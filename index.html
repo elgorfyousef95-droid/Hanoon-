@@ -1,0 +1,201 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#071b18">
+  <meta name="description" content="هنون - تواصل مع من تحب بسهولة وأمان">
+  <title>HANOON CHAT</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+  <!-- شاشة البداية -->
+  <section id="splashScreen" class="splash-screen">
+    <div class="splash-background"></div>
+
+    <div class="splash-content">
+      <div class="brand-symbol">
+        <svg viewBox="0 0 100 100" aria-hidden="true">
+          <path d="M50 8C27 8 9 25 9 47c0 9 3 17 9 24l-5 18 20-7c5 3 11 4 17 4 23 0 41-17 41-39S73 8 50 8Z"
+            fill="none" stroke="currentColor" stroke-width="7"
+            stroke-linejoin="round"/>
+          <path d="M30 38c5 15 15 25 30 30M35 33l-9 9M65 63l9-9"
+            fill="none" stroke="currentColor" stroke-width="6"
+            stroke-linecap="round"/>
+        </svg>
+      </div>
+
+      <h1>HANOON</h1>
+      <p>تواصل بلا حدود</p>
+
+      <div class="splash-loader">
+        <span></span>
+      </div>
+    </div>
+
+    <div class="splash-footer">HANOON CHAT</div>
+  </section>
+
+  <!-- التطبيق -->
+  <main id="appRoot" class="app-root" hidden>
+
+    <!-- شاشة تسجيل الدخول -->
+    <section id="authScreen" class="auth-screen" hidden>
+      <div class="auth-brand">
+        <div class="auth-logo">H</div>
+        <h1>مرحباً بك في هنون</h1>
+        <p>مكانك للتواصل مع الجميع</p>
+      </div>
+
+      <div class="auth-card">
+        <div class="auth-tabs">
+          <button type="button" class="active" data-auth-tab="login">
+            تسجيل الدخول
+          </button>
+          <button type="button" data-auth-tab="register">
+            إنشاء حساب
+          </button>
+        </div>
+
+        <form id="loginForm">
+          <label for="loginEmail">البريد الإلكتروني</label>
+          <input id="loginEmail" type="email" autocomplete="email"
+            placeholder="أدخل بريدك الإلكتروني" required>
+
+          <label for="loginPassword">كلمة المرور</label>
+          <input id="loginPassword" type="password"
+            autocomplete="current-password"
+            placeholder="أدخل كلمة المرور" required>
+
+          <button type="submit" class="primary-button">
+            تسجيل الدخول
+          </button>
+        </form>
+
+        <form id="registerForm" hidden>
+          <label for="registerName">الاسم</label>
+          <input id="registerName" type="text"
+            autocomplete="name" placeholder="اسمك الكامل" required>
+
+          <label for="registerEmail">البريد الإلكتروني</label>
+          <input id="registerEmail" type="email"
+            autocomplete="email" placeholder="بريدك الإلكتروني" required>
+
+          <label for="registerPassword">كلمة المرور</label>
+          <input id="registerPassword" type="password"
+            autocomplete="new-password"
+            placeholder="أنشئ كلمة مرور قوية" minlength="8" required>
+
+          <button type="submit" class="primary-button">
+            إنشاء الحساب
+          </button>
+        </form>
+
+        <p id="authMessage" class="auth-message" aria-live="polite"></p>
+      </div>
+    </section>
+
+    <!-- واجهة التطبيق بعد تسجيل الدخول -->
+    <section id="mainScreen" class="main-screen" hidden>
+
+      <header class="main-header">
+        <div class="header-brand">
+          <div class="header-logo">H</div>
+          <span>HANOON</span>
+        </div>
+
+        <div class="header-actions">
+          <button type="button" aria-label="البحث" data-action="search">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="10.8" cy="10.8" r="6.8"/>
+              <path d="m16 16 5 5"/>
+            </svg>
+          </button>
+
+          <button type="button" aria-label="المزيد" data-action="menu">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="5" cy="12" r="1"/>
+              <circle cx="12" cy="12" r="1"/>
+              <circle cx="19" cy="12" r="1"/>
+            </svg>
+          </button>
+        </div>
+      </header>
+
+      <nav class="main-tabs" aria-label="أقسام التطبيق">
+        <button type="button" data-page="chats" class="active">الدردشات</button>
+        <button type="button" data-page="updates">التحديثات</button>
+        <button type="button" data-page="communities">المجتمعات</button>
+        <button type="button" data-page="calls">المكالمات</button>
+      </nav>
+
+      <div id="pageContainer" class="page-container">
+
+        <section class="app-page active" id="chatsPage" data-page-content="chats">
+          <div class="page-heading">
+            <h2>الدردشات</h2>
+            <p>رسائلك ومحادثاتك</p>
+          </div>
+          <div id="chatList" class="chat-list"></div>
+        </section>
+
+        <section class="app-page" id="updatesPage" data-page-content="updates" hidden>
+          <div class="page-heading">
+            <h2>التحديثات</h2>
+            <p>شارك لحظاتك مع الآخرين</p>
+          </div>
+          <div id="statusList"></div>
+          <div id="channelsList"></div>
+        </section>
+
+        <section class="app-page" id="communitiesPage" data-page-content="communities" hidden>
+          <div class="page-heading">
+            <h2>المجتمعات</h2>
+            <p>اجمع مجموعاتك في مكان واحد</p>
+          </div>
+          <div id="communitiesList"></div>
+        </section>
+
+        <section class="app-page" id="callsPage" data-page-content="calls" hidden>
+          <div class="page-heading">
+            <h2>المكالمات</h2>
+            <p>ابقَ على اتصال بمن تحب</p>
+          </div>
+          <div id="callsList"></div>
+        </section>
+
+      </div>
+
+      <nav class="bottom-navigation" aria-label="التنقل">
+        <button type="button" data-page="chats" class="active">الدردشات</button>
+        <button type="button" data-page="updates">التحديثات</button>
+        <button type="button" data-page="communities">المجتمعات</button>
+        <button type="button" data-page="calls">المكالمات</button>
+        <button type="button" data-page="settings">الإعدادات</button>
+      </nav>
+
+      <section id="settingsPage" class="app-page" data-page-content="settings" hidden>
+        <div class="page-heading">
+          <h2>الإعدادات</h2>
+          <p>حسابك وخصوصيتك وتفضيلاتك</p>
+        </div>
+        <div id="settingsContent"></div>
+      </section>
+
+    </section>
+
+    <!-- النوافذ والتنبيهات المخصصة -->
+    <div id="modalRoot" class="modal-root" aria-live="polite"></div>
+    <div id="toastRoot" class="toast-root" aria-live="polite"></div>
+
+  </main>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
