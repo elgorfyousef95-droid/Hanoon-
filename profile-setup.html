@@ -1,0 +1,379 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#090d1c">
+  <title>إعداد الملف الشخصي | HANOON WORLD</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{
+      min-height:100vh;
+      min-height:100dvh;
+      font-family:"Cairo",sans-serif;
+      color:#f8f5ff;
+      background:#080d1c;
+    }
+    .background{
+      position:fixed;
+      inset:0;
+      z-index:-1;
+      background:
+        linear-gradient(90deg,#080d1ce8,#080d1cbb),
+        url("https://cdn.pixabay.com/photo/2019/04/16/20/01/architecture-4132660_1280.jpg")
+        center/cover no-repeat;
+    }
+    .page{
+      min-height:100vh;
+      min-height:100dvh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:35px 16px;
+    }
+    .card{
+      width:min(100%,570px);
+      padding:35px;
+      border:1px solid #ffffff20;
+      border-radius:26px;
+      background:#0d1228dc;
+      backdrop-filter:blur(22px);
+      -webkit-backdrop-filter:blur(22px);
+      box-shadow:0 30px 90px #0008;
+    }
+    .brand{
+      text-align:center;
+      margin-bottom:25px;
+    }
+    .brand-mark{
+      width:65px;
+      height:65px;
+      display:grid;
+      place-items:center;
+      margin:0 auto 12px;
+      border-radius:21px;
+      background:linear-gradient(145deg,#f6df9f,#a77b39);
+    }
+    .brand-mark svg{width:42px;height:42px}
+    .brand h1{
+      color:#ffe6a5;
+      font-size:22px;
+      font-weight:900;
+      letter-spacing:1px;
+    }
+    .brand p{
+      color:#aaa8bd;
+      font-size:12px;
+    }
+    .heading{
+      text-align:center;
+      margin-bottom:25px;
+    }
+    .heading h2{
+      font-size:25px;
+      font-weight:900;
+      margin-bottom:5px;
+    }
+    .heading p{
+      color:#aaa8bd;
+      font-size:13px;
+      line-height:1.9;
+    }
+    .field{margin-bottom:17px}
+    label{
+      display:block;
+      margin-bottom:8px;
+      font-size:13px;
+      font-weight:700;
+    }
+    input,textarea{
+      width:100%;
+      padding:13px 15px;
+      border:1px solid #ffffff20;
+      border-radius:13px;
+      outline:none;
+      color:#fff;
+      background:#ffffff0c;
+      font-family:inherit;
+      font-size:14px;
+      transition:.2s;
+    }
+    input{height:52px}
+    textarea{
+      min-height:105px;
+      resize:vertical;
+    }
+    input:focus,textarea:focus{
+      border-color:#e8c77b;
+      box-shadow:0 0 0 3px #e8c77b18;
+    }
+    input::placeholder,textarea::placeholder{color:#85869b}
+    .hint{
+      color:#85869b;
+      font-size:11px;
+      margin-top:6px;
+    }
+    .save-btn{
+      width:100%;
+      height:55px;
+      margin-top:8px;
+      border:0;
+      border-radius:14px;
+      background:linear-gradient(110deg,#f4dfa5,#c99c50);
+      color:#211707;
+      font-family:inherit;
+      font-size:15px;
+      font-weight:900;
+      cursor:pointer;
+    }
+    .save-btn:disabled{opacity:.6;cursor:wait}
+    .message{
+      display:none;
+      margin-top:15px;
+      padding:12px;
+      border-radius:11px;
+      font-size:12px;
+      line-height:1.8;
+    }
+    .message.error{
+      display:block;
+      color:#ffbdc6;
+      background:#dc37501c;
+      border:1px solid #ff647833;
+    }
+    .message.success{
+      display:block;
+      color:#a9f4d4;
+      background:#2db47d1c;
+      border:1px solid #46dca033;
+    }
+    .footer{
+      text-align:center;
+      color:#85869b;
+      font-size:11px;
+      margin-top:22px;
+    }
+    @media(max-width:480px){
+      .card{padding:25px 19px}
+      .heading h2{font-size:22px}
+    }
+  </style>
+</head>
+
+<body>
+  <div class="background"></div>
+
+  <main class="page">
+    <section class="card">
+
+      <header class="brand">
+        <div class="brand-mark">
+          <svg viewBox="0 0 64 64" fill="none">
+            <path d="M32 5L39 18L54 21L44 32L46 47L32 40L18 47L20 32L10 21L25 18L32 5Z"
+              stroke="#38250D" stroke-width="2.8" stroke-linejoin="round"/>
+            <circle cx="32" cy="28" r="6" fill="#38250D"/>
+            <path d="M19 53H45" stroke="#38250D" stroke-width="3" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h1>HANOON WORLD</h1>
+        <p>CONNECT • PLAY • ENJOY</p>
+      </header>
+
+      <div class="heading">
+        <h2>جهّز ملفك الشخصي</h2>
+        <p>عرّف الآخرين بنفسك قبل الانطلاق في عالم هنون</p>
+      </div>
+
+      <form id="profileForm">
+
+        <div class="field">
+          <label for="fullName">الاسم الظاهر</label>
+          <input
+            id="fullName"
+            type="text"
+            maxlength="80"
+            placeholder="اكتب الاسم الذي سيظهر للآخرين"
+            required
+          >
+        </div>
+
+        <div class="field">
+          <label for="bio">نبذة عنك</label>
+          <textarea
+            id="bio"
+            maxlength="500"
+            placeholder="اكتب نبذة قصيرة عن نفسك..."
+          ></textarea>
+        </div>
+
+        <div class="field">
+          <label for="hobbies">هواياتك</label>
+          <input
+            id="hobbies"
+            type="text"
+            maxlength="300"
+            placeholder="الألعاب، القراءة، الرياضة..."
+          >
+          <div class="hint">افصل بين الهوايات باستخدام الفاصلة</div>
+        </div>
+
+        <div class="field">
+          <label for="interests">اهتماماتك</label>
+          <input
+            id="interests"
+            type="text"
+            maxlength="300"
+            placeholder="التعارف، المنافسات، الغرف الصوتية..."
+          >
+          <div class="hint">افصل بين الاهتمامات باستخدام الفاصلة</div>
+        </div>
+
+        <button class="save-btn" id="saveButton" type="submit">
+          حفظ الملف الشخصي والمتابعة
+        </button>
+
+        <div id="message" class="message" role="status" aria-live="polite"></div>
+
+      </form>
+
+      <div class="footer">
+        © HANOON WORLD — جميع الحقوق محفوظة
+      </div>
+
+    </section>
+  </main>
+
+  <script type="module">
+    import { supabase } from "./supabase.js";
+
+    const form = document.getElementById("profileForm");
+    const fullName = document.getElementById("fullName");
+    const bio = document.getElementById("bio");
+    const hobbies = document.getElementById("hobbies");
+    const interests = document.getElementById("interests");
+    const saveButton = document.getElementById("saveButton");
+    const message = document.getElementById("message");
+
+    function showMessage(text, type) {
+      message.textContent = text;
+      message.className = "message " + type;
+    }
+
+    function splitList(value) {
+      return value
+        .split(/[،,]/)
+        .map(item => item.trim())
+        .filter(Boolean);
+    }
+
+    async function loadProfile() {
+      const { data: { user }, error: authError } =
+        await supabase.auth.getUser();
+
+      if (authError || !user) {
+        window.location.replace("login.html");
+        return;
+      }
+
+      const { data, error } = await supabase
+        .from("profiles")
+        .select("full_name,bio,hobbies,interests,profile_completed")
+        .eq("id", user.id)
+        .maybeSingle();
+
+      if (error) {
+        console.error("Profile loading error:", error);
+        showMessage("تعذر تحميل بيانات الملف الشخصي.", "error");
+        return;
+      }
+
+      if (data?.profile_completed) {
+        window.location.replace("home.html");
+        return;
+      }
+
+      if (data) {
+        fullName.value = data.full_name || "";
+        bio.value = data.bio || "";
+        hobbies.value = (data.hobbies || []).join("، ");
+        interests.value = (data.interests || []).join("، ");
+      }
+    }
+
+    form.addEventListener("submit", async event => {
+      event.preventDefault();
+
+      const name = fullName.value.trim();
+
+      if (!name) {
+        showMessage("من فضلك اكتب الاسم الظاهر.", "error");
+        return;
+      }
+
+      if (name.length > 80) {
+        showMessage("الاسم يجب ألا يتجاوز 80 حرفًا.", "error");
+        return;
+      }
+
+      saveButton.disabled = true;
+      saveButton.textContent = "جارٍ حفظ بياناتك...";
+
+      try {
+        const { data: { user }, error: authError } =
+          await supabase.auth.getUser();
+
+        if (authError || !user) {
+          throw new Error("انتهت جلسة الدخول. سجّل الدخول مرة أخرى.");
+        }
+
+        const { data: profile, error: updateError } =
+          await supabase
+            .from("profiles")
+            .update({
+              full_name: name,
+              bio: bio.value.trim(),
+              hobbies: splitList(hobbies.value),
+              interests: splitList(interests.value),
+              profile_completed: true,
+              updated_at: new Date().toISOString()
+            })
+            .eq("id", user.id)
+            .select("id")
+            .maybeSingle();
+
+        if (updateError) throw updateError;
+
+        if (!profile) {
+          throw new Error(
+            "لم يتم تحديث الملف الشخصي. تحقق من صلاحيات الحساب."
+          );
+        }
+
+        showMessage("تم حفظ ملفك الشخصي بنجاح!", "success");
+
+        setTimeout(() => {
+          window.location.href = "home.html";
+        }, 900);
+
+      } catch (error) {
+        console.error("Profile save error:", error);
+
+        showMessage(
+          error.message || "حدث خطأ أثناء حفظ البيانات.",
+          "error"
+        );
+
+        saveButton.disabled = false;
+        saveButton.textContent = "حفظ الملف الشخصي والمتابعة";
+      }
+    });
+
+    loadProfile();
+  </script>
+</body>
+</html>
