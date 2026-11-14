@@ -2,538 +2,844 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
-<meta name="theme-color" content="#090713">
-<meta name="description" content="HANOON WORLD - عالمك الاجتماعي والترفيهي">
-<title>HANOON WORLD | الرئيسية</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+  <meta name="theme-color" content="#090914">
+  <meta name="description" content="HANOON WORLD — عالم الألعاب والغرف والبث والتواصل">
+  <title>HANOON WORLD | عالمك الترفيهي</title>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900;1000&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-<style>
-:root{
-  --bg:#090713;
-  --surface:rgba(20,16,34,.90);
-  --surface2:rgba(31,24,50,.94);
-  --ink:#fffaff;
-  --muted:#b7adc9;
-  --primary:#b69aff;
-  --line:rgba(213,190,255,.16);
-  --shadow:0 18px 48px rgba(0,0,0,.38);
-  --nav-height:78px;
-}
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html{scroll-behavior:smooth;scroll-padding-top:100px;background:var(--bg)}
-body{
-  position:relative;isolation:isolate;margin:0;min-height:100vh;
-  background:var(--bg);color:var(--ink);font-family:"Cairo",sans-serif;
-  overflow-x:hidden;padding-bottom:calc(var(--nav-height) + 28px)
-}
-body::before{
-  content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;
-  background:
-    linear-gradient(115deg,rgba(8,6,18,.84),rgba(17,10,31,.76) 48%,rgba(8,7,18,.91)),
-    url("https://images.unsplash.com/photo-1462331940025-496dfbfc7564?auto=format&fit=crop&w=2200&q=90") center/cover no-repeat
-}
-body::after{
-  content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
-  background:radial-gradient(ellipse at 12% 12%,rgba(130,83,210,.16),transparent 34%),
-  radial-gradient(ellipse at 88% 42%,rgba(60,150,165,.10),transparent 32%)
-}
-button,input{font:inherit}
-button,a{-webkit-tap-highlight-color:transparent}
-button{cursor:pointer}
-a{color:inherit;text-decoration:none}
-.page-shell{width:min(100%,1120px);margin:auto}
+  <style>
+    :root{
+      --bg:#090914;
+      --panel:#11111f;
+      --panel2:#171729;
+      --panel3:#202039;
+      --purple:#956cff;
+      --purple2:#7048df;
+      --gold:#f3c66b;
+      --cyan:#60d8ed;
+      --text:#f7f5ff;
+      --muted:#9693ad;
+      --line:rgba(255,255,255,.075);
+      --glass:rgba(20,18,39,.78);
+      --shadow:0 18px 55px rgba(0,0,0,.3);
+      --radius:22px;
+      --safe-bottom:env(safe-area-inset-bottom,0px);
+    }
 
-/* الشريط العلوي */
-.topbar{
-  position:sticky;top:0;z-index:50;
-  background:rgba(12,9,23,.84);
-  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
-  border-bottom:1px solid var(--line);
-  box-shadow:0 12px 35px rgba(0,0,0,.22)
-}
-.topbar-inner{
-  max-width:1120px;min-height:78px;padding:12px 19px;margin:auto;
-  display:flex;align-items:center;gap:13px
-}
-.brand{display:flex;align-items:center;gap:11px;flex-shrink:0}
-.brand-symbol{
-  width:48px;height:48px;border-radius:17px;display:grid;place-items:center;
-  color:#fff;font-size:22px;
-  background:linear-gradient(145deg,#e1c8ff,#9b73ef 42%,#5432ad);
-  box-shadow:0 0 0 5px rgba(174,139,255,.08),0 10px 28px rgba(113,72,208,.38);
-  border:1px solid rgba(255,255,255,.34)
-}
-.brand-name{font-size:16px;line-height:1.1;font-weight:1000;letter-spacing:.5px;color:#fff}
-.brand-sub{display:block;color:#c3b2e4;font-size:9px;font-weight:800;margin-top:5px;letter-spacing:1.5px}
-.top-search{
-  height:45px;flex:1;max-width:440px;margin-inline:auto;
-  background:rgba(255,255,255,.055);border:1px solid var(--line);
-  border-radius:16px;display:flex;align-items:center;gap:10px;
-  padding:0 14px;color:#c3b5dc
-}
-.top-search input{width:100%;min-width:0;outline:0;border:0;background:transparent;color:white;font-size:12px;font-weight:700}
-.top-search input::placeholder{color:#968aa9}
-.top-actions{display:flex;align-items:center;gap:8px}
-.icon-button{
-  width:43px;height:43px;border:1px solid var(--line);
-  background:rgba(255,255,255,.06);border-radius:15px;
-  color:#e9ddff;display:grid;place-items:center;font-size:16px;transition:.2s
-}
-.icon-button:active{transform:scale(.93)}
-.profile-shortcut{
-  width:45px;height:45px;padding:2px;border:2px solid #c3a1ff;
-  border-radius:50%;background:#211831;overflow:hidden;display:block;
-  box-shadow:0 0 0 4px rgba(172,132,255,.09)
-}
-.profile-shortcut img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth;background:var(--bg)}
+    body{
+      margin:0;
+      min-height:100vh;
+      color:var(--text);
+      background:
+        radial-gradient(ellipse at 10% 0%,rgba(105,67,198,.17),transparent 34%),
+        radial-gradient(ellipse at 95% 28%,rgba(37,107,144,.09),transparent 30%),
+        var(--bg);
+      font-family:"Cairo",sans-serif;
+      overflow-x:hidden;
+      -webkit-tap-highlight-color:transparent;
+    }
+    button,input{font:inherit}
+    button{color:inherit;cursor:pointer}
+    a{color:inherit;text-decoration:none}
+    img{display:block;max-width:100%}
+    .hidden{display:none!important}
+    .muted{color:var(--muted)}
+    .container{width:min(1440px,100%);margin:auto;padding-inline:22px}
+    .icon{width:21px;height:21px;display:block;flex:none}
+    .icon.sm{width:17px;height:17px}
+    .icon.lg{width:25px;height:25px}
+    .icon.xl{width:30px;height:30px}
 
-/* محتوى الصفحة */
-.main-content{padding:23px 17px 40px}
-.welcome-row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:4px 0 19px}
-.welcome-title{font-size:22px;font-weight:1000;margin:0;color:#fff;letter-spacing:-.4px}
-.welcome-description{color:var(--muted);font-size:12px;font-weight:700;margin:4px 0 0}
-.wallet-chip{
-  display:flex;align-items:center;gap:8px;padding:9px 13px;
-  background:linear-gradient(135deg,rgba(72,51,91,.72),rgba(35,26,52,.9));
-  border:1px solid rgba(235,198,129,.28);border-radius:15px;
-  box-shadow:var(--shadow);font-size:11px;font-weight:900;white-space:nowrap
-}
-.wallet-chip[hidden]{display:none}
-.wallet-chip i{color:#f3c779}
-.wallet-chip span{color:#f1d8a5}
+    /* Background decoration */
+    .ambient{
+      position:fixed;inset:0;pointer-events:none;z-index:-1;overflow:hidden;
+    }
+    .ambient:before,.ambient:after{
+      content:"";position:absolute;border-radius:50%;filter:blur(100px);opacity:.17;
+    }
+    .ambient:before{
+      width:380px;height:380px;background:#633bbd;top:150px;right:-250px;
+    }
+    .ambient:after{
+      width:320px;height:320px;background:#1c809a;bottom:50px;left:-230px;
+    }
 
-/* الواجهة السينمائية */
-.hero{
-  position:relative;min-height:278px;overflow:hidden;border-radius:30px;
-  isolation:isolate;background:#20132f;
-  border:1px solid rgba(255,255,255,.16);box-shadow:0 25px 60px rgba(0,0,0,.42)
-}
-.hero::before{
-  content:"";position:absolute;inset:0;z-index:-2;
-  background:linear-gradient(90deg,rgba(13,8,25,.96),rgba(27,13,44,.82) 46%,rgba(28,15,45,.24)),
-  url("https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&w=1600&q=90") center 42%/cover;
-  transform:scale(1.02)
-}
-.hero::after{
-  content:"";position:absolute;width:260px;height:260px;border-radius:50%;
-  background:rgba(179,132,255,.24);filter:blur(65px);
-  left:-80px;bottom:-125px;z-index:-1
-}
-.hero-content{position:relative;z-index:2;padding:33px 29px;max-width:600px;color:white}
-.hero-kicker{
-  display:inline-flex;align-items:center;gap:8px;padding:7px 12px;
-  border:1px solid rgba(239,218,255,.28);background:rgba(255,255,255,.10);
-  border-radius:30px;font-size:10px;font-weight:900;
-  backdrop-filter:blur(12px);color:#f1e7ff
-}
-.hero-kicker i{color:#f5ce83}
-.hero h1{font-size:clamp(27px,5.5vw,42px);line-height:1.32;font-weight:1000;letter-spacing:-.8px;margin:16px 0 9px;color:#fff;text-shadow:0 5px 24px rgba(0,0,0,.24)}
-.hero p{max-width:410px;color:rgba(255,255,255,.82);font-size:12px;line-height:2.05;font-weight:650;margin:0 0 19px}
-.hero-buttons{display:flex;align-items:center;flex-wrap:wrap;gap:10px}
-.hero-button{
-  min-height:44px;padding:0 18px;border:0;border-radius:14px;
-  font-size:11px;font-weight:1000;display:inline-flex;
-  align-items:center;justify-content:center;gap:9px;transition:.2s
-}
-.hero-button:active{transform:scale(.96)}
-.hero-button.primary{color:#39245f;background:linear-gradient(135deg,#fff8e9,#dfc5ff);box-shadow:0 8px 25px rgba(202,166,255,.2)}
-.hero-button.ghost{color:white;background:rgba(255,255,255,.11);border:1px solid rgba(255,255,255,.27);backdrop-filter:blur(10px)}
-.hero-decoration{
-  position:absolute;left:8%;top:15%;width:140px;height:140px;
-  border:1px solid rgba(255,255,255,.2);border-radius:42px;
-  transform:rotate(-14deg);pointer-events:none;
-  box-shadow:inset 0 0 35px rgba(255,255,255,.04)
-}
-.hero-decoration::before,.hero-decoration::after{content:"";position:absolute;border:1px solid rgba(255,255,255,.2);border-radius:50%}
-.hero-decoration::before{width:82px;height:82px;top:27px;left:27px}
-.hero-decoration::after{width:13px;height:13px;background:#f5d08d;top:-8px;right:14px;border:0;box-shadow:0 0 20px #f5d08d}
+    /* Header */
+    .topbar{
+      position:sticky;top:0;z-index:50;
+      background:rgba(9,9,20,.86);
+      backdrop-filter:blur(22px);
+      border-bottom:1px solid var(--line);
+    }
+    .topbar-inner{
+      min-height:76px;display:flex;align-items:center;gap:18px;
+    }
+    .brand{
+      display:flex;align-items:center;gap:11px;flex:none;
+      min-width:190px;
+    }
+    .brand-mark{
+      width:45px;height:45px;border-radius:15px;
+      display:grid;place-items:center;
+      background:linear-gradient(145deg,#b08aff,#6942cf 70%,#36205e);
+      box-shadow:0 8px 26px rgba(132,91,231,.3),inset 0 1px 1px #ffffff70;
+      border:1px solid #ffffff25;
+    }
+    .brand-mark svg{width:27px;height:27px}
+    .brand-name{font-size:17px;font-weight:900;letter-spacing:.2px;line-height:1.15}
+    .brand-sub{font-size:10px;color:#aaa0ca;font-weight:600;letter-spacing:1.3px;margin-top:4px}
 
-/* الوصول السريع */
-.quick-discover{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:11px;margin:19px 0 29px}
-.quick-card{
-  min-height:108px;padding:14px 7px 12px;
-  background:linear-gradient(155deg,rgba(39,29,58,.94),rgba(19,15,32,.92));
-  border:1px solid var(--line);border-radius:21px;
-  box-shadow:0 12px 30px rgba(0,0,0,.23),inset 0 1px rgba(255,255,255,.045);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  gap:8px;text-align:center;transition:transform .22s,border-color .22s;
-  backdrop-filter:blur(14px)
-}
-.quick-card:active{transform:scale(.95);border-color:rgba(205,174,255,.4)}
-.quick-icon{width:45px;height:45px;border-radius:16px;display:grid;place-items:center;color:white;font-size:17px;box-shadow:0 7px 18px rgba(0,0,0,.2)}
-.quick-card:nth-child(1) .quick-icon{background:linear-gradient(145deg,#b89aff,#7147d4)}
-.quick-card:nth-child(2) .quick-icon{background:linear-gradient(145deg,#ff9ec7,#c84e91)}
-.quick-card:nth-child(3) .quick-icon{background:linear-gradient(145deg,#7de4df,#268e9e)}
-.quick-card:nth-child(4) .quick-icon{background:linear-gradient(145deg,#f5cf91,#bd7844)}
-.quick-card strong{font-size:11px;font-weight:1000;color:#fff}
-.quick-card small{color:#b1a5c5;font-size:9px;font-weight:700}
+    .top-search{
+      height:43px;flex:1;max-width:390px;
+      display:flex;align-items:center;gap:10px;
+      border:1px solid var(--line);background:#151526;
+      border-radius:14px;padding:0 13px;color:var(--muted);
+    }
+    .top-search input{
+      border:0;outline:0;background:transparent;color:white;
+      width:100%;font-size:12px;min-width:0;
+    }
+    .top-search input::placeholder{color:#77748d}
+    .header-actions{display:flex;align-items:center;gap:9px;margin-inline-start:auto}
+    .icon-button{
+      width:42px;height:42px;border:1px solid var(--line);
+      background:#171729;border-radius:14px;
+      display:grid;place-items:center;position:relative;
+      transition:.2s;
+    }
+    .icon-button:active{transform:scale(.94)}
+    .notification-dot{
+      position:absolute;top:8px;right:8px;width:7px;height:7px;
+      background:#ff647e;border-radius:50%;border:1px solid #171729;
+    }
+    .profile-shortcut{
+      width:43px;height:43px;border:2px solid rgba(166,132,255,.7);
+      border-radius:15px;overflow:hidden;background:#24213b;
+      padding:0;
+    }
+    .profile-shortcut img{width:100%;height:100%;object-fit:cover}
 
-/* عناوين الأقسام */
-.section{margin-top:31px;scroll-margin-top:95px}
-.section-heading{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:15px}
-.section-title-wrap{display:flex;align-items:center;gap:11px;min-width:0}
-.section-symbol{
-  width:41px;height:41px;border-radius:14px;display:grid;place-items:center;
-  background:linear-gradient(145deg,rgba(173,136,255,.22),rgba(104,75,157,.14));
-  color:#d0b9ff;font-size:15px;flex-shrink:0;
-  border:1px solid rgba(196,165,255,.19);box-shadow:inset 0 1px rgba(255,255,255,.06)
-}
-.section-title{font-size:16px;font-weight:1000;margin:0;color:#fff}
-.section-subtitle{color:var(--muted);font-size:10px;font-weight:700;margin:3px 0 0}
-.section-link{color:#d0b5ff;font-size:11px;font-weight:900;white-space:nowrap;padding:8px 0}
-.section-link i{margin-right:4px;font-size:9px}
+    /* Wallet strip */
+    .wallet-strip{
+      display:flex;align-items:center;gap:9px;
+      padding:12px 0 14px;
+      overflow-x:auto;scrollbar-width:none;
+    }
+    .wallet-strip::-webkit-scrollbar{display:none}
+    .wallet-card{
+      min-width:155px;display:flex;align-items:center;gap:10px;
+      padding:10px 13px;border:1px solid var(--line);
+      border-radius:15px;background:linear-gradient(135deg,#1c1a30,#141426);
+      box-shadow:0 8px 22px #0002;
+    }
+    .wallet-symbol{
+      width:36px;height:36px;border-radius:12px;display:grid;place-items:center;
+      flex:none;
+    }
+    .wallet-symbol.gold{background:rgba(242,192,92,.13);color:var(--gold)}
+    .wallet-symbol.blue{background:rgba(75,190,225,.13);color:var(--cyan)}
+    .wallet-label{font-size:10px;color:var(--muted);font-weight:700}
+    .wallet-value{font-size:15px;font-weight:900;line-height:1.3;direction:ltr;text-align:right}
+    .wallet-add{
+      width:29px;height:29px;border:1px solid #ffffff17;
+      border-radius:10px;background:#ffffff08;color:#e6d7ff;
+      display:grid;place-items:center;margin-inline-start:auto;
+    }
+    .wallet-tools{display:flex;align-items:center;gap:8px}
+    .wallet-tool{
+      min-width:82px;height:57px;padding:5px 11px;
+      border:1px solid var(--line);border-radius:15px;
+      background:#151526;display:flex;flex-direction:column;
+      align-items:center;justify-content:center;gap:3px;
+      color:#cfc9e6;font-size:10px;font-weight:700;
+    }
+    .wallet-tool svg{color:#c3a7ff}
+    .wallet-tool:active{transform:scale(.96)}
 
-/* فلاتر الغرف */
-.filter-row{display:flex;align-items:center;gap:8px;overflow:auto;padding:1px 0 13px;scrollbar-width:none}
-.filter-row::-webkit-scrollbar{display:none}
-.filter-button{flex-shrink:0;border:1px solid var(--line);background:rgba(255,255,255,.055);color:#c0b4d2;border-radius:30px;padding:8px 15px;font-size:10px;font-weight:900}
-.filter-button.active{background:linear-gradient(135deg,#ad8aff,#7048c9);border-color:transparent;color:white;box-shadow:0 7px 20px rgba(118,85,233,.3)}
+    /* Main content */
+    main{padding-top:12px;padding-bottom:115px}
+    .section{margin-top:30px}
+    .section-head{
+      display:flex;align-items:center;justify-content:space-between;
+      gap:12px;margin-bottom:15px;
+    }
+    .section-title{
+      font-size:18px;font-weight:900;display:flex;align-items:center;gap:10px;
+      margin:0;
+    }
+    .section-title:before{
+      content:"";width:4px;height:22px;border-radius:5px;
+      background:linear-gradient(#b89aff,#7047d7);
+    }
+    .section-link{
+      font-size:11px;color:#bda8ff;font-weight:800;
+      display:flex;align-items:center;gap:5px;
+    }
+    .section-link svg{width:15px;height:15px}
 
-/* بطاقات الغرف */
-.rooms-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
-.room-card{background:linear-gradient(155deg,rgba(36,27,54,.97),rgba(17,14,29,.97));border:1px solid var(--line);border-radius:21px;overflow:hidden;min-width:0;box-shadow:var(--shadow);transition:transform .2s,border-color .2s}
-.room-card:active{transform:scale(.985);border-color:rgba(199,169,255,.35)}
-.room-cover{min-height:132px;position:relative;overflow:hidden;background:#33244f}
-.room-cover img{width:100%;height:132px;display:block;object-fit:cover;transition:transform .5s}
-.room-card:hover .room-cover img{transform:scale(1.05)}
-.room-cover-placeholder{height:132px;display:grid;place-items:center;color:white;font-size:32px;background:radial-gradient(circle at 75% 25%,rgba(255,255,255,.22),transparent 28%),linear-gradient(135deg,#7555b8,#382b61)}
-.room-status{position:absolute;top:10px;right:10px;padding:5px 10px;border-radius:20px;background:rgba(15,11,27,.88);border:1px solid rgba(255,255,255,.18);color:#d8c5ff;font-size:9px;font-weight:1000;backdrop-filter:blur(8px)}
-.room-status.playing{color:#ffadd0}
-.room-body{padding:12px}
-.room-title{font-size:12px;font-weight:1000;margin:0 0 8px;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.room-meta{display:flex;align-items:center;justify-content:space-between;gap:5px;color:var(--muted);font-size:9px;font-weight:800}
-.room-host{display:flex;align-items:center;gap:6px;min-width:0}
-.room-host img{width:23px;height:23px;object-fit:cover;border-radius:50%;border:1px solid rgba(255,255,255,.2)}
-.room-host span{overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
-.room-open{width:100%;margin-top:11px;min-height:35px;border:1px solid rgba(255,255,255,.12);border-radius:11px;color:white;background:linear-gradient(120deg,#916de4,#6443b5);font-size:10px;font-weight:1000;box-shadow:0 5px 15px rgba(89,58,157,.22)}
+    /* Hero */
+    .hero{
+      min-height:330px;position:relative;isolation:isolate;
+      overflow:hidden;border-radius:27px;
+      border:1px solid rgba(255,255,255,.1);
+      box-shadow:var(--shadow);
+      background:#171329;
+    }
+    .hero-image{
+      position:absolute;inset:0;width:100%;height:100%;
+      object-fit:cover;z-index:-2;
+      filter:saturate(.9);
+    }
+    .hero:after{
+      content:"";position:absolute;inset:0;z-index:-1;
+      background:
+        linear-gradient(90deg,rgba(8,8,19,.04),rgba(8,8,19,.52) 42%,rgba(8,8,19,.94) 100%),
+        linear-gradient(0deg,rgba(8,8,19,.72),transparent 60%);
+    }
+    .hero-content{
+      min-height:330px;max-width:610px;padding:35px 36px;
+      display:flex;flex-direction:column;justify-content:center;
+    }
+    .eyebrow{
+      width:max-content;display:flex;align-items:center;gap:7px;
+      color:#e0d4ff;font-size:10px;font-weight:800;
+      background:rgba(146,105,236,.2);
+      border:1px solid rgba(191,161,255,.27);
+      padding:7px 12px;border-radius:50px;margin-bottom:16px;
+    }
+    .eyebrow span{width:6px;height:6px;border-radius:50%;background:#b89aff}
+    .hero h1{font-size:clamp(27px,4vw,43px);line-height:1.35;margin:0 0 10px;font-weight:900}
+    .hero p{font-size:13px;color:#d1cadd;line-height:2;margin:0 0 20px;max-width:440px}
+    .hero-actions{display:flex;gap:10px;flex-wrap:wrap}
+    .primary-btn,.secondary-btn{
+      min-height:45px;padding:0 19px;border-radius:13px;
+      display:inline-flex;align-items:center;justify-content:center;gap:9px;
+      font-size:12px;font-weight:900;border:1px solid transparent;
+    }
+    .primary-btn{
+      color:white;background:linear-gradient(120deg,#a17aff,#7148d7);
+      box-shadow:0 8px 24px rgba(121,81,216,.3);
+    }
+    .secondary-btn{background:rgba(255,255,255,.09);border-color:#ffffff25;color:#fff}
+    .primary-btn:active,.secondary-btn:active{transform:scale(.97)}
 
-/* الحالات الفارغة */
-.empty-state{grid-column:1/-1;padding:28px 18px;text-align:center;background:linear-gradient(145deg,rgba(35,27,52,.92),rgba(17,14,29,.92));border:1px dashed rgba(190,162,255,.32);border-radius:22px;box-shadow:inset 0 1px rgba(255,255,255,.04)}
-.empty-illustration{width:68px;height:68px;border-radius:23px;margin:0 auto 13px;display:grid;place-items:center;background:linear-gradient(145deg,rgba(170,133,255,.22),rgba(90,65,141,.13));border:1px solid rgba(195,166,255,.16);color:#d0b9ff;font-size:25px}
-.empty-state h3{margin:0 0 6px;font-size:13px;font-weight:1000;color:#fff}
-.empty-state p{max-width:320px;margin:0 auto;color:var(--muted);font-size:10px;font-weight:700;line-height:1.9}
+    /* Quick categories */
+    .category-rail{
+      display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px;
+    }
+    .category-card{
+      min-height:105px;position:relative;overflow:hidden;
+      border:1px solid var(--line);border-radius:18px;
+      background:linear-gradient(145deg,#211b39,#141426);
+      display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;
+      transition:.22s;
+    }
+    .category-card:before{
+      content:"";position:absolute;width:80px;height:80px;border-radius:50%;
+      background:var(--glow,rgba(146,104,240,.18));filter:blur(25px);
+      top:-35px;right:-20px;
+    }
+    .category-icon{
+      width:43px;height:43px;display:grid;place-items:center;
+      border-radius:14px;background:#ffffff0d;
+      color:var(--accent,#c3a6ff);border:1px solid #ffffff12;
+    }
+    .category-card span{font-size:11px;font-weight:800;position:relative}
+    .category-card:active{transform:translateY(2px)}
 
-/* الألعاب */
-.games-strip{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
-.game-card{min-height:155px;position:relative;overflow:hidden;border-radius:21px;color:white;background:#30214e;border:1px solid var(--line);box-shadow:var(--shadow)}
-.game-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .5s}
-.game-card:hover img{transform:scale(1.06)}
-.game-card::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(12,8,24,.97),rgba(26,17,48,.02) 80%)}
-.game-card-content{position:absolute;z-index:2;bottom:13px;right:13px;left:13px}
-.game-card h3{margin:0 0 4px;font-size:13px;font-weight:1000}
-.game-card p{margin:0;font-size:9px;color:rgba(255,255,255,.82);font-weight:700}
-.game-card button{margin-top:10px;border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.13);color:white;border-radius:10px;padding:7px 12px;font-size:9px;font-weight:900;backdrop-filter:blur(8px)}
+    /* Game cards */
+    .game-rail{
+      display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:13px;
+    }
+    .game-card{
+      min-width:0;overflow:hidden;border-radius:19px;
+      background:#171729;border:1px solid var(--line);
+      transition:.22s;
+    }
+    .game-cover{
+      height:132px;position:relative;overflow:hidden;background:#24223b;
+    }
+    .game-cover img{width:100%;height:100%;object-fit:cover;transition:transform .4s}
+    .game-card:hover .game-cover img{transform:scale(1.06)}
+    .game-cover:after{
+      content:"";position:absolute;inset:35% 0 0;
+      background:linear-gradient(transparent,#11111f);
+    }
+    .game-info{padding:10px 11px 12px}
+    .game-name{font-size:12px;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .game-meta{font-size:10px;color:var(--muted);margin-top:4px}
+    .game-open{
+      width:100%;margin-top:9px;border:1px solid #9b7aff40;
+      background:#8d65ed16;color:#d7c7ff;border-radius:10px;
+      min-height:31px;font-size:10px;font-weight:800;
+    }
 
-/* الأعضاء */
-.members-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
-.member-card{display:flex;align-items:center;gap:10px;min-width:0;padding:13px;background:linear-gradient(145deg,rgba(37,28,55,.95),rgba(18,15,30,.95));border:1px solid var(--line);border-radius:19px;box-shadow:0 10px 25px rgba(0,0,0,.2)}
-.member-avatar{width:48px;height:48px;border-radius:17px;object-fit:cover;flex-shrink:0;background:#33264e;border:1px solid rgba(255,255,255,.13)}
-.member-info{min-width:0;flex:1}
-.member-info strong{display:block;font-size:11px;font-weight:1000;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.member-info span{display:block;color:var(--muted);font-size:9px;font-weight:700;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.member-open{width:30px;height:30px;flex-shrink:0;border:1px solid rgba(190,160,255,.17);border-radius:11px;background:rgba(143,111,230,.2);color:#d2bdff}
+    /* Discovery banner */
+    .discovery-banner{
+      position:relative;overflow:hidden;border-radius:23px;
+      min-height:185px;border:1px solid #ffffff14;
+      background:#17142a;
+    }
+    .discovery-banner img{
+      position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;
+    }
+    .discovery-banner:after{
+      content:"";position:absolute;inset:0;
+      background:linear-gradient(90deg,rgba(9,9,20,.1),rgba(9,9,20,.93) 75%);
+    }
+    .discovery-copy{
+      position:relative;z-index:1;padding:25px 28px;
+      max-width:510px;
+    }
+    .discovery-copy h3{font-size:23px;margin:0 0 7px;font-weight:900}
+    .discovery-copy p{font-size:11px;color:#d1c9e2;line-height:1.9;margin:0 0 14px}
 
-/* بانر الاكتشاف */
-.discovery-banner{
-  position:relative;min-height:155px;margin-top:29px;padding:23px;
-  overflow:hidden;border-radius:25px;color:white;border:1px solid rgba(255,255,255,.15);
-  background:linear-gradient(100deg,rgba(15,9,28,.96),rgba(55,34,87,.7)),
-  url("https://images.unsplash.com/photo-1517457373958-b7532e35ba0b?auto=format&fit=crop&w=1300&q=85") center/cover;
-  box-shadow:var(--shadow)
-}
-.discovery-banner h3{margin:0 0 7px;font-size:18px;font-weight:1000}
-.discovery-banner p{max-width:390px;margin:0 0 14px;color:rgba(255,255,255,.82);font-size:10px;line-height:1.9;font-weight:700}
-.discovery-banner a{display:inline-flex;align-items:center;gap:7px;padding:9px 14px;border-radius:11px;background:linear-gradient(135deg,#fff7e9,#e4d1ff);color:#4d347b;font-size:10px;font-weight:1000}
+    /* Room cards */
+    .room-grid{
+      display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;
+    }
+    .room-card{
+      border:1px solid var(--line);border-radius:19px;
+      overflow:hidden;background:#151526;min-width:0;
+    }
+    .room-cover{height:130px;position:relative;background:#28233d;overflow:hidden}
+    .room-cover img{width:100%;height:100%;object-fit:cover}
+    .room-status{
+      position:absolute;top:10px;right:10px;
+      background:#171421d9;border:1px solid #ffffff20;
+      border-radius:30px;padding:5px 9px;font-size:9px;font-weight:800;
+      display:flex;align-items:center;gap:6px;
+    }
+    .status-dot{width:6px;height:6px;border-radius:50%;background:#4ed6a2}
+    .room-body{padding:12px}
+    .room-title{font-size:13px;font-weight:900;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .room-details{
+      display:flex;justify-content:space-between;gap:8px;
+      color:var(--muted);font-size:10px;margin-top:8px;
+    }
+    .room-action{
+      margin-top:12px;width:100%;min-height:34px;
+      border-radius:10px;border:1px solid #9875f34a;
+      background:#9167ed19;color:#d7c8ff;font-size:10px;font-weight:800;
+    }
 
-/* التنقل السفلي */
-.bottom-nav{
-  position:fixed;z-index:60;bottom:0;right:0;left:0;min-height:var(--nav-height);
-  padding:9px 8px calc(9px + env(safe-area-inset-bottom));
-  display:flex;align-items:center;justify-content:space-around;
-  background:rgba(12,9,23,.91);border-top:1px solid var(--line);
-  backdrop-filter:blur(25px);-webkit-backdrop-filter:blur(25px);
-  box-shadow:0 -12px 35px rgba(0,0,0,.22)
-}
-.nav-item{min-width:57px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;color:#9c91b1;font-size:9px;font-weight:800;transition:.2s}
-.nav-item i{font-size:18px}
-.nav-item.active{color:#d0b5ff}
-.nav-item.active i{filter:drop-shadow(0 4px 9px rgba(154,112,244,.55));transform:translateY(-1px)}
+    /* Live area */
+    .live-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+    .live-card{
+      position:relative;height:205px;overflow:hidden;
+      border-radius:19px;border:1px solid #ffffff18;background:#211b36;
+    }
+    .live-card img{width:100%;height:100%;object-fit:cover;transition:.4s}
+    .live-card:hover img{transform:scale(1.05)}
+    .live-card:after{
+      content:"";position:absolute;inset:0;
+      background:linear-gradient(0deg,rgba(7,7,16,.96),transparent 72%);
+    }
+    .live-tag{
+      position:absolute;z-index:2;top:11px;right:11px;
+      background:#e84864;color:white;border-radius:7px;
+      padding:4px 8px;font-size:9px;font-weight:900;
+    }
+    .live-copy{position:absolute;z-index:2;bottom:12px;right:13px;left:13px}
+    .live-title{font-size:13px;font-weight:900}
+    .live-sub{font-size:10px;color:#d0c9df;margin-top:4px}
 
-/* البحث والتنبيهات */
-.loading-line{height:3px;position:fixed;top:0;right:0;width:0;z-index:100;background:linear-gradient(90deg,#c5a6ff,#f0c77e,#ed83bb);transition:width .25s}
-.toast{position:fixed;z-index:120;bottom:calc(var(--nav-height) + 18px);left:50%;transform:translate(-50%,20px);opacity:0;pointer-events:none;padding:11px 17px;border:1px solid var(--line);border-radius:14px;color:white;background:rgba(39,28,60,.97);box-shadow:var(--shadow);font-size:11px;font-weight:800;transition:.25s;max-width:calc(100% - 35px);text-align:center;backdrop-filter:blur(15px)}
-.toast.show{opacity:1;transform:translate(-50%,0)}
-.search-results{display:none;position:fixed;z-index:80;top:78px;right:0;left:0;max-width:1120px;margin:auto;padding:13px 17px;background:rgba(18,13,31,.97);border:1px solid var(--line);border-top:0;box-shadow:var(--shadow);backdrop-filter:blur(22px)}
-.search-results.visible{display:block}
-.search-results-title{color:var(--muted);font-size:10px;font-weight:900;margin-bottom:9px}
-.search-result-list{display:flex;flex-wrap:wrap;gap:8px}
-.search-result{border:1px solid var(--line);background:rgba(255,255,255,.055);border-radius:12px;padding:9px 12px;font-size:10px;font-weight:800;color:#fff}
-.search-result small{display:block;color:var(--muted);margin-top:3px}
-.screen-error{display:none;margin:15px 0;padding:13px;background:rgba(150,39,67,.2);color:#ff9caf;border:1px solid rgba(255,120,150,.25);border-radius:14px;font-size:11px;font-weight:800;line-height:1.8}
-.screen-error.show{display:block}
+    /* Members */
+    .member-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
+    .member-card{
+      padding:16px 10px;border:1px solid var(--line);
+      border-radius:17px;background:#151526;
+      display:flex;flex-direction:column;align-items:center;text-align:center;
+    }
+    .member-avatar{
+      width:58px;height:58px;border-radius:20px;overflow:hidden;
+      border:2px solid #a887ff75;background:#28243d;
+    }
+    .member-avatar img{width:100%;height:100%;object-fit:cover}
+    .member-name{
+      font-size:11px;font-weight:900;margin-top:9px;
+      max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+    }
+    .member-code{font-size:9px;color:var(--muted);margin-top:3px}
+    .member-open{
+      margin-top:9px;border:0;background:transparent;color:#bca5ff;
+      font-size:10px;font-weight:800;
+    }
 
-@media(min-width:760px){
-  .main-content{padding:27px 25px 48px}
-  .hero{min-height:315px}
-  .hero-content{padding:42px 40px}
-  .rooms-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
-  .games-strip{grid-template-columns:repeat(3,minmax(0,1fr))}
-  .members-row{grid-template-columns:repeat(3,minmax(0,1fr))}
-  .bottom-nav{right:50%;left:auto;width:min(100%,670px);transform:translateX(50%);border:1px solid var(--line);border-bottom:0;border-radius:22px 22px 0 0}
-}
-@media(max-width:390px){
-  .topbar-inner{padding-inline:11px;gap:8px}
-  .brand-name{font-size:13px}
-  .brand-symbol{width:41px;height:41px}
-  .top-search{height:40px;padding-inline:10px}
-  .icon-button{width:37px;height:37px}
-  .profile-shortcut{width:39px;height:39px}
-  .quick-discover{gap:7px}
-  .quick-card{min-height:96px}
-  .rooms-grid,.games-strip,.members-row{gap:8px}
-  .room-body{padding:9px}
-  .hero-content{padding:26px 20px}
-  .hero-decoration{opacity:.55}
-}
-</style>
+    /* Empty / error states */
+    .state-box{
+      border:1px dashed rgba(190,168,255,.2);
+      background:rgba(25,22,43,.6);
+      border-radius:18px;padding:26px 18px;
+      text-align:center;color:var(--muted);
+    }
+    .state-box svg{margin:0 auto 10px;color:#9b80df}
+    .state-title{font-size:13px;color:#e9e3f7;font-weight:800}
+    .state-text{font-size:10px;line-height:1.8;margin-top:5px}
+    .load-error{
+      color:#ff9ba9;background:#54202b36;
+      border:1px solid #ff647e30;border-radius:12px;
+      padding:10px 13px;font-size:11px;margin-top:12px;
+    }
+
+    /* Bottom navigation */
+    .bottom-nav-wrap{
+      position:fixed;bottom:0;left:0;right:0;z-index:80;
+      padding:9px 14px calc(9px + var(--safe-bottom));
+      background:linear-gradient(0deg,rgba(8,8,18,.99),rgba(8,8,18,.94));
+      border-top:1px solid var(--line);
+      backdrop-filter:blur(20px);
+    }
+    .bottom-nav{
+      width:min(720px,100%);margin:auto;
+      display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:5px;
+    }
+    .nav-item{
+      border:0;background:transparent;min-height:55px;
+      display:flex;flex-direction:column;align-items:center;justify-content:center;
+      gap:4px;color:#858198;font-size:9px;font-weight:800;
+      border-radius:13px;position:relative;
+    }
+    .nav-item svg{width:21px;height:21px}
+    .nav-item.active{color:#c7afff}
+    .nav-item.active:before{
+      content:"";position:absolute;top:0;width:22px;height:2px;
+      border-radius:4px;background:#a98aff;
+      box-shadow:0 0 12px #9e7aff;
+    }
+    .nav-item.random{
+      color:#d8c6ff;
+    }
+    .nav-item.random svg{
+      color:#c5a5ff;filter:drop-shadow(0 0 7px #a77bff55);
+    }
+
+    /* Toast */
+    .toast{
+      position:fixed;z-index:150;bottom:95px;left:50%;
+      transform:translate(-50%,15px);opacity:0;pointer-events:none;
+      background:#27213b;border:1px solid #ffffff20;color:#fff;
+      border-radius:13px;padding:12px 17px;font-size:11px;
+      box-shadow:var(--shadow);transition:.25s;max-width:90%;text-align:center;
+    }
+    .toast.show{opacity:1;transform:translate(-50%,0)}
+
+    /* Loading skeleton */
+    .skeleton{
+      background:linear-gradient(90deg,#1a192b 25%,#26233b 45%,#1a192b 65%);
+      background-size:220% 100%;animation:shimmer 1.5s infinite;
+      border-radius:10px;
+    }
+    @keyframes shimmer{to{background-position:-220% 0}}
+    .skeleton-card{height:215px;border:1px solid var(--line);border-radius:18px;padding:10px}
+    .skeleton-cover{height:125px}
+    .skeleton-line{height:12px;margin-top:12px;width:70%}
+    .skeleton-small{height:9px;margin-top:8px;width:45%}
+
+    /* Responsive */
+    @media(max-width:1000px){
+      .game-rail{grid-template-columns:repeat(4,minmax(0,1fr))}
+      .category-rail{grid-template-columns:repeat(6,minmax(0,1fr))}
+      .member-grid{grid-template-columns:repeat(5,minmax(0,1fr))}
+    }
+    @media(max-width:720px){
+      .container{padding-inline:14px}
+      .topbar-inner{min-height:65px;gap:10px}
+      .brand{min-width:0;gap:8px}
+      .brand-mark{width:39px;height:39px;border-radius:13px}
+      .brand-name{font-size:14px}
+      .brand-sub{font-size:8px}
+      .top-search{max-width:none;height:39px;flex:1}
+      .header-actions{gap:6px}
+      .icon-button{width:37px;height:37px;border-radius:12px}
+      .profile-shortcut{width:37px;height:37px;border-radius:12px}
+      .top-search input{font-size:10px}
+      .wallet-strip{padding:10px 0}
+      .wallet-card{min-width:140px;padding:8px 10px}
+      .wallet-tool{min-width:70px;height:54px}
+      main{padding-top:8px;padding-bottom:110px}
+      .hero,.hero-content{min-height:290px}
+      .hero-content{padding:24px 20px}
+      .hero h1{font-size:27px}
+      .hero p{font-size:11px}
+      .section{margin-top:25px}
+      .section-title{font-size:16px}
+      .category-rail{grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
+      .category-card{min-height:91px}
+      .game-rail{grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
+      .game-cover{height:112px}
+      .room-grid,.live-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+      .room-cover{height:105px}
+      .live-card{height:175px}
+      .member-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+      .member-card{padding:13px 7px}
+      .discovery-copy{padding:21px}
+      .discovery-copy h3{font-size:20px}
+      .bottom-nav-wrap{padding-inline:7px}
+      .nav-item{font-size:8px;min-height:53px}
+    }
+    @media(max-width:390px){
+      .brand-sub{display:none}
+      .brand-name{font-size:12px}
+      .brand-mark{width:35px;height:35px}
+      .top-search{padding-inline:8px}
+      .top-search input{font-size:9px}
+      .header-actions .icon-button{width:34px;height:34px}
+      .profile-shortcut{width:34px;height:34px}
+      .wallet-card{min-width:132px}
+      .game-cover{height:100px}
+      .room-title{font-size:11px}
+      .nav-item svg{width:19px;height:19px}
+    }
+    @media(min-width:1100px){
+      .hero{min-height:390px}
+      .hero-content{min-height:390px;padding:48px}
+      .game-cover{height:155px}
+      .room-cover{height:155px}
+    }
+  </style>
 </head>
 
 <body>
+<div class="ambient"></div>
 
-<div class="loading-line" id="loadingLine"></div>
+<!-- SVG icon library -->
+<svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
+  <symbol id="i-crown" viewBox="0 0 24 24"><path d="m3 8 5 4 4-7 4 7 5-4-2 11H5L3 8Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M5 21h14" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="6.8" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="m16 16 5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9ZM10 21h4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M4 21a8 8 0 0 1 16 0" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+  <symbol id="i-coins" viewBox="0 0 24 24"><ellipse cx="9" cy="6" rx="6" ry="3" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M3 6v5c0 1.7 2.7 3 6 3 1 0 2-.1 2.8-.4M3 11v5c0 1.7 2.7 3 6 3 1 0 2-.1 2.8-.4M15 10c3.3 0 6 1.3 6 3s-2.7 3-6 3-6-1.3-6-3 2.7-3 6-3Z" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M9 13v5c0 1.7 2.7 3 6 3s6-1.3 6-3v-5" fill="none" stroke="currentColor" stroke-width="1.7"/></symbol>
+  <symbol id="i-gem" viewBox="0 0 24 24"><path d="m3 8 4-5h10l4 5-9 13L3 8Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="m3 8 18 0M7 3l5 18 5-18M7 3l-4 5m14-5 4 5" fill="none" stroke="currentColor" stroke-width="1.4"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+  <symbol id="i-store" viewBox="0 0 24 24"><path d="M4 9v11h16V9M3 9l2-6h14l2 6M3 9a3 3 0 0 0 6 0 3 3 0 0 0 6 0 3 3 0 0 0 6 0M9 20v-6h6v6" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></symbol>
+  <symbol id="i-gift" viewBox="0 0 24 24"><path d="M3 10h18v11H3zM2 6h20v4H2zM12 6v15M12 6c-5 0-7-5-3-5 3 0 3 5 3 5Zm0 0c5 0 7-5 3-5-3 0-3 5-3 5Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></symbol>
+  <symbol id="i-game" viewBox="0 0 24 24"><path d="M6 8h12a4 4 0 0 1 3.8 5l-1 3.5a2.5 2.5 0 0 1-4.1 1.2L14 15h-4l-2.7 2.7a2.5 2.5 0 0 1-4.1-1.2l-1-3.5A4 4 0 0 1 6 8Z" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M7 11v4m-2-2h4m7-1h.01M18 14h.01" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0M16 5a3.5 3.5 0 0 1 0 6.8M18 14a5.5 5.5 0 0 1 3.5 5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+  <symbol id="i-radio" viewBox="0 0 24 24"><path d="M12 18v3M8 21h8M12 3v3M5.6 8.6a9 9 0 0 0 0 12.8M18.4 8.6a9 9 0 0 1 0 12.8M8.5 11.5a5 5 0 0 0 0 7M15.5 11.5a5 5 0 0 1 0 7" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle cx="12" cy="10" r="1.5" fill="currentColor"/></symbol>
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1V10Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></symbol>
+  <symbol id="i-chat" viewBox="0 0 24 24"><path d="M4 4h16v13H9l-5 4V4Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M8 9h8M8 13h5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+  <symbol id="i-shuffle" viewBox="0 0 24 24"><path d="M16 3h5v5M3 7h2.5c5 0 7 10 12 10H21M16 16h5v5M3 17h2.5c2.3 0 3.8-2.2 5.1-4.5M14 7c1.1-1.1 2.1-2 3.5-2H21" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-spark" viewBox="0 0 24 24"><path d="m12 2 2.1 7.9L22 12l-7.9 2.1L12 22l-2.1-7.9L2 12l7.9-2.1L12 2Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></symbol>
+  <symbol id="i-trophy" viewBox="0 0 24 24"><path d="M8 21h8m-4-4v4M7 3h10v6a5 5 0 0 1-10 0V3ZM7 6H3v2a4 4 0 0 0 4 4m10-6h4v2a4 4 0 0 1-4 4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M12 7v5l3 2" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+  <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 7v5h-5M4 17v-5h5M5.5 9A7 7 0 0 1 18 6l2 6M4 12l2 6a7 7 0 0 0 12.5-3" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+</svg>
 
 <header class="topbar">
-  <div class="topbar-inner">
-    <a href="home.html" class="brand" aria-label="HANOON WORLD">
-      <div class="brand-symbol"><i class="fa-solid fa-earth-americas"></i></div>
-      <div>
-        <div class="brand-name">HANOON WORLD</div>
-        <span class="brand-sub">YOUR SOCIAL WORLD</span>
-      </div>
-    </a>
-
-    <label class="top-search">
-      <i class="fa-solid fa-magnifying-glass"></i>
-      <input id="globalSearch" type="search" placeholder="ابحث عن عضو أو غرفة أو لعبة" autocomplete="off">
-    </label>
-
-    <div class="top-actions">
-      <button class="icon-button" id="refreshButton" type="button" aria-label="تحديث">
-        <i class="fa-solid fa-rotate"></i>
-      </button>
-      <a class="profile-shortcut" href="profile.html" aria-label="ملفي الشخصي">
-        <img id="headerAvatar" src="https://placehold.co/100x100/33264e/c4b1ff?text=H" alt="الصورة الشخصية">
+  <div class="container">
+    <div class="topbar-inner">
+      <a class="brand" href="home.html" aria-label="HANOON WORLD">
+        <div class="brand-mark">
+          <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 18V6l7 8 7-8v12"/>
+            <path d="M8 18h8" opacity=".7"/>
+          </svg>
+        </div>
+        <div>
+          <div class="brand-name">HANOON WORLD</div>
+          <div class="brand-sub">YOUR SOCIAL UNIVERSE</div>
+        </div>
       </a>
+
+      <label class="top-search">
+        <svg class="icon sm"><use href="#i-search"/></svg>
+        <input id="globalSearch" type="search" placeholder="ابحث عن لعبة أو غرفة أو عضو">
+      </label>
+
+      <div class="header-actions">
+        <button class="icon-button" id="notificationsButton" aria-label="الإشعارات">
+          <svg class="icon"><use href="#i-bell"/></svg>
+          <span class="notification-dot"></span>
+        </button>
+        <a class="profile-shortcut" id="myProfileLink" href="profile.html" aria-label="ملفي الشخصي">
+          <img id="myAvatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120&h=120&fit=crop&crop=faces" alt="الصورة الشخصية">
+        </a>
+      </div>
+    </div>
+
+    <div class="wallet-strip">
+      <div class="wallet-card">
+        <div class="wallet-symbol gold"><svg class="icon lg"><use href="#i-coins"/></svg></div>
+        <div>
+          <div class="wallet-label">العملات</div>
+          <div class="wallet-value" id="coinsBalance">—</div>
+        </div>
+        <button class="wallet-add" data-wallet-action="coins" aria-label="العملات">
+          <svg class="icon sm"><use href="#i-plus"/></svg>
+        </button>
+      </div>
+
+      <div class="wallet-card">
+        <div class="wallet-symbol blue"><svg class="icon lg"><use href="#i-gem"/></svg></div>
+        <div>
+          <div class="wallet-label">الجواهر</div>
+          <div class="wallet-value" id="gemsBalance">—</div>
+        </div>
+        <button class="wallet-add" data-wallet-action="gems" aria-label="الجواهر">
+          <svg class="icon sm"><use href="#i-plus"/></svg>
+        </button>
+      </div>
+
+      <div class="wallet-tools">
+        <a class="wallet-tool" href="store.html">
+          <svg class="icon"><use href="#i-store"/></svg>
+          <span>المتجر</span>
+        </a>
+        <a class="wallet-tool" href="gifts.html">
+          <svg class="icon"><use href="#i-gift"/></svg>
+          <span>الهدايا</span>
+        </a>
+        <a class="wallet-tool" href="wallet.html">
+          <svg class="icon"><use href="#i-coins"/></svg>
+          <span>محفظتي</span>
+        </a>
+      </div>
     </div>
   </div>
 </header>
 
-<div class="search-results" id="searchResults">
-  <div class="search-results-title">نتائج البحث من البيانات المتاحة</div>
-  <div class="search-result-list" id="searchResultList"></div>
-</div>
-
-<main class="page-shell main-content">
-
-  <div class="welcome-row">
-    <div>
-      <h2 class="welcome-title" id="welcomeTitle">أهلاً بك في HANOON</h2>
-      <p class="welcome-description">اكتشف عالمك، وتواصل، وشارك اللحظة.</p>
-    </div>
-    <div class="wallet-chip" id="walletChip" hidden>
-      <i class="fa-solid fa-coins"></i>
-      <span id="walletCoins">0</span>
-    </div>
-  </div>
-
-  <div class="screen-error" id="screenError"></div>
-
+<main class="container">
+  <!-- Main hero -->
   <section class="hero">
-    <div class="hero-decoration"></div>
+    <img class="hero-image"
+      src="https://images.unsplash.com/photo-1511512578047-dfb367046420?w=1800&q=85"
+      alt="عالم الألعاب"
+      fetchpriority="high">
     <div class="hero-content">
-      <div class="hero-kicker">
-        <i class="fa-solid fa-sparkles"></i>
-        عالم واحد.. تجارب بلا حدود
-      </div>
-      <h1>مكانك بين الناس<br>والألعاب واللحظات الجميلة</h1>
-      <p>اكتشف الغرف، تعرّف على أعضاء جدد، واستمتع بتجارب اجتماعية وترفيهية في عالم HANOON.</p>
-      <div class="hero-buttons">
-        <a href="rooms.html" class="hero-button primary">
-          <i class="fa-solid fa-headphones"></i> اكتشف الغرف
+      <div class="eyebrow"><span></span> HANOON WORLD EXPERIENCE</div>
+      <h1>عالمك يبدأ من هنا</h1>
+      <p>اكتشف الألعاب، ادخل غرفًا جديدة، تعرّف على أشخاص يشاركونك الاهتمامات، وكن جزءًا من عالم مليء بالتحديات والمنافسات.</p>
+      <div class="hero-actions">
+        <a href="games.html" class="primary-btn">
+          <svg class="icon"><use href="#i-game"/></svg>
+          اكتشف الألعاب
         </a>
-        <a href="games.html" class="hero-button ghost">
-          <i class="fa-solid fa-gamepad"></i> عالم الألعاب
+        <a href="rooms.html" class="secondary-btn">
+          <svg class="icon"><use href="#i-users"/></svg>
+          استكشف الغرف
         </a>
       </div>
     </div>
   </section>
 
-  <section class="quick-discover" aria-label="الوصول السريع">
-    <a href="rooms.html" class="quick-card">
-      <div class="quick-icon"><i class="fa-solid fa-headphones"></i></div>
-      <strong>الغرف</strong><small>اكتشف الغرف</small>
-    </a>
-    <a href="games.html" class="quick-card">
-      <div class="quick-icon"><i class="fa-solid fa-gamepad"></i></div>
-      <strong>الألعاب</strong><small>العب واستمتع</small>
-    </a>
-    <a href="members.html" class="quick-card">
-      <div class="quick-icon"><i class="fa-solid fa-users"></i></div>
-      <strong>الأعضاء</strong><small>اكتشف أشخاصًا</small>
-    </a>
-    <a href="chat.html" class="quick-card">
-      <div class="quick-icon"><i class="fa-solid fa-comments"></i></div>
-      <strong>المحادثات</strong><small>تواصل مع أصدقائك</small>
-    </a>
-  </section>
-
-  <section class="section" id="roomsSection">
-    <div class="section-heading">
-      <div class="section-title-wrap">
-        <div class="section-symbol"><i class="fa-solid fa-headphones"></i></div>
-        <div>
-          <h2 class="section-title">الغرف النشطة</h2>
-          <p class="section-subtitle">غرف الألعاب المتاحة حاليًا</p>
-        </div>
-      </div>
-      <a href="rooms.html" class="section-link">كل الغرف <i class="fa-solid fa-arrow-left"></i></a>
+  <!-- Main categories -->
+  <section class="section">
+    <div class="section-head">
+      <h2 class="section-title">اكتشف عالم حنون</h2>
     </div>
-
-    <div class="filter-row" id="roomFilters">
-      <button class="filter-button active" data-room-filter="all">الكل</button>
-      <button class="filter-button" data-room-filter="waiting">بانتظار اللاعبين</button>
-      <button class="filter-button" data-room-filter="playing">قيد اللعب</button>
-    </div>
-
-    <div class="rooms-grid" id="roomsGrid">
-      <div class="empty-state">
-        <div class="empty-illustration"><i class="fa-solid fa-circle-notch fa-spin"></i></div>
-        <h3>جاري تحميل الغرف</h3>
-        <p>نبحث عن الغرف المسجلة في قاعدة البيانات.</p>
-      </div>
+    <div class="category-rail">
+      <a class="category-card" href="games.html" style="--accent:#c5a5ff;--glow:#7045c9">
+        <div class="category-icon"><svg class="icon xl"><use href="#i-game"/></svg></div>
+        <span>الألعاب</span>
+      </a>
+      <a class="category-card" href="rooms.html" style="--accent:#74d8ee;--glow:#287f9a">
+        <div class="category-icon"><svg class="icon xl"><use href="#i-users"/></svg></div>
+        <span>الغرف</span>
+      </a>
+      <a class="category-card" href="live.html" style="--accent:#ff8caa;--glow:#a63263">
+        <div class="category-icon"><svg class="icon xl"><use href="#i-radio"/></svg></div>
+        <span>البث المباشر</span>
+      </a>
+      <a class="category-card" href="members.html" style="--accent:#f2ce7c;--glow:#9b7132">
+        <div class="category-icon"><svg class="icon xl"><use href="#i-user"/></svg></div>
+        <span>الأعضاء</span>
+      </a>
+      <a class="category-card" href="contests.html" style="--accent:#8fe1ba;--glow:#287a59">
+        <div class="category-icon"><svg class="icon xl"><use href="#i-trophy"/></svg></div>
+        <span>المنافسات</span>
+      </a>
+      <a class="category-card" href="chat.html" style="--accent:#b7c5ff;--glow:#455caa">
+        <div class="category-icon"><svg class="icon xl"><use href="#i-chat"/></svg></div>
+        <span>المحادثات</span>
+      </a>
     </div>
   </section>
 
+  <!-- Games -->
   <section class="section" id="gamesSection">
-    <div class="section-heading">
-      <div class="section-title-wrap">
-        <div class="section-symbol"><i class="fa-solid fa-gamepad"></i></div>
-        <div>
-          <h2 class="section-title">عالم الألعاب</h2>
-          <p class="section-subtitle">الألعاب المفعّلة في المنصة</p>
-        </div>
-      </div>
-      <a href="games.html" class="section-link">كل الألعاب <i class="fa-solid fa-arrow-left"></i></a>
+    <div class="section-head">
+      <h2 class="section-title">عالم الألعاب</h2>
+      <a href="games.html" class="section-link">كل الألعاب <svg class="icon"><use href="#i-arrow"/></svg></a>
     </div>
-    <div class="games-strip" id="gamesGrid">
-      <div class="empty-state">
-        <div class="empty-illustration"><i class="fa-solid fa-gamepad"></i></div>
-        <h3>جاري تحميل الألعاب</h3>
-        <p>سيتم عرض الألعاب المفعّلة فقط.</p>
+    <div class="game-rail" id="gamesList">
+      <div class="skeleton-card"><div class="skeleton skeleton-cover"></div><div class="skeleton skeleton-line"></div><div class="skeleton skeleton-small"></div></div>
+      <div class="skeleton-card"><div class="skeleton skeleton-cover"></div><div class="skeleton skeleton-line"></div><div class="skeleton skeleton-small"></div></div>
+      <div class="skeleton-card"><div class="skeleton skeleton-cover"></div><div class="skeleton skeleton-line"></div><div class="skeleton skeleton-small"></div></div>
+    </div>
+    <div id="gamesError" class="load-error hidden"></div>
+  </section>
+
+  <!-- Discovery banner -->
+  <section class="section">
+    <div class="discovery-banner">
+      <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?w=1400&q=85" alt="أجواء المنافسات" loading="lazy">
+      <div class="discovery-copy">
+        <div class="eyebrow"><span></span> PLAY · CONNECT · COMPETE</div>
+        <h3>كل لحظة ممكن تبدأ مغامرة جديدة</h3>
+        <p>اختار لعبتك، قابل لاعبين جدد، وابدأ رحلتك في مجتمع حنون.</p>
+        <a href="rooms.html" class="primary-btn">
+          اكتشف الغرف الآن
+          <svg class="icon"><use href="#i-arrow"/></svg>
+        </a>
       </div>
     </div>
   </section>
 
+  <!-- Rooms -->
+  <section class="section" id="roomsSection">
+    <div class="section-head">
+      <h2 class="section-title">غرف تستحق الاكتشاف</h2>
+      <a href="rooms.html" class="section-link">عرض الغرف <svg class="icon"><use href="#i-arrow"/></svg></a>
+    </div>
+    <div class="room-grid" id="roomsList">
+      <div class="skeleton-card"><div class="skeleton skeleton-cover"></div><div class="skeleton skeleton-line"></div><div class="skeleton skeleton-small"></div></div>
+      <div class="skeleton-card"><div class="skeleton skeleton-cover"></div><div class="skeleton skeleton-line"></div><div class="skeleton skeleton-small"></div></div>
+      <div class="skeleton-card"><div class="skeleton skeleton-cover"></div><div class="skeleton skeleton-line"></div><div class="skeleton skeleton-small"></div></div>
+    </div>
+    <div id="roomsError" class="load-error hidden"></div>
+  </section>
+
+  <!-- Live discovery -->
+  <section class="section" id="liveSection">
+    <div class="section-head">
+      <h2 class="section-title">اكتشف البث المباشر</h2>
+      <a href="live.html" class="section-link">كل البثوث <svg class="icon"><use href="#i-arrow"/></svg></a>
+    </div>
+    <div class="live-grid">
+      <a href="live.html" class="live-card">
+        <img src="https://images.unsplash.com/photo-1547394765-185e1e68f34e?w=700&q=80" alt="أجواء اللعب" loading="lazy">
+        <div class="live-copy">
+          <div class="live-title">عالم البث والتحديات</div>
+          <div class="live-sub">اكتشف البثوث المتاحة</div>
+        </div>
+      </a>
+      <a href="live.html" class="live-card">
+        <img src="https://images.unsplash.com/photo-1593305841991-05c297ba4575?w=700&q=80" alt="الألعاب" loading="lazy">
+        <div class="live-copy">
+          <div class="live-title">منافسات الألعاب</div>
+          <div class="live-sub">تابع لحظات اللعب</div>
+        </div>
+      </a>
+      <a href="live.html" class="live-card">
+        <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=700&q=80" alt="المجتمع" loading="lazy">
+        <div class="live-copy">
+          <div class="live-title">مجتمع حنون</div>
+          <div class="live-sub">اكتشف فعاليات المجتمع</div>
+        </div>
+      </a>
+    </div>
+    <div class="state-box hidden" id="liveEmpty">
+      <svg class="icon xl"><use href="#i-radio"/></svg>
+      <div class="state-title">مساحة البث المباشر</div>
+      <div class="state-text">سيتم عرض البثوث الفعلية هنا عند ربط نظام البث المباشر.</div>
+    </div>
+  </section>
+
+  <!-- Members -->
   <section class="section" id="membersSection">
-    <div class="section-heading">
-      <div class="section-title-wrap">
-        <div class="section-symbol"><i class="fa-solid fa-user-group"></i></div>
-        <div>
-          <h2 class="section-title">اكتشف الأعضاء</h2>
-          <p class="section-subtitle">أعضاء لديهم ملفات شخصية مكتملة</p>
-        </div>
-      </div>
-      <a href="members.html" class="section-link">كل الأعضاء <i class="fa-solid fa-arrow-left"></i></a>
+    <div class="section-head">
+      <h2 class="section-title">أعضاء من مجتمع حنون</h2>
+      <a href="members.html" class="section-link">اكتشف الأعضاء <svg class="icon"><use href="#i-arrow"/></svg></a>
     </div>
-    <div class="members-row" id="membersGrid">
-      <div class="empty-state">
-        <div class="empty-illustration"><i class="fa-solid fa-users"></i></div>
-        <h3>جاري تحميل الأعضاء</h3>
-        <p>يتم جلب الملفات الشخصية الحقيقية.</p>
-      </div>
+    <div class="member-grid" id="membersList">
+      <div class="skeleton-card"><div class="skeleton" style="width:58px;height:58px;border-radius:20px;margin:auto"></div><div class="skeleton skeleton-line" style="margin-inline:auto"></div></div>
+      <div class="skeleton-card"><div class="skeleton" style="width:58px;height:58px;border-radius:20px;margin:auto"></div><div class="skeleton skeleton-line" style="margin-inline:auto"></div></div>
+      <div class="skeleton-card"><div class="skeleton" style="width:58px;height:58px;border-radius:20px;margin:auto"></div><div class="skeleton skeleton-line" style="margin-inline:auto"></div></div>
     </div>
+    <div id="membersError" class="load-error hidden"></div>
   </section>
 
-  <section class="discovery-banner">
-    <h3>عالمك الاجتماعي يبدأ من هنا</h3>
-    <p>انتقل بين الغرف والألعاب والأعضاء، واكتشف المساحات التي تناسب اهتماماتك.</p>
-    <a href="members.html">اكتشف الأعضاء <i class="fa-solid fa-arrow-left"></i></a>
-  </section>
-
+  <div id="globalError" class="load-error hidden"></div>
 </main>
 
-<nav class="bottom-nav">
-  <a href="home.html" class="nav-item active">
-    <i class="fa-solid fa-house"></i><span>الرئيسية</span>
-  </a>
-  <a href="rooms.html" class="nav-item">
-    <i class="fa-solid fa-headphones"></i><span>الغرف</span>
-  </a>
-  <a href="games.html" class="nav-item">
-    <i class="fa-solid fa-gamepad"></i><span>الألعاب</span>
-  </a>
-  <a href="chat.html" class="nav-item">
-    <i class="fa-solid fa-message"></i><span>الدردشة</span>
-  </a>
-  <a href="profile.html" class="nav-item">
-    <i class="fa-solid fa-user"></i><span>حسابي</span>
-  </a>
-</nav>
+<!-- Bottom navigation -->
+<div class="bottom-nav-wrap">
+  <nav class="bottom-nav" aria-label="التنقل الرئيسي">
+    <a class="nav-item active" href="home.html">
+      <svg class="icon"><use href="#i-home"/></svg>
+      <span>الرئيسية</span>
+    </a>
+    <a class="nav-item" href="games.html">
+      <svg class="icon"><use href="#i-game"/></svg>
+      <span>الألعاب</span>
+    </a>
+    <a class="nav-item" href="rooms.html">
+      <svg class="icon"><use href="#i-users"/></svg>
+      <span>الغرف</span>
+    </a>
+    <a class="nav-item random" href="live.html" id="randomLiveButton">
+      <svg class="icon"><use href="#i-shuffle"/></svg>
+      <span>بث عشوائي</span>
+    </a>
+    <a class="nav-item" href="chat.html">
+      <svg class="icon"><use href="#i-chat"/></svg>
+      <span>المحادثات</span>
+    </a>
+    <a class="nav-item" href="profile.html">
+      <svg class="icon"><use href="#i-user"/></svg>
+      <span>حسابي</span>
+    </a>
+  </nav>
+</div>
 
 <div class="toast" id="toast"></div>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1/dist/umd/supabase.min.js"></script>
 <script>
 (() => {
   "use strict";
 
+  /* Supabase connection */
   const SUPABASE_URL = "https://gjtgvczvclfwvlvcquxh.supabase.co";
   const SUPABASE_KEY = "sb_publishable_4DVTUZ-xTlqU2GpFvpb7lw_g-Kxomd4";
 
-  if (!window.supabase) {
-    document.getElementById("screenError").textContent =
-      "تعذر تحميل مكتبة الاتصال بقاعدة البيانات. تحقق من اتصال الإنترنت.";
-    document.getElementById("screenError").classList.add("show");
-    return;
-  }
+  const client = window.supabase?.createClient
+    ? window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY, {
+        auth: {
+          persistSession: true,
+          autoRefreshToken: true,
+          detectSessionInUrl: true
+        }
+      })
+    : null;
 
-  const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  const $ = (id) => document.getElementById(id);
 
   const state = {
-    user:null,
-    profile:null,
-    rooms:[],
-    games:[],
-    members:[],
-    roomFilter:"all",
-    searchTimer:null
+    user: null,
+    profile: null,
+    games: [],
+    rooms: [],
+    members: [],
+    searchTerm: ""
   };
 
-  const $ = id => document.getElementById(id);
+  const fallbackImages = {
+    game: "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=700&q=80",
+    room: "https://images.unsplash.com/photo-1511512578047-dfb367046420?w=700&q=80",
+    avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120&h=120&fit=crop&crop=faces"
+  };
 
   function escapeHTML(value) {
     return String(value ?? "").replace(/[&<>"']/g, char => ({
-      "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+      "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
     }[char]));
   }
 
-  function safeAvatar(path) {
-    if (!path) return "";
-    if (/^https?:\/\//i.test(path)) return path;
-
-    const cleanPath = String(path).replace(/^\/+/, "");
-    return db.storage.from("avatars").getPublicUrl(cleanPath).data.publicUrl;
-  }
-
-  function safeExternalImage(path) {
-    if (!path || !/^https?:\/\//i.test(path)) return "";
-    return path;
+  function formatNumber(value) {
+    const number = Number(value);
+    return Number.isFinite(number)
+      ? new Intl.NumberFormat("en-US").format(number)
+      : "—";
   }
 
   function showToast(message) {
@@ -544,134 +850,94 @@ a{color:inherit;text-decoration:none}
     showToast.timer = setTimeout(() => toast.classList.remove("show"), 2800);
   }
 
-  function setLoading(active) {
-    $("loadingLine").style.width = active ? "75%" : "100%";
-    if (!active) {
-      setTimeout(() => $("loadingLine").style.width = "0", 300);
+  function setError(id, message) {
+    const el = $(id);
+    if (!el) return;
+    if (!message) {
+      el.classList.add("hidden");
+      el.textContent = "";
+      return;
     }
+    el.textContent = message;
+    el.classList.remove("hidden");
   }
 
-  function showError(message) {
-    const box = $("screenError");
-    box.textContent = message;
-    box.classList.add("show");
-  }
-
-  function clearError() {
-    $("screenError").textContent = "";
-    $("screenError").classList.remove("show");
-  }
-
-  function emptyState(icon, title, description) {
-    return `
-      <div class="empty-state">
-        <div class="empty-illustration"><i class="${escapeHTML(icon)}"></i></div>
-        <h3>${escapeHTML(title)}</h3>
-        <p>${escapeHTML(description)}</p>
+  function showEmpty(container, title, message, icon = "i-spark") {
+    container.innerHTML = `
+      <div class="state-box" style="grid-column:1/-1">
+        <svg class="icon xl"><use href="#${icon}"></use></svg>
+        <div class="state-title">${escapeHTML(title)}</div>
+        <div class="state-text">${escapeHTML(message)}</div>
       </div>`;
   }
 
-  async function checkSession() {
-    const {data,error} = await db.auth.getSession();
-    if (error) throw error;
+  function storageImage(bucket, path, fallback) {
+    if (!path) return fallback;
+    if (/^https?:\/\//i.test(path)) return path;
+    if (!client) return fallback;
+    const { data } = client.storage.from(bucket).getPublicUrl(path);
+    return data?.publicUrl || fallback;
+  }
 
-    if (!data.session) {
-      window.location.replace("index.html");
+  function safeImage(url, fallback) {
+    const value = url || fallback;
+    return `src="${escapeHTML(value)}" onerror="this.onerror=null;this.src='${escapeHTML(fallback)}'"`;
+  }
+
+  function requireClient() {
+    if (!client) {
+      setError("globalError", "تعذر تحميل مكتبة الاتصال. تحقق من اتصال الإنترنت ثم أعد فتح الصفحة.");
       return false;
     }
-
-    state.user = data.session.user;
     return true;
   }
 
+  async function getCurrentUser() {
+    const { data, error } = await client.auth.getUser();
+    if (error) throw error;
+    if (!data?.user) {
+      location.replace("index.html");
+      return null;
+    }
+    state.user = data.user;
+    return data.user;
+  }
+
   async function loadMyProfile() {
-    const {data,error} = await db
+    const { data, error } = await client
       .from("profiles")
       .select("id,full_name,avatar_path,member_code")
-      .eq("id",state.user.id)
+      .eq("id", state.user.id)
       .maybeSingle();
 
     if (error) throw error;
+    state.profile = data || null;
 
-    state.profile = data;
-
-    if (data) {
-      $("welcomeTitle").textContent = `أهلاً ${data.full_name || "بك"}`;
-      const avatar = safeAvatar(data.avatar_path);
-      if (avatar) $("headerAvatar").src = avatar;
+    if (data?.avatar_path) {
+      $("myAvatar").src = storageImage("avatars", data.avatar_path, fallbackImages.avatar);
     }
   }
 
   async function loadWallet() {
-    const {data,error} = await db
+    const { data, error } = await client
       .from("world_wallets")
-      .select("coins")
-      .eq("user_id",state.user.id)
+      .select("coins,gems")
+      .eq("user_id", state.user.id)
       .maybeSingle();
-
-    if (error) {
-      console.warn("Wallet could not be loaded:", error.message);
-      return;
-    }
-
-    if (data) {
-      $("walletChip").hidden = false;
-      $("walletCoins").textContent = Number(data.coins || 0).toLocaleString("ar-EG");
-    } else {
-      $("walletChip").hidden = true;
-    }
-  }
-
-  async function loadRooms() {
-    const {data,error} = await db
-      .from("world_game_rooms")
-      .select("id,game_id,host_user_id,room_code,status,visibility,max_players,created_at")
-      .eq("visibility","public")
-      .in("status",["waiting","playing"])
-      .order("created_at",{ascending:false})
-      .limit(12);
 
     if (error) throw error;
 
-    const rooms = data || [];
-    const gameIds = [...new Set(rooms.map(room => room.game_id).filter(Boolean))];
-    const hostIds = [...new Set(rooms.map(room => room.host_user_id).filter(Boolean))];
-
-    const [gamesResult,hostsResult] = await Promise.all([
-      gameIds.length
-        ? db.from("world_games_catalog")
-            .select("id,title_ar,title_en,slug,cover_path")
-            .in("id",gameIds)
-        : Promise.resolve({data:[],error:null}),
-
-      hostIds.length
-        ? db.from("profiles")
-            .select("id,full_name,avatar_path")
-            .in("id",hostIds)
-        : Promise.resolve({data:[],error:null})
-    ]);
-
-    if (gamesResult.error) throw gamesResult.error;
-    if (hostsResult.error) throw hostsResult.error;
-
-    const gamesMap = new Map((gamesResult.data || []).map(game => [game.id,game]));
-    const hostsMap = new Map((hostsResult.data || []).map(host => [host.id,host]));
-
-    state.rooms = rooms.map(room => ({
-      ...room,
-      game:gamesMap.get(room.game_id) || null,
-      host:hostsMap.get(room.host_user_id) || null
-    }));
-
-    renderRooms();
+    $("coinsBalance").textContent = formatNumber(data?.coins ?? 0);
+    $("gemsBalance").textContent = formatNumber(data?.gems ?? 0);
   }
 
   async function loadGames() {
-    const {data,error} = await db
+    const { data, error } = await client
       .from("world_games_catalog")
       .select("id,title_ar,title_en,slug,cover_path,is_active")
-      .eq("is_active",true)
-      .limit(9);
+      .eq("is_active", true)
+      .order("title_ar", { ascending: true })
+      .limit(12);
 
     if (error) throw error;
 
@@ -679,350 +945,259 @@ a{color:inherit;text-decoration:none}
     renderGames();
   }
 
-  async function loadMembers() {
-    const {data,error} = await db
-      .from("member_directory")
-      .select("id,username,member_code,full_name,avatar_path,bio,hobbies,reading_interests,created_at")
-      .order("created_at",{ascending:false})
-      .limit(8);
+  function renderGames() {
+    const container = $("gamesList");
+    const items = state.games;
+
+    if (!items.length) {
+      showEmpty(container, "لا توجد ألعاب متاحة حاليًا", "ستظهر الألعاب المنشورة هنا بمجرد تفعيلها في مكتبة الألعاب.", "i-game");
+      return;
+    }
+
+    container.innerHTML = items.map(game => {
+      const title = game.title_ar || game.title_en || "لعبة";
+      const cover = /^https?:\/\//i.test(game.cover_path || "")
+        ? game.cover_path
+        : fallbackImages.game;
+
+      return `
+        <article class="game-card" data-search="${escapeHTML(title.toLowerCase())}">
+          <div class="game-cover">
+            <img ${safeImage(cover, fallbackImages.game)} alt="${escapeHTML(title)}" loading="lazy">
+          </div>
+          <div class="game-info">
+            <div class="game-name">${escapeHTML(title)}</div>
+            <div class="game-meta">من مكتبة ألعاب حنون</div>
+            <button class="game-open" data-game-slug="${escapeHTML(game.slug || "")}">عرض اللعبة</button>
+          </div>
+        </article>`;
+    }).join("");
+
+    container.querySelectorAll("[data-game-slug]").forEach(button => {
+      button.addEventListener("click", () => {
+        const slug = button.dataset.gameSlug;
+        location.href = slug
+          ? `games.html?game=${encodeURIComponent(slug)}`
+          : "games.html";
+      });
+    });
+  }
+
+  async function loadRooms() {
+    const { data, error } = await client
+      .from("world_game_rooms")
+      .select("id,game_id,host_user_id,room_code,status,visibility,max_players,created_at")
+      .eq("visibility", "public")
+      .in("status", ["waiting", "playing"])
+      .order("created_at", { ascending: false })
+      .limit(6);
 
     if (error) throw error;
 
-    state.members = (data || []).filter(member => member.id !== state.user.id);
+    state.rooms = data || [];
+    await renderRooms();
+  }
+
+  async function renderRooms() {
+    const container = $("roomsList");
+    if (!state.rooms.length) {
+      showEmpty(container, "لا توجد غرف عامة متاحة الآن", "عندما يتم إنشاء غرف عامة نشطة ستظهر هنا تلقائيًا.", "i-users");
+      return;
+    }
+
+    const gameIds = [...new Set(state.rooms.map(room => room.game_id).filter(Boolean))];
+    const hostIds = [...new Set(state.rooms.map(room => room.host_user_id).filter(Boolean))];
+
+    let gamesById = {};
+    let hostsById = {};
+
+    if (gameIds.length) {
+      const result = await client
+        .from("world_games_catalog")
+        .select("id,title_ar,title_en,cover_path")
+        .in("id", gameIds);
+
+      if (!result.error) {
+        (result.data || []).forEach(game => gamesById[game.id] = game);
+      }
+    }
+
+    if (hostIds.length) {
+      const result = await client
+        .from("profiles")
+        .select("id,full_name,avatar_path")
+        .in("id", hostIds);
+
+      if (!result.error) {
+        (result.data || []).forEach(profile => hostsById[profile.id] = profile);
+      }
+    }
+
+    container.innerHTML = state.rooms.map(room => {
+      const game = gamesById[room.game_id];
+      const host = hostsById[room.host_user_id];
+      const title = game?.title_ar || game?.title_en || "غرفة ألعاب";
+      const hostName = host?.full_name || "مضيف الغرفة";
+      const image = /^https?:\/\//i.test(game?.cover_path || "")
+        ? game.cover_path
+        : fallbackImages.room;
+      const statusText = room.status === "playing" ? "جارية الآن" : "بانتظار اللاعبين";
+
+      return `
+        <article class="room-card" data-search="${escapeHTML((title+" "+hostName).toLowerCase())}">
+          <div class="room-cover">
+            <img ${safeImage(image, fallbackImages.room)} alt="${escapeHTML(title)}" loading="lazy">
+            <div class="room-status"><span class="status-dot"></span>${statusText}</div>
+          </div>
+          <div class="room-body">
+            <div class="room-title">${escapeHTML(title)}</div>
+            <div class="room-details">
+              <span>المضيف: ${escapeHTML(hostName)}</span>
+              <span>الحد الأقصى: ${formatNumber(room.max_players)}</span>
+            </div>
+            <button class="room-action" data-room-id="${escapeHTML(room.id)}">تفاصيل الغرفة</button>
+          </div>
+        </article>`;
+    }).join("");
+
+    container.querySelectorAll("[data-room-id]").forEach(button => {
+      button.addEventListener("click", () => {
+        location.href = `rooms.html?room=${encodeURIComponent(button.dataset.roomId)}`;
+      });
+    });
+  }
+
+  async function loadMembers() {
+    const { data, error } = await client
+      .from("member_directory")
+      .select("id,username,member_code,full_name,avatar_path,bio,created_at")
+      .neq("id", state.user.id)
+      .order("created_at", { ascending: false })
+      .limit(10);
+
+    if (error) throw error;
+
+    state.members = data || [];
     renderMembers();
   }
 
-  function renderRooms() {
-    const grid = $("roomsGrid");
-    let rooms = [...state.rooms];
-
-    if (state.roomFilter !== "all") {
-      rooms = rooms.filter(room => room.status === state.roomFilter);
-    }
-
-    if (!rooms.length) {
-      grid.innerHTML = emptyState(
-        "fa-solid fa-headphones",
-        state.roomFilter === "all" ? "لا توجد غرف متاحة حاليًا" : "لا توجد غرف في هذا التصنيف",
-        "عندما تتوفر غرف عامة حقيقية في المنصة ستظهر هنا تلقائيًا."
-      );
-      return;
-    }
-
-    grid.innerHTML = rooms.map(room => {
-      const gameTitle = room.game?.title_ar || room.game?.title_en || "غرفة ألعاب";
-      const hostName = room.host?.full_name || "مضيف الغرفة";
-      const hostAvatar = safeAvatar(room.host?.avatar_path) ||
-        "https://placehold.co/80x80/33264e/c4b1ff?text=H";
-
-      // لا نفترض اسم Storage bucket لأغلفة الألعاب.
-      const cover = safeExternalImage(room.game?.cover_path);
-      const statusText = room.status === "playing" ? "قيد اللعب" : "بانتظار اللاعبين";
-      const statusClass = room.status === "playing" ? "playing" : "";
-
-      return `
-        <article class="room-card">
-          <div class="room-cover">
-            ${cover
-              ? `<img src="${escapeHTML(cover)}" alt="${escapeHTML(gameTitle)}" loading="lazy">`
-              : `<div class="room-cover-placeholder"><i class="fa-solid fa-headset"></i></div>`
-            }
-            <span class="room-status ${statusClass}">${statusText}</span>
-          </div>
-          <div class="room-body">
-            <h3 class="room-title">${escapeHTML(gameTitle)}</h3>
-            <div class="room-meta">
-              <div class="room-host">
-                <img src="${escapeHTML(hostAvatar)}" alt="" loading="lazy">
-                <span>${escapeHTML(hostName)}</span>
-              </div>
-              <span>السعة ${escapeHTML(room.max_players ?? "—")}</span>
-            </div>
-            <button class="room-open" type="button" data-open-room="${escapeHTML(room.id)}">
-              عرض الغرفة
-            </button>
-          </div>
-        </article>`;
-    }).join("");
-  }
-
-  function renderGames() {
-    const grid = $("gamesGrid");
-
-    if (!state.games.length) {
-      grid.innerHTML = emptyState(
-        "fa-solid fa-gamepad",
-        "لا توجد ألعاب مفعّلة حاليًا",
-        "ستظهر الألعاب هنا بعد تفعيلها في كتالوج المنصة."
-      );
-      return;
-    }
-
-    grid.innerHTML = state.games.map(game => {
-      const title = game.title_ar || game.title_en || "لعبة";
-      const image = safeExternalImage(game.cover_path);
-
-      return `
-        <article class="game-card">
-          ${image
-            ? `<img src="${escapeHTML(image)}" alt="${escapeHTML(title)}" loading="lazy">`
-            : ""
-          }
-          <div class="game-card-content">
-            <h3>${escapeHTML(title)}</h3>
-            <p>اكتشف اللعبة في HANOON WORLD</p>
-            <button type="button" data-open-game="${escapeHTML(game.id)}">تفاصيل اللعبة</button>
-          </div>
-        </article>`;
-    }).join("");
-  }
-
   function renderMembers() {
-    const grid = $("membersGrid");
+    const container = $("membersList");
 
     if (!state.members.length) {
-      grid.innerHTML = emptyState(
-        "fa-solid fa-user-group",
-        "لا يوجد أعضاء آخرون للعرض",
-        "ستظهر هنا الحسابات التي أكملت ملفاتها الشخصية."
-      );
+      showEmpty(container, "مجتمع حنون في انتظارك", "سيظهر الأعضاء الذين أكملوا ملفاتهم الشخصية هنا.", "i-users");
       return;
     }
 
-    grid.innerHTML = state.members.map(member => {
-      const avatar = safeAvatar(member.avatar_path) ||
-        "https://placehold.co/100x100/33264e/c4b1ff?text=H";
-      const username = member.username
-        ? `@${member.username}`
-        : member.member_code || "عضو";
+    container.innerHTML = state.members.map(member => {
+      const avatar = storageImage("avatars", member.avatar_path, fallbackImages.avatar);
+      const name = member.full_name || member.username || "عضو حنون";
 
       return `
-        <article class="member-card">
-          <img class="member-avatar" src="${escapeHTML(avatar)}" alt="" loading="lazy">
-          <div class="member-info">
-            <strong>${escapeHTML(member.full_name)}</strong>
-            <span>${escapeHTML(username)}</span>
+        <article class="member-card" data-search="${escapeHTML(name.toLowerCase())}">
+          <div class="member-avatar">
+            <img ${safeImage(avatar, fallbackImages.avatar)} alt="${escapeHTML(name)}" loading="lazy">
           </div>
-          <button class="member-open" type="button" aria-label="فتح الملف الشخصي"
-            data-open-member="${escapeHTML(member.id)}">
-            <i class="fa-solid fa-arrow-up-right-from-square"></i>
-          </button>
+          <div class="member-name">${escapeHTML(name)}</div>
+          <div class="member-code">${escapeHTML(member.member_code || "")}</div>
+          <button class="member-open" data-member-id="${escapeHTML(member.id)}">عرض الملف</button>
         </article>`;
     }).join("");
+
+    container.querySelectorAll("[data-member-id]").forEach(button => {
+      button.addEventListener("click", () => {
+        location.href = `profile.html?id=${encodeURIComponent(button.dataset.memberId)}`;
+      });
+    });
   }
 
-  async function loadAllData() {
-    setLoading(true);
-    clearError();
-
-    const jobs = [
-      ["الغرف",loadRooms],
-      ["الألعاب",loadGames],
-      ["الأعضاء",loadMembers]
+  async function runIndependentTasks() {
+    const tasks = [
+      ["profile", loadMyProfile],
+      ["wallet", loadWallet],
+      ["games", loadGames],
+      ["rooms", loadRooms],
+      ["members", loadMembers]
     ];
 
-    const results = await Promise.allSettled(jobs.map(([,job]) => job()));
-    const failures = [];
+    const results = await Promise.allSettled(tasks.map(([, task]) => task()));
 
-    results.forEach((result,index) => {
-      if (result.status !== "rejected") return;
+    results.forEach((result, index) => {
+      if (result.status === "fulfilled") return;
 
-      console.error(`Failed loading ${jobs[index][0]}:`,result.reason);
-      failures.push(jobs[index][0]);
+      const key = tasks[index][0];
+      const message = "تعذر تحميل هذا الجزء. تحقق من الاتصال ثم أعد المحاولة.";
+      const errorId = {
+        games: "gamesError",
+        rooms: "roomsError",
+        members: "membersError"
+      }[key];
 
-      const name = jobs[index][0];
+      if (errorId) setError(errorId, message);
+      console.error(`HANOON ${key} load error:`, result.reason);
 
-      if (name === "الغرف") {
-        $("roomsGrid").innerHTML = emptyState(
-          "fa-solid fa-triangle-exclamation","تعذر تحميل الغرف",
-          "حدث خطأ أثناء الاتصال ببيانات الغرف. حاول التحديث."
-        );
+      if (key === "wallet") {
+        $("coinsBalance").textContent = "—";
+        $("gemsBalance").textContent = "—";
       }
-
-      if (name === "الألعاب") {
-        $("gamesGrid").innerHTML = emptyState(
-          "fa-solid fa-triangle-exclamation","تعذر تحميل الألعاب",
-          "حدث خطأ أثناء قراءة كتالوج الألعاب."
-        );
-      }
-
-      if (name === "الأعضاء") {
-        $("membersGrid").innerHTML = emptyState(
-          "fa-solid fa-triangle-exclamation","تعذر تحميل الأعضاء",
-          "تحقق من اتصال قاعدة البيانات وصلاحيات قراءة الأعضاء."
-        );
-      }
-    });
-
-    if (failures.length) {
-      showError("تعذر تحميل بعض أجزاء الصفحة: " + failures.join("، ") + ". يمكنك المحاولة مرة أخرى.");
-    }
-
-    setLoading(false);
-  }
-
-  function setupRoomFilters() {
-    $("roomFilters").addEventListener("click",event => {
-      const button = event.target.closest("[data-room-filter]");
-      if (!button) return;
-
-      state.roomFilter = button.dataset.roomFilter;
-
-      document.querySelectorAll("[data-room-filter]").forEach(item => {
-        item.classList.toggle("active",item === button);
-      });
-
-      renderRooms();
     });
   }
 
   function setupSearch() {
-    const input = $("globalSearch");
-    const panel = $("searchResults");
-    const list = $("searchResultList");
+    $("globalSearch").addEventListener("input", event => {
+      state.searchTerm = event.target.value.trim().toLowerCase();
 
-    input.addEventListener("input",() => {
-      clearTimeout(state.searchTimer);
-
-      state.searchTimer = setTimeout(() => {
-        const query = input.value.trim().toLowerCase();
-
-        if (!query) {
-          panel.classList.remove("visible");
-          list.innerHTML = "";
-          return;
-        }
-
-        const results = [];
-
-        state.members.forEach(member => {
-          const searchable = [
-            member.full_name,member.username,member.member_code,member.bio
-          ].join(" ").toLowerCase();
-
-          if (searchable.includes(query)) {
-            results.push({
-              title:member.full_name,
-              subtitle:member.username ? "@" + member.username : member.member_code,
-              url:"profile.html?u=" + encodeURIComponent(member.username || member.id)
-            });
-          }
-        });
-
-        state.rooms.forEach(room => {
-          const title = room.game?.title_ar || room.game?.title_en || "غرفة ألعاب";
-
-          if (title.toLowerCase().includes(query) ||
-              String(room.room_code || "").toLowerCase().includes(query)) {
-            results.push({
-              title,
-              subtitle:"غرفة ألعاب",
-              url:"rooms.html?room=" + encodeURIComponent(room.id)
-            });
-          }
-        });
-
-        state.games.forEach(game => {
-          const title = game.title_ar || game.title_en || "";
-          if (title.toLowerCase().includes(query)) {
-            results.push({
-              title,
-              subtitle:"لعبة",
-              url:"games.html?game=" + encodeURIComponent(game.id)
-            });
-          }
-        });
-
-        panel.classList.add("visible");
-
-        if (!results.length) {
-          list.innerHTML = `<span class="search-result">لا توجد نتائج مطابقة في البيانات المتاحة.</span>`;
-          return;
-        }
-
-        list.innerHTML = results.slice(0,10).map(result => `
-          <a class="search-result" href="${escapeHTML(result.url)}">
-            ${escapeHTML(result.title)}
-            <small>${escapeHTML(result.subtitle || "")}</small>
-          </a>`).join("");
-      },180);
-    });
-
-    document.addEventListener("click",event => {
-      if (!event.target.closest(".top-search") &&
-          !event.target.closest(".search-results")) {
-        panel.classList.remove("visible");
-      }
+      document.querySelectorAll("[data-search]").forEach(card => {
+        const matches = !state.searchTerm || card.dataset.search.includes(state.searchTerm);
+        card.classList.toggle("hidden", !matches);
+      });
     });
   }
 
-  function setupCardActions() {
-    $("roomsGrid").addEventListener("click",event => {
-      const button = event.target.closest("[data-open-room]");
-      if (!button) return;
-      window.location.href = "rooms.html?room=" + encodeURIComponent(button.dataset.openRoom);
+  function setupActions() {
+    $("notificationsButton").addEventListener("click", () => {
+      showToast("قسم الإشعارات سيتم ربطه بصفحة الإشعارات.");
     });
 
-    $("gamesGrid").addEventListener("click",event => {
-      const button = event.target.closest("[data-open-game]");
-      if (!button) return;
-      window.location.href = "games.html?game=" + encodeURIComponent(button.dataset.openGame);
+    document.querySelectorAll("[data-wallet-action]").forEach(button => {
+      button.addEventListener("click", () => {
+        location.href = "wallet.html";
+      });
     });
 
-    $("membersGrid").addEventListener("click",event => {
-      const button = event.target.closest("[data-open-member]");
-      if (!button) return;
-      window.location.href = "profile.html?id=" + encodeURIComponent(button.dataset.openMember);
+    $("randomLiveButton").addEventListener("click", event => {
+      event.preventDefault();
+      showToast("زر البث العشوائي جاهز في الواجهة، وسيتم تفعيل اختياره عند تجهيز نظام البث.");
     });
-  }
-
-  async function refreshPage() {
-    const button = $("refreshButton");
-    button.disabled = true;
-    button.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
-
-    try {
-      await Promise.all([loadMyProfile(),loadWallet()]);
-      await loadAllData();
-      showToast("تم تحديث البيانات.");
-    } catch (error) {
-      console.error(error);
-      showToast("تعذر تحديث بعض البيانات.");
-    } finally {
-      button.disabled = false;
-      button.innerHTML = '<i class="fa-solid fa-rotate"></i>';
-    }
   }
 
   async function start() {
+    if (!requireClient()) return;
+
     try {
-      const authenticated = await checkSession();
-      if (!authenticated) return;
+      const user = await getCurrentUser();
+      if (!user) return;
 
-      await Promise.all([loadMyProfile(),loadWallet()]);
-
-      setupRoomFilters();
       setupSearch();
-      setupCardActions();
+      setupActions();
 
-      await loadAllData();
+      await runIndependentTasks();
 
-      $("refreshButton").addEventListener("click",refreshPage);
-
-      document.addEventListener("visibilitychange",() => {
-        if (!document.hidden) loadAllData();
+      // تحديث البيانات عند العودة إلى الصفحة
+      document.addEventListener("visibilitychange", () => {
+        if (document.visibilityState === "visible") {
+          runIndependentTasks();
+        }
       });
 
     } catch (error) {
-      console.error("HANOON home initialization error:",error);
-      showError("تعذر تشغيل الصفحة. تأكد من تسجيل الدخول واتصال قاعدة البيانات، ثم أعد تحميل الصفحة.");
-      setLoading(false);
+      console.error("HANOON home startup error:", error);
+      setError("globalError", "تعذر التحقق من جلسة الحساب. أعد تسجيل الدخول وحاول مرة أخرى.");
     }
   }
 
   start();
 })();
 </script>
-
 </body>
 </html>
