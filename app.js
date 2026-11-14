@@ -3,6 +3,7 @@ import { supabase } from "./supabase.js";
 
 /* =========================================
    HANOON WORLD — APPLICATION CORE
+   Fixed startup + session restoration
 ========================================= */
 
 const $ = (selector, parent = document) =>
@@ -21,7 +22,8 @@ const state = {
   games: [],
   rooms: [],
   wallet: null,
-  loading: false
+  loading: false,
+  initialized: false
 };
 
 const TEXT = {
@@ -67,6 +69,7 @@ const TEXT = {
     coins: "العملات",
     gems: "الجواهر"
   },
+
   en: {
     login: "Sign in",
     register: "Create account",
@@ -133,9 +136,7 @@ function toast(message, type = "info") {
 
   root.appendChild(item);
 
-  window.setTimeout(() => {
-    item.remove();
-  }, 3500);
+  window.setTimeout(() => item.remove(), 3500);
 }
 
 /* =========================================
@@ -146,6 +147,7 @@ function showPage(pageName) {
   const target = $(`#page-${pageName}`);
 
   if (!target) {
+    console.warn("HANOON page not found:", pageName);
     toast(t("error"), "error");
     return;
   }
@@ -164,11 +166,8 @@ function showPage(pageName) {
     );
   });
 
-  const viewport = $("#page-viewport");
-  if (viewport) {
-    const content = $(".page-content", target);
-    if (content) content.scrollTop = 0;
-  }
+  const content = $(".page-content", target);
+  if (content) content.scrollTop = 0;
 
   if (pageName === "home") loadHome();
   if (pageName === "rooms") loadRooms();
@@ -185,18 +184,21 @@ function navigate(page) {
 
 document.addEventListener("click", event => {
   const nav = event.target.closest("[data-page]");
+
   if (nav && nav.classList.contains("nav-item")) {
     navigate(nav.dataset.page);
     return;
   }
 
   const pageLink = event.target.closest("[data-page-link]");
+
   if (pageLink) {
     navigate(pageLink.dataset.pageLink);
     return;
   }
 
   const action = event.target.closest("[data-action]");
+
   if (action) {
     handleAction(action.dataset.action);
   }
@@ -220,7 +222,10 @@ function applyLanguage() {
   document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
 
   const toggle = $("#language-toggle");
-  if (toggle) toggle.textContent = lang === "ar" ? "EN" : "AR";
+
+  if (toggle) {
+    toggle.textContent = lang === "ar" ? "EN" : "AR";
+  }
 
   $$("[data-ar][data-en]").forEach(element => {
     element.textContent =
@@ -238,20 +243,17 @@ function applyLanguage() {
   const usernameInput = $("#username");
   const passwordInput = $("#password");
 
-  if (usernameInput) {
-    usernameInput.placeholder = t("username");
-  }
-
-  if (passwordInput) {
-    passwordInput.placeholder = t("password");
-  }
+  if (usernameInput) usernameInput.placeholder = t("username");
+  if (passwordInput) passwordInput.placeholder = t("password");
 
   updateAuthButton();
 }
 
 $("#language-toggle")?.addEventListener("click", () => {
   state.language = state.language === "ar" ? "en" : "ar";
+
   localStorage.setItem("hanoon_language", state.language);
+
   applyLanguage();
   refreshVisiblePage();
 });
@@ -264,6 +266,7 @@ function refreshVisiblePage() {
   if (state.currentPage === "games") loadGames();
   if (state.currentPage === "store") loadStore();
   if (state.currentPage === "wallet") loadWallet();
+  if (state.currentPage === "profile") loadProfile();
 }
 
 /* =========================================
@@ -281,6 +284,7 @@ function setAuthMode(mode) {
   });
 
   const password = $("#password");
+
   if (password) {
     password.autocomplete =
       mode === "register" ? "new-password" : "current-password";
@@ -291,7 +295,12 @@ function setAuthMode(mode) {
 
 function updateAuthButton() {
   const submit = $("#auth-submit");
-  if (submit) submit.textContent = t(state.authMode);
+
+  if (submit) {
+    submit.textContent = t(
+      state.authMode === "register" ? "register" : "login"
+    );
+  }
 }
 
 $$(".auth-tab").forEach(tab => {
@@ -302,7 +311,6 @@ $$(".auth-tab").forEach(tab => {
 
 /* =========================================
    USERNAME AUTHENTICATION
-   Uses the deployed Edge Function.
 ========================================= */
 
 function validUsername(username) {
@@ -334,10 +342,7 @@ async function authenticate(username, password, action) {
   );
 
   if (error) throw error;
-
-  if (data?.error) {
-    throw new Error(data.error);
-  }
+  if (data?.error) throw new Error(data.error);
 
   const session = getReturnedSession(data);
 
@@ -401,6 +406,7 @@ $("#auth-form")?.addEventListener("submit", async event => {
     );
 
     await openApplication();
+
   } catch (error) {
     console.error("HANOON authentication:", error);
 
@@ -410,6 +416,7 @@ $("#auth-form")?.addEventListener("submit", async event => {
           ? t("authError")
           : (error.message || t("authError"));
     }
+
   } finally {
     state.loading = false;
 
@@ -425,8 +432,8 @@ $("#auth-form")?.addEventListener("submit", async event => {
 ========================================= */
 
 function showAuthentication() {
-  $("#app")?.classList.add("hidden");
   $("#splash")?.classList.add("hidden");
+  $("#app")?.classList.add("hidden");
   $("#auth-screen")?.classList.remove("hidden");
 }
 
@@ -436,23 +443,35 @@ function showApplication() {
   $("#app")?.classList.remove("hidden");
 }
 
-async function openApplication() {
-  const { data, error } = await supabase.auth.getSession();
+async function openApplication(sessionOverride) {
+  let session = sessionOverride;
 
-  if (error) throw error;
+  if (session === undefined) {
+    const { data, error } = await supabase.auth.getSession();
 
-  state.session = data.session;
-  state.user = data.session?.user || null;
+    if (error) throw error;
+
+    session = data.session;
+  }
+
+  state.session = session;
+  state.user = session?.user || null;
 
   if (!state.user) {
     showAuthentication();
     return;
   }
 
+  // إظهار التطبيق أولًا
   showApplication();
-  await loadProfile();
-  await loadWallet();
-  await loadHome();
+  showPage("home");
+
+  // تحميل البيانات دون تعطيل ظهور الشاشة
+  Promise.allSettled([
+    loadProfile(),
+    loadWallet(),
+    loadHome()
+  ]);
 }
 
 /* =========================================
@@ -480,9 +499,11 @@ async function loadProfile() {
       "HANOON Member";
 
     const sidebarName = $("#sidebar-username");
+
     if (sidebarName) sidebarName.textContent = username;
 
     const memberId = $("#sidebar-member-id");
+
     if (memberId) {
       memberId.textContent =
         data?.member_code || data?.member_id || "HANOON";
@@ -499,6 +520,7 @@ async function loadProfile() {
     }
 
     renderProfile(data);
+
   } catch (error) {
     console.error("Profile loading:", error);
     toast(t("error"), "error");
@@ -507,10 +529,12 @@ async function loadProfile() {
 
 function renderProfile(profile) {
   const root = $("#profile-content");
+
   if (!root) return;
 
   if (!profile) {
-    root.innerHTML = `<div class="empty-state">${escapeHTML(t("noData"))}</div>`;
+    root.innerHTML =
+      `<div class="empty-state">${escapeHTML(t("noData"))}</div>`;
     return;
   }
 
@@ -520,6 +544,7 @@ function renderProfile(profile) {
     "HANOON Member";
 
   const username = profile.username || "";
+
   const memberCode =
     profile.member_code ||
     profile.member_id ||
@@ -547,9 +572,11 @@ function renderProfile(profile) {
 
   if (avatar) {
     const image = document.createElement("img");
+
     image.className = "profile-avatar";
     image.src = avatar;
     image.alt = name;
+
     container.appendChild(image);
   }
 
@@ -575,6 +602,7 @@ async function loadWallet() {
 
     state.wallet = data;
     renderWallet(data);
+
   } catch (error) {
     console.error("Wallet loading:", error);
     renderWallet(null);
@@ -597,11 +625,20 @@ function renderWallet(wallet) {
     wallet?.points_balance ??
     "--";
 
-  if ($("#home-coins")) $("#home-coins").textContent = coins;
-  if ($("#home-gems")) $("#home-gems").textContent = gems;
-  if ($("#home-points")) $("#home-points").textContent = points;
+  if ($("#home-coins")) {
+    $("#home-coins").textContent = coins;
+  }
+
+  if ($("#home-gems")) {
+    $("#home-gems").textContent = gems;
+  }
+
+  if ($("#home-points")) {
+    $("#home-points").textContent = points;
+  }
 
   const root = $("#wallet-content");
+
   if (!root) return;
 
   root.replaceChildren();
@@ -651,8 +688,6 @@ async function loadHome() {
 
 /* =========================================
    ROOMS
-   Public social rooms require their own
-   database schema before activation.
 ========================================= */
 
 async function loadRooms(homeOnly = false) {
@@ -685,7 +720,10 @@ $("#create-room-form")?.addEventListener("submit", event => {
   event.preventDefault();
 
   const message = $("#create-room-message");
-  if (message) message.textContent = t("roomSystemPending");
+
+  if (message) {
+    message.textContent = t("roomSystemPending");
+  }
 
   toast(t("roomSystemPending"));
 });
@@ -754,10 +792,16 @@ async function loadGames(homeOnly = false) {
       cover.className = "card-cover";
 
       const image = document.createElement("img");
-      image.src = game.image_url || GAME_IMAGES[index % GAME_IMAGES.length];
+
+      image.src =
+        game.image_url ||
+        GAME_IMAGES[index % GAME_IMAGES.length];
+
       image.alt = title;
       image.loading = "lazy";
+
       image.onerror = () => {
+        image.onerror = null;
         image.src = GAME_IMAGES[index % GAME_IMAGES.length];
       };
 
@@ -777,21 +821,24 @@ async function loadGames(homeOnly = false) {
 
       const button = document.createElement("button");
       button.type = "button";
-      button.textContent = active ? "فتح اللعبة" : t("comingSoon");
+
+      button.textContent =
+        active ? "فتح اللعبة" : t("comingSoon");
+
       button.disabled = !active;
 
       if (!active) {
         button.style.opacity = ".55";
         button.style.cursor = "not-allowed";
       } else {
-        button.addEventListener("click", () => {
-          openGame(game);
-        });
+        button.addEventListener("click", () => openGame(game));
       }
 
       actions.appendChild(button);
+
       body.append(heading, text, actions);
       card.append(cover, body);
+
       root.appendChild(card);
     });
 
@@ -810,6 +857,7 @@ function openGame(game) {
   }
 
   const root = $("#game-details-content");
+
   if (root) {
     root.replaceChildren();
 
@@ -817,7 +865,8 @@ function openGame(game) {
     panel.className = "content-panel";
 
     const heading = document.createElement("h2");
-    heading.textContent = game.title || game.name || "HANOON Game";
+    heading.textContent =
+      game.title || game.name || "HANOON Game";
 
     const message = document.createElement("p");
     message.textContent = t("comingSoon");
@@ -837,6 +886,7 @@ async function loadStore() {
   if (!state.user) return;
 
   const root = $("#store-items");
+
   if (!root) return;
 
   root.replaceChildren();
@@ -872,6 +922,7 @@ async function loadStore() {
 
   } catch (error) {
     console.error("Store loading:", error);
+
     root.innerHTML =
       `<div class="empty-state">${escapeHTML(t("error"))}</div>`;
   }
@@ -883,6 +934,7 @@ async function loadStore() {
 
 function showPendingContent(elementId) {
   const root = $(`#${elementId}`);
+
   if (!root) return;
 
   root.replaceChildren();
@@ -914,11 +966,12 @@ $("#logout-button")?.addEventListener("click", async () => {
     state.user = null;
     state.profile = null;
     state.session = null;
+    state.wallet = null;
 
-    $("#app")?.classList.add("hidden");
     showAuthentication();
 
     toast(t("logoutSuccess"), "success");
+
   } catch (error) {
     console.error("Logout:", error);
     toast(t("error"), "error");
@@ -956,40 +1009,64 @@ function escapeHTML(value) {
 ========================================= */
 
 async function initializeApp() {
+  if (state.initialized) return;
+
+  state.initialized = true;
+
   applyLanguage();
   setAuthMode("login");
 
-  const splashStart = Date.now();
+  // يبدأ مؤقت شاشة البداية فور تشغيل التطبيق
+  const splashTimer = new Promise(resolve => {
+    window.setTimeout(resolve, 5000);
+  });
 
-  try {
-    const { data, error } = await supabase.auth.getSession();
+  let sessionResolved = false;
+  let restoredSession = null;
 
-    if (error) throw error;
+  // استعادة الجلسة بالتوازي مع المؤقت
+  const sessionPromise = supabase.auth.getSession()
+    .then(({ data, error }) => {
+      if (error) throw error;
 
-    state.session = data.session;
-    state.user = data.session?.user || null;
-  } catch (error) {
-    console.error("Session restore:", error);
-    state.user = null;
+      restoredSession = data.session || null;
+
+      state.session = restoredSession;
+      state.user = restoredSession?.user || null;
+
+      sessionResolved = true;
+
+      return restoredSession;
+    })
+    .catch(error => {
+      console.error("Session restore:", error);
+
+      restoredSession = null;
+      state.session = null;
+      state.user = null;
+
+      sessionResolved = true;
+
+      return null;
+    });
+
+  // لا ننتظر تحميل الجلسة قبل انتهاء الخمس ثواني
+  await splashTimer;
+
+  if (sessionResolved) {
+    await openApplication(restoredSession);
+    return;
   }
 
-  const remaining = Math.max(
-    0,
-    5000 - (Date.now() - splashStart)
-  );
+  // إذا تأخرت الجلسة، نعرض تسجيل الدخول بدل تعليق شاشة البداية
+  showAuthentication();
 
-  window.setTimeout(async () => {
-    if (state.user) {
-      try {
-        await openApplication();
-      } catch (error) {
-        console.error("Application startup:", error);
-        showAuthentication();
-      }
-    } else {
-      showAuthentication();
-    }
-  }, remaining);
+  // نستمر في انتظار الجلسة في الخلفية
+  const session = await sessionPromise;
+
+  if (session) {
+    await openApplication(session);
+  }
 }
 
 /* =========================================
@@ -1002,7 +1079,8 @@ supabase.auth.onAuthStateChange((event, session) => {
 
   if (event === "SIGNED_OUT") {
     state.profile = null;
-    $("#app")?.classList.add("hidden");
+    state.wallet = null;
+
     showAuthentication();
   }
 });
