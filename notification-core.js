@@ -1,3 +1,4 @@
+
 /* =========================================
    HANOON WORLD
    CENTRAL NOTIFICATION CORE
@@ -34,7 +35,6 @@ const SELECT_FIELDS = [
 
 /* =========================================
    SAFE DESTINATIONS
-   Only approved internal pages are allowed
 ========================================= */
 
 const DESTINATIONS = {
@@ -108,6 +108,93 @@ const DESTINATIONS = {
     return "notifications.html";
   }
 };
+
+/* =========================================
+   APPROVED ADMIN ROUTES
+========================================= */
+
+const ADMIN_ALLOWED_PAGES = new Set([
+  "home.html",
+  "members.html",
+  "member.html",
+  "profile.html",
+  "games.html",
+  "rooms.html",
+  "notifications.html"
+]);
+
+function resolveAdminRoute(route) {
+  if (
+    typeof route !== "string" ||
+    !route.trim()
+  ) {
+    return null;
+  }
+
+  const cleanRoute = route.trim();
+
+  /*
+    Reject external URLs, protocol-relative URLs,
+    backslashes and directory traversal.
+  */
+
+  if (
+    cleanRoute.startsWith("//") ||
+    cleanRoute.includes("\\") ||
+    cleanRoute.includes("..") ||
+    cleanRoute.includes(":") ||
+    cleanRoute.startsWith("/") ||
+    /[\u0000-\u001F\u007F]/.test(cleanRoute)
+  ) {
+    return null;
+  }
+
+  try {
+    const currentUrl = new URL(
+      window.location.href
+    );
+
+    const targetUrl = new URL(
+      cleanRoute,
+      currentUrl.href
+    );
+
+    if (
+      targetUrl.origin !== currentUrl.origin
+    ) {
+      return null;
+    }
+
+    if (
+      targetUrl.username ||
+      targetUrl.password
+    ) {
+      return null;
+    }
+
+    const pageName = targetUrl.pathname
+      .split("/")
+      .pop()
+      .toLowerCase();
+
+    if (!ADMIN_ALLOWED_PAGES.has(pageName)) {
+      return null;
+    }
+
+    return (
+      targetUrl.pathname +
+      targetUrl.search
+    );
+
+  } catch (error) {
+    console.warn(
+      "HANOON invalid admin notification route:",
+      error
+    );
+
+    return null;
+  }
+}
 
 /* =========================================
    INTERNAL STATE
@@ -354,6 +441,31 @@ export function resolveNotificationTarget(notification) {
   if (!notification) {
     return "notifications.html";
   }
+
+  /*
+    Admin notifications:
+    Use the approved internal route selected
+    by the administrator.
+  */
+
+  if (
+    notification.target_type === "admin" ||
+    notification.type === "admin"
+  ) {
+    const adminDestination =
+      resolveAdminRoute(notification.target_route);
+
+    if (adminDestination) {
+      return adminDestination;
+    }
+
+    return "notifications.html";
+  }
+
+  /*
+    Other notification types:
+    Keep the original destination behavior.
+  */
 
   const type = notification.target_type;
   const id = getValidId(notification.target_id);
