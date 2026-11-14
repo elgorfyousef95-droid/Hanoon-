@@ -1,0 +1,1135 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HANOON WORLD — الملف الشخصي</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#0b0d14;
+      --panel:#141824;
+      --panel2:#1b2130;
+      --line:rgba(255,255,255,.09);
+      --gold:#d9b66d;
+      --gold2:#f2d99d;
+      --text:#f4f3ef;
+      --muted:#9299a9;
+      --green:#47d6a0;
+      --red:#ff7185;
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      min-height:100vh;
+      background:
+        linear-gradient(rgba(8,10,16,.92),rgba(8,10,16,.97)),
+        url("https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=2000&q=85")
+        center/cover fixed;
+      color:var(--text);
+      font-family:'Cairo',sans-serif;
+    }
+
+    button,a{font:inherit}
+    button{cursor:pointer}
+    a{color:inherit;text-decoration:none}
+
+    .topbar{
+      height:70px;
+      padding:0 5%;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      background:rgba(12,15,23,.88);
+      border-bottom:1px solid var(--line);
+      backdrop-filter:blur(18px);
+      position:sticky;
+      top:0;
+      z-index:20;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:11px;
+      font-weight:900;
+      letter-spacing:1px;
+      color:var(--gold2);
+      font-size:19px;
+    }
+
+    .brand-mark{
+      width:39px;height:39px;
+      border-radius:13px;
+      display:grid;place-items:center;
+      background:linear-gradient(145deg,#f2d99d,#a77c36);
+      color:#17130b;
+      font-size:20px;
+      box-shadow:0 5px 25px #d9b66d33;
+    }
+
+    .top-actions{display:flex;gap:10px;align-items:center}
+    .top-btn{
+      border:1px solid var(--line);
+      color:var(--text);
+      background:#ffffff09;
+      padding:9px 17px;
+      border-radius:12px;
+      font-size:13px;
+      font-weight:700;
+    }
+
+    .page{
+      width:min(1100px,94%);
+      margin:32px auto 70px;
+    }
+
+    .profile-card{
+      overflow:hidden;
+      border:1px solid var(--line);
+      border-radius:25px;
+      background:rgba(19,23,34,.94);
+      box-shadow:0 25px 90px #0007;
+    }
+
+    .cover{
+      height:280px;
+      position:relative;
+      background:
+        linear-gradient(0deg,#111621 0%,transparent 75%),
+        url("https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=1800&q=90")
+        center 48%/cover;
+    }
+
+    .cover::after{
+      content:"";
+      position:absolute;inset:0;
+      background:linear-gradient(90deg,#080b1299,transparent 70%);
+    }
+
+    .profile-main{
+      padding:0 38px 30px;
+      position:relative;
+    }
+
+    .identity-row{
+      display:flex;
+      align-items:flex-end;
+      gap:22px;
+      margin-top:-75px;
+      position:relative;
+      z-index:2;
+    }
+
+    .avatar-wrap{
+      width:150px;height:150px;
+      border:5px solid #141824;
+      border-radius:50%;
+      background:#242b3b;
+      overflow:hidden;
+      flex-shrink:0;
+      box-shadow:0 12px 35px #0008;
+    }
+
+    .avatar-wrap img{
+      width:100%;height:100%;
+      object-fit:cover;
+    }
+
+    .avatar-fallback{
+      width:100%;height:100%;
+      display:grid;place-items:center;
+      font-size:50px;font-weight:900;
+      color:var(--gold2);
+      background:linear-gradient(145deg,#3a3040,#171d2a);
+    }
+
+    .identity-info{
+      flex:1;
+      padding-bottom:8px;
+      min-width:0;
+    }
+
+    .name-line{
+      display:flex;
+      align-items:center;
+      flex-wrap:wrap;
+      gap:10px;
+    }
+
+    .name-line h1{
+      margin:0;
+      font-size:27px;
+      font-weight:900;
+    }
+
+    .verified{
+      width:21px;height:21px;
+      border-radius:50%;
+      display:grid;place-items:center;
+      background:#399ee9;
+      color:white;
+      font-size:12px;
+    }
+
+    .username{
+      color:var(--muted);
+      font-size:14px;
+      margin-top:3px;
+      direction:ltr;
+      text-align:right;
+    }
+
+    .member-code{
+      display:inline-flex;
+      align-items:center;
+      gap:7px;
+      margin-top:8px;
+      color:var(--gold2);
+      font-size:12px;
+      background:#d9b66d12;
+      border:1px solid #d9b66d25;
+      border-radius:9px;
+      padding:5px 10px;
+    }
+
+    .action-area{
+      display:flex;
+      gap:9px;
+      flex-wrap:wrap;
+      padding-bottom:8px;
+    }
+
+    .action-btn{
+      border:0;
+      border-radius:12px;
+      padding:11px 19px;
+      font-weight:800;
+      font-size:13px;
+      transition:.2s;
+    }
+
+    .action-btn:hover{transform:translateY(-2px)}
+    .primary-btn{
+      background:linear-gradient(120deg,#f1d79a,#bd914a);
+      color:#21180a;
+    }
+
+    .secondary-btn{
+      background:#ffffff0c;
+      border:1px solid var(--line);
+      color:var(--text);
+    }
+
+    .danger-btn{
+      background:#ff718515;
+      color:#ff9baa;
+      border:1px solid #ff718530;
+    }
+
+    .stats{
+      display:flex;
+      gap:34px;
+      flex-wrap:wrap;
+      margin:25px 0 20px;
+      padding:18px 0;
+      border-top:1px solid var(--line);
+      border-bottom:1px solid var(--line);
+    }
+
+    .stat{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    .stat strong{
+      color:var(--text);
+      font-size:18px;
+      font-weight:900;
+    }
+
+    .bio{
+      font-size:14px;
+      line-height:2;
+      color:#d5d7df;
+      max-width:750px;
+      white-space:pre-wrap;
+      overflow-wrap:anywhere;
+    }
+
+    .info-tags{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-top:17px;
+    }
+
+    .tag{
+      background:#ffffff09;
+      border:1px solid var(--line);
+      padding:7px 12px;
+      border-radius:30px;
+      color:#d9dce5;
+      font-size:12px;
+    }
+
+    .section{
+      margin-top:25px;
+      background:rgba(19,23,34,.94);
+      border:1px solid var(--line);
+      border-radius:22px;
+      padding:25px;
+    }
+
+    .section-head{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom:20px;
+    }
+
+    .section-head h2{
+      margin:0;
+      font-size:19px;
+      font-weight:900;
+    }
+
+    .tabs{
+      display:flex;
+      gap:8px;
+      border-bottom:1px solid var(--line);
+      margin-bottom:20px;
+    }
+
+    .tab{
+      background:none;
+      border:0;
+      color:var(--muted);
+      padding:11px 18px;
+      border-bottom:2px solid transparent;
+      font-size:13px;
+      font-weight:800;
+    }
+
+    .tab.active{
+      color:var(--gold2);
+      border-color:var(--gold);
+    }
+
+    .posts-grid{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:15px;
+    }
+
+    .post{
+      background:#ffffff07;
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:17px;
+      min-width:0;
+    }
+
+    .post-content{
+      line-height:1.9;
+      font-size:14px;
+      white-space:pre-wrap;
+      overflow-wrap:anywhere;
+    }
+
+    .post-media{
+      display:block;
+      width:100%;
+      max-height:350px;
+      object-fit:cover;
+      border-radius:12px;
+      margin-top:13px;
+      background:#090c13;
+    }
+
+    .post-date{
+      color:var(--muted);
+      font-size:11px;
+      margin-top:13px;
+    }
+
+    .about-grid{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:13px;
+    }
+
+    .about-item{
+      background:#ffffff07;
+      border:1px solid var(--line);
+      padding:16px;
+      border-radius:14px;
+    }
+
+    .about-item small{
+      color:var(--muted);
+      display:block;
+      margin-bottom:7px;
+    }
+
+    .about-item strong{
+      font-size:13px;
+      line-height:1.8;
+    }
+
+    .video-box{
+      margin-top:20px;
+      max-width:500px;
+    }
+
+    .video-box video{
+      width:100%;
+      border-radius:16px;
+      background:#000;
+    }
+
+    .empty{
+      padding:35px 15px;
+      text-align:center;
+      color:var(--muted);
+      font-size:13px;
+      line-height:2;
+    }
+
+    .empty-icon{
+      font-size:35px;
+      display:block;
+      margin-bottom:8px;
+    }
+
+    .private-box{
+      padding:35px 15px;
+      text-align:center;
+      color:var(--muted);
+      line-height:2;
+    }
+
+    .private-box strong{
+      display:block;
+      color:var(--text);
+      font-size:17px;
+      margin:10px 0 4px;
+    }
+
+    .status{
+      display:none;
+      margin:15px 0;
+      padding:12px 15px;
+      border-radius:12px;
+      font-size:13px;
+      line-height:1.8;
+    }
+
+    .status.show{display:block}
+    .status.success{background:#47d6a015;color:var(--green)}
+    .status.error{background:#ff718515;color:#ff9baa}
+
+    .loading{
+      min-height:65vh;
+      display:grid;
+      place-items:center;
+      text-align:center;
+      color:var(--gold2);
+    }
+
+    .spinner{
+      width:43px;height:43px;
+      border:3px solid #ffffff18;
+      border-top-color:var(--gold);
+      border-radius:50%;
+      animation:spin .8s linear infinite;
+      margin:0 auto 15px;
+    }
+
+    @keyframes spin{to{transform:rotate(360deg)}}
+
+    @media(max-width:700px){
+      .topbar{height:62px;padding:0 4%}
+      .brand{font-size:16px}
+      .page{width:94%;margin-top:18px}
+      .cover{height:205px}
+      .profile-main{padding:0 17px 22px}
+      .identity-row{
+        align-items:center;
+        flex-direction:column;
+        text-align:center;
+        gap:10px;
+        margin-top:-65px;
+      }
+      .avatar-wrap{width:125px;height:125px}
+      .identity-info{padding:0}
+      .name-line{justify-content:center}
+      .name-line h1{font-size:23px}
+      .username{text-align:center}
+      .action-area{justify-content:center;padding:12px 0 0}
+      .action-btn{padding:10px 14px}
+      .stats{justify-content:center;gap:20px}
+      .section{padding:18px}
+      .posts-grid,.about-grid{grid-template-columns:1fr}
+      .top-btn{padding:8px 11px;font-size:11px}
+    }
+  </style>
+</head>
+
+<body>
+
+<header class="topbar">
+  <a class="brand" href="home.html">
+    <span class="brand-mark">H</span>
+    <span>HANOON WORLD</span>
+  </a>
+
+  <div class="top-actions">
+    <a class="top-btn" href="home.html">الرئيسية</a>
+    <button class="top-btn" id="logoutButton">تسجيل الخروج</button>
+  </div>
+</header>
+
+<main class="page" id="page">
+  <div class="loading">
+    <div>
+      <div class="spinner"></div>
+      جاري تحميل الملف الشخصي...
+    </div>
+  </div>
+</main>
+
+<script type="module">
+  import { supabase } from "./supabase.js";
+
+  const $ = (selector) => document.querySelector(selector);
+  const params = new URLSearchParams(location.search);
+
+  let currentUser = null;
+  let profile = null;
+  let isOwner = false;
+  let canSeeDetails = false;
+  let followState = "none";
+  let friendState = "none";
+
+  function escapeHTML(value = "") {
+    return String(value).replace(/[&<>"']/g, char => ({
+      "&":"&amp;",
+      "<":"&lt;",
+      ">":"&gt;",
+      '"':"&quot;",
+      "'":"&#039;"
+    })[char]);
+  }
+
+  function assetUrl(bucket, path) {
+    if (!path) return "";
+    if (/^https?:\/\//i.test(path)) return path;
+
+    return supabase.storage
+      .from(bucket)
+      .getPublicUrl(path).data.publicUrl;
+  }
+
+  function showStatus(message, type = "success") {
+    const box = $("#statusBox");
+    if (!box) return;
+
+    box.textContent = message;
+    box.className = `status show ${type}`;
+  }
+
+  function formatDate(date) {
+    return new Date(date).toLocaleDateString("ar-EG", {
+      year:"numeric",
+      month:"long",
+      day:"numeric"
+    });
+  }
+
+  function renderTags(items = []) {
+    if (!Array.isArray(items) || !items.length) {
+      return '<span class="tag">لم تتم الإضافة بعد</span>';
+    }
+
+    return items.map(item =>
+      `<span class="tag">${escapeHTML(item)}</span>`
+    ).join("");
+  }
+
+  async function loadProfile() {
+    const { data: authData, error: authError } =
+      await supabase.auth.getUser();
+
+    if (authError || !authData.user) {
+      location.replace("login.html");
+      return;
+    }
+
+    currentUser = authData.user;
+
+    const targetId = params.get("id");
+    const targetUsername = params.get("username");
+    const targetCode = params.get("code");
+
+    let query = supabase
+      .from("profiles")
+      .select(`
+        id,full_name,username,member_code,
+        avatar_path,cover_path,profile_video_path,
+        bio,hobbies,interests,reading_interests,
+        profile_completed,is_private,created_at
+      `);
+
+    if (targetId) {
+      query = query.eq("id", targetId);
+    } else if (targetUsername) {
+      query = query.ilike("username", targetUsername);
+    } else if (targetCode) {
+      query = query.eq("member_code", targetCode);
+    } else {
+      query = query.eq("id", currentUser.id);
+    }
+
+    const { data, error } = await query.maybeSingle();
+
+    if (error) throw error;
+
+    if (!data) {
+      $("#page").innerHTML = `
+        <section class="section empty">
+          <span class="empty-icon">⌕</span>
+          الملف الشخصي غير موجود أو لم يعد متاحًا.
+          <br><br>
+          <a class="action-btn primary-btn" href="home.html">العودة للرئيسية</a>
+        </section>`;
+      return;
+    }
+
+    profile = data;
+    isOwner = profile.id === currentUser.id;
+
+    await loadRelationships();
+
+    canSeeDetails =
+      isOwner ||
+      !profile.is_private ||
+      followState === "following" ||
+      friendState === "accepted";
+
+    await renderProfile();
+  }
+
+  async function loadRelationships() {
+    if (isOwner) {
+      followState = "owner";
+      friendState = "owner";
+      return;
+    }
+
+    const [followResult, followRequestResult, friendResult] =
+      await Promise.all([
+        supabase.from("follows")
+          .select("follower_id")
+          .eq("follower_id", currentUser.id)
+          .eq("following_id", profile.id)
+          .maybeSingle(),
+
+        supabase.from("follow_requests")
+          .select("id,status,sender_id,receiver_id")
+          .or(
+            `and(sender_id.eq.${currentUser.id},receiver_id.eq.${profile.id}),and(sender_id.eq.${profile.id},receiver_id.eq.${currentUser.id})`
+          )
+          .limit(1),
+
+        supabase.from("friend_requests")
+          .select("id,status,sender_id,receiver_id")
+          .or(
+            `and(sender_id.eq.${currentUser.id},receiver_id.eq.${profile.id}),and(sender_id.eq.${profile.id},receiver_id.eq.${currentUser.id})`
+          )
+          .limit(1)
+      ]);
+
+    if (followResult.data) {
+      followState = "following";
+    } else {
+      const request = followRequestResult.data?.[0];
+
+      if (request?.status === "pending") {
+        followState = request.sender_id === currentUser.id
+          ? "requested"
+          : "incoming";
+      } else if (request?.status === "accepted") {
+        followState = "following";
+      } else {
+        followState = "none";
+      }
+    }
+
+    const friend = friendResult.data?.[0];
+
+    if (!friend) {
+      friendState = "none";
+    } else if (friend.status === "accepted") {
+      friendState = "accepted";
+    } else if (friend.status === "pending") {
+      friendState = friend.sender_id === currentUser.id
+        ? "sent"
+        : "incoming";
+    } else {
+      friendState = "none";
+    }
+  }
+
+  async function getCounts() {
+    const [followers, following, friends, posts] = await Promise.all([
+      supabase.from("follows")
+        .select("*", {count:"exact",head:true})
+        .eq("following_id", profile.id),
+
+      supabase.from("follows")
+        .select("*", {count:"exact",head:true})
+        .eq("follower_id", profile.id),
+
+      supabase.from("friend_requests")
+        .select("*", {count:"exact",head:true})
+        .eq("status", "accepted")
+        .or(`sender_id.eq.${profile.id},receiver_id.eq.${profile.id}`),
+
+      supabase.from("posts")
+        .select("*", {count:"exact",head:true})
+        .eq("user_id", profile.id)
+    ]);
+
+    return {
+      followers: followers.count || 0,
+      following: following.count || 0,
+      friends: friends.count || 0,
+      posts: posts.count || 0
+    };
+  }
+
+  async function loadPosts() {
+    const { data, error } = await supabase
+      .from("posts")
+      .select("id,content,media_path,media_type,created_at")
+      .eq("user_id", profile.id)
+      .order("created_at", {ascending:false})
+      .limit(30);
+
+    if (error) throw error;
+
+    return data || [];
+  }
+
+  function postMedia(post) {
+    if (!post.media_path) return "";
+
+    const url = assetUrl("post-media", post.media_path);
+    const type = (post.media_type || "").toLowerCase();
+
+    if (type.includes("video")) {
+      return `<video class="post-media" controls preload="metadata" src="${escapeHTML(url)}"></video>`;
+    }
+
+    return `<img class="post-media" loading="lazy" src="${escapeHTML(url)}" alt="صورة المنشور">`;
+  }
+
+  async function renderProfile() {
+    const counts = await getCounts();
+
+    const avatar = assetUrl("avatars", profile.avatar_path);
+    const cover = assetUrl("avatars", profile.cover_path);
+    const video = assetUrl("post-media", profile.profile_video_path);
+
+    const name = profile.full_name || "عضو هنون";
+    const username = profile.username
+      ? "@" + profile.username
+      : "@member";
+
+    const actionButtons = isOwner
+      ? `
+        <a class="action-btn primary-btn" href="profile-setup.html">تعديل بياناتي</a>
+        <button class="action-btn secondary-btn" id="copyCodeButton">نسخ كود العضوية</button>
+      `
+      : `
+        <button class="action-btn primary-btn" id="friendButton">
+          ${friendState === "accepted" ? "صديق ✓" :
+            friendState === "sent" ? "تم إرسال الطلب" :
+            friendState === "incoming" ? "قبول طلب الصداقة" :
+            "إضافة صديق"}
+        </button>
+
+        <button class="action-btn secondary-btn" id="followButton">
+          ${followState === "following" ? "تتابعه ✓" :
+            followState === "requested" ? "طلب المتابعة مُرسل" :
+            followState === "incoming" ? "قبول المتابعة" :
+            "متابعة"}
+        </button>
+      `;
+
+    $("#page").innerHTML = `
+      <section class="profile-card">
+
+        <div class="cover" id="coverArea"
+          style="${cover ? `background-image:linear-gradient(0deg,#111621 0%,transparent 75%),url('${escapeHTML(cover)}')` : ""}">
+        </div>
+
+        <div class="profile-main">
+          <div class="identity-row">
+
+            <div class="avatar-wrap">
+              ${
+                avatar
+                  ? `<img src="${escapeHTML(avatar)}" alt="الصورة الشخصية"
+                      onerror="this.style.display='none';this.nextElementSibling.style.display='grid'">
+                     <div class="avatar-fallback" style="display:none">${escapeHTML(name.slice(0,1))}</div>`
+                  : `<div class="avatar-fallback">${escapeHTML(name.slice(0,1))}</div>`
+              }
+            </div>
+
+            <div class="identity-info">
+              <div class="name-line">
+                <h1>${escapeHTML(name)}</h1>
+                ${profile.profile_completed ? '<span class="verified" title="حساب مكتمل">✓</span>' : ""}
+              </div>
+              <div class="username">${escapeHTML(username)}</div>
+              <div class="member-code">
+                <span>كود العضوية</span>
+                <strong>${escapeHTML(profile.member_code || "—")}</strong>
+              </div>
+            </div>
+
+            <div class="action-area">
+              ${actionButtons}
+            </div>
+
+          </div>
+
+          <div class="stats">
+            <div class="stat"><strong>${counts.posts}</strong> منشور</div>
+            <div class="stat"><strong>${counts.followers}</strong> متابع</div>
+            <div class="stat"><strong>${counts.following}</strong> يتابع</div>
+            <div class="stat"><strong>${counts.friends}</strong> صديق</div>
+          </div>
+
+          <div id="statusBox" class="status"></div>
+
+          ${
+            canSeeDetails
+              ? `
+                <div class="bio">${escapeHTML(profile.bio || "لا توجد نبذة تعريفية حتى الآن.")}</div>
+                <div class="info-tags">
+                  ${renderTags(profile.interests)}
+                </div>
+              `
+              : `
+                <div class="private-box">
+                  <span class="empty-icon">🔒</span>
+                  <strong>هذا الحساب خاص</strong>
+                  تابع الحساب أو أرسل طلب صداقة لرؤية المزيد من التفاصيل والمنشورات.
+                </div>
+              `
+          }
+
+        </div>
+      </section>
+
+      ${
+        canSeeDetails
+          ? `
+            <section class="section">
+              <div class="tabs">
+                <button class="tab active" data-tab="posts">المنشورات</button>
+                <button class="tab" data-tab="about">حول الحساب</button>
+              </div>
+
+              <div id="postsPanel">
+                <div class="empty">جاري تحميل المنشورات...</div>
+              </div>
+
+              <div id="aboutPanel" hidden>
+                <div class="about-grid">
+                  <div class="about-item">
+                    <small>الهوايات</small>
+                    <strong>${escapeHTML((profile.hobbies || []).join("، ") || "لم تتم الإضافة")}</strong>
+                  </div>
+                  <div class="about-item">
+                    <small>الاهتمامات</small>
+                    <strong>${escapeHTML((profile.interests || []).join("، ") || "لم تتم الإضافة")}</strong>
+                  </div>
+                  <div class="about-item">
+                    <small>اهتمامات القراءة</small>
+                    <strong>${escapeHTML((profile.reading_interests || []).join("، ") || "لم تتم الإضافة")}</strong>
+                  </div>
+                  <div class="about-item">
+                    <small>تاريخ الانضمام</small>
+                    <strong>${formatDate(profile.created_at)}</strong>
+                  </div>
+                  <div class="about-item">
+                    <small>نوع الحساب</small>
+                    <strong>${profile.is_private ? "خاص" : "عام"}</strong>
+                  </div>
+                </div>
+
+                ${
+                  video
+                    ? `<div class="video-box">
+                         <h3>الفيديو التعريفي</h3>
+                         <video controls playsinline preload="metadata" src="${escapeHTML(video)}"></video>
+                       </div>`
+                    : ""
+                }
+              </div>
+            </section>
+          `
+          : ""
+      }
+    `;
+
+    bindPageActions();
+
+    if (canSeeDetails) {
+      await renderPosts();
+    }
+  }
+
+  async function renderPosts() {
+    const panel = $("#postsPanel");
+
+    try {
+      const posts = await loadPosts();
+
+      if (!posts.length) {
+        panel.innerHTML = `
+          <div class="empty">
+            <span class="empty-icon">▤</span>
+            لا توجد منشورات حتى الآن.
+          </div>`;
+        return;
+      }
+
+      panel.innerHTML = `
+        <div class="posts-grid">
+          ${posts.map(post => `
+            <article class="post">
+              <div class="post-content">${escapeHTML(post.content || "")}</div>
+              ${postMedia(post)}
+              <div class="post-date">${formatDate(post.created_at)}</div>
+            </article>
+          `).join("")}
+        </div>
+      `;
+    } catch (error) {
+      panel.innerHTML = `<div class="empty">تعذر تحميل المنشورات: ${escapeHTML(error.message)}</div>`;
+    }
+  }
+
+  function bindPageActions() {
+    document.querySelectorAll("[data-tab]").forEach(button => {
+      button.addEventListener("click", () => {
+        document.querySelectorAll("[data-tab]").forEach(tab =>
+          tab.classList.toggle("active", tab === button)
+        );
+
+        $("#postsPanel").hidden = button.dataset.tab !== "posts";
+        $("#aboutPanel").hidden = button.dataset.tab !== "about";
+      });
+    });
+
+    $("#copyCodeButton")?.addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(profile.member_code || "");
+        showStatus("تم نسخ كود العضوية.");
+      } catch {
+        showStatus("تعذر النسخ من المتصفح.", "error");
+      }
+    });
+
+    $("#friendButton")?.addEventListener("click", handleFriend);
+    $("#followButton")?.addEventListener("click", handleFollow);
+  }
+
+  async function handleFriend() {
+    const button = $("#friendButton");
+    button.disabled = true;
+
+    try {
+      if (friendState === "accepted") {
+        showStatus("أنتم بالفعل أصدقاء.");
+        return;
+      }
+
+      if (friendState === "sent") {
+        showStatus("طلب الصداقة مُرسل بالفعل.");
+        return;
+      }
+
+      if (friendState === "incoming") {
+        const { data: request, error: findError } = await supabase
+          .from("friend_requests")
+          .select("id")
+          .eq("sender_id", profile.id)
+          .eq("receiver_id", currentUser.id)
+          .eq("status", "pending")
+          .maybeSingle();
+
+        if (findError) throw findError;
+        if (!request) throw new Error("لم يتم العثور على طلب الصداقة.");
+
+        const { error } = await supabase
+          .from("friend_requests")
+          .update({status:"accepted",updated_at:new Date().toISOString()})
+          .eq("id", request.id);
+
+        if (error) throw error;
+
+        friendState = "accepted";
+        showStatus("تم قبول طلب الصداقة.");
+      } else {
+        const { error } = await supabase
+          .from("friend_requests")
+          .insert({
+            sender_id:currentUser.id,
+            receiver_id:profile.id,
+            status:"pending"
+          });
+
+        if (error) throw error;
+
+        friendState = "sent";
+        showStatus("تم إرسال طلب الصداقة.");
+      }
+
+      await renderProfile();
+    } catch (error) {
+      showStatus(error.message || "تعذر تنفيذ طلب الصداقة.", "error");
+    } finally {
+      button.disabled = false;
+    }
+  }
+
+  async function handleFollow() {
+    const button = $("#followButton");
+    button.disabled = true;
+
+    try {
+      if (followState === "following") {
+        const { error } = await supabase
+          .from("follows")
+          .delete()
+          .eq("follower_id", currentUser.id)
+          .eq("following_id", profile.id);
+
+        if (error) throw error;
+
+        followState = "none";
+        showStatus("تم إلغاء المتابعة.");
+      } else if (followState === "requested") {
+        showStatus("طلب المتابعة قيد الانتظار.");
+        return;
+      } else if (followState === "incoming") {
+        const { data: request, error: findError } = await supabase
+          .from("follow_requests")
+          .select("id")
+          .eq("sender_id", profile.id)
+          .eq("receiver_id", currentUser.id)
+          .eq("status", "pending")
+          .maybeSingle();
+
+        if (findError) throw findError;
+        if (!request) throw new Error("لم يتم العثور على طلب المتابعة.");
+
+        const { error } = await supabase
+          .from("follow_requests")
+          .update({status:"accepted",updated_at:new Date().toISOString()})
+          .eq("id", request.id);
+
+        if (error) throw error;
+
+        const { error: followError } = await supabase
+          .from("follows")
+          .insert({
+            follower_id:profile.id,
+            following_id:currentUser.id
+          });
+
+        if (followError && followError.code !== "23505") {
+          throw followError;
+        }
+
+        followState = "following";
+        showStatus("تم قبول طلب المتابعة.");
+      } else if (profile.is_private) {
+        const { error } = await supabase
+          .from("follow_requests")
+          .insert({
+            sender_id:currentUser.id,
+            receiver_id:profile.id,
+            status:"pending"
+          });
+
+        if (error) throw error;
+
+        followState = "requested";
+        showStatus("تم إرسال طلب المتابعة.");
+      } else {
+        const { error } = await supabase
+          .from("follows")
+          .insert({
+            follower_id:currentUser.id,
+            following_id:profile.id
+          });
+
+        if (error) throw error;
+
+        followState = "following";
+        showStatus("أصبحت تتابع هذا الحساب.");
+      }
+
+      await loadRelationships();
+      await renderProfile();
+    } catch (error) {
+      showStatus(error.message || "تعذر تنفيذ المتابعة.", "error");
+    } finally {
+      button.disabled = false;
+    }
+  }
+
+  $("#logoutButton").addEventListener("click", async () => {
+    const { error } = await supabase.auth.signOut();
+
+    if (error) {
+      alert("تعذر تسجيل الخروج: " + error.message);
+      return;
+    }
+
+    location.replace("login.html");
+  });
+
+  try {
+    await loadProfile();
+  } catch (error) {
+    console.error(error);
+
+    $("#page").innerHTML = `
+      <section class="section empty">
+        <span class="empty-icon">!</span>
+        حصلت مشكلة أثناء تحميل البروفايل.
+        <br>
+        ${escapeHTML(error.message || "خطأ غير معروف")}
+        <br><br>
+        <a class="action-btn primary-btn" href="home.html">العودة للرئيسية</a>
+      </section>`;
+  }
+</script>
+
+</body>
+</html>
