@@ -1,423 +1,1138 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
-  <meta name="theme-color" content="#090d1c">
-  <title>إنشاء حساب | HANOON WORLD</title>
+  <meta name="theme-color" content="#090a10">
+  <title>HANOON WORLD — إنشاء الحساب</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
   <style>
-    *{box-sizing:border-box;margin:0;padding:0}
-    :root{
-      --gold:#e8c77b;
-      --gold-light:#ffe6a5;
-      --text:#f8f5ff;
-      --muted:#aaa8bd;
-      --panel:rgba(12,15,32,.86);
+    :root {
+      --bg: #090a10;
+      --panel: #12141e;
+      --panel2: #191c29;
+      --gold: #d8b46b;
+      --gold2: #f1d69a;
+      --text: #f5f3ed;
+      --muted: #9396a6;
+      --line: rgba(255,255,255,.09);
+      --danger: #ff6578;
+      --green: #52d6a3;
     }
-    body{
-      min-height:100vh;
-      min-height:100dvh;
-      background:#080d1c;
-      color:var(--text);
-      font-family:"Cairo",sans-serif;
-      overflow-x:hidden;
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
     }
-    .background{
-      position:fixed;
-      inset:0;
-      z-index:-2;
+
+    html {
+      width: 100%;
+      min-height: 100%;
+      overflow-x: hidden;
+      touch-action: pan-y;
+      overscroll-behavior: none;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      min-height: 100dvh;
+      width: 100%;
+      overflow-x: hidden;
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Cairo", sans-serif;
+      touch-action: pan-y;
+      overscroll-behavior: none;
+    }
+
+    button, input {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    .page {
+      min-height: 100vh;
+      min-height: 100dvh;
+      position: relative;
+      isolation: isolate;
+      padding: 22px 15px 35px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      overflow: hidden;
+    }
+
+    .page::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -2;
       background:
-        url("https://cdn.pixabay.com/photo/2019/04/16/20/01/architecture-4132660_1280.jpg")
-        center/cover no-repeat;
+        linear-gradient(rgba(7,8,14,.87), rgba(7,8,14,.96)),
+        url("https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=1800&q=85")
+        center / cover fixed;
     }
-    .background:after{
-      content:"";
-      position:absolute;
-      inset:0;
-      background:linear-gradient(90deg,rgba(5,9,24,.45),rgba(5,9,24,.88)),
-      linear-gradient(0deg,rgba(5,8,22,.9),transparent);
+
+    .page::after {
+      content: "";
+      position: absolute;
+      width: 420px;
+      height: 420px;
+      border-radius: 50%;
+      top: -230px;
+      right: -180px;
+      background: rgba(216,180,107,.12);
+      filter: blur(85px);
+      z-index: -1;
+      pointer-events: none;
     }
-    .page{
-      min-height:100vh;
-      min-height:100dvh;
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      align-items:center;
-      gap:35px;
-      padding:45px 8%;
+
+    .shell {
+      width: 100%;
+      max-width: 510px;
+      margin: auto;
+      position: relative;
     }
-    .intro{max-width:600px;padding:20px}
-    .brand{
-      display:flex;
-      align-items:center;
-      gap:15px;
-      margin-bottom:35px;
+
+    .brand {
+      text-align: center;
+      margin: 5px 0 24px;
     }
-    .brand-mark{
-      width:65px;height:65px;
-      display:grid;place-items:center;
-      border-radius:21px;
-      background:linear-gradient(145deg,#f6df9f,#a77b39);
-      box-shadow:0 10px 40px #d8b15b35;
+
+    .brand-mark {
+      width: 68px;
+      height: 68px;
+      margin: 0 auto 10px;
+      border-radius: 23px;
+      display: grid;
+      place-items: center;
+      color: #17120a;
+      font-size: 30px;
+      font-weight: 900;
+      background: linear-gradient(145deg, #f4dfa9, #b98c43);
+      box-shadow: 0 10px 35px rgba(216,180,107,.22);
+      transform: rotate(-5deg);
     }
-    .brand-mark svg{width:42px;height:42px}
-    .brand-name{
-      color:var(--gold-light);
-      font-size:25px;
-      font-weight:900;
-      letter-spacing:2px;
+
+    .brand h1 {
+      font-size: 27px;
+      letter-spacing: 3px;
+      margin: 0;
+      font-weight: 900;
+      color: var(--gold2);
     }
-    .brand-caption{
-      color:#c7c3d6;
-      font-size:11px;
-      letter-spacing:3px;
+
+    .brand p {
+      color: var(--muted);
+      margin: 2px 0 0;
+      font-size: 12px;
     }
-    .intro h1{
-      font-size:clamp(34px,5vw,60px);
-      line-height:1.5;
-      font-weight:900;
-      margin-bottom:12px;
+
+    .card {
+      background: rgba(18,20,30,.94);
+      border: 1px solid rgba(216,180,107,.16);
+      border-radius: 25px;
+      padding: 23px 19px;
+      box-shadow: 0 25px 80px rgba(0,0,0,.38);
+      backdrop-filter: blur(18px);
     }
-    .intro h1 span{color:var(--gold-light)}
-    .intro p{
-      color:#d2d0df;
-      line-height:2.1;
-      max-width:470px;
-      font-size:15px;
+
+    .tabs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      padding: 5px;
+      background: #0b0d15;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      margin-bottom: 23px;
     }
-    .line{
-      width:85px;height:3px;
-      margin-top:25px;
-      background:linear-gradient(90deg,var(--gold),transparent);
+
+    .tab {
+      border: 0;
+      color: var(--muted);
+      background: transparent;
+      border-radius: 10px;
+      padding: 10px;
+      font-weight: 800;
+      font-size: 13px;
     }
-    .form-side{
-      display:flex;
-      justify-content:center;
-      width:100%;
+
+    .tab.active {
+      color: #21190c;
+      background: linear-gradient(135deg, var(--gold2), #c49b54);
     }
-    .card{
-      width:min(100%,450px);
-      padding:35px;
-      border:1px solid #ffffff20;
-      border-radius:27px;
-      background:var(--panel);
-      backdrop-filter:blur(22px);
-      -webkit-backdrop-filter:blur(22px);
-      box-shadow:0 30px 90px #0007,inset 0 1px #ffffff12;
+
+    .heading {
+      margin-bottom: 20px;
     }
-    .heading{margin-bottom:24px}
-    .heading h2{font-size:27px;font-weight:900}
-    .heading p{font-size:13px;color:var(--muted)}
-    .field{margin-bottom:16px}
-    label{
-      display:block;
-      margin-bottom:8px;
-      font-size:13px;
-      font-weight:700;
-      color:#e9e5f4;
+
+    .heading h2 {
+      font-size: 21px;
+      margin: 0 0 3px;
+      font-weight: 900;
     }
-    .input-wrap{position:relative}
-    input{
-      width:100%;
-      height:54px;
-      padding:0 15px;
-      border-radius:13px;
-      outline:none;
-      border:1px solid #ffffff20;
-      background:#ffffff0d;
-      color:white;
-      font-family:inherit;
-      font-size:14px;
-      transition:.2s;
+
+    .heading p {
+      color: var(--muted);
+      font-size: 12px;
+      margin: 0;
+      line-height: 1.8;
     }
-    input:focus{
-      border-color:var(--gold);
-      box-shadow:0 0 0 3px #e8c77b18;
+
+    .progress-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 9px;
+      font-size: 11px;
+      color: var(--muted);
     }
-    input::placeholder{color:#85869b}
-    .password-input{padding-left:55px}
-    .toggle{
-      position:absolute;
-      left:12px;
-      top:50%;
-      transform:translateY(-50%);
-      border:0;
-      background:none;
-      color:#c2bed0;
-      cursor:pointer;
-      font-family:inherit;
-      font-size:12px;
+
+    .progress-info strong {
+      color: var(--gold2);
     }
-    .hint{
-      color:#89879d;
-      font-size:11px;
-      margin-top:6px;
+
+    .progress-track {
+      height: 5px;
+      border-radius: 10px;
+      overflow: hidden;
+      background: #292b35;
+      margin-bottom: 23px;
     }
-    .create-btn{
-      width:100%;
-      height:56px;
-      margin-top:10px;
-      border:0;
-      border-radius:14px;
-      background:linear-gradient(110deg,#f4dfa5,#c99c50);
-      color:#211707;
-      font-family:inherit;
-      font-size:16px;
-      font-weight:900;
-      cursor:pointer;
-      transition:.2s;
+
+    .progress-fill {
+      height: 100%;
+      width: 25%;
+      background: linear-gradient(90deg, #ad8240, #f4dca3);
+      border-radius: inherit;
+      transition: width .3s ease;
     }
-    .create-btn:hover{transform:translateY(-2px)}
-    .create-btn:disabled{opacity:.6;cursor:wait;transform:none}
-    .message{
-      display:none;
-      margin-top:15px;
-      padding:12px;
-      border-radius:11px;
-      font-size:12px;
-      line-height:1.8;
+
+    .step-dots {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 6px;
+      margin-bottom: 24px;
     }
-    .message.error{
-      display:block;
-      color:#ffbdc6;
-      background:#dc37501c;
-      border:1px solid #ff647833;
+
+    .step-dot {
+      text-align: center;
+      color: #656978;
+      font-size: 10px;
+      font-weight: 700;
     }
-    .message.success{
-      display:block;
-      color:#a9f4d4;
-      background:#2db47d1c;
-      border:1px solid #46dca033;
+
+    .step-dot span {
+      display: grid;
+      place-items: center;
+      width: 27px;
+      height: 27px;
+      border-radius: 50%;
+      margin: 0 auto 5px;
+      background: #252837;
+      border: 1px solid var(--line);
     }
-    .login-link{
-      text-align:center;
-      margin-top:22px;
-      color:var(--muted);
-      font-size:13px;
+
+    .step-dot.active {
+      color: var(--gold2);
     }
-    .login-link a{
-      color:var(--gold-light);
-      text-decoration:none;
-      font-weight:800;
+
+    .step-dot.active span,
+    .step-dot.done span {
+      color: #21190c;
+      background: var(--gold);
+      border-color: var(--gold);
     }
-    .footer{
-      position:fixed;
-      bottom:13px;
-      left:0;right:0;
-      text-align:center;
-      color:#ffffff80;
-      font-size:11px;
-      pointer-events:none;
+
+    .field {
+      margin-bottom: 15px;
     }
-    @media(max-width:850px){
-      .page{
-        grid-template-columns:1fr;
-        gap:20px;
-        padding:25px 18px 55px;
+
+    .field label {
+      display: block;
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 7px;
+      color: #e9e5da;
+    }
+
+    .field input {
+      width: 100%;
+      height: 49px;
+      outline: none;
+      color: var(--text);
+      background: #0b0d15;
+      border: 1px solid #2a2d3b;
+      border-radius: 12px;
+      padding: 0 14px;
+      font-size: 13px;
+      transition: .2s;
+    }
+
+    .field input:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(216,180,107,.09);
+    }
+
+    .field input::placeholder {
+      color: #666a79;
+    }
+
+    .ltr {
+      direction: ltr;
+      text-align: left;
+    }
+
+    .hint {
+      font-size: 10px;
+      color: var(--muted);
+      margin-top: 5px;
+      line-height: 1.7;
+    }
+
+    .two {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 11px;
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 23px;
+    }
+
+    .btn {
+      min-height: 49px;
+      border: 0;
+      border-radius: 13px;
+      padding: 10px 17px;
+      font-size: 13px;
+      font-weight: 900;
+      flex: 1;
+      transition: transform .15s, opacity .15s;
+    }
+
+    .btn:active {
+      transform: scale(.98);
+    }
+
+    .btn:disabled {
+      opacity: .55;
+      cursor: not-allowed;
+    }
+
+    .btn-primary {
+      color: #21190c;
+      background: linear-gradient(135deg, #f3dfa9, #c69b53);
+      box-shadow: 0 8px 24px rgba(198,155,83,.15);
+    }
+
+    .btn-secondary {
+      color: #e9e6dc;
+      background: #252837;
+      border: 1px solid var(--line);
+    }
+
+    .message {
+      display: none;
+      padding: 11px 13px;
+      border-radius: 11px;
+      margin: 15px 0 0;
+      font-size: 12px;
+      line-height: 1.8;
+    }
+
+    .message.error {
+      display: block;
+      color: #ff9eaa;
+      background: rgba(255,101,120,.09);
+      border: 1px solid rgba(255,101,120,.2);
+    }
+
+    .message.success {
+      display: block;
+      color: #8be4bd;
+      background: rgba(82,214,163,.09);
+      border: 1px solid rgba(82,214,163,.2);
+    }
+
+    .upload-box {
+      position: relative;
+      border: 1px dashed rgba(216,180,107,.42);
+      background: #0b0d15;
+      border-radius: 17px;
+      padding: 16px;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .upload-box input {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    .avatar-preview {
+      width: 116px;
+      height: 116px;
+      margin: 0 auto 12px;
+      border-radius: 50%;
+      border: 3px solid var(--gold);
+      background: #252837;
+      object-fit: cover;
+      display: block;
+    }
+
+    .cover-preview {
+      width: 100%;
+      height: 145px;
+      border-radius: 12px;
+      object-fit: cover;
+      background: #252837;
+      display: block;
+      margin-bottom: 12px;
+    }
+
+    .upload-title {
+      color: var(--gold2);
+      font-size: 13px;
+      font-weight: 900;
+      margin: 0 0 4px;
+    }
+
+    .upload-sub {
+      color: var(--muted);
+      font-size: 10px;
+      margin: 0;
+    }
+
+    .review {
+      display: grid;
+      gap: 9px;
+    }
+
+    .review-item {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 11px 12px;
+      background: #0b0d15;
+      border: 1px solid var(--line);
+      border-radius: 11px;
+      font-size: 12px;
+    }
+
+    .review-item span:first-child {
+      color: var(--muted);
+    }
+
+    .review-item strong {
+      overflow-wrap: anywhere;
+      text-align: left;
+    }
+
+    .member-card {
+      text-align: center;
+      padding: 18px 12px;
+      border-radius: 19px;
+      background:
+        linear-gradient(145deg, rgba(216,180,107,.12), transparent 60%),
+        #0b0d15;
+      border: 1px solid rgba(216,180,107,.28);
+    }
+
+    .member-card h3 {
+      color: var(--gold2);
+      margin: 0 0 5px;
+      font-size: 18px;
+    }
+
+    .member-card p {
+      color: var(--muted);
+      font-size: 11px;
+      margin: 0 0 15px;
+    }
+
+    .member-code {
+      direction: ltr;
+      font-size: 23px;
+      letter-spacing: 2px;
+      color: var(--gold2);
+      font-weight: 900;
+      margin: 12px 0;
+      overflow-wrap: anywhere;
+    }
+
+    #qrCode {
+      display: inline-flex;
+      background: white;
+      border-radius: 12px;
+      padding: 10px;
+      min-width: 180px;
+      min-height: 180px;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #qrCode img,
+    #qrCode canvas {
+      max-width: 100%;
+      height: auto;
+    }
+
+    .center {
+      text-align: center;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .login-note {
+      color: var(--muted);
+      text-align: center;
+      font-size: 11px;
+      margin-top: 19px;
+    }
+
+    .login-note a {
+      color: var(--gold2);
+      text-decoration: none;
+      font-weight: 800;
+    }
+
+    .security-note {
+      color: #7d8191;
+      font-size: 10px;
+      line-height: 1.8;
+      text-align: center;
+      margin-top: 17px;
+    }
+
+    @media (max-width: 390px) {
+      .card {
+        padding: 19px 14px;
       }
-      .intro{text-align:center;margin:auto;padding:5px}
-      .brand{justify-content:center;margin-bottom:12px}
-      .brand-mark{width:52px;height:52px;border-radius:17px}
-      .brand-mark svg{width:34px;height:34px}
-      .brand-name{font-size:20px}
-      .brand-caption{font-size:9px}
-      .intro h1{font-size:27px;margin-bottom:5px}
-      .intro p{font-size:12px;line-height:1.8;margin:auto}
-      .line{margin:12px auto}
-      .card{padding:27px 22px}
-    }
-    @media(max-width:380px){
-      .page{padding-left:13px;padding-right:13px}
-      .card{padding:23px 17px}
+
+      .brand h1 {
+        font-size: 24px;
+      }
+
+      .two {
+        grid-template-columns: 1fr;
+        gap: 0;
+      }
     }
   </style>
 </head>
 
 <body>
-  <div class="background"></div>
-
   <main class="page">
-    <section class="intro">
-      <div class="brand">
-        <div class="brand-mark">
-          <svg viewBox="0 0 64 64" fill="none">
-            <path d="M32 5L39 18L54 21L44 32L46 47L32 40L18 47L20 32L10 21L25 18L32 5Z"
-              stroke="#38250D" stroke-width="2.8" stroke-linejoin="round"/>
-            <circle cx="32" cy="28" r="6" fill="#38250D"/>
-            <path d="M19 53H45" stroke="#38250D" stroke-width="3" stroke-linecap="round"/>
-          </svg>
-        </div>
-        <div>
-          <div class="brand-name">HANOON WORLD</div>
-          <div class="brand-caption">CONNECT • PLAY • ENJOY</div>
-        </div>
-      </div>
+    <div class="shell">
 
-      <h1>ابدأ رحلتك<br><span>في عالم هنون</span></h1>
-      <p>
-        أنشئ حسابك وانضم إلى مجتمع هنون،
-        كوّن صداقات جديدة، واكتشف الغرف
-        والألعاب والتجارب الممتعة.
-      </p>
-      <div class="line"></div>
-    </section>
+      <header class="brand">
+        <div class="brand-mark">H</div>
+        <h1>HANOON WORLD</h1>
+        <p>عالمك.. أصدقاؤك.. لحظاتك</p>
+      </header>
 
-    <section class="form-side">
-      <div class="card">
-        <div class="heading">
-          <h2>إنشاء حساب جديد</h2>
-          <p>أدخل بياناتك لإنشاء حسابك في HANOON WORLD</p>
+      <section class="card">
+
+        <div class="tabs">
+          <button class="tab active" id="registerTab" type="button">إنشاء حساب</button>
+          <button class="tab" id="loginTab" type="button">تسجيل الدخول</button>
         </div>
 
-        <form id="registerForm">
-          <div class="field">
-            <label for="username">اسم المستخدم</label>
-            <input
-              id="username"
-              type="text"
-              placeholder="مثال: hanoon_user"
-              autocomplete="username"
-              minlength="3"
-              maxlength="24"
-              pattern="[A-Za-z0-9_]{3,24}"
-              required
-            >
-            <div class="hint">
-              من 3 إلى 24 حرفًا إنجليزيًا أو رقمًا أو _
+        <!-- REGISTER -->
+        <section id="registerView">
+
+          <div class="progress-info">
+            <span id="stepLabel">المرحلة الأولى من خمس مراحل</span>
+            <strong id="stepPercent">20%</strong>
+          </div>
+
+          <div class="progress-track">
+            <div class="progress-fill" id="progressFill"></div>
+          </div>
+
+          <div class="step-dots">
+            <div class="step-dot active" data-dot="1"><span>1</span>البيانات</div>
+            <div class="step-dot" data-dot="2"><span>2</span>المعلومات</div>
+            <div class="step-dot" data-dot="3"><span>3</span>الصورة</div>
+            <div class="step-dot" data-dot="4"><span>4</span>الغلاف</div>
+            <div class="step-dot" data-dot="5"><span>5</span>العضوية</div>
+          </div>
+
+          <!-- STEP 1 -->
+          <div class="step" data-step="1">
+            <div class="heading">
+              <h2>أهلًا بك في هنون</h2>
+              <p>ابدأ بإنشاء حسابك واختيار بيانات الدخول الخاصة بك.</p>
+            </div>
+
+            <div class="field">
+              <label for="fullName">الاسم الكامل</label>
+              <input id="fullName" maxlength="70" placeholder="اكتب اسمك الكامل" autocomplete="name">
+            </div>
+
+            <div class="field">
+              <label for="username">اسم المستخدم</label>
+              <input id="username" class="ltr" maxlength="24" placeholder="username" autocomplete="username">
+              <div class="hint">من 3 إلى 24 حرفًا إنجليزيًا أو رقمًا أو علامة _.</div>
+            </div>
+
+            <div class="field">
+              <label for="password">كلمة المرور</label>
+              <input id="password" type="password" class="ltr" minlength="8" maxlength="72" placeholder="8 أحرف على الأقل" autocomplete="new-password">
+            </div>
+
+            <div class="field">
+              <label for="confirmPassword">تأكيد كلمة المرور</label>
+              <input id="confirmPassword" type="password" class="ltr" maxlength="72" placeholder="أعد كتابة كلمة المرور" autocomplete="new-password">
             </div>
           </div>
 
-          <div class="field">
-            <label for="password">كلمة المرور</label>
-            <div class="input-wrap">
-              <input
-                id="password"
-                class="password-input"
-                type="password"
-                placeholder="أنشئ كلمة مرور قوية"
-                autocomplete="new-password"
-                minlength="8"
-                maxlength="72"
-                required
-              >
-              <button class="toggle" type="button" data-target="password">
-                إظهار
-              </button>
+          <!-- STEP 2 -->
+          <div class="step hidden" data-step="2">
+            <div class="heading">
+              <h2>معلوماتك الشخصية</h2>
+              <p>أضف اللقب والسن حتى تكتمل بيانات عضويتك.</p>
+            </div>
+
+            <div class="field">
+              <label for="nickname">اللقب</label>
+              <input id="nickname" maxlength="35" placeholder="اللقب الذي تحب أن يظهر للناس">
+            </div>
+
+            <div class="field">
+              <label for="age">السن</label>
+              <input id="age" type="number" min="13" max="120" inputmode="numeric" placeholder="اكتب عمرك">
+              <div class="hint">يجب أن يكون العمر 13 عامًا أو أكثر لاستخدام هذا التسجيل.</div>
             </div>
           </div>
 
-          <div class="field">
-            <label for="confirmPassword">تأكيد كلمة المرور</label>
-            <div class="input-wrap">
-              <input
-                id="confirmPassword"
-                class="password-input"
-                type="password"
-                placeholder="أعد كتابة كلمة المرور"
-                autocomplete="new-password"
-                required
-              >
-              <button class="toggle" type="button" data-target="confirmPassword">
-                إظهار
-              </button>
+          <!-- STEP 3 -->
+          <div class="step hidden" data-step="3">
+            <div class="heading">
+              <h2>صورة الحساب</h2>
+              <p>اختر صورة واضحة تمثلك داخل عالم هنون.</p>
+            </div>
+
+            <div class="upload-box">
+              <img id="avatarPreview" class="avatar-preview" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80" alt="معاينة صورة الحساب">
+              <p class="upload-title">اختيار صورة البروفايل</p>
+              <p class="upload-sub">JPG أو PNG أو WebP — بحد أقصى 5 ميجابايت</p>
+              <input id="avatarFile" type="file" accept="image/jpeg,image/png,image/webp">
             </div>
           </div>
 
-          <button class="create-btn" id="createButton" type="submit">
-            إنشاء الحساب
-          </button>
+          <!-- STEP 4 -->
+          <div class="step hidden" data-step="4">
+            <div class="heading">
+              <h2>صورة الغلاف</h2>
+              <p>اختر صورة الغلاف التي ستظهر أعلى حسابك.</p>
+            </div>
 
-          <div id="message" class="message" role="status" aria-live="polite"></div>
-        </form>
+            <div class="upload-box">
+              <img id="coverPreview" class="cover-preview" src="https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=1000&q=80" alt="معاينة الغلاف">
+              <p class="upload-title">اختيار صورة الغلاف</p>
+              <p class="upload-sub">JPG أو PNG أو WebP — بحد أقصى 8 ميجابايت</p>
+              <input id="coverFile" type="file" accept="image/jpeg,image/png,image/webp">
+            </div>
 
-        <div class="login-link">
-          لديك حساب بالفعل؟
-          <a href="login.html">تسجيل الدخول</a>
-        </div>
-      </div>
-    </section>
+            <div class="hint center" style="margin-top:12px">
+              صورة الغلاف مطلوبة لإكمال إنشاء العضوية.
+            </div>
+          </div>
+
+          <!-- STEP 5 -->
+          <div class="step hidden" data-step="5">
+            <div class="heading">
+              <h2>بطاقة عضويتك</h2>
+              <p>تم إنشاء حسابك. هذه هويتك الخاصة داخل HANOON WORLD.</p>
+            </div>
+
+            <div class="member-card">
+              <h3>HANOON WORLD</h3>
+              <p>بطاقة العضوية الرقمية</p>
+
+              <div id="qrCode"></div>
+
+              <div class="member-code" id="memberCode">HN-0000000000</div>
+              <p id="memberName"></p>
+              <p>احتفظ برقم العضوية ورمز QR الخاص بك.</p>
+            </div>
+
+            <div class="actions">
+              <button class="btn btn-secondary" type="button" id="copyCode">نسخ ID</button>
+              <button class="btn btn-secondary" type="button" id="downloadQR">حفظ QR</button>
+            </div>
+
+            <div class="actions">
+              <button class="btn btn-primary" type="button" id="enterWorld">الدخول إلى هنون</button>
+            </div>
+          </div>
+
+          <div class="message" id="registerMessage" role="alert"></div>
+
+          <div class="actions" id="navigation">
+            <button class="btn btn-secondary hidden" type="button" id="backBtn">رجوع</button>
+            <button class="btn btn-primary" type="button" id="nextBtn">متابعة</button>
+          </div>
+
+          <p class="security-note" id="registerSecurity">
+            بياناتك تُستخدم لإنشاء عضويتك، وكلمة المرور لا تُعرض لأي مستخدم آخر.
+          </p>
+        </section>
+
+        <!-- LOGIN -->
+        <section id="loginView" class="hidden">
+          <div class="heading">
+            <h2>مرحبًا بعودتك</h2>
+            <p>سجل الدخول للعودة إلى عالم HANOON WORLD.</p>
+          </div>
+
+          <div class="field">
+            <label for="loginUsername">اسم المستخدم</label>
+            <input id="loginUsername" class="ltr" placeholder="username" autocomplete="username">
+          </div>
+
+          <div class="field">
+            <label for="loginPassword">كلمة المرور</label>
+            <input id="loginPassword" type="password" class="ltr" placeholder="كلمة المرور" autocomplete="current-password">
+          </div>
+
+          <div class="message" id="loginMessage" role="alert"></div>
+
+          <div class="actions">
+            <button class="btn btn-primary" type="button" id="loginBtn">تسجيل الدخول</button>
+          </div>
+        </section>
+
+      </section>
+    </div>
   </main>
 
-  <div class="footer">
-    © HANOON WORLD — جميع الحقوق محفوظة
-  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
   <script type="module">
-    import { signUp } from "./auth.js";
+    import { supabase } from "./supabase.js";
 
-    const form = document.getElementById("registerForm");
-    const usernameInput = document.getElementById("username");
-    const passwordInput = document.getElementById("password");
-    const confirmInput = document.getElementById("confirmPassword");
-    const button = document.getElementById("createButton");
-    const message = document.getElementById("message");
+    const $ = (id) => document.getElementById(id);
 
-    function showMessage(text, type) {
-      message.textContent = text;
-      message.className = "message " + type;
+    let currentStep = 1;
+    const totalSteps = 5;
+    let createdMemberCode = "";
+    let createdUserId = "";
+    let avatarObjectUrl = "";
+    let coverObjectUrl = "";
+
+    const registerView = $("registerView");
+    const loginView = $("loginView");
+
+    function showMessage(element, message, type = "error") {
+      element.textContent = message;
+      element.className = "message " + type;
     }
 
-    document.querySelectorAll(".toggle").forEach(toggle => {
-      toggle.addEventListener("click", () => {
-        const input = document.getElementById(toggle.dataset.target);
-        const visible = input.type === "password";
+    function clearMessage(element) {
+      element.textContent = "";
+      element.className = "message";
+    }
 
-        input.type = visible ? "text" : "password";
-        toggle.textContent = visible ? "إخفاء" : "إظهار";
+    function setBusy(button, busy, label) {
+      button.disabled = busy;
+      if (busy) {
+        button.dataset.oldLabel = button.textContent;
+        button.textContent = label || "جارٍ التنفيذ...";
+      } else {
+        button.textContent = button.dataset.oldLabel || button.textContent;
+      }
+    }
+
+    function switchTab(tab) {
+      const register = tab === "register";
+
+      registerView.classList.toggle("hidden", !register);
+      loginView.classList.toggle("hidden", register);
+
+      $("registerTab").classList.toggle("active", register);
+      $("loginTab").classList.toggle("active", !register);
+    }
+
+    $("registerTab").addEventListener("click", () => switchTab("register"));
+    $("loginTab").addEventListener("click", () => switchTab("login"));
+
+    function updateStep() {
+      document.querySelectorAll(".step").forEach((section) => {
+        section.classList.toggle(
+          "hidden",
+          Number(section.dataset.step) !== currentStep
+        );
       });
+
+      document.querySelectorAll(".step-dot").forEach((dot) => {
+        const number = Number(dot.dataset.dot);
+        dot.classList.toggle("active", number === currentStep);
+        dot.classList.toggle("done", number < currentStep);
+      });
+
+      $("progressFill").style.width = (currentStep / totalSteps * 100) + "%";
+      $("stepPercent").textContent = Math.round(currentStep / totalSteps * 100) + "%";
+
+      const labels = [
+        "البيانات الأساسية",
+        "المعلومات الشخصية",
+        "صورة الحساب",
+        "صورة الغلاف",
+        "بطاقة العضوية"
+      ];
+
+      $("stepLabel").textContent =
+        "المرحلة " + currentStep + " من " + totalSteps + " — " + labels[currentStep - 1];
+
+      $("backBtn").classList.toggle("hidden", currentStep === 1 || currentStep === 5);
+      $("nextBtn").classList.toggle("hidden", currentStep === 5);
+      $("navigation").classList.toggle("hidden", currentStep === 5);
+      $("registerSecurity").classList.toggle("hidden", currentStep === 5);
+
+      clearMessage($("registerMessage"));
+    }
+
+    function validateStep() {
+      const fullName = $("fullName").value.trim();
+      const username = $("username").value.trim().toLowerCase();
+      const password = $("password").value;
+      const confirmPassword = $("confirmPassword").value;
+
+      if (currentStep === 1) {
+        if (fullName.length < 2) return "اكتب الاسم الكامل بشكل صحيح.";
+        if (!/^[a-z0-9_]{3,24}$/.test(username)) {
+          return "اسم المستخدم يجب أن يكون من 3 إلى 24 حرفًا إنجليزيًا أو رقمًا أو _.";
+        }
+        if (password.length < 8 || password.length > 72) {
+          return "كلمة المرور يجب أن تكون من 8 إلى 72 حرفًا.";
+        }
+        if (password !== confirmPassword) {
+          return "كلمتا المرور غير متطابقتين.";
+        }
+      }
+
+      if (currentStep === 2) {
+        const age = Number($("age").value);
+        if (!$("nickname").value.trim()) return "اكتب اللقب الذي تريد ظهوره.";
+        if (!Number.isInteger(age) || age < 13 || age > 120) {
+          return "اكتب سنًا صحيحًا من 13 إلى 120.";
+        }
+      }
+
+      if (currentStep === 3) {
+        if (!$("avatarFile").files[0]) return "اختر صورة الحساب أولًا.";
+        const file = $("avatarFile").files[0];
+        if (file.size > 5 * 1024 * 1024) return "حجم صورة الحساب يجب ألا يتجاوز 5 ميجابايت.";
+        if (!file.type.startsWith("image/")) return "الملف المختار ليس صورة صالحة.";
+      }
+
+      if (currentStep === 4) {
+        if (!$("coverFile").files[0]) return "اختر صورة الغلاف أولًا.";
+        const file = $("coverFile").files[0];
+        if (file.size > 8 * 1024 * 1024) return "حجم صورة الغلاف يجب ألا يتجاوز 8 ميجابايت.";
+        if (!file.type.startsWith("image/")) return "الملف المختار ليس صورة صالحة.";
+      }
+
+      return "";
+    }
+
+    $("nextBtn").addEventListener("click", async () => {
+      const error = validateStep();
+
+      if (error) {
+        showMessage($("registerMessage"), error);
+        return;
+      }
+
+      if (currentStep < 4) {
+        currentStep++;
+        updateStep();
+        return;
+      }
+
+      await createAccount();
     });
 
-    form.addEventListener("submit", async event => {
-      event.preventDefault();
-      message.className = "message";
-
-      const username = usernameInput.value.trim();
-      const password = passwordInput.value;
-      const confirmPassword = confirmInput.value;
-
-      if (password !== confirmPassword) {
-        showMessage("كلمتا المرور غير متطابقتين.", "error");
-        return;
+    $("backBtn").addEventListener("click", () => {
+      if (currentStep > 1 && currentStep < 5) {
+        currentStep--;
+        updateStep();
       }
+    });
 
-      if (!/^[a-zA-Z0-9_]{3,24}$/.test(username)) {
-        showMessage("اسم المستخدم يجب أن يكون من 3 إلى 24 حرفًا إنجليزيًا أو رقمًا أو _.", "error");
-        return;
-      }
+    function previewFile(input, image, oldUrlSetter) {
+      input.addEventListener("change", () => {
+        const file = input.files[0];
+        if (!file) return;
 
-      if (password.length < 8 || password.length > 72) {
-        showMessage("كلمة المرور يجب أن تكون من 8 إلى 72 حرفًا.", "error");
-        return;
-      }
+        if (oldUrlSetter === "avatar") {
+          if (avatarObjectUrl) URL.revokeObjectURL(avatarObjectUrl);
+          avatarObjectUrl = URL.createObjectURL(file);
+          image.src = avatarObjectUrl;
+        } else {
+          if (coverObjectUrl) URL.revokeObjectURL(coverObjectUrl);
+          coverObjectUrl = URL.createObjectURL(file);
+          image.src = coverObjectUrl;
+        }
+      });
+    }
 
-      button.disabled = true;
-      button.textContent = "جارٍ إنشاء الحساب...";
+    previewFile($("avatarFile"), $("avatarPreview"), "avatar");
+    previewFile($("coverFile"), $("coverPreview"), "cover");
+
+    async function uploadImage(userId, file, prefix) {
+      const extension = file.name.split(".").pop().toLowerCase();
+      const safeExtension = /^[a-z0-9]+$/.test(extension) ? extension : "jpg";
+      const path = `${userId}/${prefix}-${Date.now()}.${safeExtension}`;
+
+      const { data, error } = await supabase.storage
+        .from("avatars")
+        .upload(path, file, {
+          cacheControl: "3600",
+          upsert: false,
+          contentType: file.type
+        });
+
+      if (error) throw error;
+      return data.path;
+    }
+
+    async function createAccount() {
+      const button = $("nextBtn");
+      setBusy(button, true, "جارٍ إنشاء حسابك...");
 
       try {
-        await signUp(username, password);
+        const username = $("username").value.trim().toLowerCase();
+        const password = $("password").value;
 
-        showMessage("تم إنشاء حسابك بنجاح. جارٍ الانتقال...", "success");
+        const { data: authData, error: authError } =
+          await supabase.functions.invoke("hanoon-username-auth", {
+            body: {
+              action: "signup",
+              username,
+              password
+            }
+          });
 
-        setTimeout(() => {
-          window.location.href = "profile-setup.html";
-        }, 900);
+        if (authError) throw authError;
+        if (!authData || !authData.session || !authData.user) {
+          throw new Error(authData?.error || "تعذر إنشاء الحساب.");
+        }
 
-      } catch (error) {
+        const { error: sessionError } = await supabase.auth.setSession({
+          access_token: authData.session.access_token,
+          refresh_token: authData.session.refresh_token
+        });
+
+        if (sessionError) throw sessionError;
+
+        createdUserId = authData.user.id;
+
         showMessage(
-          error.message || "تعذر إنشاء الحساب. حاول مرة أخرى.",
-          "error"
+          $("registerMessage"),
+          "تم إنشاء بيانات الدخول. جارٍ حفظ صورك وبيانات العضوية...",
+          "success"
         );
 
-        button.disabled = false;
-        button.textContent = "إنشاء الحساب";
+        const avatarPath = await uploadImage(
+          createdUserId,
+          $("avatarFile").files[0],
+          "avatar"
+        );
+
+        const coverPath = await uploadImage(
+          createdUserId,
+          $("coverFile").files[0],
+          "cover"
+        );
+
+        const profileUpdate = {
+          full_name: $("fullName").value.trim(),
+          nickname: $("nickname").value.trim(),
+          username,
+          age: Number($("age").value),
+          avatar_path: avatarPath,
+          cover_path: coverPath
+        };
+
+        const { error: updateError } = await supabase
+          .from("profiles")
+          .update(profileUpdate)
+          .eq("id", createdUserId);
+
+        if (updateError) throw updateError;
+
+        const { data: profile, error: profileError } = await supabase
+          .from("profiles")
+          .select("member_code, profile_completed")
+          .eq("id", createdUserId)
+          .single();
+
+        if (profileError) throw profileError;
+
+        if (!profile.profile_completed) {
+          throw new Error("تم حفظ الحساب، لكن لم يكتمل تأكيد العضوية. أعد المحاولة أو تواصل مع الدعم.");
+        }
+
+        createdMemberCode = profile.member_code;
+
+        $("memberCode").textContent = createdMemberCode;
+        $("memberName").textContent = $("fullName").value.trim();
+
+        $("qrCode").innerHTML = "";
+
+        if (typeof QRCode === "undefined") {
+          throw new Error("تعذر تحميل مولد QR. تحقق من اتصال الإنترنت ثم أعد تحميل الصفحة.");
+        }
+
+        new QRCode($("qrCode"), {
+          text: "HANOON-MEMBER:" + createdMemberCode,
+          width: 180,
+          height: 180,
+          colorDark: "#111111",
+          colorLight: "#ffffff",
+          correctLevel: QRCode.CorrectLevel.H
+        });
+
+        currentStep = 5;
+        updateStep();
+
+      } catch (error) {
+        console.error("HANOON signup:", error);
+
+        const message =
+          error?.message ||
+          "حدث خطأ أثناء إنشاء الحساب. تحقق من البيانات وحاول مرة أخرى.";
+
+        showMessage($("registerMessage"), message);
+      } finally {
+        setBusy(button, false);
+      }
+    }
+
+    $("copyCode").addEventListener("click", async () => {
+      if (!createdMemberCode) return;
+
+      try {
+        await navigator.clipboard.writeText(createdMemberCode);
+        showMessage($("registerMessage"), "تم نسخ رقم العضوية.", "success");
+      } catch {
+        showMessage($("registerMessage"), "تعذر النسخ تلقائيًا على هذا المتصفح.");
       }
     });
+
+    $("downloadQR").addEventListener("click", () => {
+      const canvas = $("qrCode").querySelector("canvas");
+      const image = $("qrCode").querySelector("img");
+      const source = canvas ? canvas.toDataURL("image/png") : image?.src;
+
+      if (!source) {
+        showMessage($("registerMessage"), "رمز QR غير جاهز للحفظ.");
+        return;
+      }
+
+      const link = document.createElement("a");
+      link.href = source;
+      link.download = "HANOON-MEMBER-QR.png";
+      link.click();
+    });
+
+    $("enterWorld").addEventListener("click", () => {
+      window.location.href = "./home.html";
+    });
+
+    $("loginBtn").addEventListener("click", async () => {
+      const button = $("loginBtn");
+      const username = $("loginUsername").value.trim().toLowerCase();
+      const password = $("loginPassword").value;
+
+      clearMessage($("loginMessage"));
+
+      if (!/^[a-z0-9_]{3,24}$/.test(username)) {
+        showMessage($("loginMessage"), "اكتب اسم المستخدم بشكل صحيح.");
+        return;
+      }
+
+      if (!password) {
+        showMessage($("loginMessage"), "اكتب كلمة المرور.");
+        return;
+      }
+
+      setBusy(button, true, "جارٍ تسجيل الدخول...");
+
+      try {
+        const { data, error } = await supabase.functions.invoke(
+          "hanoon-username-auth",
+          {
+            body: {
+              action: "signin",
+              username,
+              password
+            }
+          }
+        );
+
+        if (error) throw error;
+        if (!data?.session) {
+          throw new Error(data?.error || "اسم المستخدم أو كلمة المرور غير صحيحة.");
+        }
+
+        const { error: sessionError } = await supabase.auth.setSession({
+          access_token: data.session.access_token,
+          refresh_token: data.session.refresh_token
+        });
+
+        if (sessionError) throw sessionError;
+
+        const { data: profile, error: profileError } = await supabase
+          .from("profiles")
+          .select("profile_completed")
+          .eq("id", data.user.id)
+          .single();
+
+        if (profileError) throw profileError;
+
+        if (!profile.profile_completed) {
+          showMessage(
+            $("loginMessage"),
+            "الحساب يحتاج إلى استكمال بياناته. لا تغلق الصفحة حتى نكمل استعادة بياناته."
+          );
+          return;
+        }
+
+        window.location.href = "./home.html";
+
+      } catch (error) {
+        console.error("HANOON login:", error);
+        showMessage(
+          $("loginMessage"),
+          error?.message || "تعذر تسجيل الدخول. حاول مرة أخرى."
+        );
+      } finally {
+        setBusy(button, false);
+      }
+    });
+
+    updateStep();
   </script>
 </body>
-</html>
+                                                                   </html>
