@@ -1,773 +1,371 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
-  <meta name="theme-color" content="#090b18">
-  <title>تفاصيل اللعبة | HANOON WORLD</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#090b18">
+<title>HANOON WORLD | Gaming</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-  <style>
-    :root {
-      --bg: #090b18;
-      --panel: rgba(22,25,45,.94);
-      --purple: #a18aff;
-      --gold: #edca83;
-      --cyan: #68d9d5;
-      --text: #f7f5ff;
-      --muted: #a6a8bd;
-      --line: rgba(255,255,255,.09);
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    body {
-      min-height: 100vh;
-      overflow-x: hidden;
-      padding-bottom: 40px;
-      background: var(--bg);
-      color: var(--text);
-      font-family: "Cairo", sans-serif;
-    }
-
-    button, a {
-      font: inherit;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    button {
-      cursor: pointer;
-      color: inherit;
-    }
-
-    .background {
-      position: fixed;
-      inset: 0;
-      z-index: -2;
-      background:
-        linear-gradient(180deg, rgba(7,9,20,.55), rgba(7,9,20,.91) 70%, #090b18),
-        url("https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=2200&q=90")
-        center top / cover no-repeat;
-    }
-
-    .background::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(ellipse at 15% 20%, rgba(125,91,230,.18), transparent 38%),
-        radial-gradient(ellipse at 90% 55%, rgba(48,174,183,.10), transparent 35%);
-    }
-
-    .container {
-      width: min(1100px, calc(100% - 30px));
-      margin: auto;
-    }
-
-    .topbar {
-      height: 75px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-bottom: 1px solid var(--line);
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 15px;
-      font-weight: 900;
-    }
-
-    .brand-icon {
-      width: 42px;
-      height: 42px;
-      display: grid;
-      place-items: center;
-      border-radius: 14px;
-      background: linear-gradient(145deg, #b49aff, #6845ce);
-      box-shadow: 0 8px 25px rgba(126,91,226,.3);
-    }
-
-    .brand-icon svg {
-      width: 24px;
-      height: 24px;
-      stroke: white;
-      fill: none;
-      stroke-width: 1.8;
-    }
-
-    .brand small {
-      display: block;
-      margin-top: -5px;
-      color: var(--gold);
-      font-size: 8px;
-      letter-spacing: 2px;
-    }
-
-    .back-button {
-      min-height: 40px;
-      padding: 7px 14px;
-      display: flex;
-      align-items: center;
-      gap: 7px;
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      background: rgba(255,255,255,.06);
-      color: #ded8f4;
-      font-size: 11px;
-      font-weight: 800;
-    }
-
-    .back-button svg {
-      width: 17px;
-      height: 17px;
-      stroke: currentColor;
-      fill: none;
-      stroke-width: 2;
-    }
-
-    .breadcrumb {
-      display: flex;
-      align-items: center;
-      gap: 9px;
-      margin: 23px 0 17px;
-      color: var(--muted);
-      font-size: 11px;
-    }
-
-    .breadcrumb a {
-      color: #c0adff;
-    }
-
-    .hero {
-      position: relative;
-      min-height: 370px;
-      overflow: hidden;
-      border: 1px solid rgba(190,171,255,.2);
-      border-radius: 27px;
-      background:
-        linear-gradient(90deg, rgba(9,10,25,.97), rgba(9,10,25,.7) 55%, rgba(9,10,25,.18)),
-        url("https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1800&q=90")
-        center / cover no-repeat;
-      box-shadow: 0 25px 65px rgba(0,0,0,.35);
-    }
-
-    .hero-content {
-      position: relative;
-      z-index: 2;
-      max-width: 620px;
-      padding: 55px 42px;
-    }
-
-    .eyebrow {
-      display: inline-flex;
-      padding: 7px 13px;
-      border: 1px solid rgba(237,202,131,.25);
-      border-radius: 30px;
-      background: rgba(237,202,131,.08);
-      color: var(--gold);
-      font-size: 10px;
-      font-weight: 900;
-    }
-
-    .hero h1 {
-      margin-top: 20px;
-      font-size: clamp(32px, 5vw, 51px);
-      font-weight: 900;
-      line-height: 1.4;
-    }
-
-    .hero-description {
-      max-width: 500px;
-      margin-top: 12px;
-      color: #d0cce0;
-      font-size: 13px;
-      line-height: 2.1;
-    }
-
-    .cover-image {
-      position: absolute;
-      inset: 0 45% 0 0;
-      width: 55%;
-      height: 100%;
-      object-fit: cover;
-      opacity: .75;
-      mask-image: linear-gradient(270deg, transparent, black 35%);
-      -webkit-mask-image: linear-gradient(270deg, transparent, black 35%);
-    }
-
-    .hero-placeholder {
-      position: absolute;
-      inset: 0 45% 0 0;
-      display: grid;
-      place-items: center;
-      color: rgba(196,177,255,.65);
-    }
-
-    .hero-placeholder svg {
-      width: 115px;
-      height: 115px;
-      stroke: currentColor;
-      fill: none;
-      stroke-width: .8;
-      filter: drop-shadow(0 0 25px rgba(151,119,255,.4));
-    }
-
-    .status {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      margin-top: 22px;
-      padding: 9px 13px;
-      border: 1px solid rgba(255,255,255,.12);
-      border-radius: 12px;
-      background: rgba(7,9,20,.55);
-      font-size: 11px;
-      font-weight: 900;
-    }
-
-    .status-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: #e4a36f;
-      box-shadow: 0 0 10px rgba(228,163,111,.6);
-    }
-
-    .status.active .status-dot {
-      background: #63d7a0;
-      box-shadow: 0 0 10px rgba(99,215,160,.6);
-    }
-
-    .layout {
-      display: grid;
-      grid-template-columns: 1fr 310px;
-      gap: 19px;
-      margin-top: 22px;
-      align-items: start;
-    }
-
-    .panel {
-      padding: 25px;
-      border: 1px solid var(--line);
-      border-radius: 21px;
-      background: var(--panel);
-      box-shadow: 0 15px 40px rgba(0,0,0,.2);
-      backdrop-filter: blur(15px);
-    }
-
-    .panel + .panel {
-      margin-top: 18px;
-    }
-
-    .panel-title {
-      margin-bottom: 15px;
-      font-size: 17px;
-      font-weight: 900;
-    }
-
-    .description {
-      color: #c0bfd0;
-      font-size: 13px;
-      line-height: 2.2;
-      white-space: pre-line;
-    }
-
-    .details-list {
-      display: grid;
-      gap: 12px;
-    }
-
-    .detail-item {
-      min-height: 57px;
-      padding: 11px 13px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      border: 1px solid rgba(255,255,255,.07);
-      border-radius: 13px;
-      background: rgba(255,255,255,.035);
-    }
-
-    .detail-label {
-      color: var(--muted);
-      font-size: 11px;
-    }
-
-    .detail-value {
-      color: #eeeaff;
-      font-size: 12px;
-      font-weight: 900;
-      text-align: left;
-    }
-
-    .notice {
-      padding: 17px;
-      border: 1px solid rgba(237,202,131,.2);
-      border-radius: 15px;
-      background: rgba(237,202,131,.065);
-    }
-
-    .notice h3 {
-      color: var(--gold);
-      font-size: 13px;
-      font-weight: 900;
-    }
-
-    .notice p {
-      margin-top: 7px;
-      color: #c6bfd0;
-      font-size: 11px;
-      line-height: 2;
-    }
-
-    .primary-button {
-      width: 100%;
-      min-height: 48px;
-      margin-top: 18px;
-      border: 0;
-      border-radius: 13px;
-      background: linear-gradient(120deg, #9277f1, #7050d2);
-      color: white;
-      font-size: 12px;
-      font-weight: 900;
-    }
-
-    .primary-button:disabled {
-      cursor: not-allowed;
-      opacity: .55;
-      filter: grayscale(.3);
-    }
-
-    .state {
-      min-height: 330px;
-      margin-top: 30px;
-      padding: 30px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      border: 1px solid var(--line);
-      border-radius: 23px;
-      background: var(--panel);
-    }
-
-    .state-icon {
-      width: 75px;
-      height: 75px;
-      display: grid;
-      place-items: center;
-      border: 1px solid rgba(157,129,255,.22);
-      border-radius: 22px;
-      background: rgba(157,129,255,.1);
-    }
-
-    .state-icon svg {
-      width: 38px;
-      height: 38px;
-      stroke: #c1b1ff;
-      fill: none;
-      stroke-width: 1.5;
-    }
-
-    .state h2 {
-      margin-top: 17px;
-      font-size: 18px;
-      font-weight: 900;
-    }
-
-    .state p {
-      max-width: 420px;
-      margin-top: 8px;
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 2;
-    }
-
-    .loading {
-      width: 34px;
-      height: 34px;
-      border: 3px solid rgba(255,255,255,.12);
-      border-top-color: var(--purple);
-      border-radius: 50%;
-      animation: spin .8s linear infinite;
-    }
-
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-
-    @media (max-width: 760px) {
-      .container {
-        width: calc(100% - 22px);
-      }
-
-      .topbar {
-        height: 66px;
-      }
-
-      .hero {
-        min-height: 330px;
-        border-radius: 21px;
-        background-position: 60% center;
-      }
-
-      .hero-content {
-        padding: 35px 21px;
-        max-width: 90%;
-      }
-
-      .hero h1 {
-        font-size: 34px;
-      }
-
-      .hero-description {
-        font-size: 11px;
-      }
-
-      .cover-image,
-      .hero-placeholder {
-        inset: 0 30% 0 0;
-        width: 70%;
-        opacity: .35;
-      }
-
-      .layout {
-        grid-template-columns: 1fr;
-      }
-
-      .panel {
-        padding: 19px;
-      }
-    }
-
-    @media (max-width: 360px) {
-      .brand {
-        font-size: 12px;
-      }
-
-      .back-button {
-        padding: 6px 9px;
-        font-size: 10px;
-      }
-    }
-  </style>
+<style>
+:root{
+ --bg:#080a16;--panel:#14182b;--panel2:#1b2037;--line:rgba(255,255,255,.09);
+ --text:#f7f5ff;--muted:#a5abc4;--purple:#a78bfa;--gold:#edca83;
+ --cyan:#65d9d2;--green:#56d6a0;--red:#ff7188;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{min-height:100vh;background:var(--bg);color:var(--text);font-family:Cairo,sans-serif;overflow-x:hidden}
+button,input{font:inherit}button{cursor:pointer;color:inherit}
+a{color:inherit;text-decoration:none}
+.bg{position:fixed;inset:0;z-index:-2;background:
+linear-gradient(180deg,rgba(6,8,19,.65),#080a16 85%),
+url("https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=2000&q=85") center/cover}
+.bg:after{content:"";position:absolute;inset:0;background:
+radial-gradient(ellipse at 15% 10%,rgba(132,92,245,.2),transparent 38%),
+radial-gradient(ellipse at 90% 45%,rgba(38,184,190,.12),transparent 35%)}
+.container{width:min(1120px,calc(100% - 28px));margin:auto}
+header{height:72px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:11px;font-weight:900;letter-spacing:.4px}
+.brand-icon{width:43px;height:43px;border-radius:15px;display:grid;place-items:center;background:linear-gradient(145deg,#b49aff,#6845ce);box-shadow:0 8px 28px #7955dc55}
+.brand-icon svg{width:25px;stroke:white;fill:none;stroke-width:1.8}
+.brand small{display:block;color:var(--gold);font-size:8px;letter-spacing:2px;margin-top:-5px}
+.back{padding:9px 14px;border:1px solid var(--line);border-radius:12px;background:#ffffff0b;font-size:11px;font-weight:800}
+.back svg{width:15px;vertical-align:middle;margin-left:5px;stroke:currentColor;fill:none;stroke-width:2}
+.breadcrumb{display:flex;gap:9px;margin:20px 0;color:var(--muted);font-size:11px}
+.breadcrumb a{color:#c1adff}
+.hero{position:relative;min-height:280px;border:1px solid #b49aff33;border-radius:25px;overflow:hidden;background:#17172c;box-shadow:0 24px 70px #0007}
+.hero-image{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.5}
+.hero-shade{position:absolute;inset:0;background:linear-gradient(90deg,#090b19 0%,#090b19dd 38%,#090b1966 100%)}
+.hero-content{position:relative;z-index:1;padding:38px;max-width:650px}
+.eyebrow{display:inline-flex;padding:6px 12px;border:1px solid #edca8350;border-radius:30px;color:var(--gold);background:#edca8310;font-size:10px;font-weight:900}
+h1{font-size:clamp(29px,5vw,48px);font-weight:900;margin:13px 0 6px}
+.hero p{font-size:12px;line-height:2;color:#d0cce0;max-width:520px}
+.hero-meta{display:flex;gap:9px;flex-wrap:wrap;margin-top:17px}
+.pill{padding:7px 11px;border:1px solid var(--line);background:#080a1688;border-radius:10px;color:#e7e1ff;font-size:10px}
+.section-title{display:flex;align-items:center;justify-content:space-between;margin:25px 0 13px}
+.section-title h2{font-size:17px;font-weight:900}
+.section-title span{font-size:10px;color:var(--muted)}
+.layout{display:grid;grid-template-columns:minmax(0,1fr) 310px;gap:17px;align-items:start;margin-top:18px}
+.panel{padding:20px;border:1px solid var(--line);border-radius:20px;background:linear-gradient(145deg,#171b30f2,#101426f2);box-shadow:0 15px 40px #0003;backdrop-filter:blur(14px)}
+.panel+.panel{margin-top:15px}
+.panel h3{font-size:15px;font-weight:900;margin-bottom:13px}
+.modes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
+.mode{min-height:108px;padding:15px;text-align:right;border:1px solid var(--line);border-radius:15px;background:#ffffff06;transition:border-color .2s,background .2s}
+.mode:hover{border-color:#a78bfa88;background:#a78bfa12}
+.mode svg{width:23px;height:23px;stroke:var(--purple);fill:none;stroke-width:1.7;margin-bottom:8px}
+.mode b{display:block;font-size:12px}
+.mode small{display:block;color:var(--muted);font-size:10px;margin-top:3px}
+.mode.locked{opacity:.55;cursor:not-allowed}
+.notice{padding:13px;border:1px solid #edca8333;border-radius:13px;background:#edca830c;color:#d7d0e1;font-size:11px;line-height:2}
+.notice strong{color:var(--gold)}
+.primary{width:100%;min-height:47px;border:0;border-radius:13px;background:linear-gradient(120deg,#9c7cf4,#674bd0);font-size:12px;font-weight:900;box-shadow:0 9px 24px #7955dc30}
+.secondary{width:100%;min-height:44px;border:1px solid var(--line);border-radius:12px;background:#ffffff08;font-size:11px;font-weight:800}
+.game-area{margin-top:17px;display:none}
+.game-area.show{display:block}
+.game-top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:15px}
+.game-top strong{font-size:14px}
+.game-top span{font-size:10px;color:var(--muted)}
+.scoreboard{display:grid;grid-template-columns:1fr auto 1fr;gap:8px;align-items:center;margin-bottom:15px}
+.player-score{padding:12px;border:1px solid var(--line);border-radius:13px;background:#ffffff07;text-align:center}
+.player-score.active{border-color:#a78bfa99;background:#a78bfa15}
+.player-score b{display:block;font-size:12px}
+.player-score small{color:var(--muted);font-size:10px}
+.vs{font-size:10px;color:var(--gold);font-weight:900}
+.xo-board{width:min(100%,390px);margin:12px auto;display:grid;grid-template-columns:repeat(3,1fr);gap:9px;direction:ltr}
+.xo-cell{aspect-ratio:1;border:1px solid #a78bfa35;border-radius:17px;background:linear-gradient(145deg,#202641,#11172b);font-size:clamp(35px,9vw,57px);font-weight:900;color:var(--purple);box-shadow:inset 0 0 20px #0003}
+.xo-cell.o{color:var(--cyan)}
+.xo-cell:disabled{cursor:default}
+.game-message{text-align:center;min-height:27px;margin:8px 0 14px;font-size:12px;font-weight:800;color:var(--gold)}
+.game-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.domino-hand{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin:17px 0}
+.domino-tile{min-width:55px;height:82px;border:1px solid #d9c28c;border-radius:9px;background:linear-gradient(145deg,#fff5d9,#d8c49b);color:#171525;display:flex;flex-direction:column;align-items:center;justify-content:space-evenly;font-size:17px;font-weight:900;box-shadow:0 5px 12px #0005}
+.domino-tile span{width:80%;height:1px;background:#766b55}
+.domino-table{min-height:100px;padding:15px;border:1px dashed #ffffff25;border-radius:15px;background:#ffffff05;display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:5px}
+.domino-table .domino-tile{transform:scale(.75);margin:-8px}
+.empty{padding:30px;text-align:center;color:var(--muted);font-size:12px;line-height:2}
+.empty svg{width:42px;height:42px;stroke:#a78bfa;fill:none;margin-bottom:10px}
+.loading{width:32px;height:32px;border:3px solid #ffffff22;border-top-color:var(--purple);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 12px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.hidden{display:none!important}
+footer{text-align:center;padding:25px 0;color:#777d98;font-size:9px}
+@media(max-width:760px){
+ .container{width:calc(100% - 20px)}header{height:64px}
+ .hero{min-height:270px;border-radius:19px}
+ .hero-content{padding:27px 20px;max-width:95%}
+ .hero-shade{background:linear-gradient(90deg,#090b19ee,#090b19b8)}
+ .layout{grid-template-columns:1fr}
+ .panel{padding:16px}
+ .modes{grid-template-columns:1fr 1fr}
+}
+@media(max-width:390px){.modes{grid-template-columns:1fr}.hero p{font-size:11px}}
+</style>
 </head>
 
 <body>
-  <div class="background"></div>
+<div class="bg"></div>
+<div class="container">
+<header>
+ <a class="brand" href="home.html">
+  <span class="brand-icon"><svg viewBox="0 0 24 24"><path d="M7 8h10a4 4 0 0 1 4 4v4a3 3 0 0 1-5 2l-2-2h-4l-2 2a3 3 0 0 1-5-2v-4a4 4 0 0 1 4-4Z"/><path d="M8 11v4M6 13h4M16 12h.01M18 14h.01"/></svg></span>
+  <span>HANOON WORLD<small>GAMES EXPERIENCE</small></span>
+ </a>
+ <a class="back" id="backLink" href="games.html">
+  <svg viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></svg>رجوع
+ </a>
+</header>
 
-  <div class="container">
+<div class="breadcrumb"><a href="home.html">الرئيسية</a><span>/</span><a href="games.html">الألعاب</a><span>/</span><span id="crumb">اللعبة</span></div>
 
-    <header class="topbar">
-      <a class="brand" href="home.html">
-        <span class="brand-icon">
-          <svg viewBox="0 0 24 24">
-            <path d="M7 8h10a4 4 0 0 1 4 4v4a3 3 0 0 1-5 2l-2-2h-4l-2 2a3 3 0 0 1-5-2v-4a4 4 0 0 1 4-4Z"/>
-            <path d="M8 11v4M6 13h4M16 12h.01M18 14h.01"/>
-          </svg>
-        </span>
-        <span>
-          HANOON WORLD
-          <small>GAMES EXPERIENCE</small>
-        </span>
-      </a>
+<main id="main">
+ <section class="panel empty"><div class="loading"></div>جارٍ تحميل اللعبة</section>
+</main>
+<footer>HANOON WORLD · PLAY TOGETHER</footer>
+</div>
 
-      <a class="back-button" href="games.html">
-        <svg viewBox="0 0 24 24">
-          <path d="m15 18-6-6 6-6"/>
-        </svg>
-        العودة للألعاب
-      </a>
-    </header>
+<script>
+const SUPABASE_URL="https://gjtgvczvclfwvlvcquxh.supabase.co";
+const SUPABASE_KEY="sb_publishable_4DVTUZ-xTlqU2GpFvpb7lw_g-Kxomd4";
+const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+const params=new URLSearchParams(location.search);
+const gameKey=params.get("game");
+const roomId=params.get("room");
+const $=id=>document.getElementById(id);
 
-    <div class="breadcrumb">
-      <a href="home.html">الرئيسية</a>
-      <span>/</span>
-      <a href="games.html">الألعاب</a>
-      <span>/</span>
-      <span id="breadcrumbTitle">التفاصيل</span>
+const GAME_INFO={
+ domino:{name:"الدومينو",en:"DOMINO",desc:"رتّب القطع، خطط لحركتك، وتغلّب على منافسك في مواجهة الدومينو.",image:"https://i.tgrthaber.com/images/2025/3/24/domino-nedir-ve-nasil-oynanir-domino-oyunu-toplam-kacta-biter-3209914_202503241741_4.jpg",type:"domino"},
+ ludo:{name:"لودو",en:"LUDO",desc:"سباق القطع على اللوحة، خطط لتحركاتك وحاول الوصول إلى خط النهاية.",image:"https://images.unsplash.com/photo-1606503153255-59d8b8b82185?auto=format&fit=crop&w=1600&q=85",type:"future"},
+ chess:{name:"الشطرنج",en:"CHESS",desc:"مواجهة استراتيجية تعتمد على التخطيط وحساب كل حركة.",image:"https://burst.shopifycdn.com/photos/dark-wooden-chess-pieces-against-a-black-background.jpg?exif=0&iptc=0&width=1200",type:"future"},
+ jackaroo:{name:"جاكارو",en:"JACKAROO",desc:"تحديات الورق والكرات والتكتيك والعمل الجماعي.",image:"https://i0.wp.com/www.jackarokw.com/wp-content/uploads/2018/01/Jackaroo-28-scaled.jpg?fit=1200%2C800&ssl=1",type:"future"},
+ "tic-tac-toe":{name:"إكس أو",en:"TIC TAC TOE",desc:"تحدٍّ سريع، كوّن ثلاثة رموز متتالية قبل منافسك.",image:"https://images.unsplash.com/photo-1611996575749-79a3a250f948?auto=format&fit=crop&w=1600&q=85",type:"xo"}
+};
+
+function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function showError(title,msg){
+ $("main").innerHTML=`<section class="panel empty"><h2>${esc(title)}</h2><p>${esc(msg)}</p><a class="primary" style="display:grid;place-items:center;margin-top:17px" href="games.html">العودة للألعاب</a></section>`;
+}
+function roomBack(){
+ return roomId ? `room.html?id=${encodeURIComponent(roomId)}` : "games.html";
+}
+$("backLink").href=roomBack();
+
+function render(game){
+ const info=GAME_INFO[game.slug]||{};
+ const title=game.title_ar||info.name||game.title_en||"اللعبة";
+ const desc=game.description_ar||info.desc||"استمتع بتجربة اللعب.";
+ const image=(game.cover_path&&/^https?:\/\//i.test(game.cover_path))?game.cover_path:(info.image||"");
+ $("crumb").textContent=title;
+ document.title=title+" | HANOON WORLD";
+
+ $("main").innerHTML=`
+ <section class="hero">
+  ${image?`<img class="hero-image" src="${esc(image)}" alt="${esc(title)}" onerror="this.remove()">`:""}
+  <div class="hero-shade"></div>
+  <div class="hero-content">
+   <span class="eyebrow">HANOON GAME ARENA</span>
+   <h1>${esc(title)}</h1>
+   <p>${esc(desc)}</p>
+   <div class="hero-meta">
+    <span class="pill">${esc(game.category||"ألعاب ترفيهية")}</span>
+    <span class="pill">${game.is_active?"متاحة للعب":"قريبًا"}</span>
+    ${roomId?'<span class="pill">تم فتح اللعبة من غرفة</span>':""}
+   </div>
+  </div>
+ </section>
+
+ ${!game.is_active?`
+ <section class="panel" style="margin-top:17px">
+  <div class="empty"><h2>اللعبة قيد التجهيز</h2><p>هنفتح اللعبة بعد تجهيز تجربة اللعب وقواعدها ونظام المنافسة.</p></div>
+ </section>`:`
+ <div class="layout">
+  <div>
+   <section class="panel">
+    <h3>اختار طريقة اللعب</h3>
+    <div class="modes">
+     <button class="mode" id="localMode">
+      <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M8 10v4M6 12h4M16 11h.01M18 13h.01"/></svg>
+      <b>لعب محلي</b><small>العب على نفس الجهاز</small>
+     </button>
+     <button class="mode locked" type="button" disabled>
+      <svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3 20v-2a6 6 0 0 1 12 0v2M16 5a3 3 0 0 1 0 6M18 14a5 5 0 0 1 3 5"/></svg>
+      <b>العب مع صديق</b><small>دعوة ومباراة أونلاين</small>
+     </button>
+     <button class="mode locked" type="button" disabled>
+      <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+      <b>ابحث عن لاعب</b><small>العثور على منافس متاح</small>
+     </button>
+     <button class="mode locked" type="button" disabled>
+      <svg viewBox="0 0 24 24"><path d="M4 5h16v14H4zM8 9h.01M12 9h.01M16 9h.01M8 13h8M8 16h8"/></svg>
+      <b>استدعاء من الغرفة</b><small>دعوة الموجودين للعب</small>
+     </button>
     </div>
+   </section>
 
-    <main id="content">
-      <section class="state">
-        <div class="loading"></div>
-        <h2>جارٍ تحميل تفاصيل اللعبة</h2>
-        <p>لحظات ونجهز لك بيانات اللعبة.</p>
-      </section>
-    </main>
-
+   <section class="panel game-area" id="gameArea">
+    <div class="game-top"><strong id="boardTitle">ساحة اللعب</strong><span id="boardMode">لعب محلي</span></div>
+    <div id="board"></div>
+   </section>
   </div>
 
-  <script>
-    const SUPABASE_URL = "https://gjtgvczvclfwvlvcquxh.supabase.co";
-    const SUPABASE_KEY = "sb_publishable_4DVTUZ-xTlqU2GpFvpb7lw_g-Kxomd4";
+  <aside>
+   <section class="panel">
+    <h3>عن اللعبة</h3>
+    <p style="font-size:11px;line-height:2.2;color:#b9bdd0">${esc(desc)}</p>
+   </section>
+   <section class="panel">
+    <h3>نظام المنافسة</h3>
+    <div class="notice"><strong>نظام النقاط والمباريات</strong><br>سيتم احتساب النقاط والانتصارات في ملف اللاعب بعد ربط نظام النتائج بالمباريات المحفوظة في قاعدة البيانات. لن نضيف رصيدًا أو ترتيبًا غير حقيقي.</div>
+   </section>
+   <section class="panel">
+    <h3>اللعب أونلاين</h3>
+    <div class="notice">دعوات الأصدقاء والبحث عن خصم ومزامنة اللعب تحتاج نظام جلسات ومباريات وصلاحيات في قاعدة البيانات. لن نعرض لاعبين غير حقيقيين.</div>
+   </section>
+  </aside>
+ </div>`}
 
-    const db = window.supabase.createClient(
-      SUPABASE_URL,
-      SUPABASE_KEY
-    );
+ const local=$("localMode");
+ if(local) local.addEventListener("click",()=>startLocal(game.slug));
+}
 
-    const params = new URLSearchParams(location.search);
-    const gameKey = params.get("game");
+$("main").addEventListener("click",e=>{
+ if(e.target.closest("[data-back-room]")) location.href=roomBack();
+});
 
-    const $ = id => document.getElementById(id);
+function startLocal(slug){
+ const area=$("gameArea");
+ area.classList.add("show");
+ area.scrollIntoView({behavior:"smooth",block:"start"});
+ if(slug==="tic-tac-toe") startXO();
+ else if(slug==="domino") startDomino();
+ else {
+  $("boardTitle").textContent="اللعبة";
+  $("board").innerHTML=`<div class="notice"><strong>نمط اللعب المحلي قيد التطوير.</strong><br>واجهة اللعب الخاصة بهذه اللعبة لم تكتمل بعد. لن نعرض لوحة شكلية على أنها لعبة مكتملة.</div>`;
+ }
+}
 
-    function esc(value) {
-      return String(value ?? "").replace(/[&<>"']/g, char => ({
-        "&": "&amp;",
-        "<": "&lt;",
-        ">": "&gt;",
-        '"': "&quot;",
-        "'": "&#039;"
-      })[char]);
-    }
+/* Tic Tac Toe - two players on the same device */
+function startXO(){
+ $("boardTitle").textContent="إكس أو";
+ $("boardMode").textContent="لاعبان على نفس الجهاز";
+ let cells=Array(9).fill("");
+ let turn="X",ended=false;
+ const wins=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+ $("board").innerHTML=`
+ <div class="scoreboard">
+  <div class="player-score active" id="scoreX"><b>اللاعب الأول · X</b><small>دوره الآن</small></div>
+  <div class="vs">VS</div>
+  <div class="player-score" id="scoreO"><b>اللاعب الثاني · O</b><small>ينتظر دوره</small></div>
+ </div>
+ <div class="game-message" id="xoMessage">دور اللاعب الأول</div>
+ <div class="xo-board" id="xoBoard">${cells.map((_,i)=>`<button class="xo-cell" data-cell="${i}" aria-label="مربع ${i+1}"></button>`).join("")}</div>
+ <div class="game-actions">
+  <button class="primary" id="xoRestart">جولة جديدة</button>
+  <button class="secondary" id="xoExit">إغلاق اللعبة</button>
+ </div>`;
+ const board=$("xoBoard"),message=$("xoMessage");
+ function update(){
+  [...board.children].forEach((b,i)=>{b.textContent=cells[i];b.classList.toggle("o",cells[i]==="O");b.disabled=!!cells[i]||ended});
+  $("scoreX").classList.toggle("active",turn==="X"&&!ended);
+  $("scoreO").classList.toggle("active",turn==="O"&&!ended);
+  $("scoreX").querySelector("small").textContent=turn==="X"&&!ended?"دوره الآن":"";
+  $("scoreO").querySelector("small").textContent=turn==="O"&&!ended?"دوره الآن":"";
+ }
+ function check(){
+  const line=wins.find(([a,b,c])=>cells[a]&&cells[a]===cells[b]&&cells[b]===cells[c]);
+  if(line){ended=true;message.textContent=(turn==="X"?"اللاعب الأول":"اللاعب الثاني")+" فاز بالجولة";line.forEach(i=>board.children[i].style.borderColor="#edca83");}
+  else if(cells.every(Boolean)){ended=true;message.textContent="تعادل! جولة قوية";}
+ }
+ board.addEventListener("click",e=>{
+  const btn=e.target.closest("[data-cell]");
+  if(!btn||ended)return;
+  const i=Number(btn.dataset.cell);
+  if(cells[i])return;
+  cells[i]=turn;check();
+  if(!ended){turn=turn==="X"?"O":"X";message.textContent=turn==="X"?"دور اللاعب الأول":"دور اللاعب الثاني";}
+  update();
+ });
+ $("xoRestart").onclick=()=>{cells=Array(9).fill("");turn="X";ended=false;message.textContent="دور اللاعب الأول";[...board.children].forEach(b=>b.style.borderColor="");update()};
+ $("xoExit").onclick=()=>areaHide();
+ update();
+}
+function areaHide(){$("gameArea").classList.remove("show")}
 
-    function categoryName(category) {
-      const names = {
-        board: "ألعاب الطاولة",
-        strategy: "ألعاب استراتيجية",
-        quick: "ألعاب سريعة",
-        cards: "ألعاب الورق",
-        party: "ألعاب جماعية",
-        puzzle: "ألغاز وتفكير"
-      };
+/* Local domino: draw, place matching ends, pass, and determine winner */
+function startDomino(){
+ $("boardTitle").textContent="الدومينو";
+ $("boardMode").textContent="لاعبان على نفس الجهاز";
+ let deck=[];
+ for(let a=0;a<=6;a++)for(let b=a;b<=6;b++)deck.push([a,b]);
+ deck.sort(()=>Math.random()-.5);
+ let hands=[deck.splice(0,7),deck.splice(0,7)];
+ let line=[],turn=0,finished=false,passes=0;
+ const dots=n=>n===0?"—":Array.from({length:n},()=> "●").join(" ");
+ function tileHTML(t,idx,hand=false){return `<button class="domino-tile" ${hand?`data-tile="${idx}"`:"disabled"}><b>${t[0]}</b><span></span><b>${t[1]}</b></button>`}
+ function canPlay(t){if(!line.length)return true;let l=line[0][0],r=line[line.length-1][1];return t.includes(l)||t.includes(r)}
+ function paint(){
+  $("board").innerHTML=`
+   <div class="scoreboard">
+    <div class="player-score ${turn===0?"active":""}"><b>اللاعب الأول</b><small>${hands[0].length} قطع</small></div><div class="vs">VS</div>
+    <div class="player-score ${turn===1?"active":""}"><b>اللاعب الثاني</b><small>${hands[1].length} قطع</small></div>
+   </div>
+   <div class="game-message" id="domMessage">${finished?"انتهت الجولة":`دور اللاعب ${turn+1}`}</div>
+   <div class="domino-table">${line.length?line.map(t=>tileHTML(t,0,false)).join(""):"ابدأ بوضع أي قطعة"}</div>
+   <h3 style="margin-top:17px">قطع اللاعب ${turn+1}</h3>
+   <div class="domino-hand">${hands[turn].map((t,i)=>tileHTML(t,i,true)).join("")}</div>
+   <div class="game-actions">
+    <button class="primary" id="domDraw" ${deck.length===0||finished?"disabled":""}>اسحب قطعة (${deck.length})</button>
+    <button class="secondary" id="domPass" ${finished?"disabled":""}>تخطي الدور</button>
+   </div>
+   <button class="secondary" id="domReset" style="margin-top:9px">بدء جولة جديدة</button>
+   <p style="font-size:10px;color:#a5abc4;line-height:2;margin-top:12px">اختر قطعة تطابق أحد طرفي السلسلة. عند عدم وجود حركة يمكنك سحب قطعة أو تخطي الدور.</p>`;
+  $("board").querySelectorAll("[data-tile]").forEach(btn=>btn.addEventListener("click",()=>playTile(Number(btn.dataset.tile))));
+  $("domDraw").onclick=()=>{if(deck.length&&!finished){hands[turn].push(deck.pop());paint()}};
+  $("domPass").onclick=()=>{if(finished)return;passes++;if(passes>=2){finishByCount()}else{turn=1-turn;paint()}};
+  $("domReset").onclick=()=>startDomino();
+ }
+ function playTile(index){
+  if(finished)return;
+  const t=hands[turn][index];
+  if(!t||!canPlay(t)){alert("القطعة دي مش مطابقة لطرف السلسلة.");return}
+  if(!line.length)line.push(t);
+  else{
+   let left=line[0][0],right=line[line.length-1][1];
+   if(t[1]===left)line.unshift(t);
+   else if(t[0]===left)line.unshift([t[1],t[0]]);
+   else if(t[0]===right)line.push(t);
+   else if(t[1]===right)line.push([t[1],t[0]]);
+  }
+  hands[turn].splice(index,1);passes=0;
+  if(hands[turn].length===0){finished=true;paint();$("domMessage").textContent=`اللاعب ${turn+1} فاز بالجولة!`;return}
+  turn=1-turn;paint();
+ }
+ function finishByCount(){
+  finished=true;
+  const sum=h=>h.reduce((s,t)=>s+t[0]+t[1],0);
+  const a=sum(hands[0]),b=sum(hands[1]);
+  paint();
+  $("domMessage").textContent=a===b?"انتهت الجولة بالتعادل":`الفائز اللاعب ${a<b?1:2}`;
+ }
+ paint();
+}
 
-      return names[category] || category || "غير محدد";
-    }
-
-    function showState(title, description) {
-      $("content").innerHTML = `
-        <section class="state">
-          <div class="state-icon">
-            <svg viewBox="0 0 24 24">
-              <path d="M7 8h10a4 4 0 0 1 4 4v4a3 3 0 0 1-5 2l-2-2h-4l-2 2a3 3 0 0 1-5-2v-4a4 4 0 0 1 4-4Z"/>
-              <path d="M8 11v4M6 13h4M16 12h.01M18 14h.01"/>
-            </svg>
-          </div>
-          <h2>${esc(title)}</h2>
-          <p>${esc(description)}</p>
-          <a class="primary-button" href="games.html" style="display:grid;place-items:center;text-decoration:none;">
-            العودة إلى مكتبة الألعاب
-          </a>
-        </section>
-      `;
-    }
-
-    function renderGame(game) {
-      const title = game.title_ar || game.title_en || "لعبة";
-      const description =
-        game.description_ar ||
-        game.description_en ||
-        "لا يوجد وصف إضافي لهذه اللعبة.";
-
-      $("breadcrumbTitle").textContent = title;
-      document.title = title + " | HANOON WORLD";
-
-      const players = game.min_players === game.max_players
-        ? `${game.min_players} لاعبين`
-        : `${game.min_players} - ${game.max_players} لاعبين`;
-
-      const image = /^https?:\/\//i.test(game.cover_path || "")
-        ? game.cover_path
-        : "";
-
-      const statusText = game.is_active
-        ? "مفعّلة في قائمة الألعاب"
-        : "غير متاحة حاليًا";
-
-      $("content").innerHTML = `
-        <section class="hero">
-
-          ${
-            image
-              ? `<img class="cover-image" src="${esc(image)}" alt="${esc(title)}">`
-              : `
-                <div class="hero-placeholder">
-                  <svg viewBox="0 0 24 24">
-                    <path d="M7 8h10a4 4 0 0 1 4 4v4a3 3 0 0 1-5 2l-2-2h-4l-2 2a3 3 0 0 1-5-2v-4a4 4 0 0 1 4-4Z"/>
-                    <path d="M8 11v4M6 13h4M16 12h.01M18 14h.01"/>
-                  </svg>
-                </div>
-              `
-          }
-
-          <div class="hero-content">
-            <span class="eyebrow">HANOON GAME COLLECTION</span>
-            <h1>${esc(title)}</h1>
-            <p class="hero-description">${esc(description)}</p>
-
-            <span class="status ${game.is_active ? "active" : ""}">
-              <span class="status-dot"></span>
-              ${statusText}
-            </span>
-          </div>
-        </section>
-
-        <div class="layout">
-
-          <div>
-            <section class="panel">
-              <h2 class="panel-title">عن اللعبة</h2>
-              <p class="description">${esc(description)}</p>
-            </section>
-
-            <section class="panel">
-              <h2 class="panel-title">حالة اللعبة</h2>
-
-              ${
-                game.is_active
-                  ? `
-                    <div class="notice">
-                      <h3>اللعبة مفعّلة في المكتبة</h3>
-                      <p>
-                        اللعبة مفعّلة في سجل الألعاب. توفر تجربة اللعب الفعلية
-                        يعتمد على ربط واجهة اللعبة ونظام الجلسات الخاص بها.
-                      </p>
-                    </div>
-                  `
-                  : `
-                    <div class="notice">
-                      <h3>اللعبة غير متاحة حاليًا</h3>
-                      <p>
-                        هذه اللعبة مسجلة في قاعدة بيانات هنون، لكنها غير مفعّلة
-                        حاليًا. لن نعرض خيار دخول غير متاح.
-                      </p>
-                    </div>
-                  `
-              }
-            </section>
-          </div>
-
-          <aside>
-            <section class="panel">
-              <h2 class="panel-title">معلومات اللعبة</h2>
-
-              <div class="details-list">
-
-                <div class="detail-item">
-                  <span class="detail-label">التصنيف</span>
-                  <span class="detail-value">${esc(categoryName(game.category))}</span>
-                </div>
-
-                <div class="detail-item">
-                  <span class="detail-label">عدد اللاعبين</span>
-                  <span class="detail-value">${esc(players)}</span>
-                </div>
-
-                <div class="detail-item">
-                  <span class="detail-label">الاسم الإنجليزي</span>
-                  <span class="detail-value">${esc(game.title_en || "—")}</span>
-                </div>
-
-                <div class="detail-item">
-                  <span class="detail-label">الحالة</span>
-                  <span class="detail-value">${game.is_active ? "مفعّلة" : "غير مفعّلة"}</span>
-                </div>
-
-              </div>
-
-              <button
-                class="primary-button"
-                id="gameAction"
-                ${game.is_active ? "" : "disabled"}
-                type="button"
-              >
-                ${game.is_active ? "اللعبة مفعّلة — تفاصيل الدخول غير مربوطة" : "اللعبة غير متاحة حاليًا"}
-              </button>
-
-              <a
-                href="games.html"
-                class="back-button"
-                style="justify-content:center;margin-top:12px;"
-              >
-                العودة إلى جميع الألعاب
-              </a>
-            </section>
-          </aside>
-
-        </div>
-      `;
-    }
-
-    async function loadGame() {
-      if (!gameKey) {
-        showState(
-          "لم يتم تحديد لعبة",
-          "ارجع إلى مكتبة الألعاب واختر اللعبة التي تريد معرفة تفاصيلها."
-        );
-        return;
-      }
-
-      try {
-        const isUUID =
-          /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(gameKey);
-
-        let query = db
-          .from("world_games_catalog")
-          .select(`
-            id,
-            slug,
-            title_ar,
-            title_en,
-            description_ar,
-            description_en,
-            category,
-            min_players,
-            max_players,
-            cover_path,
-            route_key,
-            is_active,
-            sort_order,
-            settings
-          `);
-
-        query = isUUID
-          ? query.eq("id", gameKey)
-          : query.eq("slug", gameKey);
-
-        const { data, error } = await query.maybeSingle();
-
-        if (error) throw error;
-
-        if (!data) {
-          showState(
-            "اللعبة غير موجودة",
-            "لم نعثر على لعبة بهذا المعرف في قاعدة بيانات المنصة."
-          );
-          return;
-        }
-
-        renderGame(data);
-
-      } catch (error) {
-        console.error("HANOON game details:", error);
-
-        showState(
-          "تعذر تحميل تفاصيل اللعبة",
-          "حدث خطأ أثناء الاتصال بقاعدة البيانات. حاول مرة أخرى لاحقًا."
-        );
-      }
-    }
-
-    loadGame();
-  </script>
+async function loadGame(){
+ if(!gameKey){showError("لم يتم تحديد اللعبة","ارجع لمكتبة الألعاب واختر اللعبة.");return}
+ try{
+  const uuid=/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(gameKey);
+  let q=db.from("world_games_catalog").select("id,slug,title_ar,title_en,description_ar,category,cover_path,route_key,is_active,sort_order");
+  q=uuid?q.eq("id",gameKey):q.eq("slug",gameKey);
+  const {data,error}=await q.maybeSingle();
+  if(error)throw error;
+  if(!data){showError("اللعبة غير موجودة","لم نعثر على اللعبة في مكتبة هنون.");return}
+  render(data);
+ }catch(err){
+  console.error("HANOON game:",err);
+  showError("تعذر تحميل اللعبة","راجع اتصال الإنترنت وصلاحيات قراءة كتالوج الألعاب في Supabase ثم حاول مرة أخرى.");
+ }
+}
+loadGame();
+</script>
 </body>
 </html>
