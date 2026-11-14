@@ -1,11 +1,10 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#101019">
-  <title>HANOON WORLD — تجهيز حسابك</title>
+  <meta name="theme-color" content="#10101b">
+  <title>HANOON WORLD — تجهيز ملفك الشخصي</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,1013 +12,1411 @@
 
   <style>
     :root {
-      --bg:#101019;
-      --panel:#191925;
-      --panel2:#20202e;
-      --gold:#d9b779;
-      --gold2:#f0d6a2;
-      --text:#f8f5ef;
-      --muted:#aaa7b5;
-      --line:rgba(255,255,255,.09);
-      --danger:#ff647c;
-      --green:#56d6a4;
+      --bg: #10101b;
+      --panel: #191927;
+      --panel2: #202033;
+      --panel3: #292941;
+      --gold: #e9c77c;
+      --gold2: #f6dfa7;
+      --purple: #9d83ff;
+      --text: #f7f4ff;
+      --muted: #aaa7bd;
+      --border: rgba(255,255,255,.09);
+      --success: #55d6a2;
+      --danger: #ff7187;
+      --radius: 22px;
     }
 
-    * { box-sizing:border-box; }
+    * {
+      box-sizing: border-box;
+    }
 
     html {
-      min-height:100%;
-      scroll-behavior:smooth;
+      scroll-behavior: smooth;
+      -webkit-text-size-adjust: 100%;
+      touch-action: pan-y pinch-zoom;
     }
 
     body {
-      margin:0;
-      min-height:100vh;
-      color:var(--text);
-      font-family:'Cairo',sans-serif;
-      background:#101019;
-      background-image:
-        linear-gradient(rgba(12,12,20,.88),rgba(12,12,20,.96)),
-        url("https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=2200&q=85");
-      background-size:cover;
-      background-position:center;
-      background-attachment:fixed;
-      overflow-x:hidden;
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Cairo", sans-serif;
+      color: var(--text);
+      background:
+        linear-gradient(rgba(12,12,22,.87), rgba(12,12,22,.94)),
+        url("https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=2000&q=85")
+        center/cover fixed;
+      overflow-x: hidden;
     }
 
-    button,input,textarea { font:inherit; }
-    button { cursor:pointer; }
+    button, input, textarea {
+      font: inherit;
+    }
 
-    .page {
-      width:min(1120px, calc(100% - 32px));
-      margin:auto;
-      padding:28px 0 60px;
+    button {
+      cursor: pointer;
+    }
+
+    .ambient {
+      position: fixed;
+      width: 330px;
+      height: 330px;
+      border-radius: 50%;
+      filter: blur(110px);
+      opacity: .15;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .ambient.one {
+      background: #8b69ff;
+      top: 5%;
+      right: -150px;
+    }
+
+    .ambient.two {
+      background: #d5a64f;
+      bottom: 5%;
+      left: -160px;
     }
 
     .topbar {
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:16px;
-      margin-bottom:26px;
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(16,16,27,.88);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .topbar-inner {
+      max-width: 1180px;
+      min-height: 76px;
+      margin: auto;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
     }
 
     .brand {
-      display:flex;
-      align-items:center;
-      gap:13px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
     }
 
-    .brand-mark {
-      width:52px;
-      height:52px;
-      border-radius:17px;
-      display:grid;
-      place-items:center;
-      color:#20180c;
-      font-size:24px;
-      font-weight:900;
-      background:linear-gradient(145deg,#f5dfb2,#b98b48);
-      box-shadow:0 8px 30px rgba(217,183,121,.22);
+    .brand-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      color: #171321;
+      font-size: 23px;
+      font-weight: 900;
+      background: linear-gradient(135deg, #f6dfa7, #c89b4f);
+      box-shadow: 0 8px 25px rgba(218,176,96,.2);
     }
 
     .brand-name {
-      font-size:19px;
-      font-weight:900;
-      letter-spacing:1px;
+      font-size: 18px;
+      font-weight: 900;
+      letter-spacing: .5px;
     }
 
     .brand-sub {
-      color:var(--muted);
-      font-size:11px;
+      color: var(--muted);
+      font-size: 11px;
+      margin-top: -4px;
     }
 
-    .step-pill {
-      border:1px solid rgba(217,183,121,.25);
-      background:rgba(217,183,121,.08);
-      color:var(--gold2);
-      border-radius:30px;
-      padding:9px 16px;
-      font-size:12px;
-      font-weight:700;
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 9px;
     }
 
-    .intro {
-      text-align:center;
-      margin:30px auto 32px;
-      max-width:700px;
+    .top-btn {
+      border: 1px solid var(--border);
+      color: var(--text);
+      background: rgba(255,255,255,.05);
+      padding: 9px 14px;
+      border-radius: 13px;
+      font-size: 12px;
+      font-weight: 700;
     }
 
-    .intro .eyebrow {
-      color:var(--gold);
-      font-size:12px;
-      font-weight:800;
-      letter-spacing:2px;
+    .top-btn:hover {
+      background: rgba(255,255,255,.1);
     }
 
-    .intro h1 {
-      font-size:clamp(27px,5vw,43px);
-      line-height:1.5;
-      margin:8px 0;
-      font-weight:900;
+    .page {
+      max-width: 1180px;
+      margin: auto;
+      padding: 30px 18px 70px;
     }
 
-    .intro p {
-      color:var(--muted);
-      font-size:14px;
-      line-height:2;
-      margin:0;
+    .welcome {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(233,199,124,.2);
+      border-radius: 28px;
+      padding: 30px;
+      margin-bottom: 24px;
+      background:
+        linear-gradient(105deg, rgba(26,23,42,.96), rgba(39,31,54,.85)),
+        url("https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&fit=crop&w=1400&q=80")
+        center/cover;
     }
 
-    .progress {
-      height:5px;
-      max-width:430px;
-      margin:22px auto 0;
-      border-radius:20px;
-      overflow:hidden;
-      background:rgba(255,255,255,.1);
+    .welcome::after {
+      content: "✦";
+      position: absolute;
+      left: 35px;
+      top: 10px;
+      color: rgba(233,199,124,.18);
+      font-size: 100px;
+      pointer-events: none;
     }
 
-    .progress span {
-      display:block;
-      width:100%;
-      height:100%;
-      background:linear-gradient(90deg,#a77c3c,var(--gold2));
-      border-radius:20px;
+    .welcome-label {
+      display: inline-block;
+      color: var(--gold);
+      background: rgba(233,199,124,.1);
+      border: 1px solid rgba(233,199,124,.2);
+      padding: 5px 12px;
+      border-radius: 30px;
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .welcome h1 {
+      font-size: clamp(25px, 4vw, 38px);
+      line-height: 1.5;
+      margin: 12px 0 7px;
+      font-weight: 900;
+    }
+
+    .welcome p {
+      color: #c4bfd2;
+      max-width: 650px;
+      line-height: 2;
+      font-size: 14px;
+      margin: 0;
+    }
+
+    .progress-card {
+      padding: 17px 20px;
+      background: rgba(25,25,39,.88);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      margin-bottom: 24px;
+    }
+
+    .progress-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .progress-head strong {
+      font-size: 13px;
+    }
+
+    .progress-number {
+      color: var(--gold);
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .progress-track {
+      height: 8px;
+      background: rgba(255,255,255,.08);
+      border-radius: 20px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0;
+      border-radius: inherit;
+      background: linear-gradient(90deg, #9d83ff, #e9c77c);
+      transition: width .3s ease;
     }
 
     .layout {
-      display:grid;
-      grid-template-columns:minmax(0,1.55fr) minmax(270px,.75fr);
-      gap:22px;
-      align-items:start;
+      display: grid;
+      grid-template-columns: 245px minmax(0,1fr);
+      gap: 22px;
+      align-items: start;
     }
 
-    .main-column,.side-column {
-      display:grid;
-      gap:20px;
-      min-width:0;
+    .side-nav {
+      position: sticky;
+      top: 96px;
+      padding: 15px;
+      background: rgba(25,25,39,.91);
+      border: 1px solid var(--border);
+      border-radius: 22px;
     }
 
-    .card {
-      background:rgba(25,25,37,.94);
-      border:1px solid var(--line);
-      border-radius:23px;
-      padding:24px;
-      box-shadow:0 15px 50px rgba(0,0,0,.22);
-      backdrop-filter:blur(16px);
+    .side-title {
+      font-size: 12px;
+      color: var(--muted);
+      padding: 5px 10px 12px;
+    }
+
+    .nav-item {
+      width: 100%;
+      border: 0;
+      background: transparent;
+      color: #c7c3d5;
+      padding: 12px 10px;
+      border-radius: 13px;
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      text-align: right;
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .nav-item:hover,
+    .nav-item.active {
+      background: rgba(233,199,124,.1);
+      color: var(--gold2);
+    }
+
+    .nav-icon {
+      width: 31px;
+      height: 31px;
+      display: grid;
+      place-items: center;
+      border-radius: 10px;
+      background: rgba(255,255,255,.06);
+      font-size: 15px;
+    }
+
+    .main-content {
+      min-width: 0;
+    }
+
+    .section {
+      padding: 24px;
+      margin-bottom: 19px;
+      border-radius: var(--radius);
+      background: rgba(25,25,39,.94);
+      border: 1px solid var(--border);
+      scroll-margin-top: 100px;
     }
 
     .section-heading {
-      display:flex;
-      align-items:center;
-      gap:12px;
-      margin-bottom:20px;
-    }
-
-    .section-icon {
-      width:42px;
-      height:42px;
-      display:grid;
-      place-items:center;
-      flex:none;
-      border-radius:14px;
-      color:var(--gold2);
-      background:rgba(217,183,121,.12);
-      font-size:19px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 15px;
+      margin-bottom: 21px;
     }
 
     .section-heading h2 {
-      font-size:17px;
-      margin:0;
-      font-weight:800;
+      font-size: 19px;
+      margin: 0 0 4px;
+      font-weight: 900;
     }
 
     .section-heading p {
-      font-size:11px;
-      color:var(--muted);
-      margin:3px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.9;
+      margin: 0;
     }
 
-    .cover {
-      height:205px;
-      position:relative;
-      overflow:hidden;
-      border-radius:18px;
+    .section-number {
+      min-width: 37px;
+      height: 37px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      background: rgba(233,199,124,.12);
+      color: var(--gold);
+      font-weight: 900;
+    }
+
+    .cover-area {
+      height: 220px;
+      position: relative;
+      border-radius: 19px;
+      overflow: hidden;
       background:
-        linear-gradient(120deg,rgba(24,22,33,.25),rgba(24,22,33,.65)),
-        url("https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=1400&q=85") center/cover;
-      border:1px solid rgba(255,255,255,.12);
+        linear-gradient(90deg,rgba(20,18,30,.35),rgba(20,18,30,.65)),
+        url("https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&w=1400&q=85")
+        center/cover;
+      border: 1px solid var(--border);
     }
 
-    .cover img {
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      display:none;
+    .cover-area img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: none;
     }
 
-    .cover img.visible { display:block; }
+    .cover-area.has-image img {
+      display: block;
+    }
 
     .cover-action {
-      position:absolute;
-      bottom:13px;
-      left:13px;
-      border:1px solid rgba(255,255,255,.2);
-      background:rgba(12,12,20,.78);
-      color:white;
-      border-radius:12px;
-      padding:9px 14px;
-      font-size:12px;
-      font-weight:700;
+      position: absolute;
+      bottom: 13px;
+      right: 13px;
+      border: 1px solid rgba(255,255,255,.2);
+      background: rgba(12,12,22,.76);
+      color: white;
+      padding: 10px 14px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .avatar-row {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      margin: -45px 20px 0;
+      position: relative;
+      z-index: 2;
     }
 
     .avatar-wrap {
-      display:flex;
-      align-items:center;
-      gap:18px;
-      margin:18px 0 6px;
-      flex-wrap:wrap;
+      width: 112px;
+      height: 112px;
+      flex: 0 0 112px;
+      border-radius: 50%;
+      border: 5px solid var(--panel);
+      background: #292941;
+      overflow: hidden;
+      position: relative;
     }
 
-    .avatar {
-      width:112px;
-      height:112px;
-      flex:none;
-      position:relative;
-      border-radius:50%;
-      overflow:hidden;
-      border:4px solid #d9b779;
-      background:#282536;
-      box-shadow:0 0 0 5px rgba(217,183,121,.1);
+    .avatar-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
 
-    .avatar img {
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      display:none;
+    .avatar-upload {
+      border: 1px solid var(--border);
+      background: #292941;
+      color: var(--text);
+      border-radius: 13px;
+      padding: 10px 14px;
+      font-size: 12px;
+      font-weight: 800;
     }
 
-    .avatar img.visible { display:block; }
-
-    .avatar-placeholder {
-      width:100%;
-      height:100%;
-      display:grid;
-      place-items:center;
-      font-size:38px;
-      color:var(--gold2);
+    .avatar-hint {
+      color: var(--muted);
+      font-size: 11px;
+      margin-top: 6px;
     }
 
-    .avatar-info { flex:1; min-width:180px; }
-
-    .avatar-info strong {
-      display:block;
-      font-size:14px;
-      margin-bottom:5px;
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2,minmax(0,1fr));
+      gap: 16px;
+      margin-top: 22px;
     }
 
-    .avatar-info p {
-      font-size:11px;
-      line-height:1.9;
-      color:var(--muted);
-      margin:0 0 10px;
+    .field {
+      min-width: 0;
     }
 
-    .upload-btn {
-      border:1px solid rgba(217,183,121,.35);
-      background:rgba(217,183,121,.1);
-      color:var(--gold2);
-      border-radius:11px;
-      padding:8px 14px;
-      font-size:12px;
-      font-weight:800;
+    .field.full {
+      grid-column: 1/-1;
     }
-
-    .fields {
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:15px;
-    }
-
-    .field { min-width:0; }
-    .field.full { grid-column:1/-1; }
 
     .field label {
-      display:block;
-      font-size:12px;
-      color:#ded9e5;
-      font-weight:700;
-      margin-bottom:8px;
+      display: block;
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 8px;
     }
 
-    .field input,.field textarea {
-      width:100%;
-      outline:none;
-      color:var(--text);
-      background:#12121d;
-      border:1px solid rgba(255,255,255,.1);
-      border-radius:12px;
-      padding:13px 14px;
-      transition:.2s;
+    .required {
+      color: var(--gold);
     }
 
-    .field input:focus,.field textarea:focus {
-      border-color:rgba(217,183,121,.7);
-      box-shadow:0 0 0 3px rgba(217,183,121,.08);
+    .field input,
+    .field textarea {
+      width: 100%;
+      border: 1px solid var(--border);
+      outline: 0;
+      color: var(--text);
+      background: #12121f;
+      border-radius: 13px;
+      padding: 13px 14px;
+      font-size: 13px;
+      transition: .2s;
+    }
+
+    .field input:focus,
+    .field textarea:focus {
+      border-color: rgba(233,199,124,.65);
+      box-shadow: 0 0 0 3px rgba(233,199,124,.08);
     }
 
     .field input[readonly] {
-      color:var(--gold2);
-      background:rgba(217,183,121,.06);
-      cursor:default;
+      color: #aaa5ba;
+      background: #1d1d2b;
     }
 
     .field textarea {
-      min-height:110px;
-      resize:vertical;
-      line-height:1.9;
+      min-height: 110px;
+      resize: vertical;
+      line-height: 1.9;
     }
 
-    .hint {
-      color:var(--muted);
-      font-size:10px;
-      margin-top:6px;
-      line-height:1.8;
+    .field-hint {
+      color: var(--muted);
+      font-size: 10px;
+      margin-top: 6px;
+      line-height: 1.8;
     }
 
-    .member-code {
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      border:1px dashed rgba(217,183,121,.4);
-      background:rgba(217,183,121,.07);
-      border-radius:15px;
-      padding:15px;
+    .counter {
+      color: var(--muted);
+      font-size: 10px;
+      text-align: left;
+      margin-top: 5px;
     }
 
-    .member-code small {
-      color:var(--muted);
-      display:block;
-      font-size:10px;
+    .member-code-box {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      border: 1px dashed rgba(233,199,124,.4);
+      background: rgba(233,199,124,.07);
+      border-radius: 13px;
+      padding: 12px 14px;
     }
 
-    .member-code strong {
-      display:block;
-      direction:ltr;
-      text-align:right;
-      color:var(--gold2);
-      letter-spacing:2px;
-      font-size:18px;
-      margin-top:3px;
+    .member-code-box strong {
+      color: var(--gold2);
+      direction: ltr;
+      letter-spacing: 1px;
     }
 
     .copy-btn {
-      border:0;
-      background:var(--gold);
-      color:#21190e;
-      border-radius:10px;
-      padding:9px 13px;
-      font-size:11px;
-      font-weight:900;
-      flex:none;
+      border: 0;
+      color: #181522;
+      background: var(--gold);
+      padding: 7px 12px;
+      border-radius: 9px;
+      font-size: 11px;
+      font-weight: 900;
+    }
+
+    .selection-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 10px;
+      margin: 16px 0 12px;
+    }
+
+    .selection-count {
+      color: var(--gold);
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .clear-selection {
+      border: 0;
+      background: transparent;
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .option-grid {
+      display: grid;
+      grid-template-columns: repeat(4,minmax(0,1fr));
+      gap: 9px;
+    }
+
+    .option {
+      min-height: 73px;
+      padding: 10px 7px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.025);
+      color: #d9d5e6;
+      border-radius: 14px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
+      font-size: 11px;
+      font-weight: 700;
+      transition: .18s;
+    }
+
+    .option .emoji {
+      font-size: 20px;
+    }
+
+    .option:hover {
+      border-color: rgba(233,199,124,.4);
+      transform: translateY(-2px);
+    }
+
+    .option.selected {
+      border-color: var(--gold);
+      color: var(--gold2);
+      background: rgba(233,199,124,.12);
+      box-shadow: inset 0 0 0 1px rgba(233,199,124,.12);
+    }
+
+    .option.selected::after {
+      content: "✓ تم الاختيار";
+      font-size: 9px;
+      color: var(--success);
+    }
+
+    .custom-add {
+      display: flex;
+      gap: 9px;
+      margin-top: 15px;
+    }
+
+    .custom-add input {
+      flex: 1;
+      min-width: 0;
+      background: #12121f;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 11px 13px;
+      color: white;
+      outline: none;
+      font-size: 12px;
+    }
+
+    .custom-add button {
+      border: 0;
+      border-radius: 12px;
+      padding: 0 16px;
+      color: #171321;
+      background: var(--gold);
+      font-weight: 900;
+      font-size: 12px;
     }
 
     .video-box {
-      min-height:190px;
-      border:1px dashed rgba(217,183,121,.35);
-      border-radius:17px;
-      background:#12121d;
-      display:grid;
-      place-items:center;
-      overflow:hidden;
-      position:relative;
+      border: 1px dashed rgba(233,199,124,.35);
+      background: rgba(255,255,255,.025);
+      border-radius: 17px;
+      padding: 18px;
+      text-align: center;
     }
 
-    .video-box video {
-      display:none;
-      width:100%;
-      max-height:340px;
-      background:#000;
+    .video-preview {
+      display: none;
+      width: 100%;
+      max-height: 320px;
+      border-radius: 13px;
+      margin-top: 14px;
+      background: #080810;
     }
 
-    .video-box video.visible { display:block; }
-
-    .video-empty {
-      text-align:center;
-      padding:25px;
+    .video-symbol {
+      font-size: 34px;
+      margin-bottom: 6px;
     }
 
-    .video-empty .video-icon {
-      font-size:35px;
-      color:var(--gold2);
+    .video-box p {
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.8;
+      margin: 5px 0 13px;
     }
 
-    .video-empty strong {
-      display:block;
-      margin:8px 0 4px;
-      font-size:13px;
+    .upload-label {
+      display: inline-block;
+      cursor: pointer;
+      color: #171321;
+      background: var(--gold);
+      padding: 10px 16px;
+      border-radius: 11px;
+      font-size: 11px;
+      font-weight: 900;
     }
 
-    .video-empty p {
-      color:var(--muted);
-      font-size:11px;
-      margin:0 0 13px;
+    input[type="file"] {
+      display: none;
     }
 
-    .tag-area {
-      display:flex;
-      flex-wrap:wrap;
-      gap:8px;
-      margin-top:10px;
+    .privacy-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      padding: 16px;
+      background: rgba(255,255,255,.035);
+      border: 1px solid var(--border);
+      border-radius: 15px;
+      margin-bottom: 12px;
     }
 
-    .suggestion {
-      border:1px solid rgba(217,183,121,.22);
-      color:#e6d8c1;
-      background:rgba(217,183,121,.07);
-      border-radius:30px;
-      padding:7px 12px;
-      font-size:11px;
-      cursor:pointer;
+    .privacy-card strong {
+      display: block;
+      font-size: 12px;
+      margin-bottom: 4px;
     }
 
-    .suggestion:hover,.suggestion.active {
-      background:rgba(217,183,121,.22);
-      border-color:var(--gold);
-      color:#fff0d2;
-    }
-
-    .privacy-row {
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:15px;
-      background:#12121d;
-      border-radius:14px;
-      padding:14px;
-    }
-
-    .privacy-row strong {
-      display:block;
-      font-size:12px;
-    }
-
-    .privacy-row small {
-      display:block;
-      color:var(--muted);
-      font-size:10px;
-      margin-top:4px;
+    .privacy-card p {
+      color: var(--muted);
+      font-size: 10px;
+      line-height: 1.8;
+      margin: 0;
     }
 
     .switch {
-      width:48px;
-      height:27px;
-      position:relative;
-      flex:none;
+      width: 48px;
+      height: 27px;
+      position: relative;
+      flex: 0 0 48px;
     }
 
-    .switch input { display:none; }
+    .switch input {
+      display: none;
+    }
 
     .switch span {
-      position:absolute;
-      inset:0;
-      border-radius:30px;
-      background:#484653;
-      transition:.2s;
-      cursor:pointer;
+      position: absolute;
+      inset: 0;
+      border-radius: 30px;
+      background: #444457;
+      transition: .2s;
     }
 
-    .switch span:before {
-      content:"";
-      position:absolute;
-      width:19px;
-      height:19px;
-      top:4px;
-      right:4px;
-      border-radius:50%;
-      background:#fff;
-      transition:.2s;
+    .switch span::before {
+      content: "";
+      width: 19px;
+      height: 19px;
+      position: absolute;
+      right: 4px;
+      top: 4px;
+      background: white;
+      border-radius: 50%;
+      transition: .2s;
     }
 
     .switch input:checked + span {
-      background:#b48b4d;
+      background: #9d83ff;
     }
 
-    .switch input:checked + span:before {
-      transform:translateX(-21px);
+    .switch input:checked + span::before {
+      transform: translateX(-21px);
     }
 
     .preview-card {
-      position:sticky;
-      top:18px;
+      overflow: hidden;
+      border-radius: 18px;
+      background: #12121e;
+      border: 1px solid var(--border);
     }
 
     .preview-cover {
-      height:115px;
-      border-radius:15px 15px 0 0;
+      height: 115px;
       background:
-        linear-gradient(rgba(0,0,0,.1),rgba(0,0,0,.35)),
-        url("https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=900&q=80") center/cover;
-      overflow:hidden;
+        linear-gradient(rgba(0,0,0,.1),rgba(0,0,0,.4)),
+        url("https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&w=1000&q=80")
+        center/cover;
     }
 
-    .preview-cover img {
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      display:none;
-    }
-
-    .preview-cover img.visible { display:block; }
-
-    .preview-body {
-      background:#12121d;
-      border:1px solid var(--line);
-      border-top:0;
-      border-radius:0 0 15px 15px;
-      padding:0 16px 18px;
-      text-align:center;
+    .preview-info {
+      padding: 0 17px 17px;
     }
 
     .preview-avatar {
-      width:78px;
-      height:78px;
-      border-radius:50%;
-      overflow:hidden;
-      background:#282536;
-      border:3px solid #d9b779;
-      margin:-39px auto 9px;
-      position:relative;
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      border: 4px solid #12121e;
+      margin-top: -35px;
+      object-fit: cover;
+      background: #292941;
     }
 
-    .preview-avatar img {
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      display:none;
+    .preview-name {
+      font-size: 16px;
+      font-weight: 900;
+      margin-top: 5px;
     }
 
-    .preview-avatar img.visible { display:block; }
-
-    .preview-avatar span {
-      display:grid;
-      place-items:center;
-      height:100%;
-      font-size:28px;
-    }
-
-    .preview-body h3 {
-      margin:0;
-      font-size:16px;
-    }
-
-    .preview-user {
-      color:var(--gold);
-      font-size:11px;
-      direction:ltr;
-      margin:3px 0 10px;
+    .preview-username {
+      color: var(--muted);
+      font-size: 11px;
+      direction: ltr;
+      text-align: right;
     }
 
     .preview-bio {
-      color:var(--muted);
-      font-size:11px;
-      line-height:1.8;
-      min-height:40px;
-      overflow-wrap:anywhere;
+      font-size: 11px;
+      color: #c9c5d6;
+      line-height: 1.9;
+      margin-top: 12px;
+      overflow-wrap: anywhere;
     }
 
-    .preview-stats {
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:8px;
-      margin-top:15px;
+    .preview-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 12px;
     }
 
-    .preview-stat {
-      padding:10px 5px;
-      background:rgba(255,255,255,.04);
-      border-radius:10px;
+    .preview-tag {
+      background: rgba(233,199,124,.1);
+      color: var(--gold2);
+      border-radius: 20px;
+      padding: 5px 9px;
+      font-size: 9px;
     }
 
-    .preview-stat strong {
-      display:block;
-      color:var(--gold2);
-      font-size:12px;
+    .bottom-actions {
+      position: sticky;
+      bottom: 10px;
+      z-index: 15;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 13px;
+      background: rgba(20,20,32,.94);
+      border: 1px solid var(--border);
+      border-radius: 17px;
+      backdrop-filter: blur(15px);
+      box-shadow: 0 12px 40px rgba(0,0,0,.3);
     }
 
-    .preview-stat small {
-      color:var(--muted);
-      font-size:9px;
-    }
-
-    .tips {
-      list-style:none;
-      padding:0;
-      margin:0;
-      display:grid;
-      gap:12px;
-    }
-
-    .tips li {
-      display:flex;
-      align-items:flex-start;
-      gap:10px;
-      color:#d9d5df;
-      font-size:11px;
-      line-height:1.9;
-    }
-
-    .tips li span {
-      color:var(--green);
-      font-size:14px;
-      flex:none;
-    }
-
-    .actions {
-      display:flex;
-      gap:12px;
-      margin-top:22px;
+    .bottom-note {
+      color: var(--muted);
+      font-size: 10px;
+      line-height: 1.7;
     }
 
     .save-btn {
-      flex:1;
-      border:0;
-      border-radius:14px;
-      padding:15px;
-      color:#21190e;
-      font-weight:900;
-      background:linear-gradient(110deg,#b98b48,#f0d6a2);
-      box-shadow:0 10px 25px rgba(185,139,72,.18);
+      border: 0;
+      border-radius: 13px;
+      padding: 13px 23px;
+      color: #171321;
+      background: linear-gradient(135deg,var(--gold2),#d3a955);
+      font-size: 12px;
+      font-weight: 900;
+      white-space: nowrap;
+      box-shadow: 0 7px 22px rgba(218,176,96,.16);
     }
 
     .save-btn:disabled {
-      opacity:.55;
-      cursor:wait;
-    }
-
-    .later-btn {
-      border:1px solid var(--line);
-      background:#242331;
-      color:#ddd8e5;
-      border-radius:14px;
-      padding:15px 20px;
-      font-weight:700;
+      opacity: .55;
+      cursor: wait;
     }
 
     .status {
-      display:none;
-      border-radius:12px;
-      padding:12px 14px;
-      font-size:12px;
-      line-height:1.8;
-      margin-top:15px;
+      display: none;
+      padding: 12px 15px;
+      border-radius: 12px;
+      margin-bottom: 15px;
+      font-size: 12px;
+      line-height: 1.8;
     }
 
-    .status.show { display:block; }
     .status.error {
-      color:#ffc3cb;
-      background:rgba(255,100,124,.1);
-      border:1px solid rgba(255,100,124,.25);
+      display: block;
+      color: #ffc1cb;
+      background: rgba(255,113,135,.1);
+      border: 1px solid rgba(255,113,135,.25);
     }
 
     .status.success {
-      color:#baf5dc;
-      background:rgba(86,214,164,.1);
-      border:1px solid rgba(86,214,164,.25);
+      display: block;
+      color: #a6f2d0;
+      background: rgba(85,214,162,.1);
+      border: 1px solid rgba(85,214,162,.25);
     }
 
-    .footer {
-      text-align:center;
-      color:#777482;
-      font-size:10px;
-      margin-top:25px;
+    .loading-screen {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      color: var(--gold);
+      font-weight: 800;
     }
 
-    .hidden-file { display:none; }
+    .spinner {
+      width: 42px;
+      height: 42px;
+      margin: 0 auto 13px;
+      border: 3px solid rgba(233,199,124,.18);
+      border-top-color: var(--gold);
+      border-radius: 50%;
+      animation: spin .8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .footer-note {
+      text-align: center;
+      color: var(--muted);
+      font-size: 10px;
+      margin-top: 25px;
+      line-height: 2;
+    }
 
     @media(max-width:850px) {
-      .layout { grid-template-columns:1fr; }
-      .side-column { grid-row:1; }
-      .preview-card { position:static; }
-      .preview-card .section-heading { margin-bottom:14px; }
-    }
-
-    @media(max-width:560px) {
-      .page {
-        width:calc(100% - 20px);
-        padding-top:15px;
+      .layout {
+        grid-template-columns: 1fr;
       }
 
-      .card { padding:17px; border-radius:18px; }
-      .topbar { margin-bottom:15px; }
-      .brand-mark { width:44px;height:44px;border-radius:14px; }
-      .brand-name { font-size:15px; }
-      .step-pill { font-size:10px;padding:7px 10px; }
-      .intro { margin:20px auto 22px; }
-      .intro p { font-size:12px; }
-      .fields { grid-template-columns:1fr; }
-      .field.full { grid-column:auto; }
-      .cover { height:165px; }
-      .avatar { width:92px;height:92px; }
-      .actions { flex-direction:column; }
-      .later-btn { width:100%; }
-      .save-btn { width:100%; }
+      .side-nav {
+        position: static;
+        display: flex;
+        overflow-x: auto;
+        gap: 5px;
+        padding: 9px;
+      }
+
+      .side-title {
+        display: none;
+      }
+
+      .nav-item {
+        flex: 0 0 auto;
+        width: auto;
+        margin: 0;
+        padding: 8px 11px;
+      }
+
+      .nav-item span:last-child {
+        white-space: nowrap;
+      }
+
+      .nav-icon {
+        width: 27px;
+        height: 27px;
+      }
+    }
+
+    @media(max-width:600px) {
+      .topbar-inner {
+        padding: 10px 12px;
+      }
+
+      .brand-name {
+        font-size: 15px;
+      }
+
+      .brand-icon {
+        width: 41px;
+        height: 41px;
+      }
+
+      .top-btn {
+        padding: 8px 10px;
+        font-size: 10px;
+      }
+
+      .page {
+        padding: 17px 11px 45px;
+      }
+
+      .welcome {
+        padding: 22px 18px;
+        border-radius: 21px;
+      }
+
+      .welcome p {
+        font-size: 12px;
+      }
+
+      .section {
+        padding: 17px 13px;
+        border-radius: 18px;
+      }
+
+      .section-heading h2 {
+        font-size: 16px;
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .field.full {
+        grid-column: auto;
+      }
+
+      .option-grid {
+        grid-template-columns: repeat(3,minmax(0,1fr));
+        gap: 7px;
+      }
+
+      .option {
+        min-height: 70px;
+        font-size: 10px;
+      }
+
+      .cover-area {
+        height: 165px;
+      }
+
+      .avatar-wrap {
+        width: 91px;
+        height: 91px;
+        flex-basis: 91px;
+      }
+
+      .avatar-row {
+        margin-top: -37px;
+      }
+
+      .bottom-actions {
+        align-items: center;
+      }
+
+      .bottom-note {
+        max-width: 48%;
+      }
+
+      .save-btn {
+        padding: 12px 15px;
+        font-size: 11px;
+      }
+    }
+
+    @media(max-width:360px) {
+      .option-grid {
+        grid-template-columns: repeat(2,minmax(0,1fr));
+      }
+
+      .brand-sub {
+        display: none;
+      }
     }
   </style>
 </head>
 
 <body>
-  <div class="page">
+  <div class="ambient one"></div>
+  <div class="ambient two"></div>
 
+  <div id="loadingScreen" class="loading-screen">
+    <div>
+      <div class="spinner"></div>
+      جاري تجهيز ملفك الشخصي...
+    </div>
+  </div>
+
+  <div id="app" hidden>
     <header class="topbar">
-      <div class="brand">
-        <div class="brand-mark">H</div>
-        <div>
-          <div class="brand-name">HANOON WORLD</div>
-          <div class="brand-sub">عالمك يبدأ من هنا</div>
+      <div class="topbar-inner">
+        <div class="brand">
+          <div class="brand-icon">H</div>
+          <div>
+            <div class="brand-name">HANOON WORLD</div>
+            <div class="brand-sub">عالمك.. شخصيتك.. حكايتك</div>
+          </div>
+        </div>
+
+        <div class="top-actions">
+          <button class="top-btn" id="logoutButton">تسجيل الخروج</button>
         </div>
       </div>
-      <div class="step-pill">الخطوة الأخيرة · تجهيز الحساب</div>
     </header>
 
-    <section class="intro">
-      <div class="eyebrow">WELCOME TO YOUR WORLD</div>
-      <h1>اصنع هويتك في عالم هنون</h1>
-      <p>
-        جهّز ملفك الشخصي بالطريقة التي تعبّر عنك.
-        أضف صورتك ونبذتك واهتماماتك، واجعل الآخرين يتعرفون عليك.
-      </p>
-      <div class="progress"><span></span></div>
-    </section>
+    <main class="page">
+      <section class="welcome">
+        <span class="welcome-label">✦ مساحة خاصة بك</span>
+        <h1>خلّي العالم يعرف شخصيتك!</h1>
+        <p>
+          جهّز ملفك الشخصي بطريقتك، اختار الحاجات اللي بتحبها،
+          أضف صورك واهتماماتك، وخلي لكل شخص في HANOON WORLD
+          فكرة جميلة عنك.
+        </p>
+      </section>
 
-    <form id="profileForm" novalidate>
+      <section class="progress-card">
+        <div class="progress-head">
+          <strong>تقدم تجهيز ملفك الشخصي</strong>
+          <span class="progress-number" id="progressNumber">0%</span>
+        </div>
+        <div class="progress-track">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+      </section>
+
       <div class="layout">
+        <aside class="side-nav">
+          <div class="side-title">أقسام ملفك الشخصي</div>
 
-        <div class="main-column">
+          <button class="nav-item active" data-target="photosSection">
+            <span class="nav-icon">📸</span>
+            <span>الصور والهوية</span>
+          </button>
 
-          <section class="card">
+          <button class="nav-item" data-target="basicSection">
+            <span class="nav-icon">👤</span>
+            <span>معلوماتك</span>
+          </button>
+
+          <button class="nav-item" data-target="hobbiesSection">
+            <span class="nav-icon">🎯</span>
+            <span>الهوايات</span>
+          </button>
+
+          <button class="nav-item" data-target="interestsSection">
+            <span class="nav-icon">✨</span>
+            <span>الاهتمامات</span>
+          </button>
+
+          <button class="nav-item" data-target="readingSection">
+            <span class="nav-icon">📚</span>
+            <span>القراءة</span>
+          </button>
+
+          <button class="nav-item" data-target="videoSection">
+            <span class="nav-icon">🎬</span>
+            <span>الفيديو التعريفي</span>
+          </button>
+
+          <button class="nav-item" data-target="privacySection">
+            <span class="nav-icon">🔐</span>
+            <span>الخصوصية</span>
+          </button>
+
+          <button class="nav-item" data-target="previewSection">
+            <span class="nav-icon">🌟</span>
+            <span>معاينة ملفك</span>
+          </button>
+        </aside>
+
+        <div class="main-content">
+          <div id="statusBox" class="status"></div>
+
+          <!-- الصور والهوية -->
+          <section class="section" id="photosSection">
             <div class="section-heading">
-              <div class="section-icon">✦</div>
               <div>
-                <h2>هويتك البصرية</h2>
-                <p>صورتك الشخصية وصورة الغلاف</p>
+                <h2>📸 صورك وهويتك</h2>
+                <p>اختار صورة تعبر عنك وغلاف يدي ملفك لمسة مميزة.</p>
               </div>
+              <div class="section-number">01</div>
             </div>
 
-            <div class="cover">
+            <div class="cover-area" id="coverArea">
               <img id="coverPreview" alt="صورة الغلاف">
-              <button type="button" class="cover-action" id="coverButton">
-                تغيير صورة الغلاف
+              <button class="cover-action" type="button"
+                onclick="document.getElementById('coverInput').click()">
+                ✦ تغيير صورة الغلاف
               </button>
             </div>
 
-            <input class="hidden-file" type="file" id="coverInput" accept="image/jpeg,image/png,image/webp">
+            <input type="file" id="coverInput" accept="image/png,image/jpeg,image/webp">
 
-            <div class="avatar-wrap">
-              <div class="avatar">
-                <div class="avatar-placeholder" id="avatarPlaceholder">H</div>
-                <img id="avatarPreview" alt="الصورة الشخصية">
+            <div class="avatar-row">
+              <div class="avatar-wrap">
+                <img id="avatarPreview"
+                  src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=300&q=80"
+                  alt="الصورة الشخصية">
               </div>
 
-              <div class="avatar-info">
-                <strong>الصورة الشخصية</strong>
-                <p>اختر صورة واضحة تمثلك. الصيغ المدعومة JPG وPNG وWEBP، بحد أقصى 5 ميجابايت.</p>
-                <button type="button" class="upload-btn" id="avatarButton">اختيار صورة</button>
+              <div>
+                <button class="avatar-upload" type="button"
+                  onclick="document.getElementById('avatarInput').click()">
+                  📷 اختيار الصورة الشخصية
+                </button>
+                <div class="avatar-hint">الصورة الشخصية مطلوبة لإكمال الملف.</div>
               </div>
             </div>
 
-            <input class="hidden-file" type="file" id="avatarInput" accept="image/jpeg,image/png,image/webp">
+            <input type="file" id="avatarInput" accept="image/png,image/jpeg,image/webp">
+
+            <div class="field-hint">
+              الصور المسموحة: JPG وPNG وWEBP، بحد أقصى 5 ميجابايت للصورة.
+            </div>
           </section>
 
-          <section class="card">
+          <!-- المعلومات الأساسية -->
+          <section class="section" id="basicSection">
             <div class="section-heading">
-              <div class="section-icon">◈</div>
               <div>
-                <h2>معلومات حسابك</h2>
-                <p>البيانات الأساسية التي ستظهر في ملفك</p>
+                <h2>👤 معلوماتك الأساسية</h2>
+                <p>المعلومات اللي هتعرّف الناس بيك داخل العالم.</p>
               </div>
+              <div class="section-number">02</div>
             </div>
 
-            <div class="fields">
+            <div class="form-grid">
               <div class="field">
-                <label for="fullName">الاسم الذي يظهر للأعضاء</label>
-                <input id="fullName" maxlength="60" placeholder="اكتب اسمك">
+                <label for="fullName">الاسم الظاهر <span class="required">*</span></label>
+                <input id="fullName" maxlength="60" placeholder="اكتب اسمك اللي تحب يظهر">
+                <div class="field-hint">استخدم اسمًا مناسبًا يظهر للأعضاء.</div>
               </div>
 
               <div class="field">
                 <label for="username">اسم المستخدم</label>
-                <input id="username" readonly placeholder="جارٍ تحميل الحساب">
-                <div class="hint">اسم المستخدم المرتبط بتسجيل دخولك.</div>
+                <input id="username" readonly>
+                <div class="field-hint">اسم حسابك ثابت ولا يتغير من هنا.</div>
               </div>
 
               <div class="field full">
-                <label>كود العضوية الخاص بك</label>
-                <div class="member-code">
-                  <div>
-                    <small>معرّفك الفريد في HANOON WORLD</small>
-                    <strong id="memberCode">جارٍ تحميل الكود...</strong>
-                  </div>
-                  <button type="button" class="copy-btn" id="copyCode">نسخ الكود</button>
+                <label>رقم العضوية الخاص بك</label>
+                <div class="member-code-box">
+                  <strong id="memberCode">سيظهر بعد تحميل الحساب</strong>
+                  <button type="button" class="copy-btn" id="copyCodeButton">نسخ الرقم</button>
                 </div>
-                <div class="hint">هذا الكود يتم إنشاؤه من قاعدة البيانات، ويمكن استخدامه للتعرف عليك.</div>
+                <div class="field-hint">احتفظ برقم العضوية؛ هيساعد الآخرين في الوصول لحسابك.</div>
               </div>
 
               <div class="field full">
                 <label for="bio">نبذة عنك</label>
-                <textarea id="bio" maxlength="500" placeholder="اكتب نبذة جميلة عن نفسك، اهتماماتك، وما تحب مشاركته مع الآخرين..."></textarea>
-                <div class="hint"><span id="bioCount">0</span> / 500 حرف</div>
+                <textarea id="bio" maxlength="350"
+                  placeholder="احكيلنا عن نفسك، شخصيتك، الحاجات اللي بتحبها، أو أي كلام تحب الناس تعرفه..."></textarea>
+                <div class="counter"><span id="bioCount">0</span> / 350</div>
               </div>
             </div>
           </section>
 
-          <section class="card">
+          <!-- الهوايات -->
+          <section class="section" id="hobbiesSection">
             <div class="section-heading">
-              <div class="section-icon">◇</div>
               <div>
-                <h2>هواياتك واهتماماتك</h2>
-                <p>اختر الأشياء التي تحبها واكتبها في ملفك</p>
+                <h2>🎯 إيه هواياتك؟</h2>
+                <p>اختار كل الهوايات اللي بتحبها. تقدر تختار أكتر من واحدة.</p>
               </div>
+              <div class="section-number">03</div>
             </div>
 
-            <div class="fields">
-              <div class="field full">
-                <label for="hobbies">الهوايات</label>
-                <textarea id="hobbies" placeholder="مثال: القراءة، الرسم، كرة القدم، السفر"></textarea>
-                <div class="hint">افصل بين كل هواية والأخرى بفاصلة.</div>
-                <div class="tag-area" data-target="hobbies">
-                  <button type="button" class="suggestion">القراءة</button>
-                  <button type="button" class="suggestion">الرسم</button>
-                  <button type="button" class="suggestion">السفر</button>
-                  <button type="button" class="suggestion">الرياضة</button>
-                  <button type="button" class="suggestion">التصوير</button>
-                  <button type="button" class="suggestion">الألعاب</button>
-                </div>
-              </div>
+            <div class="selection-toolbar">
+              <span class="selection-count" id="hobbiesCount">تم اختيار 0</span>
+              <button class="clear-selection" type="button" data-clear="hobbies">إلغاء الاختيارات</button>
+            </div>
 
-              <div class="field full">
-                <label for="interests">اهتماماتك العامة</label>
-                <textarea id="interests" placeholder="ما الموضوعات التي تحب التحدث عنها؟"></textarea>
-                <div class="hint">افصل بين الاهتمامات بفاصلة.</div>
-                <div class="tag-area" data-target="interests">
-                  <button type="button" class="suggestion">التكنولوجيا</button>
-                  <button type="button" class="suggestion">العلوم</button>
-                  <button type="button" class="suggestion">الثقافة</button>
-                  <button type="button" class="suggestion">الفن</button>
-                  <button type="button" class="suggestion">الرياضة</button>
-                  <button type="button" class="suggestion">السفر</button>
-                </div>
-              </div>
+            <div class="option-grid" id="hobbiesOptions"></div>
 
-              <div class="field full">
-                <label for="readingInterests">اهتماماتك في القراءة</label>
-                <textarea id="readingInterests" placeholder="روايات، تاريخ، تطوير الذات، علوم..."></textarea>
-                <div class="hint">اكتب أنواع الكتب أو الموضوعات التي تفضل قراءتها.</div>
-              </div>
+            <div class="custom-add">
+              <input id="customHobby" maxlength="35" placeholder="عندك هواية مش موجودة؟ اكتبها هنا">
+              <button type="button" id="addHobbyButton">+ إضافة</button>
             </div>
           </section>
 
-          <section class="card">
+          <!-- الاهتمامات -->
+          <section class="section" id="interestsSection">
             <div class="section-heading">
-              <div class="section-icon">▷</div>
               <div>
-                <h2>فيديو التعريف الشخصي</h2>
-                <p>عرّف الآخرين بنفسك من خلال فيديو قصير</p>
+                <h2>✨ اهتماماتك</h2>
+                <p>اختار المجالات والمواضيع اللي بتحب تتابعها وتشارك فيها.</p>
               </div>
+              <div class="section-number">04</div>
+            </div>
+
+            <div class="selection-toolbar">
+              <span class="selection-count" id="interestsCount">تم اختيار 0</span>
+              <button class="clear-selection" type="button" data-clear="interests">إلغاء الاختيارات</button>
+            </div>
+
+            <div class="option-grid" id="interestsOptions"></div>
+
+            <div class="custom-add">
+              <input id="customInterest" maxlength="35" placeholder="أضف اهتمامًا خاصًا بك">
+              <button type="button" id="addInterestButton">+ إضافة</button>
+            </div>
+          </section>
+
+          <!-- القراءة -->
+          <section class="section" id="readingSection">
+            <div class="section-heading">
+              <div>
+                <h2>📚 بتحب تقرأ في إيه؟</h2>
+                <p>اختار أنواع الكتب والموضوعات اللي تهمك.</p>
+              </div>
+              <div class="section-number">05</div>
+            </div>
+
+            <div class="selection-toolbar">
+              <span class="selection-count" id="readingCount">تم اختيار 0</span>
+              <button class="clear-selection" type="button" data-clear="reading">إلغاء الاختيارات</button>
+            </div>
+
+            <div class="option-grid" id="readingOptions"></div>
+
+            <div class="custom-add">
+              <input id="customReading" maxlength="35" placeholder="أضف مجال قراءة آخر">
+              <button type="button" id="addReadingButton">+ إضافة</button>
+            </div>
+          </section>
+
+          <!-- الفيديو -->
+          <section class="section" id="videoSection">
+            <div class="section-heading">
+              <div>
+                <h2>🎬 فيديو تعريفي</h2>
+                <p>اختياري: أضف فيديو قصير تعرف فيه الناس بنفسك.</p>
+              </div>
+              <div class="section-number">06</div>
             </div>
 
             <div class="video-box">
-              <div class="video-empty" id="videoEmpty">
-                <div class="video-icon">▶</div>
-                <strong>أضف فيديو تعريفيًا إلى ملفك</strong>
-                <p>اختر فيديو MP4 أو WEBM أو MOV، بحد أقصى 45 ميجابايت.</p>
-                <button type="button" class="upload-btn" id="videoButton">اختيار فيديو</button>
-              </div>
-              <video id="videoPreview" controls playsinline></video>
+              <div class="video-symbol">🎥</div>
+              <strong>خلّي الناس تتعرف عليك أكتر</strong>
+              <p>ارفع فيديو بصيغة MP4 أو WEBM أو MOV، بحد أقصى 45 ميجابايت.</p>
+
+              <label for="videoInput" class="upload-label">اختيار فيديو</label>
+              <input type="file" id="videoInput" accept="video/mp4,video/webm,video/quicktime">
+
+              <video id="videoPreview" class="video-preview" controls playsinline></video>
             </div>
-
-            <input class="hidden-file" type="file" id="videoInput" accept="video/mp4,video/webm,video/quicktime">
-
-            <div class="hint">الفيديو اختياري. يمكنك إكمال حسابك من دونه وإضافته لاحقًا.</div>
           </section>
 
-          <section class="card">
+          <!-- الخصوصية -->
+          <section class="section" id="privacySection">
             <div class="section-heading">
-              <div class="section-icon">⚙</div>
               <div>
-                <h2>خصوصية ملفك الشخصي</h2>
-                <p>تحكم في طريقة ظهور ملفك للأعضاء</p>
+                <h2>🔐 إعدادات الخصوصية</h2>
+                <p>اختار مستوى الخصوصية اللي يناسبك.</p>
               </div>
+              <div class="section-number">07</div>
             </div>
 
-            <div class="privacy-row">
+            <div class="privacy-card">
               <div>
                 <strong>حساب خاص</strong>
-                <small>عند تفعيل هذا الخيار يصبح ملفك خاصًا وفق إعدادات الخصوصية.</small>
+                <p>فعّل الاختيار ده لو عايز ملفك يكون خاصًا بدلًا من العام.</p>
               </div>
+
               <label class="switch">
                 <input type="checkbox" id="privateAccount">
                 <span></span>
               </label>
             </div>
+
+            <div class="field-hint">
+              إعداد الخصوصية ده مرتبط بحقل خصوصية الحساب في قاعدة البيانات.
+              أما إعدادات ظهور التفاصيل والأصدقاء فهنبنيها في صفحة البروفايل المستقلة.
+            </div>
           </section>
 
-          <div class="actions">
-            <button type="submit" class="save-btn" id="saveButton">حفظ الملف الشخصي والدخول إلى العالم</button>
-            <button type="button" class="later-btn" id="logoutButton">تسجيل الخروج</button>
+          <!-- المعاينة -->
+          <section class="section" id="previewSection">
+            <div class="section-heading">
+              <div>
+                <h2>🌟 شوف ملفك قبل الحفظ</h2>
+                <p>دي معاينة لشكل معلوماتك وصورتك.</p>
+              </div>
+              <div class="section-number">08</div>
+            </div>
+
+            <div class="preview-card">
+              <div class="preview-cover" id="previewCover"></div>
+              <div class="preview-info">
+                <img class="preview-avatar" id="previewAvatar"
+                  src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=300&q=80"
+                  alt="معاينة الصورة">
+                <div class="preview-name" id="previewName">اسمك هيظهر هنا</div>
+                <div class="preview-username" id="previewUsername">@username</div>
+                <div class="preview-bio" id="previewBio">النبذة الشخصية هتظهر هنا...</div>
+                <div class="preview-tags" id="previewTags"></div>
+              </div>
+            </div>
+          </section>
+
+          <div class="bottom-actions">
+            <div class="bottom-note">
+              بياناتك هتتحفظ في حسابك.
+              راجع اختياراتك قبل الحفظ.
+            </div>
+
+            <button class="save-btn" id="saveButton" type="button">
+              حفظ الملف الشخصي ←
+            </button>
           </div>
 
-          <div class="status" id="statusBox" role="status"></div>
+          <div class="footer-note">
+            HANOON WORLD · عالم يجمعنا
+            <br>
+            ملفك الشخصي هو مساحتك الخاصة داخل العالم.
+          </div>
         </div>
-
-        <aside class="side-column">
-
-          <section class="card preview-card">
-            <div class="section-heading">
-              <div class="section-icon">◎</div>
-              <div>
-                <h2>معاينة ملفك</h2>
-                <p>هكذا سيظهر ملفك بشكل مبدئي</p>
-              </div>
-            </div>
-
-            <div class="preview-cover">
-              <img id="previewCoverImage" alt="">
-            </div>
-
-            <div class="preview-body">
-              <div class="preview-avatar">
-                <span id="previewAvatarPlaceholder">H</span>
-                <img id="previewAvatarImage" alt="">
-              </div>
-              <h3 id="previewName">اسم العضو</h3>
-              <div class="preview-user" id="previewUsername">@username</div>
-              <div class="preview-bio" id="previewBio">ستظهر نبذتك الشخصية هنا بعد كتابتها.</div>
-
-              <div class="preview-stats">
-                <div class="preview-stat">
-                  <strong>عضو جديد</strong>
-                  <small>في عالم هنون</small>
-                </div>
-                <div class="preview-stat">
-                  <strong id="previewCode">HN-••••••••••</strong>
-                  <small>كود العضوية</small>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <section class="card">
-            <div class="section-heading">
-              <div class="section-icon">✧</div>
-              <div>
-                <h2>نصائح لملف مميز</h2>
-                <p>اجعل تجربتك أفضل</p>
-              </div>
-            </div>
-
-            <ul class="tips">
-              <li><span>✓</span> استخدم صورة شخصية واضحة ومناسبة.</li>
-              <li><span>✓</span> اختر غلافًا يعبر عن شخصيتك.</li>
-              <li><span>✓</span> اكتب نبذة حقيقية ومختصرة عن نفسك.</li>
-              <li><span>✓</span> أضف هواياتك حتى تجد أشخاصًا يشاركونك اهتماماتك.</li>
-              <li><span>✓</span> احتفظ بكود العضوية الخاص بك.</li>
-            </ul>
-          </section>
-
-        </aside>
       </div>
-    </form>
-
-    <footer class="footer">
-      HANOON WORLD · عالم يجمعنا
-    </footer>
+    </main>
   </div>
 
   <script type="module">
     import { supabase } from "./supabase.js";
-    import { signOut } from "./auth.js";
 
     const $ = (id) => document.getElementById(id);
 
     const state = {
-      user:null,
-      profile:null,
-      avatarFile:null,
-      coverFile:null,
-      videoFile:null,
-      avatarUrl:null,
-      coverUrl:null,
-      videoUrl:null
+      user: null,
+      profile: null,
+      avatarPath: null,
+      coverPath: null,
+      videoPath: null,
+      avatarFile: null,
+      coverFile: null,
+      videoFile: null,
+      selections: {
+        hobbies: new Set(),
+        interests: new Set(),
+        reading: new Set()
+      },
+      objectUrls: []
     };
 
-    function showStatus(message,type="error") {
+    const catalogs = {
+      hobbies: [
+        ["🎮","الألعاب"],["⚽","كرة القدم"],["🏀","كرة السلة"],
+        ["🎨","الرسم"],["📷","التصوير"],["🎵","الموسيقى"],
+        ["🎤","الغناء"],["✍️","الكتابة"],["🏊","السباحة"],
+        ["🏃","الجري"],["🚴","ركوب الدراجات"],["🍳","الطبخ"],
+        ["✈️","السفر"],["🌱","الزراعة"],["♟️","الشطرنج"],
+        ["🧩","الألغاز"],["🎬","الأفلام"],["🎭","التمثيل"],
+        ["💻","البرمجة"],["🧵","الأعمال اليدوية"],["🐎","الفروسية"],
+        ["🏋️","الرياضة"],["🧘","التأمل"],["🐾","الحيوانات"]
+      ],
+      interests: [
+        ["🌍","الثقافة"],["🔬","العلوم"],["💻","التكنولوجيا"],
+        ["🤖","الذكاء الاصطناعي"],["📈","الأعمال"],["💰","الاقتصاد"],
+        ["🏛️","التاريخ"],["🗺️","الجغرافيا"],["🎮","الألعاب الإلكترونية"],
+        ["⚽","الرياضة"],["🎥","السينما"],["🎼","الفن"],
+        ["🌌","الفضاء"],["🌿","الطبيعة"],["🧠","علم النفس"],
+        ["📰","الأخبار"],["🧑‍🍳","الطعام"],["✈️","السفر"],
+        ["🛠️","الاختراعات"],["📱","التطبيقات"],["🏡","الحياة اليومية"],
+        ["🎓","التعليم"],["🗣️","اللغات"],["🤝","التطوع"]
+      ],
+      reading: [
+        ["📖","الروايات"],["🕵️","الغموض والجريمة"],["❤️","الرومانسية"],
+        ["🚀","الخيال العلمي"],["🐉","الفانتازيا"],["🏛️","التاريخ"],
+        ["🧠","علم النفس"],["🔬","العلوم"],["💼","تطوير الذات"],
+        ["💰","الاقتصاد والمال"],["🌍","الثقافة العامة"],["🕌","السير والتراجم"],
+        ["📰","المقالات"],["✍️","الأدب والشعر"],["🧑‍💻","التكنولوجيا"],
+        ["🗺️","السفر والمغامرات"],["⚖️","القانون"],["🎓","التعليم"]
+      ]
+    };
+
+    function showStatus(message, type = "error") {
       const box = $("statusBox");
       box.textContent = message;
-      box.className = `status show ${type}`;
-      box.scrollIntoView({behavior:"smooth",block:"nearest"});
+      box.className = `status ${type}`;
+      box.scrollIntoView({ behavior: "smooth", block: "center" });
     }
 
     function clearStatus() {
@@ -1027,386 +1424,632 @@
       $("statusBox").textContent = "";
     }
 
-    function splitTags(value) {
-      return [...new Set(
-        String(value || "")
-          .split(/[,،\n]/)
-          .map(item => item.trim())
-          .filter(Boolean)
-      )].slice(0,30);
+    function escapeHTML(value) {
+      return String(value ?? "").replace(/[&<>"']/g, char => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#039;"
+      }[char]));
     }
 
-    function fillTags(items) {
-      return Array.isArray(items) ? items.join("، ") : "";
+    function parseList(value) {
+      return String(value || "")
+        .split(",")
+        .map(item => item.trim())
+        .filter(Boolean);
     }
 
-    function resolvePublicUrl(bucket,path) {
+    function storageUrl(bucket, path) {
       if (!path) return "";
-      if (/^https?:\/\//i.test(path)) return path;
       return supabase.storage.from(bucket).getPublicUrl(path).data.publicUrl;
     }
 
-    function setImagePreview(file,inputType) {
+    function updateProgress() {
+      const checks = [
+        $("fullName").value.trim().length >= 2,
+        !!state.avatarPath || !!state.avatarFile,
+        state.selections.hobbies.size > 0,
+        state.selections.interests.size > 0,
+        state.selections.reading.size > 0,
+        $("bio").value.trim().length > 0
+      ];
+
+      const completed = checks.filter(Boolean).length;
+      const percent = Math.round((completed / checks.length) * 100);
+
+      $("progressFill").style.width = `${percent}%`;
+      $("progressNumber").textContent = `${percent}%`;
+    }
+
+    function updateCount(type) {
+      const labels = {
+        hobbies: "hobbiesCount",
+        interests: "interestsCount",
+        reading: "readingCount"
+      };
+
+      const count = state.selections[type].size;
+      $(labels[type]).textContent = `تم اختيار ${count} ${count === 1 ? "اختيار" : "اختيارات"}`;
+      updatePreview();
+      updateProgress();
+    }
+
+    function renderOptions(type) {
+      const containerId = {
+        hobbies: "hobbiesOptions",
+        interests: "interestsOptions",
+        reading: "readingOptions"
+      }[type];
+
+      const container = $(containerId);
+      container.innerHTML = "";
+
+      catalogs[type].forEach(([emoji, label]) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "option";
+        button.dataset.value = label;
+
+        button.innerHTML = `
+          <span class="emoji">${emoji}</span>
+          <span>${escapeHTML(label)}</span>
+        `;
+
+        button.addEventListener("click", () => {
+          toggleOption(type, label, button);
+        });
+
+        container.appendChild(button);
+      });
+
+      updateOptionStyles(type);
+    }
+
+    function updateOptionStyles(type) {
+      const containerId = {
+        hobbies: "hobbiesOptions",
+        interests: "interestsOptions",
+        reading: "readingOptions"
+      }[type];
+
+      $(containerId).querySelectorAll(".option").forEach(button => {
+        button.classList.toggle(
+          "selected",
+          state.selections[type].has(button.dataset.value)
+        );
+      });
+    }
+
+    function toggleOption(type, value, button) {
+      const selected = state.selections[type];
+
+      if (selected.has(value)) {
+        selected.delete(value);
+      } else {
+        selected.add(value);
+      }
+
+      button.classList.toggle("selected", selected.has(value));
+      updateCount(type);
+    }
+
+    function addCustomOption(type, inputId) {
+      const input = $(inputId);
+      const value = input.value.trim();
+
+      if (!value) {
+        input.focus();
+        return;
+      }
+
+      if (value.length > 35) {
+        showStatus("الاختيار طويل جدًا. اختصره من فضلك.");
+        return;
+      }
+
+      state.selections[type].add(value);
+
+      const containerId = {
+        hobbies: "hobbiesOptions",
+        interests: "interestsOptions",
+        reading: "readingOptions"
+      }[type];
+
+      const container = $(containerId);
+      let button = [...container.querySelectorAll(".option")]
+        .find(item => item.dataset.value === value);
+
+      if (!button) {
+        button = document.createElement("button");
+        button.type = "button";
+        button.className = "option";
+        button.dataset.value = value;
+        button.innerHTML = `
+          <span class="emoji">✦</span>
+          <span>${escapeHTML(value)}</span>
+        `;
+
+        button.addEventListener("click", () => {
+          toggleOption(type, value, button);
+        });
+
+        container.appendChild(button);
+      }
+
+      updateOptionStyles(type);
+      updateCount(type);
+      input.value = "";
+      clearStatus();
+    }
+
+    function setSelections(type, values) {
+      state.selections[type] = new Set(values || []);
+      renderOptions(type);
+
+      const containerId = {
+        hobbies: "hobbiesOptions",
+        interests: "interestsOptions",
+        reading: "readingOptions"
+      }[type];
+
+      const container = $(containerId);
+
+      state.selections[type].forEach(value => {
+        if (![...container.querySelectorAll(".option")]
+          .some(button => button.dataset.value === value)) {
+          const button = document.createElement("button");
+          button.type = "button";
+          button.className = "option";
+          button.dataset.value = value;
+          button.innerHTML = `
+            <span class="emoji">✦</span>
+            <span>${escapeHTML(value)}</span>
+          `;
+          button.addEventListener("click", () => {
+            toggleOption(type, value, button);
+          });
+          container.appendChild(button);
+        }
+      });
+
+      updateOptionStyles(type);
+      updateCount(type);
+    }
+
+    function updatePreview() {
+      const name = $("fullName").value.trim();
+      const username = $("username").value.trim();
+      const bio = $("bio").value.trim();
+
+      $("previewName").textContent = name || "اسمك هيظهر هنا";
+      $("previewUsername").textContent = username ? `@${username}` : "@username";
+      $("previewBio").textContent = bio || "النبذة الشخصية هتظهر هنا...";
+
+      const tags = [
+        ...state.selections.hobbies,
+        ...state.selections.interests
+      ].slice(0, 8);
+
+      $("previewTags").innerHTML = tags
+        .map(tag => `<span class="preview-tag">${escapeHTML(tag)}</span>`)
+        .join("");
+
+      updateProgress();
+    }
+
+    function makeObjectUrl(file) {
       const url = URL.createObjectURL(file);
-
-      if (inputType === "avatar") {
-        if (state.avatarUrl) URL.revokeObjectURL(state.avatarUrl);
-        state.avatarUrl = url;
-        $("avatarPreview").src = url;
-        $("avatarPreview").classList.add("visible");
-        $("avatarPlaceholder").style.display = "none";
-        $("previewAvatarImage").src = url;
-        $("previewAvatarImage").classList.add("visible");
-        $("previewAvatarPlaceholder").style.display = "none";
-      }
-
-      if (inputType === "cover") {
-        if (state.coverUrl) URL.revokeObjectURL(state.coverUrl);
-        state.coverUrl = url;
-        $("coverPreview").src = url;
-        $("coverPreview").classList.add("visible");
-        $("previewCoverImage").src = url;
-        $("previewCoverImage").classList.add("visible");
-      }
+      state.objectUrls.push(url);
+      return url;
     }
 
-    function setExistingImage(bucket,path,type) {
-      if (!path) return;
-      const url = resolvePublicUrl(bucket,path);
+    function validateImage(file) {
+      if (!file) return false;
 
-      if (type === "avatar") {
-        $("avatarPreview").src = url;
-        $("avatarPreview").classList.add("visible");
-        $("avatarPlaceholder").style.display = "none";
-        $("previewAvatarImage").src = url;
-        $("previewAvatarImage").classList.add("visible");
-        $("previewAvatarPlaceholder").style.display = "none";
-      }
+      const allowed = ["image/jpeg", "image/png", "image/webp"];
 
-      if (type === "cover") {
-        $("coverPreview").src = url;
-        $("coverPreview").classList.add("visible");
-        $("previewCoverImage").src = url;
-        $("previewCoverImage").classList.add("visible");
-      }
-    }
-
-    function setExistingVideo(path) {
-      if (!path) return;
-      const url = resolvePublicUrl("post-media",path);
-      $("videoPreview").src = url;
-      $("videoPreview").classList.add("visible");
-      $("videoEmpty").style.display = "none";
-    }
-
-    function validImage(file) {
-      const allowed = ["image/jpeg","image/png","image/webp"];
       if (!allowed.includes(file.type)) {
-        throw new Error("صيغة الصورة غير مدعومة. استخدم JPG أو PNG أو WEBP.");
+        showStatus("اختار صورة بصيغة JPG أو PNG أو WEBP.");
+        return false;
       }
+
       if (file.size > 5 * 1024 * 1024) {
-        throw new Error("حجم الصورة أكبر من 5 ميجابايت.");
+        showStatus("حجم الصورة أكبر من 5 ميجابايت.");
+        return false;
       }
+
+      return true;
     }
 
-    function validVideo(file) {
-      const allowed = ["video/mp4","video/webm","video/quicktime"];
+    function validateVideo(file) {
+      if (!file) return false;
+
+      const allowed = ["video/mp4", "video/webm", "video/quicktime"];
+
       if (!allowed.includes(file.type)) {
-        throw new Error("صيغة الفيديو غير مدعومة. استخدم MP4 أو WEBM أو MOV.");
+        showStatus("اختار فيديو بصيغة MP4 أو WEBM أو MOV.");
+        return false;
       }
+
       if (file.size > 45 * 1024 * 1024) {
-        throw new Error("حجم الفيديو أكبر من 45 ميجابايت.");
+        showStatus("حجم الفيديو أكبر من 45 ميجابايت.");
+        return false;
       }
+
+      return true;
     }
 
-    async function uploadFile(bucket,file,userId,prefix) {
-      const extension = file.name.split(".").pop().toLowerCase().replace(/[^a-z0-9]/g,"");
-      const safeExtension = extension || (file.type.startsWith("video/") ? "mp4" : "jpg");
-      const path = `${userId}/${prefix}-${Date.now()}-${crypto.randomUUID()}.${safeExtension}`;
+    async function uploadFile(bucket, file, prefix) {
+      const extension = file.name.split(".").pop().toLowerCase();
+      const path = `${state.user.id}/${prefix}-${Date.now()}-${crypto.randomUUID()}.${extension}`;
 
-      const { error } = await supabase.storage
+      const { data, error } = await supabase.storage
         .from(bucket)
-        .upload(path,file,{
-          cacheControl:"3600",
-          upsert:false,
-          contentType:file.type
+        .upload(path, file, {
+          cacheControl: "3600",
+          upsert: false,
+          contentType: file.type
         });
 
       if (error) throw error;
-      return path;
+      return data.path;
     }
 
     async function loadProfile() {
-      const { data:authData,error:authError } = await supabase.auth.getUser();
+      const { data: authData, error: authError } = await supabase.auth.getUser();
 
-      if (authError || !authData?.user) {
-        window.location.replace("login.html");
+      if (authError || !authData.user) {
+        location.replace("./login.html");
         return;
       }
 
       state.user = authData.user;
 
-      const { data:profile,error } = await supabase
+      const { data, error } = await supabase
         .from("profiles")
-        .select("id,full_name,username,member_code,avatar_path,cover_path,profile_video_path,bio,hobbies,interests,reading_interests,profile_completed,is_private")
-        .eq("id",state.user.id)
+        .select(`
+          id,
+          full_name,
+          username,
+          member_code,
+          avatar_path,
+          cover_path,
+          profile_video_path,
+          bio,
+          hobbies,
+          interests,
+          reading_interests,
+          profile_completed,
+          is_private
+        `)
+        .eq("id", state.user.id)
         .maybeSingle();
 
       if (error) throw error;
 
-      if (!profile) {
-        const { error:insertError } = await supabase
+      if (!data) {
+        const { error: insertError } = await supabase
           .from("profiles")
-          .insert({id:state.user.id});
+          .insert({ id: state.user.id });
 
         if (insertError) throw insertError;
 
-        const { data:created,error:readError } = await supabase
+        const { data: newProfile, error: reloadError } = await supabase
           .from("profiles")
-          .select("id,full_name,username,member_code,avatar_path,cover_path,profile_video_path,bio,hobbies,interests,reading_interests,profile_completed,is_private")
-          .eq("id",state.user.id)
+          .select(`
+            id, full_name, username, member_code,
+            avatar_path, cover_path, profile_video_path,
+            bio, hobbies, interests, reading_interests,
+            profile_completed, is_private
+          `)
+          .eq("id", state.user.id)
           .single();
 
-        if (readError) throw readError;
-        state.profile = created;
+        if (reloadError) throw reloadError;
+        state.profile = newProfile;
       } else {
-        state.profile = profile;
+        state.profile = data;
       }
 
-      const p = state.profile;
+      fillForm(state.profile);
+      $("loadingScreen").hidden = true;
+      $("app").hidden = false;
+    }
 
-      $("fullName").value = p.full_name || "";
-      $("username").value = p.username ? "@" + p.username : (state.user.user_metadata?.username ? "@" + state.user.user_metadata.username : "—");
-      $("memberCode").textContent = p.member_code || "سيظهر بعد إنشاء الملف";
-      $("bio").value = p.bio || "";
-      $("hobbies").value = fillTags(p.hobbies);
-      $("interests").value = fillTags(p.interests);
-      $("readingInterests").value = fillTags(p.reading_interests);
-      $("privateAccount").checked = !!p.is_private;
+    function fillForm(profile) {
+      state.avatarPath = profile.avatar_path || null;
+      state.coverPath = profile.cover_path || null;
+      state.videoPath = profile.profile_video_path || null;
 
-      $("previewName").textContent = p.full_name || "اسم العضو";
-      $("previewUsername").textContent = p.username ? "@" + p.username : $("username").value;
-      $("previewBio").textContent = p.bio || "ستظهر نبذتك الشخصية هنا بعد كتابتها.";
-      $("previewCode").textContent = p.member_code || "عضو جديد";
+      $("fullName").value = profile.full_name || "";
+      $("username").value = profile.username || "";
+      $("memberCode").textContent = profile.member_code || "غير متاح";
+      $("bio").value = profile.bio || "";
+      $("privateAccount").checked = !!profile.is_private;
 
-      setExistingImage("avatars",p.avatar_path,"avatar");
-      setExistingImage("avatars",p.cover_path,"cover");
-      setExistingVideo(p.profile_video_path);
+      $("bioCount").textContent = $("bio").value.length;
 
-      if (p.profile_completed) {
-        window.location.replace("home.html");
+      if (state.avatarPath) {
+        $("avatarPreview").src = storageUrl("avatars", state.avatarPath);
+        $("previewAvatar").src = storageUrl("avatars", state.avatarPath);
+      }
+
+      if (state.coverPath) {
+        const url = storageUrl("avatars", state.coverPath);
+        $("coverPreview").src = url;
+        $("coverArea").classList.add("has-image");
+        $("previewCover").style.backgroundImage = `url("${url}")`;
+      }
+
+      if (state.videoPath) {
+        $("videoPreview").src = storageUrl("post-media", state.videoPath);
+        $("videoPreview").style.display = "block";
+      }
+
+      setSelections("hobbies", profile.hobbies || []);
+      setSelections("interests", profile.interests || []);
+      setSelections("reading", profile.reading_interests || []);
+
+      updatePreview();
+    }
+
+    async function saveProfile() {
+      clearStatus();
+
+      const fullName = $("fullName").value.trim();
+      const hobbies = [...state.selections.hobbies];
+      const interests = [...state.selections.interests];
+      const reading = [...state.selections.reading];
+
+      if (fullName.length < 2) {
+        showStatus("اكتب اسمك الظاهر بشكل صحيح، ويكون حرفين على الأقل.");
+        $("fullName").focus();
         return;
       }
 
-      updateBioCount();
+      if (!state.avatarPath && !state.avatarFile) {
+        showStatus("اختار صورة شخصية قبل إكمال الملف.");
+        $("photosSection").scrollIntoView({ behavior: "smooth" });
+        return;
+      }
+
+      if (!hobbies.length) {
+        showStatus("اختار هواية واحدة على الأقل.");
+        $("hobbiesSection").scrollIntoView({ behavior: "smooth" });
+        return;
+      }
+
+      if (!reading.length) {
+        showStatus("اختار مجال قراءة واحدًا على الأقل لإكمال ملفك.");
+        $("readingSection").scrollIntoView({ behavior: "smooth" });
+        return;
+      }
+
+      const saveButton = $("saveButton");
+      saveButton.disabled = true;
+      saveButton.textContent = "جاري الحفظ...";
+
+      try {
+        let avatarPath = state.avatarPath;
+        let coverPath = state.coverPath;
+        let videoPath = state.videoPath;
+
+        if (state.avatarFile) {
+          avatarPath = await uploadFile("avatars", state.avatarFile, "avatar");
+        }
+
+        if (state.coverFile) {
+          coverPath = await uploadFile("avatars", state.coverFile, "cover");
+        }
+
+        if (state.videoFile) {
+          videoPath = await uploadFile("post-media", state.videoFile, "profile-video");
+        }
+
+        const updateData = {
+          full_name: fullName,
+          bio: $("bio").value.trim(),
+          hobbies,
+          interests,
+          reading_interests: reading,
+          avatar_path: avatarPath,
+          cover_path: coverPath,
+          profile_video_path: videoPath,
+          is_private: $("privateAccount").checked,
+          profile_completed: true,
+          updated_at: new Date().toISOString()
+        };
+
+        const { data, error } = await supabase
+          .from("profiles")
+          .update(updateData)
+          .eq("id", state.user.id)
+          .select("id, profile_completed, member_code")
+          .single();
+
+        if (error) throw error;
+
+        state.avatarPath = avatarPath;
+        state.coverPath = coverPath;
+        state.videoPath = videoPath;
+        state.avatarFile = null;
+        state.coverFile = null;
+        state.videoFile = null;
+
+        showStatus("تم حفظ ملفك الشخصي بنجاح! جاري الانتقال للصفحة الرئيسية...", "success");
+
+        saveButton.textContent = "تم الحفظ ✓";
+
+        setTimeout(() => {
+          location.href = "./home.html";
+        }, 1500);
+
+      } catch (error) {
+        console.error("Profile save error:", error);
+
+        showStatus(
+          `لم نتمكن من إكمال الحفظ: ${error.message || "حدث خطأ غير معروف"}. بياناتك السابقة لم يتم حذفها.`
+        );
+
+        saveButton.disabled = false;
+        saveButton.textContent = "حفظ الملف الشخصي ←";
+      }
     }
 
-    function updateBioCount() {
-      $("bioCount").textContent = $("bio").value.length;
-    }
+    // التنقل بين الأقسام
+    document.querySelectorAll(".nav-item").forEach(button => {
+      button.addEventListener("click", () => {
+        document.querySelectorAll(".nav-item").forEach(item => {
+          item.classList.remove("active");
+        });
 
-    function updateLivePreview() {
-      $("previewName").textContent = $("fullName").value.trim() || "اسم العضو";
-      $("previewUsername").textContent = $("username").value || "@username";
-      $("previewBio").textContent = $("bio").value.trim() || "ستظهر نبذتك الشخصية هنا بعد كتابتها.";
-      updateBioCount();
-    }
-
-    $("avatarButton").addEventListener("click",() => $("avatarInput").click());
-    $("coverButton").addEventListener("click",() => $("coverInput").click());
-    $("videoButton").addEventListener("click",() => $("videoInput").click());
-
-    $("avatarInput").addEventListener("change",event => {
-      const file = event.target.files?.[0];
-      if (!file) return;
-      try {
-        validImage(file);
-        state.avatarFile = file;
-        setImagePreview(file,"avatar");
-        clearStatus();
-      } catch(error) {
-        showStatus(error.message);
-        event.target.value = "";
-      }
-    });
-
-    $("coverInput").addEventListener("change",event => {
-      const file = event.target.files?.[0];
-      if (!file) return;
-      try {
-        validImage(file);
-        state.coverFile = file;
-        setImagePreview(file,"cover");
-        clearStatus();
-      } catch(error) {
-        showStatus(error.message);
-        event.target.value = "";
-      }
-    });
-
-    $("videoInput").addEventListener("change",event => {
-      const file = event.target.files?.[0];
-      if (!file) return;
-      try {
-        validVideo(file);
-        state.videoFile = file;
-
-        if (state.videoUrl) URL.revokeObjectURL(state.videoUrl);
-        state.videoUrl = URL.createObjectURL(file);
-
-        $("videoPreview").src = state.videoUrl;
-        $("videoPreview").classList.add("visible");
-        $("videoEmpty").style.display = "none";
-        clearStatus();
-      } catch(error) {
-        showStatus(error.message);
-        event.target.value = "";
-      }
-    });
-
-    ["fullName","bio"].forEach(id => {
-      $(id).addEventListener("input",updateLivePreview);
-    });
-
-    document.querySelectorAll(".tag-area").forEach(area => {
-      area.querySelectorAll(".suggestion").forEach(button => {
-        button.addEventListener("click",() => {
-          const target = $(area.dataset.target);
-          const current = splitTags(target.value);
-          const value = button.textContent.trim();
-
-          if (current.includes(value)) {
-            target.value = current.filter(item => item !== value).join("، ");
-            button.classList.remove("active");
-          } else {
-            current.push(value);
-            target.value = current.join("، ");
-            button.classList.add("active");
-          }
+        button.classList.add("active");
+        $(button.dataset.target).scrollIntoView({
+          behavior: "smooth",
+          block: "start"
         });
       });
     });
 
-    $("copyCode").addEventListener("click",async() => {
+    // رفع الصورة الشخصية
+    $("avatarInput").addEventListener("change", event => {
+      const file = event.target.files[0];
+      if (!file || !validateImage(file)) return;
+
+      state.avatarFile = file;
+      const url = makeObjectUrl(file);
+
+      $("avatarPreview").src = url;
+      $("previewAvatar").src = url;
+
+      updateProgress();
+      clearStatus();
+    });
+
+    // رفع الغلاف
+    $("coverInput").addEventListener("change", event => {
+      const file = event.target.files[0];
+      if (!file || !validateImage(file)) return;
+
+      state.coverFile = file;
+      const url = makeObjectUrl(file);
+
+      $("coverPreview").src = url;
+      $("coverArea").classList.add("has-image");
+      $("previewCover").style.backgroundImage = `url("${url}")`;
+
+      clearStatus();
+    });
+
+    // رفع الفيديو
+    $("videoInput").addEventListener("change", event => {
+      const file = event.target.files[0];
+      if (!file || !validateVideo(file)) return;
+
+      state.videoFile = file;
+      $("videoPreview").src = makeObjectUrl(file);
+      $("videoPreview").style.display = "block";
+
+      clearStatus();
+    });
+
+    // تحديث المعاينة
+    $("fullName").addEventListener("input", updatePreview);
+
+    $("bio").addEventListener("input", () => {
+      $("bioCount").textContent = $("bio").value.length;
+      updatePreview();
+    });
+
+    // إضافة الاختيارات المخصصة
+    $("addHobbyButton").addEventListener("click", () => {
+      addCustomOption("hobbies", "customHobby");
+    });
+
+    $("addInterestButton").addEventListener("click", () => {
+      addCustomOption("interests", "customInterest");
+    });
+
+    $("addReadingButton").addEventListener("click", () => {
+      addCustomOption("reading", "customReading");
+    });
+
+    ["customHobby","customInterest","customReading"].forEach(id => {
+      $(id).addEventListener("keydown", event => {
+        if (event.key === "Enter") {
+          event.preventDefault();
+          $(id.replace("custom", "add") + "Button")?.click();
+        }
+      });
+    });
+
+    // مسح اختيارات قسم
+    document.querySelectorAll("[data-clear]").forEach(button => {
+      button.addEventListener("click", () => {
+        const type = button.dataset.clear;
+        state.selections[type].clear();
+        updateOptionStyles(type);
+        updateCount(type);
+      });
+    });
+
+    // نسخ رقم العضوية
+    $("copyCodeButton").addEventListener("click", async () => {
       const code = $("memberCode").textContent.trim();
-      if (!code || code.includes("تحميل") || code.includes("سيظهر")) {
-        showStatus("كود العضوية لم يتم تحميله بعد.");
+
+      if (!code || code === "غير متاح") {
+        showStatus("رقم العضوية غير متاح حاليًا.");
         return;
       }
 
       try {
         await navigator.clipboard.writeText(code);
-        $("copyCode").textContent = "تم النسخ ✓";
-        setTimeout(() => $("copyCode").textContent = "نسخ الكود",1800);
+        showStatus("تم نسخ رقم العضوية.", "success");
       } catch {
-        showStatus("تعذر النسخ تلقائيًا. يمكنك تحديد الكود ونسخه يدويًا.");
+        showStatus("تعذر النسخ تلقائيًا. يمكنك تحديد الرقم ونسخه يدويًا.");
       }
     });
 
-    $("profileForm").addEventListener("submit",async event => {
-      event.preventDefault();
-      clearStatus();
+    // تسجيل الخروج
+    $("logoutButton").addEventListener("click", async () => {
+      const confirmed = confirm("هل تريد تسجيل الخروج من HANOON WORLD؟");
+      if (!confirmed) return;
 
-      if (!state.user || !state.profile) {
-        showStatus("تعذر تحميل الحساب. أعد فتح الصفحة.");
+      const { error } = await supabase.auth.signOut();
+
+      if (error) {
+        showStatus("تعذر تسجيل الخروج: " + error.message);
         return;
       }
 
-      const fullName = $("fullName").value.trim();
-      const bio = $("bio").value.trim();
-
-      if (fullName.length < 2) {
-        showStatus("اكتب اسمًا صحيحًا لا يقل عن حرفين.");
-        $("fullName").focus();
-        return;
-      }
-
-      const button = $("saveButton");
-      button.disabled = true;
-      button.textContent = "جارٍ حفظ بياناتك ورفع الملفات...";
-
-      try {
-        let avatarPath = state.profile.avatar_path || null;
-        let coverPath = state.profile.cover_path || null;
-        let videoPath = state.profile.profile_video_path || null;
-
-        if (state.avatarFile) {
-          showStatus("جارٍ رفع الصورة الشخصية...","success");
-          avatarPath = await uploadFile("avatars",state.avatarFile,state.user.id,"avatar");
-        }
-
-        if (state.coverFile) {
-          showStatus("جارٍ رفع صورة الغلاف...","success");
-          coverPath = await uploadFile("avatars",state.coverFile,state.user.id,"cover");
-        }
-
-        if (state.videoFile) {
-          showStatus("جارٍ رفع فيديو التعريف...","success");
-          videoPath = await uploadFile("post-media",state.videoFile,state.user.id,"profile-video");
-        }
-
-        const updates = {
-          full_name:fullName,
-          bio,
-          hobbies:splitTags($("hobbies").value),
-          interests:splitTags($("interests").value),
-          reading_interests:splitTags($("readingInterests").value),
-          avatar_path:avatarPath,
-          cover_path:coverPath,
-          profile_video_path:videoPath,
-          is_private:$("privateAccount").checked,
-          profile_completed:true,
-          updated_at:new Date().toISOString()
-        };
-
-        const { data,error } = await supabase
-          .from("profiles")
-          .update(updates)
-          .eq("id",state.user.id)
-          .select("id,profile_completed,member_code")
-          .single();
-
-        if (error) throw error;
-        if (!data?.profile_completed) {
-          throw new Error("لم يتم تأكيد حفظ الملف الشخصي.");
-        }
-
-        showStatus("تم حفظ ملفك الشخصي بنجاح. جارٍ دخول عالم هنون...","success");
-        button.textContent = "تم الحفظ ✓";
-
-        setTimeout(() => {
-          window.location.replace("home.html");
-        },900);
-
-      } catch(error) {
-        console.error("Profile save error:",error);
-        showStatus(error.message || "حدث خطأ أثناء حفظ الملف الشخصي.");
-        button.disabled = false;
-        button.textContent = "حفظ الملف الشخصي والدخول إلى العالم";
-      }
+      location.href = "./login.html";
     });
 
-    $("logoutButton").addEventListener("click",async() => {
-      const button = $("logoutButton");
-      button.disabled = true;
-      button.textContent = "جارٍ تسجيل الخروج...";
+    $("saveButton").addEventListener("click", saveProfile);
 
-      try {
-        await signOut();
-        window.location.replace("login.html");
-      } catch(error) {
-        showStatus(error.message || "تعذر تسجيل الخروج.");
-        button.disabled = false;
-        button.textContent = "تسجيل الخروج";
-      }
-    });
-
+    // بدء الصفحة
     try {
+      Object.keys(catalogs).forEach(renderOptions);
       await loadProfile();
-    } catch(error) {
-      console.error("Profile loading error:",error);
-      showStatus(error.message || "تعذر تحميل بيانات الحساب.");
+    } catch (error) {
+      console.error("Profile page error:", error);
+
+      $("loadingScreen").innerHTML = `
+        <div>
+          <div style="font-size:35px;margin-bottom:12px">!</div>
+          <div style="color:#ff9aaa">تعذر تحميل الملف الشخصي</div>
+          <p style="color:#aaa;font-size:12px;max-width:300px;line-height:2">
+            ${escapeHTML(error.message || "حدث خطأ أثناء الاتصال بقاعدة البيانات")}
+          </p>
+          <button onclick="location.reload()"
+            style="padding:10px 18px;border:0;border-radius:10px;background:#e9c77c;font-weight:bold">
+            إعادة المحاولة
+          </button>
+        </div>
+      `;
     }
   </script>
 </body>
-</html>
+  </html>
