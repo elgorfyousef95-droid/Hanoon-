@@ -3,666 +3,607 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
-  <meta name="theme-color" content="#090b16">
+  <meta name="theme-color" content="#0a0b16">
   <title>الملف الشخصي | HANOON WORLD</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
-    :root {
-      --bg: #090b16;
-      --panel: #121626;
-      --panel2: #191f33;
-      --panel3: #202842;
-      --text: #f6f5ff;
-      --muted: #969db5;
-      --purple: #9878ff;
-      --purple2: #7658e9;
-      --cyan: #55d7e8;
-      --gold: #f1c779;
-      --line: rgba(255,255,255,.085);
-      --danger: #ff718a;
-      --radius: 23px;
+    :root{
+      --bg:#090b16;
+      --panel:#131629;
+      --panel2:#191e35;
+      --text:#f7f5ff;
+      --muted:#9299b2;
+      --purple:#a184ff;
+      --cyan:#58d8e5;
+      --gold:#f1cd86;
+      --line:rgba(255,255,255,.09);
+      --radius:24px;
     }
 
-    * {
-      box-sizing: border-box;
-      -webkit-tap-highlight-color: transparent;
+    *{
+      box-sizing:border-box;
+      -webkit-tap-highlight-color:transparent;
     }
 
-    html, body {
-      margin: 0;
-      min-height: 100%;
-      background: var(--bg);
-      color: var(--text);
-      font-family: "Cairo", sans-serif;
-      overscroll-behavior: none;
+    html,body{
+      margin:0;
+      min-height:100%;
+      background:var(--bg);
+      color:var(--text);
+      font-family:"Cairo",sans-serif;
+      overscroll-behavior:none;
     }
 
-    body {
-      min-height: 100vh;
-      padding-bottom: 35px;
+    body{
+      min-height:100vh;
+      padding-bottom:35px;
       background:
-        radial-gradient(ellipse at 85% 0%, rgba(117,85,225,.19), transparent 35%),
-        radial-gradient(ellipse at 5% 40%, rgba(46,173,195,.10), transparent 32%),
-        linear-gradient(155deg, #0b0e1b 0%, #090b16 55%, #101326 100%);
+        radial-gradient(ellipse at 85% 0%,rgba(132,91,255,.23),transparent 35%),
+        radial-gradient(ellipse at 5% 42%,rgba(49,190,205,.12),transparent 34%),
+        linear-gradient(150deg,#101326,#090b16 60%,#11162a);
     }
 
-    button, a {
-      font: inherit;
+    button,a{font:inherit}
+    button{cursor:pointer}
+    a{color:inherit;text-decoration:none}
+    [hidden]{display:none!important}
+
+    .page{
+      width:min(100%,900px);
+      margin:auto;
+      padding:0 16px 35px;
     }
 
-    button {
-      cursor: pointer;
+    .topbar{
+      height:72px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
     }
 
-    .page {
-      width: min(100%, 850px);
-      margin: auto;
-      padding: 0 17px 35px;
+    .top-side{
+      display:flex;
+      align-items:center;
+      gap:11px;
     }
 
-    .topbar {
-      height: 72px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      position: relative;
-      z-index: 5;
+    .icon-btn{
+      width:44px;
+      height:44px;
+      display:grid;
+      place-items:center;
+      border:1px solid var(--line);
+      border-radius:15px;
+      background:rgba(255,255,255,.055);
+      color:white;
     }
 
-    .topbar-side {
-      display: flex;
-      align-items: center;
-      gap: 11px;
+    .icon-btn svg{
+      width:21px;
+      height:21px;
+      fill:none;
+      stroke:currentColor;
+      stroke-width:1.8;
+      stroke-linecap:round;
+      stroke-linejoin:round;
     }
 
-    .icon-btn {
-      width: 43px;
-      height: 43px;
-      border: 1px solid var(--line);
-      border-radius: 15px;
-      background: rgba(255,255,255,.055);
-      color: white;
-      display: grid;
-      place-items: center;
-      transition: .2s;
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      font-weight:900;
+      font-size:14px;
+      letter-spacing:.5px;
     }
 
-    .icon-btn:active {
-      transform: scale(.94);
-      background: rgba(152,120,255,.2);
+    .brand-mark{
+      width:37px;
+      height:37px;
+      display:grid;
+      place-items:center;
+      border-radius:13px;
+      background:linear-gradient(145deg,#bba4ff,#7250e5);
+      box-shadow:0 7px 22px #8865f54d;
     }
 
-    .icon-btn svg {
-      width: 20px;
-      height: 20px;
-      stroke: currentColor;
-      fill: none;
-      stroke-width: 1.8;
-      stroke-linecap: round;
-      stroke-linejoin: round;
+    .brand-mark svg{
+      width:23px;
+      height:23px;
+      fill:none;
+      stroke:white;
+      stroke-width:2;
+      stroke-linecap:round;
+      stroke-linejoin:round;
     }
 
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-weight: 900;
-      letter-spacing: .4px;
-      font-size: 16px;
+    .hero{
+      position:relative;
+      overflow:hidden;
+      border:1px solid var(--line);
+      border-radius:29px;
+      background:#151a2d;
+      box-shadow:0 24px 65px #0005;
     }
 
-    .brand-mark {
-      width: 34px;
-      height: 34px;
-      border-radius: 12px;
-      display: grid;
-      place-items: center;
-      background: linear-gradient(145deg, #b29aff, #7051df);
-      box-shadow: 0 5px 20px rgba(132,99,239,.3);
-    }
-
-    .brand-mark svg {
-      width: 20px;
-      height: 20px;
-      stroke: white;
-      fill: none;
-      stroke-width: 2;
-    }
-
-    .hero {
-      position: relative;
-      overflow: hidden;
-      border: 1px solid var(--line);
-      border-radius: 28px;
-      background: #151a2c;
-      box-shadow: 0 20px 60px rgba(0,0,0,.25);
-    }
-
-    .cover {
-      height: 260px;
-      position: relative;
-      overflow: hidden;
+    .cover{
+      height:290px;
+      position:relative;
+      overflow:hidden;
       background:
-        linear-gradient(125deg, rgba(93,67,179,.55), rgba(25,102,133,.35)),
-        url("https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=1400&q=85") center/cover;
+        linear-gradient(120deg,rgba(73,51,142,.25),rgba(13,105,129,.15)),
+        url("https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=1500&q=90") center/cover;
     }
 
-    .cover::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(180deg, rgba(7,9,20,.04), rgba(9,11,22,.16) 45%, #151a2c 100%);
+    .cover::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:linear-gradient(180deg,rgba(8,10,22,.05),rgba(8,10,22,.15) 40%,#151a2d 100%);
     }
 
-    .cover-image {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: none;
+    .cover-image{
+      position:absolute;
+      inset:0;
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      z-index:1;
     }
 
-    .cover-image.visible {
-      display: block;
+    .cover-label{
+      position:absolute;
+      z-index:2;
+      top:17px;
+      right:18px;
+      padding:8px 13px;
+      border:1px solid #ffffff35;
+      border-radius:30px;
+      background:#090b1670;
+      backdrop-filter:blur(12px);
+      color:white;
+      font-size:10px;
+      font-weight:900;
+      letter-spacing:1px;
     }
 
-    .cover-shade {
-      position: absolute;
-      inset: 0;
-      z-index: 1;
-      background: linear-gradient(180deg, transparent 35%, rgba(10,12,24,.75));
-      pointer-events: none;
+    .profile-main{
+      position:relative;
+      z-index:3;
+      margin-top:-73px;
+      padding:0 25px 27px;
     }
 
-    .cover-label {
-      position: absolute;
-      z-index: 2;
-      top: 17px;
-      right: 17px;
-      padding: 7px 12px;
-      border-radius: 30px;
-      background: rgba(8,10,22,.48);
-      border: 1px solid rgba(255,255,255,.18);
-      backdrop-filter: blur(12px);
-      color: #fff;
-      font-size: 11px;
-      font-weight: 800;
+    .profile-head{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:16px;
+      flex-wrap:wrap;
     }
 
-    .profile-main {
-      position: relative;
-      padding: 0 24px 24px;
-      margin-top: -67px;
-      z-index: 3;
+    .avatar-frame{
+      width:137px;
+      height:137px;
+      padding:5px;
+      flex-shrink:0;
+      border-radius:39px;
+      background:linear-gradient(145deg,#e0caff,#8b66ff 50%,#54d9df);
+      box-shadow:0 12px 35px #0008;
     }
 
-    .profile-head {
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      gap: 15px;
-      flex-wrap: wrap;
+    .avatar{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      border:4px solid #151a2d;
+      border-radius:35px;
+      background:#222943;
     }
 
-    .avatar-wrap {
-      width: 126px;
-      height: 126px;
-      border-radius: 36px;
-      padding: 5px;
-      background: linear-gradient(145deg, #d0baff, #7958ed 52%, #43d3d5);
-      box-shadow: 0 10px 30px rgba(0,0,0,.4);
-      flex-shrink: 0;
+    .actions{
+      display:flex;
+      gap:9px;
+      padding-bottom:5px;
     }
 
-    .avatar {
-      width: 100%;
-      height: 100%;
-      border-radius: 32px;
-      object-fit: cover;
-      background: #252b42;
-      border: 3px solid #151a2c;
+    .action-btn{
+      min-height:44px;
+      padding:0 16px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      border:1px solid var(--line);
+      border-radius:14px;
+      background:rgba(255,255,255,.06);
+      color:white;
+      font-size:12px;
+      font-weight:800;
     }
 
-    .member-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 6px 11px;
-      border-radius: 30px;
-      color: #e5d9ff;
-      background: rgba(145,111,255,.13);
-      border: 1px solid rgba(165,137,255,.25);
-      font-size: 11px;
-      font-weight: 800;
-      margin-bottom: 9px;
+    .action-btn svg{
+      width:17px;
+      height:17px;
+      fill:none;
+      stroke:currentColor;
+      stroke-width:1.8;
+      stroke-linecap:round;
+      stroke-linejoin:round;
     }
 
-    .member-badge svg {
-      width: 14px;
-      height: 14px;
-      stroke: currentColor;
-      fill: none;
-      stroke-width: 2;
+    .action-btn.primary{
+      border-color:transparent;
+      background:linear-gradient(115deg,#a184ff,#704fe0);
+      box-shadow:0 8px 22px #805fe044;
     }
 
-    .profile-actions {
-      display: flex;
-      gap: 9px;
-      padding-bottom: 5px;
+    .identity{margin-top:20px}
+
+    .member-badge{
+      display:inline-flex;
+      align-items:center;
+      gap:7px;
+      padding:6px 12px;
+      border:1px solid #a184ff45;
+      border-radius:30px;
+      background:#a184ff18;
+      color:#d8caff;
+      font-size:11px;
+      font-weight:900;
     }
 
-    .action-btn {
-      height: 43px;
-      border-radius: 14px;
-      padding: 0 17px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,.055);
-      color: white;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      font-weight: 800;
-      font-size: 12px;
-      transition: .2s;
+    .member-badge svg{
+      width:15px;
+      height:15px;
+      fill:none;
+      stroke:currentColor;
+      stroke-width:2;
     }
 
-    .action-btn svg {
-      width: 17px;
-      height: 17px;
-      stroke: currentColor;
-      fill: none;
-      stroke-width: 1.8;
-      stroke-linecap: round;
-      stroke-linejoin: round;
+    .full-name{
+      margin:10px 0 0;
+      font-size:29px;
+      font-weight:900;
+      line-height:1.5;
+      overflow-wrap:anywhere;
     }
 
-    .action-btn.primary {
-      background: linear-gradient(120deg, #9878ff, #7355df);
-      border-color: transparent;
-      box-shadow: 0 7px 20px rgba(126,91,231,.22);
+    .username{
+      margin-top:1px;
+      color:#b8acd9;
+      direction:ltr;
+      text-align:right;
+      font-size:14px;
+      font-weight:700;
     }
 
-    .action-btn:active {
-      transform: scale(.96);
+    .bio{
+      margin:15px 0 0;
+      color:#c8cadd;
+      font-size:13px;
+      line-height:2.1;
+      white-space:pre-wrap;
+      overflow-wrap:anywhere;
     }
 
-    .identity {
-      margin-top: 18px;
+    .code-card{
+      display:inline-flex;
+      align-items:center;
+      gap:11px;
+      margin-top:17px;
+      padding:11px 14px;
+      border:1px solid #f1cd8638;
+      border-radius:15px;
+      background:#f1cd8610;
+      color:var(--gold);
+      font-size:12px;
+      font-weight:900;
     }
 
-    .full-name {
-      font-size: 26px;
-      line-height: 1.5;
-      font-weight: 900;
-      margin: 0;
-      overflow-wrap: anywhere;
+    .code-card span{
+      direction:ltr;
+      letter-spacing:1px;
     }
 
-    .username {
-      color: #a9a2ca;
-      direction: ltr;
-      text-align: right;
-      font-size: 13px;
-      font-weight: 700;
-      margin-top: 1px;
+    .code-card button{
+      display:grid;
+      place-items:center;
+      padding:0;
+      border:0;
+      background:none;
+      color:var(--gold);
     }
 
-    .bio {
-      color: #c5c8d8;
-      line-height: 2;
-      font-size: 13px;
-      margin: 14px 0 0;
-      white-space: pre-wrap;
-      overflow-wrap: anywhere;
+    .code-card svg{
+      width:17px;
+      height:17px;
+      fill:none;
+      stroke:currentColor;
+      stroke-width:1.8;
     }
 
-    .member-code {
-      display: inline-flex;
-      align-items: center;
-      gap: 9px;
-      margin-top: 15px;
-      padding: 9px 12px;
-      border: 1px solid rgba(241,199,121,.2);
-      background: rgba(241,199,121,.075);
-      border-radius: 13px;
-      color: var(--gold);
-      font-size: 12px;
-      font-weight: 800;
+    .section{
+      margin-top:19px;
+      padding:22px;
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      background:linear-gradient(145deg,rgba(26,31,53,.97),rgba(16,20,36,.97));
+      box-shadow:0 14px 35px #0003;
     }
 
-    .member-code span {
-      direction: ltr;
-      letter-spacing: 1px;
+    .section-title{
+      display:flex;
+      align-items:center;
+      gap:11px;
+      margin:0 0 18px;
+      font-size:16px;
+      font-weight:900;
     }
 
-    .member-code button {
-      border: 0;
-      background: transparent;
-      color: var(--gold);
-      display: grid;
-      place-items: center;
-      padding: 0;
+    .section-icon{
+      width:39px;
+      height:39px;
+      display:grid;
+      place-items:center;
+      flex-shrink:0;
+      border:1px solid #a184ff35;
+      border-radius:13px;
+      background:#a184ff18;
+      color:#d2c2ff;
     }
 
-    .member-code svg {
-      width: 16px;
-      height: 16px;
-      stroke: currentColor;
-      fill: none;
-      stroke-width: 1.8;
+    .section-icon svg{
+      width:20px;
+      height:20px;
+      fill:none;
+      stroke:currentColor;
+      stroke-width:1.8;
+      stroke-linecap:round;
+      stroke-linejoin:round;
     }
 
-    .section {
-      margin-top: 19px;
-      padding: 22px;
-      border-radius: var(--radius);
-      border: 1px solid var(--line);
-      background: linear-gradient(145deg, rgba(25,31,51,.96), rgba(17,22,38,.96));
-      box-shadow: 0 12px 35px rgba(0,0,0,.13);
+    .info-grid{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:11px;
     }
 
-    .section-title {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 16px;
-      font-weight: 900;
-      margin: 0 0 17px;
+    .info-item{
+      min-height:79px;
+      padding:13px;
+      border:1px solid #ffffff0c;
+      border-radius:16px;
+      background:#ffffff08;
     }
 
-    .section-icon {
-      width: 35px;
-      height: 35px;
-      border-radius: 12px;
-      display: grid;
-      place-items: center;
-      color: #c9b8ff;
-      background: rgba(152,120,255,.13);
+    .info-label{
+      margin-bottom:6px;
+      color:var(--muted);
+      font-size:11px;
+      font-weight:700;
     }
 
-    .section-icon svg {
-      width: 18px;
-      height: 18px;
-      stroke: currentColor;
-      fill: none;
-      stroke-width: 1.8;
-      stroke-linecap: round;
-      stroke-linejoin: round;
+    .info-value{
+      font-size:13px;
+      font-weight:900;
+      overflow-wrap:anywhere;
     }
 
-    .info-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0,1fr));
-      gap: 11px;
+    .tag-list{
+      display:flex;
+      flex-wrap:wrap;
+      gap:9px;
     }
 
-    .info-item {
-      min-height: 78px;
-      border-radius: 16px;
-      padding: 13px;
-      background: rgba(255,255,255,.035);
-      border: 1px solid rgba(255,255,255,.055);
+    .tag{
+      padding:8px 14px;
+      border:1px solid #a184ff35;
+      border-radius:30px;
+      background:#a184ff13;
+      color:#d9ceff;
+      font-size:12px;
+      font-weight:800;
     }
 
-    .info-label {
-      color: var(--muted);
-      font-size: 11px;
-      font-weight: 700;
-      margin-bottom: 5px;
+    .tag.cyan{
+      border-color:#58d8e535;
+      background:#58d8e510;
+      color:#a9eff3;
     }
 
-    .info-value {
-      font-size: 13px;
-      font-weight: 800;
-      overflow-wrap: anywhere;
+    .empty-inline{
+      width:100%;
+      padding:15px;
+      border:1px dashed #ffffff24;
+      border-radius:14px;
+      background:#ffffff05;
+      color:var(--muted);
+      text-align:center;
+      font-size:12px;
     }
 
-    .tag-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 9px;
+    .joined-card{
+      display:flex;
+      align-items:center;
+      gap:13px;
+      padding:15px;
+      border:1px solid #ffffff10;
+      border-radius:16px;
+      background:#ffffff08;
     }
 
-    .tag {
-      padding: 8px 13px;
-      border-radius: 30px;
-      background: rgba(152,120,255,.10);
-      border: 1px solid rgba(152,120,255,.18);
-      color: #d6caff;
-      font-size: 12px;
-      font-weight: 700;
+    .joined-icon{
+      width:46px;
+      height:46px;
+      display:grid;
+      place-items:center;
+      border-radius:15px;
+      background:#f1cd8618;
+      color:var(--gold);
     }
 
-    .tag.cyan {
-      background: rgba(85,215,232,.08);
-      border-color: rgba(85,215,232,.18);
-      color: #a7edf4;
+    .joined-icon svg{
+      width:22px;
+      height:22px;
+      fill:none;
+      stroke:currentColor;
+      stroke-width:1.8;
     }
 
-    .empty-inline {
-      color: var(--muted);
-      font-size: 12px;
-      padding: 14px;
-      border-radius: 14px;
-      background: rgba(255,255,255,.025);
-      border: 1px dashed rgba(255,255,255,.1);
-      text-align: center;
+    .joined-label{
+      color:var(--muted);
+      font-size:11px;
+      font-weight:700;
     }
 
-    .joined-card {
-      display: flex;
-      align-items: center;
-      gap: 13px;
-      padding: 14px;
-      border-radius: 16px;
-      background: rgba(255,255,255,.035);
-      border: 1px solid rgba(255,255,255,.055);
+    .joined-date{
+      margin-top:4px;
+      font-size:13px;
+      font-weight:900;
     }
 
-    .joined-icon {
-      width: 43px;
-      height: 43px;
-      border-radius: 14px;
-      display: grid;
-      place-items: center;
-      color: #f1d28f;
-      background: rgba(241,199,121,.11);
+    .loading,.error-state{
+      min-height:65vh;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      padding:30px 20px;
+      text-align:center;
     }
 
-    .joined-icon svg {
-      width: 21px;
-      height: 21px;
-      stroke: currentColor;
-      fill: none;
-      stroke-width: 1.8;
+    .loader{
+      width:48px;
+      height:48px;
+      margin-bottom:18px;
+      border:3px solid #ffffff1c;
+      border-top-color:var(--purple);
+      border-radius:50%;
+      animation:spin .8s linear infinite;
     }
 
-    .joined-label {
-      color: var(--muted);
-      font-size: 11px;
-      font-weight: 700;
+    @keyframes spin{to{transform:rotate(360deg)}}
+
+    .loading p,.error-state p{
+      max-width:340px;
+      color:var(--muted);
+      font-size:13px;
+      line-height:2;
     }
 
-    .joined-date {
-      font-size: 13px;
-      font-weight: 800;
-      margin-top: 3px;
+    .error-symbol{
+      width:66px;
+      height:66px;
+      display:grid;
+      place-items:center;
+      margin-bottom:16px;
+      border-radius:22px;
+      background:#ff718a18;
+      color:#ff8298;
     }
 
-    .loading, .error-state {
-      min-height: 65vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 30px 20px;
+    .error-symbol svg{
+      width:30px;
+      height:30px;
+      fill:none;
+      stroke:currentColor;
+      stroke-width:1.8;
     }
 
-    .loader {
-      width: 48px;
-      height: 48px;
-      border: 3px solid rgba(255,255,255,.1);
-      border-top-color: var(--purple);
-      border-radius: 50%;
-      animation: spin .8s linear infinite;
-      margin-bottom: 18px;
+    .error-state h2{
+      margin:0;
+      font-size:20px;
+      font-weight:900;
     }
 
-    @keyframes spin {
-      to { transform: rotate(360deg); }
+    .error-actions{
+      display:flex;
+      flex-wrap:wrap;
+      justify-content:center;
+      gap:9px;
+      margin-top:10px;
     }
 
-    .loading p, .error-state p {
-      color: var(--muted);
-      font-size: 13px;
+    .toast{
+      position:fixed;
+      z-index:30;
+      bottom:25px;
+      left:50%;
+      transform:translate(-50%,20px);
+      opacity:0;
+      pointer-events:none;
+      padding:12px 18px;
+      border:1px solid var(--line);
+      border-radius:14px;
+      background:#252b42;
+      color:white;
+      font-size:12px;
+      font-weight:800;
+      box-shadow:0 12px 35px #0008;
+      transition:.25s;
+      white-space:nowrap;
     }
 
-    .error-symbol {
-      width: 65px;
-      height: 65px;
-      border-radius: 22px;
-      background: rgba(255,113,138,.1);
-      color: var(--danger);
-      display: grid;
-      place-items: center;
-      margin-bottom: 15px;
+    .toast.show{
+      transform:translate(-50%,0);
+      opacity:1;
     }
 
-    .error-symbol svg {
-      width: 29px;
-      height: 29px;
-      stroke: currentColor;
-      fill: none;
-      stroke-width: 1.8;
+    .footer-note{
+      padding:25px 0 10px;
+      color:#777f98;
+      text-align:center;
+      font-size:10px;
     }
 
-    .error-state h2 {
-      font-size: 20px;
-      margin: 0;
-    }
-
-    .error-state button {
-      margin-top: 14px;
-    }
-
-    .footer-note {
-      text-align: center;
-      color: #777f98;
-      font-size: 10px;
-      padding: 25px 0 10px;
-    }
-
-    .toast {
-      position: fixed;
-      bottom: 25px;
-      left: 50%;
-      transform: translate(-50%, 20px);
-      opacity: 0;
-      pointer-events: none;
-      z-index: 20;
-      background: #252b42;
-      border: 1px solid var(--line);
-      border-radius: 13px;
-      padding: 11px 17px;
-      color: white;
-      font-size: 12px;
-      font-weight: 700;
-      box-shadow: 0 10px 30px rgba(0,0,0,.35);
-      transition: .25s;
-      white-space: nowrap;
-    }
-
-    .toast.show {
-      opacity: 1;
-      transform: translate(-50%, 0);
-    }
-
-    @media (max-width: 520px) {
-      .page {
-        padding-inline: 11px;
+    @media(max-width:560px){
+      .page{padding-inline:11px}
+      .topbar{height:65px}
+      .brand{font-size:12px}
+      .cover{height:215px}
+      .profile-main{
+        margin-top:-57px;
+        padding:0 16px 20px;
       }
-
-      .topbar {
-        height: 64px;
+      .avatar-frame{
+        width:112px;
+        height:112px;
+        border-radius:32px;
       }
-
-      .cover {
-        height: 205px;
+      .avatar{border-radius:28px}
+      .full-name{font-size:24px}
+      .profile-head{gap:12px}
+      .actions{width:100%;padding-top:10px}
+      .actions .action-btn{flex:1}
+      .section{
+        padding:17px;
+        border-radius:20px;
       }
-
-      .profile-main {
-        padding-inline: 16px;
-        margin-top: -55px;
-      }
-
-      .avatar-wrap {
-        width: 108px;
-        height: 108px;
-        border-radius: 31px;
-      }
-
-      .avatar {
-        border-radius: 27px;
-      }
-
-      .full-name {
-        font-size: 23px;
-      }
-
-      .profile-actions {
-        width: 100%;
-        padding-top: 13px;
-      }
-
-      .profile-actions .action-btn {
-        flex: 1;
-      }
-
-      .section {
-        padding: 17px;
-        border-radius: 20px;
-      }
-
-      .info-grid {
-        gap: 8px;
-      }
-
-      .info-item {
-        padding: 11px;
-      }
+      .info-grid{gap:8px}
+      .info-item{padding:11px}
     }
 
-    @media (max-width: 350px) {
-      .info-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .brand {
-        font-size: 13px;
-      }
-
-      .cover {
-        height: 175px;
-      }
+    @media(max-width:350px){
+      .info-grid{grid-template-columns:1fr}
+      .cover{height:180px}
+      .full-name{font-size:21px}
+      .action-btn{padding-inline:10px;font-size:11px}
     }
   </style>
 </head>
 
 <body>
-
   <main class="page">
 
     <header class="topbar">
-      <div class="topbar-side">
+      <div class="top-side">
         <button class="icon-btn" id="backButton" aria-label="رجوع">
           <svg viewBox="0 0 24 24">
             <path d="m15 18-6-6 6-6"/>
@@ -673,30 +614,28 @@
         <div class="brand">
           <div class="brand-mark">
             <svg viewBox="0 0 24 24">
-              <path d="M5 18V6l7 8 7-8v12"/>
-              <path d="M3 21h18"/>
+              <path d="M4 19V5l8 10 8-10v14"/>
+              <path d="M3 22h18"/>
             </svg>
           </div>
           <span>HANOON WORLD</span>
         </div>
       </div>
 
-      <div class="topbar-side">
-        <button class="icon-btn" id="shareButton" aria-label="مشاركة الملف الشخصي">
-          <svg viewBox="0 0 24 24">
-            <circle cx="18" cy="5" r="3"/>
-            <circle cx="6" cy="12" r="3"/>
-            <circle cx="18" cy="19" r="3"/>
-            <path d="m8.7 10.7 6.6-4.4M8.7 13.3l6.6 4.4"/>
-          </svg>
-        </button>
-      </div>
+      <button class="icon-btn" id="shareButton" aria-label="مشاركة الملف">
+        <svg viewBox="0 0 24 24">
+          <circle cx="18" cy="5" r="3"/>
+          <circle cx="6" cy="12" r="3"/>
+          <circle cx="18" cy="19" r="3"/>
+          <path d="m8.7 10.7 6.6-4.4M8.7 13.3l6.6 4.4"/>
+        </svg>
+      </button>
     </header>
 
     <div id="loadingState" class="loading">
       <div class="loader"></div>
       <strong>جاري تحميل الملف الشخصي</strong>
-      <p>لحظات ونفتح لك صفحة العضو</p>
+      <p>نجهز بيانات العضو من قاعدة بيانات هنون.</p>
     </div>
 
     <div id="errorState" class="error-state" hidden>
@@ -707,29 +646,29 @@
         </svg>
       </div>
       <h2 id="errorTitle">تعذر فتح الملف الشخصي</h2>
-      <p id="errorMessage">لم نتمكن من العثور على بيانات هذا العضو.</p>
-      <button class="action-btn primary" id="retryButton">إعادة المحاولة</button>
-      <button class="action-btn" id="membersButton">العودة إلى الأعضاء</button>
+      <p id="errorMessage">لم نتمكن من تحميل بيانات هذا العضو.</p>
+
+      <div class="error-actions">
+        <button class="action-btn primary" id="retryButton">إعادة المحاولة</button>
+        <button class="action-btn" id="membersButton">العودة إلى الأعضاء</button>
+      </div>
     </div>
 
     <div id="profileContent" hidden>
 
       <section class="hero">
-
         <div class="cover">
-          <img class="cover-image" id="coverImage" alt="غلاف الملف الشخصي">
-          <div class="cover-shade"></div>
+          <img class="cover-image" id="coverImage" alt="غلاف الملف الشخصي" hidden>
           <div class="cover-label">HANOON WORLD MEMBER</div>
         </div>
 
         <div class="profile-main">
-
           <div class="profile-head">
-            <div class="avatar-wrap">
+            <div class="avatar-frame">
               <img class="avatar" id="avatarImage" alt="الصورة الشخصية">
             </div>
 
-            <div class="profile-actions">
+            <div class="actions">
               <button class="action-btn" id="copyCodeButton">
                 <svg viewBox="0 0 24 24">
                   <rect x="8" y="8" width="12" height="12" rx="2"/>
@@ -737,6 +676,7 @@
                 </svg>
                 نسخ الكود
               </button>
+
               <button class="action-btn primary" id="shareProfileButton">
                 <svg viewBox="0 0 24 24">
                   <circle cx="18" cy="5" r="3"/>
@@ -744,7 +684,7 @@
                   <circle cx="18" cy="19" r="3"/>
                   <path d="m8.7 10.7 6.6-4.4M8.7 13.3l6.6 4.4"/>
                 </svg>
-                مشاركة
+                مشاركة الملف
               </button>
             </div>
           </div>
@@ -755,14 +695,14 @@
                 <path d="m12 3 2.7 2 3.4.2.8 3.3 2 2.5-1.5 3.1.2 3.4-3.2 1.1-2.4 2.1-3.1-1.5-3.4.2-1.1-3.2-2.1-2.4 1.5-3.1-.2-3.4 3.2-1.1z"/>
                 <path d="m8.5 12 2.3 2.3 4.8-5"/>
               </svg>
-              عضو في هنوون
+              عضو في مجتمع هنون
             </div>
 
             <h1 class="full-name" id="fullName">—</h1>
             <div class="username" id="username">—</div>
             <p class="bio" id="bio" hidden></p>
 
-            <div class="member-code">
+            <div class="code-card">
               <span>MEMBER ID</span>
               <span id="memberCode">—</span>
               <button id="copyCodeSmall" aria-label="نسخ رقم العضوية">
@@ -773,7 +713,6 @@
               </button>
             </div>
           </div>
-
         </div>
       </section>
 
@@ -805,8 +744,8 @@
           </div>
 
           <div class="info-item">
-            <div class="info-label">حالة الملف</div>
-            <div class="info-value">ملف عضو مكتمل</div>
+            <div class="info-label">نوع الملف</div>
+            <div class="info-value">ملف عضو عام</div>
           </div>
         </div>
       </section>
@@ -815,13 +754,12 @@
         <h2 class="section-title">
           <span class="section-icon">
             <svg viewBox="0 0 24 24">
-              <path d="M12 3v18M3 12h18"/>
               <circle cx="12" cy="12" r="9"/>
+              <path d="M12 7v10M7 12h10"/>
             </svg>
           </span>
-          الاهتمامات والهوايات
+          الهوايات والاهتمامات
         </h2>
-
         <div class="tag-list" id="hobbiesList"></div>
       </section>
 
@@ -835,7 +773,6 @@
           </span>
           اهتمامات القراءة
         </h2>
-
         <div class="tag-list" id="readingList"></div>
       </section>
 
@@ -844,10 +781,10 @@
           <span class="section-icon">
             <svg viewBox="0 0 24 24">
               <rect x="3" y="4" width="18" height="17" rx="3"/>
-              <path d="M16 2v4M8 2v4M3 10h18"/>
+              <path d="M7 2v4M17 2v4M3 9h18"/>
             </svg>
           </span>
-          الانضمام إلى هنوون
+          عضوية هنون
         </h2>
 
         <div class="joined-card">
@@ -858,7 +795,7 @@
             </svg>
           </div>
           <div>
-            <div class="joined-label">عضو منذ</div>
+            <div class="joined-label">تاريخ الانضمام إلى المجتمع</div>
             <div class="joined-date" id="joinedDate">—</div>
           </div>
         </div>
@@ -866,13 +803,14 @@
 
     </div>
 
-    <div class="footer-note">HANOON WORLD · عالم يجمعنا</div>
-
+    <div class="footer-note">HANOON WORLD · YOUR SOCIAL UNIVERSE</div>
   </main>
 
   <div class="toast" id="toast"></div>
 
   <script>
+    "use strict";
+
     const SUPABASE_URL = "https://gjtgvczvclfwvlvcquxh.supabase.co";
     const SUPABASE_KEY = "sb_publishable_4DVTUZ-xTlqU2GpFvpb7lw_g-Kxomd4";
 
@@ -881,88 +819,96 @@
       SUPABASE_KEY
     );
 
-    const state = {
-      member: null,
-      session: null,
-      profileUrl: window.location.href
-    };
-
     const $ = id => document.getElementById(id);
 
-    function showToast(message) {
+    const state = {
+      session:null,
+      member:null,
+      loading:false
+    };
+
+    const FALLBACK_AVATAR =
+      "data:image/svg+xml;charset=UTF-8," +
+      encodeURIComponent(`
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+          <rect width="200" height="200" fill="#202943"/>
+          <circle cx="100" cy="75" r="37" fill="#8992b3"/>
+          <path d="M30 200c5-48 30-72 70-72s65 24 70 72" fill="#8992b3"/>
+        </svg>
+      `);
+
+    function showToast(message){
       const toast = $("toast");
       toast.textContent = message;
       toast.classList.add("show");
 
       clearTimeout(showToast.timer);
-      showToast.timer = setTimeout(() => {
+      showToast.timer = setTimeout(()=>{
         toast.classList.remove("show");
-      }, 2400);
+      },2400);
     }
 
-    function showError(title, message) {
+    function showError(title,message){
       $("loadingState").hidden = true;
       $("profileContent").hidden = true;
       $("errorState").hidden = false;
-
       $("errorTitle").textContent = title;
       $("errorMessage").textContent = message;
     }
 
-    function formatDate(value) {
-      if (!value) return "غير متاح";
+    function formatDate(value){
+      if(!value) return "غير متاح";
 
       const date = new Date(value);
-      if (Number.isNaN(date.getTime())) return "غير متاح";
+      if(Number.isNaN(date.getTime())) return "غير متاح";
 
-      return new Intl.DateTimeFormat("ar-EG", {
-        year: "numeric",
-        month: "long",
-        day: "numeric"
+      return new Intl.DateTimeFormat("ar-EG",{
+        year:"numeric",
+        month:"long",
+        day:"numeric"
       }).format(date);
     }
 
-    function getStorageUrl(path) {
-      if (!path) return null;
+    function getStorageUrl(path){
+      if(!path) return null;
 
-      if (/^https?:\/\//i.test(path)) {
+      if(/^https?:\/\//i.test(path)){
         return path;
       }
 
-      const cleanPath = path.replace(/^\/+/, "");
+      const cleanPath = String(path).replace(/^\/+/,"");
       const bucketPath = cleanPath.startsWith("avatars/")
         ? cleanPath.substring("avatars/".length)
         : cleanPath;
 
-      return db.storage
+      const result = db.storage
         .from("avatars")
-        .getPublicUrl(bucketPath).data.publicUrl;
+        .getPublicUrl(bucketPath);
+
+      return result.data?.publicUrl || null;
     }
 
-    function setImage(element, path, fallback) {
+    function setImage(element,path,fallback){
       const url = getStorageUrl(path);
 
-      if (!url) {
-        element.src = fallback;
-        return;
-      }
-
-      element.onerror = () => {
+      element.onerror = ()=>{
         element.onerror = null;
         element.src = fallback;
       };
 
-      element.src = url;
+      element.src = url || fallback;
     }
 
-    function renderTags(container, values, type) {
+    function renderTags(container,values,type){
       container.replaceChildren();
 
       const items = Array.isArray(values)
-        ? values.filter(item => typeof item === "string" && item.trim())
+        ? values.filter(item =>
+            typeof item === "string" && item.trim()
+          )
         : [];
 
-      if (!items.length) {
+      if(!items.length){
         const empty = document.createElement("div");
         empty.className = "empty-inline";
         empty.textContent = "لم يضف العضو بيانات في هذا القسم بعد.";
@@ -970,7 +916,7 @@
         return;
       }
 
-      items.forEach(value => {
+      items.forEach(value=>{
         const tag = document.createElement("span");
         tag.className = type === "cyan" ? "tag cyan" : "tag";
         tag.textContent = value;
@@ -978,58 +924,58 @@
       });
     }
 
-    function renderProfile(member) {
+    function renderProfile(member){
       state.member = member;
 
-      $("fullName").textContent = member.full_name || "عضو هنوون";
+      $("fullName").textContent =
+        member.full_name || member.username || "عضو هنون";
+
       $("username").textContent = member.username
         ? "@" + member.username
         : "اسم المستخدم غير متاح";
 
       $("memberCode").textContent = member.member_code || "—";
+
       $("infoUsername").textContent = member.username
         ? "@" + member.username
         : "غير متاح";
 
-      $("infoCode").textContent = member.member_code || "غير متاح";
+      $("infoCode").textContent =
+        member.member_code || "غير متاح";
 
       const joined = formatDate(member.created_at);
+
       $("infoJoined").textContent = joined;
       $("joinedDate").textContent = joined;
 
-      const bio = (member.bio || "").trim();
+      const bio = String(member.bio || "").trim();
 
-      if (bio) {
-        $("bio").textContent = bio;
-        $("bio").hidden = false;
-      } else {
-        $("bio").hidden = true;
-      }
+      $("bio").textContent = bio;
+      $("bio").hidden = !bio;
 
       setImage(
         $("avatarImage"),
         member.avatar_path,
-        "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80"
+        FALLBACK_AVATAR
       );
 
       const cover = $("coverImage");
 
-      if (member.cover_path) {
-        const coverUrl = getStorageUrl(member.cover_path);
+      if(member.cover_path){
+        setImage(
+          cover,
+          member.cover_path,
+          ""
+        );
 
-        if (coverUrl) {
-          cover.onerror = () => {
-            cover.onerror = null;
-            cover.classList.remove("visible");
-          };
-
-          cover.onload = () => cover.classList.add("visible");
-          cover.src = coverUrl;
-        }
+        cover.hidden = false;
+      }else{
+        cover.hidden = true;
+        cover.removeAttribute("src");
       }
 
-      renderTags($("hobbiesList"), member.hobbies, "normal");
-      renderTags($("readingList"), member.reading_interests, "cyan");
+      renderTags($("hobbiesList"),member.hobbies,"normal");
+      renderTags($("readingList"),member.reading_interests,"cyan");
 
       $("loadingState").hidden = true;
       $("errorState").hidden = true;
@@ -1039,62 +985,152 @@
         (member.full_name || "الملف الشخصي") + " | HANOON WORLD";
     }
 
-    async function loadProfile() {
+    /*
+      البحث الأول: دليل الأعضاء العام.
+      البحث الاحتياطي: جدول profiles، مع التحقق من اكتمال الملف
+      وأن الحساب ليس خاصًا.
+    */
+    async function findMember(memberId){
+      let directoryError = null;
+
+      const directoryResult = await db
+        .from("member_directory")
+        .select("id,username,member_code,full_name,avatar_path,bio,hobbies,reading_interests,created_at")
+        .eq("id",memberId)
+        .maybeSingle();
+
+      if(directoryResult.error){
+        directoryError = directoryResult.error;
+        console.warn(
+          "Member directory lookup:",
+          directoryError
+        );
+      }
+
+      if(directoryResult.data){
+        return {
+          member:directoryResult.data,
+          source:"member_directory"
+        };
+      }
+
+      const profileResult = await db
+        .from("profiles")
+        .select("id,username,member_code,full_name,avatar_path,cover_path,bio,hobbies,reading_interests,created_at,profile_completed,is_private")
+        .eq("id",memberId)
+        .maybeSingle();
+
+      if(profileResult.error){
+        console.error(
+          "Public profile fallback:",
+          profileResult.error
+        );
+
+        return {
+          member:null,
+          error:profileResult.error,
+          directoryError
+        };
+      }
+
+      const profile = profileResult.data;
+
+      if(!profile){
+        return {
+          member:null,
+          directoryError
+        };
+      }
+
+      /*
+        لا نعرض ملفًا غير مكتمل أو حسابًا خاصًا
+        من خلال مسار البحث الاحتياطي.
+      */
+      if(
+        profile.profile_completed !== true ||
+        profile.is_private === true
+      ){
+        return {
+          member:null,
+          privateOrIncomplete:true
+        };
+      }
+
+      return {
+        member:profile,
+        source:"profiles"
+      };
+    }
+
+    async function loadProfile(){
+      if(state.loading) return;
+
+      state.loading = true;
+
       $("loadingState").hidden = false;
       $("errorState").hidden = true;
       $("profileContent").hidden = true;
 
-      const memberId = new URLSearchParams(
-        window.location.search
-      ).get("id");
+      try{
+        const memberId = new URLSearchParams(
+          window.location.search
+        ).get("id");
 
-      if (!memberId) {
+        if(!memberId){
+          showError(
+            "رابط الملف غير مكتمل",
+            "لم يتم تحديد العضو المطلوب عرضه."
+          );
+          return;
+        }
+
+        const result = await findMember(memberId);
+
+        if(result.error){
+          showError(
+            "تعذر تحميل بيانات العضو",
+            "تعذر الوصول إلى بيانات الملف الشخصي. حاول مرة أخرى."
+          );
+          return;
+        }
+
+        if(!result.member){
+          showError(
+            "الملف الشخصي غير متاح",
+            result.privateOrIncomplete
+              ? "هذا الملف غير متاح للعرض العام."
+              : "لم نعثر على ملف عام مكتمل بهذا الرابط."
+          );
+          return;
+        }
+
+        renderProfile(result.member);
+
+      }catch(error){
+        console.error("HANOON member page:",error);
+
         showError(
-          "رابط الملف غير مكتمل",
-          "لم يتم تحديد العضو المطلوب عرضه."
+          "حدث خطأ أثناء فتح الملف",
+          "تحقق من اتصال الإنترنت ثم حاول تحميل الصفحة مرة أخرى."
         );
-        return;
+
+      }finally{
+        state.loading = false;
       }
-
-      const { data, error } = await db
-        .from("member_directory")
-        .select("id,username,member_code,full_name,avatar_path,bio,hobbies,reading_interests,created_at")
-        .eq("id", memberId)
-        .maybeSingle();
-
-      if (error) {
-        console.error("Member profile error:", error);
-
-        showError(
-          "تعذر تحميل بيانات العضو",
-          "حدث خطأ أثناء الاتصال بقاعدة البيانات. حاول مرة أخرى."
-        );
-        return;
-      }
-
-      if (!data) {
-        showError(
-          "العضو غير موجود",
-          "قد يكون الملف الشخصي غير متاح أو لم يعد هذا العضو ضمن دليل الأعضاء."
-        );
-        return;
-      }
-
-      renderProfile(data);
     }
 
-    async function copyMemberCode() {
+    async function copyMemberCode(){
       const code = state.member?.member_code;
 
-      if (!code) {
+      if(!code){
         showToast("رقم العضوية غير متاح");
         return;
       }
 
-      try {
+      try{
         await navigator.clipboard.writeText(code);
         showToast("تم نسخ رقم العضوية");
-      } catch (error) {
+      }catch(error){
         const input = document.createElement("textarea");
         input.value = code;
         document.body.appendChild(input);
@@ -1103,71 +1139,85 @@
         const copied = document.execCommand("copy");
         input.remove();
 
-        showToast(copied ? "تم نسخ رقم العضوية" : "تعذر النسخ");
+        showToast(
+          copied ? "تم نسخ رقم العضوية" : "تعذر النسخ"
+        );
       }
     }
 
-    async function shareProfile() {
-      const title = state.member?.full_name || "ملف عضو هنوون";
+    async function shareProfile(){
+      const title =
+        state.member?.full_name || "ملف عضو هنون";
 
-      try {
-        if (navigator.share) {
+      try{
+        if(navigator.share){
           await navigator.share({
-            title: title + " | HANOON WORLD",
-            text: "شاهد الملف الشخصي على HANOON WORLD",
-            url: window.location.href
+            title:title + " | HANOON WORLD",
+            text:"شاهد الملف الشخصي على HANOON WORLD",
+            url:window.location.href
           });
-        } else {
-          await navigator.clipboard.writeText(window.location.href);
+        }else{
+          await navigator.clipboard.writeText(
+            window.location.href
+          );
           showToast("تم نسخ رابط الملف الشخصي");
         }
-      } catch (error) {
-        if (error.name !== "AbortError") {
+      }catch(error){
+        if(error.name !== "AbortError"){
           showToast("تعذرت مشاركة الرابط");
         }
       }
     }
 
-    $("backButton").addEventListener("click", () => {
-      if (window.history.length > 1) {
+    $("backButton").addEventListener("click",()=>{
+      if(window.history.length > 1){
         window.history.back();
-      } else {
+      }else{
         window.location.href = "members.html";
       }
     });
 
-    $("membersButton").addEventListener("click", () => {
+    $("membersButton").addEventListener("click",()=>{
       window.location.href = "members.html";
     });
 
-    $("retryButton").addEventListener("click", loadProfile);
+    $("retryButton").addEventListener("click",loadProfile);
 
-    $("copyCodeButton").addEventListener("click", copyMemberCode);
-    $("copyCodeSmall").addEventListener("click", copyMemberCode);
+    $("copyCodeButton").addEventListener("click",copyMemberCode);
+    $("copyCodeSmall").addEventListener("click",copyMemberCode);
 
-    $("shareButton").addEventListener("click", shareProfile);
-    $("shareProfileButton").addEventListener("click", shareProfile);
+    $("shareButton").addEventListener("click",shareProfile);
+    $("shareProfileButton").addEventListener("click",shareProfile);
 
-    async function initialize() {
-      const { data, error } = await db.auth.getSession();
+    async function initialize(){
+      try{
+        const {data,error} = await db.auth.getSession();
 
-      if (error || !data.session) {
-        window.location.href = "index.html";
-        return;
+        if(error || !data.session){
+          window.location.href = "index.html";
+          return;
+        }
+
+        state.session = data.session;
+        await loadProfile();
+
+      }catch(error){
+        console.error("HANOON session:",error);
+
+        showError(
+          "تعذر التحقق من تسجيل الدخول",
+          "أعد فتح الصفحة بعد تسجيل الدخول إلى حسابك."
+        );
       }
-
-      state.session = data.session;
-      await loadProfile();
     }
 
-    db.auth.onAuthStateChange((event, session) => {
-      if (event === "SIGNED_OUT" || !session) {
+    db.auth.onAuthStateChange((event,session)=>{
+      if(event === "SIGNED_OUT" || !session){
         window.location.href = "index.html";
       }
     });
 
     initialize();
   </script>
-
 </body>
-</html>
+  </html>
