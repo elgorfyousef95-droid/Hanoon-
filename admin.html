@@ -12,19 +12,10 @@
 
 <style>
 :root{
-  --bg:#090b16;
-  --panel:#111525;
-  --panel2:#171d30;
-  --panel3:#202840;
-  --line:rgba(205,214,255,.11);
-  --text:#f5f4ff;
-  --muted:#929bb5;
-  --purple:#a58aff;
-  --purple2:#7958df;
-  --gold:#e8c98d;
-  --green:#53d6a2;
-  --red:#ff7188;
-  --radius:22px;
+  --bg:#090b16;--panel:#111525;--panel2:#171d30;--panel3:#202840;
+  --line:rgba(205,214,255,.11);--text:#f5f4ff;--muted:#929bb5;
+  --purple:#a58aff;--purple2:#7958df;--gold:#e8c98d;
+  --green:#53d6a2;--red:#ff7188;--radius:22px;
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:"Cairo",sans-serif}
@@ -34,57 +25,27 @@ button{cursor:pointer}
 a{color:inherit;text-decoration:none}
 [hidden]{display:none!important}
 svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-.app{min-height:100vh;background:
-radial-gradient(ellipse at 80% 0%,rgba(126,91,226,.13),transparent 35%),
-radial-gradient(ellipse at 0% 100%,rgba(72,166,190,.07),transparent 35%),
-var(--bg)}
-.topbar{
-  height:76px;position:fixed;inset:0 0 auto;z-index:30;
-  display:flex;align-items:center;justify-content:space-between;
-  padding:0 27px;background:rgba(9,11,22,.91);
-  border-bottom:1px solid var(--line);backdrop-filter:blur(22px)
-}
+.app{min-height:100vh;background:radial-gradient(ellipse at 80% 0%,rgba(126,91,226,.13),transparent 35%),radial-gradient(ellipse at 0% 100%,rgba(72,166,190,.07),transparent 35%),var(--bg)}
+.topbar{height:76px;position:fixed;inset:0 0 auto;z-index:30;display:flex;align-items:center;justify-content:space-between;padding:0 27px;background:rgba(9,11,22,.91);border-bottom:1px solid var(--line);backdrop-filter:blur(22px)}
 .brand{display:flex;align-items:center;gap:12px}
-.brand-mark{
-  width:43px;height:43px;display:grid;place-items:center;
-  border-radius:15px;background:linear-gradient(145deg,#c3aaff,#7653d6);
-  color:#171128;box-shadow:0 8px 28px #8662e744
-}
+.brand-mark{width:43px;height:43px;display:grid;place-items:center;border-radius:15px;background:linear-gradient(145deg,#c3aaff,#7653d6);color:#171128;box-shadow:0 8px 28px #8662e744}
 .brand-mark svg{width:25px;height:25px;stroke:#171128;stroke-width:2.3}
 .brand-name{font-size:14px;font-weight:900;letter-spacing:1.2px}
 .brand-sub{font-size:9px;color:var(--muted);letter-spacing:2px;margin-top:2px}
 .top-actions{display:flex;align-items:center;gap:10px}
 .admin-label{padding:8px 13px;border:1px solid #a58aff35;border-radius:30px;background:#a58aff12;color:#c9baff;font-size:10px;font-weight:900}
-.icon-btn{
-  width:42px;height:42px;display:grid;place-items:center;
-  border:1px solid var(--line);border-radius:14px;background:#ffffff06;color:#d9d8eb
-}
+.icon-btn{width:42px;height:42px;display:grid;place-items:center;border:1px solid var(--line);border-radius:14px;background:#ffffff06;color:#d9d8eb}
 .icon-btn:hover{background:#ffffff12}
 .layout{display:grid;grid-template-columns:265px minmax(0,1fr);min-height:100vh;padding-top:76px}
-.sidebar{
-  position:fixed;top:76px;bottom:0;right:0;width:265px;
-  padding:24px 16px;overflow-y:auto;
-  background:rgba(14,18,33,.94);border-left:1px solid var(--line)
-}
+.sidebar{position:fixed;top:76px;bottom:0;right:0;width:265px;padding:24px 16px;overflow-y:auto;background:rgba(14,18,33,.94);border-left:1px solid var(--line)}
 .side-caption{padding:8px 13px 12px;color:#727d9b;font-size:9px;font-weight:900;letter-spacing:1.5px}
-.nav-btn{
-  width:100%;min-height:49px;display:flex;align-items:center;gap:12px;
-  padding:0 13px;margin:4px 0;border:1px solid transparent;border-radius:14px;
-  background:transparent;color:#aeb5ca;text-align:right;font-size:12px;font-weight:800
-}
+.nav-btn{width:100%;min-height:49px;display:flex;align-items:center;gap:12px;padding:0 13px;margin:4px 0;border:1px solid transparent;border-radius:14px;background:transparent;color:#aeb5ca;text-align:right;font-size:12px;font-weight:800}
 .nav-btn svg{width:19px;height:19px;color:#8992ad}
 .nav-btn:hover{background:#ffffff08;color:white}
-.nav-btn.active{
-  border-color:#a58aff38;
-  background:linear-gradient(100deg,#a58aff20,#7958df0d);
-  color:#e0d5ff
-}
+.nav-btn.active{border-color:#a58aff38;background:linear-gradient(100deg,#a58aff20,#7958df0d);color:#e0d5ff}
 .nav-btn.active svg{color:var(--purple)}
 .side-separator{height:1px;background:var(--line);margin:18px 7px}
-.sidebar-bottom{
-  margin:25px 5px 0;padding:15px;border:1px solid var(--line);
-  border-radius:17px;background:#ffffff04
-}
+.sidebar-bottom{margin:25px 5px 0;padding:15px;border:1px solid var(--line);border-radius:17px;background:#ffffff04}
 .secure-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--green);margin-left:7px;box-shadow:0 0 12px #53d6a2}
 .sidebar-bottom strong{font-size:11px}
 .sidebar-bottom p{margin:7px 0 0;color:var(--muted);font-size:10px;line-height:1.9}
@@ -98,26 +59,14 @@ var(--bg)}
 .view{display:none;animation:appear .22s ease}
 .view.active{display:block}
 @keyframes appear{from{opacity:.35;transform:translateY(5px)}to{opacity:1;transform:none}}
-.welcome{
-  position:relative;overflow:hidden;display:flex;align-items:center;justify-content:space-between;gap:20px;
-  padding:27px 30px;margin-bottom:20px;border:1px solid #a58aff2c;border-radius:24px;
-  background:linear-gradient(110deg,#201b3a,#171b31 62%,#14202d);
-  box-shadow:0 18px 55px #0003
-}
-.welcome:after{
-  content:"";position:absolute;width:230px;height:230px;left:-65px;top:-120px;
-  border:1px solid #c0a9ff25;border-radius:50%;
-  box-shadow:0 0 0 22px #c0a9ff08,0 0 0 48px #c0a9ff05
-}
+.welcome{position:relative;overflow:hidden;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:27px 30px;margin-bottom:20px;border:1px solid #a58aff2c;border-radius:24px;background:linear-gradient(110deg,#201b3a,#171b31 62%,#14202d);box-shadow:0 18px 55px #0003}
+.welcome:after{content:"";position:absolute;width:230px;height:230px;left:-65px;top:-120px;border:1px solid #c0a9ff25;border-radius:50%;box-shadow:0 0 0 22px #c0a9ff08,0 0 0 48px #c0a9ff05}
 .welcome h2{margin:0;font-size:20px;font-weight:900}
 .welcome p{margin:7px 0 0;color:#b5b1cc;font-size:11px;line-height:2}
 .welcome-icon{width:66px;height:66px;flex-shrink:0;display:grid;place-items:center;border:1px solid #d4c2ff42;border-radius:21px;background:#a58aff18;color:#d5c7ff}
 .welcome-icon svg{width:31px;height:31px}
 .stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px;margin-bottom:21px}
-.stat-card{
-  min-height:123px;padding:17px;border:1px solid var(--line);
-  border-radius:19px;background:linear-gradient(145deg,#171d30,#111626)
-}
+.stat-card{min-height:123px;padding:17px;border:1px solid var(--line);border-radius:19px;background:linear-gradient(145deg,#171d30,#111626)}
 .stat-top{display:flex;justify-content:space-between;align-items:center}
 .stat-icon{width:36px;height:36px;display:grid;place-items:center;border-radius:12px;background:#a58aff14;color:#bba7ff}
 .stat-icon svg{width:18px;height:18px}
@@ -129,10 +78,7 @@ var(--bg)}
 .panel-head h3{font-size:13px;margin:0;font-weight:900}
 .panel-head span{font-size:9px;color:var(--muted)}
 .quick-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-.quick-action{
-  min-height:83px;display:flex;align-items:center;gap:12px;padding:13px;
-  border:1px solid var(--line);border-radius:15px;background:#ffffff04;text-align:right
-}
+.quick-action{min-height:83px;display:flex;align-items:center;gap:12px;padding:13px;border:1px solid var(--line);border-radius:15px;background:#ffffff04;text-align:right}
 .quick-action:hover{border-color:#a58aff55;background:#a58aff0b}
 .quick-action .q-icon{width:38px;height:38px;flex-shrink:0;display:grid;place-items:center;border-radius:12px;background:#a58aff14;color:#c5b3ff}
 .quick-action strong{display:block;font-size:11px}
@@ -145,27 +91,16 @@ var(--bg)}
 .form-panel{padding:23px;border:1px solid var(--line);border-radius:21px;background:linear-gradient(145deg,#151b2d,#101525)}
 .field{margin-bottom:17px}
 .field label{display:block;margin-bottom:8px;color:#d4d8e9;font-size:11px;font-weight:800}
-.field input,.field textarea,.field select{
-  width:100%;min-height:47px;padding:12px 14px;border:1px solid #ffffff16;
-  border-radius:13px;outline:none;background:#0c1120;color:var(--text);font-size:12px
-}
+.field input,.field textarea,.field select{width:100%;min-height:47px;padding:12px 14px;border:1px solid #ffffff16;border-radius:13px;outline:none;background:#0c1120;color:var(--text);font-size:12px}
 .field textarea{min-height:125px;resize:vertical;line-height:1.9}
 .field input:focus,.field textarea:focus,.field select:focus{border-color:#a58aff88;box-shadow:0 0 0 3px #a58aff12}
 .field input::placeholder,.field textarea::placeholder{color:#68728c}
 .field-hint{margin-top:6px;color:#7f89a4;font-size:9px;line-height:1.8}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.primary-btn{
-  min-height:48px;display:inline-flex;align-items:center;justify-content:center;gap:9px;
-  padding:0 20px;border:0;border-radius:14px;
-  background:linear-gradient(110deg,#b69cff,#805ce1);color:#171128;
-  font-size:12px;font-weight:900;box-shadow:0 9px 25px #805ce133
-}
+.primary-btn{min-height:48px;display:inline-flex;align-items:center;justify-content:center;gap:9px;padding:0 20px;border:0;border-radius:14px;background:linear-gradient(110deg,#b69cff,#805ce1);color:#171128;font-size:12px;font-weight:900;box-shadow:0 9px 25px #805ce133}
 .primary-btn:hover{filter:brightness(1.08)}
 .primary-btn:disabled{opacity:.55;cursor:not-allowed}
-.secondary-btn{
-  min-height:43px;padding:0 15px;border:1px solid var(--line);
-  border-radius:13px;background:#ffffff08;color:#d9d9e9;font-size:11px;font-weight:800
-}
+.secondary-btn{min-height:43px;padding:0 15px;border:1px solid var(--line);border-radius:13px;background:#ffffff08;color:#d9d9e9;font-size:11px;font-weight:800}
 .preview-card{position:sticky;top:100px;padding:18px;border:1px solid #a58aff2c;border-radius:19px;background:linear-gradient(145deg,#201c37,#151b2e)}
 .preview-top{display:flex;align-items:center;gap:10px;margin-bottom:17px}
 .preview-bell{width:37px;height:37px;display:grid;place-items:center;border-radius:12px;background:#a58aff1a;color:#cbbaff}
@@ -178,18 +113,10 @@ var(--bg)}
 .preview-destination strong{color:#c7b7ff}
 .notice{padding:12px 14px;border:1px solid #e8c98d2c;border-radius:13px;background:#e8c98d0b;color:#e8d4a8;font-size:10px;line-height:2;margin-bottom:17px}
 .notice svg{width:15px;height:15px;vertical-align:middle;margin-left:5px}
-.toast{
-  position:fixed;z-index:100;bottom:25px;left:50%;transform:translate(-50%,20px);
-  opacity:0;pointer-events:none;padding:13px 19px;border:1px solid var(--line);
-  border-radius:14px;background:#1b2236;color:white;font-size:11px;font-weight:800;
-  box-shadow:0 12px 35px #0009;transition:.25s;max-width:90%;text-align:center
-}
+.toast{position:fixed;z-index:100;bottom:25px;left:50%;transform:translate(-50%,20px);opacity:0;pointer-events:none;padding:13px 19px;border:1px solid var(--line);border-radius:14px;background:#1b2236;color:white;font-size:11px;font-weight:800;box-shadow:0 12px 35px #0009;transition:.25s;max-width:90%;text-align:center}
 .toast.show{opacity:1;transform:translate(-50%,0)}
 .toast.error{border-color:#ff718855;color:#ffb0bd}
-.access-screen{
-  position:fixed;inset:0;z-index:200;display:flex;align-items:center;justify-content:center;
-  padding:22px;background:#090b16
-}
+.access-screen{position:fixed;inset:0;z-index:200;display:flex;align-items:center;justify-content:center;padding:22px;background:#090b16}
 .access-card{width:min(430px,100%);padding:35px 27px;text-align:center;border:1px solid var(--line);border-radius:25px;background:#141a2b;box-shadow:0 25px 90px #0008}
 .access-mark{width:65px;height:65px;display:grid;place-items:center;margin:0 auto 18px;border-radius:21px;background:#a58aff19;color:#c6b4ff}
 .access-mark svg{width:30px;height:30px}
@@ -198,10 +125,24 @@ var(--bg)}
 .access-card .primary-btn{width:100%}
 .mobile-menu{display:none}
 .footer-note{text-align:center;color:#59647e;font-size:9px;margin-top:30px}
-@media(max-width:1100px){
-  .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .form-layout{grid-template-columns:minmax(0,1fr) 260px}
-}
+
+/* إدارة الأعضاء */
+.member-tools{display:flex;gap:10px;align-items:center;margin-bottom:16px}
+.member-tools input{flex:1;min-width:0;min-height:48px;padding:12px 15px;border:1px solid #ffffff18;border-radius:14px;outline:none;background:#0c1120;color:var(--text);font:inherit;font-size:12px}
+.member-tools input:focus{border-color:#a58aff88}
+.member-results{display:grid;gap:10px}
+.member-row{display:flex;align-items:center;gap:13px;padding:14px;border:1px solid var(--line);border-radius:16px;background:#ffffff05}
+.member-avatar{width:45px;height:45px;flex-shrink:0;display:grid;place-items:center;border-radius:15px;background:#a58aff1c;color:#cbbaff;font-weight:900}
+.member-info{flex:1;min-width:0}
+.member-info strong{display:block;font-size:12px;overflow-wrap:anywhere}
+.member-info small{display:block;margin-top:4px;color:var(--muted);font-size:10px;direction:ltr;text-align:right;overflow-wrap:anywhere}
+.member-meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:7px}
+.member-tag{padding:3px 8px;border:1px solid var(--line);border-radius:20px;color:#b9c1d8;font-size:9px}
+.member-open{min-height:38px;padding:0 12px;border:1px solid #a58aff44;border-radius:11px;background:#a58aff12;color:#d6c9ff;font-size:10px;font-weight:900;white-space:nowrap}
+.member-empty{padding:28px 12px;text-align:center;color:var(--muted);font-size:11px;line-height:2;border:1px dashed var(--line);border-radius:15px}
+.member-pagination{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:15px;color:var(--muted);font-size:10px}
+
+@media(max-width:1100px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.form-layout{grid-template-columns:minmax(0,1fr) 260px}}
 @media(max-width:800px){
   .layout{display:block}
   .sidebar{width:265px;transform:translateX(105%);transition:transform .25s;z-index:40;box-shadow:-20px 0 60px #0008}
@@ -234,13 +175,16 @@ var(--bg)}
   .quick-grid{grid-template-columns:1fr}
   .form-row{grid-template-columns:1fr;gap:0}
   .live-status{font-size:9px;padding:7px 9px}
+  .member-tools{flex-direction:column;align-items:stretch}
+  .member-tools .primary-btn{width:100%}
+  .member-row{align-items:flex-start;flex-wrap:wrap}
+  .member-open{margin-right:58px}
 }
 </style>
 </head>
 
 <body>
 <div class="app">
-
 <header class="topbar">
   <div class="brand">
     <div class="brand-mark">
@@ -268,6 +212,10 @@ var(--bg)}
     <button class="nav-btn active" data-view="dashboard">
       <svg viewBox="0 0 24 24"><rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="5" rx="2"/><rect x="13" y="10" width="8" height="11" rx="2"/><rect x="3" y="13" width="8" height="8" rx="2"/></svg>
       الرئيسية
+    </button>
+    <button class="nav-btn" data-view="members">
+      <svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M20 21v-2a4 4 0 0 0-3-3.87"/></svg>
+      إدارة الأعضاء
     </button>
     <button class="nav-btn" data-view="notifications">
       <svg viewBox="0 0 24 24"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9ZM10 21h4"/></svg>
@@ -345,19 +293,48 @@ var(--bg)}
               <span class="q-icon"><svg viewBox="0 0 24 24"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9ZM10 21h4"/></svg></span>
               <span><strong>إرسال إشعار</strong><small>إلى عضو أو مجموعة أو الجميع</small></span>
             </button>
-            <a class="quick-action" href="members.html">
+            <button class="quick-action" data-open-view="members">
               <span class="q-icon"><svg viewBox="0 0 24 24"><circle cx="9" cy="7" r="4"/><path d="M2 21v-2a4 4 0 0 1 4-4h6a4 4 0 0 1 4 4v2"/></svg></span>
-              <span><strong>دليل الأعضاء</strong><small>فتح صفحة أعضاء الموقع</small></span>
-            </a>
+              <span><strong>إدارة الأعضاء</strong><small>البحث وفتح ملفات الأعضاء</small></span>
+            </button>
           </div>
         </div>
         <div class="panel">
           <div class="panel-head"><h3>حالة مركز التحكم</h3><span>الأمان</span></div>
           <div class="activity-empty">
             <svg viewBox="0 0 24 24"><path d="M12 3 4 6v5c0 5 3.4 8.4 8 10 4.6-1.6 8-5 8-10V6l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg>
-            تم التحقق من صلاحية حساب الإدارة.
+            يتم التحقق من صلاحية حساب الإدارة.
             <br>الأدوات الإدارية لا تعمل إلا بعد التحقق من الخادم.
           </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="view" id="view-members">
+      <div class="page-head">
+        <div>
+          <div class="eyebrow">MEMBER MANAGEMENT</div>
+          <h1>إدارة الأعضاء</h1>
+          <p>ابحث عن الأعضاء وافتح ملفاتهم الشخصية.</p>
+        </div>
+        <div class="live-status"><i></i> بحث آمن عبر الخادم</div>
+      </div>
+      <div class="panel">
+        <div class="panel-head">
+          <h3>دليل أعضاء هَنون</h3>
+          <span id="memberCount">جاهز للبحث</span>
+        </div>
+        <form class="member-tools" id="memberSearchForm">
+          <input id="memberSearchInput" type="search" maxlength="80" placeholder="ابحث بالاسم أو اسم المستخدم أو كود العضوية" autocomplete="off">
+          <button class="primary-btn" id="memberSearchButton" type="submit">بحث عن عضو</button>
+        </form>
+        <div class="member-results" id="memberResults">
+          <div class="member-empty">اكتب اسم العضو أو كود العضوية ثم اضغط بحث.</div>
+        </div>
+        <div class="member-pagination" id="memberPagination" hidden>
+          <button class="secondary-btn" id="memberPrev" type="button">السابق</button>
+          <span id="memberPageLabel"></span>
+          <button class="secondary-btn" id="memberNext" type="button">التالي</button>
         </div>
       </div>
     </section>
@@ -418,7 +395,7 @@ var(--bg)}
               <option value="notifications.html">الإشعارات</option>
               <option value="profile.html">الملف الشخصي</option>
             </select>
-            <div class="field-hint">يمكن تخصيص رابط داخلي لاحقًا حسب نوع العملية الإدارية.</div>
+            <div class="field-hint">اختر وجهة داخل الموقع. الروابط الخارجية غير مسموحة في هذه المرحلة.</div>
           </div>
 
           <button class="primary-btn" id="sendButton" type="submit">
@@ -484,7 +461,6 @@ function showDashboard(){
 
 async function verifyAdmin(){
   const {data:{session},error:sessionError}=await supabase.auth.getSession();
-
   if(sessionError) throw sessionError;
 
   if(!session){
@@ -495,7 +471,6 @@ async function verifyAdmin(){
   const {data,error}=await supabase.functions.invoke("admin-send-notification",{
     body:{action:"check"}
   });
-
   if(error) throw error;
 
   if(!data?.ok || !data?.isAdmin){
@@ -530,7 +505,6 @@ function openView(name){
 document.querySelectorAll("[data-view]").forEach(button=>{
   button.addEventListener("click",()=>openView(button.dataset.view));
 });
-
 document.querySelectorAll("[data-open-view]").forEach(button=>{
   button.addEventListener("click",()=>openView(button.dataset.openView));
 });
@@ -541,9 +515,163 @@ $("audience").addEventListener("change",()=>{
   $("memberCodeField").hidden=$("audience").value!=="member";
 });
 
+/* البحث عن الأعضاء */
+const MEMBER_PAGE_SIZE=20;
+let memberSearchOffset=0;
+let memberSearchTotal=0;
+
+function memberInitial(member){
+  const name=String(member.full_name||member.nickname||member.username||"؟").trim();
+  return name.slice(0,1)||"؟";
+}
+
+function renderMembers(members){
+  const container=$("memberResults");
+  container.replaceChildren();
+
+  if(!members.length){
+    const empty=document.createElement("div");
+    empty.className="member-empty";
+    empty.textContent="لم يتم العثور على أعضاء بهذه البيانات.";
+    container.appendChild(empty);
+    return;
+  }
+
+  members.forEach(member=>{
+    const row=document.createElement("article");
+    row.className="member-row";
+
+    const avatar=document.createElement("div");
+    avatar.className="member-avatar";
+    avatar.textContent=memberInitial(member);
+
+    const info=document.createElement("div");
+    info.className="member-info";
+
+    const name=document.createElement("strong");
+    name.textContent=member.full_name||member.nickname||"عضو هَنون";
+
+    const details=document.createElement("small");
+    details.textContent=[
+      member.username?"@"+member.username:"",
+      member.member_code||""
+    ].filter(Boolean).join(" · ");
+
+    const meta=document.createElement("div");
+    meta.className="member-meta";
+
+    const status=document.createElement("span");
+    status.className="member-tag";
+    status.textContent=member.profile_completed?"الملف مكتمل":"الملف غير مكتمل";
+    meta.appendChild(status);
+
+    if(member.role==="admin"){
+      const admin=document.createElement("span");
+      admin.className="member-tag";
+      admin.textContent="مدير";
+      meta.appendChild(admin);
+    }
+
+    info.append(name,details,meta);
+
+    const open=document.createElement("button");
+    open.type="button";
+    open.className="member-open";
+    open.textContent="فتح الملف";
+    open.addEventListener("click",()=>{
+      location.href="member.html?id="+encodeURIComponent(member.id);
+    });
+
+    row.append(avatar,info,open);
+    container.appendChild(row);
+  });
+}
+
+function updateMemberPagination(){
+  const page=Math.floor(memberSearchOffset/MEMBER_PAGE_SIZE)+1;
+  const pages=Math.max(1,Math.ceil(memberSearchTotal/MEMBER_PAGE_SIZE));
+
+  $("memberPagination").hidden=memberSearchTotal<=MEMBER_PAGE_SIZE;
+  $("memberPageLabel").textContent="صفحة "+page+" من "+pages+" · "+memberSearchTotal+" عضو";
+  $("memberPrev").disabled=memberSearchOffset<=0;
+  $("memberNext").disabled=memberSearchOffset+MEMBER_PAGE_SIZE>=memberSearchTotal;
+}
+
+async function searchMembers(reset=true){
+  if(reset) memberSearchOffset=0;
+
+  const query=$("memberSearchInput").value.trim();
+  const button=$("memberSearchButton");
+
+  button.disabled=true;
+  button.textContent="جارٍ البحث...";
+  $("memberCount").textContent="جارٍ تحميل النتائج";
+  $("memberResults").replaceChildren();
+
+  const loading=document.createElement("div");
+  loading.className="member-empty";
+  loading.textContent="جارٍ البحث في أعضاء هَنون...";
+  $("memberResults").appendChild(loading);
+  $("memberPagination").hidden=true;
+
+  try{
+    const {data,error}=await supabase.functions.invoke("admin-send-notification",{
+      body:{
+        action:"search_members",
+        query,
+        limit:MEMBER_PAGE_SIZE,
+        offset:memberSearchOffset
+      }
+    });
+
+    if(error) throw error;
+    if(!data?.ok) throw new Error(data?.error||"تعذر البحث عن الأعضاء.");
+
+    memberSearchTotal=Number(data.total||0);
+    renderMembers(Array.isArray(data.members)?data.members:[]);
+    $("memberCount").textContent=memberSearchTotal.toLocaleString("ar-EG")+" عضو";
+    updateMemberPagination();
+
+  }catch(error){
+    console.error("HANOON ADMIN MEMBER SEARCH:",error);
+    $("memberResults").replaceChildren();
+
+    const empty=document.createElement("div");
+    empty.className="member-empty";
+    empty.textContent=error.message||"حدث خطأ أثناء تحميل الأعضاء.";
+    $("memberResults").appendChild(empty);
+
+    $("memberCount").textContent="تعذر تحميل النتائج";
+    toast(error.message||"تعذر البحث عن الأعضاء.",true);
+
+  }finally{
+    button.disabled=false;
+    button.textContent="بحث عن عضو";
+  }
+}
+
+$("memberSearchForm").addEventListener("submit",event=>{
+  event.preventDefault();
+  searchMembers(true);
+});
+
+$("memberPrev").addEventListener("click",()=>{
+  if(memberSearchOffset<=0) return;
+  memberSearchOffset=Math.max(0,memberSearchOffset-MEMBER_PAGE_SIZE);
+  searchMembers(false);
+});
+
+$("memberNext").addEventListener("click",()=>{
+  if(memberSearchOffset+MEMBER_PAGE_SIZE>=memberSearchTotal) return;
+  memberSearchOffset+=MEMBER_PAGE_SIZE;
+  searchMembers(false);
+});
+
+/* معاينة الإشعار */
 function updatePreview(){
   $("previewTitle").textContent=$("notificationTitle").value.trim()||"عنوان الإشعار سيظهر هنا";
   $("previewBody").textContent=$("notificationBody").value.trim()||"اكتب نص الإشعار لتظهر المعاينة هنا مباشرة.";
+
   const routes={
     "":"صفحة الإشعارات",
     "home.html":"الرئيسية",
@@ -552,6 +680,7 @@ function updatePreview(){
     "notifications.html":"الإشعارات",
     "profile.html":"الملف الشخصي"
   };
+
   $("previewDestination").textContent=routes[$("targetRoute").value]||"صفحة الإشعارات";
 }
 
@@ -560,6 +689,7 @@ function updatePreview(){
   $(id).addEventListener("change",updatePreview);
 });
 
+/* إرسال الإشعار */
 $("notificationForm").addEventListener("submit",async event=>{
   event.preventDefault();
 
@@ -586,7 +716,7 @@ $("notificationForm").addEventListener("submit",async event=>{
     member:"العضو المحدد"
   };
 
-  if(!confirm(`تأكيد إرسال الإشعار إلى: ${audienceNames[audience]}؟`)) return;
+  if(!confirm("تأكيد إرسال الإشعار إلى: "+audienceNames[audience]+"؟")) return;
 
   const button=$("sendButton");
   button.disabled=true;
@@ -594,20 +724,13 @@ $("notificationForm").addEventListener("submit",async event=>{
 
   try{
     const {data,error}=await supabase.functions.invoke("admin-send-notification",{
-      body:{
-        action:"send",
-        audience,
-        memberCode,
-        title,
-        body,
-        targetRoute
-      }
+      body:{action:"send",audience,memberCode,title,body,targetRoute}
     });
 
     if(error) throw error;
     if(!data?.ok) throw new Error(data?.error||"تعذر إرسال الإشعار.");
 
-    toast(`تم حفظ الإشعار وإرساله إلى ${Number(data.sent||0).toLocaleString("en-US")} عضو.`);
+    toast("تم حفظ الإشعار وإرساله إلى "+Number(data.sent||0).toLocaleString("en-US")+" عضو.");
     $("notificationForm").reset();
     $("memberCodeField").hidden=true;
     updatePreview();
