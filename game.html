@@ -1,852 +1,879 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#090b18">
-<title>HANOON WORLD | Game Arena</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#080a16">
+<title>مكتبة الألعاب | HANOON WORLD</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
 :root{
- --bg:#080a16;
- --panel:#14182b;
- --panel2:#1b2037;
- --line:rgba(255,255,255,.09);
- --text:#f7f5ff;
- --muted:#a5abc4;
- --purple:#a78bfa;
- --gold:#edca83;
- --cyan:#65d9d2;
- --green:#56d6a0;
- --red:#ff7188;
+  --bg:#080a16;
+  --panel:#111629;
+  --purple:#a58aff;
+  --gold:#edca83;
+  --cyan:#70d9d2;
+  --text:#f8f6ff;
+  --muted:#a6abc2;
+  --line:rgba(255,255,255,.09);
+  --green:#65d6a1;
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
 body{
- min-height:100vh;
- background:var(--bg);
- color:var(--text);
- font-family:Cairo,sans-serif;
- overflow-x:hidden;
+  min-height:100vh;
+  overflow-x:hidden;
+  padding-bottom:110px;
+  background:var(--bg);
+  color:var(--text);
+  font-family:"Cairo",sans-serif;
 }
 button,input{font:inherit}
 button{cursor:pointer;color:inherit}
 a{color:inherit;text-decoration:none}
-button:disabled{opacity:.45;cursor:not-allowed}
+svg{display:block;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 
-.bg{
- position:fixed;inset:0;z-index:-2;
- background:
- linear-gradient(180deg,rgba(6,8,19,.66),#080a16 88%),
- url("https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=2000&q=85") center/cover;
+.page-background{
+  position:fixed;inset:0;z-index:-2;pointer-events:none;
+  background:
+    radial-gradient(ellipse at 10% 12%,rgba(115,81,210,.22),transparent 35%),
+    radial-gradient(ellipse at 90% 45%,rgba(37,139,151,.13),transparent 35%),
+    radial-gradient(ellipse at 50% 100%,rgba(117,76,190,.13),transparent 40%),
+    #080a16;
 }
-.bg:after{
- content:"";position:absolute;inset:0;
- background:
- radial-gradient(ellipse at 15% 10%,rgba(132,92,245,.2),transparent 38%),
- radial-gradient(ellipse at 90% 45%,rgba(38,184,190,.12),transparent 35%);
+.page-background:before,.page-background:after{
+  content:"";position:absolute;width:360px;height:360px;
+  border:1px solid rgba(177,151,255,.07);border-radius:50%;
 }
-.container{width:min(1120px,calc(100% - 28px));margin:auto}
+.page-background:before{
+  top:180px;right:-250px;
+  box-shadow:0 0 0 35px rgba(177,151,255,.018),0 0 0 75px rgba(177,151,255,.012);
+}
+.page-background:after{
+  bottom:100px;left:-260px;
+  box-shadow:0 0 0 35px rgba(104,217,213,.018),0 0 0 75px rgba(104,217,213,.012);
+}
+.app{width:min(100%,1500px);margin:auto;padding:0 25px}
 
-header{
- height:72px;display:flex;align-items:center;
- justify-content:space-between;border-bottom:1px solid var(--line);
+/* HEADER */
+.topbar{
+  min-height:82px;display:flex;align-items:center;
+  justify-content:space-between;gap:14px;
+  border-bottom:1px solid var(--line);
 }
-.brand{display:flex;align-items:center;gap:11px;font-weight:900}
+.brand{display:flex;align-items:center;gap:12px}
 .brand-icon{
- width:43px;height:43px;border-radius:15px;
- display:grid;place-items:center;
- background:linear-gradient(145deg,#b49aff,#6845ce);
- box-shadow:0 8px 28px #7955dc55;
+  width:46px;height:46px;display:grid;place-items:center;
+  border:1px solid #c2adff55;border-radius:15px;
+  background:linear-gradient(145deg,#b49aff,#6845ce);
+  box-shadow:0 8px 28px #7954d455;
 }
-.brand-icon svg{width:25px;stroke:white;fill:none;stroke-width:1.8}
-.brand small{display:block;color:var(--gold);font-size:8px;letter-spacing:2px;margin-top:-5px}
-.back{
- padding:9px 14px;border:1px solid var(--line);
- border-radius:12px;background:#ffffff0b;font-size:11px;font-weight:800;
+.brand-icon svg{width:26px;height:26px;color:white}
+.brand-name{display:block;font-size:15px;font-weight:900}
+.brand-sub{display:block;margin-top:-5px;color:var(--gold);font-size:9px;letter-spacing:2px}
+.header-actions{display:flex;align-items:center;gap:10px}
+.wallet{
+  display:flex;align-items:center;gap:11px;padding:7px 9px;
+  border:1px solid var(--line);border-radius:14px;
+  background:#151a2de8;backdrop-filter:blur(15px);
 }
-.back svg{width:15px;vertical-align:middle;margin-left:5px;stroke:currentColor;fill:none;stroke-width:2}
+.wallet-unit{display:flex;align-items:center;gap:5px;font-size:12px;font-weight:900}
+.wallet-unit svg{width:17px;height:17px;color:var(--gold)}
+.wallet-unit.gems svg{color:var(--cyan)}
+.wallet-add{
+  width:30px;height:30px;display:grid;place-items:center;
+  border-radius:9px;background:linear-gradient(145deg,#aa91ff,#704ed4);
+}
+.wallet-add svg{width:17px;height:17px;color:white;stroke-width:2.4}
+.profile-link{
+  width:43px;height:43px;overflow:hidden;display:grid;place-items:center;
+  border:2px solid var(--purple);border-radius:50%;background:#24243d;
+}
+.profile-link img{width:100%;height:100%;object-fit:cover}
+.profile-link svg{width:22px;height:22px;color:#cbbdff}
 
-.breadcrumb{display:flex;gap:9px;margin:20px 0;color:var(--muted);font-size:11px}
-.breadcrumb a{color:#c1adff}
-
+/* HERO */
 .hero{
- position:relative;min-height:275px;border:1px solid #b49aff33;
- border-radius:25px;overflow:hidden;background:#17172c;
- box-shadow:0 24px 70px #0007;
+  position:relative;min-height:330px;margin-top:24px;padding:40px;
+  display:flex;align-items:center;overflow:hidden;isolation:isolate;
+  border:1px solid #bba4ff38;border-radius:28px;
+  background:
+    linear-gradient(90deg,rgba(7,9,23,.97),rgba(10,12,29,.75),rgba(10,12,29,.25)),
+    url("https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1900&q=90")
+    center/cover no-repeat;
+  box-shadow:0 22px 65px #0007;
 }
-.hero-image{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.48}
-.hero-shade{
- position:absolute;inset:0;
- background:linear-gradient(90deg,#090b19 0%,#090b19dd 38%,#090b1966 100%);
+.hero:after{
+  content:"";position:absolute;inset:0;z-index:-1;
+  background:radial-gradient(circle at 75% 45%,rgba(160,125,255,.25),transparent 35%);
 }
-.hero-content{position:relative;z-index:1;padding:38px;max-width:650px}
-.eyebrow{
- display:inline-flex;padding:6px 12px;border:1px solid #edca8350;
- border-radius:30px;color:var(--gold);background:#edca8310;
- font-size:10px;font-weight:900;
+.hero-content{position:relative;z-index:2;max-width:620px}
+.hero-label{
+  display:inline-flex;align-items:center;gap:9px;padding:7px 14px;
+  border:1px solid #edca8350;border-radius:30px;
+  background:#edca8314;color:var(--gold);font-size:11px;font-weight:900;
 }
-h1{font-size:clamp(29px,5vw,48px);font-weight:900;margin:13px 0 6px}
-.hero p{font-size:12px;line-height:2;color:#d0cce0;max-width:520px}
-.hero-meta{display:flex;gap:9px;flex-wrap:wrap;margin-top:17px}
-.pill{
- padding:7px 11px;border:1px solid var(--line);
- background:#080a1688;border-radius:10px;color:#e7e1ff;font-size:10px;
+.hero-label span{
+  width:7px;height:7px;border-radius:50%;
+  background:var(--gold);box-shadow:0 0 12px var(--gold);
+}
+.hero h1{margin-top:17px;font-size:clamp(34px,5vw,55px);line-height:1.35;font-weight:900}
+.hero h1 strong{color:#c2adff;text-shadow:0 5px 30px #9b7bff55}
+.hero p{max-width:480px;margin-top:12px;color:#d0cce0;font-size:13px;line-height:2.1}
+.hero-art{
+  position:absolute;left:8%;top:50%;transform:translateY(-50%);
+  width:190px;height:190px;display:grid;place-items:center;
+  border:1px solid #ffffff24;border-radius:50%;
+  background:#ffffff09;box-shadow:0 0 90px #9170ff28;
+}
+.hero-art:before,.hero-art:after{
+  content:"";position:absolute;border:1px solid #beabff30;border-radius:50%;
+}
+.hero-art:before{inset:14px}
+.hero-art:after{inset:29px}
+.hero-art svg{width:75px;height:75px;color:#c8b8ff;stroke-width:1.2}
+
+/* SEARCH */
+.search-area{margin-top:26px}
+.search-box{
+  min-height:58px;display:flex;align-items:center;gap:13px;
+  padding:0 18px;border:1px solid #ae97ff38;border-radius:16px;
+  background:#15192bef;box-shadow:0 10px 30px #0002;
+}
+.search-box svg{width:22px;height:22px;flex:none;color:#bbaaff}
+.search-box input{
+  width:100%;min-width:0;border:0;outline:0;
+  background:transparent;color:white;font-size:13px;
+}
+.search-box input::placeholder{color:#888ba4}
+
+/* FILTERS */
+.filters{
+  display:flex;align-items:center;gap:9px;
+  margin-top:17px;overflow-x:auto;padding-bottom:5px;scrollbar-width:none;
+}
+.filters::-webkit-scrollbar{display:none}
+.filter-btn{
+  flex:none;padding:9px 18px;border:1px solid #ffffff18;
+  border-radius:30px;background:#171a30d9;color:#b9bad0;
+  font-size:11px;font-weight:800;transition:none;
+}
+.filter-btn.active{
+  border-color:#a18aff80;background:#a18aff24;color:#d6caff;
 }
 
-.section-title{
- display:flex;align-items:center;justify-content:space-between;
- margin:25px 0 13px;
+/* SECTION */
+.section-heading{
+  margin:29px 0 18px;display:flex;
+  align-items:flex-end;justify-content:space-between;gap:12px;
 }
-.section-title h2{font-size:17px;font-weight:900}
-.section-title span{font-size:10px;color:var(--muted)}
+.section-title{font-size:22px;font-weight:900}
+.section-subtitle{display:block;margin-top:3px;color:var(--muted);font-size:11px}
+.games-count{color:var(--gold);font-size:11px;font-weight:900;white-space:nowrap}
 
-.layout{
- display:grid;grid-template-columns:minmax(0,1fr) 300px;
- gap:17px;align-items:start;margin-top:18px;
+/* GAME CARDS */
+.games-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(min(100%,255px),1fr));
+  gap:20px;
 }
-.panel{
- padding:20px;border:1px solid var(--line);border-radius:20px;
- background:linear-gradient(145deg,#171b30f2,#101426f2);
- box-shadow:0 15px 40px #0003;
- backdrop-filter:blur(14px);
+.game-card{
+  --game-glow:rgba(145,112,255,.25);
+  --game-color:#a58aff;
+  min-width:0;overflow:hidden;position:relative;display:block;
+  border:1px solid #ffffff18;border-radius:22px;
+  background:linear-gradient(155deg,#202641,#101528 80%);
+  box-shadow:0 16px 38px #0005;
+  transition:none!important;
+  transform:none!important;
 }
-.panel+.panel{margin-top:15px}
-.panel h3{font-size:15px;font-weight:900;margin-bottom:13px}
+.game-card.is-ready{cursor:pointer}
+.game-card.is-ready:hover{
+  transform:none!important;
+  border-color:#ffffff30;
+  box-shadow:0 16px 38px #0005;
+}
+.game-card.is-coming{
+  cursor:not-allowed;
+  pointer-events:none!important;
+  opacity:.9;
+}
+.game-cover{
+  position:relative;height:220px;overflow:hidden;isolation:isolate;
+  background:
+    radial-gradient(circle at 50% 40%,var(--game-glow),transparent 65%),
+    linear-gradient(140deg,#222b49,#11172a);
+}
+.game-cover:before{
+  content:"";position:absolute;inset:0;z-index:1;
+  background:linear-gradient(180deg,rgba(4,7,18,.02) 5%,transparent 30%,rgba(4,7,18,.9) 100%);
+  pointer-events:none;
+}
+.game-cover img{
+  position:absolute;inset:0;width:100%;height:100%;
+  display:block;object-fit:cover;
+  transform:none!important;
+  transition:none!important;
+}
+.game-art{
+  position:absolute;inset:0;display:grid;place-items:center;overflow:hidden;
+  background:
+    radial-gradient(circle at 50% 40%,var(--game-glow),transparent 65%),
+    linear-gradient(145deg,#242b49,#101528);
+}
+.game-art:before,.game-art:after{
+  content:"";position:absolute;
+  border:1px solid color-mix(in srgb,var(--game-color) 35%,transparent);
+  border-radius:50%;width:190px;height:190px;
+}
+.game-art:after{width:135px;height:135px}
+.game-art svg{width:82px;height:82px;color:var(--game-color);stroke-width:1.2;z-index:1}
+.game-number{
+  position:absolute;z-index:3;top:12px;right:12px;
+  min-width:33px;height:31px;padding:0 8px;
+  display:grid;place-items:center;border:1px solid #ffffff35;
+  border-radius:9px;background:#080a16c9;color:white;font-size:10px;font-weight:900;
+}
+.game-category{
+  position:absolute;z-index:3;bottom:13px;right:14px;
+  padding:5px 11px;border:1px solid #ffffff2b;border-radius:20px;
+  background:#090b18c9;color:#e8deff;font-size:9px;font-weight:800;
+}
+.game-info{position:relative;padding:16px}
+.game-title{font-size:16px;font-weight:900;line-height:1.7}
+.game-description{min-height:43px;margin-top:5px;color:var(--muted);font-size:10px;line-height:1.9}
+.coming-note{
+  margin-top:8px;padding:9px 10px;
+  border:1px solid #edca8330;border-radius:10px;
+  background:#edca830d;color:#e8d2a5;font-size:10px;line-height:1.9;
+}
+.game-footer{
+  margin-top:14px;padding-top:12px;display:flex;
+  align-items:center;justify-content:space-between;gap:10px;
+  border-top:1px solid #ffffff12;
+}
+.game-status{display:flex;align-items:center;gap:7px;color:var(--gold);font-size:10px;font-weight:900}
+.game-status:before{
+  content:"";width:7px;height:7px;border-radius:50%;
+  background:var(--gold);box-shadow:0 0 9px #edca8380;
+}
+.game-status.ready{color:var(--green)}
+.game-status.ready:before{background:var(--green);box-shadow:0 0 9px #65d6a180}
+.game-action{
+  min-height:38px;padding:7px 15px;display:inline-flex;
+  align-items:center;justify-content:center;gap:7px;
+  border-radius:10px;font-size:10px;font-weight:900;
+}
+.game-action.play{
+  background:linear-gradient(120deg,#9277f1,#7050d2);
+  color:white;box-shadow:0 6px 17px #7954d455;
+}
+.game-action svg{width:14px;height:14px}
+.game-action.coming{
+  border:1px solid #edca8340;background:#edca8312;color:var(--gold);
+}
 
-.modes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
-.mode{
- min-height:112px;padding:15px;text-align:right;
- border:1px solid var(--line);border-radius:15px;background:#ffffff06;
- transition:border-color .2s,background .2s;
+/* EMPTY / LOADING */
+.state-panel{
+  grid-column:1/-1;min-height:270px;padding:30px 20px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;border:1px solid var(--line);border-radius:22px;
+  background:#171a30ef;
 }
-.mode:hover{border-color:#a78bfa88;background:#a78bfa12}
-.mode.selected{border-color:var(--purple);background:#a78bfa18}
-.mode svg{
- width:23px;height:23px;stroke:var(--purple);
- fill:none;stroke-width:1.7;margin-bottom:8px;
+.state-panel h3{margin-top:15px;font-size:17px}
+.state-panel p{max-width:390px;margin-top:7px;color:var(--muted);font-size:12px;line-height:2}
+.state-icon{
+  width:70px;height:70px;display:grid;place-items:center;
+  border:1px solid #9d81ff40;border-radius:21px;background:#9d81ff19;
 }
-.mode b{display:block;font-size:12px}
-.mode small{display:block;color:var(--muted);font-size:10px;margin-top:3px}
-
-.notice{
- padding:13px;border:1px solid #edca8333;border-radius:13px;
- background:#edca830c;color:#d7d0e1;font-size:11px;line-height:2;
+.state-icon svg{width:35px;height:35px;color:#c1b1ff}
+.retry-button{
+  margin-top:18px;padding:9px 18px;border:0;border-radius:10px;
+  background:linear-gradient(120deg,#9277f1,#7050d2);
+  color:white;font-size:11px;font-weight:900;
 }
-.notice strong{color:var(--gold)}
-
-.primary{
- width:100%;min-height:47px;border:0;border-radius:13px;
- background:linear-gradient(120deg,#9c7cf4,#674bd0);
- font-size:12px;font-weight:900;
- box-shadow:0 9px 24px #7955dc30;
-}
-.secondary{
- width:100%;min-height:44px;border:1px solid var(--line);
- border-radius:12px;background:#ffffff08;font-size:11px;font-weight:800;
+.skeleton{
+  min-height:310px;border:1px solid var(--line);border-radius:20px;
+  background:linear-gradient(145deg,#242a43,#151a2d);
 }
 
-.game-area{margin-top:17px;display:none}
-.game-area.show{display:block}
-.game-top{
- display:flex;justify-content:space-between;align-items:center;
- gap:10px;margin-bottom:15px;
+/* NAV */
+.bottom-nav{
+  position:fixed;z-index:50;right:50%;
+  bottom:max(12px,env(safe-area-inset-bottom));
+  transform:translateX(50%);
+  width:min(calc(100% - 26px),610px);min-height:67px;
+  padding:8px 10px;display:flex;align-items:center;justify-content:space-around;gap:4px;
+  border:1px solid #ffffff20;border-radius:21px;
+  background:#0d1020ed;box-shadow:0 15px 45px #0008;backdrop-filter:blur(22px);
 }
-.game-top strong{font-size:14px}
-.game-top span{font-size:10px;color:var(--muted)}
+.nav-item{
+  min-width:0;flex:1;min-height:49px;padding:5px 3px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
+  border-radius:13px;color:#9295ac;font-size:9px;font-weight:800;
+}
+.nav-item svg{width:21px;height:21px}
+.nav-item.active{color:#c7b8ff;background:#9477f524}
 
-.levels{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin:12px 0 17px}
-.level{
- min-height:43px;border:1px solid var(--line);
- border-radius:10px;background:#ffffff07;
- font-size:10px;font-weight:800;
+/* RESPONSIVE */
+@media(max-width:650px){
+  .app{padding:0 13px}
+  .topbar{min-height:69px}
+  .brand-icon{width:39px;height:39px}
+  .brand-name{font-size:12px}
+  .brand-sub{font-size:7px;letter-spacing:1.5px}
+  .header-actions{gap:5px}
+  .wallet{gap:6px;padding:6px}
+  .wallet-unit{font-size:9px}
+  .wallet-unit svg{width:14px;height:14px}
+  .wallet-add{width:24px;height:24px}
+  .profile-link{width:36px;height:36px}
+  .hero{min-height:270px;margin-top:15px;padding:22px 18px;border-radius:22px;background-position:58% center}
+  .hero-content{max-width:92%}
+  .hero h1{font-size:32px}
+  .hero p{font-size:10px}
+  .hero-art{left:-20px;width:105px;height:105px;opacity:.65}
+  .hero-art svg{width:43px;height:43px}
+  .games-grid{grid-template-columns:repeat(auto-fit,minmax(min(100%,155px),1fr));gap:11px}
+  .game-cover{height:150px}
+  .game-info{padding:11px}
+  .game-title{font-size:12px}
+  .game-description{font-size:9px;min-height:48px}
+  .coming-note{font-size:9px}
+  .game-footer{align-items:flex-start;flex-direction:column}
+  .game-action{width:100%}
+  .section-title{font-size:18px}
 }
-.level.active{border-color:var(--purple);background:#a78bfa20;color:#d9caff}
-
-.scoreboard{
- display:grid;grid-template-columns:1fr auto 1fr;
- gap:8px;align-items:center;margin-bottom:15px;
-}
-.player-score{
- padding:12px;border:1px solid var(--line);
- border-radius:13px;background:#ffffff07;text-align:center;
-}
-.player-score.active{border-color:#a78bfa99;background:#a78bfa15}
-.player-score b{display:block;font-size:12px}
-.player-score small{color:var(--muted);font-size:10px}
-.vs{font-size:10px;color:var(--gold);font-weight:900}
-
-.xo-board{
- width:min(100%,390px);margin:12px auto;
- display:grid;grid-template-columns:repeat(3,1fr);gap:9px;direction:ltr;
-}
-.xo-cell{
- aspect-ratio:1;border:1px solid #a78bfa35;
- border-radius:17px;background:linear-gradient(145deg,#202641,#11172b);
- font-size:clamp(35px,9vw,57px);font-weight:900;color:var(--purple);
- box-shadow:inset 0 0 20px #0003;
-}
-.xo-cell.o{color:var(--cyan)}
-.xo-cell:disabled{cursor:default}
-.xo-cell.winner{
- border-color:var(--gold);
- background:linear-gradient(145deg,#463c2b,#211c20);
- box-shadow:0 0 20px #edca8330;
-}
-.game-message{
- text-align:center;min-height:27px;margin:8px 0 14px;
- font-size:12px;font-weight:800;color:var(--gold);
-}
-.game-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px}
-
-.stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.stat{
- padding:12px 6px;text-align:center;
- border:1px solid var(--line);border-radius:12px;background:#ffffff06;
-}
-.stat b{display:block;font-size:18px;color:var(--gold)}
-.stat small{font-size:9px;color:var(--muted)}
-
-.empty{padding:30px;text-align:center;color:var(--muted);font-size:12px;line-height:2}
-.loading{
- width:32px;height:32px;border:3px solid #ffffff22;
- border-top-color:var(--purple);border-radius:50%;
- animation:spin .8s linear infinite;margin:0 auto 12px;
-}
-@keyframes spin{to{transform:rotate(360deg)}}
-.hidden{display:none!important}
-footer{text-align:center;padding:25px 0;color:#777d98;font-size:9px}
-
-@media(max-width:760px){
- .container{width:calc(100% - 20px)}
- header{height:64px}
- .hero{min-height:270px;border-radius:19px}
- .hero-content{padding:27px 20px;max-width:95%}
- .hero-shade{background:linear-gradient(90deg,#090b19ee,#090b19b8)}
- .layout{grid-template-columns:1fr}
- .panel{padding:16px}
- .modes{grid-template-columns:1fr 1fr}
-}
-@media(max-width:390px){
- .modes{grid-template-columns:1fr}
- .hero p{font-size:11px}
- .levels{grid-template-columns:repeat(2,1fr)}
+@media(max-width:360px){
+  .wallet{gap:4px}
+  .games-grid{gap:8px}
+  .game-cover{height:125px}
+  .game-info{padding:9px}
 }
 </style>
 </head>
 
 <body>
-<div class="bg"></div>
+<div class="page-background"></div>
 
-<div class="container">
-<header>
- <a class="brand" href="home.html">
-  <span class="brand-icon">
-   <svg viewBox="0 0 24 24">
-    <path d="M7 8h10a4 4 0 0 1 4 4v4a3 3 0 0 1-5 2l-2-2h-4l-2 2a3 3 0 0 1-5-2v-4a4 4 0 0 1 4-4Z"/>
-    <path d="M8 11v4M6 13h4M16 12h.01M18 14h.01"/>
-   </svg>
-  </span>
-  <span>HANOON WORLD<small>GAMES EXPERIENCE</small></span>
- </a>
+<div class="app">
+<header class="topbar">
+  <a class="brand" href="home.html">
+    <span class="brand-icon">
+      <svg viewBox="0 0 24 24">
+        <path d="M7 8h10a4 4 0 0 1 4 4v4a3 3 0 0 1-5 2l-2-2h-4l-2 2a3 3 0 0 1-5-2v-4a4 4 0 0 1 4-4Z"/>
+        <path d="M8 11v4M6 13h4M16 12h.01M18 14h.01"/>
+      </svg>
+    </span>
+    <span>
+      <span class="brand-name">HANOON WORLD</span>
+      <span class="brand-sub">GAMES EXPERIENCE</span>
+    </span>
+  </a>
 
- <a class="back" id="backLink" href="games.html">
-  <svg viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></svg>
-  رجوع
- </a>
+  <div class="header-actions">
+    <div class="wallet">
+      <div class="wallet-unit">
+        <svg viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="9"/>
+          <path d="M12 7v10M15 9.5c-.5-1-1.5-1.5-3-1.5-1.4 0-2.5.7-2.5 1.7 0 3 5.5 1.2 5.5 4.2 0 1.1-1.1 2.1-3 2.1-1.4 0-2.5-.5-3.2-1.5"/>
+        </svg>
+        <span id="coinBalance">—</span>
+      </div>
+      <div class="wallet-unit gems">
+        <svg viewBox="0 0 24 24">
+          <path d="m12 2 9 7-9 13L3 9l9-7Z"/>
+          <path d="m3 9 18 0M8 9l4 13 4-13M8 9l4-7 4 7"/>
+        </svg>
+        <span id="gemBalance">—</span>
+      </div>
+      <a class="wallet-add" href="wallet.html" aria-label="المحفظة">
+        <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+      </a>
+    </div>
+
+    <a class="profile-link" id="myProfileLink" href="profile.html" aria-label="حسابي">
+      <svg viewBox="0 0 24 24">
+        <circle cx="12" cy="8" r="3.5"/>
+        <path d="M4.5 21c.5-4 3.2-6 7.5-6s7 2 7.5 6"/>
+      </svg>
+    </a>
+  </div>
 </header>
 
-<div class="breadcrumb">
- <a href="home.html">الرئيسية</a>
- <span>/</span>
- <a href="games.html">الألعاب</a>
- <span>/</span>
- <span id="crumb">اللعبة</span>
-</div>
+<main>
+  <section class="hero">
+    <div class="hero-content">
+      <span class="hero-label"><span></span> عالم المنافسة والتحدي</span>
+      <h1>اكتشف عالم<br><strong>الألعاب</strong></h1>
+      <p>مكتبة متنوعة من الألعاب الكلاسيكية والتحديات الذهنية والمنافسات الجماعية. اختر لعبتك وابدأ تجربتك.</p>
+    </div>
+    <div class="hero-art">
+      <svg viewBox="0 0 24 24">
+        <path d="M7 8h10a4 4 0 0 1 4 4v4a3 3 0 0 1-5 2l-2-2h-4l-2 2a3 3 0 0 1-5-2v-4a4 4 0 0 1 4-4Z"/>
+        <path d="M8 11v4M6 13h4M16 12h.01M18 14h.01"/>
+      </svg>
+    </div>
+  </section>
 
-<main id="main">
- <section class="panel empty">
-  <div class="loading"></div>
-  جارٍ تحميل اللعبة
- </section>
+  <section class="search-area">
+    <label class="search-box">
+      <svg viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="7"/><path d="m16 16 5 5"/></svg>
+      <input id="gameSearch" type="search" placeholder="ابحث عن لعبة..." autocomplete="off">
+    </label>
+  </section>
+
+  <div class="filters">
+    <button class="filter-btn active" data-filter="all">كل الألعاب</button>
+    <button class="filter-btn" data-filter="ready">يمكنك لعبها الآن</button>
+    <button class="filter-btn" data-filter="coming">قيد التجهيز</button>
+  </div>
+
+  <section>
+    <div class="section-heading">
+      <div>
+        <h2 class="section-title">مكتبة الألعاب</h2>
+        <span class="section-subtitle">كل الألعاب في مكان واحد</span>
+      </div>
+      <span class="games-count" id="gamesCount">جارٍ التحميل</span>
+    </div>
+
+    <div class="games-grid" id="gamesGrid">
+      <div class="skeleton"></div>
+      <div class="skeleton"></div>
+      <div class="skeleton"></div>
+    </div>
+  </section>
 </main>
-
-<footer>HANOON WORLD · PLAY TOGETHER</footer>
 </div>
+
+<nav class="bottom-nav">
+  <a class="nav-item" href="home.html">
+    <svg viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-6v-7h-4v7H4a1 1 0 0 1-1-1V10Z"/></svg>
+    <span>الرئيسية</span>
+  </a>
+  <a class="nav-item" href="rooms.html">
+    <svg viewBox="0 0 24 24"><path d="M3 20V9l9-6 9 6v11h-6v-7H9v7H3Z"/></svg>
+    <span>الغرف</span>
+  </a>
+  <a class="nav-item active" href="games.html">
+    <svg viewBox="0 0 24 24">
+      <path d="M7 8h10a4 4 0 0 1 4 4v4a3 3 0 0 1-5 2l-2-2h-4l-2 2a3 3 0 0 1-5-2v-4a4 4 0 0 1 4-4Z"/>
+      <path d="M8 11v4M6 13h4M16 12h.01M18 14h.01"/>
+    </svg>
+    <span>الألعاب</span>
+  </a>
+  <a class="nav-item" href="chat.html">
+    <svg viewBox="0 0 24 24"><path d="M4 5h16v12H9l-5 4V5Z"/><path d="M8 9h8M8 13h5"/></svg>
+    <span>المحادثات</span>
+  </a>
+  <a class="nav-item" href="profile.html">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 21c.5-4 3.2-6 7.5-6s7 2 7.5 6"/></svg>
+    <span>حسابي</span>
+  </a>
+</nav>
 
 <script>
-"use strict";
+const SUPABASE_URL = "https://gjtgvczvclfwvlvcquxh.supabase.co";
+const SUPABASE_KEY = "sb_publishable_4DVTUZ-xTlqU2GpFvpb7lw_g-Kxomd4";
 
-/* إعداد الاتصال */
-const SUPABASE_URL="https://gjtgvczvclfwvlvcquxh.supabase.co";
-const SUPABASE_KEY="sb_publishable_4DVTUZ-xTlqU2GpFvpb7lw_g-Kxomd4";
-const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+const db = window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+const $ = id => document.getElementById(id);
 
-const params=new URLSearchParams(location.search);
-const gameKey=params.get("game");
-const roomId=params.get("room");
-const $=id=>document.getElementById(id);
+const state = {
+  user:null,
+  games:[],
+  filter:"all",
+  query:""
+};
 
-const GAME_INFO={
- domino:{
-  name:"الدومينو",en:"DOMINO",
-  desc:"رتّب القطع، خطط لحركتك، وتغلّب على منافسك.",
-  image:"https://i.tgrthaber.com/images/2025/3/24/domino-nedir-ve-nasil-oynanir-domino-oyunu-toplam-kacta-biter-3209914_202503241741_4.jpg"
- },
- ludo:{
-  name:"لودو",en:"LUDO",
-  desc:"سباق القطع على اللوحة، خطط لتحركاتك وحاول الوصول إلى خط النهاية.",
-  image:"https://images.unsplash.com/photo-1606503153255-59d8b8b82185?auto=format&fit=crop&w=1600&q=85"
- },
- chess:{
-  name:"الشطرنج",en:"CHESS",
-  desc:"مواجهة استراتيجية تعتمد على التخطيط وحساب كل حركة.",
-  image:"https://burst.shopifycdn.com/photos/dark-wooden-chess-pieces-against-a-black-background.jpg?exif=0&iptc=0&width=1200"
- },
- jackaroo:{
-  name:"جاكارو",en:"JACKAROO",
-  desc:"تحديات الورق والكرات والتكتيك والعمل الجماعي.",
-  image:"https://i0.wp.com/www.jackarokw.com/wp-content/uploads/2018/01/Jackaroo-28-scaled.jpg?fit=1200%2C800&ssl=1"
- },
- "tic-tac-toe":{
-  name:"إكس أو",en:"TIC TAC TOE",
-  desc:"تحدٍّ سريع. كوّن ثلاثة رموز متتالية قبل منافسك.",
-  image:"https://images.unsplash.com/photo-1611996575749-79a3a250f948?auto=format&fit=crop&w=1600&q=85"
- }
+/*
+  لا تظهر اللعبة كمتاحة إلا إذا:
+  1) كانت مفعلة في قاعدة البيانات.
+  2) كان ملفها المستقل موجودًا ضمن قائمة الملفات الجاهزة.
+*/
+const READY_GAME_FILES = new Set([
+  "tic-tac-toe"
+]);
+
+function isGameFileReady(game){
+  return game.is_active === true &&
+         READY_GAME_FILES.has(game.slug);
+}
+
+/* صورة منفصلة لكل لعبة */
+const GAME_COVERS = {
+  "ludo":"https://www.abeectoys.com/cdn/shop/files/AMZ-1246-Image-6_700x700.jpg?v=1686926255",
+  "domino":"https://i.tgrthaber.com/images/2025/3/24/domino-nedir-ve-nasil-oynanir-domino-oyunu-toplam-kacta-biter-3209914_202503241741_4.jpg",
+  "chess":"https://burst.shopifycdn.com/photos/dark-wooden-chess-pieces-against-a-black-background.jpg?exif=0&iptc=0&width=925",
+  "tic-tac-toe":"https://ak1.ostkcdn.com/images/products/is/images/direct/a875f84efbc4b05c962330218dfe6d738e72fe07/Wood-Tic-Tac-Toe-Game-Board-Tabletop-Decor-%289%22-x-9%22%29.jpg?impolicy=medium",
+  "connect-four":"https://www.gameology.com.au/cdn/shop/products/3_6007f145-a949-4ef0-b55b-98343619d362_1200x1200.jpg?v=1708767289",
+  "checkers":"https://cdn.fnaf.online/images/checkers-two-player.jpeg",
+  "jackaroo":"https://i0.wp.com/www.jackarokw.com/wp-content/uploads/2018/01/Jackaroo-28-scaled.jpg?fit=980%2C654&ssl=1",
+  "trivia":"https://cdn.webshopapp.com/shops/14594/files/484135573/gift-republic-trivia-game-after-dinner.jpg",
+  "draw-guess":"https://images-cdn.ubuy.com.sa/693bc1cffd5cb2b266016b64-mattel-games-pictionary-board-game.jpg",
+  "word-duel":"https://static.prsa.pl/images/b9c2bb49-f951-4c2a-8ed9-e420ae8763f6.file?format=900",
+  "memory-match":"https://ditt-datt.heteml.net/sopiva-hokuou.com/images/kehvola/memorycard/memorycard-9.jpg",
+  "mafia":"https://adminbm.kharkiv.ua/uploads/pizza_mafia_4a1596bed6.jpg",
+  "backgammon":"https://www.elbalad.news/UploadCache/libfiles/328/0/609.jpg",
+  "carrom":"https://static-01.daraz.pk/p/2892412b5baed65bc9659eb6ab4dfda2.jpg",
+  "mancala":"https://assets.weimgs.com/weimgs/ab/images/wcm/products/202445/0038/mango-wood-mancala-game-board-1-o.jpg",
+  "rummy":"https://www.meinspiel.de/app/uploads/2019/11/Romme-Spielrunde-1200x800.jpg",
+  "solitaire":"https://www.reisereporter.de/resizer/v2/LMG7OEXT6FGSXDQA7Q67JZHOLU.jpg?auth=deeea71d4694e2c60211318eb2d5c96411fa7638cf7a4a2ad4f16bd4e1578040&height=1441&quality=70&smart=true&width=1441",
+  "number-cards":"https://cdn.shopify.com/s/files/1/0616/2346/8213/files/MG_1305-Edit_480x480.jpg?v=1711988072",
+  "sudoku":"https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Sudoku_Puzzle_by_L2G-20050714_standardized_layout.svg/960px-Sudoku_Puzzle_by_L2G-20050714_standardized_layout.svg.png",
+  "2048":"https://img.diepresse.com/public/incoming/qmvouh-2_1396338532544473.jpg/alternates/FREE_1200/2_1396338532544473.jpg",
+  "word-search":"https://defbnszqe1hwm.cloudfront.net/images/wordsearch-puzzle-razzle.webp",
+  "guess-character":"https://theonlinetoystore.co.uk/cdn/shop/products/Guess-Who-Board-Game-The-Original-Character-Face-Kids-Guessing-Game-Hasbro-2_grande.jpg?v=1743078504",
+  "snakes-ladders":"https://images-cdn.ubuy.co.in/6690e08a5903fc64242ca9fb-wooden-snakes-and-ladders-game.jpg",
+  "battleship":"https://d31xsmoz1lk3y3.cloudfront.net/games/imgur/82Xxfy9.jpg",
+  "five-in-row":"https://staticz.novelgames.com/multiplayerflashgames/fiveinarow/screenshot_600x400.2.png",
+  "puzzle-box":"https://puzzleboxworld.com/cdn/shop/products/PickLockBox_800x.jpg?v=1614193073",
+  "reaction-rush":"https://timerbattle.io/og-image.jpg",
+  "mahjong":"https://www.jayi-acrylic.com/uploads/Custom-Mahjong-Tiles.jpg",
+  "dots-and-boxes":"https://wl-incrivel.cf.tsp.li/resize/728x/jpg/427/528/63caf1557999e444abb547cca2.jpg",
+  "property-trading":"https://images.squarespace-cdn.com/content/v1/5ebd37dfa6aa3058bb969211/1590080714198-M0MOQ5GOXSQOZW70PTBD/FP_banner_flash2.jpg"
+};
+
+const GAME_THEMES = {
+  "ludo":["#a58aff","rgba(145,112,255,.28)"],
+  "domino":["#70d9d2","rgba(65,190,185,.25)"],
+  "chess":["#e6c58b","rgba(180,130,70,.25)"],
+  "tic-tac-toe":["#ff8f9e","rgba(255,100,130,.25)"],
+  "connect-four":["#ffb16d","rgba(255,150,75,.25)"],
+  "checkers":["#e2a77b","rgba(190,110,65,.25)"],
+  "jackaroo":["#c59aff","rgba(155,105,230,.25)"],
+  "trivia":["#75c6ff","rgba(65,150,255,.25)"],
+  "draw-guess":["#ff9bc8","rgba(255,100,180,.25)"],
+  "word-duel":["#9be58b","rgba(100,200,100,.25)"],
+  "memory-match":["#f0b6ff","rgba(200,110,255,.25)"],
+  "mafia":["#ff8790","rgba(210,65,85,.25)"],
+  "backgammon":["#d9ae77","rgba(180,120,60,.25)"],
+  "carrom":["#8cd8b1","rgba(70,180,130,.25)"],
+  "mancala":["#d7b27f","rgba(180,130,75,.25)"],
+  "rummy":["#8cbbff","rgba(75,130,230,.25)"],
+  "solitaire":["#8de1bd","rgba(65,180,130,.25)"],
+  "number-cards":["#f4c66d","rgba(230,170,70,.25)"],
+  "sudoku":["#8ab8ff","rgba(75,130,230,.25)"],
+  "2048":["#ffb67e","rgba(235,135,70,.25)"],
+  "word-search":["#a6d98b","rgba(120,180,90,.25)"],
+  "guess-character":["#c2a5ff","rgba(135,95,230,.25)"],
+  "snakes-ladders":["#91d88c","rgba(80,180,85,.25)"],
+  "battleship":["#77bde5","rgba(50,135,190,.25)"],
+  "five-in-row":["#d5b28b","rgba(175,125,75,.25)"],
+  "puzzle-box":["#b5a1ff","rgba(130,100,220,.25)"],
+  "reaction-rush":["#ff9a72","rgba(230,100,65,.25)"],
+  "mahjong":["#e2b77c","rgba(190,135,65,.25)"],
+  "dots-and-boxes":["#8bc9ef","rgba(70,150,210,.25)"],
+  "property-trading":["#8dd7b0","rgba(65,175,125,.25)"]
+};
+
+const CATEGORY_NAMES = {
+  board:"ألعاب الطاولة",
+  strategy:"استراتيجية",
+  cards:"ألعاب الورق",
+  quick:"ألعاب سريعة",
+  party:"ألعاب جماعية",
+  puzzle:"ألغاز وذكاء",
+  classic:"ألعاب كلاسيكية"
+};
+
+const GAME_SYMBOLS = {
+  "ludo":'<circle cx="12" cy="12" r="8"/><path d="M12 4v16M4 12h16M8 8h.01M16 8h.01M8 16h.01M16 16h.01"/>',
+  "domino":'<rect x="5" y="3" width="14" height="18" rx="3"/><path d="M5 12h14M9 7h.01M15 7h.01M9 17h.01M15 17h.01"/>',
+  "chess":'<path d="M8 21h8M9 17h6l-1-5 3-3-2-2-2 2-2-2-2 2 3 3-1 5Z"/>',
+  "tic-tac-toe":'<path d="M8 3v18M16 3v18M3 8h18M3 16h18"/><circle cx="5.5" cy="5.5" r="1.5"/><path d="m18 18 3 3m0-3-3 3"/>',
+  "connect-four":'<circle cx="7" cy="7" r="3"/><circle cx="17" cy="7" r="3"/><circle cx="7" cy="17" r="3"/><circle cx="17" cy="17" r="3"/><path d="M3 3h18v18H3z"/>',
+  "checkers":'<circle cx="8" cy="8" r="4"/><circle cx="16" cy="16" r="4"/><path d="M4 16h8M12 4h8"/>',
+  "jackaroo":'<path d="M12 3 20 8v8l-8 5-8-5V8l8-5Z"/><path d="M12 7v10M8 10l8 4"/>',
+  "trivia":'<circle cx="12" cy="12" r="9"/><path d="M9 9a3 3 0 1 1 5 2c-2 1-2 2-2 3M12 17h.01"/>',
+  "draw-guess":'<path d="m4 17 10-10 4 4L8 21H4v-4Z"/><path d="m12 9 4 4M15 4l1-2 1 2 2 1-2 1-1 2-1-2-2-1 2-1Z"/>',
+  "word-duel":'<path d="M4 5h16v14H4zM8 9h3v3H8zM14 9h3v3h-3zM8 15h9"/>',
+  "memory-match":'<rect x="3" y="4" width="8" height="8" rx="2"/><rect x="13" y="4" width="8" height="8" rx="2"/><rect x="3" y="14" width="8" height="7" rx="2"/><rect x="13" y="14" width="8" height="7" rx="2"/>',
+  "mafia":'<path d="M12 3 20 7v5c0 5-4 8-8 9-4-1-8-4-8-9V7l8-4Z"/><path d="M8 11h8M9 15h6"/>',
+  "backgammon":'<rect x="4" y="3" width="16" height="18" rx="2"/><path d="m7 5 3 7-3 7M17 5l-3 7 3 7M10 12h4"/>',
+  "carrom":'<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="12" cy="12" r="3"/><circle cx="6" cy="6" r="1"/><circle cx="18" cy="18" r="1"/>',
+  "mancala":'<rect x="3" y="6" width="18" height="12" rx="6"/><circle cx="7" cy="12" r="1"/><circle cx="11" cy="10" r="1"/><circle cx="15" cy="14" r="1"/><circle cx="18" cy="10" r="1"/>',
+  "rummy":'<path d="M12 3 20 7v10l-8 4-8-4V7l8-4Z"/><path d="M8 9h8M8 13h8M8 17h4"/>',
+  "solitaire":'<path d="M12 3 20 17H4L12 3Z"/><path d="M12 8v5M12 16h.01"/>',
+  "number-cards":'<rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M12 6v4M9 15h6"/>',
+  "sudoku":'<rect x="3" y="3" width="18" height="18"/><path d="M9 3v18M15 3v18M3 9h18M3 15h18"/>',
+  "2048":'<rect x="3" y="3" width="18" height="18" rx="3"/><path d="M7 8h4v4H7zM13 8h4v4h-4zM7 14h4v4H7zM13 14h4v4h-4z"/>',
+  "word-search":'<path d="M4 4h16v16H4zM8 4v16M12 4v16M16 4v16M4 8h16M4 12h16M4 16h16"/>',
+  "guess-character":'<circle cx="12" cy="8" r="4"/><path d="M4 21c1-5 4-7 8-7s7 2 8 7M18 3l3 3-3 3"/>',
+  "snakes-ladders":'<path d="M6 21 18 3M4 12h6M14 12h6M7 3l10 18"/>',
+  "battleship":'<path d="M3 16h18l-3 4H6l-3-4Z"/><path d="M12 3v13M12 5l6 5h-6M4 21h16"/>',
+  "five-in-row":'<path d="M4 4h16v16H4zM9 4v16M15 4v16M4 9h16M4 15h16"/><circle cx="9" cy="9" r="2"/><circle cx="15" cy="15" r="2"/>',
+  "puzzle-box":'<rect x="4" y="4" width="16" height="16" rx="3"/><path d="M9 4v5h6V4M9 20v-5h6v5M4 9h5v6H4M20 9h-5v6h5"/>',
+  "reaction-rush":'<path d="M13 2 5 13h6l-1 9 9-12h-6l1-8Z"/>',
+  "mahjong":'<rect x="5" y="3" width="14" height="18" rx="3"/><path d="M9 8h6M9 12h6M9 16h6"/>',
+  "dots-and-boxes":'<path d="M5 5h.01M12 5h.01M19 5h.01M5 12h.01M12 12h.01M19 12h.01M5 19h.01M12 19h.01M19 19h.01M5 5h7v7H5z"/>',
+  "property-trading":'<path d="M3 10 12 3l9 7v11H3V10Z"/><path d="M9 21v-7h6v7M7 10h10"/>'
 };
 
 function esc(value){
- return String(value??"").replace(/[&<>"']/g,c=>({
-  "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
- }[c]));
+  return String(value ?? "").replace(/[&<>"']/g,char=>({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+  })[char]);
 }
 
-function showError(title,message){
- $("main").innerHTML=`
- <section class="panel empty">
-  <h2>${esc(title)}</h2>
-  <p>${esc(message)}</p>
-  <a class="primary" style="display:grid;place-items:center;margin-top:17px" href="games.html">
-   العودة للألعاب
-  </a>
- </section>`;
+function getTheme(slug){
+  return GAME_THEMES[slug] || ["#a58aff","rgba(145,112,255,.25)"];
 }
 
-function roomBack(){
- return roomId
-  ? "room.html?id="+encodeURIComponent(roomId)
-  : "games.html";
+function getCover(game){
+  if(game.cover_path && /^https?:\/\//i.test(game.cover_path)){
+    return game.cover_path;
+  }
+  return GAME_COVERS[game.slug] || null;
 }
 
-$("backLink").href=roomBack();
+function artMarkup(slug){
+  const symbol = GAME_SYMBOLS[slug] || '<rect x="4" y="4" width="16" height="16" rx="4"/>';
+  return `<div class="game-art"><svg viewBox="0 0 24 24">${symbol}</svg></div>`;
+}
 
-/* واجهة اللعبة */
-function render(game){
- const info=GAME_INFO[game.slug]||{};
- const title=game.title_ar||info.name||game.title_en||"اللعبة";
- const desc=game.description_ar||info.desc||"استمتع بتجربة اللعب.";
- const image=(game.cover_path&&/^https?:\/\//i.test(game.cover_path))
-  ?game.cover_path:(info.image||"");
+async function loadSession(){
+  const {data,error} = await db.auth.getSession();
+  if(error) throw error;
 
- $("crumb").textContent=title;
- document.title=title+" | HANOON WORLD";
+  state.user = data.session?.user || null;
 
- $("main").innerHTML=`
- <section class="hero">
-  ${image?`<img class="hero-image" src="${esc(image)}" alt="${esc(title)}" onerror="this.remove()">`:""}
-  <div class="hero-shade"></div>
-  <div class="hero-content">
-   <span class="eyebrow">HANOON GAME ARENA</span>
-   <h1>${esc(title)}</h1>
-   <p>${esc(desc)}</p>
-   <div class="hero-meta">
-    <span class="pill">${esc(game.category||"ألعاب ترفيهية")}</span>
-    <span class="pill">تجربة اللعب</span>
-    ${roomId?'<span class="pill">تم فتح اللعبة من غرفة</span>':""}
-   </div>
-  </div>
- </section>
+  if(!state.user){
+    location.replace("index.html");
+    return false;
+  }
+  return true;
+}
 
- ${!game.is_active?`
- <section class="panel" style="margin-top:17px">
-  <div class="empty">
-   <h2>اللعبة قيد التجهيز</h2>
-   <p>هنفتح اللعبة بعد تجهيز تجربة اللعب وقواعدها ونظام المنافسة.</p>
-  </div>
- </section>`:`
- <div class="layout">
-  <div>
-   <section class="panel">
-    <h3>اختار طريقة اللعب</h3>
-    <div class="modes">
-     <button class="mode selected" id="aiMode">
-      <svg viewBox="0 0 24 24">
-       <rect x="3" y="4" width="18" height="16" rx="4"/>
-       <path d="M8 10h.01M16 10h.01M8 15c2.5 2 5.5 2 8 0M12 2v2"/>
-      </svg>
-      <b>ضد الذكاء الاصطناعي</b>
-      <small>العب بمستويات صعوبة مختلفة</small>
-     </button>
+async function loadProfile(){
+  const {data,error} = await db
+    .from("profiles")
+    .select("id,avatar_path")
+    .eq("id",state.user.id)
+    .maybeSingle();
 
-     <button class="mode" id="localMode">
-      <svg viewBox="0 0 24 24">
-       <rect x="3" y="5" width="18" height="14" rx="3"/>
-       <path d="M8 10v4M6 12h4M16 11h.01M18 13h.01"/>
-      </svg>
-      <b>لاعبان على الجهاز</b>
-      <small>العب مع شخص بجانبك بدون إنترنت</small>
-     </button>
+  if(error) throw error;
+  if(!data?.avatar_path) return;
 
-     <button class="mode" id="friendMode">
-      <svg viewBox="0 0 24 24">
-       <circle cx="9" cy="8" r="3"/>
-       <path d="M3 20v-2a6 6 0 0 1 12 0v2M16 5a3 3 0 0 1 0 6M18 14a5 5 0 0 1 3 5"/>
-      </svg>
-      <b>العب مع صديق</b>
-      <small>دعوة ومباراة أونلاين</small>
-     </button>
+  const {data:imageData} = db.storage.from("avatars").getPublicUrl(data.avatar_path);
+  if(imageData?.publicUrl){
+    $("myProfileLink").innerHTML =
+      `<img src="${esc(imageData.publicUrl)}" alt="حسابي">`;
+  }
+}
 
-     <button class="mode" id="randomMode">
-      <svg viewBox="0 0 24 24">
-       <circle cx="11" cy="11" r="7"/>
-       <path d="m20 20-4-4M8 11h6M11 8v6"/>
-      </svg>
-      <b>منافس عشوائي</b>
-      <small>ابحث عن لاعب حقيقي</small>
-     </button>
+async function loadWallet(){
+  const {data,error} = await db
+    .from("world_wallets")
+    .select("coins,gems")
+    .eq("user_id",state.user.id)
+    .maybeSingle();
+
+  if(error) throw error;
+
+  $("coinBalance").textContent =
+    data?.coins == null ? "—" : Number(data.coins).toLocaleString("en-US");
+
+  $("gemBalance").textContent =
+    data?.gems == null ? "—" : Number(data.gems).toLocaleString("en-US");
+}
+
+function showEmpty(title,description,retry=false){
+  $("gamesGrid").innerHTML = `
+    <div class="state-panel">
+      <div class="state-icon">
+        <svg viewBox="0 0 24 24">
+          <path d="M7 8h10a4 4 0 0 1 4 4v4a3 3 0 0 1-5 2l-2-2h-4l-2 2a3 3 0 0 1-5-2v-4a4 4 0 0 1 4-4Z"/>
+          <path d="M8 11v4M6 13h4M16 12h.01M18 14h.01"/>
+        </svg>
+      </div>
+      <h3>${esc(title)}</h3>
+      <p>${esc(description)}</p>
+      ${retry ? '<button class="retry-button" id="retryGames">إعادة المحاولة</button>' : ""}
     </div>
+  `;
 
-    <div class="notice" id="onlineNotice" style="margin-top:13px">
-     <strong>المباريات الأونلاين:</strong>
-     تم تجهيز أساس البحث عن المنافسين والدعوات في قاعدة البيانات.
-     ربط اللعب المباشر وتبادل الحركات هو الخطوة التالية.
-    </div>
-   </section>
-
-   <section class="panel game-area show" id="gameArea">
-    <div class="game-top">
-     <strong id="boardTitle">إكس أو</strong>
-     <span id="boardMode">ضد الذكاء الاصطناعي</span>
-    </div>
-    <div id="board"></div>
-   </section>
-  </div>
-
-  <aside>
-   <section class="panel">
-    <h3>إحصائياتك على هذا الجهاز</h3>
-    <div class="stats-grid">
-     <div class="stat"><b id="statPlayed">0</b><small>مباريات</small></div>
-     <div class="stat"><b id="statWins">0</b><small>انتصارات</small></div>
-     <div class="stat"><b id="statDraws">0</b><small>تعادلات</small></div>
-    </div>
-    <p style="font-size:9px;color:var(--muted);line-height:2;margin-top:10px">
-     هذه إحصائيات محلية محفوظة على هذا الجهاز، وليست نقاطًا أو ترتيبًا عامًا.
-    </p>
-   </section>
-
-   <section class="panel">
-    <h3>مستويات الذكاء الاصطناعي</h3>
-    <div class="notice">
-     <strong>سهل:</strong> حركات بسيطة وعشوائية.<br>
-     <strong>متوسط:</strong> يحاول منع فوزك.<br>
-     <strong>صعب:</strong> يحسب الحركات القادمة.<br>
-     <strong>محترف:</strong> يستخدم استراتيجية كاملة للعبة إكس أو.
-    </div>
-   </section>
-
-   <section class="panel">
-    <h3>النقاط والمكافآت</h3>
-    <div class="notice">
-     لن تُضاف نقاط أو عملات لمجرد الفوز محليًا.
-     المكافآت والترتيب العام سيُربطان بنتائج مباريات موثقة على الخادم حتى لا يمكن تزويرها.
-    </div>
-   </section>
-  </aside>
- </div>`}
-
- if(!game.is_active)return;
-
- if(game.slug==="tic-tac-toe"){
-  setupXO();
- }else if(game.slug==="domino"){
-  setupDominoModes();
- }else{
-  $("board").innerHTML=`
-   <div class="empty">
-    <h3>محرك اللعبة قيد التطوير</h3>
-    <p>هنجهز قواعد اللعبة والذكاء الاصطناعي الخاص بها قبل فتحها للعب.</p>
-   </div>`;
- }
-
- $("aiMode")?.addEventListener("click",()=>setXOmode("ai"));
- $("localMode")?.addEventListener("click",()=>setXOmode("local"));
- $("friendMode")?.addEventListener("click",showOnlineStatus);
- $("randomMode")?.addEventListener("click",showOnlineStatus);
-
- updateLocalStats(game.slug);
+  if(retry) $("retryGames").addEventListener("click",loadGames);
 }
 
-/* إحصائيات محلية */
-function statsKey(slug){return "hanoon_game_stats_"+slug}
+function getFilteredGames(){
+  return state.games.filter(game=>{
+    const ready = isGameFileReady(game);
 
-function readStats(slug){
- try{
-  return JSON.parse(localStorage.getItem(statsKey(slug)))||{
-   played:0,wins:0,losses:0,draws:0
-  };
- }catch{
-  return {played:0,wins:0,losses:0,draws:0};
- }
-}
+    if(state.filter === "ready" && !ready) return false;
+    if(state.filter === "coming" && ready) return false;
 
-function saveResult(slug,result){
- const stats=readStats(slug);
- stats.played++;
- if(result==="win")stats.wins++;
- if(result==="loss")stats.losses++;
- if(result==="draw")stats.draws++;
- localStorage.setItem(statsKey(slug),JSON.stringify(stats));
- updateLocalStats(slug);
-}
+    if(state.query){
+      const words = [
+        game.title_ar,game.title_en,game.slug,
+        game.description_ar,game.description_en
+      ].filter(Boolean).join(" ").toLocaleLowerCase();
 
-function updateLocalStats(slug){
- const s=readStats(slug);
- if($("statPlayed"))$("statPlayed").textContent=s.played;
- if($("statWins"))$("statWins").textContent=s.wins;
- if($("statDraws"))$("statDraws").textContent=s.draws;
-}
-
-/* حالة الأونلاين */
-function showOnlineStatus(){
- alert("نظام الدعوات والبحث عن المنافسين تم تأسيسه في قاعدة البيانات. ربط اللعب المباشر ومزامنة الحركات قيد التنفيذ، ولن نبدأ مباراة غير مكتملة.");
-}
-
-/* إكس أو */
-let xoState=null;
-
-function setupXO(){
- setXOmode("ai");
-}
-
-function setXOmode(mode){
- document.querySelectorAll(".mode").forEach(b=>b.classList.remove("selected"));
- $(mode==="ai"?"aiMode":"localMode")?.classList.add("selected");
-
- $("gameArea").classList.add("show");
- $("boardTitle").textContent="إكس أو";
- $("boardMode").textContent=mode==="ai"?"ضد الذكاء الاصطناعي":"لاعبان على نفس الجهاز";
-
- xoState={
-  mode,
-  cells:Array(9).fill(""),
-  turn:"X",
-  ended:false,
-  level:"medium",
-  recorded:false
- };
-
- drawXO();
- $("gameArea").scrollIntoView({behavior:"smooth",block:"start"});
-}
-
-function drawXO(){
- const s=xoState;
- if(!s)return;
-
- const levels=s.mode==="ai"?`
-  <div class="notice">
-   <strong>اختار قوة المنافس</strong>
-   <div class="levels">
-    <button class="level ${s.level==="easy"?"active":""}" data-level="easy">سهل</button>
-    <button class="level ${s.level==="medium"?"active":""}" data-level="medium">متوسط</button>
-    <button class="level ${s.level==="hard"?"active":""}" data-level="hard">صعب</button>
-    <button class="level ${s.level==="expert"?"active":""}" data-level="expert">محترف</button>
-   </div>
-  </div>`:"";
-
- $("board").innerHTML=`
-  ${levels}
-  <div class="scoreboard">
-   <div class="player-score ${s.turn==="X"&&!s.ended?"active":""}" id="scoreX">
-    <b>أنت · X</b><small>${s.turn==="X"&&!s.ended?"دورك الآن":""}</small>
-   </div>
-   <div class="vs">VS</div>
-   <div class="player-score ${s.turn==="O"&&!s.ended?"active":""}" id="scoreO">
-    <b>${s.mode==="ai"?"الذكاء الاصطناعي · O":"اللاعب الثاني · O"}</b>
-    <small>${s.turn==="O"&&!s.ended?"دوره الآن":""}</small>
-   </div>
-  </div>
-  <div class="game-message" id="xoMessage">
-   ${s.ended?"انتهت المباراة":s.turn==="X"?"دورك الآن":"دور المنافس"}
-  </div>
-  <div class="xo-board" id="xoBoard">
-   ${s.cells.map((v,i)=>`
-    <button class="xo-cell ${v==="O"?"o":""}" data-cell="${i}" aria-label="مربع ${i+1}" ${v||s.ended?"disabled":""}>${v}</button>
-   `).join("")}
-  </div>
-  <div class="game-actions">
-   <button class="primary" id="xoRestart">مباراة جديدة</button>
-   <button class="secondary" id="xoExit">إغلاق اللوحة</button>
-  </div>
- `;
-
- $("board").querySelectorAll("[data-level]").forEach(btn=>{
-  btn.addEventListener("click",()=>{
-   if(s.cells.some(Boolean)){
-    alert("ابدأ مباراة جديدة لتغيير المستوى.");
-    return;
-   }
-   s.level=btn.dataset.level;
-   drawXO();
+      if(!words.includes(state.query)) return false;
+    }
+    return true;
   });
- });
-
- $("xoBoard").addEventListener("click",handleXOclick);
- $("xoRestart").addEventListener("click",()=>setXOmode(s.mode));
- $("xoExit").addEventListener("click",()=>{
-  $("gameArea").classList.remove("show");
- });
-
- const aiTurn=s.mode==="ai"&&s.turn==="O"&&!s.ended;
- if(aiTurn){
-  $("xoMessage").textContent="المنافس يفكر...";
-  setTimeout(()=>{
-   if(xoState!==s||s.ended||s.turn!=="O")return;
-   const move=chooseAIMove(s.cells,s.level);
-   if(move!==null)playXO(move,"O");
-  },420);
- }
 }
 
-function handleXOclick(e){
- const btn=e.target.closest("[data-cell]");
- if(!btn||!xoState)return;
- const s=xoState;
- const index=Number(btn.dataset.cell);
+function renderGames(){
+  const games = getFilteredGames();
 
- if(s.ended||s.cells[index])return;
- if(s.mode==="ai"&&s.turn!=="X")return;
+  $("gamesCount").textContent =
+    `${games.length.toLocaleString("ar-EG")} لعبة`;
 
- playXO(index,"X");
-}
-
-const XO_WINS=[
- [0,1,2],[3,4,5],[6,7,8],
- [0,3,6],[1,4,7],[2,5,8],
- [0,4,8],[2,4,6]
-];
-
-function getWinner(cells){
- for(const line of XO_WINS){
-  const [a,b,c]=line;
-  if(cells[a]&&cells[a]===cells[b]&&cells[a]===cells[c]){
-   return {winner:cells[a],line};
-  }
- }
- if(cells.every(Boolean))return {winner:"draw",line:[]};
- return null;
-}
-
-function playXO(index,mark){
- const s=xoState;
- if(!s||s.ended||s.cells[index])return;
-
- s.cells[index]=mark;
- const result=getWinner(s.cells);
-
- if(result){
-  s.ended=true;
-  finishXO(result);
-  drawXO();
-  highlightWinningLine(result.line);
-  return;
- }
-
- s.turn=mark==="X"?"O":"X";
- drawXO();
-}
-
-function finishXO(result){
- const s=xoState;
- if(s.recorded)return;
- s.recorded=true;
-
- const message=$("xoMessage");
-
- if(result.winner==="draw"){
-  message.textContent="تعادل! مباراة متكافئة.";
-  if(s.mode==="ai")saveResult("tic-tac-toe","draw");
-  else saveResult("tic-tac-toe","draw");
- }else if(result.winner==="X"){
-  message.textContent="مبروك! أنت الفائز.";
-  saveResult("tic-tac-toe","win");
- }else{
-  message.textContent=s.mode==="ai"?"الذكاء الاصطناعي فاز هذه المرة.":"اللاعب الثاني فاز!";
-  saveResult("tic-tac-toe",s.mode==="ai"?"loss":"loss");
- }
-}
-
-function highlightWinningLine(line){
- const board=$("xoBoard");
- if(!board)return;
- line.forEach(i=>board.children[i]?.classList.add("winner"));
-}
-
-/* الذكاء الاصطناعي */
-function chooseAIMove(cells,level){
- const available=cells.map((v,i)=>v?null:i).filter(v=>v!==null);
- if(!available.length)return null;
-
- if(level==="easy"){
-  return available[Math.floor(Math.random()*available.length)];
- }
-
- if(level==="medium"){
-  const win=findImmediateMove(cells,"O");
-  if(win!==null)return win;
-
-  const block=findImmediateMove(cells,"X");
-  if(block!==null)return block;
-
-  return available[Math.floor(Math.random()*available.length)];
- }
-
- if(level==="hard"){
-  const win=findImmediateMove(cells,"O");
-  if(win!==null)return win;
-
-  const block=findImmediateMove(cells,"X");
-  if(block!==null)return block;
-
-  return minimaxBestMove(cells);
- }
-
- if(level==="expert"){
-  return minimaxBestMove(cells);
- }
-
- return available[Math.floor(Math.random()*available.length)];
-}
-
-function findImmediateMove(cells,mark){
- for(let i=0;i<9;i++){
-  if(cells[i])continue;
-  const test=cells.slice();
-  test[i]=mark;
-  const result=getWinner(test);
-  if(result&&result.winner===mark)return i;
- }
- return null;
-}
-
-function minimaxBestMove(cells){
- const empty=cells.map((v,i)=>v?null:i).filter(v=>v!==null);
- let bestScore=-Infinity;
- let bestMoves=[];
-
- for(const index of empty){
-  const test=cells.slice();
-  test[index]="O";
-  const score=minimax(test,false,0);
-
-  if(score>bestScore){
-   bestScore=score;
-   bestMoves=[index];
-  }else if(score===bestScore){
-   bestMoves.push(index);
-  }
- }
-
- return bestMoves[Math.floor(Math.random()*bestMoves.length)];
-}
-
-function minimax(cells,isMaximizing,depth){
- const result=getWinner(cells);
-
- if(result){
-  if(result.winner==="O")return 10-depth;
-  if(result.winner==="X")return depth-10;
-  return 0;
- }
-
- if(isMaximizing){
-  let best=-Infinity;
-  for(let i=0;i<9;i++){
-   if(cells[i])continue;
-   cells[i]="O";
-   best=Math.max(best,minimax(cells,false,depth+1));
-   cells[i]="";
-  }
-  return best;
- }else{
-  let best=Infinity;
-  for(let i=0;i<9;i++){
-   if(cells[i])continue;
-   cells[i]="X";
-   best=Math.min(best,minimax(cells,true,depth+1));
-   cells[i]="";
-  }
-  return best;
- }
-}
-
-/* الدومينو: وضع محلي أولي */
-function setupDominoModes(){
- $("board").innerHTML=`
-  <div class="notice">
-   <strong>الدومينو:</strong>
-   محرك الدومينو المحلي الكامل والذكاء الاصطناعي الخاص به سيُبنيان في خطوة مستقلة.
-   لن نعرض تجربة ناقصة على أنها مكتملة.
-  </div>`;
- $("aiMode").addEventListener("click",()=>{
-  alert("ذكاء الدومينو الاصطناعي سيُضاف عند تطوير محرك الدومينو.");
- });
- $("localMode").addEventListener("click",()=>{
-  alert("نظام الدومينو المحلي سيُضاف عند تطوير محرك الدومينو.");
- });
-}
-
-/* تحميل اللعبة من قاعدة البيانات */
-async function loadGame(){
- if(!gameKey){
-  showError("لم يتم تحديد اللعبة","ارجع لمكتبة الألعاب واختر اللعبة.");
-  return;
- }
-
- try{
-  const uuid=/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(gameKey);
-
-  let query=db.from("world_games_catalog")
-   .select("id,slug,title_ar,title_en,description_ar,category,cover_path,route_key,is_active,sort_order");
-
-  query=uuid?query.eq("id",gameKey):query.eq("slug",gameKey);
-
-  const {data,error}=await query.maybeSingle();
-
-  if(error)throw error;
-
-  if(!data){
-   showError("اللعبة غير موجودة","لم نعثر على اللعبة في مكتبة هنون.");
-   return;
+  if(!games.length){
+    showEmpty("لا توجد نتائج مطابقة","لم نعثر على لعبة بهذا الاسم ضمن الاختيار الحالي.");
+    return;
   }
 
-  render(data);
+  $("gamesGrid").innerHTML = games.map((game,index)=>{
+    const title = game.title_ar || game.title_en || "لعبة";
+    const description =
+      game.description_ar || game.description_en || "اكتشف هذه اللعبة من مكتبة هنون.";
+    const category = CATEGORY_NAMES[game.category] || "ألعاب متنوعة";
+    const ready = isGameFileReady(game);
+    const cover = getCover(game);
+    const theme = getTheme(game.slug);
 
- }catch(error){
-  console.error("HANOON game:",error);
-  showError(
-   "تعذر تحميل اللعبة",
-   "راجع اتصال الإنترنت وصلاحيات قراءة كتالوج الألعاب في Supabase ثم حاول مرة أخرى."
-  );
- }
+    /* كل لعبة تفتح ملف HTML المستقل الخاص بها */
+    const target = `games/${encodeURIComponent(game.slug)}.html`;
+
+    const coverMarkup = cover
+      ? `<img src="${esc(cover)}" alt="${esc(title)}" loading="lazy" onerror="this.remove()">`
+      : "";
+
+    const cardContent = `
+      <div class="game-cover">
+        ${artMarkup(game.slug)}
+        ${coverMarkup}
+        <span class="game-number">${String(index+1).padStart(2,"0")}</span>
+        <span class="game-category">${esc(category)}</span>
+      </div>
+
+      <div class="game-info">
+        <h3 class="game-title">${esc(title)}</h3>
+        <p class="game-description">${esc(description)}</p>
+
+        ${ready ? "" : `
+          <p class="coming-note">
+            لسه بنحضّرها ليك… استنّى تجربة حلوة قريبًا.
+          </p>
+        `}
+
+        <div class="game-footer">
+          <span class="game-status ${ready ? "ready" : ""}">
+            ${ready ? "متاحة للعب" : "قيد التجهيز"}
+          </span>
+
+          <span class="game-action ${ready ? "play" : "coming"}">
+            ${ready ? "العب الآن" : "قريبًا"}
+            ${ready ? '<svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg>' : ""}
+          </span>
+        </div>
+      </div>
+    `;
+
+    if(ready){
+      return `
+        <a class="game-card is-ready"
+           href="${target}"
+           style="--game-color:${theme[0]};--game-glow:${theme[1]}"
+           aria-label="افتح لعبة ${esc(title)}">
+          ${cardContent}
+        </a>
+      `;
+    }
+
+    return `
+      <article class="game-card is-coming"
+        aria-disabled="true"
+        style="--game-color:${theme[0]};--game-glow:${theme[1]}">
+        ${cardContent}
+      </article>
+    `;
+  }).join("");
 }
 
-loadGame();
+async function loadGames(){
+  $("gamesGrid").innerHTML = `
+    <div class="skeleton"></div>
+    <div class="skeleton"></div>
+    <div class="skeleton"></div>
+  `;
+
+  try{
+    const {data,error} = await db
+      .from("world_games_catalog")
+      .select("*")
+      .order("sort_order",{ascending:true});
+
+    if(error) throw error;
+
+    state.games = data || [];
+
+    if(!state.games.length){
+      $("gamesCount").textContent = "0 لعبة";
+      showEmpty("مكتبة الألعاب فارغة","لا توجد ألعاب مسجلة في قاعدة البيانات حاليًا.");
+      return;
+    }
+
+    renderGames();
+  }catch(error){
+    console.error("HANOON games:",error);
+    $("gamesCount").textContent = "تعذر التحميل";
+    showEmpty("تعذر تحميل الألعاب","حدث خطأ أثناء الاتصال بقاعدة البيانات. حاول مرة أخرى.",true);
+  }
+}
+
+function setupSearch(){
+  $("gameSearch").addEventListener("input",event=>{
+    state.query = event.target.value.trim().toLocaleLowerCase();
+    renderGames();
+  });
+}
+
+function setupFilters(){
+  document.querySelectorAll(".filter-btn").forEach(button=>{
+    button.addEventListener("click",()=>{
+      document.querySelectorAll(".filter-btn")
+        .forEach(item=>item.classList.remove("active"));
+
+      button.classList.add("active");
+      state.filter = button.dataset.filter;
+      renderGames();
+    });
+  });
+}
+
+async function startPage(){
+  try{
+    const valid = await loadSession();
+    if(!valid) return;
+
+    await Promise.allSettled([loadProfile(),loadWallet()]);
+    await loadGames();
+  }catch(error){
+    console.error("HANOON games startup:",error);
+    showEmpty("تعذر فتح الصفحة","حدث خطأ أثناء تجهيز الصفحة. أعد تحميلها.");
+  }
+}
+
+setupSearch();
+setupFilters();
+
+db.auth.onAuthStateChange((event,session)=>{
+  if(event === "SIGNED_OUT" || !session){
+    location.replace("index.html");
+  }
+});
+
+startPage();
 </script>
 </body>
-</html>
+   </html>
