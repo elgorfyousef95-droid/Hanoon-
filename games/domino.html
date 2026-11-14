@@ -4,690 +4,1746 @@
 <head>
 <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
-<meta name="theme-color" content="#10120f">
-<title>هنون | الدومينو</title>
+<meta name="theme-color" content="#101b18">
+<title>هنون | عالم الدومينو</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
 <style>
 :root{
-  --bg:#10120f;
-  --panel:#191d18;
-  --panel2:#20271f;
-  --gold:#d9b675;
-  --gold2:#f0d6a0;
-  --cream:#f4ead6;
-  --muted:#9a9c8f;
-  --green:#244a36;
-  --green2:#315d43;
-  --border:rgba(221,190,133,.16);
-  --red:#d36d60;
+  --bg:#0c1513;
+  --panel:#17231f;
+  --panel2:#1d2c26;
+  --gold:#e5c58b;
+  --gold2:#f6dfb0;
+  --green:#174d38;
+  --green2:#236447;
+  --cream:#f5ead5;
+  --muted:#a6b2a8;
+  --line:rgba(229,197,139,.19);
+  --danger:#dc7770;
+  --success:#75d4a0;
   --shadow:0 20px 55px rgba(0,0,0,.38);
 }
+
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{
   margin:0;
   min-height:100vh;
-  color:#f6f0e5;
+  color:#f7f1e5;
   font-family:'Cairo',sans-serif;
   background:
-    radial-gradient(ellipse at 15% 5%,rgba(110,91,48,.16),transparent 34%),
-    radial-gradient(ellipse at 90% 80%,rgba(36,91,58,.18),transparent 38%),
-    linear-gradient(145deg,#11140f,#171b15 52%,#10130f);
+    radial-gradient(ellipse at 12% 8%,rgba(190,145,75,.12),transparent 34%),
+    radial-gradient(ellipse at 88% 75%,rgba(30,111,73,.16),transparent 38%),
+    linear-gradient(145deg,#0b1412,#14221c 52%,#0c1513);
 }
 button,input,select{font:inherit}
 button{cursor:pointer}
-button:disabled{opacity:.45;cursor:not-allowed}
-*{scrollbar-width:thin;scrollbar-color:#62543a transparent}
+button:disabled{opacity:.42;cursor:not-allowed}
+a{color:inherit;text-decoration:none}
+.hidden{display:none!important}
+button:focus-visible,input:focus-visible,select:focus-visible{
+  outline:2px solid var(--gold);
+  outline-offset:3px;
+}
+
+/* TOP BAR */
 
 .topbar{
-  height:76px;padding:0 5%;
-  display:flex;align-items:center;justify-content:space-between;
-  border-bottom:1px solid rgba(255,255,255,.06);
-  background:rgba(14,17,13,.8);backdrop-filter:blur(18px);
-  position:sticky;top:0;z-index:20;
+  height:72px;
+  padding:0 clamp(14px,4vw,55px);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+  border-bottom:1px solid rgba(255,255,255,.07);
+  background:rgba(9,17,14,.83);
+  backdrop-filter:blur(20px);
+  position:sticky;
+  top:0;
+  z-index:50;
 }
-.brand{display:flex;align-items:center;gap:12px}
-.brand-icon{
-  width:44px;height:44px;border-radius:14px;
-  background:linear-gradient(145deg,#e4c68d,#9b7740);
-  display:grid;place-items:center;color:#252016;
-  box-shadow:0 5px 20px #b38a4530;
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  min-width:0;
 }
-.brand-name{font-size:19px;font-weight:900;letter-spacing:.5px}
-.brand-name small{display:block;font-size:10px;color:var(--gold);font-weight:600;letter-spacing:2px}
-.top-actions{display:flex;align-items:center;gap:10px}
-.icon-btn{
-  width:42px;height:42px;border:1px solid var(--border);
-  background:#ffffff08;color:#e9dfca;border-radius:13px;
-  display:grid;place-items:center;
+.brand-mark{
+  width:43px;
+  height:43px;
+  border-radius:14px;
+  display:grid;
+  place-items:center;
+  color:#302719;
+  background:linear-gradient(145deg,#f3dba9,#a87d42);
+  box-shadow:0 7px 24px #c49a4b35,inset 0 1px 2px #fff9;
 }
-.icon-btn svg{width:19px;height:19px}
+.brand-mark svg{width:25px;height:25px}
+.brand-name{
+  font-size:18px;
+  font-weight:900;
+  letter-spacing:.5px;
+}
+.brand-name small{
+  display:block;
+  color:var(--gold);
+  font-size:9px;
+  letter-spacing:2.2px;
+  font-weight:700;
+}
+.topbar-actions{
+  display:flex;
+  align-items:center;
+  gap:9px;
+}
+.top-icon{
+  width:40px;
+  height:40px;
+  display:grid;
+  place-items:center;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:#ffffff08;
+  color:#eadfc9;
+}
+.top-icon svg{width:18px;height:18px}
 .back-link{
-  color:var(--muted);text-decoration:none;font-size:13px;
-  display:flex;align-items:center;gap:7px
+  color:#c3c9bd;
+  font-size:12px;
+  display:flex;
+  align-items:center;
+  gap:7px;
+  padding:9px 12px;
+  border:1px solid #ffffff13;
+  border-radius:11px;
+  background:#ffffff06;
+}
+.back-link svg{width:16px;height:16px}
+
+/* PAGE BACKGROUND */
+
+.page{
+  width:min(1320px,100%);
+  margin:auto;
+  padding:25px clamp(12px,3vw,32px) 65px;
+}
+.ambient{
+  position:fixed;
+  pointer-events:none;
+  z-index:-1;
+  border-radius:50%;
+  filter:blur(70px);
+  opacity:.17;
+}
+.ambient.one{
+  width:260px;height:260px;
+  background:#b68c4c;
+  top:140px;right:-150px;
+}
+.ambient.two{
+  width:330px;height:330px;
+  background:#176a49;
+  bottom:0;left:-180px;
 }
 
-.page{max-width:1240px;margin:auto;padding:28px 22px 65px}
+/* HERO */
+
 .hero{
-  min-height:255px;position:relative;overflow:hidden;
-  border:1px solid var(--border);border-radius:27px;
+  min-height:220px;
+  position:relative;
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:25px;
+  padding:30px clamp(20px,5vw,60px);
+  border:1px solid rgba(229,197,139,.22);
+  border-radius:27px;
   background:
-    radial-gradient(circle at 78% 45%,#9e7b3b30,transparent 24%),
-    linear-gradient(110deg,#252a1e,#303b2a 55%,#1c261d);
-  display:flex;align-items:center;justify-content:space-between;
-  padding:34px 5%;box-shadow:var(--shadow);
+    radial-gradient(circle at 76% 48%,rgba(217,180,111,.24),transparent 23%),
+    radial-gradient(circle at 15% 100%,rgba(32,108,70,.3),transparent 35%),
+    linear-gradient(115deg,#202c22,#344332 52%,#18271e);
+  box-shadow:var(--shadow);
 }
-.hero:before,.hero:after{
-  content:"";position:absolute;border:1px solid #d9b67520;
-  border-radius:50%;pointer-events:none;
+.hero:before{
+  content:"";
+  position:absolute;
+  width:360px;height:360px;
+  border:1px solid #e7cb9330;
+  border-radius:50%;
+  right:42%;
+  top:-230px;
 }
-.hero:before{width:330px;height:330px;right:50%;top:-190px}
-.hero:after{width:230px;height:230px;right:55%;bottom:-160px}
-.hero-content{position:relative;z-index:2;max-width:560px}
-.eyebrow{
-  color:var(--gold);font-size:12px;font-weight:800;
-  letter-spacing:2px;margin-bottom:9px
+.hero:after{
+  content:"";
+  position:absolute;
+  width:260px;height:260px;
+  border:1px solid #e7cb9320;
+  border-radius:50%;
+  right:48%;
+  bottom:-205px;
 }
-.hero h1{font-size:clamp(30px,5vw,49px);line-height:1.35;margin:0 0 8px;font-weight:900}
-.hero p{color:#c4c7b9;margin:0;line-height:2;font-size:14px}
-.hero-art{width:235px;height:190px;position:relative;display:grid;place-items:center}
-.hero-tile{
-  width:68px;height:126px;position:absolute;border-radius:10px;
-  background:linear-gradient(145deg,#fff7e6,#d8c7a7);
-  box-shadow:0 14px 25px #0007,inset 0 0 0 1px #fff;
-  border:3px solid #b9a681;display:flex;flex-direction:column;
-  align-items:center;justify-content:space-evenly;padding:7px;
+.hero-content{position:relative;z-index:2;max-width:620px}
+.hero-kicker{
+  color:var(--gold);
+  font-size:11px;
+  font-weight:900;
+  letter-spacing:2px;
+  margin-bottom:8px;
 }
-.hero-tile.one{transform:rotate(-25deg) translate(-38px,8px)}
-.hero-tile.two{transform:rotate(13deg) translate(37px,-2px)}
-.hero-tile:after{content:"";width:80%;height:1px;background:#887653}
-.pips{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;width:100%;height:42%;align-items:center;justify-items:center}
-.pip{width:7px;height:7px;background:#30352d;border-radius:50%}
-.hero-tile .pip{width:8px;height:8px}
+.hero h1{
+  margin:0;
+  font-size:clamp(28px,4.5vw,45px);
+  font-weight:900;
+  line-height:1.4;
+}
+.hero p{
+  margin:7px 0 0;
+  color:#d1d6c9;
+  font-size:13px;
+  line-height:2;
+}
+.hero-tags{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:17px;
+}
+.hero-tag{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  padding:6px 11px;
+  border:1px solid #ffffff22;
+  border-radius:30px;
+  background:#0d1914a8;
+  color:#e9dfc9;
+  font-size:10px;
+  font-weight:800;
+}
+.hero-tag svg{width:13px;height:13px;color:var(--gold)}
+.hero-art{
+  width:230px;
+  height:170px;
+  position:relative;
+  flex:none;
+  display:grid;
+  place-items:center;
+}
+.hero-ring{
+  position:absolute;
+  width:160px;height:160px;
+  border:1px solid #e9cf9530;
+  border-radius:50%;
+  box-shadow:0 0 45px #d6ad5c16;
+}
+.hero-ring:before,.hero-ring:after{
+  content:"";
+  position:absolute;
+  border:1px solid #e9cf9520;
+  border-radius:50%;
+  inset:13px;
+}
+.hero-ring:after{inset:28px}
+.hero-domino{
+  position:absolute;
+  width:56px;height:112px;
+  padding:7px;
+  border-radius:9px;
+  border:2px solid #b9a47c;
+  background:linear-gradient(145deg,#fff9eb,#d9c7a2);
+  box-shadow:0 14px 25px #0008,inset 0 0 0 1px #fff;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-around;
+  align-items:center;
+}
+.hero-domino.first{transform:rotate(-24deg) translate(-30px,7px)}
+.hero-domino.second{transform:rotate(19deg) translate(32px,-3px)}
+.hero-domino .pips{width:100%;height:42%;gap:3px}
+.hero-domino .pip{width:6px;height:6px}
+
+/* COMMON PANELS */
 
 .section-heading{
-  display:flex;align-items:center;justify-content:space-between;
-  gap:12px;margin:30px 2px 16px
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin:29px 2px 14px;
 }
-.section-heading h2{font-size:19px;margin:0;font-weight:800}
-.section-heading span{font-size:12px;color:var(--muted)}
-
-.main-grid{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(290px,.75fr);gap:18px}
+.section-heading h2{
+  margin:0;
+  font-size:18px;
+  font-weight:900;
+}
+.section-heading p{
+  margin:3px 0 0;
+  color:var(--muted);
+  font-size:11px;
+}
+.section-label{
+  color:var(--gold);
+  font-size:10px;
+  font-weight:800;
+}
 .panel{
-  background:linear-gradient(145deg,#20251e,#191e18);
-  border:1px solid var(--border);border-radius:21px;
-  padding:22px;box-shadow:0 12px 35px #0002;
+  min-width:0;
+  border:1px solid var(--line);
+  border-radius:21px;
+  padding:21px;
+  background:
+    linear-gradient(145deg,rgba(35,49,40,.97),rgba(19,30,25,.98));
+  box-shadow:0 14px 35px #0002;
 }
-.panel-title{font-size:16px;font-weight:800;margin:0 0 17px}
-.panel-subtitle{font-size:12px;color:var(--muted);margin-top:-12px;margin-bottom:18px}
+.panel-title{
+  margin:0 0 5px;
+  font-size:15px;
+  font-weight:900;
+}
+.panel-subtitle{
+  margin:0 0 17px;
+  color:var(--muted);
+  font-size:11px;
+  line-height:1.9;
+}
 
-.mode-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:11px}
-.mode-card{
-  min-height:125px;padding:15px 10px;text-align:center;
-  border:1px solid #ffffff12;border-radius:16px;
-  background:#ffffff05;color:#f2eadc;transition:.2s;
-}
-.mode-card:hover{border-color:#d9b67580;transform:translateY(-2px)}
-.mode-card.active{border-color:var(--gold);background:#d9b67513;box-shadow:inset 0 0 0 1px #d9b67535}
-.mode-icon{
-  width:42px;height:42px;border-radius:13px;
-  margin:0 auto 8px;background:#d9b67516;color:var(--gold);
-  display:grid;place-items:center
-}
-.mode-icon svg{width:22px;height:22px}
-.mode-card strong{display:block;font-size:13px}
-.mode-card small{display:block;color:var(--muted);font-size:10px;margin-top:4px}
+/* SETUP */
 
-.field-label{display:block;font-size:12px;color:#c9c4b6;margin-bottom:8px;font-weight:700}
-.choice-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.setup-layout{
+  display:grid;
+  grid-template-columns:minmax(0,1.35fr) minmax(280px,.75fr);
+  gap:17px;
+  align-items:start;
+}
+.setup-main{display:grid;gap:16px}
+.setup-side{display:grid;gap:16px}
+.option-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:10px;
+}
+.option-card{
+  position:relative;
+  min-width:0;
+  min-height:118px;
+  padding:14px 9px;
+  border:1px solid #ffffff17;
+  border-radius:15px;
+  color:#f1eadb;
+  background:
+    radial-gradient(circle at 50% 0%,#d9b67512,transparent 70%),
+    #101c17;
+  text-align:center;
+  transition:.2s ease;
+}
+.option-card:hover{
+  border-color:#e5c58b80;
+  transform:translateY(-2px);
+}
+.option-card.active{
+  border-color:var(--gold);
+  background:
+    radial-gradient(circle at 50% 0%,#e5c58b27,transparent 75%),
+    #17241c;
+  box-shadow:inset 0 0 0 1px #e5c58b35,0 8px 22px #0002;
+}
+.option-icon{
+  width:42px;height:42px;
+  margin:0 auto 8px;
+  border:1px solid #e5c58b35;
+  border-radius:13px;
+  display:grid;
+  place-items:center;
+  color:var(--gold);
+  background:#d8b16c12;
+}
+.option-icon svg{width:22px;height:22px}
+.option-card strong{display:block;font-size:12px}
+.option-card small{
+  display:block;
+  color:var(--muted);
+  font-size:9px;
+  margin-top:4px;
+  line-height:1.7;
+}
+.option-check{
+  position:absolute;
+  top:8px;left:8px;
+  width:17px;height:17px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  background:var(--gold);
+  color:#292216;
+  opacity:0;
+}
+.option-check svg{width:11px;height:11px}
+.option-card.active .option-check{opacity:1}
+
+.setting-row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:13px;
+}
+.setting-block{min-width:0}
+.field-label{
+  display:block;
+  margin-bottom:8px;
+  color:#d7d2c4;
+  font-size:11px;
+  font-weight:800;
+}
+.choice-row{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:7px;
+}
 .choice{
-  border:1px solid #ffffff16;border-radius:12px;
-  background:#ffffff06;color:#e9e2d5;padding:11px 8px;
-  font-size:12px;font-weight:700
+  min-width:0;
+  padding:10px 5px;
+  border:1px solid #ffffff17;
+  border-radius:11px;
+  background:#101b16;
+  color:#e7e1d3;
+  font-size:11px;
+  font-weight:800;
 }
-.choice.active{border-color:var(--gold);color:var(--gold2);background:#d9b67512}
-.setting-block{margin-top:21px}
-.select-field{
-  width:100%;background:#151a14;color:#f3ead9;
-  border:1px solid #ffffff1b;border-radius:12px;padding:12px;
-  outline:none
+.choice.active{
+  border-color:var(--gold);
+  color:var(--gold2);
+  background:#d9b67518;
 }
-.select-field:focus{border-color:var(--gold)}
-.setting-note{font-size:11px;color:var(--muted);line-height:1.9;margin-top:7px}
+.select-field,.text-field{
+  width:100%;
+  min-height:44px;
+  padding:10px 12px;
+  border:1px solid #ffffff1d;
+  border-radius:11px;
+  outline:none;
+  color:#f4ead7;
+  background:#101b16;
+  font-size:12px;
+}
+.select-field:focus,.text-field:focus{border-color:var(--gold)}
+.select-field option{background:#17231f;color:white}
+.setting-note{
+  margin-top:7px;
+  color:#9eaa9f;
+  font-size:10px;
+  line-height:1.9;
+}
+.deal-preview{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-top:14px;
+  padding:13px;
+  border:1px solid #d9b67525;
+  border-radius:13px;
+  background:linear-gradient(110deg,#d9b67512,#ffffff04);
+}
+.deal-icon{
+  width:39px;height:39px;
+  flex:none;
+  display:grid;
+  place-items:center;
+  border-radius:12px;
+  color:var(--gold);
+  background:#d9b67518;
+}
+.deal-icon svg{width:20px;height:20px}
+.deal-preview strong{display:block;font-size:11px}
+.deal-preview span{
+  display:block;
+  color:var(--muted);
+  font-size:10px;
+  line-height:1.8;
+  margin-top:3px;
+}
+
+.primary-btn,.secondary-btn{
+  min-height:45px;
+  padding:11px 17px;
+  border-radius:12px;
+  font-size:12px;
+  font-weight:900;
+}
 .primary-btn{
-  border:0;border-radius:13px;padding:14px 20px;
-  background:linear-gradient(135deg,#e5c88f,#b28b4e);
-  color:#211d14;font-weight:900;box-shadow:0 8px 22px #c39b4b25;
-  transition:.2s
+  border:0;
+  color:#282116;
+  background:linear-gradient(135deg,#f0d69f,#b78d4c);
+  box-shadow:0 8px 22px #c49a4b25;
 }
-.primary-btn:hover{filter:brightness(1.08);transform:translateY(-1px)}
+.primary-btn:hover{filter:brightness(1.07)}
 .secondary-btn{
-  border:1px solid var(--border);border-radius:13px;padding:12px 17px;
-  background:#ffffff08;color:#e9dfcc;font-weight:700
+  border:1px solid var(--line);
+  color:#eee4d0;
+  background:#ffffff08;
 }
-.full-btn{width:100%;margin-top:22px}
-.divider{height:1px;background:#ffffff10;margin:20px 0}
+.full-btn{width:100%;margin-top:17px}
+.button-icon{
+  display:inline-flex;
+  vertical-align:middle;
+  margin-left:7px;
+}
+.button-icon svg{width:16px;height:16px}
+
 .info-list{display:grid;gap:13px}
-.info-item{display:flex;gap:12px;align-items:flex-start}
+.info-item{
+  display:flex;
+  align-items:flex-start;
+  gap:11px;
+}
 .info-icon{
-  flex:0 0 34px;height:34px;border-radius:11px;
-  background:#d9b67513;color:var(--gold);
-  display:grid;place-items:center
+  width:35px;height:35px;
+  flex:none;
+  display:grid;
+  place-items:center;
+  border-radius:11px;
+  border:1px solid #d9b67522;
+  color:var(--gold);
+  background:#d9b67512;
 }
 .info-icon svg{width:17px;height:17px}
-.info-item strong{display:block;font-size:12px}
-.info-item small{display:block;color:var(--muted);font-size:11px;line-height:1.8;margin-top:3px}
-
-.lobby-options{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
-.lobby-btn{
-  display:flex;align-items:center;gap:12px;text-align:right;
-  background:#ffffff06;border:1px solid #ffffff13;border-radius:14px;
-  padding:14px;color:#eee5d5
+.info-item strong{display:block;font-size:11px}
+.info-item small{
+  display:block;
+  color:var(--muted);
+  font-size:10px;
+  line-height:1.8;
+  margin-top:3px;
 }
-.lobby-btn:hover{border-color:#d9b67575;background:#d9b6750b}
-.lobby-btn .info-icon{flex-shrink:0}
-.lobby-btn strong{font-size:12px;display:block}
-.lobby-btn small{font-size:10px;color:var(--muted);display:block;margin-top:3px}
+.panel-divider{
+  height:1px;
+  margin:17px 0;
+  background:#ffffff12;
+}
+.lobby-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.lobby-btn{
+  min-width:0;
+  display:flex;
+  align-items:center;
+  gap:9px;
+  padding:11px 9px;
+  border:1px solid #ffffff16;
+  border-radius:12px;
+  background:#101b16;
+  color:#eee5d6;
+  text-align:right;
+}
+.lobby-btn .info-icon{width:32px;height:32px}
+.lobby-btn strong{display:block;font-size:10px}
+.lobby-btn small{display:block;color:var(--muted);font-size:9px;margin-top:2px}
+.lobby-btn:disabled{opacity:.55}
+.coming-label{
+  display:inline-block;
+  margin-top:5px;
+  color:var(--gold);
+  font-size:8px;
+  font-weight:800;
+}
+
+/* GAME SCREEN */
 
 #gameScreen{display:none}
 .game-toolbar{
-  display:flex;align-items:center;justify-content:space-between;
-  gap:12px;margin-bottom:17px;flex-wrap:wrap
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  margin:0 0 15px;
+  flex-wrap:wrap;
 }
-.game-toolbar h2{font-size:20px;margin:0}
-.game-toolbar p{font-size:11px;color:var(--muted);margin:2px 0 0}
-.game-actions{display:flex;gap:8px}
-.game-actions button{font-size:11px;padding:9px 13px}
+.game-title-wrap h2{margin:0;font-size:19px;font-weight:900}
+.game-title-wrap p{margin:3px 0 0;color:var(--muted);font-size:10px}
+.game-toolbar-actions{display:flex;gap:8px;flex-wrap:wrap}
+.game-toolbar-actions button{min-height:37px;padding:8px 12px;font-size:10px}
+
+/* GAME ROOM BACKDROP */
+
+.game-room{
+  position:relative;
+  padding:17px;
+  overflow:hidden;
+  border:1px solid #c29a5b5a;
+  border-radius:29px;
+  background:
+    radial-gradient(ellipse at 50% 45%,#6b4a2c 0%,#38291d 65%,#211a14 100%);
+  box-shadow:
+    0 25px 65px #0009,
+    inset 0 0 0 3px #e1bd7a20,
+    inset 0 0 0 8px #0003;
+}
+.game-room:before{
+  content:"";
+  position:absolute;
+  inset:8px;
+  border:1px solid #e9cc8b3b;
+  border-radius:23px;
+  pointer-events:none;
+}
+.room-light{
+  position:absolute;
+  width:430px;height:220px;
+  top:-120px;left:50%;
+  transform:translateX(-50%);
+  background:#f0d69f25;
+  filter:blur(65px);
+  pointer-events:none;
+}
+
+/* WOODEN TABLE */
+
 .table-shell{
-  position:relative;padding:16px;border-radius:27px;
-  background:linear-gradient(135deg,#6b4b2b,#30251a 25%,#765532 50%,#30251a 75%,#6b4b2b);
-  box-shadow:0 22px 50px #0008,inset 0 0 0 2px #b78b5145;
+  position:relative;
+  padding:13px;
+  border-radius:23px;
+  background:
+    repeating-linear-gradient(4deg,transparent 0 12px,#ffffff08 13px 14px),
+    linear-gradient(135deg,#a77b43,#50351e 18%,#7e5730 38%,#3e2a1b 60%,#93683a 82%,#49301c);
+  box-shadow:
+    0 15px 35px #0009,
+    inset 0 0 0 2px #e0b87355,
+    inset 0 0 0 6px #24170d99;
 }
 .table-inner{
-  min-height:490px;position:relative;overflow:hidden;border-radius:17px;
-  border:2px solid #b88b524d;
+  min-height:590px;
+  position:relative;
+  overflow:hidden;
+  border-radius:15px;
+  border:2px solid #b88a4d80;
   background:
-    radial-gradient(ellipse at center,#315d40 0%,#21452f 58%,#173323 100%);
-  box-shadow:inset 0 0 35px #07190d99,inset 0 0 0 7px #ffffff08;
-  padding:20px;
+    radial-gradient(ellipse at 50% 44%,rgba(64,133,85,.55),transparent 55%),
+    repeating-linear-gradient(45deg,#ffffff04 0 1px,transparent 1px 5px),
+    radial-gradient(ellipse at center,#286044 0%,#19472f 58%,#103321 100%);
+  box-shadow:
+    inset 0 0 65px #071b10c9,
+    inset 0 0 0 6px #ffffff08;
 }
 .table-inner:before{
-  content:"";position:absolute;inset:12px;border:1px solid #e3c68a25;
-  border-radius:11px;pointer-events:none
+  content:"";
+  position:absolute;
+  inset:12px;
+  border:1px solid #e6c98c35;
+  border-radius:10px;
+  pointer-events:none;
 }
-.table-center{
-  position:absolute;inset:0;display:grid;place-items:center;
-  pointer-events:none
+.table-inner:after{
+  content:"";
+  position:absolute;
+  inset:21px;
+  border:1px dashed #e6c98c15;
+  border-radius:7px;
+  pointer-events:none;
+}
+.table-pattern{
+  position:absolute;
+  inset:0;
+  opacity:.14;
+  pointer-events:none;
+  background:
+    radial-gradient(ellipse at 50% 50%,transparent 0 105px,#e9d3a0 106px,#e9d3a0 107px,transparent 108px),
+    radial-gradient(ellipse at 50% 50%,transparent 0 155px,#e9d3a0 156px,#e9d3a0 157px,transparent 158px);
 }
 .table-emblem{
-  width:130px;height:130px;border:1px solid #e7d1a01c;
-  border-radius:50%;display:grid;place-items:center;
-  color:#e5d4ad18;font-size:13px;font-weight:900;letter-spacing:3px
+  position:absolute;
+  top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  width:130px;height:130px;
+  display:grid;
+  place-items:center;
+  border:1px solid #e8d4a02a;
+  border-radius:50%;
+  color:#e8d4a025;
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:3px;
+  pointer-events:none;
 }
+
+/* PLAYER SEATS */
+
 .player-seat{
-  position:absolute;z-index:3;display:flex;align-items:center;gap:9px;
-  padding:8px 12px;border:1px solid #ffffff1b;border-radius:13px;
-  background:#101c14d9;backdrop-filter:blur(8px);min-width:130px
+  position:absolute;
+  z-index:5;
+  min-width:135px;
+  max-width:190px;
+  display:flex;
+  align-items:center;
+  gap:9px;
+  padding:8px 11px;
+  border:1px solid #e7d2a23a;
+  border-radius:14px;
+  background:linear-gradient(145deg,#12251ddf,#0c1914e8);
+  box-shadow:0 8px 20px #0004;
+  backdrop-filter:blur(10px);
 }
-.player-seat.top{top:17px;left:50%;transform:translateX(-50%)}
-.player-seat.bottom{bottom:17px;left:50%;transform:translateX(-50%)}
-.player-seat.left{left:17px;top:50%;transform:translateY(-50%)}
-.player-seat.right{right:17px;top:50%;transform:translateY(-50%)}
+.player-seat.top{
+  top:17px;left:50%;transform:translateX(-50%);
+}
+.player-seat.bottom{
+  bottom:17px;left:50%;transform:translateX(-50%);
+}
+.player-seat.left{
+  top:50%;left:17px;transform:translateY(-50%);
+}
+.player-seat.right{
+  top:50%;right:17px;transform:translateY(-50%);
+}
 .player-avatar{
-  width:34px;height:34px;border-radius:11px;
-  background:linear-gradient(135deg,#d5b77b,#846239);
-  color:#241e14;display:grid;place-items:center;font-weight:900
+  width:37px;height:37px;
+  flex:none;
+  display:grid;
+  place-items:center;
+  border:1px solid #f0d69f80;
+  border-radius:12px;
+  color:#302719;
+  font-size:14px;
+  font-weight:900;
+  background:linear-gradient(145deg,#f0d69f,#a67c42);
+  box-shadow:0 4px 12px #0004;
 }
-.player-seat strong{font-size:11px;display:block}
-.player-seat small{font-size:9px;color:#c1c8b8;display:block}
-.player-seat.current{border-color:#e3c17b;box-shadow:0 0 0 2px #d9b67520}
-.turn-dot{width:7px;height:7px;background:#77d69a;border-radius:50%;display:inline-block;margin-left:4px}
+.player-details{min-width:0;flex:1}
+.player-details strong{
+  display:block;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  font-size:10px;
+}
+.player-details small{
+  display:block;
+  margin-top:2px;
+  color:#bdc9bc;
+  font-size:9px;
+}
+.player-status{
+  display:flex;
+  align-items:center;
+  gap:5px;
+  color:#9bd9ac;
+  font-size:8px;
+}
+.player-status:before{
+  content:"";
+  width:6px;height:6px;
+  border-radius:50%;
+  background:#72d69a;
+  box-shadow:0 0 9px #72d69a;
+}
+.player-seat.current{
+  border-color:#f0d69f;
+  box-shadow:0 0 0 2px #f0d69f25,0 8px 20px #0005;
+}
+.player-seat.current .player-avatar{
+  box-shadow:0 0 0 3px #f0d69f30;
+}
+.player-seat.inactive{opacity:.38}
+
+/* TABLE CENTER AND BOARD */
 
 .board-area{
-  position:absolute;z-index:2;inset:100px 100px;
-  display:flex;align-items:center;justify-content:center;
-  flex-wrap:wrap;gap:7px;align-content:center;overflow:auto
+  position:absolute;
+  z-index:3;
+  inset:105px 125px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-wrap:wrap;
+  align-content:center;
+  gap:7px;
+  overflow:auto;
+  padding:15px;
+}
+.board-placeholder{
+  position:relative;
+  z-index:2;
+  max-width:250px;
+  padding:18px 22px;
+  border:1px solid #e9d3a02b;
+  border-radius:18px;
+  background:#0d2a1d9c;
+  color:#d9e1d4b8;
+  font-size:11px;
+  line-height:2.1;
+  text-align:center;
+  box-shadow:0 10px 30px #0002;
+}
+.board-placeholder svg{
+  display:block;
+  width:43px;height:43px;
+  margin:0 auto 9px;
+  color:#d7bd85a8;
 }
 .domino-tile{
-  width:65px;height:31px;flex:0 0 65px;
-  display:flex;align-items:center;justify-content:space-around;
-  padding:3px;border-radius:6px;
-  background:linear-gradient(145deg,#fff8e9,#d8c9a9);
-  border:1px solid #9f8b67;
-  box-shadow:0 3px 7px #07170d88,inset 0 0 0 1px #fff;
-  color:#252a23;position:relative
+  width:68px;
+  height:34px;
+  flex:0 0 68px;
+  display:flex;
+  align-items:center;
+  justify-content:space-around;
+  position:relative;
+  padding:3px;
+  border:1px solid #a58c63;
+  border-radius:6px;
+  color:#252a23;
+  background:linear-gradient(145deg,#fff9eb,#d8c6a1);
+  box-shadow:0 4px 8px #06170c99,inset 0 0 0 1px #fff;
 }
-.domino-tile:after{content:"";height:78%;width:1px;background:#8e8065;position:absolute;left:50%}
-.domino-half{width:45%;height:100%;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);place-items:center}
-.domino-half i{width:4px;height:4px;border-radius:50%;background:#30372c;display:block}
+.domino-tile:after{
+  content:"";
+  position:absolute;
+  left:50%;top:11%;
+  height:78%;width:1px;
+  background:#8b795a;
+}
+.domino-tile.vertical{
+  width:34px;height:68px;
+  flex-basis:34px;
+  flex-direction:column;
+}
+.domino-tile.vertical:after{
+  left:11%;top:50%;
+  width:78%;height:1px;
+}
+.domino-half{
+  width:45%;height:100%;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  grid-template-rows:repeat(3,1fr);
+  place-items:center;
+}
+.domino-half i{
+  display:block;
+  width:4px;height:4px;
+  border-radius:50%;
+  background:#30372c;
+}
 .domino-half i.off{visibility:hidden}
-.board-placeholder{
-  color:#e4d5b2a0;text-align:center;font-size:12px;
-  line-height:2;max-width:230px
+
+/* GAME STATUS */
+
+.game-status-bar{
+  position:relative;
+  z-index:8;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-top:13px;
+  padding:11px 14px;
+  border:1px solid #e6c88c30;
+  border-radius:13px;
+  background:linear-gradient(100deg,#0d2118e8,#152a20e8);
 }
-.board-placeholder svg{width:42px;height:42px;display:block;margin:0 auto 10px;opacity:.6}
+.status-main{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  min-width:0;
+}
+.status-light{
+  width:9px;height:9px;
+  flex:none;
+  border-radius:50%;
+  background:#8bd9a5;
+  box-shadow:0 0 12px #8bd9a5;
+}
+.status-main strong{display:block;font-size:10px}
+.status-main small{display:block;color:#aebdaf;font-size:9px;margin-top:2px}
+.game-info{
+  color:var(--gold2);
+  font-size:10px;
+  font-weight:800;
+  text-align:left;
+}
+
+/* HAND PANEL */
 
 .hand-panel{
-  margin-top:17px;padding:18px;border-radius:20px;
-  background:linear-gradient(145deg,#20251e,#181d17);
-  border:1px solid var(--border)
+  margin-top:15px;
+  padding:17px;
+  border:1px solid var(--line);
+  border-radius:20px;
+  background:
+    radial-gradient(circle at 50% 0%,#d9b67512,transparent 55%),
+    linear-gradient(145deg,#202e26,#14221c);
+  box-shadow:0 13px 35px #0003;
 }
-.hand-head{display:flex;justify-content:space-between;align-items:center;gap:10px}
-.hand-head h3{font-size:15px;margin:0}
-.hand-head span{font-size:11px;color:var(--muted)}
-.hand-tiles{display:flex;gap:9px;overflow-x:auto;padding:18px 3px 8px;min-height:100px}
+.hand-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+}
+.hand-head h3{margin:0;font-size:14px;font-weight:900}
+.hand-head span{color:var(--muted);font-size:10px}
+.hand-tiles{
+  min-height:110px;
+  display:flex;
+  align-items:flex-end;
+  gap:9px;
+  overflow-x:auto;
+  padding:17px 5px 9px;
+  scrollbar-width:thin;
+}
 .hand-tile{
-  flex:0 0 52px;width:52px;height:84px;border-radius:8px;
-  background:linear-gradient(145deg,#fff9e9,#d9c9a7);
-  border:2px solid #b9a681;box-shadow:0 5px 12px #0004;
-  display:flex;flex-direction:column;align-items:center;justify-content:space-around;
-  padding:6px;color:#292d25;position:relative
+  width:55px;height:88px;
+  flex:0 0 55px;
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-around;
+  align-items:center;
+  padding:6px;
+  border:2px solid #b9a681;
+  border-radius:8px;
+  color:#282d25;
+  background:linear-gradient(145deg,#fff9e9,#d8c7a5);
+  box-shadow:0 7px 14px #0005,inset 0 0 0 1px #fff;
+  transition:transform .15s,border-color .15s;
 }
-.hand-tile:after{content:"";position:absolute;top:50%;left:12%;right:12%;height:1px;background:#988765}
-.hand-tile .pips{height:40%;width:100%;gap:3px}
-.hand-tile .pip{width:6px;height:6px}
-.hand-tile.selected{outline:3px solid var(--gold);transform:translateY(-7px)}
-.hand-tile:disabled{opacity:.65}
-.play-controls{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}
-.play-controls button{font-size:12px}
+.hand-tile:after{
+  content:"";
+  position:absolute;
+  top:50%;left:12%;right:12%;
+  height:1px;
+  background:#988765;
+}
+.hand-tile .pips{
+  width:100%;height:42%;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  grid-template-rows:repeat(3,1fr);
+  place-items:center;
+  gap:2px;
+}
+.hand-tile .pip{
+  width:6px;height:6px;
+  border-radius:50%;
+  background:#30372c;
+}
+.hand-tile .pip.off{visibility:hidden}
+.hand-tile.selected{
+  transform:translateY(-8px);
+  border-color:#e2b957;
+  box-shadow:0 0 0 3px #e2b95745,0 10px 18px #0005;
+}
+.hand-tile.legal{border-color:#75c995}
+.hand-tile:disabled{opacity:.45}
+.hand-empty{
+  width:100%;
+  padding:20px;
+  color:var(--muted);
+  font-size:11px;
+  text-align:center;
+}
+.play-controls{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:9px;
+}
+.play-controls button{
+  min-height:39px;
+  padding:9px 13px;
+  font-size:10px;
+}
+.control-btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+}
+.control-btn svg{width:15px;height:15px}
 
-.game-status{
-  padding:12px 15px;border-radius:13px;margin-top:13px;
-  background:#d9b67510;border:1px solid #d9b67520;
-  color:#e8d7b3;font-size:12px;line-height:1.8
-}
-.hidden{display:none!important}
+/* SOCIAL GAME TOOLS */
 
-.modal-backdrop{
-  position:fixed;inset:0;background:#000a;z-index:60;
-  display:none;align-items:center;justify-content:center;padding:18px;
-  backdrop-filter:blur(7px)
+.social-tools{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:10px;
+  margin-top:15px;
 }
-.modal-backdrop.open{display:flex}
+.social-tool{
+  min-width:0;
+  min-height:82px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:7px;
+  border:1px solid #ffffff16;
+  border-radius:15px;
+  color:#e9e3d6;
+  background:linear-gradient(145deg,#1e3027,#14231c);
+}
+.social-tool svg{width:21px;height:21px;color:var(--gold)}
+.social-tool strong{font-size:10px}
+.social-tool small{font-size:8px;color:var(--muted)}
+.social-tool:disabled{opacity:.52}
+
+/* MODALS */
+
 .modal{
-  width:min(460px,100%);max-height:90vh;overflow:auto;
-  background:#1b211a;border:1px solid var(--border);
-  border-radius:22px;padding:23px;box-shadow:var(--shadow)
+  position:fixed;
+  inset:0;
+  z-index:100;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+  background:#030907c9;
+  backdrop-filter:blur(9px);
 }
-.modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:17px}
-.modal-head h3{margin:0;font-size:17px}
-.modal-close{border:0;background:#ffffff10;color:#fff;border-radius:10px;width:34px;height:34px}
-.modal .setting-block:first-of-type{margin-top:0}
-.modal-actions{display:flex;gap:9px;margin-top:20px}
+.modal.open{display:flex}
+.modal-card{
+  width:min(460px,100%);
+  max-height:min(85vh,720px);
+  overflow:auto;
+  padding:22px;
+  border:1px solid #e4c58b40;
+  border-radius:22px;
+  background:
+    radial-gradient(circle at 100% 0%,#d9b67513,transparent 40%),
+    linear-gradient(145deg,#213128,#111e18);
+  box-shadow:0 25px 80px #000a;
+}
+.modal-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  margin-bottom:15px;
+}
+.modal-head h3{margin:0;font-size:16px}
+.modal-close{
+  width:34px;height:34px;
+  display:grid;place-items:center;
+  border:1px solid #ffffff20;
+  border-radius:10px;
+  color:#eee4d1;
+  background:#ffffff09;
+}
+.modal-close svg{width:17px;height:17px}
+.modal-content{color:#d2d8cd;font-size:11px;line-height:2}
+.modal-content h4{color:var(--gold2);font-size:12px;margin:14px 0 4px}
+.modal-actions{display:flex;gap:8px;margin-top:18px}
 .modal-actions button{flex:1}
-
+.form-group{margin-top:13px}
+.form-group label{display:block;margin-bottom:7px;color:#d9d5c8;font-size:11px;font-weight:800}
 .toast{
-  position:fixed;bottom:22px;left:50%;transform:translate(-50%,20px);
-  background:#252c23;color:#f6eddd;border:1px solid var(--border);
-  border-radius:12px;padding:11px 18px;font-size:12px;z-index:100;
-  opacity:0;pointer-events:none;transition:.25s;box-shadow:var(--shadow)
+  position:fixed;
+  z-index:150;
+  bottom:25px;
+  left:50%;
+  transform:translateX(-50%) translateY(20px);
+  max-width:calc(100% - 30px);
+  padding:12px 18px;
+  border:1px solid #e5c58b55;
+  border-radius:13px;
+  color:#f8edda;
+  background:#14251ceF;
+  box-shadow:0 12px 35px #0008;
+  font-size:11px;
+  opacity:0;
+  pointer-events:none;
+  transition:.25s;
 }
-.toast.show{opacity:1;transform:translate(-50%,0)}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* RESPONSIVE */
 
 @media(max-width:850px){
-  .main-grid{grid-template-columns:1fr}
-  .hero-art{width:160px}
-  .table-inner{min-height:460px}
-  .board-area{inset:100px 65px}
+  .setup-layout{grid-template-columns:1fr}
+  .setup-side{grid-template-columns:1fr 1fr}
+  .table-inner{min-height:540px}
+  .board-area{inset:100px 85px}
 }
-@media(max-width:560px){
-  .topbar{height:65px;padding:0 15px}
-  .brand-name{font-size:16px}
-  .page{padding:17px 12px 40px}
-  .hero{min-height:210px;padding:24px 20px}
-  .hero-art{width:100px;transform:scale(.8)}
-  .hero p{font-size:12px}
-  .hero h1{font-size:30px}
-  .panel{padding:17px}
-  .mode-grid{gap:7px}
-  .mode-card{min-height:112px;padding:12px 5px}
-  .mode-card strong{font-size:11px}
-  .mode-card small{font-size:9px}
-  .lobby-options{grid-template-columns:1fr}
-  .table-shell{padding:8px;border-radius:18px}
-  .table-inner{min-height:430px;padding:10px}
-  .player-seat{min-width:105px;padding:6px 8px}
-  .player-seat.left{left:8px}
-  .player-seat.right{right:8px}
-  .player-avatar{width:28px;height:28px}
-  .player-seat strong{font-size:10px}
-  .player-seat small{font-size:8px}
-  .board-area{inset:105px 12px}
-  .domino-tile{width:55px;flex-basis:55px;height:27px}
+@media(max-width:600px){
+  .topbar{height:62px;padding:0 12px}
+  .brand-mark{width:37px;height:37px;border-radius:12px}
+  .brand-name{font-size:15px}
+  .back-link{font-size:10px;padding:8px}
+  .page{padding:15px 11px 45px}
+  .hero{
+    min-height:195px;
+    padding:23px 18px;
+    border-radius:21px;
+  }
+  .hero h1{font-size:28px}
+  .hero p{font-size:11px;max-width:280px}
+  .hero-art{width:100px;height:130px;transform:scale(.8)}
+  .hero-ring{width:125px;height:125px}
+  .hero-domino{width:43px;height:88px}
+  .hero-tags{gap:5px}
+  .hero-tag{font-size:8px;padding:5px 8px}
+  .section-heading{margin-top:23px}
+  .panel{padding:15px;border-radius:17px}
+  .option-grid{gap:7px}
+  .option-card{min-height:108px;padding:12px 5px}
+  .option-icon{width:36px;height:36px}
+  .option-card strong{font-size:10px}
+  .option-card small{font-size:8px}
+  .setting-row{grid-template-columns:1fr}
+  .setup-side{grid-template-columns:1fr}
+  .game-room{padding:8px;border-radius:19px}
+  .table-shell{padding:7px;border-radius:17px}
+  .table-inner{min-height:490px;border-radius:11px}
+  .table-inner:before{inset:7px}
+  .table-inner:after{inset:13px}
+  .player-seat{min-width:105px;max-width:130px;padding:6px 7px;gap:6px}
+  .player-avatar{width:29px;height:29px;border-radius:9px;font-size:11px}
+  .player-details strong{font-size:8px}
+  .player-details small{font-size:7px}
+  .player-seat.top{top:13px}
+  .player-seat.bottom{bottom:13px}
+  .player-seat.left{left:9px}
+  .player-seat.right{right:9px}
+  .board-area{inset:95px 45px;padding:8px;gap:5px}
+  .domino-tile{width:54px;height:28px;flex-basis:54px}
+  .domino-tile.vertical{width:28px;height:54px;flex-basis:28px}
+  .domino-half i{width:3px;height:3px}
   .hand-panel{padding:13px}
-  .game-toolbar h2{font-size:17px}
-  .game-actions button{padding:8px 9px}
+  .hand-tile{width:48px;height:78px;flex-basis:48px}
+  .hand-tile .pip{width:5px;height:5px}
+  .social-tools{grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+  .social-tool{min-height:72px;border-radius:12px}
+  .social-tool strong{font-size:8px}
+  .social-tool small{font-size:7px}
+  .game-status-bar{padding:9px}
+}
+@media(max-width:370px){
+  .hero-art{display:none}
+  .choice-row{gap:5px}
+  .choice{font-size:9px}
+  .player-seat{min-width:94px}
+  .player-avatar{width:26px;height:26px}
+  .board-area{inset:95px 35px}
 }
 </style>
 </head>
 
 <body>
+<div class="ambient one"></div>
+<div class="ambient two"></div>
 
 <header class="topbar">
-  <a class="back-link" href="../games.html">
-    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15 18l-6-6 6-6"/></svg>
-    العودة للألعاب
+  <a class="brand" href="../games.html" aria-label="هنون">
+    <span class="brand-mark">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+        <rect x="4" y="3" width="16" height="18" rx="3"/>
+        <path d="M12 3v18M7.5 7h.01M16.5 7h.01M7.5 17h.01M16.5 17h.01"/>
+      </svg>
+    </span>
+    <span class="brand-name">HANOON <small>WORLD GAMES</small></span>
   </a>
 
-  <div class="brand">
-    <div class="brand-icon">
-      <svg viewBox="0 0 24 24" width="27" height="27" fill="none" stroke="currentColor" stroke-width="1.8">
-        <rect x="5" y="2.5" width="14" height="19" rx="3"/>
-        <path d="M5 12h14"/>
-        <circle cx="9" cy="7" r="1" fill="currentColor"/>
-        <circle cx="15" cy="17" r="1" fill="currentColor"/>
-        <circle cx="15" cy="7" r="1" fill="currentColor"/>
-        <circle cx="9" cy="17" r="1" fill="currentColor"/>
+  <div class="topbar-actions">
+    <a class="back-link" href="../games.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+        <path d="M19 12H5m7 7-7-7 7-7"/>
       </svg>
-    </div>
-    <div class="brand-name">HANOON <small>WORLD GAMES</small></div>
-  </div>
-
-  <div class="top-actions">
-    <button class="icon-btn" id="rulesButton" title="قواعد اللعبة">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 4.2 1.8c-1 .9-1.7 1.3-1.7 2.7M12 17h.01"/></svg>
+      العودة للألعاب
+    </a>
+    <button class="top-icon" id="rulesButton" aria-label="قواعد اللعبة" title="قواعد اللعبة">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+        <circle cx="12" cy="12" r="9"/>
+        <path d="M9.7 9a2.4 2.4 0 1 1 4.2 1.6c-1.1 1-1.9 1.4-1.9 3M12 17h.01"/>
+      </svg>
     </button>
   </div>
 </header>
 
 <main class="page">
 
-<!-- شاشة البداية والإعدادات -->
-<section id="setupScreen">
-
+  <!-- GAME HERO -->
   <section class="hero">
     <div class="hero-content">
-      <div class="eyebrow">HANOON WORLD • CLASSIC TABLE</div>
+      <div class="hero-kicker">HANOON CLASSIC TABLE</div>
       <h1>الدومينو</h1>
-      <p>جهّز طاولتك، اختار نظام اللعب وعدد اللاعبين، وابدأ تحديك على طاولة دومينو بتجربة مختلفة.</p>
+      <p>اجلس على الطاولة، وزّع قطعك، واختبر ذكاءك في جولات دومينو مليئة بالتحدي.</p>
+      <div class="hero-tags">
+        <span class="hero-tag">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2m8-11a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm8 1a4 4 0 0 0 0-8m4 18v-2a4 4 0 0 0-3-3.87"/>
+          </svg>
+          2 إلى 4 لاعبين
+        </span>
+        <span class="hero-tag">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M12 3v18m-7-9h14M5 7l7-4 7 4M5 17l7 4 7-4"/>
+          </svg>
+          3 أنماط لعب
+        </span>
+        <span class="hero-tag">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M12 8v4l3 2m6-2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+          </svg>
+          جولات وتحديات
+        </span>
+      </div>
     </div>
 
     <div class="hero-art" aria-hidden="true">
-      <div class="hero-tile one">
+      <div class="hero-ring"></div>
+      <div class="hero-domino first">
         <div class="pips">
           <i class="pip"></i><i class="pip off"></i><i class="pip"></i>
           <i class="pip off"></i><i class="pip"></i><i class="pip off"></i>
           <i class="pip"></i><i class="pip off"></i><i class="pip"></i>
         </div>
         <div class="pips">
-          <i class="pip"></i><i class="pip"></i><i class="pip"></i>
+          <i class="pip"></i><i class="pip off"></i><i class="pip"></i>
           <i class="pip off"></i><i class="pip"></i><i class="pip off"></i>
-          <i class="pip"></i><i class="pip"></i><i class="pip"></i>
+          <i class="pip"></i><i class="pip off"></i><i class="pip"></i>
         </div>
       </div>
-      <div class="hero-tile two">
+      <div class="hero-domino second">
         <div class="pips">
-          <i class="pip"></i><i class="pip off"></i><i class="pip"></i>
+          <i class="pip"></i><i class="pip off"></i><i class="pip off"></i>
           <i class="pip off"></i><i class="pip"></i><i class="pip off"></i>
-          <i class="pip"></i><i class="pip off"></i><i class="pip"></i>
+          <i class="pip off"></i><i class="pip off"></i><i class="pip"></i>
         </div>
         <div class="pips">
           <i class="pip"></i><i class="pip"></i><i class="pip"></i>
-          <i class="pip"></i><i class="pip"></i><i class="pip"></i>
+          <i class="pip off"></i><i class="pip off"></i><i class="pip off"></i>
           <i class="pip"></i><i class="pip"></i><i class="pip"></i>
         </div>
       </div>
     </div>
   </section>
 
-  <div class="section-heading">
-    <h2>إعداد طاولتك</h2>
-    <span>اختار طريقة اللعب المناسبة لك</span>
-  </div>
+  <!-- SETUP SCREEN -->
+  <section id="setupScreen">
 
-  <div class="main-grid">
-    <section class="panel">
-      <h3 class="panel-title">أولاً: نظام الدومينو</h3>
+    <div class="section-heading">
+      <div>
+        <h2>جهّز طاولتك</h2>
+        <p>اختر نمط اللعب وعدد اللاعبين، وسيتم توزيع القطع تلقائيًا.</p>
+      </div>
+      <span class="section-label">GAME SETUP</span>
+    </div>
 
-      <div class="mode-grid" id="variantOptions">
-        <button class="mode-card active" data-variant="draw">
-          <div class="mode-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="3" width="16" height="18" rx="3"/><path d="M4 12h16"/><path d="M8 7h.01M16 17h.01M16 7h.01"/></svg>
+    <div class="setup-layout">
+
+      <div class="setup-main">
+
+        <section class="panel">
+          <h3 class="panel-title">1. اختر نمط الدومينو</h3>
+          <p class="panel-subtitle">لكل نمط قواعده وطريقته في إنهاء الجولة وحساب النقاط.</p>
+
+          <div class="option-grid" id="variantOptions">
+
+            <button class="option-card active" data-value="draw" type="button">
+              <span class="option-check">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                  <path d="m5 12 4 4L19 6"/>
+                </svg>
+              </span>
+              <span class="option-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+                  <rect x="4" y="3" width="16" height="18" rx="3"/>
+                  <path d="M12 3v18M8 7h.01M16 7h.01M8 17h.01M16 17h.01"/>
+                </svg>
+              </span>
+              <strong>دومينو السحب</strong>
+              <small>اسحب قطعة عند عدم وجود حركة</small>
+            </button>
+
+            <button class="option-card" data-value="block" type="button">
+              <span class="option-check">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                  <path d="m5 12 4 4L19 6"/>
+                </svg>
+              </span>
+              <span class="option-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+                  <path d="M5 4h14v16H5zM9 4v16m6-16v16M5 9h14M5 15h14"/>
+                </svg>
+              </span>
+              <strong>دومينو الحجب</strong>
+              <small>لا يوجد سحب من الكومة</small>
+            </button>
+
+            <button class="option-card" data-value="fives" type="button">
+              <span class="option-check">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                  <path d="m5 12 4 4L19 6"/>
+                </svg>
+              </span>
+              <span class="option-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+                  <circle cx="12" cy="12" r="9"/>
+                  <path d="M15.5 7H9l-.7 4.5a4 4 0 1 1-1 5"/>
+                  <path d="M9 11h5"/>
+                </svg>
+              </span>
+              <strong>الخمسات</strong>
+              <small>اجمع أطراف الطاولة لمضاعفات 5</small>
+            </button>
+
           </div>
-          <strong>السحب</strong>
-          <small>اسحب عند عدم وجود حركة</small>
+        </section>
+
+        <section class="panel">
+          <h3 class="panel-title">2. عدد اللاعبين</h3>
+          <p class="panel-subtitle">التوزيع يتغير تلقائيًا حسب العدد الذي تختاره.</p>
+
+          <div class="choice-row" id="playerOptions">
+            <button class="choice active" data-value="2" type="button">لاعبان</button>
+            <button class="choice" data-value="3" type="button">3 لاعبين</button>
+            <button class="choice" data-value="4" type="button">4 لاعبين</button>
+          </div>
+
+          <div class="deal-preview">
+            <span class="deal-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <rect x="3" y="4" width="18" height="16" rx="3"/>
+                <path d="M12 4v16M7 9h.01M17 9h.01M7 15h.01M17 15h.01"/>
+              </svg>
+            </span>
+            <div>
+              <strong>توزيع القطع التلقائي</strong>
+              <span id="dealDescription">كل لاعب يأخذ 7 قطع، ويتبقى 14 قطعة في كومة السحب.</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <h3 class="panel-title">3. طريقة اللعب</h3>
+          <p class="panel-subtitle">اختر كيف تريد بدء المباراة.</p>
+
+          <div class="option-grid" id="playTypeOptions">
+
+            <button class="option-card active" data-value="ai" type="button">
+              <span class="option-check">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                  <path d="m5 12 4 4L19 6"/>
+                </svg>
+              </span>
+              <span class="option-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+                  <rect x="3" y="6" width="18" height="13" rx="4"/>
+                  <path d="M8 12h4m-2-2v4m6-2h.01M18 12h.01M8 3l-2 3m10-3 2 3"/>
+                </svg>
+              </span>
+              <strong>ضد الكمبيوتر</strong>
+              <small>العب ضد خصوم افتراضيين</small>
+            </button>
+
+            <button class="option-card" data-value="local" type="button">
+              <span class="option-check">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                  <path d="m5 12 4 4L19 6"/>
+                </svg>
+              </span>
+              <span class="option-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+                  <circle cx="8" cy="8" r="3"/>
+                  <circle cx="17" cy="9" r="2.5"/>
+                  <path d="M2.5 20v-2a5.5 5.5 0 0 1 11 0v2m1-5a4.5 4.5 0 0 1 7 3.7V20"/>
+                </svg>
+              </span>
+              <strong>لعب محلي</strong>
+              <small>أكثر من لاعب على نفس الجهاز</small>
+            </button>
+
+            <button class="option-card" data-value="online" type="button">
+              <span class="option-check">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                  <path d="m5 12 4 4L19 6"/>
+                </svg>
+              </span>
+              <span class="option-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+                  <circle cx="12" cy="12" r="9"/>
+                  <path d="M3 12h18M12 3a15 15 0 0 1 0 18m0-18a15 15 0 0 0 0 18"/>
+                </svg>
+              </span>
+              <strong>أونلاين</strong>
+              <small>مباراة مع لاعبين حقيقيين</small>
+            </button>
+
+          </div>
+
+          <div class="setting-block" id="aiSettings">
+            <label class="field-label" for="aiLevel">مستوى الكمبيوتر</label>
+            <select class="select-field" id="aiLevel">
+              <option value="easy">سهل</option>
+              <option value="medium" selected>متوسط</option>
+              <option value="hard">صعب</option>
+              <option value="expert">خبير</option>
+            </select>
+            <div class="setting-note">يتغير مستوى اختيار الكمبيوتر للحركات وفق المستوى المحدد.</div>
+          </div>
+
+          <div class="setting-row" style="margin-top:18px">
+            <div class="setting-block">
+              <label class="field-label" for="targetScore">هدف نقاط المباراة</label>
+              <select class="select-field" id="targetScore">
+                <option value="100">100 نقطة</option>
+                <option value="150">150 نقطة</option>
+                <option value="200" selected>200 نقطة</option>
+                <option value="300">300 نقطة</option>
+              </select>
+            </div>
+            <div class="setting-block">
+              <label class="field-label" for="customScore">نقاط مخصصة</label>
+              <input class="text-field" id="customScore" type="number" min="50" max="1000" step="5" placeholder="اختياري">
+            </div>
+          </div>
+
+          <button class="primary-btn full-btn" id="startGameButton" type="button">
+            <span class="button-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="m8 5 12 7-12 7V5Z"/>
+              </svg>
+            </span>
+            ابدأ المباراة
+          </button>
+        </section>
+
+      </div>
+
+      <aside class="setup-side">
+
+        <section class="panel">
+          <h3 class="panel-title">قواعد التوزيع</h3>
+          <p class="panel-subtitle">توزيع قطع الدومينو المكونة من 28 قطعة.</p>
+
+          <div class="info-list">
+            <div class="info-item">
+              <span class="info-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <circle cx="8" cy="8" r="4"/><circle cx="16" cy="8" r="4"/>
+                  <path d="M2 21v-2a6 6 0 0 1 12 0v2m-1-2a5 5 0 0 1 9 0v2"/>
+                </svg>
+              </span>
+              <div>
+                <strong>الثنائي</strong>
+                <small>7 قطع لكل لاعب، و14 قطعة في كومة السحب.</small>
+              </div>
+            </div>
+
+            <div class="info-item">
+              <span class="info-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <circle cx="6" cy="8" r="3"/><circle cx="12" cy="8" r="3"/><circle cx="18" cy="8" r="3"/>
+                  <path d="M2 20v-2a4 4 0 0 1 8 0v2m0 0v-2a4 4 0 0 1 8 0v2"/>
+                </svg>
+              </span>
+              <div>
+                <strong>الثلاثي</strong>
+                <small>9 قطع لكل لاعب، وقطعة صفر–صفر خارج اللعب.</small>
+              </div>
+            </div>
+
+            <div class="info-item">
+              <span class="info-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <circle cx="6" cy="7" r="2.5"/><circle cx="12" cy="7" r="2.5"/>
+                  <circle cx="18" cy="7" r="2.5"/><circle cx="12" cy="16" r="2.5"/>
+                  <path d="M2 22v-1a4 4 0 0 1 8 0v1m4 0v-1a4 4 0 0 1 8 0v1"/>
+                </svg>
+              </span>
+              <div>
+                <strong>الرباعي</strong>
+                <small>7 قطع لكل لاعب، ولا توجد كومة سحب.</small>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <h3 class="panel-title">طرق اللعب الجماعي</h3>
+          <p class="panel-subtitle">خيارات الغرف والبحث عن اللاعبين.</p>
+
+          <div class="lobby-grid">
+            <button class="lobby-btn" id="createRoomButton" type="button" disabled>
+              <span class="info-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <path d="M12 5v14M5 12h14"/>
+                </svg>
+              </span>
+              <span>
+                <strong>إنشاء غرفة</strong>
+                <small>طاولة خاصة</small>
+                <span class="coming-label">بانتظار ربط الغرف</span>
+              </span>
+            </button>
+
+            <button class="lobby-btn" id="joinRoomButton" type="button" disabled>
+              <span class="info-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <path d="M4 12h16m-6-6 6 6-6 6"/>
+                </svg>
+              </span>
+              <span>
+                <strong>دخول غرفة</strong>
+                <small>برمز الدعوة</small>
+                <span class="coming-label">بانتظار ربط الغرف</span>
+              </span>
+            </button>
+
+            <button class="lobby-btn" id="quickMatchButton" type="button" disabled>
+              <span class="info-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <circle cx="11" cy="11" r="7"/>
+                  <path d="m20 20-4-4"/>
+                </svg>
+              </span>
+              <span>
+                <strong>لعب سريع</strong>
+                <small>ابحث عن خصم</small>
+                <span class="coming-label">بانتظار ربط البحث</span>
+              </span>
+            </button>
+
+            <button class="lobby-btn" id="inviteFriendButton" type="button" disabled>
+              <span class="info-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2m8-11a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm6-2h6m-3-3v6"/>
+                </svg>
+              </span>
+              <span>
+                <strong>دعوة صديق</strong>
+                <small>العب مع أصدقائك</small>
+                <span class="coming-label">بانتظار ربط الدعوات</span>
+              </span>
+            </button>
+          </div>
+        </section>
+
+      </aside>
+    </div>
+  </section>
+
+  <!-- GAME SCREEN -->
+  <section id="gameScreen">
+
+    <div class="game-toolbar">
+      <div class="game-title-wrap">
+        <h2>طاولة الدومينو</h2>
+        <p id="gameModeLabel">مباراة جديدة · دومينو السحب</p>
+      </div>
+      <div class="game-toolbar-actions">
+        <button class="secondary-btn" id="gameRulesButton" type="button">قواعد الجولة</button>
+        <button class="secondary-btn" id="leaveGameButton" type="button">مغادرة الطاولة</button>
+      </div>
+    </div>
+
+    <div class="game-room">
+      <div class="room-light"></div>
+
+      <div class="table-shell">
+        <div class="table-inner">
+          <div class="table-pattern"></div>
+          <div class="table-emblem">HANOON</div>
+
+          <!-- Seats -->
+          <div class="player-seat top" id="seatTop">
+            <div class="player-avatar">2</div>
+            <div class="player-details">
+              <strong>الخصم</strong>
+              <small>7 قطع</small>
+            </div>
+          </div>
+
+          <div class="player-seat left" id="seatLeft">
+            <div class="player-avatar">3</div>
+            <div class="player-details">
+              <strong>اللاعب الثالث</strong>
+              <small>7 قطع</small>
+            </div>
+          </div>
+
+          <div class="player-seat right" id="seatRight">
+            <div class="player-avatar">4</div>
+            <div class="player-details">
+              <strong>اللاعب الرابع</strong>
+              <small>7 قطع</small>
+            </div>
+          </div>
+
+          <div class="player-seat bottom current" id="seatBottom">
+            <div class="player-avatar">أ</div>
+            <div class="player-details">
+              <strong>أنت</strong>
+              <small>7 قطع</small>
+            </div>
+          </div>
+
+          <!-- Board -->
+          <div class="board-area" id="dominoBoard">
+            <div class="board-placeholder">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <rect x="4" y="3" width="16" height="18" rx="3"/>
+                <path d="M12 3v18M8 7h.01M16 7h.01M8 17h.01M16 17h.01"/>
+              </svg>
+              تبدأ الجولة من هنا
+              <br>
+              سيتم وضع القطع على الطاولة عند بدء اللعب.
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="game-status-bar">
+        <div class="status-main">
+          <span class="status-light"></span>
+          <div>
+            <strong id="gameStatus">في انتظار بدء الجولة</strong>
+            <small id="gameStatusDetail">اختر قطعة من يدك للعب.</small>
+          </div>
+        </div>
+        <div class="game-info" id="gameInfo">الجولة 1</div>
+      </div>
+    </div>
+
+    <!-- Player hand -->
+    <section class="hand-panel">
+      <div class="hand-head">
+        <h3>قطعك</h3>
+        <span id="handCount">7 قطع</span>
+      </div>
+
+      <div class="hand-tiles" id="playerHand">
+        <div class="hand-empty">ستظهر قطعك هنا بعد توزيع الأوراق.</div>
+      </div>
+
+      <div class="play-controls">
+        <button class="primary-btn control-btn" id="playLeftButton" type="button" disabled>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M19 12H5m7 7-7-7 7-7"/>
+          </svg>
+          العب يسارًا
         </button>
 
-        <button class="mode-card" data-variant="block">
-          <div class="mode-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="3" width="16" height="18" rx="3"/><path d="M4 12h16M8 7h.01M16 17h.01"/></svg>
-          </div>
-          <strong>بلوك</strong>
-          <small>بدون كومة سحب</small>
+        <button class="primary-btn control-btn" id="playRightButton" type="button" disabled>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M5 12h14m-7-7 7 7-7 7"/>
+          </svg>
+          العب يمينًا
         </button>
 
-        <button class="mode-card" data-variant="fives">
-          <div class="mode-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M15.5 7.5H10l-.5 4h4a2.5 2.5 0 1 1-2.5 3"/></svg>
-          </div>
-          <strong>الخمسات</strong>
-          <small>حساب الأطراف بمضاعفات 5</small>
+        <button class="secondary-btn control-btn" id="drawTileButton" type="button" disabled>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M12 4v16m-6-6 6 6 6-6"/>
+          </svg>
+          اسحب قطعة
+        </button>
+
+        <button class="secondary-btn control-btn" id="passTurnButton" type="button" disabled>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M5 12h14m-6-6 6 6-6 6"/>
+          </svg>
+          تخطي الدور
         </button>
       </div>
+    </section>
 
-      <div class="setting-block">
-        <label class="field-label">ثانياً: عدد اللاعبين</label>
-        <div class="choice-row" id="playerOptions">
-          <button class="choice active" data-players="2">لاعبان</button>
-          <button class="choice" data-players="3">3 لاعبين</button>
-          <button class="choice" data-players="4">4 لاعبين</button>
-        </div>
-        <div class="setting-note" id="dealDescription">
-          كل لاعب يأخذ 7 قطع، وباقي القطع تكون في كومة السحب.
-        </div>
-      </div>
+    <!-- Social tools -->
+    <section class="social-tools">
+      <button class="social-tool" id="voiceButton" type="button" disabled title="الصوت قيد التجهيز">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+          <rect x="9" y="2" width="6" height="13" rx="3"/>
+          <path d="M5 11a7 7 0 0 0 14 0m-7 7v4m-4 0h8"/>
+        </svg>
+        <strong>الصوت</strong>
+        <small>قيد التجهيز</small>
+      </button>
 
-      <div class="setting-block">
-        <label class="field-label" for="targetScore">ثالثاً: نقاط الفوز</label>
-        <select class="select-field" id="targetScore">
-          <option value="100">100 نقطة</option>
-          <option value="150">150 نقطة</option>
-          <option value="200" selected>200 نقطة</option>
-          <option value="250">250 نقطة</option>
-          <option value="custom">تحديد نقاط مخصصة</option>
-        </select>
-        <input class="select-field hidden" id="customScore" type="number" min="50" max="2000" placeholder="اكتب نقاط الفوز">
-      </div>
+      <button class="social-tool" id="giftButton" type="button" disabled title="الهدايا قيد التجهيز">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+          <rect x="3" y="9" width="18" height="12" rx="2"/>
+          <path d="M12 9v12M3 13h18M12 9H7.5a2.5 2.5 0 1 1 2.5-2.5V9Zm0 0h4.5A2.5 2.5 0 1 0 14 6.5V9Z"/>
+        </svg>
+        <strong>الهدايا</strong>
+        <small>قيد التجهيز</small>
+      </button>
 
-      <div class="setting-block">
-        <label class="field-label">رابعاً: طريقة اللعب</label>
-        <div class="choice-row" id="playTypeOptions">
-          <button class="choice active" data-playtype="ai">ضد الكمبيوتر</button>
-          <button class="choice" data-playtype="local">على نفس الجهاز</button>
-          <button class="choice" data-playtype="online">أونلاين</button>
-        </div>
-      </div>
+      <button class="social-tool" id="chatButton" type="button" disabled title="الدردشة قيد التجهيز">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+          <path d="M21 11.5a8.4 8.4 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.4 8.4 0 0 1 3.8-.9h.5a8.5 8.5 0 0 1 8 8v.5Z"/>
+        </svg>
+        <strong>الدردشة</strong>
+        <small>قيد التجهيز</small>
+      </button>
 
-      <div class="setting-block" id="aiSettings">
-        <label class="field-label" for="aiLevel">مستوى الكمبيوتر</label>
-        <select class="select-field" id="aiLevel">
-          <option value="easy">سهل</option>
-          <option value="medium" selected>متوسط</option>
-          <option value="hard">صعب</option>
-          <option value="expert">محترف</option>
-        </select>
-      </div>
-
-      <button class="primary-btn full-btn" id="startGameButton">
-        ابدأ اللعب
-        <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-right:6px"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      <button class="social-tool" id="gameMenuButton" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+          <circle cx="5" cy="12" r="1"/>
+          <circle cx="12" cy="12" r="1"/>
+          <circle cx="19" cy="12" r="1"/>
+        </svg>
+        <strong>خيارات الطاولة</strong>
+        <small>إعدادات الجولة</small>
       </button>
     </section>
 
-    <aside>
-      <section class="panel">
-        <h3 class="panel-title">قواعد توزيع القطع</h3>
-        <div class="info-list">
-          <div class="info-item">
-            <div class="info-icon">٢</div>
-            <div><strong>لاعبان</strong><small>7 قطع لكل لاعب، والباقي في كومة السحب.</small></div>
-          </div>
-          <div class="info-item">
-            <div class="info-icon">٣</div>
-            <div><strong>ثلاثة لاعبين</strong><small>9 قطع لكل لاعب، والقطعة المتبقية خارج اللعب ولا تُحسب.</small></div>
-          </div>
-          <div class="info-item">
-            <div class="info-icon">٤</div>
-            <div><strong>أربعة لاعبين</strong><small>7 قطع لكل لاعب، ولا توجد كومة سحب.</small></div>
-          </div>
-        </div>
-        <div class="divider"></div>
-        <div class="setting-note">يتم ضبط التوزيع تلقائياً بمجرد تغيير عدد اللاعبين. ونظام السحب لا يضيف قطعاً غير موجودة في التوزيع.</div>
-      </section>
-
-      <div class="section-heading">
-        <h2>العب مع الآخرين</h2>
-      </div>
-
-      <section class="panel">
-        <div class="lobby-options">
-          <button class="lobby-btn" id="createRoomButton">
-            <div class="info-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 5v14M5 12h14"/></svg>
-            </div>
-            <div><strong>إنشاء طاولة</strong><small>أنشئ طاولة بإعداداتك</small></div>
-          </button>
-          <button class="lobby-btn" id="joinRoomButton">
-            <div class="info-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 12h16M13 5l7 7-7 7"/></svg>
-            </div>
-            <div><strong>دخول بكود</strong><small>انضم إلى طاولة صديقك</small></div>
-          </button>
-          <button class="lobby-btn" id="quickMatchButton">
-            <div class="info-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="8"/><path d="M12 7v5l3 2"/></svg>
-            </div>
-            <div><strong>لعب سريع</strong><small>ابحث عن لاعبين أونلاين</small></div>
-          </button>
-          <button class="lobby-btn" id="inviteFriendButton">
-            <div class="info-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="8" r="3"/><path d="M3 20v-2a6 6 0 0 1 12 0v2M19 8v6M16 11h6"/></svg>
-            </div>
-            <div><strong>دعوة صديق</strong><small>ادعُ صديقاً إلى اللعب</small></div>
-          </button>
-        </div>
-      </section>
-    </aside>
-  </div>
-</section>
-
-<!-- شاشة الطاولة -->
-<section id="gameScreen">
-  <div class="game-toolbar">
-    <div>
-      <h2>طاولة الدومينو</h2>
-      <p id="gameInfo">اللعبة جاهزة</p>
-    </div>
-    <div class="game-actions">
-      <button class="secondary-btn" id="gameRulesButton">القواعد</button>
-      <button class="secondary-btn" id="leaveGameButton">مغادرة الطاولة</button>
-    </div>
-  </div>
-
-  <div class="table-shell">
-    <div class="table-inner">
-
-      <div class="table-center">
-        <div class="table-emblem">HANOON</div>
-      </div>
-
-      <div class="player-seat top" id="seatTop">
-        <div class="player-avatar">؟</div>
-        <div><strong>بانتظار اللاعب</strong><small>0 قطعة</small></div>
-      </div>
-
-      <div class="player-seat left hidden" id="seatLeft">
-        <div class="player-avatar">؟</div>
-        <div><strong>بانتظار اللاعب</strong><small>0 قطعة</small></div>
-      </div>
-
-      <div class="player-seat right hidden" id="seatRight">
-        <div class="player-avatar">؟</div>
-        <div><strong>بانتظار اللاعب</strong><small>0 قطعة</small></div>
-      </div>
-
-      <div class="player-seat bottom current" id="seatBottom">
-        <div class="player-avatar">أ</div>
-        <div><strong>أنت</strong><small>7 قطع</small></div>
-      </div>
-
-      <div class="board-area" id="dominoBoard">
-        <div class="board-placeholder">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="4" y="3" width="16" height="18" rx="3"/><path d="M4 12h16"/></svg>
-          ستظهر قطع الدومينو هنا عند بدء المباراة
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <section class="hand-panel">
-    <div class="hand-head">
-      <h3>قطعك</h3>
-      <span id="handCount">0 قطعة</span>
-    </div>
-    <div class="hand-tiles" id="playerHand">
-      <!-- قطع اللاعب تظهر هنا -->
-    </div>
-    <div class="play-controls">
-      <button class="primary-btn" id="playLeftButton" disabled>العب يسار</button>
-      <button class="primary-btn" id="playRightButton" disabled>العب يمين</button>
-      <button class="secondary-btn" id="drawTileButton" disabled>اسحب قطعة</button>
-      <button class="secondary-btn" id="passTurnButton" disabled>تمرير الدور</button>
-    </div>
-    <div class="game-status" id="gameStatus">اختر قطعة من يدك لبدء اللعب.</div>
   </section>
-</section>
-
 </main>
 
-<!-- نافذة القواعد -->
-<div class="modal-backdrop" id="rulesModal">
-  <div class="modal">
+<!-- RULES MODAL -->
+<div class="modal" id="rulesModal" role="dialog" aria-modal="true" aria-labelledby="rulesTitle">
+  <div class="modal-card">
     <div class="modal-head">
-      <h3>قواعد الدومينو</h3>
-      <button class="modal-close" data-close="rulesModal">×</button>
+      <h3 id="rulesTitle">قواعد الدومينو</h3>
+      <button class="modal-close" id="closeRulesButton" type="button" aria-label="إغلاق">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="m6 6 12 12M18 6 6 18"/>
+        </svg>
+      </button>
     </div>
-    <div class="info-list">
-      <div class="info-item"><div class="info-icon">١</div><div><strong>توزيع القطع</strong><small>لاعبان: 7 لكل لاعب والباقي للسحب. ثلاثة: 9 لكل لاعب وقطعة خارج اللعب. أربعة: 7 لكل لاعب دون سحب.</small></div></div>
-      <div class="info-item"><div class="info-icon">٢</div><div><strong>السحب</strong><small>في نظام السحب، لا تسحب إلا عندما لا تجد قطعة صالحة للعب، وتوجد قطع في كومة السحب.</small></div></div>
-      <div class="info-item"><div class="info-icon">٣</div><div><strong>البلوك</strong><small>إذا لم توجد حركة قانونية ولا توجد كومة سحب، ينتقل الدور وفق قواعد النظام.</small></div></div>
-      <div class="info-item"><div class="info-icon">٥</div><div><strong>الخمسات</strong><small>تُحسب أطراف السلسلة المفتوحة، وتُسجل النقاط عندما يكون مجموعها من مضاعفات خمسة.</small></div></div>
-    </div>
-  </div>
-</div>
+    <div class="modal-content">
+      <h4>توزيع القطع</h4>
+      <p>في مباراة لاعبين يحصل كل لاعب على 7 قطع ويتبقى 14 للسحب. في مباراة 3 لاعبين يحصل كل لاعب على 9 قطع وتخرج قطعة صفر–صفر من اللعب. في مباراة 4 لاعبين يحصل كل لاعب على 7 قطع ولا توجد كومة سحب.</p>
 
-<!-- نافذة إنشاء أو دخول طاولة -->
-<div class="modal-backdrop" id="roomModal">
-  <div class="modal">
-    <div class="modal-head">
-      <h3 id="roomModalTitle">إعداد الطاولة</h3>
-      <button class="modal-close" data-close="roomModal">×</button>
-    </div>
+      <h4>دومينو السحب</h4>
+      <p>إذا لم تكن لديك حركة قانونية، يمكنك سحب قطعة من الكومة عندما تكون متاحة.</p>
 
-    <div class="setting-block">
-      <label class="field-label" for="roomVisibility">خصوصية الطاولة</label>
-      <select class="select-field" id="roomVisibility">
-        <option value="public">عامة</option>
-        <option value="private">خاصة بكود</option>
-      </select>
-    </div>
+      <h4>دومينو الحجب</h4>
+      <p>لا توجد كومة سحب؛ إذا لم تستطع اللعب تنتقل الجولة وفق قواعد الحجب.</p>
 
-    <div class="setting-block" id="roomCodeGroup">
-      <label class="field-label" for="roomCode">كود الطاولة</label>
-      <input class="select-field" id="roomCode" type="text" placeholder="أدخل كود الطاولة">
+      <h4>الخمسات</h4>
+      <p>تُحسب النقاط عندما يكون مجموع أطراف اللعب المفتوحة من مضاعفات خمسة. يجب أن تظهر أطراف اللعب وحسابها بوضوح.</p>
     </div>
-
     <div class="modal-actions">
-      <button class="primary-btn" id="confirmRoomButton">تأكيد</button>
-      <button class="secondary-btn" data-close="roomModal">إلغاء</button>
+      <button class="primary-btn" id="closeRulesConfirm" type="button">فهمت</button>
     </div>
   </div>
 </div>
 
-<div class="toast" id="toast"></div>
+<!-- ROOM MODAL -->
+<div class="modal" id="roomModal" role="dialog" aria-modal="true" aria-labelledby="roomModalTitle">
+  <div class="modal-card">
+    <div class="modal-head">
+      <h3 id="roomModalTitle">إعداد الغرفة</h3>
+      <button class="modal-close" id="closeRoomButton" type="button" aria-label="إغلاق">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="m6 6 12 12M18 6 6 18"/>
+        </svg>
+      </button>
+    </div>
+    <div class="modal-content">
+      إعدادات الغرفة ستظهر هنا عند تفعيل نظام الغرف والاتصال بالأصدقاء.
+    </div>
+    <div class="modal-actions">
+      <button class="secondary-btn" id="cancelRoomButton" type="button">إغلاق</button>
+      <button class="primary-btn" id="confirmRoomButton" type="button" disabled>تأكيد</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script type="module" src="./domino.js"></script>
 </body>
