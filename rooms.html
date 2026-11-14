@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<meta name="theme-color" content="#090b18">
+<title>الغرف | HANOON WORLD</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+:root{
+ --bg:#090b18;--panel:#14182a;--panel2:#1c2036;
+ --text:#f6f4ff;--muted:#a2a8c1;--purple:#a78bfa;
+ --gold:#edca83;--cyan:#64d8d1;--green:#52d5a0;
+ --red:#ff7188;--line:rgba(255,255,255,.09);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{min-height:100vh;background:var(--bg);color:var(--text);font-family:Cairo,sans-serif;overflow-x:hidden}
+button,input,select{font:inherit}
+button{cursor:pointer;color:inherit}
+a{text-decoration:none;color:inherit}
+.bg{
+ position:fixed;inset:0;z-index:-2;
+ background:
+ linear-gradient(180deg,rgba(7,9,22,.62),#090b18 72%),
+ url("https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=2000&q=85") center/cover;
+}
+.bg:after{
+ content:"";position:absolute;inset:0;
+ background:
+ radial-gradient(ellipse at 12% 10%,#8058d52b,transparent 40%),
+ radial-gradient(ellipse at 90% 40%,#27b9b42a,transparent 38%);
+}
+.container{width:min(1160px,calc(100% - 28px));margin:auto}
+header{
+ min-height:72px;display:flex;align-items:center;justify-content:space-between;
+ border-bottom:1px solid var(--line);gap:15px;
+}
+.brand{display:flex;align-items:center;gap:11px;font-weight:900}
+.brand-icon{
+ width:43px;height:43px;border-radius:15px;display:grid;place-items:center;
+ background:linear-gradient(145deg,#b49aff,#6845ce);
+ box-shadow:0 8px 28px #7955dc55;
+}
+.brand-icon svg{width:25px;stroke:white;fill:none;stroke-width:1.8}
+.brand small{display:block;color:var(--gold);font-size:8px;letter-spacing:2px;margin-top:-5px}
+.header-actions{display:flex;align-items:center;gap:9px}
+.header-btn{
+ border:1px solid var(--line);background:#ffffff0a;border-radius:12px;
+ padding:9px 13px;font-size:11px;font-weight:800;
+}
+.header-btn svg{width:15px;height:15px;vertical-align:middle;margin-left:5px;stroke:currentColor;fill:none;stroke-width:1.8}
+.hero{
+ margin-top:23px;position:relative;min-height:245px;overflow:hidden;
+ border:1px solid #a78bfa38;border-radius:25px;
+ background:#15152b;box-shadow:0 22px 60px #0006;
+}
+.hero-bg{
+ position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.52;
+}
+.hero-shade{
+ position:absolute;inset:0;
+ background:linear-gradient(90deg,#090b18 0%,#090b18df 40%,#090b1840 100%);
+}
+.hero-content{position:relative;padding:35px;max-width:670px}
+.eyebrow{
+ display:inline-flex;padding:6px 12px;border-radius:30px;
+ border:1px solid #edca8350;background:#edca8310;
+ color:var(--gold);font-size:10px;font-weight:900;
+}
+.hero h1{font-size:clamp(28px,5vw,45px);font-weight:900;margin:12px 0 5px}
+.hero p{font-size:12px;line-height:2;color:#d1cde0;max-width:510px}
+.hero-stats{display:flex;gap:9px;flex-wrap:wrap;margin-top:17px}
+.hero-stat{
+ padding:7px 12px;border:1px solid var(--line);
+ border-radius:10px;background:#080a1688;font-size:10px;color:#e5e0f6;
+}
+.section-head{
+ display:flex;align-items:center;justify-content:space-between;
+ gap:12px;margin:26px 0 13px;
+}
+.section-head h2{font-size:17px;font-weight:900}
+.section-head p{font-size:10px;color:var(--muted);margin-top:2px}
+.section-actions{display:flex;gap:8px;align-items:center}
+.action-btn{
+ border:1px solid var(--line);border-radius:12px;
+ padding:9px 12px;background:#ffffff09;font-size:10px;font-weight:800;
+}
+.action-btn svg{width:15px;height:15px;vertical-align:middle;margin-left:4px;stroke:currentColor;fill:none;stroke-width:1.8}
+.primary{
+ border:0;border-radius:12px;padding:11px 15px;
+ background:linear-gradient(120deg,#a78bfa,#694bd0);
+ font-size:11px;font-weight:900;box-shadow:0 8px 22px #7955dc30;
+}
+.primary svg{width:16px;height:16px;vertical-align:middle;margin-left:5px;stroke:white;fill:none;stroke-width:2}
+.panel{
+ border:1px solid var(--line);border-radius:19px;
+ background:linear-gradient(145deg,#171b30ee,#101426ee);
+ padding:17px;box-shadow:0 14px 35px #0003;backdrop-filter:blur(13px);
+}
+.room-grid{
+ display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,285px),1fr));
+ gap:13px;
+}
+.room-card{
+ overflow:hidden;border:1px solid var(--line);border-radius:18px;
+ background:linear-gradient(145deg,#1b2038,#111526);
+ transition:border-color .2s;
+}
+.room-card:hover{border-color:#a78bfa88}
+.room-cover{height:125px;position:relative;overflow:hidden;background:#171b30}
+.room-cover img{width:100%;height:100%;object-fit:cover;opacity:.76}
+.room-cover:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,#101426,transparent 90%)}
+.room-cover-label{
+ position:absolute;z-index:1;right:13px;top:12px;
+ border:1px solid #ffffff28;border-radius:9px;padding:5px 9px;
+ background:#090b18a8;font-size:9px;font-weight:800;
+}
+.room-cover-status{
+ position:absolute;z-index:1;left:13px;top:12px;
+ padding:5px 9px;border-radius:9px;background:#52d5a01c;
+ border:1px solid #52d5a055;color:#8ce8c0;font-size:9px;
+}
+.room-body{padding:14px}
+.room-title{font-size:14px;font-weight:900}
+.room-code{font-size:10px;color:var(--muted);margin-top:4px}
+.room-details{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+.room-detail{
+ border:1px solid var(--line);border-radius:8px;padding:5px 8px;
+ color:#c6c9da;font-size:9px;background:#ffffff06;
+}
+.room-footer{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.room-count{font-size:10px;color:var(--muted)}
+.join-btn{
+ min-width:100px;border:0;border-radius:10px;padding:9px 13px;
+ background:#a78bfa20;color:#d9cbff;font-size:10px;font-weight:900;
+}
+.join-btn:disabled{opacity:.45;cursor:not-allowed}
+.empty{
+ padding:36px 18px;text-align:center;color:var(--muted);
+ border:1px dashed #ffffff24;border-radius:17px;
+ background:#ffffff04;
+}
+.empty svg{width:43px;height:43px;stroke:#a78bfa;fill:none;margin-bottom:12px}
+.empty h3{font-size:14px;color:#eee9ff;margin-bottom:5px}
+.empty p{font-size:11px;line-height:2}
+.loading{width:30px;height:30px;border:3px solid #ffffff22;border-top-color:var(--purple);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 12px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.game-grid{
+ display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,190px),1fr));gap:12px;
+}
+.game-card{
+ overflow:hidden;border:1px solid var(--line);border-radius:15px;
+ background:#ffffff07;cursor:pointer;text-align:right;
+}
+.game-card.selected{border-color:var(--purple);box-shadow:0 0 0 2px #a78bfa25}
+.game-card img{width:100%;height:105px;object-fit:cover;display:block}
+.game-card-info{padding:10px}
+.game-card-info b{font-size:12px;display:block}
+.game-card-info small{font-size:9px;color:var(--muted)}
+.modal{
+ position:fixed;inset:0;z-index:20;display:none;align-items:center;
+ justify-content:center;padding:15px;background:#050611d9;backdrop-filter:blur(12px);
+}
+.modal.open{display:flex}
+.modal-box{
+ width:min(610px,100%);max-height:90vh;overflow:auto;
+ border:1px solid #a78bfa44;border-radius:22px;
+ background:linear-gradient(145deg,#1a1e34,#0d1121);
+ box-shadow:0 30px 100px #000b;padding:21px;
+}
+.modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+.modal-head h2{font-size:18px;font-weight:900}
+.close-btn{
+ width:34px;height:34px;border:1px solid var(--line);
+ border-radius:10px;background:#ffffff08;font-size:18px;
+}
+.field{margin-top:14px}
+.field label{display:block;font-size:11px;font-weight:800;margin-bottom:7px}
+.field input,.field select{
+ width:100%;height:45px;border:1px solid var(--line);
+ border-radius:11px;background:#0c1020;color:var(--text);
+ padding:0 12px;outline:none;font-size:12px;
+}
+.field input:focus,.field select:focus{border-color:#a78bfa}
+.visibility-options{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.visibility-option{
+ border:1px solid var(--line);border-radius:12px;padding:12px;
+ background:#ffffff06;text-align:right;
+}
+.visibility-option.active{border-color:var(--purple);background:#a78bfa15}
+.visibility-option b{display:block;font-size:11px}
+.visibility-option small{font-size:9px;color:var(--muted)}
+.modal-submit{width:100%;margin-top:18px;height:47px}
+.feedback{
+ display:none;margin-top:12px;padding:11px;border-radius:10px;
+ background:#ff718815;border:1px solid #ff718844;
+ color:#ff9aab;font-size:10px;line-height:1.8;
+}
+.feedback.show{display:block}
+.success{
+ background:#52d5a015;border-color:#52d5a044;color:#8ce8c0;
+}
+.code-row{display:flex;gap:8px}
+.code-row input{direction:ltr;text-align:center;letter-spacing:3px;font-weight:900}
+footer{text-align:center;padding:27px 0;color:#777d98;font-size:9px}
+.bottom-nav{
+ display:none;position:fixed;bottom:0;right:0;left:0;z-index:10;
+ padding:9px 7px calc(9px + env(safe-area-inset-bottom));
+ border-top:1px solid var(--line);background:#0b0e1cf2;
+ backdrop-filter:blur(15px);
+ grid-template-columns:repeat(5,1fr);
+}
+.bottom-nav a{display:flex;flex-direction:column;align-items:center;gap:4px;color:#9299b3;font-size:9px}
+.bottom-nav a.active{color:#c4adff}
+.bottom-nav svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.7}
+@media(max-width:700px){
+ .container{width:calc(100% - 20px)}
+ header{min-height:63px}
+ .hero{min-height:245px;border-radius:19px}
+ .hero-content{padding:26px 19px}
+ .hero-shade{background:linear-gradient(90deg,#090b18ed,#090b18b9)}
+ .section-head{align-items:flex-start}
+ .section-head h2{font-size:15px}
+ .bottom-nav{display:grid}
+ body{padding-bottom:75px}
+ .header-actions .header-btn:first-child{display:none}
+ .modal-box{padding:16px}
+}
+</style>
+</head>
+
+<body>
+<div class="bg"></div>
+
+<div class="container">
+<header>
+ <a class="brand" href="home.html">
+  <span class="brand-icon">
+   <svg viewBox="0 0 24 24">
+    <path d="M7 8h10a4 4 0 0 1 4 4v4a3 3 0 0 1-5 2l-2-2h-4l-2 2a3 3 0 0 1-5-2v-4a4 4 0 0 1 4-4Z"/>
+    <path d="M8 11v4M6 13h4M16 12h.01M18 14h.01"/>
+   </svg>
+  </span>
+  <span>HANOON WORLD<small>GAMING ROOMS</small></span>
+ </a>
+
+ <div class="header-actions">
+  <a class="header-btn" href="games.html">مكتبة الألعاب</a>
+  <button class="header-btn" id="refreshBtn">
+   <svg viewBox="0 0 24 24"><path d="M20 7v5h-5M4 17v-5h5"/><path d="M5.5 9A7 7 0 0 1 18 6l2 6M4 12l2 6a7 7 0 0 0 12.5-3"/></svg>
+   تحديث
+  </button>
+ </div>
+</header>
+
+<section class="hero">
+ <img class="hero-bg" src="https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=1600&q=85" alt="Gaming room">
+ <div class="hero-shade"></div>
+ <div class="hero-content">
+  <span class="eyebrow">HANOON MULTIPLAYER ARENA</span>
+  <h1>غرف اللعب</h1>
+  <p>اجمع أصحابك، اختار لعبتك، وافتح غرفة خاصة أو ادخل منافسة في غرفة عامة. كل غرفة تبدأ بلاعبين حقيقيين فقط.</p>
+  <div class="hero-stats">
+   <span class="hero-stat">غرف عامة متاحة</span>
+   <span class="hero-stat">دعوات بكود الغرفة</span>
+   <span class="hero-stat">ألعاب هنون</span>
+  </div>
+ </div>
+</section>
+
+<section class="section-head">
+ <div>
+  <h2>الغرف المتاحة</h2>
+  <p>الغرف الموجودة حاليًا في قاعدة البيانات</p>
+ </div>
+ <div class="section-actions">
+  <button class="action-btn" id="joinCodeBtn">دخول بكود</button>
+  <button class="primary" id="createBtn">
+   <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+   إنشاء غرفة
+  </button>
+ </div>
+</section>
+
+<div id="roomsContainer">
+ <div class="empty"><div class="loading"></div>جارٍ تحميل الغرف...</div>
+</div>
+
+<section class="section-head">
+ <div>
+  <h2>ابدأ بغرفتك الخاصة</h2>
+  <p>اختار لعبة من الألعاب المتاحة وأنشئ غرفة جديدة</p>
+ </div>
+</section>
+
+<div class="panel">
+ <div id="gamesContainer" class="game-grid">
+  <div class="empty" style="grid-column:1/-1">جارٍ تحميل الألعاب...</div>
+ </div>
+</div>
+
+<footer>HANOON WORLD · PLAY TOGETHER</footer>
+</div>
+
+<nav class="bottom-nav">
+ <a href="home.html">
+  <svg viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10H3z"/><path d="M9 20v-6h6v6"/></svg>
+  الرئيسية
+ </a>
+ <a href="rooms.html" class="active">
+  <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M8 9h8M8 13h5"/></svg>
+  الغرف
+ </a>
+ <a href="games.html">
+  <svg viewBox="0 0 24 24"><path d="M7 8h10a4 4 0 0 1 4 4v4a3 3 0 0 1-5 2l-2-2h-4l-2 2a3 3 0 0 1-5-2v-4a4 4 0 0 1 4-4Z"/><path d="M8 11v4M6 13h4"/></svg>
+  الألعاب
+ </a>
+ <a href="chat.html">
+  <svg viewBox="0 0 24 24"><path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5H4l1.5-4A8.5 8.5 0 1 1 21 11.5Z"/></svg>
+  المحادثات
+ </a>
+ <a href="profile.html">
+  <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>
+  حسابي
+ </a>
+</nav>
+
+<!-- إنشاء غرفة -->
+<div class="modal" id="createModal">
+ <div class="modal-box">
+  <div class="modal-head">
+   <h2>إنشاء غرفة جديدة</h2>
+   <button class="close-btn" data-close="createModal">×</button>
+  </div>
+
+  <p style="font-size:11px;color:var(--muted);line-height:2">
+   اختار اللعبة ونوع الغرفة وعدد اللاعبين.
+  </p>
+
+  <div class="field">
+   <label>اختار اللعبة</label>
+   <div id="modalGames" class="game-grid"></div>
+  </div>
+
+  <div class="field">
+   <label>نوع الغرفة</label>
+   <div class="visibility-options">
+    <button class="visibility-option active" data-visibility="public">
+     <b>غرفة عامة</b>
+     <small>تظهر في قائمة الغرف</small>
+    </button>
+    <button class="visibility-option" data-visibility="private">
+     <b>غرفة خاصة</b>
+     <small>الدخول باستخدام كود الغرفة</small>
+    </button>
+   </div>
+  </div>
+
+  <div class="field">
+   <label for="maxPlayers">عدد اللاعبين الأقصى</label>
+   <select id="maxPlayers">
+    <option value="2">لاعبان</option>
+    <option value="3">3 لاعبين</option>
+    <option value="4" selected>4 لاعبين</option>
+    <option value="6">6 لاعبين</option>
+    <option value="8">8 لاعبين</option>
+   </select>
+  </div>
+
+  <div class="feedback" id="createFeedback"></div>
+  <button class="primary modal-submit" id="confirmCreate">إنشاء الغرفة</button>
+ </div>
+</div>
+
+<!-- دخول بكود -->
+<div class="modal" id="codeModal">
+ <div class="modal-box" style="max-width:420px">
+  <div class="modal-head">
+   <h2>دخول غرفة</h2>
+   <button class="close-btn" data-close="codeModal">×</button>
+  </div>
+  <p style="font-size:11px;color:var(--muted);line-height:2">
+   اكتب كود الغرفة الذي أرسله لك صاحبها.
+  </p>
+  <div class="field">
+   <label for="roomCodeInput">كود الغرفة</label>
+   <div class="code-row">
+    <input id="roomCodeInput" maxlength="8" placeholder="XXXXXXXX" autocomplete="off">
+   </div>
+  </div>
+  <div class="feedback" id="joinFeedback"></div>
+  <button class="primary modal-submit" id="confirmJoin">دخول الغرفة</button>
+ </div>
+</div>
+
+<script>
+const SUPABASE_URL="https://gjtgvczvclfwvlvcquxh.supabase.co";
+const SUPABASE_KEY="sb_publishable_4DVTUZ-xTlqU2GpFvpb7lw_g-Kxomd4";
+const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+
+const $=id=>document.getElementById(id);
+
+const GAME_IMAGES={
+ domino:"https://i.tgrthaber.com/images/2025/3/24/domino-nedir-ve-nasil-oynanir-domino-oyunu-toplam-kacta-biter-3209914_202503241741_4.jpg",
+ ludo:"https://images.unsplash.com/photo-1606503153255-59d8b8b82185?auto=format&fit=crop&w=900&q=85",
+ chess:"https://burst.shopifycdn.com/photos/dark-wooden-chess-pieces-against-a-black-background.jpg?exif=0&iptc=0&width=900",
+ jackaroo:"https://i0.wp.com/www.jackarokw.com/wp-content/uploads/2018/01/Jackaroo-28-scaled.jpg?fit=900%2C600&ssl=1",
+ "tic-tac-toe":"https://images.unsplash.com/photo-1611996575749-79a3a250f948?auto=format&fit=crop&w=900&q=85"
+};
+
+let currentUser=null;
+let games=[];
+let selectedGame=null;
+let selectedVisibility="public";
+let roomRows=[];
+
+function esc(value){
+ return String(value??"").replace(/[&<>"']/g,c=>({
+  "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+ }[c]));
+}
+
+function feedback(id,message,success=false){
+ const el=$(id);
+ el.textContent=message;
+ el.classList.add("show");
+ el.classList.toggle("success",success);
+}
+
+function clearFeedback(id){
+ const el=$(id);
+ el.textContent="";
+ el.classList.remove("show","success");
+}
+
+function openModal(id){$(id).classList.add("open")}
+function closeModal(id){$(id).classList.remove("open")}
+
+document.querySelectorAll("[data-close]").forEach(btn=>{
+ btn.addEventListener("click",()=>closeModal(btn.dataset.close));
+});
+
+document.querySelectorAll(".modal").forEach(modal=>{
+ modal.addEventListener("click",e=>{
+  if(e.target===modal)modal.classList.remove("open");
+ });
+});
+
+function authError(){
+ location.href="login.html?next="+encodeURIComponent("rooms.html");
+}
+
+function getGameImage(game){
+ return game.cover_path&&/^https?:\/\//i.test(game.cover_path)
+  ?game.cover_path
+  :(GAME_IMAGES[game.slug]||"");
+}
+
+async function loadGames(){
+ const {data,error}=await db
+  .from("world_games_catalog")
+  .select("id,slug,title_ar,title_en,category,cover_path,is_active,sort_order")
+  .eq("is_active",true)
+  .order("sort_order",{ascending:true});
+
+ if(error)throw error;
+ games=data||[];
+ renderGameChoices();
+}
+
+function renderGameChoices(){
+ if(!games.length){
+  $("gamesContainer").innerHTML=`
+   <div class="empty" style="grid-column:1/-1">
+    <h3>لا توجد ألعاب متاحة حاليًا</h3>
+    <p>الألعاب ستظهر هنا عندما تكون متاحة للعب.</p>
+   </div>`;
+  $("modalGames").innerHTML="";
+  return;
+ }
+
+ const cards=games.map(game=>{
+  const image=getGameImage(game);
+  return `
+   <button class="game-card ${selectedGame===game.slug?"selected":""}" data-game="${esc(game.slug)}">
+    ${image?`<img src="${esc(image)}" alt="${esc(game.title_ar)}" loading="lazy">`:`<div style="height:105px;background:#20243b"></div>`}
+    <div class="game-card-info">
+     <b>${esc(game.title_ar||game.title_en||game.slug)}</b>
+     <small>${esc(game.category||"ألعاب هنون")}</small>
+    </div>
+   </button>`;
+ }).join("");
+
+ $("gamesContainer").innerHTML=cards;
+ $("modalGames").innerHTML=cards;
+
+ document.querySelectorAll("[data-game]").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+   selectedGame=btn.dataset.game;
+   renderGameChoices();
+  });
+ });
+}
+
+async function loadRooms(){
+ $("roomsContainer").innerHTML=`
+  <div class="empty"><div class="loading"></div>جارٍ تحديث الغرف...</div>`;
+
+ const {data,error}=await db.rpc("get_world_game_rooms",{p_limit:50});
+ if(error)throw error;
+
+ roomRows=data||[];
+ renderRooms();
+}
+
+function renderRooms(){
+ if(!roomRows.length){
+  $("roomsContainer").innerHTML=`
+   <div class="empty">
+    <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M8 9h8M8 13h5"/></svg>
+    <h3>لا توجد غرف متاحة الآن</h3>
+    <p>أنشئ غرفتك وابدأ أول تحدٍ مع أصدقائك.</p>
+   </div>`;
+  return;
+ }
+
+ $("roomsContainer").innerHTML=`
+  <div class="room-grid">
+   ${roomRows.map(room=>{
+    const image=GAME_IMAGES[room.game_slug]||"";
+    const isFull=Number(room.player_count)>=Number(room.max_players);
+    const status=room.status==="playing"?"مباراة جارية":"بانتظار اللاعبين";
+    return `
+     <article class="room-card">
+      <div class="room-cover">
+       ${image?`<img src="${esc(image)}" alt="${esc(room.game_title_ar)}" loading="lazy">`:""}
+       <span class="room-cover-label">${esc(room.game_title_ar||room.game_slug)}</span>
+       <span class="room-cover-status">${status}</span>
+      </div>
+      <div class="room-body">
+       <div class="room-title">${esc(room.game_title_ar||"غرفة ألعاب")}</div>
+       <div class="room-code">كود الغرفة: ${esc(room.room_code)}</div>
+       <div class="room-details">
+        <span class="room-detail">${room.visibility==="private"?"خاصة":"عامة"}</span>
+        <span class="room-detail">${Number(room.player_count)} / ${Number(room.max_players)} لاعبين</span>
+       </div>
+       <div class="room-footer">
+        <span class="room-count">${isFull?"الغرفة مكتملة":"يمكن الانضمام"}</span>
+        <button class="join-btn" data-join="${esc(room.room_code)}" ${isFull?"disabled":""}>
+         ${isFull?"مكتملة":"دخول الغرفة"}
+        </button>
+       </div>
+      </div>
+     </article>`;
+   }).join("")}
+  </div>`;
+
+ document.querySelectorAll("[data-join]").forEach(btn=>{
+  btn.addEventListener("click",()=>joinRoom(btn.dataset.join));
+ });
+}
+
+async function createRoom(){
+ clearFeedback("createFeedback");
+
+ if(!selectedGame){
+  feedback("createFeedback","اختار اللعبة أولًا.");
+  return;
+ }
+
+ const btn=$("confirmCreate");
+ btn.disabled=true;
+ btn.textContent="جارٍ إنشاء الغرفة...";
+
+ try{
+  const {data,error}=await db.rpc("create_world_game_room",{
+   p_game_slug:selectedGame,
+   p_visibility:selectedVisibility,
+   p_max_players:Number($("maxPlayers").value)
+  });
+
+  if(error)throw error;
+  if(!data||!data.id)throw new Error("لم يتم استلام بيانات الغرفة.");
+
+  location.href="room.html?id="+encodeURIComponent(data.id);
+ }catch(error){
+  console.error(error);
+  feedback("createFeedback",translateError(error));
+ }finally{
+  btn.disabled=false;
+  btn.textContent="إنشاء الغرفة";
+ }
+}
+
+async function joinRoom(code){
+ if(!code)return;
+ clearFeedback("joinFeedback");
+
+ try{
+  const {data,error}=await db.rpc("join_world_game_room",{
+   p_room_code:String(code).trim().toUpperCase()
+  });
+  if(error)throw error;
+  if(!data||!data.id)throw new Error("لم يتم العثور على بيانات الغرفة.");
+
+  closeModal("codeModal");
+  location.href="room.html?id="+encodeURIComponent(data.id);
+ }catch(error){
+  console.error(error);
+  if($("codeModal").classList.contains("open")){
+   feedback("joinFeedback",translateError(error));
+  }else{
+   alert(translateError(error));
+  }
+ }
+}
+
+function translateError(error){
+ const message=String(error?.message||error||"");
+ if(message.includes("AUTH_REQUIRED"))return "سجل دخولك أولًا للمتابعة.";
+ if(message.includes("GAME_NOT_AVAILABLE"))return "اللعبة غير متاحة حاليًا.";
+ if(message.includes("INVALID_VISIBILITY"))return "نوع الغرفة غير صحيح.";
+ if(message.includes("INVALID_PLAYER_LIMIT"))return "عدد اللاعبين غير مسموح به.";
+ if(message.includes("INVALID_ROOM_CODE"))return "اكتب كود غرفة صحيحًا.";
+ if(message.includes("ROOM_NOT_FOUND"))return "لم نعثر على غرفة بهذا الكود.";
+ if(message.includes("ROOM_NOT_JOINABLE"))return "هذه الغرفة لم تعد تستقبل لاعبين.";
+ if(message.includes("ROOM_FULL"))return "الغرفة وصلت إلى الحد الأقصى من اللاعبين.";
+ if(message.includes("NOT_A_ROOM_MEMBER"))return "أنت لست عضوًا في هذه الغرفة.";
+ if(message.includes("foreign key")||message.includes("world_game_room_players_user_id_fkey")){
+  return "ملف حسابك غير مكتمل في قاعدة البيانات. أكمل إعداد الملف الشخصي أولًا.";
+ }
+ if(message.includes("Failed to fetch"))return "تعذر الاتصال بالخادم. تحقق من الإنترنت.";
+ return "تعذر تنفيذ العملية. حاول مرة أخرى.";
+}
+
+$("createBtn").addEventListener("click",()=>{
+ selectedGame=null;
+ selectedVisibility="public";
+ document.querySelectorAll("[data-visibility]").forEach(btn=>{
+  btn.classList.toggle("active",btn.dataset.visibility==="public");
+ });
+ renderGameChoices();
+ clearFeedback("createFeedback");
+ openModal("createModal");
+});
+
+$("joinCodeBtn").addEventListener("click",()=>{
+ $("roomCodeInput").value="";
+ clearFeedback("joinFeedback");
+ openModal("codeModal");
+});
+
+$("confirmCreate").addEventListener("click",createRoom);
+$("confirmJoin").addEventListener("click",()=>joinRoom($("roomCodeInput").value));
+
+$("roomCodeInput").addEventListener("input",e=>{
+ e.target.value=e.target.value.replace(/[^a-zA-Z0-9]/g,"").toUpperCase();
+});
+
+document.querySelectorAll("[data-visibility]").forEach(btn=>{
+ btn.addEventListener("click",()=>{
+  selectedVisibility=btn.dataset.visibility;
+  document.querySelectorAll("[data-visibility]").forEach(item=>{
+   item.classList.toggle("active",item===btn);
+  });
+ });
+});
+
+$("refreshBtn").addEventListener("click",async()=>{
+ try{
+  await loadRooms();
+ }catch(error){
+  console.error(error);
+  $("roomsContainer").innerHTML=`
+   <div class="empty"><h3>تعذر تحديث الغرف</h3><p>${esc(translateError(error))}</p></div>`;
+ }
+});
+
+async function initialize(){
+ try{
+  const {data,error}=await db.auth.getSession();
+  if(error)throw error;
+
+  currentUser=data.session?.user||null;
+  if(!currentUser){authError();return;}
+
+  await Promise.all([loadGames(),loadRooms()]);
+ }catch(error){
+  console.error("HANOON ROOMS:",error);
+  $("roomsContainer").innerHTML=`
+   <div class="empty">
+    <h3>تعذر تحميل الغرف</h3>
+    <p>${esc(translateError(error))}</p>
+   </div>`;
+  $("gamesContainer").innerHTML=`
+   <div class="empty" style="grid-column:1/-1">
+    <h3>تعذر تحميل الألعاب</h3>
+    <p>تحقق من الاتصال بقاعدة البيانات.</p>
+   </div>`;
+ }
+}
+
+initialize();
+</script>
+</body>
+</html>
