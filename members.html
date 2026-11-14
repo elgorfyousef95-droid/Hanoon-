@@ -1,0 +1,1357 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="theme-color" content="#090914">
+<title>الأعضاء | HANOON WORLD</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+:root{
+  --bg:#090914;
+  --panel:#141426;
+  --panel2:#1c1b32;
+  --purple:#9b7cff;
+  --purple2:#7654e5;
+  --gold:#f0c875;
+  --cyan:#65d9d1;
+  --text:#f8f6ff;
+  --muted:#aaa5c0;
+  --line:rgba(255,255,255,.09);
+  --shadow:0 20px 55px rgba(0,0,0,.38);
+}
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  -webkit-tap-highlight-color:transparent;
+}
+
+html{
+  min-height:100%;
+  background:var(--bg);
+}
+
+body{
+  min-height:100vh;
+  color:var(--text);
+  font-family:"Cairo",sans-serif;
+  background:
+    linear-gradient(180deg,rgba(8,7,19,.82),rgba(8,7,19,.96)),
+    url("https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=2000&q=85")
+    center top/cover fixed;
+  overflow-x:hidden;
+  padding-bottom:100px;
+}
+
+button,input,a{
+  font:inherit;
+}
+
+button,a{
+  -webkit-tap-highlight-color:transparent;
+}
+
+a{
+  color:inherit;
+  text-decoration:none;
+}
+
+button{
+  cursor:pointer;
+}
+
+svg{
+  width:22px;
+  height:22px;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:1.8;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+
+.app{
+  width:min(1250px,100%);
+  margin:auto;
+  padding:0 20px;
+}
+
+/* HEADER */
+
+.topbar{
+  height:76px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  border-bottom:1px solid var(--line);
+  background:rgba(10,9,22,.78);
+  backdrop-filter:blur(20px);
+  position:sticky;
+  top:0;
+  z-index:30;
+  padding:0 20px;
+  margin:0 -20px;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.brand-mark{
+  width:43px;
+  height:43px;
+  border-radius:15px;
+  display:grid;
+  place-items:center;
+  color:white;
+  background:linear-gradient(145deg,#b18aff,#6542c9);
+  box-shadow:0 8px 25px #8d69ff45;
+}
+
+.brand-mark svg{
+  width:27px;
+  height:27px;
+}
+
+.brand-name{
+  font-size:16px;
+  font-weight:900;
+  letter-spacing:1px;
+}
+
+.brand-sub{
+  font-size:9px;
+  color:var(--muted);
+  letter-spacing:2px;
+}
+
+.header-actions{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.header-btn{
+  width:42px;
+  height:42px;
+  border-radius:13px;
+  display:grid;
+  place-items:center;
+  background:#ffffff09;
+  border:1px solid var(--line);
+  color:var(--text);
+}
+
+.header-btn:active{
+  transform:scale(.95);
+}
+
+.my-avatar{
+  width:43px;
+  height:43px;
+  border-radius:50%;
+  overflow:hidden;
+  display:grid;
+  place-items:center;
+  background:linear-gradient(145deg,#3d315c,#171326);
+  border:2px solid #a98aff;
+  color:#d9caff;
+}
+
+.my-avatar img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+/* PAGE INTRO */
+
+.page-intro{
+  position:relative;
+  overflow:hidden;
+  min-height:245px;
+  margin-top:25px;
+  border:1px solid rgba(185,157,255,.18);
+  border-radius:27px;
+  display:flex;
+  align-items:center;
+  padding:35px;
+  background:
+    linear-gradient(90deg,rgba(12,9,27,.95),rgba(24,13,48,.70)),
+    url("https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1800&q=85")
+    center/cover;
+  box-shadow:var(--shadow);
+}
+
+.page-intro::before{
+  content:"";
+  position:absolute;
+  width:300px;
+  height:300px;
+  border-radius:50%;
+  background:#9870ff22;
+  filter:blur(55px);
+  left:-80px;
+  top:-120px;
+}
+
+.intro-content{
+  position:relative;
+  z-index:2;
+  max-width:650px;
+}
+
+.intro-label{
+  color:var(--gold);
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:2px;
+  margin-bottom:12px;
+}
+
+.intro-content h1{
+  font-size:clamp(27px,5vw,43px);
+  font-weight:900;
+  line-height:1.45;
+}
+
+.intro-content h1 span{
+  color:#c4a7ff;
+}
+
+.intro-content p{
+  color:#c5bdd9;
+  font-size:13px;
+  line-height:2;
+  margin-top:10px;
+  max-width:510px;
+}
+
+/* SEARCH */
+
+.search-section{
+  margin-top:25px;
+}
+
+.search-heading{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:13px;
+}
+
+.search-heading h2{
+  font-size:17px;
+  font-weight:900;
+}
+
+.search-heading span{
+  color:var(--muted);
+  font-size:11px;
+}
+
+.search-box{
+  height:62px;
+  display:flex;
+  align-items:center;
+  gap:13px;
+  padding:0 18px;
+  border:1px solid rgba(174,146,255,.24);
+  border-radius:17px;
+  background:rgba(24,21,42,.88);
+  box-shadow:0 12px 35px #0003;
+  transition:.2s;
+}
+
+.search-box:focus-within{
+  border-color:var(--purple);
+  box-shadow:0 0 0 3px #9b7cff18;
+}
+
+.search-box svg{
+  color:#b99aff;
+  flex-shrink:0;
+}
+
+.search-box input{
+  width:100%;
+  height:100%;
+  border:0;
+  outline:0;
+  color:white;
+  background:transparent;
+  font-size:13px;
+  min-width:0;
+}
+
+.search-box input::placeholder{
+  color:#89839f;
+}
+
+.clear-search{
+  width:32px;
+  height:32px;
+  border:0;
+  border-radius:10px;
+  color:#c7b9e9;
+  background:#ffffff0c;
+  display:none;
+  place-items:center;
+  flex-shrink:0;
+}
+
+.clear-search.show{
+  display:grid;
+}
+
+/* FILTERS */
+
+.filter-area{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  overflow-x:auto;
+  padding:17px 0 8px;
+  scrollbar-width:none;
+}
+
+.filter-area::-webkit-scrollbar{
+  display:none;
+}
+
+.filter-chip{
+  flex-shrink:0;
+  border:1px solid var(--line);
+  border-radius:30px;
+  padding:9px 17px;
+  background:#ffffff08;
+  color:#bcb5d0;
+  font-size:11px;
+  font-weight:800;
+  transition:.2s;
+}
+
+.filter-chip.active{
+  color:#fff;
+  background:linear-gradient(120deg,#7956d8,#a17bff);
+  border-color:transparent;
+  box-shadow:0 7px 20px #8c65ee35;
+}
+
+/* SECTION HEADER */
+
+.members-section{
+  margin-top:25px;
+}
+
+.section-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  margin-bottom:17px;
+}
+
+.section-title{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.section-icon{
+  width:43px;
+  height:43px;
+  border-radius:14px;
+  display:grid;
+  place-items:center;
+  color:#c5aaff;
+  background:#a17cff18;
+  border:1px solid #a17cff28;
+}
+
+.section-title h2{
+  font-size:17px;
+  font-weight:900;
+}
+
+.section-title p{
+  font-size:10px;
+  color:var(--muted);
+  margin-top:2px;
+}
+
+.results-label{
+  color:var(--muted);
+  font-size:11px;
+}
+
+/* MEMBERS GRID */
+
+.members-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:16px;
+}
+
+.member-card{
+  position:relative;
+  min-width:0;
+  overflow:hidden;
+  border-radius:20px;
+  border:1px solid var(--line);
+  background:linear-gradient(145deg,rgba(29,26,48,.96),rgba(16,15,29,.97));
+  box-shadow:0 12px 35px #0003;
+  transition:transform .2s,border-color .2s;
+}
+
+.member-card:active{
+  transform:scale(.985);
+}
+
+.member-cover{
+  height:105px;
+  position:relative;
+  background:
+    linear-gradient(135deg,#30234c,#17152b 70%);
+  overflow:hidden;
+}
+
+.member-cover::before{
+  content:"";
+  position:absolute;
+  width:180px;
+  height:180px;
+  border-radius:50%;
+  background:#a27aff25;
+  filter:blur(40px);
+  top:-100px;
+  right:15%;
+}
+
+.member-cover::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(0deg,rgba(18,15,31,.85),transparent);
+}
+
+.member-avatar{
+  width:82px;
+  height:82px;
+  position:relative;
+  z-index:2;
+  margin:-43px auto 0;
+  border-radius:50%;
+  border:4px solid #1b1830;
+  overflow:hidden;
+  background:linear-gradient(145deg,#604b88,#242039);
+  display:grid;
+  place-items:center;
+  color:#e1d4ff;
+  box-shadow:0 8px 20px #0006;
+}
+
+.member-avatar img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.member-avatar svg{
+  width:38px;
+  height:38px;
+}
+
+.member-info{
+  padding:10px 15px 17px;
+  text-align:center;
+}
+
+.member-name{
+  font-size:14px;
+  font-weight:900;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+.member-username{
+  margin-top:2px;
+  font-size:11px;
+  color:#a99cce;
+  direction:ltr;
+  text-align:center;
+  overflow-wrap:anywhere;
+}
+
+.member-code{
+  display:inline-flex;
+  margin-top:11px;
+  padding:5px 10px;
+  border-radius:9px;
+  background:#e9c77d12;
+  border:1px solid #e9c77d24;
+  color:var(--gold);
+  font-size:10px;
+  font-weight:800;
+  direction:ltr;
+}
+
+.member-bio{
+  color:#aaa4bc;
+  font-size:10px;
+  line-height:1.8;
+  margin-top:9px;
+  min-height:35px;
+  overflow:hidden;
+}
+
+.member-open{
+  width:100%;
+  min-height:39px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  margin-top:13px;
+  border-radius:11px;
+  color:white;
+  background:linear-gradient(110deg,#7654d9,#9c7bfa);
+  font-size:11px;
+  font-weight:800;
+}
+
+.member-open svg{
+  width:16px;
+  height:16px;
+}
+
+.member-open:active{
+  filter:brightness(1.15);
+}
+
+/* STATES */
+
+.state-box{
+  grid-column:1/-1;
+  min-height:240px;
+  border:1px solid var(--line);
+  border-radius:22px;
+  background:rgba(20,19,37,.82);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:30px 20px;
+}
+
+.state-icon{
+  width:64px;
+  height:64px;
+  border-radius:20px;
+  display:grid;
+  place-items:center;
+  color:#c3a6ff;
+  background:#a17cff18;
+  border:1px solid #a17cff2b;
+  margin-bottom:15px;
+}
+
+.state-icon svg{
+  width:31px;
+  height:31px;
+}
+
+.state-box h3{
+  font-size:15px;
+  font-weight:900;
+}
+
+.state-box p{
+  color:var(--muted);
+  font-size:11px;
+  line-height:2;
+  margin-top:7px;
+  max-width:330px;
+}
+
+.loader{
+  width:35px;
+  height:35px;
+  border:3px solid #ffffff18;
+  border-top-color:#b79aff;
+  border-radius:50%;
+  animation:spin .8s linear infinite;
+  margin-bottom:15px;
+}
+
+@keyframes spin{
+  to{transform:rotate(360deg)}
+}
+
+.retry-btn{
+  margin-top:15px;
+  padding:9px 20px;
+  border:1px solid #a17cff55;
+  border-radius:11px;
+  background:#a17cff18;
+  color:#e4d8ff;
+  font-size:11px;
+  font-weight:800;
+}
+
+/* LOAD MORE */
+
+.load-more-wrap{
+  display:flex;
+  justify-content:center;
+  margin-top:24px;
+}
+
+.load-more{
+  display:none;
+  min-width:180px;
+  padding:11px 22px;
+  border:1px solid #a17cff45;
+  border-radius:13px;
+  background:#a17cff13;
+  color:#e1d5ff;
+  font-size:12px;
+  font-weight:800;
+}
+
+.load-more.show{
+  display:block;
+}
+
+/* BOTTOM NAV */
+
+.bottom-nav{
+  position:fixed;
+  z-index:50;
+  bottom:max(10px,env(safe-area-inset-bottom));
+  left:50%;
+  transform:translateX(-50%);
+  width:min(650px,calc(100% - 20px));
+  min-height:70px;
+  padding:7px;
+  display:flex;
+  align-items:center;
+  justify-content:space-around;
+  gap:4px;
+  border:1px solid rgba(190,168,255,.19);
+  border-radius:21px;
+  background:rgba(18,16,32,.94);
+  backdrop-filter:blur(22px);
+  box-shadow:0 15px 45px #0008;
+}
+
+.nav-item{
+  min-width:0;
+  flex:1;
+  min-height:54px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:3px;
+  border-radius:14px;
+  color:#918ba8;
+  font-size:9px;
+  font-weight:700;
+  transition:.2s;
+}
+
+.nav-item svg{
+  width:21px;
+  height:21px;
+}
+
+.nav-item.active{
+  color:#d4c2ff;
+  background:#a17cff1b;
+}
+
+.nav-item.active svg{
+  color:#b99aff;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:850px){
+  .members-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+
+  .page-intro{
+    min-height:220px;
+  }
+}
+
+@media(max-width:520px){
+  .app{
+    padding:0 13px;
+  }
+
+  .topbar{
+    height:65px;
+    padding:0 13px;
+    margin:0 -13px;
+  }
+
+  .brand-mark{
+    width:38px;
+    height:38px;
+  }
+
+  .brand-name{
+    font-size:13px;
+  }
+
+  .brand-sub{
+    font-size:8px;
+  }
+
+  .header-btn{
+    width:38px;
+    height:38px;
+  }
+
+  .my-avatar{
+    width:39px;
+    height:39px;
+  }
+
+  .page-intro{
+    min-height:205px;
+    padding:24px 20px;
+    border-radius:21px;
+    margin-top:17px;
+    background-position:55% center;
+  }
+
+  .intro-content h1{
+    font-size:27px;
+  }
+
+  .intro-content p{
+    font-size:11px;
+  }
+
+  .search-box{
+    height:55px;
+    padding:0 13px;
+  }
+
+  .members-grid{
+    gap:10px;
+  }
+
+  .member-cover{
+    height:85px;
+  }
+
+  .member-avatar{
+    width:70px;
+    height:70px;
+    margin-top:-36px;
+  }
+
+  .member-info{
+    padding:9px 9px 12px;
+  }
+
+  .member-name{
+    font-size:12px;
+  }
+
+  .member-username{
+    font-size:10px;
+  }
+
+  .member-bio{
+    font-size:9px;
+    min-height:32px;
+  }
+
+  .member-open{
+    min-height:36px;
+    font-size:10px;
+  }
+
+  .section-title h2{
+    font-size:15px;
+  }
+
+  .bottom-nav{
+    min-height:65px;
+    border-radius:18px;
+  }
+
+  .nav-item{
+    min-height:51px;
+    font-size:8px;
+  }
+
+  .nav-item svg{
+    width:19px;
+    height:19px;
+  }
+}
+
+@media(max-width:350px){
+  .members-grid{
+    grid-template-columns:1fr;
+  }
+
+  .member-card{
+    display:grid;
+    grid-template-columns:90px 1fr;
+    align-items:center;
+  }
+
+  .member-cover{
+    display:none;
+  }
+
+  .member-avatar{
+    margin:0 auto;
+    grid-row:1;
+    grid-column:1;
+  }
+
+  .member-info{
+    grid-column:2;
+    grid-row:1;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <header class="topbar">
+    <a class="brand" href="home.html">
+      <div class="brand-mark">
+        <svg viewBox="0 0 40 40">
+          <path d="M9 29V11h5v7h12v-7h5v18h-5v-7H14v7H9Z" fill="white" stroke="none"/>
+          <path d="M6 6h28v28H6z" stroke="white" stroke-opacity=".45" stroke-width="1.5"/>
+        </svg>
+      </div>
+      <div>
+        <div class="brand-name">HANOON WORLD</div>
+        <div class="brand-sub">YOUR SOCIAL UNIVERSE</div>
+      </div>
+    </a>
+
+    <div class="header-actions">
+      <a class="header-btn" href="home.html" aria-label="الرئيسية">
+        <svg viewBox="0 0 24 24">
+          <path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1V10Z"/>
+        </svg>
+      </a>
+
+      <a class="my-avatar" href="profile.html" id="myAvatar" aria-label="حسابي">
+        <svg viewBox="0 0 24 24">
+          <circle cx="12" cy="8" r="3.5"/>
+          <path d="M4.5 21c.5-4 3.2-6 7.5-6s7 2 7.5 6"/>
+        </svg>
+      </a>
+    </div>
+  </header>
+
+  <section class="page-intro">
+    <div class="intro-content">
+      <div class="intro-label">HANOON WORLD COMMUNITY</div>
+      <h1>اكتشف <span>أعضاء هنون</span></h1>
+      <p>
+        تعرّف على أعضاء مجتمع هنون، وابحث عن أصدقائك باستخدام الاسم
+        أو اسم المستخدم أو كود العضوية.
+      </p>
+    </div>
+  </section>
+
+  <section class="search-section">
+    <div class="search-heading">
+      <h2>ابحث عن عضو</h2>
+      <span>بحث مباشر في دليل الأعضاء</span>
+    </div>
+
+    <label class="search-box">
+      <svg viewBox="0 0 24 24">
+        <circle cx="11" cy="11" r="7"/>
+        <path d="m16 16 5 5"/>
+      </svg>
+
+      <input
+        id="memberSearch"
+        type="search"
+        autocomplete="off"
+        placeholder="الاسم أو اسم المستخدم أو كود العضوية..."
+      >
+
+      <button class="clear-search" id="clearSearch" type="button" aria-label="مسح البحث">
+        <svg viewBox="0 0 24 24">
+          <path d="m6 6 12 12M18 6 6 18"/>
+        </svg>
+      </button>
+    </label>
+
+    <div class="filter-area">
+      <button class="filter-chip active" data-filter="all">كل الأعضاء</button>
+      <button class="filter-chip" data-filter="recent">الأحدث انضمامًا</button>
+      <button class="filter-chip" data-filter="bio">لديهم نبذة شخصية</button>
+    </div>
+  </section>
+
+  <section class="members-section">
+    <div class="section-head">
+      <div class="section-title">
+        <div class="section-icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+            <path d="M20 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+        </div>
+        <div>
+          <h2 id="sectionHeading">أعضاء المجتمع</h2>
+          <p>ملفات الأعضاء المسجلين في هنون</p>
+        </div>
+      </div>
+
+      <span class="results-label" id="resultsLabel">—</span>
+    </div>
+
+    <div class="members-grid" id="membersGrid">
+      <div class="state-box">
+        <div class="loader"></div>
+        <h3>جارٍ تحميل الأعضاء</h3>
+        <p>نبحث في دليل أعضاء هنون.</p>
+      </div>
+    </div>
+
+    <div class="load-more-wrap">
+      <button class="load-more" id="loadMore" type="button">
+        عرض المزيد
+      </button>
+    </div>
+  </section>
+
+</div>
+
+<nav class="bottom-nav">
+  <a class="nav-item" href="home.html">
+    <svg viewBox="0 0 24 24">
+      <path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1V10Z"/>
+    </svg>
+    الرئيسية
+  </a>
+
+  <a class="nav-item" href="games.html">
+    <svg viewBox="0 0 24 24">
+      <path d="M7 8h10a4 4 0 0 1 4 4v4a3 3 0 0 1-5 2l-2-2h-4l-2 2a3 3 0 0 1-5-2v-4a4 4 0 0 1 4-4Z"/>
+      <path d="M8 11v4M6 13h4M16 12h.01M18 14h.01"/>
+    </svg>
+    الألعاب
+  </a>
+
+  <a class="nav-item" href="rooms.html">
+    <svg viewBox="0 0 24 24">
+      <path d="M3 20V9l9-6 9 6v11h-6v-7H9v7H3Z"/>
+    </svg>
+    الغرف
+  </a>
+
+  <a class="nav-item active" href="members.html">
+    <svg viewBox="0 0 24 24">
+      <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+      <circle cx="9" cy="7" r="4"/>
+      <path d="M20 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+    </svg>
+    الأعضاء
+  </a>
+
+  <a class="nav-item" href="live.html">
+    <svg viewBox="0 0 24 24">
+      <rect x="3" y="6" width="13" height="12" rx="2"/>
+      <path d="m16 10 5-3v10l-5-3"/>
+    </svg>
+    بث عشوائي
+  </a>
+
+  <a class="nav-item" href="chat.html">
+    <svg viewBox="0 0 24 24">
+      <path d="M4 5h16v12H9l-5 4V5Z"/>
+      <path d="M8 9h8M8 13h5"/>
+    </svg>
+    المحادثات
+  </a>
+
+  <a class="nav-item" href="profile.html">
+    <svg viewBox="0 0 24 24">
+      <circle cx="12" cy="8" r="3.5"/>
+      <path d="M4.5 21c.5-4 3.2-6 7.5-6s7 2 7.5 6"/>
+    </svg>
+    حسابي
+  </a>
+</nav>
+
+<script>
+"use strict";
+
+/* إعداد الاتصال بقاعدة هنون */
+const SUPABASE_URL = "https://gjtgvczvclfwvlvcquxh.supabase.co";
+const SUPABASE_KEY = "sb_publishable_4DVTUZ-xTlqU2GpFvpb7lw_g-Kxomd4";
+
+const db = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+
+const $ = id => document.getElementById(id);
+
+const state = {
+  user:null,
+  members:[],
+  filtered:[],
+  filter:"all",
+  search:"",
+  page:1,
+  pageSize:18,
+  loading:false
+};
+
+function esc(value){
+  return String(value ?? "").replace(/[&<>"']/g,char=>({
+    "&":"&amp;",
+    "<":"&lt;",
+    ">":"&gt;",
+    '"':"&quot;",
+    "'":"&#039;"
+  })[char]);
+}
+
+function publicAvatar(path){
+  if(!path) return "";
+
+  if(/^https?:\/\//i.test(path)){
+    return path;
+  }
+
+  const {data} = db.storage
+    .from("avatars")
+    .getPublicUrl(path);
+
+  return data?.publicUrl || "";
+}
+
+function avatarFallback(){
+  return `
+    <svg viewBox="0 0 24 24">
+      <circle cx="12" cy="8" r="3.5"/>
+      <path d="M4.5 21c.5-4 3.2-6 7.5-6s7 2 7.5 6"/>
+    </svg>`;
+}
+
+function showState(title,message,type="empty"){
+  const icon = type === "error"
+    ? `<svg viewBox="0 0 24 24"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9 2.7 17a2 2 0 0 0 1.7 3h15.2a2 2 0 0 0 1.7-3l-7.6-13.1a2 2 0 0 0-3.4 0Z"/></svg>`
+    : `<svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m16 16 5 5"/></svg>`;
+
+  $("membersGrid").innerHTML = `
+    <div class="state-box">
+      <div class="state-icon">${icon}</div>
+      <h3>${esc(title)}</h3>
+      <p>${esc(message)}</p>
+      ${type === "error"
+        ? `<button class="retry-btn" id="retryLoad" type="button">إعادة المحاولة</button>`
+        : ""}
+    </div>`;
+
+  $("loadMore").classList.remove("show");
+  $("resultsLabel").textContent = "—";
+
+  const retry = $("retryLoad");
+  if(retry) retry.addEventListener("click",loadMembers);
+}
+
+async function checkSession(){
+  const {data,error} = await db.auth.getSession();
+
+  if(error) throw error;
+
+  state.user = data.session?.user || null;
+
+  if(!state.user){
+    location.replace("index.html");
+    return false;
+  }
+
+  return true;
+}
+
+async function loadMyAvatar(){
+  const {data,error} = await db
+    .from("profiles")
+    .select("avatar_path")
+    .eq("id",state.user.id)
+    .maybeSingle();
+
+  if(error) throw error;
+
+  const avatar = publicAvatar(data?.avatar_path);
+
+  if(avatar){
+    $("myAvatar").innerHTML =
+      `<img src="${esc(avatar)}" alt="حسابي">`;
+  }
+}
+
+async function loadMembers(){
+  if(state.loading) return;
+
+  state.loading = true;
+
+  $("membersGrid").innerHTML = `
+    <div class="state-box">
+      <div class="loader"></div>
+      <h3>جارٍ تحميل الأعضاء</h3>
+      <p>يتم جلب البيانات الحقيقية من دليل أعضاء هنون.</p>
+    </div>`;
+
+  try{
+    const valid = await checkSession();
+    if(!valid) return;
+
+    await loadMyAvatar();
+
+    const {data,error} = await db
+      .from("member_directory")
+      .select("id,username,member_code,full_name,avatar_path,bio,created_at")
+      .neq("id",state.user.id)
+      .order("created_at",{ascending:false})
+      .limit(500);
+
+    if(error) throw error;
+
+    state.members = data || [];
+
+    applyFilters();
+
+  }catch(error){
+    console.error("HANOON members:",error);
+
+    showState(
+      "تعذر تحميل الأعضاء",
+      "حدثت مشكلة أثناء الاتصال بدليل الأعضاء. تحقق من الاتصال وحاول مرة أخرى.",
+      "error"
+    );
+
+  }finally{
+    state.loading = false;
+  }
+}
+
+function applyFilters(){
+  let list = [...state.members];
+
+  if(state.filter === "bio"){
+    list = list.filter(member =>
+      String(member.bio || "").trim().length > 0
+    );
+  }
+
+  if(state.search){
+    const term = state.search.toLowerCase();
+
+    list = list.filter(member=>{
+      const content = [
+        member.full_name,
+        member.username,
+        member.member_code
+      ].join(" ").toLowerCase();
+
+      return content.includes(term);
+    });
+  }
+
+  if(state.filter === "recent"){
+    list.sort((a,b)=>
+      new Date(b.created_at || 0) -
+      new Date(a.created_at || 0)
+    );
+  }
+
+  state.filtered = list;
+  state.page = 1;
+
+  renderMembers();
+}
+
+function renderMembers(){
+  const grid = $("membersGrid");
+
+  const total = state.filtered.length;
+  const visible = state.filtered.slice(
+    0,
+    state.page * state.pageSize
+  );
+
+  $("resultsLabel").textContent =
+    `${total.toLocaleString("en-US")} نتيجة`;
+
+  $("sectionHeading").textContent =
+    state.search ? "نتائج البحث" : "أعضاء المجتمع";
+
+  if(!total){
+    const title = state.search
+      ? "لم نعثر على عضو مطابق"
+      : "لا يوجد أعضاء للعرض حاليًا";
+
+    const message = state.search
+      ? "جرّب البحث باستخدام الاسم أو اسم المستخدم أو كود عضوية صحيح."
+      : "سيظهر الأعضاء هنا عندما تتوفر ملفات عضوية مكتملة في دليل هنون.";
+
+    showState(title,message);
+    return;
+  }
+
+  grid.innerHTML = visible.map(member=>{
+    const name =
+      member.full_name ||
+      member.username ||
+      member.member_code ||
+      "عضو هنون";
+
+    const avatar = publicAvatar(member.avatar_path);
+
+    const username = member.username
+      ? "@" + member.username
+      : "";
+
+    const code = member.member_code || "";
+
+    const bio = String(member.bio || "").trim();
+
+    return `
+      <article class="member-card">
+
+        <div class="member-cover"></div>
+
+        <div class="member-avatar">
+          ${avatar
+            ? `<img src="${esc(avatar)}" alt="${esc(name)}" loading="lazy" onerror="this.remove()">`
+            : avatarFallback()}
+        </div>
+
+        <div class="member-info">
+
+          <h3 class="member-name">${esc(name)}</h3>
+
+          ${username
+            ? `<div class="member-username">${esc(username)}</div>`
+            : ""}
+
+          ${code
+            ? `<div class="member-code">${esc(code)}</div>`
+            : ""}
+
+          <p class="member-bio">
+            ${bio ? esc(bio) : "عضو في مجتمع هنون"}
+          </p>
+
+          <a
+            class="member-open"
+            href="member.html?id=${encodeURIComponent(member.id)}"
+          >
+            عرض الملف الشخصي
+            <svg viewBox="0 0 24 24">
+              <path d="m9 18 6-6-6-6"/>
+            </svg>
+          </a>
+
+        </div>
+      </article>`;
+  }).join("");
+
+  if(visible.length < total){
+    $("loadMore").classList.add("show");
+  }else{
+    $("loadMore").classList.remove("show");
+  }
+}
+
+/* البحث */
+let searchTimer = null;
+
+$("memberSearch").addEventListener("input",event=>{
+  state.search = event.target.value.trim();
+
+  $("clearSearch").classList.toggle(
+    "show",
+    state.search.length > 0
+  );
+
+  clearTimeout(searchTimer);
+
+  searchTimer = setTimeout(()=>{
+    applyFilters();
+  },180);
+});
+
+$("clearSearch").addEventListener("click",()=>{
+  $("memberSearch").value = "";
+  state.search = "";
+
+  $("clearSearch").classList.remove("show");
+
+  applyFilters();
+});
+
+/* الفلاتر */
+document.querySelectorAll("[data-filter]").forEach(button=>{
+  button.addEventListener("click",()=>{
+    document.querySelectorAll("[data-filter]").forEach(item=>{
+      item.classList.remove("active");
+    });
+
+    button.classList.add("active");
+    state.filter = button.dataset.filter;
+
+    applyFilters();
+  });
+});
+
+/* تحميل المزيد */
+$("loadMore").addEventListener("click",()=>{
+  state.page++;
+  renderMembers();
+});
+
+/* مراقبة تسجيل الخروج */
+db.auth.onAuthStateChange((event,session)=>{
+  if(event === "SIGNED_OUT" || !session){
+    location.replace("index.html");
+  }
+});
+
+/* بدء الصفحة */
+loadMembers();
+</script>
+
+</body>
+</html>
