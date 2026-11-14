@@ -746,8 +746,7 @@ $("notificationForm").addEventListener("submit",async event=>{
 });
 
 try{
-  const allowed=await verifyAdmin();
-  if(!allowed) return;
+  await verifyAdmin();
 }catch(error){
   console.error("HANOON ADMIN ACCESS:",error);
   showAccessError("تعذر التحقق من صلاحية الإدارة","تأكد من تسجيل الدخول، ثم أعد تحميل الصفحة. إذا استمرت المشكلة راجع إعدادات خدمة الإدارة.");
