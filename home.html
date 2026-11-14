@@ -3,580 +3,1132 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<meta name="theme-color" content="#10101b">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#090914">
+<meta name="description" content="HANOON WORLD - عالم الألعاب والغرف والتحديات">
 <title>HANOON WORLD | الرئيسية</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
 <style>
 :root{
-  --bg:#10101b;
-  --panel:#191927;
-  --panel2:#202033;
-  --purple:#9875ff;
-  --purple2:#7453e8;
-  --gold:#f4c76b;
+  --bg:#090914;
+  --surface:#11111f;
+  --surface2:#171729;
+  --surface3:#202039;
+  --purple:#9675ff;
+  --purple2:#6f4ee8;
+  --cyan:#45d9e8;
+  --gold:#f4c56a;
+  --pink:#ed79bd;
+  --green:#47d5a0;
+  --red:#ff647e;
   --text:#f7f5ff;
-  --muted:#9997ae;
-  --line:rgba(255,255,255,.075);
-  --green:#40d6a0;
+  --muted:#9997b2;
+  --line:rgba(255,255,255,.08);
+  --shadow:0 18px 55px rgba(0,0,0,.34);
+  --radius:22px;
 }
+
 *{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;background:var(--bg)}
 body{
-  background:var(--bg);
-  color:var(--text);
   font-family:'Cairo',sans-serif;
+  background:
+    radial-gradient(ellipse at 15% 0%,rgba(103,75,194,.16),transparent 35%),
+    radial-gradient(ellipse at 90% 30%,rgba(34,133,159,.09),transparent 32%),
+    #090914;
+  color:var(--text);
   min-height:100vh;
   overflow-x:hidden;
+  -webkit-tap-highlight-color:transparent;
 }
-button,a,input{font:inherit}
+button,input{font:inherit}
 button{cursor:pointer}
 a{color:inherit;text-decoration:none}
 img{display:block;max-width:100%}
-button:focus-visible,a:focus-visible{outline:2px solid var(--purple);outline-offset:3px}
-.app{width:100%;max-width:1500px;margin:auto;padding-bottom:100px}
-
-/* HEADER */
-.header{
-  height:76px;padding:0 5%;
-  display:flex;align-items:center;justify-content:space-between;
-  background:rgba(16,16,27,.94);
-  border-bottom:1px solid var(--line);
-  position:sticky;top:0;z-index:50;
-  backdrop-filter:blur(18px);
+button:focus-visible,a:focus-visible,input:focus-visible{
+  outline:2px solid var(--cyan);outline-offset:3px
 }
-.brand{display:flex;align-items:center;gap:11px}
+::selection{background:#8d70ff;color:white}
+
+/* ===== BACKGROUND DECORATION ===== */
+.ambient{
+  position:fixed;inset:0;pointer-events:none;z-index:-1;overflow:hidden
+}
+.ambient:before,.ambient:after{
+  content:"";position:absolute;border-radius:50%;filter:blur(100px);opacity:.12
+}
+.ambient:before{
+  width:380px;height:380px;background:#7548ff;top:15%;right:-220px
+}
+.ambient:after{
+  width:330px;height:330px;background:#18a9b9;bottom:5%;left:-200px
+}
+
+/* ===== TOP BAR ===== */
+.topbar{
+  position:sticky;top:0;z-index:100;
+  height:78px;
+  display:flex;align-items:center;gap:24px;
+  padding:0 clamp(14px,4vw,58px);
+  background:rgba(9,9,20,.88);
+  border-bottom:1px solid var(--line);
+  backdrop-filter:blur(22px);
+  -webkit-backdrop-filter:blur(22px)
+}
+.brand{
+  display:flex;align-items:center;gap:12px;
+  min-width:max-content
+}
 .brand-mark{
   width:43px;height:43px;border-radius:15px;
-  background:linear-gradient(145deg,#b69aff,#6744dc);
   display:grid;place-items:center;
-  box-shadow:0 7px 24px #805bff45;
+  background:linear-gradient(140deg,#a58bff,#6544df);
+  box-shadow:0 7px 25px #7956ec55;
+  font-size:20px;color:white
 }
-.brand-mark svg{width:25px;height:25px}
-.brand-name{font-size:19px;font-weight:900;letter-spacing:.4px}
-.brand-name span{color:#a88cff}
-.header-actions{display:flex;align-items:center;gap:12px}
+.brand-name{font-size:19px;font-weight:900;letter-spacing:.5px}
+.brand-name span{color:var(--purple)}
+.top-search{
+  flex:1;max-width:520px;margin:auto;
+  height:43px;position:relative
+}
+.top-search i{
+  position:absolute;right:16px;top:50%;transform:translateY(-50%);
+  color:var(--muted);font-size:14px
+}
+.top-search input{
+  width:100%;height:100%;border:1px solid var(--line);
+  border-radius:14px;background:rgba(255,255,255,.045);
+  color:white;padding:0 44px 0 15px;outline:none;
+  transition:.2s
+}
+.top-search input:focus{border-color:#9675ff88;background:#171729}
+.top-actions{display:flex;align-items:center;gap:10px}
 .icon-btn{
   width:42px;height:42px;border-radius:14px;
-  border:1px solid var(--line);background:var(--panel);
-  color:white;display:grid;place-items:center;
-}
-.icon-btn svg{width:20px;height:20px}
-.profile-mini{
-  display:flex;align-items:center;gap:9px;
-  padding:5px 11px 5px 6px;border-radius:30px;
-  background:var(--panel);border:1px solid var(--line);
-}
-.avatar{
-  width:37px;height:37px;border-radius:50%;
-  object-fit:cover;background:#353149;
-}
-.profile-mini strong{font-size:12px}
-.profile-mini small{display:block;color:var(--muted);font-size:10px}
-
-/* PAGE */
-.main{padding:25px 5%}
-.welcome{
-  position:relative;overflow:hidden;
-  min-height:245px;border-radius:27px;
-  padding:30px;display:flex;align-items:center;
-  background:
-    linear-gradient(90deg,rgba(16,13,35,.96),rgba(30,20,57,.75),rgba(22,15,42,.25)),
-    url('https://images.unsplash.com/photo-1511512578047-dfb367046420?w=1400&q=85') center/cover;
-  border:1px solid #ffffff12;
-  box-shadow:0 18px 50px #0003;
-}
-.welcome:after{
-  content:"";position:absolute;width:310px;height:310px;
-  border-radius:50%;background:#9875ff22;
-  filter:blur(65px);left:-80px;top:-80px;
-}
-.welcome-content{position:relative;z-index:2;max-width:540px}
-.eyebrow{
-  color:#c5b3ff;font-size:12px;font-weight:800;
-  display:flex;align-items:center;gap:8px;margin-bottom:10px;
-}
-.eyebrow i{width:7px;height:7px;background:var(--green);border-radius:50%}
-.welcome h1{font-size:clamp(25px,4vw,39px);font-weight:900;line-height:1.5}
-.welcome p{color:#d0c9e5;font-size:13px;line-height:2;margin:7px 0 18px}
-.primary-btn{
-  display:inline-flex;align-items:center;justify-content:center;gap:9px;
-  padding:11px 22px;border:0;border-radius:13px;
-  background:linear-gradient(120deg,#a88aff,#7551e9);
-  color:white;font-weight:800;font-size:13px;
-  box-shadow:0 8px 25px #865eff3b;
-}
-.primary-btn svg{width:17px;height:17px}
-.welcome-art{
-  position:absolute;left:7%;top:50%;transform:translateY(-50%);
-  width:190px;height:190px;border-radius:50%;
-  border:1px solid #ffffff25;
   display:grid;place-items:center;
-  background:radial-gradient(circle,#9d78ff3b,transparent 68%);
+  color:#d5d1eb;background:rgba(255,255,255,.055);
+  border:1px solid var(--line);position:relative;
+  transition:.2s
 }
-.welcome-art span{
-  font-size:76px;font-weight:900;color:#d6c8ff;
-  text-shadow:0 0 45px #a17bff;
+.icon-btn:hover{background:#282344;color:white;transform:translateY(-2px)}
+.notification-dot{
+  position:absolute;top:8px;right:8px;
+  width:7px;height:7px;border-radius:50%;
+  background:var(--red);border:1px solid var(--bg)
+}
+.profile-shortcut{
+  display:flex;align-items:center;gap:10px;
+  padding:5px 12px 5px 6px;
+  border:1px solid var(--line);border-radius:16px;
+  background:rgba(255,255,255,.045);
+  min-width:145px;cursor:pointer
+}
+.profile-shortcut img{
+  width:35px;height:35px;border-radius:12px;
+  object-fit:cover;background:#29253c
+}
+.profile-shortcut strong{display:block;font-size:12px}
+.profile-shortcut small{display:block;color:var(--muted);font-size:10px}
+.profile-shortcut i{font-size:11px;color:var(--muted);margin-right:auto}
+
+/* ===== PAGE LAYOUT ===== */
+.page{
+  width:min(1440px,100%);
+  margin:auto;padding:25px clamp(13px,3.2vw,45px) 100px
+}
+.welcome-line{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:15px;margin:8px 0 22px
+}
+.welcome-line h1{font-size:clamp(19px,2.3vw,27px);font-weight:900}
+.welcome-line p{font-size:12px;color:var(--muted);margin-top:3px}
+.welcome-date{
+  display:flex;align-items:center;gap:8px;
+  color:#c4b8ff;font-size:11px;
+  background:#8d70ff14;border:1px solid #8d70ff33;
+  padding:9px 13px;border-radius:30px
 }
 
-/* WALLET STRIP */
+/* ===== HERO ===== */
+.hero{
+  min-height:350px;position:relative;overflow:hidden;
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:30px;
+  background:#17132b;
+  box-shadow:var(--shadow);
+  isolation:isolate
+}
+.hero-image{
+  position:absolute;inset:0;z-index:-2;
+  background-image:url('https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=1800&q=90');
+  background-size:cover;background-position:center 42%;
+  transform:scale(1.02)
+}
+.hero:before{
+  content:"";position:absolute;inset:0;z-index:-1;
+  background:
+    linear-gradient(90deg,rgba(9,8,22,.1) 0%,rgba(9,8,22,.52) 38%,rgba(9,8,22,.94) 100%),
+    linear-gradient(0deg,rgba(8,8,18,.76),transparent 65%)
+}
+.hero-content{
+  max-width:620px;padding:48px 45px 42px;
+  display:flex;flex-direction:column;align-items:flex-start
+}
+.hero-tag{
+  display:inline-flex;align-items:center;gap:8px;
+  border:1px solid #c6b6ff55;background:#8d70ff2a;
+  color:#e0d8ff;border-radius:30px;
+  padding:7px 13px;font-size:11px;font-weight:800
+}
+.hero-tag i{color:var(--gold)}
+.hero h2{
+  font-size:clamp(30px,4.6vw,53px);
+  font-weight:900;line-height:1.28;
+  margin:18px 0 12px;letter-spacing:-1px
+}
+.hero h2 span{
+  background:linear-gradient(90deg,#d8caff,#a98dff,#65dce8);
+  -webkit-background-clip:text;background-clip:text;color:transparent
+}
+.hero-description{
+  color:#d1cde0;font-size:13px;line-height:2;
+  max-width:460px
+}
+.hero-buttons{display:flex;flex-wrap:wrap;gap:11px;margin-top:25px}
+.primary-btn,.secondary-btn{
+  border:0;border-radius:14px;padding:12px 20px;
+  display:inline-flex;align-items:center;justify-content:center;
+  gap:9px;font-weight:800;font-size:12px;transition:.2s
+}
+.primary-btn{
+  color:white;background:linear-gradient(120deg,#9c7cff,#704ce5);
+  box-shadow:0 9px 25px #7955eb55
+}
+.primary-btn:hover{transform:translateY(-3px);box-shadow:0 13px 30px #7955eb77}
+.secondary-btn{
+  color:white;background:rgba(255,255,255,.11);
+  border:1px solid rgba(255,255,255,.18);backdrop-filter:blur(10px)
+}
+.secondary-btn:hover{background:rgba(255,255,255,.2)}
+.hero-decoration{
+  position:absolute;left:7%;bottom:22px;
+  width:170px;height:170px;border-radius:50%;
+  border:1px solid #ffffff20;
+  box-shadow:0 0 0 22px #ffffff08,0 0 0 45px #ffffff05;
+  pointer-events:none
+}
+.hero-decoration:before{
+  content:"";position:absolute;inset:27px;border-radius:50%;
+  border:1px dashed #ffffff35
+}
+.hero-decoration i{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  color:#e6d8ff;font-size:55px;text-shadow:0 0 30px #a78bfa
+}
+
+/* ===== WALLET STRIP ===== */
 .wallet-strip{
-  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:12px;margin:18px 0 28px;
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:13px;margin:19px 0 34px
 }
 .wallet-card{
-  display:flex;align-items:center;gap:13px;
-  padding:14px 17px;background:var(--panel);
-  border:1px solid var(--line);border-radius:17px;
+  min-height:83px;display:flex;align-items:center;gap:13px;
+  padding:14px 17px;border:1px solid var(--line);
+  border-radius:19px;background:linear-gradient(145deg,#171729,#11111d);
+  position:relative;overflow:hidden
+}
+.wallet-card:after{
+  content:"";position:absolute;width:90px;height:90px;
+  border-radius:50%;left:-35px;top:-45px;background:var(--glow);
+  filter:blur(35px);opacity:.35
 }
 .wallet-icon{
-  width:42px;height:42px;border-radius:13px;
-  display:grid;place-items:center;font-size:21px;
+  width:45px;height:45px;flex-shrink:0;
+  display:grid;place-items:center;border-radius:15px;
+  background:var(--icon-bg);color:var(--icon-color);font-size:18px
 }
-.coins .wallet-icon{background:#f4c76b1c;color:var(--gold)}
-.gems .wallet-icon{background:#9c7cff20;color:#b69aff}
-.wallet-card small{display:block;color:var(--muted);font-size:10px}
-.wallet-card strong{font-size:17px;font-weight:900}
-.wallet-card a{margin-right:auto;color:#b49aff;font-size:11px;font-weight:800}
+.wallet-info{position:relative;z-index:1}
+.wallet-info small{color:var(--muted);font-size:10px;display:block}
+.wallet-info strong{font-size:17px;font-weight:900;display:block;margin-top:2px}
+.wallet-card.coins{--glow:#e5aa36;--icon-bg:#e7ae351c;--icon-color:#f3c66d}
+.wallet-card.gems{--glow:#4a9fff;--icon-bg:#438bff1c;--icon-color:#75b9ff}
+.wallet-card.points{--glow:#9b75ff;--icon-bg:#9975ff20;--icon-color:#b9a2ff}
 
-/* SECTION */
-.section{margin-top:31px}
+/* ===== SECTIONS ===== */
+.section{margin-top:36px}
 .section-head{
   display:flex;align-items:center;justify-content:space-between;
-  gap:12px;margin-bottom:15px;
+  gap:12px;margin-bottom:16px
 }
-.section-title{display:flex;align-items:center;gap:10px}
-.section-title .symbol{
-  width:36px;height:36px;border-radius:12px;
-  display:grid;place-items:center;
-  background:#9574ff20;color:#b59cff;
+.section-title{display:flex;align-items:center;gap:11px}
+.section-symbol{
+  width:39px;height:39px;border-radius:13px;
+  display:grid;place-items:center;background:#9675ff18;
+  color:#b49dff;font-size:15px
 }
-.section-title svg{width:19px;height:19px}
-.section-title h2{font-size:18px;font-weight:900}
-.section-title p{font-size:10px;color:var(--muted)}
-.more{
-  color:#b59cff;font-size:12px;font-weight:800;
-  display:flex;align-items:center;gap:5px;
+.section-title h3{font-size:17px;font-weight:900}
+.section-title p{font-size:10px;color:var(--muted);margin-top:1px}
+.section-link{
+  color:#b6a4ff;font-size:11px;font-weight:800;
+  display:flex;align-items:center;gap:8px;
+  padding:8px 12px;border-radius:11px;
+  transition:.2s
 }
-.more svg{width:15px;height:15px}
+.section-link:hover{background:#9675ff18}
+.section-link i{font-size:10px}
 
-/* FEATURE CARDS */
-.feature-grid{
-  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;
-}
-.feature-card{
-  min-height:180px;position:relative;overflow:hidden;
-  border-radius:19px;padding:17px;
-  display:flex;flex-direction:column;justify-content:flex-end;
-  border:1px solid #ffffff13;
-  background-size:cover;background-position:center;
-  transition:transform .2s,border-color .2s;
-}
-.feature-card:before{
-  content:"";position:absolute;inset:0;
-  background:linear-gradient(0deg,rgba(12,10,24,.96),rgba(12,10,24,.04) 100%);
-}
-.feature-card:active{transform:scale(.98)}
-.feature-card>*{position:relative;z-index:1}
-.feature-card .tag{
-  position:absolute;top:13px;right:13px;
-  background:#171324c9;border:1px solid #ffffff20;
-  padding:5px 10px;border-radius:30px;font-size:10px;font-weight:800;
-}
-.feature-card h3{font-size:18px;font-weight:900}
-.feature-card p{font-size:11px;color:#ddd6ee;margin-top:3px}
-.feature-card .go{
-  position:absolute;left:14px;bottom:16px;
-  width:31px;height:31px;border-radius:50%;
-  background:#ffffff20;display:grid;place-items:center;
-}
-.feature-card .go svg{width:16px;height:16px}
-.rooms-feature{background-image:url('https://images.unsplash.com/photo-1524368535928-5b5e00ddc76b?w=900&q=85')}
-.live-feature{background-image:url('https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=900&q=85')}
-.contest-feature{background-image:url('https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=900&q=85')}
-
-/* GAME CATEGORIES */
+/* ===== CATEGORY SHORTCUTS ===== */
 .category-grid{
-  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;
+  display:grid;grid-template-columns:repeat(6,minmax(0,1fr));
+  gap:12px
 }
-.category{
-  min-height:120px;border-radius:17px;overflow:hidden;
-  position:relative;background:var(--panel);
-  border:1px solid var(--line);
-  background-size:cover;background-position:center;
-  display:flex;align-items:flex-end;padding:13px;
+.category-card{
+  min-height:105px;border:1px solid var(--line);
+  border-radius:19px;background:linear-gradient(145deg,#19192b,#11111e);
+  display:flex;flex-direction:column;align-items:center;
+  justify-content:center;gap:10px;transition:.25s;
+  position:relative;overflow:hidden
 }
-.category:before{
+.category-card:before{
   content:"";position:absolute;inset:0;
-  background:linear-gradient(0deg,#100e1d 0%,#100e1d30 100%);
+  background:radial-gradient(circle at 50% 0%,var(--tint),transparent 65%);
+  opacity:.65
 }
-.category span{position:relative;font-size:13px;font-weight:900}
-.cat-board{background-image:url('https://images.unsplash.com/photo-1606503153255-59d8b8b821a4?w=600&q=80')}
-.cat-brain{background-image:url('https://images.unsplash.com/photo-1606092195730-5d7b9af1efc5?w=600&q=80')}
-.cat-team{background-image:url('https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=600&q=80')}
-.cat-sport{background-image:url('https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=600&q=80')}
+.category-card:hover{transform:translateY(-5px);border-color:#a58bff66}
+.category-icon{
+  position:relative;width:43px;height:43px;border-radius:14px;
+  display:grid;place-items:center;background:var(--tint);
+  color:var(--tone);font-size:18px
+}
+.category-card strong{position:relative;font-size:11px}
+.category-card small{position:relative;color:var(--muted);font-size:9px}
+.cat-purple{--tone:#b49aff;--tint:#9675ff20}
+.cat-blue{--tone:#72caff;--tint:#3e9bff20}
+.cat-pink{--tone:#f19acb;--tint:#e77cbd20}
+.cat-gold{--tone:#f1c775;--tint:#e7b34b20}
+.cat-green{--tone:#67dbb1;--tint:#47d5a020}
+.cat-red{--tone:#ff8295;--tint:#ff647e20}
 
-/* DYNAMIC LISTS */
-.data-list{
-  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px;
-}
-.data-card{
-  min-width:0;background:var(--panel);
-  border:1px solid var(--line);border-radius:17px;
-  padding:13px;display:flex;align-items:center;gap:12px;
-}
-.data-cover{
-  width:76px;height:76px;flex-shrink:0;
-  border-radius:13px;object-fit:cover;background:#302b43;
-}
-.data-info{min-width:0;flex:1}
-.data-info h3{font-size:13px;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.data-info p{font-size:10px;color:var(--muted);margin-top:4px}
-.data-action{
-  display:inline-flex;margin-top:8px;
-  padding:5px 12px;border-radius:9px;
-  background:#9675ff20;color:#c4b1ff;
-  font-size:10px;font-weight:800;
-}
-.empty{
-  grid-column:1/-1;text-align:center;
-  padding:28px 15px;border:1px dashed #ffffff20;
-  border-radius:17px;background:#19192780;
-}
-.empty .empty-icon{
-  width:48px;height:48px;border-radius:15px;
-  background:#9875ff18;color:#b99fff;
-  display:grid;place-items:center;margin:0 auto 10px;
-}
-.empty svg{width:23px;height:23px}
-.empty h3{font-size:13px}
-.empty p{font-size:11px;color:var(--muted);margin-top:5px}
-
-/* LIVE PANEL */
-.live-panel{
-  border-radius:21px;padding:21px;
-  background:
-    linear-gradient(100deg,#1d1732ee,#171523e8),
-    url('https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=1200&q=80') center/cover;
-  border:1px solid #a68aff2c;
-  display:flex;align-items:center;justify-content:space-between;gap:15px;
-}
-.live-panel h3{font-size:18px;font-weight:900}
-.live-panel p{font-size:11px;color:#c1b9d5;margin-top:5px}
-.live-label{
-  display:inline-flex;align-items:center;gap:6px;
-  color:#ff8b9a;font-size:10px;font-weight:900;margin-bottom:8px;
-}
-.live-label i{width:7px;height:7px;background:#ff627d;border-radius:50%}
-
-/* FOOTER NAV */
-.bottom-nav{
-  position:fixed;z-index:60;bottom:0;left:0;right:0;
-  min-height:70px;padding:8px max(5%,calc((100% - 900px)/2));
-  background:rgba(20,19,33,.97);
-  border-top:1px solid var(--line);
-  backdrop-filter:blur(18px);
+/* ===== FEATURED ROOMS ===== */
+.rooms-banner{
+  position:relative;min-height:150px;overflow:hidden;
+  border-radius:23px;border:1px solid var(--line);
+  background:#17152a;
   display:flex;align-items:center;justify-content:space-between;
+  padding:25px 28px;gap:20px
 }
-.nav-item{
-  min-width:54px;display:flex;flex-direction:column;
-  align-items:center;gap:3px;color:#858198;
-  font-size:9px;font-weight:800;
+.rooms-banner-bg{
+  position:absolute;inset:0;
+  background:url('https://images.unsplash.com/photo-1603481546238-487240415921?auto=format&fit=crop&w=1300&q=85') center/cover;
+  opacity:.24
 }
-.nav-item svg{width:21px;height:21px}
-.nav-item.active{color:#b69cff}
-.nav-item.active svg{filter:drop-shadow(0 0 7px #9c78ff)}
-.nav-item.center{
-  transform:translateY(-12px);
+.rooms-banner:after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(90deg,transparent,#141225 78%)
 }
-.nav-item.center .center-icon{
-  width:48px;height:48px;border-radius:16px;
-  background:linear-gradient(140deg,#ae91ff,#7451e8);
-  display:grid;place-items:center;color:white;
-  box-shadow:0 7px 22px #8e68ff55;
+.rooms-banner-content{position:relative;z-index:1}
+.rooms-banner h4{font-size:20px;font-weight:900}
+.rooms-banner p{font-size:11px;color:#c3bfd6;margin-top:6px}
+.rooms-banner .primary-btn{margin-top:15px}
+.rooms-banner-art{
+  position:relative;z-index:1;width:105px;height:105px;
+  flex-shrink:0;border-radius:30px;
+  background:linear-gradient(145deg,#9c7cff,#4933a2);
+  display:grid;place-items:center;font-size:39px;
+  box-shadow:0 12px 35px #7653df66;
+  transform:rotate(-7deg)
 }
-.nav-item.center svg{width:23px;height:23px}
 
-/* STATES */
-.loading{color:var(--muted);font-size:12px;padding:18px;text-align:center}
+/* ===== GAMES GRID ===== */
+.game-filters{
+  display:flex;gap:8px;overflow-x:auto;padding:2px 1px 12px;
+  scrollbar-width:none
+}
+.game-filters::-webkit-scrollbar{display:none}
+.filter-btn{
+  flex-shrink:0;border:1px solid var(--line);
+  background:#171729;color:#aaa7c0;
+  border-radius:30px;padding:8px 15px;font-size:10px;
+  font-weight:800;transition:.2s
+}
+.filter-btn.active,.filter-btn:hover{
+  color:white;background:#8061e8;border-color:#9c83ff
+}
+.games-grid{
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:14px
+}
+.game-card{
+  min-width:0;border-radius:21px;overflow:hidden;
+  border:1px solid var(--line);background:#151523;
+  transition:.25s;position:relative
+}
+.game-card:hover{transform:translateY(-5px);border-color:#a58bff66}
+.game-cover{
+  height:145px;position:relative;overflow:hidden;
+  background:#25213c
+}
+.game-cover img{
+  width:100%;height:100%;object-fit:cover;
+  transition:transform .5s
+}
+.game-card:hover .game-cover img{transform:scale(1.08)}
+.game-cover:after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(0deg,#11111f,transparent 75%)
+}
+.game-status{
+  position:absolute;top:11px;right:11px;z-index:2;
+  padding:5px 9px;border-radius:20px;
+  font-size:9px;font-weight:800;
+  background:#11111dcc;color:#f4cf82;
+  border:1px solid #f4cf8244
+}
+.game-details{padding:13px}
+.game-details h4{font-size:13px;font-weight:900}
+.game-details p{font-size:10px;color:var(--muted);margin-top:4px}
+.game-meta{
+  display:flex;align-items:center;justify-content:space-between;
+  border-top:1px solid var(--line);margin-top:12px;padding-top:10px;
+  color:#aaa6c0;font-size:9px
+}
+.game-meta i{color:#b39aff}
+.game-card.disabled{opacity:.88}
+.game-card.disabled .game-cover img{filter:saturate(.8)}
+.game-note{
+  display:flex;align-items:center;gap:8px;
+  margin-top:13px;padding:11px 13px;border-radius:13px;
+  background:#f3c66d0c;border:1px solid #f3c66d25;
+  color:#d8c08f;font-size:10px;line-height:1.8
+}
+
+/* ===== LIVE SECTION ===== */
+.live-feature{
+  display:grid;grid-template-columns:1.2fr 1fr;
+  gap:15px
+}
+.live-main{
+  min-height:235px;border-radius:23px;overflow:hidden;
+  position:relative;background:#1a172c;
+  border:1px solid var(--line)
+}
+.live-main img{
+  width:100%;height:100%;min-height:235px;object-fit:cover;
+  position:absolute;inset:0
+}
+.live-main:after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(0deg,#0d0c19 0%,rgba(13,12,25,.12) 85%)
+}
+.live-main-content{
+  position:absolute;z-index:1;bottom:20px;right:20px;left:20px
+}
+.live-label{
+  display:inline-flex;align-items:center;gap:7px;
+  background:#ed5266;color:white;border-radius:8px;
+  padding:5px 9px;font-size:9px;font-weight:900
+}
+.live-main-content h4{font-size:20px;font-weight:900;margin-top:10px}
+.live-main-content p{font-size:10px;color:#d0cbdc;margin-top:5px}
+.live-side{
+  display:flex;flex-direction:column;gap:12px
+}
+.live-mini{
+  flex:1;display:flex;align-items:center;gap:13px;
+  padding:13px;border:1px solid var(--line);
+  border-radius:18px;background:#151523
+}
+.live-mini img{
+  width:85px;height:80px;border-radius:13px;object-fit:cover
+}
+.live-mini-info{min-width:0}
+.live-mini-info strong{font-size:11px;display:block}
+.live-mini-info small{color:var(--muted);font-size:9px;display:block;margin-top:5px}
+.live-mini-info span{color:#e58ab4;font-size:9px;display:block;margin-top:7px}
+
+/* ===== CHALLENGES ===== */
+.challenge-grid{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px
+}
+.challenge-card{
+  padding:18px;border-radius:19px;border:1px solid var(--line);
+  background:linear-gradient(145deg,#19192b,#11111e);
+  position:relative;overflow:hidden
+}
+.challenge-card:after{
+  content:"";position:absolute;left:-30px;top:-40px;
+  width:110px;height:110px;border-radius:50%;
+  background:var(--challenge-glow);filter:blur(45px);opacity:.35
+}
+.challenge-icon{
+  width:43px;height:43px;border-radius:14px;
+  display:grid;place-items:center;background:var(--challenge-bg);
+  color:var(--challenge-color);font-size:18px;position:relative
+}
+.challenge-card h4{font-size:13px;margin-top:13px}
+.challenge-card p{font-size:10px;color:var(--muted);line-height:1.9;margin-top:5px}
+.challenge-card small{
+  display:inline-block;margin-top:12px;
+  color:var(--challenge-color);font-size:9px;font-weight:800
+}
+
+/* ===== COMMUNITY ===== */
+.community-strip{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:13px
+}
+.community-card{
+  border-radius:18px;overflow:hidden;position:relative;
+  height:145px;background:#171729;border:1px solid var(--line)
+}
+.community-card img{width:100%;height:100%;object-fit:cover;opacity:.68}
+.community-card:after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(0deg,#10101d,transparent 90%)
+}
+.community-card div{
+  position:absolute;z-index:1;right:14px;bottom:13px
+}
+.community-card strong{font-size:12px;display:block}
+.community-card small{font-size:9px;color:#c2bdd5}
+
+/* ===== EMPTY STATES ===== */
+.empty-state{
+  padding:27px 18px;text-align:center;
+  border:1px dashed #ffffff20;border-radius:18px;
+  background:#ffffff04
+}
+.empty-state i{font-size:25px;color:#9c83ff;margin-bottom:11px}
+.empty-state strong{display:block;font-size:13px}
+.empty-state p{font-size:10px;color:var(--muted);margin-top:6px;line-height:1.9}
+
+/* ===== FOOTER ===== */
+.footer{
+  border-top:1px solid var(--line);margin-top:50px;
+  padding:25px 0 10px;display:flex;align-items:center;
+  justify-content:space-between;gap:15px;flex-wrap:wrap;
+  color:var(--muted);font-size:10px
+}
+.footer-brand{color:#d9d0ff;font-weight:900;font-size:13px}
+.footer-links{display:flex;gap:17px}
+.footer-links a:hover{color:white}
+
+/* ===== MOBILE NAVIGATION ===== */
+.mobile-nav{
+  display:none;position:fixed;z-index:120;
+  bottom:0;right:0;left:0;
+  padding:9px 8px calc(9px + env(safe-area-inset-bottom));
+  background:rgba(12,12,23,.95);
+  border-top:1px solid var(--line);
+  backdrop-filter:blur(22px)
+}
+.mobile-nav-inner{
+  display:grid;grid-template-columns:repeat(5,1fr);gap:4px
+}
+.mobile-nav a{
+  display:flex;flex-direction:column;align-items:center;
+  justify-content:center;gap:5px;padding:5px 2px;
+  color:#8e8ba8;font-size:9px;font-weight:700
+}
+.mobile-nav a i{font-size:17px}
+.mobile-nav a.active{color:#b7a2ff}
+.mobile-nav a.active i{filter:drop-shadow(0 0 8px #9878ff)}
+
 .toast{
-  position:fixed;z-index:100;bottom:90px;left:50%;
+  position:fixed;z-index:300;bottom:25px;left:50%;
   transform:translate(-50%,20px);
-  background:#29243b;color:white;
-  border:1px solid #ffffff20;border-radius:12px;
-  padding:11px 18px;font-size:12px;
-  opacity:0;pointer-events:none;transition:.25s;
-  max-width:90%;text-align:center;
+  background:#222039;border:1px solid #ffffff20;
+  color:white;padding:12px 18px;border-radius:13px;
+  font-size:11px;opacity:0;pointer-events:none;
+  transition:.25s;box-shadow:var(--shadow);
+  max-width:90%;text-align:center
 }
 .toast.show{opacity:1;transform:translate(-50%,0)}
-.hidden{display:none!important}
+.loading-shimmer{
+  background:linear-gradient(90deg,#ffffff05,#ffffff12,#ffffff05);
+  background-size:200% 100%;animation:shimmer 1.5s infinite
+}
+@keyframes shimmer{
+  from{background-position:200% 0}
+  to{background-position:-200% 0}
+}
+@keyframes float{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-7px)}
+}
 
+/* ===== RESPONSIVE ===== */
+@media(max-width:1100px){
+  .games-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .category-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
 @media(max-width:760px){
-  .header{height:66px;padding:0 4%}
-  .main{padding:17px 4%}
-  .welcome{min-height:215px;padding:22px}
-  .welcome-art{width:125px;height:125px;left:3%;opacity:.65}
-  .welcome-art span{font-size:54px}
-  .welcome-content{max-width:75%}
-  .feature-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .feature-card{min-height:160px}
-  .feature-card:last-child{grid-column:1/-1;min-height:140px}
-  .category-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .data-list{grid-template-columns:1fr}
-  .brand-name{font-size:16px}
+  .topbar{height:66px;padding:0 12px;gap:10px}
+  .brand-mark{width:38px;height:38px;border-radius:13px}
+  .brand-name{font-size:15px}
+  .top-search{max-width:none}
+  .top-search input{height:39px;font-size:11px}
+  .top-actions{gap:6px}
+  .top-actions .icon-btn{width:37px;height:37px}
+  .profile-shortcut{min-width:0;padding:4px}
+  .profile-shortcut img{width:34px;height:34px}
+  .profile-shortcut .profile-shortcut-text,
+  .profile-shortcut>i{display:none}
+  .page{padding:19px 13px 95px}
+  .welcome-line{margin-top:2px}
+  .welcome-line h1{font-size:19px}
+  .welcome-date{font-size:9px;padding:7px 9px}
+  .hero{min-height:340px;border-radius:23px}
+  .hero-content{padding:33px 22px;max-width:100%}
+  .hero h2{font-size:35px;max-width:360px}
+  .hero-description{font-size:11px;max-width:330px}
+  .hero-decoration{width:115px;height:115px;left:-15px;bottom:12px}
+  .hero-decoration i{font-size:36px}
+  .wallet-strip{gap:7px;margin:13px 0 28px}
+  .wallet-card{min-height:75px;padding:10px 8px;gap:7px;border-radius:15px}
+  .wallet-icon{width:34px;height:34px;border-radius:11px;font-size:14px}
+  .wallet-info small{font-size:8px}
+  .wallet-info strong{font-size:13px}
+  .section{margin-top:29px}
+  .section-title h3{font-size:15px}
+  .section-title p{font-size:9px}
+  .section-symbol{width:34px;height:34px}
+  .category-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
+  .category-card{min-height:93px}
+  .rooms-banner{padding:19px;min-height:145px}
+  .rooms-banner h4{font-size:17px}
+  .rooms-banner p{font-size:9px}
+  .rooms-banner-art{width:75px;height:75px;font-size:29px;border-radius:23px}
+  .games-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .game-cover{height:125px}
+  .game-details{padding:11px}
+  .game-details h4{font-size:12px}
+  .game-details p{font-size:9px}
+  .live-feature{grid-template-columns:1fr}
+  .live-main{min-height:220px}
+  .live-main img{min-height:220px}
+  .live-side{display:grid;grid-template-columns:1fr 1fr}
+  .live-mini{display:block;padding:9px}
+  .live-mini img{width:100%;height:85px;margin-bottom:8px}
+  .live-mini-info strong{font-size:10px}
+  .challenge-grid{grid-template-columns:1fr 1fr}
+  .community-strip{grid-template-columns:1fr 1fr}
+  .community-card:last-child{display:none}
+  .footer{margin-top:35px}
+  .mobile-nav{display:block}
+  .toast{bottom:85px}
 }
 @media(max-width:390px){
-  .profile-mini strong{display:none}
-  .welcome-art{left:-20px;opacity:.35}
-  .welcome-content{max-width:100%}
-  .wallet-card{padding:11px}
-  .wallet-card strong{font-size:15px}
-  .section-title h2{font-size:16px}
-  .feature-card h3{font-size:16px}
+  .brand-name{font-size:13px}
+  .topbar{gap:7px}
+  .top-search{min-width:70px}
+  .top-actions .icon-btn{width:34px;height:34px}
+  .welcome-date{display:none}
+  .hero h2{font-size:30px}
+  .wallet-card{flex-direction:column;align-items:flex-start}
+  .wallet-icon{width:29px;height:29px}
+  .wallet-info strong{font-size:12px}
+  .challenge-grid{grid-template-columns:1fr}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*:before,*:after{scroll-behavior:auto!important;animation:none!important;transition:none!important}
 }
 </style>
 </head>
 
 <body>
-<div class="app">
+<div class="ambient"></div>
 
-<header class="header">
-  <a class="brand" href="home.html">
-    <div class="brand-mark">
-      <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
-        <path d="M4 17V7l8 7 8-7v10"/>
-        <path d="M8 17h8"/>
-      </svg>
-    </div>
+<!-- ================= TOP BAR ================= -->
+<header class="topbar">
+  <a class="brand" href="home.html" aria-label="Hanoon World">
+    <div class="brand-mark"><i class="fa-solid fa-earth-africa"></i></div>
     <div class="brand-name">HANOON <span>WORLD</span></div>
   </a>
 
-  <div class="header-actions">
-    <a class="icon-btn" href="notifications.html" aria-label="الإشعارات">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-        <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/>
-        <path d="M10 21h4"/>
-      </svg>
+  <div class="top-search">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <input id="globalSearch" type="search" placeholder="ابحث عن لعبة أو غرفة أو عضو..." autocomplete="off">
+  </div>
+
+  <div class="top-actions">
+    <button class="icon-btn" id="notificationButton" aria-label="الإشعارات">
+      <i class="fa-regular fa-bell"></i>
+      <span class="notification-dot"></span>
+    </button>
+    <a class="icon-btn" href="chat.html" aria-label="المحادثات">
+      <i class="fa-regular fa-comments"></i>
     </a>
-    <a class="profile-mini" href="profile.html">
-      <img id="headerAvatar" class="avatar" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&q=80" alt="الصورة الشخصية">
-      <span>
-        <strong id="headerName">حسابي</strong>
-        <small id="headerCode">HANOON MEMBER</small>
+    <a class="profile-shortcut" href="profile.html" aria-label="الملف الشخصي">
+      <img id="topAvatar" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=120&q=80" alt="الصورة الشخصية">
+      <span class="profile-shortcut-text">
+        <strong id="topName">حسابي</strong>
+        <small id="topUsername">@member</small>
       </span>
+      <i class="fa-solid fa-chevron-down"></i>
     </a>
   </div>
 </header>
 
-<main class="main">
+<main class="page">
 
-  <section class="welcome">
-    <div class="welcome-content">
-      <div class="eyebrow"><i></i> عالمك الترفيهي يبدأ من هنا</div>
-      <h1>أهلاً بك في<br>HANOON WORLD</h1>
-      <p>اكتشف الألعاب، ادخل غرفتك المفضلة، شارك في التحديات واجمع النقاط والإنجازات.</p>
-      <a class="primary-btn" href="games.html">
-        اكتشف الألعاب
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M5 12h14M13 6l6 6-6 6"/>
-        </svg>
-      </a>
+  <!-- ================= WELCOME ================= -->
+  <div class="welcome-line">
+    <div>
+      <h1 id="welcomeTitle">أهلاً بك في عالم هنون 👑</h1>
+      <p>مكانك للعب والتحدي والتواصل وصناعة لحظات ممتعة.</p>
     </div>
-    <div class="welcome-art"><span>H</span></div>
+    <div class="welcome-date">
+      <i class="fa-regular fa-calendar"></i>
+      <span id="currentDate">أهلاً بك</span>
+    </div>
+  </div>
+
+  <!-- ================= HERO ================= -->
+  <section class="hero">
+    <div class="hero-image"></div>
+    <div class="hero-content">
+      <div class="hero-tag">
+        <i class="fa-solid fa-crown"></i>
+        عالمك.. لعبتك.. أصدقاؤك
+      </div>
+      <h2>هنا تبدأ<br><span>الحكاية!</span></h2>
+      <p class="hero-description">
+        ادخل عالم مليان ألعاب ومنافسات وغرف تجمعك بأشخاص من كل مكان.
+        اختار لعبتك، اكتشف عالمك، واصنع لحظتك القادمة.
+      </p>
+      <div class="hero-buttons">
+        <a class="primary-btn" href="rooms.html">
+          <i class="fa-solid fa-door-open"></i>
+          اكتشف الغرف
+        </a>
+        <a class="secondary-btn" href="games.html">
+          <i class="fa-solid fa-gamepad"></i>
+          عالم الألعاب
+        </a>
+      </div>
+    </div>
+    <div class="hero-decoration"><i class="fa-solid fa-gamepad"></i></div>
   </section>
 
+  <!-- ================= WALLET ================= -->
   <section class="wallet-strip">
     <div class="wallet-card coins">
-      <div class="wallet-icon">◈</div>
-      <div><small>رصيد العملات</small><strong id="coinBalance">—</strong></div>
-      <a href="wallet.html">المحفظة</a>
+      <div class="wallet-icon"><i class="fa-solid fa-coins"></i></div>
+      <div class="wallet-info">
+        <small>رصيد العملات</small>
+        <strong id="coinBalance">—</strong>
+      </div>
     </div>
     <div class="wallet-card gems">
-      <div class="wallet-icon">✧</div>
-      <div><small>رصيد الجواهر</small><strong id="gemBalance">—</strong></div>
-      <a href="wallet.html">التفاصيل</a>
+      <div class="wallet-icon"><i class="fa-solid fa-gem"></i></div>
+      <div class="wallet-info">
+        <small>الجواهر</small>
+        <strong id="gemBalance">—</strong>
+      </div>
+    </div>
+    <div class="wallet-card points">
+      <div class="wallet-icon"><i class="fa-solid fa-star"></i></div>
+      <div class="wallet-info">
+        <small>نقاطك</small>
+        <strong id="pointsBalance">—</strong>
+      </div>
     </div>
   </section>
 
+  <!-- ================= DISCOVER CATEGORIES ================= -->
   <section class="section">
     <div class="section-head">
       <div class="section-title">
-        <div class="symbol">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-            <path d="M3 12h18M12 3v18M5.6 5.6l12.8 12.8M18.4 5.6 5.6 18.4"/>
-          </svg>
+        <div class="section-symbol"><i class="fa-solid fa-compass"></i></div>
+        <div>
+          <h3>اكتشف عالم هنون</h3>
+          <p>اختار المكان اللي يناسب مزاجك</p>
         </div>
-        <div><h2>اكتشف عالم هنون</h2><p>اختار تجربتك وابدأ المغامرة</p></div>
       </div>
-    </div>
-
-    <div class="feature-grid">
-      <a href="rooms.html" class="feature-card rooms-feature">
-        <span class="tag">تواصل والعب</span>
-        <h3>الغرف الصوتية</h3>
-        <p>اجتمع مع الأصدقاء في عالم واحد</p>
-        <span class="go">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-        </span>
-      </a>
-
-      <a href="live.html" class="feature-card live-feature">
-        <span class="tag">LIVE</span>
-        <h3>عالم اللايف</h3>
-        <p>تجارب تفاعلية وتحديات مباشرة</p>
-        <span class="go">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-        </span>
-      </a>
-
-      <a href="contests.html" class="feature-card contest-feature">
-        <span class="tag">نافس واربح</span>
-        <h3>المسابقات</h3>
-        <p>تحديات ونقاط وترتيب الفائزين</p>
-        <span class="go">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-        </span>
-      </a>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="section-head">
-      <div class="section-title">
-        <div class="symbol">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-            <path d="M6 8h12l3 10H3L6 8Z"/>
-            <path d="M8 12v4m-2-2h4m6-1h.01M18 15h.01"/>
-          </svg>
-        </div>
-        <div><h2>عالم الألعاب</h2><p>اختار نوع اللعب اللي بتحبه</p></div>
-      </div>
-      <a class="more" href="games.html">كل الألعاب</a>
     </div>
 
     <div class="category-grid">
-      <a href="games.html?category=classic" class="category cat-board"><span>ألعاب الطاولة</span></a>
-      <a href="games.html?category=brain" class="category cat-brain"><span>ألعاب الذكاء</span></a>
-      <a href="games.html?category=team" class="category cat-team"><span>ألعاب جماعية</span></a>
-      <a href="games.html?category=sport" class="category cat-sport"><span>التحديات الرياضية</span></a>
+      <a href="rooms.html" class="category-card cat-purple">
+        <span class="category-icon"><i class="fa-solid fa-door-open"></i></span>
+        <strong>الغرف</strong><small>عالم من التجمعات</small>
+      </a>
+      <a href="games.html" class="category-card cat-blue">
+        <span class="category-icon"><i class="fa-solid fa-gamepad"></i></span>
+        <strong>الألعاب</strong><small>العب وتحدى</small>
+      </a>
+      <a href="live.html" class="category-card cat-pink">
+        <span class="category-icon"><i class="fa-solid fa-tower-broadcast"></i></span>
+        <strong>البث المباشر</strong><small>منافسات مباشرة</small>
+      </a>
+      <a href="contests.html" class="category-card cat-gold">
+        <span class="category-icon"><i class="fa-solid fa-trophy"></i></span>
+        <strong>البطولات</strong><small>نافس على القمة</small>
+      </a>
+      <a href="members.html" class="category-card cat-green">
+        <span class="category-icon"><i class="fa-solid fa-users"></i></span>
+        <strong>الأعضاء</strong><small>اكتشف أشخاصاً جدد</small>
+      </a>
+      <a href="chat.html" class="category-card cat-red">
+        <span class="category-icon"><i class="fa-solid fa-message"></i></span>
+        <strong>المحادثات</strong><small>تواصل مع أصدقائك</small>
+      </a>
     </div>
   </section>
 
+  <!-- ================= ROOMS ================= -->
   <section class="section">
     <div class="section-head">
       <div class="section-title">
-        <div class="symbol">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-            <path d="M12 3 15 9l6 3-6 3-3 6-3-6-6-3 6-3 3-6Z"/>
-          </svg>
+        <div class="section-symbol"><i class="fa-solid fa-door-open"></i></div>
+        <div>
+          <h3>عالم الغرف</h3>
+          <p>اجتمعوا.. العبوا.. واصنعوا التحدي</p>
         </div>
-        <div><h2>غرف اللعب النشطة</h2><p>ادخل غرفة وابدأ التحدي</p></div>
       </div>
-      <a class="more" href="rooms.html">عرض الغرف</a>
+      <a href="rooms.html" class="section-link">كل الغرف <i class="fa-solid fa-arrow-left"></i></a>
     </div>
-    <div class="data-list" id="roomsList">
-      <div class="loading">جارٍ تحميل الغرف...</div>
+
+    <div class="rooms-banner">
+      <div class="rooms-banner-bg"></div>
+      <div class="rooms-banner-content">
+        <h4>غرفتك.. وأصحابك.. والتحدي يبدأ!</h4>
+        <p>اكتشف غرف الألعاب وتابع التجمعات المتاحة.</p>
+        <a href="rooms.html" class="primary-btn">
+          <i class="fa-solid fa-arrow-left"></i> تصفح الغرف
+        </a>
+      </div>
+      <div class="rooms-banner-art"><i class="fa-solid fa-users"></i></div>
+    </div>
+
+    <div class="section" style="margin-top:14px">
+      <div id="roomsContainer">
+        <div class="empty-state">
+          <i class="fa-solid fa-door-closed"></i>
+          <strong>لا توجد غرف عامة متاحة حالياً</strong>
+          <p>عندما يتم إنشاء غرف عامة ستظهر هنا تلقائياً.</p>
+        </div>
+      </div>
     </div>
   </section>
 
-  <section class="section">
-    <div class="live-panel">
-      <div>
-        <div class="live-label"><i></i> HANOON LIVE</div>
-        <h3>ساحة التحديات المباشرة</h3>
-        <p>مكان للألعاب التفاعلية والهدايا والنقاط والمنافسات.</p>
+  <!-- ================= GAMES ================= -->
+  <section class="section" id="gamesSection">
+    <div class="section-head">
+      <div class="section-title">
+        <div class="section-symbol"><i class="fa-solid fa-gamepad"></i></div>
+        <div>
+          <h3>ألعاب هنون</h3>
+          <p>ألعاب الطاولة والورق والذكاء والتحديات</p>
+        </div>
       </div>
-      <a href="live.html" class="primary-btn">دخول الساحة</a>
+      <a href="games.html" class="section-link">كل الألعاب <i class="fa-solid fa-arrow-left"></i></a>
+    </div>
+
+    <div class="game-filters" id="gameFilters">
+      <button class="filter-btn active" data-filter="all">كل الألعاب</button>
+      <button class="filter-btn" data-filter="board">ألعاب الطاولة</button>
+      <button class="filter-btn" data-filter="cards">الورق والكروت</button>
+      <button class="filter-btn" data-filter="strategy">الذكاء والاستراتيجية</button>
+      <button class="filter-btn" data-filter="party">ألعاب جماعية</button>
+      <button class="filter-btn" data-filter="puzzle">الألغاز</button>
+      <button class="filter-btn" data-filter="quick">ألعاب سريعة</button>
+    </div>
+
+    <div class="games-grid" id="gamesGrid">
+
+      <article class="game-card disabled" data-category="board" data-search="لودو ludo">
+        <div class="game-cover">
+          <img loading="lazy" src="https://images.unsplash.com/photo-1606503153255-59d8b8b8214e?auto=format&fit=crop&w=700&q=85" alt="لودو">
+          <span class="game-status">قريباً</span>
+        </div>
+        <div class="game-details">
+          <h4>لودو</h4>
+          <p>اجمع أصحابك ونافسهم في لعبة الطاولة.</p>
+          <div class="game-meta"><span><i class="fa-solid fa-users"></i> 2 - 4 لاعبين</span><span>طاولة</span></div>
+        </div>
+      </article>
+
+      <article class="game-card disabled" data-category="board" data-search="دومينو domino">
+        <div class="game-cover">
+          <img loading="lazy" src="https://images.unsplash.com/photo-1610890716171-6b1bb98ffd09?auto=format&fit=crop&w=700&q=85" alt="دومينو">
+          <span class="game-status">قريباً</span>
+        </div>
+        <div class="game-details">
+          <h4>دومينو</h4>
+          <p>خطط لحركاتك وتغلب على منافسيك.</p>
+          <div class="game-meta"><span><i class="fa-solid fa-users"></i> 2 - 4 لاعبين</span><span>طاولة</span></div>
+        </div>
+      </article>
+
+      <article class="game-card disabled" data-category="strategy" data-search="شطرنج chess">
+        <div class="game-cover">
+          <img loading="lazy" src="https://images.unsplash.com/photo-1586165368502-1bad197a6461?auto=format&fit=crop&w=700&q=85" alt="شطرنج">
+          <span class="game-status">قريباً</span>
+        </div>
+        <div class="game-details">
+          <h4>الشطرنج</h4>
+          <p>خطط بذكاء وخطوة واحدة قد تغير المباراة.</p>
+          <div class="game-meta"><span><i class="fa-solid fa-users"></i> لاعبان</span><span>استراتيجية</span></div>
+        </div>
+      </article>
+
+      <article class="game-card disabled" data-category="cards" data-search="جاكارو jackaroo">
+        <div class="game-cover">
+          <img loading="lazy" src="https://images.unsplash.com/photo-1606167668584-78701c57f13d?auto=format&fit=crop&w=700&q=85" alt="جاكارو">
+          <span class="game-status">قريباً</span>
+        </div>
+        <div class="game-details">
+          <h4>جاكارو</h4>
+          <p>ورق وتكتيك وتعاون ومنافسة.</p>
+          <div class="game-meta"><span><i class="fa-solid fa-users"></i> 2 - 4 لاعبين</span><span>ورق</span></div>
+        </div>
+      </article>
+
+      <article class="game-card disabled" data-category="quick" data-search="اكس او tic tac toe">
+        <div class="game-cover">
+          <img loading="lazy" src="https://images.unsplash.com/photo-1611996575749-79a3a250f948?auto=format&fit=crop&w=700&q=85" alt="إكس أو">
+          <span class="game-status">قريباً</span>
+        </div>
+        <div class="game-details">
+          <h4>إكس أو</h4>
+          <p>مبارزة سريعة بين لاعبين.</p>
+          <div class="game-meta"><span><i class="fa-solid fa-users"></i> لاعبان</span><span>سريعة</span></div>
+        </div>
+      </article>
+
+      <article class="game-card disabled" data-category="party" data-search="مافيا mafia">
+        <div class="game-cover">
+          <img loading="lazy" src="https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=700&q=85" alt="مافيا">
+          <span class="game-status">قريباً</span>
+        </div>
+        <div class="game-details">
+          <h4>مافيا</h4>
+          <p>لعبة جماعية مليئة بالغموض والتحليل.</p>
+          <div class="game-meta"><span><i class="fa-solid fa-users"></i> 5 - 12 لاعباً</span><span>جماعية</span></div>
+        </div>
+      </article>
+
+      <article class="game-card disabled" data-category="party" data-search="ارسم وخمن draw guess">
+        <div class="game-cover">
+          <img loading="lazy" src="https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=700&q=85" alt="ارسم وخمن">
+          <span class="game-status">قريباً</span>
+        </div>
+        <div class="game-details">
+          <h4>ارسم وخمّن</h4>
+          <p>ارسم الفكرة ودع أصحابك يكتشفونها.</p>
+          <div class="game-meta"><span><i class="fa-solid fa-users"></i> 2 - 8 لاعبين</span><span>جماعية</span></div>
+        </div>
+      </article>
+
+      <article class="game-card disabled" data-category="puzzle" data-search="تحدي الكلمات word duel">
+        <div class="game-cover">
+          <img loading="lazy" src="https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=700&q=85" alt="تحدي الكلمات">
+          <span class="game-status">قريباً</span>
+        </div>
+        <div class="game-details">
+          <h4>تحدي الكلمات</h4>
+          <p>اختبر سرعة تفكيرك وقوة مفرداتك.</p>
+          <div class="game-meta"><span><i class="fa-solid fa-users"></i> 2 - 4 لاعبين</span><span>ألغاز</span></div>
+        </div>
+      </article>
+
+    </div>
+
+    <div class="game-note">
+      <i class="fa-solid fa-circle-info"></i>
+      الألعاب المعروضة هنا ضمن كتالوج المنصة، وحالتها الحالية غير مفعّلة بعد. لن يتم فتح مباراة قبل تجهيز اللعبة وربط نظام اللعب الحقيقي.
     </div>
   </section>
 
+  <!-- ================= LIVE ================= -->
   <section class="section">
     <div class="section-head">
       <div class="section-title">
-        <div class="symbol">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-            <path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0V4Z"/>
-            <path d="M7 6H4v2a4 4 0 0 0 4 4m9-6h3v2a4 4 0 0 1-4 4"/>
-          </svg>
+        <div class="section-symbol"><i class="fa-solid fa-tower-broadcast"></i></div>
+        <div>
+          <h3>عالم البث المباشر</h3>
+          <p>منافسات وألعاب وتحديات مباشرة</p>
         </div>
-        <div><h2>المسابقات والفعاليات</h2><p>تابع التحديات المتاحة</p></div>
       </div>
-      <a class="more" href="contests.html">كل المسابقات</a>
+      <a href="live.html" class="section-link">صفحة البث <i class="fa-solid fa-arrow-left"></i></a>
     </div>
-    <div class="data-list" id="contestsList">
-      <div class="loading">جارٍ تحميل المسابقات...</div>
+
+    <div class="live-feature">
+      <div class="live-main">
+        <img loading="lazy" src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1100&q=85" alt="عالم الألعاب">
+        <div class="live-main-content">
+          <span class="live-label"><i class="fa-solid fa-circle"></i> عالم المنافسات</span>
+          <h4>تابع لحظات التحدي</h4>
+          <p>صفحة مخصصة للبثوث والألعاب والمنافسات المباشرة.</p>
+        </div>
+      </div>
+      <div class="live-side">
+        <div class="live-mini">
+          <img loading="lazy" src="https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=400&q=80" alt="تحديات الألعاب">
+          <div class="live-mini-info">
+            <strong>تحديات الألعاب</strong>
+            <small>منافسات بين اللاعبين</small>
+            <span>اكتشف عالم البث</span>
+          </div>
+        </div>
+        <div class="live-mini">
+          <img loading="lazy" src="https://images.unsplash.com/photo-1560253023-3ec5d502959f?auto=format&fit=crop&w=400&q=80" alt="بطولات">
+          <div class="live-mini-info">
+            <strong>المنافسات والبطولات</strong>
+            <small>نتائج وتحديات وترتيب</small>
+            <span>اكتشف البطولات</span>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
+  <!-- ================= CHALLENGES ================= -->
   <section class="section">
     <div class="section-head">
       <div class="section-title">
-        <div class="symbol">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-            <circle cx="9" cy="8" r="3"/><path d="M3 20v-2a6 6 0 0 1 12 0v2"/>
-            <path d="M16 5a3 3 0 0 1 0 6m2 3a5 5 0 0 1 3 4v2"/>
-          </svg>
+        <div class="section-symbol"><i class="fa-solid fa-trophy"></i></div>
+        <div>
+          <h3>التحديات والبطولات</h3>
+          <p>مكانك بين المنافسين</p>
         </div>
-        <div><h2>حسابك في هنون</h2><p>ملفك الشخصي وإنجازاتك</p></div>
       </div>
-      <a class="more" href="profile.html">فتح البروفايل</a>
+      <a href="contests.html" class="section-link">كل البطولات <i class="fa-solid fa-arrow-left"></i></a>
     </div>
-    <a href="profile.html" class="data-card">
-      <img id="profileAvatar" class="data-cover" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&q=80" alt="الصورة الشخصية">
-      <div class="data-info">
-        <h3 id="profileName">ملفك الشخصي</h3>
-        <p id="profileMemberCode">رقم العضوية: —</p>
-        <span class="data-action">عرض الملف الشخصي والإعدادات</span>
+
+    <div id="contestsContainer">
+      <div class="empty-state">
+        <i class="fa-solid fa-trophy"></i>
+        <strong>لا توجد بطولات منشورة حالياً</strong>
+        <p>ستظهر البطولات هنا عندما يتم نشرها في النظام.</p>
       </div>
-    </a>
+    </div>
+
+    <div class="challenge-grid" style="margin-top:13px">
+      <div class="challenge-card" style="--challenge-glow:#9b75ff;--challenge-bg:#9675ff20;--challenge-color:#b8a2ff">
+        <div class="challenge-icon"><i class="fa-solid fa-ranking-star"></i></div>
+        <h4>لوحة المتصدرين</h4>
+        <p>تابع ترتيب اللاعبين وأصحاب أعلى النقاط.</p>
+        <small>ترتيب المنافسين</small>
+      </div>
+      <div class="challenge-card" style="--challenge-glow:#e5aa36;--challenge-bg:#e5aa3620;--challenge-color:#f4c56a">
+        <div class="challenge-icon"><i class="fa-solid fa-medal"></i></div>
+        <h4>الإنجازات</h4>
+        <p>إنجازات وشارات تبرز تقدمك داخل العالم.</p>
+        <small>رحلة الإنجاز</small>
+      </div>
+      <div class="challenge-card" style="--challenge-glow:#38cdbb;--challenge-bg:#38cdbb20;--challenge-color:#66dfd2">
+        <div class="challenge-icon"><i class="fa-solid fa-gift"></i></div>
+        <h4>المكافآت والهدايا</h4>
+        <p>مساحة للمكافآت والهدايا المرتبطة بالأنشطة.</p>
+        <small>عالم المكافآت</small>
+      </div>
+    </div>
   </section>
+
+  <!-- ================= DISCOVER WORLDS ================= -->
+  <section class="section">
+    <div class="section-head">
+      <div class="section-title">
+        <div class="section-symbol"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+        <div>
+          <h3>عوالم تستحق الاكتشاف</h3>
+          <p>مساحات مختلفة داخل هنون</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="community-strip">
+      <a href="games.html" class="community-card">
+        <img loading="lazy" src="https://images.unsplash.com/photo-1606503153255-59d8b8b8214e?auto=format&fit=crop&w=700&q=80" alt="ألعاب الطاولة">
+        <div><strong>ألعاب الطاولة</strong><small>خطط ونافس</small></div>
+      </a>
+      <a href="live.html" class="community-card">
+        <img loading="lazy" src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=700&q=80" alt="عالم المنافسات">
+        <div><strong>عالم المنافسات</strong><small>تابع التحديات</small></div>
+      </a>
+      <a href="rooms.html" class="community-card">
+        <img loading="lazy" src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=700&q=80" alt="الأصدقاء">
+        <div><strong>اجتمع مع الأصدقاء</strong><small>اكتشف الغرف</small></div>
+      </a>
+    </div>
+  </section>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="footer">
+    <div>
+      <div class="footer-brand">HANOON WORLD</div>
+      <span>عالم يجمع اللعب والتحدي والتواصل.</span>
+    </div>
+    <div class="footer-links">
+      <a href="home.html">الرئيسية</a>
+      <a href="rooms.html">الغرف</a>
+      <a href="games.html">الألعاب</a>
+      <a href="profile.html">حسابي</a>
+    </div>
+    <span>© <span id="yearNow"></span> HANOON WORLD</span>
+  </footer>
 
 </main>
-</div>
 
-<nav class="bottom-nav">
-  <a class="nav-item active" href="home.html">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7h-6v7H4a1 1 0 0 1-1-1V10Z"/></svg>
-    <span>الرئيسية</span>
-  </a>
-  <a class="nav-item" href="rooms.html">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5h16v11H4zM8 20h8m-4-4v4M8 9h8m-8 3h5"/></svg>
-    <span>الغرف</span>
-  </a>
-  <a class="nav-item center" href="games.html">
-    <span class="center-icon">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 8h12l3 10H3L6 8Z"/><path d="M8 12v4m-2-2h4m6-1h.01M18 15h.01"/></svg>
-    </span>
-    <span>الألعاب</span>
-  </a>
-  <a class="nav-item" href="chat.html">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 11.5a7.5 7.5 0 0 1-8 7.5 8 8 0 0 1-3.5-.8L4 20l1.3-4A7 7 0 0 1 4 11.5 7.5 7.5 0 0 1 12 4a7.5 7.5 0 0 1 8 7.5Z"/></svg>
-    <span>الشات</span>
-  </a>
-  <a class="nav-item" href="profile.html">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>
-    <span>حسابي</span>
-  </a>
+<!-- ================= MOBILE NAV ================= -->
+<nav class="mobile-nav">
+  <div class="mobile-nav-inner">
+    <a href="home.html" class="active"><i class="fa-solid fa-house"></i><span>الرئيسية</span></a>
+    <a href="rooms.html"><i class="fa-solid fa-door-open"></i><span>الغرف</span></a>
+    <a href="games.html"><i class="fa-solid fa-gamepad"></i><span>الألعاب</span></a>
+    <a href="chat.html"><i class="fa-regular fa-comments"></i><span>الدردشة</span></a>
+    <a href="profile.html"><i class="fa-regular fa-user"></i><span>حسابي</span></a>
+  </div>
 </nav>
 
 <div class="toast" id="toast"></div>
 
+<!-- ================= SUPABASE ================= -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script>
-/* =========================================
-   HANOON WORLD — HOME
-   Supabase connection
-========================================= */
+/* ================================================
+   HANOON WORLD - HOME APPLICATION
+   Connected to the existing HANOON Supabase project
+================================================ */
 
 const SUPABASE_URL = "https://gjtgvczvclfwvlvcquxh.supabase.co";
 const SUPABASE_KEY = "sb_publishable_4DVTUZ-xTlqU2GpFvpb7lw_g-Kxomd4";
 
-const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+const supabase = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY,
+  {
+    auth:{
+      persistSession:true,
+      autoRefreshToken:true,
+      detectSessionInUrl:true
+    }
+  }
+);
 
-const $ = (selector) => document.querySelector(selector);
+const $ = (selector, parent=document) => parent.querySelector(selector);
+const $$ = (selector, parent=document) => [...parent.querySelectorAll(selector)];
+
+const state = {
+  user:null,
+  profile:null,
+  wallet:null,
+  games:[],
+  rooms:[],
+  contests:[],
+  points:0
+};
+
+const formatNumber = value =>
+  new Intl.NumberFormat("ar-EG").format(Number(value || 0));
 
 function showToast(message){
   const toast = $("#toast");
@@ -586,183 +1138,393 @@ function showToast(message){
   showToast.timer = setTimeout(()=>toast.classList.remove("show"),2800);
 }
 
-function escapeHTML(value=""){
-  return String(value).replace(/[&<>"']/g, char => ({
-    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
-  }[char]));
+function setText(selector,value){
+  const el = $(selector);
+  if(el) el.textContent = value;
 }
 
-function formatNumber(value){
-  return new Intl.NumberFormat("ar-EG").format(Number(value || 0));
-}
-
-function storageImage(path,bucket="avatars"){
+function storagePublicUrl(bucket,path){
   if(!path) return "";
   if(/^https?:\/\//i.test(path)) return path;
-  const {data} = db.storage.from(bucket).getPublicUrl(path);
+  const {data} = supabase.storage.from(bucket).getPublicUrl(path);
   return data?.publicUrl || "";
 }
 
-function setImage(element,url,fallback){
-  if(!element) return;
-  element.src = url || fallback;
-  element.onerror = () => { element.src = fallback; };
+function setProfileImage(path){
+  const url = storagePublicUrl("avatars",path);
+  if(url) $("#topAvatar").src = url;
 }
 
-const FALLBACK_AVATAR =
-  "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&q=80";
+function safeText(value){
+  return String(value ?? "").replace(/[&<>"']/g,char=>({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+  })[char]);
+}
 
-async function loadAccount(){
-  const {data:{user},error:authError} = await db.auth.getUser();
+function setDate(){
+  const now = new Date();
+  setText("#currentDate",new Intl.DateTimeFormat("ar-EG",{
+    weekday:"long",day:"numeric",month:"long"
+  }).format(now));
+  setText("#yearNow",now.getFullYear());
+}
 
-  if(authError || !user){
-    document.body.innerHTML = `
-      <div style="min-height:100vh;display:grid;place-items:center;padding:25px;text-align:center;font-family:Cairo,sans-serif;background:#10101b;color:white">
-        <div>
-          <h2 style="margin-bottom:10px">سجّل دخولك إلى HANOON WORLD</h2>
-          <p style="color:#aaa;margin-bottom:20px">يجب تسجيل الدخول أولاً لفتح عالم هنون.</p>
-          <a href="index.html" style="display:inline-block;padding:12px 25px;background:#8c6af5;color:white;border-radius:12px;text-decoration:none">العودة لتسجيل الدخول</a>
-        </div>
-      </div>`;
+async function requireSession(){
+  const {data,error} = await supabase.auth.getSession();
+  if(error) throw error;
+
+  const session = data?.session;
+  if(!session?.user){
+    window.location.replace("index.html");
     return null;
   }
 
-  const {data:profile,error:profileError} = await db
+  state.user = session.user;
+  return session.user;
+}
+
+/* ================= PROFILE ================= */
+
+async function loadProfile(){
+  const {data,error} = await supabase
     .from("profiles")
-    .select("id,full_name,nickname,member_code,avatar_path,cover_path")
-    .eq("id",user.id)
+    .select("id,full_name,username,avatar_path,cover_path,member_code,profile_completed")
+    .eq("id",state.user.id)
     .maybeSingle();
 
-  if(profileError) console.error("Profile:",profileError);
+  if(error) throw error;
+  if(!data) throw new Error("لم يتم العثور على ملف الحساب.");
 
-  if(profile){
-    const displayName = profile.nickname || profile.full_name || "عضو هنون";
-    $("#headerName").textContent = displayName;
-    $("#profileName").textContent = displayName;
-    $("#headerCode").textContent = profile.member_code || "HANOON MEMBER";
-    $("#profileMemberCode").textContent =
-      "رقم العضوية: " + (profile.member_code || "غير متاح");
+  state.profile = data;
 
-    const avatar = storageImage(profile.avatar_path);
-    setImage($("#headerAvatar"),avatar,FALLBACK_AVATAR);
-    setImage($("#profileAvatar"),avatar,FALLBACK_AVATAR);
+  const displayName = data.full_name || data.username || "عضو هنون";
+  setText("#topName",displayName);
+  setText("#topUsername",data.username ? "@"+data.username : "عضو هنون");
+  setText("#welcomeTitle","أهلاً بك يا "+displayName+" 👑");
+  setProfileImage(data.avatar_path);
+
+  if(!data.profile_completed){
+    showToast("أكمل بيانات ملفك الشخصي أولاً.");
+    setTimeout(()=>window.location.replace("profile.html"),1600);
   }
+}
 
-  const {data:wallet,error:walletError} = await db
+/* ================= WALLET ================= */
+
+async function loadWallet(){
+  const {data,error} = await supabase
     .from("world_wallets")
     .select("coins,gems")
-    .eq("user_id",user.id)
+    .eq("user_id",state.user.id)
     .maybeSingle();
 
-  if(walletError) console.error("Wallet:",walletError);
+  if(error) throw error;
 
-  $("#coinBalance").textContent = formatNumber(wallet?.coins);
-  $("#gemBalance").textContent = formatNumber(wallet?.gems);
+  state.wallet = data || {coins:0,gems:0};
 
-  return user;
+  setText("#coinBalance",formatNumber(state.wallet.coins));
+  setText("#gemBalance",formatNumber(state.wallet.gems));
 }
 
-function showEmpty(container,title,description,icon){
-  container.innerHTML = `
-    <div class="empty">
-      <div class="empty-icon">${icon}</div>
-      <h3>${escapeHTML(title)}</h3>
-      <p>${escapeHTML(description)}</p>
-    </div>`;
+/* ================= POINTS ================= */
+
+async function loadPoints(){
+  const {data,error} = await supabase
+    .from("points_ledger")
+    .select("points_delta")
+    .eq("user_id",state.user.id);
+
+  if(error){
+    console.warn("Points could not be loaded:",error.message);
+    setText("#pointsBalance","—");
+    return;
+  }
+
+  state.points = (data || []).reduce(
+    (sum,item)=>sum + Number(item.points_delta || 0),0
+  );
+
+  setText("#pointsBalance",formatNumber(state.points));
 }
+
+/* ================= GAME CATALOG ================= */
+
+const categoryNames = {
+  board:"ألعاب الطاولة",
+  cards:"ألعاب الورق",
+  strategy:"ألعاب الذكاء",
+  party:"ألعاب جماعية",
+  puzzle:"الألغاز",
+  quick:"ألعاب سريعة",
+  classic:"ألعاب كلاسيكية"
+};
+
+async function loadGames(){
+  const {data,error} = await supabase
+    .from("world_games_catalog")
+    .select("id,slug,title_ar,title_en,description_ar,category,min_players,max_players,cover_path,route_key,is_active,sort_order")
+    .eq("is_active",true)
+    .order("sort_order",{ascending:true});
+
+  if(error) throw error;
+
+  state.games = data || [];
+
+  // The visual catalog above is a preview.
+  // Only active database games are considered playable.
+  if(state.games.length){
+    renderActiveGames();
+  }
+}
+
+function renderActiveGames(){
+  const grid = $("#gamesGrid");
+  if(!grid) return;
+
+  const activeCards = state.games.map(game=>{
+    const cover = storagePublicUrl("avatars",game.cover_path);
+    const title = safeText(game.title_ar || game.title_en);
+    const description = safeText(game.description_ar || categoryNames[game.category] || "لعبة من عالم هنون");
+    const route = game.route_key && !game.route_key.startsWith("/")
+      ? game.route_key
+      : "games.html";
+
+    return `
+      <a class="game-card" href="${safeText(route)}"
+         data-category="${safeText(game.category)}"
+         data-search="${safeText((game.title_ar||"")+" "+(game.title_en||""))}">
+        <div class="game-cover">
+          <img loading="lazy"
+            src="${cover || "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=700&q=80"}"
+            alt="${title}">
+          <span class="game-status" style="color:#76e4b9;border-color:#76e4b955">متاحة</span>
+        </div>
+        <div class="game-details">
+          <h4>${title}</h4>
+          <p>${description}</p>
+          <div class="game-meta">
+            <span><i class="fa-solid fa-users"></i> ${formatNumber(game.min_players)} - ${formatNumber(game.max_players)}</span>
+            <span>${safeText(categoryNames[game.category] || "لعبة")}</span>
+          </div>
+        </div>
+      </a>
+    `;
+  }).join("");
+
+  const previewCards = $$(".game-card",grid);
+  const activeHtml = document.createElement("div");
+  activeHtml.innerHTML = activeCards;
+
+  grid.innerHTML = "";
+  [...activeHtml.children].forEach(card=>grid.appendChild(card));
+  setupGameFilters();
+}
+
+/* ================= ROOMS ================= */
 
 async function loadRooms(){
-  const container = $("#roomsList");
-
-  const {data,error} = await db
+  const {data,error} = await supabase
     .from("world_game_rooms")
     .select(`
-      id,room_code,status,visibility,max_players,created_at,
-      game:world_games_catalog(title_ar,cover_path,slug)
+      id,game_id,host_user_id,room_code,status,visibility,max_players,created_at,
+      world_games_catalog(title_ar,title_en,slug)
     `)
     .eq("visibility","public")
     .in("status",["waiting","playing"])
     .order("created_at",{ascending:false})
-    .limit(4);
+    .limit(8);
 
-  if(error){
-    console.error("Rooms:",error);
-    showEmpty(container,"تعذر تحميل الغرف","حاول تحديث الصفحة بعد قليل.",
-      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 8v5m0 4h.01M4 20h16L12 4 4 20Z"/></svg>');
-    return;
-  }
+  if(error) throw error;
 
-  if(!data?.length){
-    showEmpty(container,"لا توجد غرف نشطة الآن","عندما يتم إنشاء غرف عامة ستظهر هنا تلقائيًا.",
-      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5h16v11H4zM8 20h8m-4-4v4"/></svg>');
-    return;
-  }
-
-  container.innerHTML = data.map(room=>{
-    const title = room.game?.title_ar || "غرفة ألعاب";
-    const image = storageImage(room.game?.cover_path,"");
-    const status = room.status === "playing" ? "اللعب مستمر" : "بانتظار اللاعبين";
-
-    return `
-      <article class="data-card">
-        <img class="data-cover" src="${escapeHTML(image || "https://images.unsplash.com/photo-1606503153255-59d8b8b821a4?w=200&q=80")}" alt="">
-        <div class="data-info">
-          <h3>${escapeHTML(title)}</h3>
-          <p>${escapeHTML(status)} · الحد الأقصى ${formatNumber(room.max_players)} لاعبين</p>
-          <a class="data-action" href="rooms.html?room=${encodeURIComponent(room.id)}">عرض الغرفة</a>
-        </div>
-      </article>`;
-  }).join("");
+  state.rooms = data || [];
+  renderRooms();
 }
 
-async function loadContests(){
-  const container = $("#contestsList");
+function renderRooms(){
+  const container = $("#roomsContainer");
+  if(!container) return;
 
-  const {data,error} = await db
+  if(!state.rooms.length){
+    container.innerHTML = `
+      <div class="empty-state">
+        <i class="fa-solid fa-door-closed"></i>
+        <strong>لا توجد غرف عامة متاحة حالياً</strong>
+        <p>عندما يتم إنشاء غرف عامة ستظهر هنا تلقائياً.</p>
+      </div>`;
+    return;
+  }
+
+  container.innerHTML = `
+    <div class="games-grid">
+      ${state.rooms.map(room=>{
+        const game = room.world_games_catalog || {};
+        const title = safeText(game.title_ar || game.title_en || "غرفة ألعاب");
+        const status = room.status === "playing" ? "جارية الآن" : "بانتظار اللاعبين";
+        return `
+          <article class="game-card">
+            <div class="game-cover">
+              <img loading="lazy"
+                src="https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=700&q=80"
+                alt="${title}">
+              <span class="game-status">${status}</span>
+            </div>
+            <div class="game-details">
+              <h4>${title}</h4>
+              <p>رمز الغرفة: ${safeText(room.room_code || "—")}</p>
+              <div class="game-meta">
+                <span><i class="fa-solid fa-users"></i> حتى ${formatNumber(room.max_players)}</span>
+                <span>غرفة عامة</span>
+              </div>
+            </div>
+          </article>`;
+      }).join("")}
+    </div>`;
+}
+
+/* ================= CONTESTS ================= */
+
+async function loadContests(){
+  const {data,error} = await supabase
     .from("contests")
     .select("id,title,description,contest_type,status,starts_at,ends_at,minimum_points")
     .in("status",["published","active"])
-    .order("starts_at",{ascending:true,nullsFirst:false})
-    .limit(4);
+    .order("starts_at",{ascending:true})
+    .limit(6);
 
-  if(error){
-    console.error("Contests:",error);
-    showEmpty(container,"تعذر تحميل المسابقات","حاول مرة أخرى لاحقًا.",
-      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 8v5m0 4h.01M4 20h16L12 4 4 20Z"/></svg>');
-    return;
-  }
+  if(error) throw error;
 
-  if(!data?.length){
-    showEmpty(container,"لا توجد مسابقات معلنة الآن","المسابقات التي يتم نشرها ستظهر هنا.",
-      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0V4Z"/></svg>');
-    return;
-  }
-
-  container.innerHTML = data.map(contest=>`
-    <article class="data-card">
-      <div class="data-cover" style="display:grid;place-items:center;background:linear-gradient(145deg,#5d438f,#211b37);font-size:30px;color:#e4d8ff">✦</div>
-      <div class="data-info">
-        <h3>${escapeHTML(contest.title)}</h3>
-        <p>${escapeHTML(contest.description || "مسابقة من مسابقات هنون")}</p>
-        <a class="data-action" href="contests.html?contest=${encodeURIComponent(contest.id)}">التفاصيل</a>
-      </div>
-    </article>
-  `).join("");
+  state.contests = data || [];
+  renderContests();
 }
 
+function renderContests(){
+  const container = $("#contestsContainer");
+  if(!container) return;
+
+  if(!state.contests.length){
+    container.innerHTML = `
+      <div class="empty-state">
+        <i class="fa-solid fa-trophy"></i>
+        <strong>لا توجد بطولات منشورة حالياً</strong>
+        <p>ستظهر البطولات هنا عندما يتم نشرها في النظام.</p>
+      </div>`;
+    return;
+  }
+
+  container.innerHTML = `
+    <div class="challenge-grid">
+      ${state.contests.map(contest=>`
+        <article class="challenge-card">
+          <div class="challenge-icon"><i class="fa-solid fa-trophy"></i></div>
+          <h4>${safeText(contest.title)}</h4>
+          <p>${safeText(contest.description || "بطولة من بطولات هنون.")}</p>
+          <small>${contest.status==="active"?"بطولة نشطة":"بطولة منشورة"}</small>
+        </article>
+      `).join("")}
+    </div>`;
+}
+
+/* ================= GAME FILTERS ================= */
+
+function setupGameFilters(){
+  const buttons = $$(".filter-btn");
+  buttons.forEach(button=>{
+    button.onclick = ()=>{
+      buttons.forEach(item=>item.classList.remove("active"));
+      button.classList.add("active");
+
+      const filter = button.dataset.filter;
+      $$(".game-card",$("#gamesGrid")).forEach(card=>{
+        card.hidden = filter!=="all" && card.dataset.category!==filter;
+      });
+    };
+  });
+}
+
+/* ================= GLOBAL SEARCH ================= */
+
+function setupGlobalSearch(){
+  const input = $("#globalSearch");
+  if(!input) return;
+
+  input.addEventListener("input",()=>{
+    const query = input.value.trim().toLocaleLowerCase("ar");
+    if(!query) return;
+
+    const gameSection = $("#gamesSection");
+    const cards = $$(".game-card",$("#gamesGrid"));
+    let found = false;
+
+    cards.forEach(card=>{
+      const content = (card.dataset.search || card.textContent).toLocaleLowerCase("ar");
+      const matches = content.includes(query);
+      card.hidden = !matches;
+      if(matches) found = true;
+    });
+
+    if(found){
+      gameSection.scrollIntoView({behavior:"smooth",block:"start"});
+    }
+  });
+
+  input.addEventListener("keydown",event=>{
+    if(event.key==="Enter"){
+      const query = input.value.trim();
+      if(!query) return;
+      const found = $$(".game-card",$("#gamesGrid")).some(card=>
+        (card.dataset.search || "").toLocaleLowerCase("ar").includes(query.toLocaleLowerCase("ar"))
+      );
+      if(!found) showToast("لم يتم العثور على لعبة بهذا الاسم.");
+    }
+  });
+}
+
+/* ================= NOTIFICATIONS ================= */
+
+$("#notificationButton")?.addEventListener("click",()=>{
+  showToast("لا توجد إشعارات جديدة حالياً.");
+});
+
+/* ================= AUTH STATE ================= */
+
+supabase.auth.onAuthStateChange((event,session)=>{
+  if(event==="SIGNED_OUT" || !session){
+    window.location.replace("index.html");
+  }
+});
+
+/* ================= APPLICATION START ================= */
+
 async function startHome(){
+  setDate();
+  setupGameFilters();
+  setupGlobalSearch();
+
   try{
-    const user = await loadAccount();
+    const user = await requireSession();
     if(!user) return;
 
-    await Promise.all([
+    await loadProfile();
+
+    if(!state.profile?.profile_completed) return;
+
+    const results = await Promise.allSettled([
+      loadWallet(),
+      loadPoints(),
+      loadGames(),
       loadRooms(),
       loadContests()
     ]);
 
+    results.forEach((result,index)=>{
+      if(result.status==="rejected"){
+        console.error("Home section failed:",index,result.reason);
+      }
+    });
+
   }catch(error){
-    console.error("HANOON HOME:",error);
-    showToast("حصل خطأ أثناء تحميل بعض البيانات.");
+    console.error("HANOON HOME ERROR:",error);
+    showToast(error.message || "حدث خطأ أثناء تحميل الصفحة.");
   }
 }
 
