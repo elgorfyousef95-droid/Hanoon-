@@ -1,0 +1,434 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#100923">
+  <title>تسجيل الدخول | HANOON WORLD</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: "Cairo", sans-serif;
+      color: white;
+      background: #100923;
+    }
+
+    .page {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 30px 18px;
+      position: relative;
+      overflow: hidden;
+
+      background:
+        linear-gradient(
+          90deg,
+          rgba(10, 5, 25, .35),
+          rgba(10, 5, 25, .78)
+        ),
+        url("https://discourse.assets.forge-vtt.com/original/3X/1/7/170d0d24e2b2fe3524d9723e55cad2005b886596.jpeg");
+
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+    }
+
+    .page::before,
+    .page::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(90px);
+      pointer-events: none;
+    }
+
+    .page::before {
+      width: 300px;
+      height: 300px;
+      background: rgba(132, 65, 255, .24);
+      top: -100px;
+      right: -100px;
+    }
+
+    .page::after {
+      width: 280px;
+      height: 280px;
+      background: rgba(35, 170, 210, .12);
+      bottom: -100px;
+      left: -100px;
+    }
+
+    .login-card {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      max-width: 440px;
+      padding: 38px 32px;
+      border: 1px solid rgba(255,255,255,.19);
+      border-radius: 28px;
+      background: rgba(20, 13, 39, .76);
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
+      box-shadow: 0 25px 80px rgba(0,0,0,.45);
+      animation: appear .7s ease both;
+    }
+
+    .brand {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    .brand-icon {
+      width: 76px;
+      height: 76px;
+      margin: 0 auto 14px;
+      display: grid;
+      place-items: center;
+      border-radius: 24px;
+      background: linear-gradient(145deg, #b58aff, #6332b8);
+      border: 1px solid rgba(255,255,255,.4);
+      box-shadow: 0 0 35px rgba(155, 102, 255, .35);
+      font-size: 40px;
+      font-weight: 900;
+    }
+
+    .brand h1 {
+      font-size: 27px;
+      font-weight: 900;
+      letter-spacing: 2px;
+    }
+
+    .brand p {
+      color: #c8b9e8;
+      font-size: 13px;
+      margin-top: 5px;
+    }
+
+    .welcome {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    .welcome h2 {
+      font-size: 22px;
+      font-weight: 800;
+    }
+
+    .welcome p {
+      color: #bcb1d2;
+      font-size: 13px;
+      margin-top: 5px;
+    }
+
+    .field {
+      margin-bottom: 17px;
+    }
+
+    .field label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #e9e0ff;
+    }
+
+    .input-wrap {
+      position: relative;
+    }
+
+    .input-wrap input {
+      width: 100%;
+      height: 54px;
+      padding: 0 17px;
+      border: 1px solid rgba(255,255,255,.15);
+      border-radius: 14px;
+      outline: none;
+      background: rgba(255,255,255,.07);
+      color: white;
+      font-family: inherit;
+      font-size: 14px;
+      transition: .25s;
+    }
+
+    .input-wrap input::placeholder {
+      color: #968ba9;
+    }
+
+    .input-wrap input:focus {
+      border-color: #a987ff;
+      background: rgba(255,255,255,.11);
+      box-shadow: 0 0 0 3px rgba(169,135,255,.12);
+    }
+
+    .password-input {
+      padding-left: 65px !important;
+    }
+
+    .show-password {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      border: none;
+      background: transparent;
+      color: #cbb9f5;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 12px;
+    }
+
+    .options {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin: 5px 0 23px;
+      font-size: 12px;
+      color: #c9bedb;
+    }
+
+    .remember {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .remember input {
+      accent-color: #a47bff;
+    }
+
+    .forgot {
+      color: #c6aaff;
+      text-decoration: none;
+    }
+
+    .login-btn {
+      width: 100%;
+      height: 55px;
+      border: none;
+      border-radius: 15px;
+      color: white;
+      font-family: inherit;
+      font-size: 16px;
+      font-weight: 800;
+      cursor: pointer;
+      background: linear-gradient(100deg, #8050dc, #a77aff);
+      box-shadow: 0 10px 28px rgba(125, 75, 220, .3);
+      transition: .25s;
+    }
+
+    .login-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 35px rgba(125, 75, 220, .45);
+    }
+
+    .login-btn:active {
+      transform: scale(.98);
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 25px 0;
+      color: #9c91ae;
+      font-size: 11px;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: "";
+      height: 1px;
+      flex: 1;
+      background: rgba(255,255,255,.14);
+    }
+
+    .create-account {
+      text-align: center;
+      color: #c9bedb;
+      font-size: 13px;
+    }
+
+    .create-account a {
+      color: #c6aaff;
+      font-weight: 800;
+      text-decoration: none;
+      margin-right: 4px;
+    }
+
+    .message {
+      display: none;
+      margin-top: 15px;
+      padding: 12px;
+      border-radius: 12px;
+      background: rgba(255, 190, 80, .12);
+      border: 1px solid rgba(255, 190, 80, .25);
+      color: #ffe0a8;
+      font-size: 12px;
+      text-align: center;
+      line-height: 1.8;
+    }
+
+    .footer {
+      text-align: center;
+      color: #a99bbd;
+      font-size: 10px;
+      margin-top: 27px;
+    }
+
+    @keyframes appear {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .page {
+        padding: 18px 13px;
+        background-attachment: scroll;
+      }
+
+      .login-card {
+        padding: 30px 22px;
+        border-radius: 23px;
+      }
+
+      .brand h1 {
+        font-size: 24px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="page">
+    <section class="login-card">
+
+      <header class="brand">
+        <div class="brand-icon">H</div>
+        <h1>HANOON WORLD</h1>
+        <p>عالمك، أصدقاؤك، وألعابك في مكان واحد</p>
+      </header>
+
+      <div class="welcome">
+        <h2>مرحبًا بعودتك</h2>
+        <p>سجل دخولك وارجع إلى عالم هنون</p>
+      </div>
+
+      <form id="loginForm">
+
+        <div class="field">
+          <label for="username">اسم المستخدم</label>
+          <div class="input-wrap">
+            <input
+              type="text"
+              id="username"
+              name="username"
+              placeholder="اكتب اسم المستخدم"
+              autocomplete="username"
+              required
+            >
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="password">كلمة المرور</label>
+          <div class="input-wrap">
+            <input
+              class="password-input"
+              type="password"
+              id="password"
+              name="password"
+              placeholder="اكتب كلمة المرور"
+              autocomplete="current-password"
+              required
+              minlength="6"
+            >
+            <button
+              class="show-password"
+              type="button"
+              id="togglePassword"
+            >إظهار</button>
+          </div>
+        </div>
+
+        <div class="options">
+          <label class="remember">
+            <input type="checkbox" id="remember">
+            تذكرني
+          </label>
+
+          <a class="forgot" href="recover-password.html">
+            نسيت كلمة المرور؟
+          </a>
+        </div>
+
+        <button class="login-btn" type="submit">
+          تسجيل الدخول
+        </button>
+
+        <div class="message" id="message" role="status"></div>
+
+      </form>
+
+      <div class="divider">HANOON WORLD</div>
+
+      <div class="create-account">
+        ليس لديك حساب؟
+        <a href="register.html">إنشاء حساب جديد</a>
+      </div>
+
+      <footer class="footer">
+        © HANOON WORLD — جميع الحقوق محفوظة
+      </footer>
+
+    </section>
+  </main>
+
+  <script>
+    const password = document.getElementById("password");
+    const togglePassword = document.getElementById("togglePassword");
+    const loginForm = document.getElementById("loginForm");
+    const message = document.getElementById("message");
+
+    togglePassword.addEventListener("click", () => {
+      const isHidden = password.type === "password";
+
+      password.type = isHidden ? "text" : "password";
+      togglePassword.textContent = isHidden ? "إخفاء" : "إظهار";
+    });
+
+    loginForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      if (!loginForm.reportValidity()) return;
+
+      message.style.display = "block";
+      message.textContent =
+        "واجهة تسجيل الدخول جاهزة. سيتم تفعيل التحقق الحقيقي من الحسابات عند ربط قاعدة بيانات HANOON.";
+    });
+  </script>
+
+</body>
+</html>
