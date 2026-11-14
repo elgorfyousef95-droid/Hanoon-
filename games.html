@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -15,7 +16,7 @@
 :root{
   --bg:#080a16;
   --panel:#111629;
-  --panel2:#171d33;
+  --panel2:#191e35;
   --purple:#a58aff;
   --gold:#edca83;
   --cyan:#70d9d2;
@@ -25,15 +26,8 @@
   --green:#65d6a1;
 }
 
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-  -webkit-tap-highlight-color:transparent;
-}
-
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 html{scroll-behavior:smooth}
-
 body{
   min-height:100vh;
   overflow-x:hidden;
@@ -42,21 +36,10 @@ body{
   color:var(--text);
   font-family:"Cairo",sans-serif;
 }
-
 button,input{font:inherit}
 button{cursor:pointer;color:inherit}
 a{color:inherit;text-decoration:none}
-
-svg{
-  display:block;
-  fill:none;
-  stroke:currentColor;
-  stroke-width:1.8;
-  stroke-linecap:round;
-  stroke-linejoin:round;
-}
-
-/* BACKGROUND */
+svg{display:block;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 
 .page-background{
   position:fixed;
@@ -64,44 +47,30 @@ svg{
   z-index:-2;
   pointer-events:none;
   background:
-    radial-gradient(ellipse at 10% 12%,rgba(115,81,210,.19),transparent 35%),
-    radial-gradient(ellipse at 90% 45%,rgba(37,139,151,.10),transparent 35%),
-    radial-gradient(ellipse at 50% 100%,rgba(117,76,190,.10),transparent 40%),
+    radial-gradient(ellipse at 10% 12%,rgba(115,81,210,.22),transparent 35%),
+    radial-gradient(ellipse at 90% 45%,rgba(37,139,151,.13),transparent 35%),
+    radial-gradient(ellipse at 50% 100%,rgba(117,76,190,.13),transparent 40%),
     #080a16;
 }
-
-.page-background::before,
-.page-background::after{
+.page-background:before,.page-background:after{
   content:"";
   position:absolute;
-  width:360px;
-  height:360px;
+  width:360px;height:360px;
   border:1px solid rgba(177,151,255,.07);
   border-radius:50%;
 }
-
-.page-background::before{
-  top:180px;
-  right:-250px;
-  box-shadow:0 0 0 35px rgba(177,151,255,.018),
-             0 0 0 75px rgba(177,151,255,.012);
+.page-background:before{
+  top:180px;right:-250px;
+  box-shadow:0 0 0 35px rgba(177,151,255,.018),0 0 0 75px rgba(177,151,255,.012);
+}
+.page-background:after{
+  bottom:100px;left:-260px;
+  box-shadow:0 0 0 35px rgba(104,217,213,.018),0 0 0 75px rgba(104,217,213,.012);
 }
 
-.page-background::after{
-  bottom:100px;
-  left:-260px;
-  box-shadow:0 0 0 35px rgba(104,217,213,.018),
-             0 0 0 75px rgba(104,217,213,.012);
-}
-
-.app{
-  width:min(100%,1500px);
-  margin:auto;
-  padding:0 25px;
-}
+.app{width:min(100%,1500px);margin:auto;padding:0 25px}
 
 /* HEADER */
-
 .topbar{
   min-height:82px;
   display:flex;
@@ -110,118 +79,48 @@ svg{
   gap:14px;
   border-bottom:1px solid var(--line);
 }
-
-.brand{
-  display:flex;
-  align-items:center;
-  gap:12px;
-}
-
+.brand{display:flex;align-items:center;gap:12px}
 .brand-icon{
-  width:46px;
-  height:46px;
-  display:grid;
-  place-items:center;
+  width:46px;height:46px;
+  display:grid;place-items:center;
   border:1px solid #c2adff55;
   border-radius:15px;
   background:linear-gradient(145deg,#b49aff,#6845ce);
   box-shadow:0 8px 28px #7954d455;
 }
-
-.brand-icon svg{
-  width:26px;
-  height:26px;
-  color:white;
-}
-
-.brand-name{
-  display:block;
-  font-size:15px;
-  font-weight:900;
-}
-
-.brand-sub{
-  display:block;
-  margin-top:-5px;
-  color:var(--gold);
-  font-size:9px;
-  letter-spacing:2px;
-}
-
-.header-actions{
-  display:flex;
-  align-items:center;
-  gap:10px;
-}
-
+.brand-icon svg{width:26px;height:26px;color:white}
+.brand-name{display:block;font-size:15px;font-weight:900}
+.brand-sub{display:block;margin-top:-5px;color:var(--gold);font-size:9px;letter-spacing:2px}
+.header-actions{display:flex;align-items:center;gap:10px}
 .wallet{
-  display:flex;
-  align-items:center;
-  gap:11px;
+  display:flex;align-items:center;gap:11px;
   padding:7px 9px;
   border:1px solid var(--line);
   border-radius:14px;
   background:#151a2de8;
   backdrop-filter:blur(15px);
 }
-
-.wallet-unit{
-  display:flex;
-  align-items:center;
-  gap:5px;
-  font-size:12px;
-  font-weight:900;
-}
-
-.wallet-unit svg{
-  width:17px;
-  height:17px;
-  color:var(--gold);
-}
-
+.wallet-unit{display:flex;align-items:center;gap:5px;font-size:12px;font-weight:900}
+.wallet-unit svg{width:17px;height:17px;color:var(--gold)}
 .wallet-unit.gems svg{color:var(--cyan)}
-
 .wallet-add{
-  width:30px;
-  height:30px;
-  display:grid;
-  place-items:center;
+  width:30px;height:30px;
+  display:grid;place-items:center;
   border-radius:9px;
   background:linear-gradient(145deg,#aa91ff,#704ed4);
 }
-
-.wallet-add svg{
-  width:17px;
-  height:17px;
-  color:white;
-  stroke-width:2.4;
-}
-
+.wallet-add svg{width:17px;height:17px;color:white;stroke-width:2.4}
 .profile-link{
-  width:43px;
-  height:43px;
-  overflow:hidden;
-  display:grid;
-  place-items:center;
+  width:43px;height:43px;overflow:hidden;
+  display:grid;place-items:center;
   border:2px solid var(--purple);
   border-radius:50%;
   background:#24243d;
 }
-
-.profile-link img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-}
-
-.profile-link svg{
-  width:22px;
-  height:22px;
-  color:#cbbdff;
-}
+.profile-link img{width:100%;height:100%;object-fit:cover}
+.profile-link svg{width:22px;height:22px;color:#cbbdff}
 
 /* HERO */
-
 .hero{
   position:relative;
   min-height:330px;
@@ -239,516 +138,227 @@ svg{
     center/cover no-repeat;
   box-shadow:0 22px 65px #0007;
 }
-
-.hero::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  z-index:-1;
+.hero:after{
+  content:"";position:absolute;inset:0;z-index:-1;
   background:radial-gradient(circle at 75% 45%,rgba(160,125,255,.25),transparent 35%);
 }
-
-.hero-content{
-  position:relative;
-  z-index:2;
-  max-width:620px;
-}
-
+.hero-content{position:relative;z-index:2;max-width:620px}
 .hero-label{
-  display:inline-flex;
-  align-items:center;
-  gap:9px;
+  display:inline-flex;align-items:center;gap:9px;
   padding:7px 14px;
   border:1px solid #edca8350;
   border-radius:30px;
   background:#edca8314;
   color:var(--gold);
-  font-size:11px;
-  font-weight:900;
+  font-size:11px;font-weight:900;
 }
-
 .hero-label span{
-  width:7px;
-  height:7px;
-  border-radius:50%;
-  background:var(--gold);
-  box-shadow:0 0 12px var(--gold);
+  width:7px;height:7px;border-radius:50%;
+  background:var(--gold);box-shadow:0 0 12px var(--gold);
 }
-
-.hero h1{
-  margin-top:17px;
-  font-size:clamp(34px,5vw,55px);
-  line-height:1.35;
-  font-weight:900;
-}
-
-.hero h1 strong{
-  color:#c2adff;
-  text-shadow:0 5px 30px #9b7bff55;
-}
-
-.hero p{
-  max-width:480px;
-  margin-top:12px;
-  color:#d0cce0;
-  font-size:13px;
-  line-height:2.1;
-}
-
+.hero h1{margin-top:17px;font-size:clamp(34px,5vw,55px);line-height:1.35;font-weight:900}
+.hero h1 strong{color:#c2adff;text-shadow:0 5px 30px #9b7bff55}
+.hero p{max-width:480px;margin-top:12px;color:#d0cce0;font-size:13px;line-height:2.1}
 .hero-art{
-  position:absolute;
-  left:8%;
-  top:50%;
-  transform:translateY(-50%);
-  width:190px;
-  height:190px;
-  display:grid;
-  place-items:center;
-  border:1px solid #ffffff24;
-  border-radius:50%;
-  background:#ffffff09;
-  box-shadow:0 0 90px #9170ff28;
+  position:absolute;left:8%;top:50%;transform:translateY(-50%);
+  width:190px;height:190px;
+  display:grid;place-items:center;
+  border:1px solid #ffffff24;border-radius:50%;
+  background:#ffffff09;box-shadow:0 0 90px #9170ff28;
 }
-
-.hero-art::before,
-.hero-art::after{
-  content:"";
-  position:absolute;
-  border:1px solid #beabff30;
-  border-radius:50%;
+.hero-art:before,.hero-art:after{
+  content:"";position:absolute;border:1px solid #beabff30;border-radius:50%;
 }
-
-.hero-art::before{inset:14px}
-.hero-art::after{inset:29px}
-
-.hero-art svg{
-  width:75px;
-  height:75px;
-  color:#c8b8ff;
-  stroke-width:1.2;
-}
+.hero-art:before{inset:14px}
+.hero-art:after{inset:29px}
+.hero-art svg{width:75px;height:75px;color:#c8b8ff;stroke-width:1.2}
 
 /* SEARCH */
-
-.search-area{
-  margin-top:26px;
-}
-
+.search-area{margin-top:26px}
 .search-box{
   min-height:58px;
-  display:flex;
-  align-items:center;
-  gap:13px;
+  display:flex;align-items:center;gap:13px;
   padding:0 18px;
   border:1px solid #ae97ff38;
   border-radius:16px;
   background:#15192bef;
   box-shadow:0 10px 30px #0002;
 }
-
-.search-box svg{
-  width:22px;
-  height:22px;
-  flex:none;
-  color:#bbaaff;
-}
-
+.search-box svg{width:22px;height:22px;flex:none;color:#bbaaff}
 .search-box input{
-  width:100%;
-  min-width:0;
-  border:0;
-  outline:0;
-  background:transparent;
-  color:white;
-  font-size:13px;
+  width:100%;min-width:0;border:0;outline:0;
+  background:transparent;color:white;font-size:13px;
 }
-
 .search-box input::placeholder{color:#888ba4}
 
 /* FILTERS */
-
 .filters{
-  display:flex;
-  align-items:center;
-  gap:9px;
-  margin-top:17px;
-  overflow-x:auto;
-  padding-bottom:5px;
+  display:flex;align-items:center;gap:9px;
+  margin-top:17px;overflow-x:auto;padding-bottom:5px;
   scrollbar-width:none;
 }
-
 .filters::-webkit-scrollbar{display:none}
-
 .filter-btn{
-  flex:none;
-  padding:9px 18px;
-  border:1px solid #ffffff18;
-  border-radius:30px;
-  background:#171a30d9;
-  color:#b9bad0;
-  font-size:11px;
-  font-weight:800;
-  transition:.2s;
+  flex:none;padding:9px 18px;
+  border:1px solid #ffffff18;border-radius:30px;
+  background:#171a30d9;color:#b9bad0;
+  font-size:11px;font-weight:800;transition:.2s;
 }
-
 .filter-btn.active{
-  border-color:#a18aff80;
-  background:#a18aff24;
-  color:#d6caff;
+  border-color:#a18aff80;background:#a18aff24;color:#d6caff;
 }
 
-/* LIBRARY HEADER */
-
+/* SECTION */
 .section-heading{
   margin:29px 0 18px;
-  display:flex;
-  align-items:flex-end;
-  justify-content:space-between;
-  gap:12px;
+  display:flex;align-items:flex-end;justify-content:space-between;gap:12px;
 }
+.section-title{font-size:22px;font-weight:900}
+.section-subtitle{display:block;margin-top:3px;color:var(--muted);font-size:11px}
+.games-count{color:var(--gold);font-size:11px;font-weight:900;white-space:nowrap}
 
-.section-title{
-  font-size:22px;
-  font-weight:900;
-}
-
-.section-subtitle{
-  display:block;
-  margin-top:3px;
-  color:var(--muted);
-  font-size:11px;
-}
-
-.games-count{
-  color:var(--gold);
-  font-size:11px;
-  font-weight:900;
-  white-space:nowrap;
-}
-
-/* GAME GRID */
-
+/* GAME CARDS */
 .games-grid{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(min(100%,255px),1fr));
   gap:20px;
 }
-
 .game-card{
   --game-glow:rgba(145,112,255,.25);
   --game-color:#a58aff;
-  min-width:0;
-  overflow:hidden;
-  position:relative;
-  border:1px solid #ffffff18;
-  border-radius:22px;
+  min-width:0;overflow:hidden;position:relative;
+  display:block;
+  border:1px solid #ffffff18;border-radius:22px;
   background:linear-gradient(155deg,#202641,#101528 80%);
   box-shadow:0 16px 38px #0005;
   transition:transform .25s,border-color .25s,box-shadow .25s;
 }
-
-.game-card:hover{
+.game-card.is-ready{cursor:pointer}
+.game-card.is-ready:hover{
   transform:translateY(-6px);
   border-color:var(--game-color);
   box-shadow:0 22px 48px #0008,0 0 25px var(--game-glow);
 }
-
+.game-card.is-coming{cursor:default}
 .game-cover{
-  position:relative;
-  height:220px;
-  overflow:hidden;
-  isolation:isolate;
+  position:relative;height:220px;overflow:hidden;isolation:isolate;
   background:
     radial-gradient(circle at 50% 40%,var(--game-glow),transparent 65%),
     linear-gradient(140deg,#222b49,#11172a);
 }
-
-.game-cover::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  z-index:1;
-  background:
-    linear-gradient(180deg,rgba(4,7,18,.04) 10%,transparent 35%,rgba(4,7,18,.91) 100%);
+.game-cover:before{
+  content:"";position:absolute;inset:0;z-index:1;
+  background:linear-gradient(180deg,rgba(4,7,18,.04) 10%,transparent 35%,rgba(4,7,18,.91) 100%);
   pointer-events:none;
 }
-
 .game-cover img{
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  display:block;
-  object-fit:cover;
+  position:absolute;inset:0;width:100%;height:100%;
+  display:block;object-fit:cover;
   transition:transform .6s,filter .4s;
 }
-
-.game-card:hover .game-cover img{
-  transform:scale(1.08);
-}
-
-.game-cover-fallback{
-  position:absolute;
-  inset:0;
-  z-index:0;
-  display:grid;
-  place-items:center;
+.game-card:hover .game-cover img{transform:scale(1.08)}
+.game-art{
+  position:absolute;inset:0;
+  display:grid;place-items:center;
+  overflow:hidden;
   background:
-    radial-gradient(circle at 50% 45%,var(--game-glow),transparent 65%),
+    radial-gradient(circle at 50% 40%,var(--game-glow),transparent 65%),
     linear-gradient(145deg,#242b49,#101528);
 }
-
-.game-cover-fallback svg{
-  width:76px;
-  height:76px;
-  color:var(--game-color);
-  opacity:.8;
-  stroke-width:1.2;
+.game-art:before,.game-art:after{
+  content:"";position:absolute;border:1px solid color-mix(in srgb,var(--game-color) 35%,transparent);
+  border-radius:50%;width:190px;height:190px;
 }
-
+.game-art:after{width:135px;height:135px}
+.game-art svg{width:82px;height:82px;color:var(--game-color);stroke-width:1.2;z-index:1}
 .game-number{
-  position:absolute;
-  z-index:3;
-  top:12px;
-  right:12px;
-  min-width:33px;
-  height:31px;
-  padding:0 8px;
-  display:grid;
-  place-items:center;
-  border:1px solid #ffffff35;
-  border-radius:9px;
-  background:#080a16c9;
-  color:white;
-  font-size:10px;
-  font-weight:900;
+  position:absolute;z-index:3;top:12px;right:12px;
+  min-width:33px;height:31px;padding:0 8px;
+  display:grid;place-items:center;
+  border:1px solid #ffffff35;border-radius:9px;
+  background:#080a16c9;color:white;font-size:10px;font-weight:900;
   backdrop-filter:blur(12px);
 }
-
 .game-category{
-  position:absolute;
-  z-index:3;
-  bottom:13px;
-  right:14px;
-  padding:5px 11px;
-  border:1px solid #ffffff2b;
-  border-radius:20px;
-  background:#090b18c9;
-  color:#e8deff;
-  font-size:9px;
-  font-weight:800;
+  position:absolute;z-index:3;bottom:13px;right:14px;
+  padding:5px 11px;border:1px solid #ffffff2b;border-radius:20px;
+  background:#090b18c9;color:#e8deff;font-size:9px;font-weight:800;
   backdrop-filter:blur(10px);
 }
-
-.game-info{
-  position:relative;
-  padding:16px;
-}
-
-.game-title{
-  font-size:16px;
-  font-weight:900;
-  line-height:1.7;
-}
-
-.game-description{
-  min-height:43px;
-  margin-top:5px;
-  color:var(--muted);
-  font-size:10px;
-  line-height:1.9;
-}
-
+.game-info{position:relative;padding:16px}
+.game-title{font-size:16px;font-weight:900;line-height:1.7}
+.game-description{min-height:43px;margin-top:5px;color:var(--muted);font-size:10px;line-height:1.9}
 .game-footer{
-  margin-top:14px;
-  padding-top:12px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:10px;
+  margin-top:14px;padding-top:12px;
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
   border-top:1px solid #ffffff12;
 }
-
-.game-status{
-  display:flex;
-  align-items:center;
-  gap:7px;
-  color:var(--gold);
-  font-size:10px;
-  font-weight:900;
+.game-status{display:flex;align-items:center;gap:7px;color:var(--gold);font-size:10px;font-weight:900}
+.game-status:before{
+  content:"";width:7px;height:7px;border-radius:50%;
+  background:var(--gold);box-shadow:0 0 9px #edca8380;
 }
-
-.game-status::before{
-  content:"";
-  width:7px;
-  height:7px;
-  border-radius:50%;
-  background:var(--gold);
-  box-shadow:0 0 9px #edca8380;
-}
-
 .game-status.ready{color:var(--green)}
-
-.game-status.ready::before{
-  background:var(--green);
-  box-shadow:0 0 9px #65d6a180;
+.game-status.ready:before{background:var(--green);box-shadow:0 0 9px #65d6a180}
+.game-action{
+  min-height:38px;padding:7px 15px;
+  display:inline-flex;align-items:center;justify-content:center;gap:7px;
+  border-radius:10px;font-size:10px;font-weight:900;
 }
-
-.game-open,
-.game-coming{
-  min-height:38px;
-  padding:7px 15px;
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  gap:7px;
-  border-radius:10px;
-  font-size:10px;
-  font-weight:900;
-}
-
-.game-open{
-  border:0;
+.game-action.play{
   background:linear-gradient(120deg,#9277f1,#7050d2);
-  color:white;
-  box-shadow:0 6px 17px #7954d455;
+  color:white;box-shadow:0 6px 17px #7954d455;
 }
-
-.game-open svg{
-  width:14px;
-  height:14px;
-  color:white;
-}
-
-.game-coming{
-  border:1px solid #edca8340;
-  background:#edca8312;
-  color:var(--gold);
-  cursor:default;
-}
+.game-action svg{width:14px;height:14px}
+.game-action.coming{border:1px solid #edca8340;background:#edca8312;color:var(--gold)}
 
 /* EMPTY / LOADING */
-
 .state-panel{
-  grid-column:1/-1;
-  min-height:270px;
-  padding:30px 20px;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  border:1px solid var(--line);
-  border-radius:22px;
+  grid-column:1/-1;min-height:270px;padding:30px 20px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;border:1px solid var(--line);border-radius:22px;
   background:#171a30ef;
 }
-
-.state-panel h3{
-  margin-top:15px;
-  font-size:17px;
-}
-
-.state-panel p{
-  max-width:390px;
-  margin-top:7px;
-  color:var(--muted);
-  font-size:12px;
-  line-height:2;
-}
-
+.state-panel h3{margin-top:15px;font-size:17px}
+.state-panel p{max-width:390px;margin-top:7px;color:var(--muted);font-size:12px;line-height:2}
 .state-icon{
-  width:70px;
-  height:70px;
-  display:grid;
-  place-items:center;
-  border:1px solid #9d81ff40;
-  border-radius:21px;
-  background:#9d81ff19;
+  width:70px;height:70px;display:grid;place-items:center;
+  border:1px solid #9d81ff40;border-radius:21px;background:#9d81ff19;
 }
-
-.state-icon svg{
-  width:35px;
-  height:35px;
-  color:#c1b1ff;
-}
-
+.state-icon svg{width:35px;height:35px;color:#c1b1ff}
 .retry-button{
-  margin-top:18px;
-  padding:9px 18px;
-  border:0;
-  border-radius:10px;
+  margin-top:18px;padding:9px 18px;border:0;border-radius:10px;
   background:linear-gradient(120deg,#9277f1,#7050d2);
-  color:white;
-  font-size:11px;
-  font-weight:900;
+  color:white;font-size:11px;font-weight:900;
 }
-
 .skeleton{
-  min-height:310px;
-  border:1px solid var(--line);
-  border-radius:20px;
+  min-height:310px;border:1px solid var(--line);border-radius:20px;
   background:linear-gradient(110deg,#1b1f35 8%,#30304b 18%,#1b1f35 33%);
-  background-size:200% 100%;
-  animation:shimmer 1.5s linear infinite;
+  background-size:200% 100%;animation:shimmer 1.5s linear infinite;
 }
+@keyframes shimmer{to{background-position-x:-200%}}
 
-@keyframes shimmer{
-  to{background-position-x:-200%}
-}
-
-/* BOTTOM NAV */
-
+/* NAV */
 .bottom-nav{
-  position:fixed;
-  z-index:50;
-  right:50%;
-  bottom:max(12px,env(safe-area-inset-bottom));
+  position:fixed;z-index:50;
+  right:50%;bottom:max(12px,env(safe-area-inset-bottom));
   transform:translateX(50%);
-  width:min(calc(100% - 26px),610px);
-  min-height:67px;
-  padding:8px 10px;
-  display:flex;
-  align-items:center;
-  justify-content:space-around;
-  gap:4px;
-  border:1px solid #ffffff20;
-  border-radius:21px;
-  background:#0d1020ed;
-  box-shadow:0 15px 45px #0008;
-  backdrop-filter:blur(22px);
+  width:min(calc(100% - 26px),610px);min-height:67px;
+  padding:8px 10px;display:flex;align-items:center;justify-content:space-around;gap:4px;
+  border:1px solid #ffffff20;border-radius:21px;
+  background:#0d1020ed;box-shadow:0 15px 45px #0008;backdrop-filter:blur(22px);
 }
-
 .nav-item{
-  min-width:0;
-  flex:1;
-  min-height:49px;
-  padding:5px 3px;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  gap:2px;
-  border-radius:13px;
-  color:#9295ac;
-  font-size:9px;
-  font-weight:800;
+  min-width:0;flex:1;min-height:49px;padding:5px 3px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
+  border-radius:13px;color:#9295ac;font-size:9px;font-weight:800;
 }
-
-.nav-item svg{
-  width:21px;
-  height:21px;
-}
-
-.nav-item.active{
-  color:#c7b8ff;
-  background:#9477f524;
-}
+.nav-item svg{width:21px;height:21px}
+.nav-item.active{color:#c7b8ff;background:#9477f524}
 
 /* RESPONSIVE */
-
 @media(max-width:650px){
   .app{padding:0 13px}
-
   .topbar{min-height:69px}
   .brand-icon{width:39px;height:39px}
   .brand-name{font-size:12px}
@@ -759,41 +369,21 @@ svg{
   .wallet-unit svg{width:14px;height:14px}
   .wallet-add{width:24px;height:24px}
   .profile-link{width:36px;height:36px}
-
-  .hero{
-    min-height:270px;
-    margin-top:15px;
-    padding:22px 18px;
-    border-radius:22px;
-    background-position:58% center;
-  }
-
+  .hero{min-height:270px;margin-top:15px;padding:22px 18px;border-radius:22px;background-position:58% center}
   .hero-content{max-width:92%}
   .hero h1{font-size:32px}
   .hero p{font-size:10px}
-  .hero-art{
-    left:-20px;
-    width:105px;
-    height:105px;
-    opacity:.65;
-  }
-
+  .hero-art{left:-20px;width:105px;height:105px;opacity:.65}
   .hero-art svg{width:43px;height:43px}
-
-  .games-grid{
-    grid-template-columns:repeat(auto-fit,minmax(min(100%,155px),1fr));
-    gap:11px;
-  }
-
+  .games-grid{grid-template-columns:repeat(auto-fit,minmax(min(100%,155px),1fr));gap:11px}
   .game-cover{height:150px}
   .game-info{padding:11px}
   .game-title{font-size:12px}
   .game-description{font-size:9px;min-height:48px}
   .game-footer{align-items:flex-start;flex-direction:column}
-  .game-open,.game-coming{width:100%}
+  .game-action{width:100%}
   .section-title{font-size:18px}
 }
-
 @media(max-width:360px){
   .wallet{gap:4px}
   .games-grid{gap:8px}
@@ -807,7 +397,6 @@ svg{
 <div class="page-background"></div>
 
 <div class="app">
-
 <header class="topbar">
   <a class="brand" href="home.html">
     <span class="brand-icon">
@@ -831,7 +420,6 @@ svg{
         </svg>
         <span id="coinBalance">—</span>
       </div>
-
       <div class="wallet-unit gems">
         <svg viewBox="0 0 24 24">
           <path d="m12 2 9 7-9 13L3 9l9-7Z"/>
@@ -839,11 +427,8 @@ svg{
         </svg>
         <span id="gemBalance">—</span>
       </div>
-
       <a class="wallet-add" href="wallet.html" aria-label="المحفظة">
-        <svg viewBox="0 0 24 24">
-          <path d="M12 5v14M5 12h14"/>
-        </svg>
+        <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
       </a>
     </div>
 
@@ -860,18 +445,9 @@ svg{
   <section class="hero">
     <div class="hero-content">
       <span class="hero-label"><span></span> عالم المنافسة والتحدي</span>
-
-      <h1>
-        اكتشف عالم<br>
-        <strong>الألعاب</strong>
-      </h1>
-
-      <p>
-        مكتبة متنوعة من الألعاب الكلاسيكية والتحديات الذهنية
-        والمنافسات الجماعية. اختر لعبتك وابدأ تجربتك.
-      </p>
+      <h1>اكتشف عالم<br><strong>الألعاب</strong></h1>
+      <p>مكتبة متنوعة من الألعاب الكلاسيكية والتحديات الذهنية والمنافسات الجماعية. اختر لعبتك وابدأ تجربتك.</p>
     </div>
-
     <div class="hero-art">
       <svg viewBox="0 0 24 24">
         <path d="M7 8h10a4 4 0 0 1 4 4v4a3 3 0 0 1-5 2l-2-2h-4l-2 2a3 3 0 0 1-5-2v-4a4 4 0 0 1 4-4Z"/>
@@ -882,16 +458,8 @@ svg{
 
   <section class="search-area">
     <label class="search-box">
-      <svg viewBox="0 0 24 24">
-        <circle cx="10.8" cy="10.8" r="7"/>
-        <path d="m16 16 5 5"/>
-      </svg>
-      <input
-        id="gameSearch"
-        type="search"
-        placeholder="ابحث عن لعبة..."
-        autocomplete="off"
-      >
+      <svg viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="7"/><path d="m16 16 5 5"/></svg>
+      <input id="gameSearch" type="search" placeholder="ابحث عن لعبة..." autocomplete="off">
     </label>
   </section>
 
@@ -921,19 +489,13 @@ svg{
 
 <nav class="bottom-nav">
   <a class="nav-item" href="home.html">
-    <svg viewBox="0 0 24 24">
-      <path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-6v-7h-4v7H4a1 1 0 0 1-1-1V10Z"/>
-    </svg>
+    <svg viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-6v-7h-4v7H4a1 1 0 0 1-1-1V10Z"/></svg>
     <span>الرئيسية</span>
   </a>
-
   <a class="nav-item" href="rooms.html">
-    <svg viewBox="0 0 24 24">
-      <path d="M3 20V9l9-6 9 6v11h-6v-7H9v7H3Z"/>
-    </svg>
+    <svg viewBox="0 0 24 24"><path d="M3 20V9l9-6 9 6v11h-6v-7H9v7H3Z"/></svg>
     <span>الغرف</span>
   </a>
-
   <a class="nav-item active" href="games.html">
     <svg viewBox="0 0 24 24">
       <path d="M7 8h10a4 4 0 0 1 4 4v4a3 3 0 0 1-5 2l-2-2h-4l-2 2a3 3 0 0 1-5-2v-4a4 4 0 0 1 4-4Z"/>
@@ -941,20 +503,12 @@ svg{
     </svg>
     <span>الألعاب</span>
   </a>
-
   <a class="nav-item" href="chat.html">
-    <svg viewBox="0 0 24 24">
-      <path d="M4 5h16v12H9l-5 4V5Z"/>
-      <path d="M8 9h8M8 13h5"/>
-    </svg>
+    <svg viewBox="0 0 24 24"><path d="M4 5h16v12H9l-5 4V5Z"/><path d="M8 9h8M8 13h5"/></svg>
     <span>المحادثات</span>
   </a>
-
   <a class="nav-item" href="profile.html">
-    <svg viewBox="0 0 24 24">
-      <circle cx="12" cy="8" r="3.5"/>
-      <path d="M4.5 21c.5-4 3.2-6 7.5-6s7 2 7.5 6"/>
-    </svg>
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 21c.5-4 3.2-6 7.5-6s7 2 7.5 6"/></svg>
     <span>حسابي</span>
   </a>
 </nav>
@@ -963,10 +517,8 @@ svg{
 const SUPABASE_URL = "https://gjtgvczvclfwvlvcquxh.supabase.co";
 const SUPABASE_KEY = "sb_publishable_4DVTUZ-xTlqU2GpFvpb7lw_g-Kxomd4";
 
-const db = window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY
-);
+const db = window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+const $ = id => document.getElementById(id);
 
 const state = {
   user:null,
@@ -975,47 +527,29 @@ const state = {
   query:""
 };
 
-const $ = id => document.getElementById(id);
-
 /*
-  لكل لعبة صورة مستقلة بكلمة بحث خاصة ورقم مختلف.
-  لا توجد صورة ألعاب عامة مشتركة بين البطاقات.
+  صور مستقلة لبعض الألعاب من مصادر صور مباشرة.
+  بقية الألعاب لها تصميم بصري مستقل خاص بها.
 */
-
 const GAME_COVERS = {
-  "ludo":"https://loremflickr.com/1200/800/ludo,boardgame,dice?lock=201",
-  "domino":"https://loremflickr.com/1200/800/domino,tiles,game?lock=202",
-  "chess":"https://loremflickr.com/1200/800/chess,wooden,chessboard?lock=203",
-  "tic-tac-toe":"https://loremflickr.com/1200/800/tic,tac,toe,game?lock=204",
-  "connect-four":"https://loremflickr.com/1200/800/connect,four,boardgame?lock=205",
-  "checkers":"https://loremflickr.com/1200/800/checkers,draughts,board?lock=206",
-  "jackaroo":"https://loremflickr.com/1200/800/jackaroo,playing,cards?lock=207",
-  "trivia":"https://loremflickr.com/1200/800/trivia,quiz,questions?lock=208",
-  "draw-guess":"https://loremflickr.com/1200/800/drawing,sketch,art?lock=209",
-  "word-duel":"https://loremflickr.com/1200/800/wordgame,letters,tiles?lock=210",
-  "memory-match":"https://loremflickr.com/1200/800/memory,cards,matching?lock=211",
-  "mafia":"https://loremflickr.com/1200/800/mystery,detective,cards?lock=212",
-  "backgammon":"https://loremflickr.com/1200/800/backgammon,dice,board?lock=213",
-  "carrom":"https://loremflickr.com/1200/800/carrom,board,game?lock=214",
-  "mancala":"https://loremflickr.com/1200/800/mancala,wooden,board?lock=215",
-  "rummy":"https://loremflickr.com/1200/800/rummy,playing,cards?lock=216",
-  "solitaire":"https://loremflickr.com/1200/800/solitaire,playing,cards?lock=217",
-  "number-cards":"https://loremflickr.com/1200/800/number,cards,game?lock=218",
-  "sudoku":"https://loremflickr.com/1200/800/sudoku,number,puzzle?lock=219",
-  "2048":"https://loremflickr.com/1200/800/number,tiles,puzzle?lock=220",
-  "word-search":"https://loremflickr.com/1200/800/wordsearch,letters,puzzle?lock=221",
-  "guess-character":"https://loremflickr.com/1200/800/portrait,character,guess?lock=222",
-  "snakes-ladders":"https://loremflickr.com/1200/800/snakes,ladders,boardgame?lock=223",
-  "battleship":"https://loremflickr.com/1200/800/battleship,ships,naval?lock=224",
-  "five-in-row":"https://loremflickr.com/1200/800/gomoku,stones,board?lock=225",
-  "puzzle-box":"https://loremflickr.com/1200/800/wooden,puzzle,box?lock=226",
-  "reaction-rush":"https://loremflickr.com/1200/800/arcade,game,buttons?lock=227",
-  "mahjong":"https://loremflickr.com/1200/800/mahjong,tiles,game?lock=228",
-  "dots-and-boxes":"https://loremflickr.com/1200/800/dots,lines,paper,game?lock=229",
-  "property-trading":"https://loremflickr.com/1200/800/boardgame,houses,property?lock=230"
+  "ludo":"https://images.unsplash.com/photo-1606503153255-59d8b8b8217b?auto=format&fit=crop&w=1000&q=85",
+  "domino":"https://i.tgrthaber.com/images/2025/3/24/domino-nedir-ve-nasil-oynanir-domino-oyunu-toplam-kacta-biter-3209914_202503241741_4.jpg",
+  "chess":"https://burst.shopifycdn.com/photos/dark-wooden-chess-pieces-against-a-black-background.jpg?exif=0&iptc=0&width=925",
+  "jackaroo":"https://i0.wp.com/www.jackarokw.com/wp-content/uploads/2018/01/Jackaroo-28-scaled.jpg?fit=980%2C654&ssl=1",
+  "sudoku":"https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Sudoku_Puzzle_by_L2G-20050714_standardized_layout.svg/960px-Sudoku_Puzzle_by_L2G-20050714_standardized_layout.svg.png",
+  "memory-match":"https://ditt-datt.heteml.net/sopiva-hokuou.com/images/kehvola/memorycard/memorycard-9.jpg",
+  "2048":"https://img.diepresse.com/public/incoming/qmvouh-2_1396338532544473.jpg/alternates/FREE_1200/2_1396338532544473.jpg",
+  "mancala":"https://assets.weimgs.com/weimgs/ab/images/wcm/products/202445/0038/mango-wood-mancala-game-board-1-o.jpg",
+  "rummy":"https://www.meinspiel.de/app/uploads/2019/11/Romme-Spielrunde-1200x800.jpg",
+  "word-search":"https://defbnszqe1hwm.cloudfront.net/images/wordsearch-puzzle-razzle.webp",
+  "snakes-ladders":"https://images-cdn.ubuy.co.in/6690e08a5903fc64242ca9fb-wooden-snakes-and-ladders-game.jpg",
+  "property-trading":"https://images.squarespace-cdn.com/content/v1/5ebd37dfa6aa3058bb969211/1590080714198-M0MOQ5GOXSQOZW70PTBD/FP_banner_flash2.jpg",
+  "battleship":"https://d31xsmoz1lk3y3.cloudfront.net/games/imgur/82Xxfy9.jpg",
+  "carrom":"https://static-01.daraz.pk/p/2892412b5baed65bc9659eb6ab4dfda2.jpg",
+  "dots-and-boxes":"https://wl-incrivel.cf.tsp.li/resize/728x/jpg/427/528/63caf1557999e444abb547cca2.jpg",
+  "puzzle-box":"https://puzzleboxworld.com/cdn/shop/products/PickLockBox_800x.jpg?v=1614193073",
+  "solitaire":"https://www.reisereporter.de/resizer/v2/LMG7OEXT6FGSXDQA7Q67JZHOLU.jpg?auth=deeea71d4694e2c60211318eb2d5c96411fa7638cf7a4a2ad4f16bd4e1578040&height=1441&quality=70&smart=true&width=1441"
 };
-
-/* ألوان مستقلة حسب طبيعة اللعبة */
 
 const GAME_THEMES = {
   "ludo":["#a58aff","rgba(145,112,255,.28)"],
@@ -1060,28 +594,64 @@ const CATEGORY_NAMES = {
   classic:"ألعاب كلاسيكية"
 };
 
+/* رسومات بديلة مختلفة لكل نوع لعبة */
+const GAME_SYMBOLS = {
+  "ludo":'<circle cx="12" cy="12" r="8"/><path d="M12 4v16M4 12h16M8 8h.01M16 8h.01M8 16h.01M16 16h.01"/>',
+  "domino":'<rect x="5" y="3" width="14" height="18" rx="3"/><path d="M5 12h14M9 7h.01M15 7h.01M9 17h.01M15 17h.01"/>',
+  "chess":'<path d="M8 21h8M9 17h6l-1-5 3-3-2-2-2 2-2-2-2 2 3 3-1 5Z"/>',
+  "tic-tac-toe":'<path d="M8 3v18M16 3v18M3 8h18M3 16h18"/><circle cx="5.5" cy="5.5" r="1.5"/><path d="m18 18 3 3m0-3-3 3"/>',
+  "connect-four":'<circle cx="7" cy="7" r="3"/><circle cx="17" cy="7" r="3"/><circle cx="7" cy="17" r="3"/><circle cx="17" cy="17" r="3"/><path d="M3 3h18v18H3z"/>',
+  "checkers":'<circle cx="8" cy="8" r="4"/><circle cx="16" cy="16" r="4"/><path d="M4 16h8M12 4h8"/>',
+  "jackaroo":'<path d="M12 3 20 8v8l-8 5-8-5V8l8-5Z"/><path d="M12 7v10M8 10l8 4"/>',
+  "trivia":'<circle cx="12" cy="12" r="9"/><path d="M9 9a3 3 0 1 1 5 2c-2 1-2 2-2 3M12 17h.01"/>',
+  "draw-guess":'<path d="m4 17 10-10 4 4L8 21H4v-4Z"/><path d="m12 9 4 4M15 4l1-2 1 2 2 1-2 1-1 2-1-2-2-1 2-1Z"/>',
+  "word-duel":'<path d="M4 5h16v14H4zM8 9h3v3H8zM14 9h3v3h-3zM8 15h9"/>',
+  "memory-match":'<rect x="3" y="4" width="8" height="8" rx="2"/><rect x="13" y="4" width="8" height="8" rx="2"/><rect x="3" y="14" width="8" height="7" rx="2"/><rect x="13" y="14" width="8" height="7" rx="2"/>',
+  "mafia":'<path d="M12 3 20 7v5c0 5-4 8-8 9-4-1-8-4-8-9V7l8-4Z"/><path d="M8 11h8M9 15h6"/>',
+  "backgammon":'<rect x="4" y="3" width="16" height="18" rx="2"/><path d="m7 5 3 7-3 7M17 5l-3 7 3 7M10 12h4"/>',
+  "carrom":'<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="12" cy="12" r="3"/><circle cx="6" cy="6" r="1"/><circle cx="18" cy="18" r="1"/>',
+  "mancala":'<rect x="3" y="6" width="18" height="12" rx="6"/><circle cx="7" cy="12" r="1"/><circle cx="11" cy="10" r="1"/><circle cx="15" cy="14" r="1"/><circle cx="18" cy="10" r="1"/>',
+  "rummy":'<path d="M12 3 20 7v10l-8 4-8-4V7l8-4Z"/><path d="M8 9h8M8 13h8M8 17h4"/>',
+  "solitaire":'<path d="M12 3 20 17H4L12 3Z"/><path d="M12 8v5M12 16h.01"/>',
+  "number-cards":'<rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M12 6v4M9 15h6"/>',
+  "sudoku":'<rect x="3" y="3" width="18" height="18"/><path d="M9 3v18M15 3v18M3 9h18M3 15h18"/>',
+  "2048":'<rect x="3" y="3" width="18" height="18" rx="3"/><path d="M7 8h4v4H7zM13 8h4v4h-4zM7 14h4v4H7zM13 14h4v4h-4z"/>',
+  "word-search":'<path d="M4 4h16v16H4zM8 4v16M12 4v16M16 4v16M4 8h16M4 12h16M4 16h16"/>',
+  "guess-character":'<circle cx="12" cy="8" r="4"/><path d="M4 21c1-5 4-7 8-7s7 2 8 7M18 3l3 3-3 3"/>',
+  "snakes-ladders":'<path d="M6 21 18 3M4 12h6M14 12h6M7 3l10 18"/>',
+  "battleship":'<path d="M3 16h18l-3 4H6l-3-4Z"/><path d="M12 3v13M12 5l6 5h-6M4 21h16"/>',
+  "five-in-row":'<path d="M4 4h16v16H4zM9 4v16M15 4v16M4 9h16M4 15h16"/><circle cx="9" cy="9" r="2"/><circle cx="15" cy="15" r="2"/>',
+  "puzzle-box":'<rect x="4" y="4" width="16" height="16" rx="3"/><path d="M9 4v5h6V4M9 20v-5h6v5M4 9h5v6H4M20 9h-5v6h5"/>',
+  "reaction-rush":'<path d="M13 2 5 13h6l-1 9 9-12h-6l1-8Z"/>',
+  "mahjong":'<rect x="5" y="3" width="14" height="18" rx="3"/><path d="M9 8h6M9 12h6M9 16h6"/>',
+  "dots-and-boxes":'<path d="M5 5h.01M12 5h.01M19 5h.01M5 12h.01M12 12h.01M19 12h.01M5 19h.01M12 19h.01M19 19h.01M5 5h7v7H5z"/>',
+  "property-trading":'<path d="M3 10 12 3l9 7v11H3V10Z"/><path d="M9 21v-7h6v7M7 10h10"/>'
+};
+
 function esc(value){
   return String(value ?? "").replace(/[&<>"']/g,char=>({
-    "&":"&amp;",
-    "<":"&lt;",
-    ">":"&gt;",
-    '"':"&quot;",
-    "'":"&#039;"
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
   })[char]);
 }
 
-function validHttpUrl(value){
-  try{
-    const url = new URL(value);
-    return url.protocol === "https:" || url.protocol === "http:";
-  }catch{
-    return false;
+function getTheme(slug){
+  return GAME_THEMES[slug] || ["#a58aff","rgba(145,112,255,.25)"];
+}
+
+function getCover(game){
+  if(game.cover_path && /^https?:\/\//i.test(game.cover_path)){
+    return game.cover_path;
   }
+  return GAME_COVERS[game.slug] || null;
+}
+
+function artMarkup(slug){
+  const symbol = GAME_SYMBOLS[slug] || '<rect x="4" y="4" width="16" height="16" rx="4"/>';
+  return `<div class="game-art"><svg viewBox="0 0 24 24">${symbol}</svg></div>`;
 }
 
 async function loadSession(){
   const {data,error} = await db.auth.getSession();
-
   if(error) throw error;
 
   state.user = data.session?.user || null;
@@ -1090,7 +660,6 @@ async function loadSession(){
     location.replace("index.html");
     return false;
   }
-
   return true;
 }
 
@@ -1104,14 +673,9 @@ async function loadProfile(){
   if(error) throw error;
   if(!data?.avatar_path) return;
 
-  const {data:imageData} = db.storage
-    .from("avatars")
-    .getPublicUrl(data.avatar_path);
-
+  const {data:imageData} = db.storage.from("avatars").getPublicUrl(data.avatar_path);
   if(imageData?.publicUrl){
-    $("myProfileLink").innerHTML = `
-      <img src="${esc(imageData.publicUrl)}" alt="حسابي">
-    `;
+    $("myProfileLink").innerHTML = `<img src="${esc(imageData.publicUrl)}" alt="حسابي">`;
   }
 }
 
@@ -1124,56 +688,26 @@ async function loadWallet(){
 
   if(error) throw error;
 
-  $("coinBalance").textContent =
-    data?.coins == null
-      ? "—"
-      : Number(data.coins).toLocaleString("en-US");
-
-  $("gemBalance").textContent =
-    data?.gems == null
-      ? "—"
-      : Number(data.gems).toLocaleString("en-US");
+  $("coinBalance").textContent = data?.coins == null ? "—" : Number(data.coins).toLocaleString("en-US");
+  $("gemBalance").textContent = data?.gems == null ? "—" : Number(data.gems).toLocaleString("en-US");
 }
 
-function stateIcon(){
-  return `
-    <div class="state-icon">
-      <svg viewBox="0 0 24 24">
-        <path d="M7 8h10a4 4 0 0 1 4 4v4a3 3 0 0 1-5 2l-2-2h-4l-2 2a3 3 0 0 1-5-2v-4a4 4 0 0 1 4-4Z"/>
-        <path d="M8 11v4M6 13h4M16 12h.01M18 14h.01"/>
-      </svg>
-    </div>
-  `;
-}
-
-function renderEmpty(title,description,retry=false){
+function showEmpty(title,description,retry=false){
   $("gamesGrid").innerHTML = `
     <div class="state-panel">
-      ${stateIcon()}
+      <div class="state-icon">
+        <svg viewBox="0 0 24 24">
+          <path d="M7 8h10a4 4 0 0 1 4 4v4a3 3 0 0 1-5 2l-2-2h-4l-2 2a3 3 0 0 1-5-2v-4a4 4 0 0 1 4-4Z"/>
+          <path d="M8 11v4M6 13h4M16 12h.01M18 14h.01"/>
+        </svg>
+      </div>
       <h3>${esc(title)}</h3>
       <p>${esc(description)}</p>
       ${retry ? '<button class="retry-button" id="retryGames">إعادة المحاولة</button>' : ""}
     </div>
   `;
 
-  if(retry){
-    $("retryGames").addEventListener("click",loadGames);
-  }
-}
-
-function getTheme(slug){
-  return GAME_THEMES[slug] || [
-    "#a58aff",
-    "rgba(145,112,255,.25)"
-  ];
-}
-
-function getCover(game){
-  if(game.cover_path && validHttpUrl(game.cover_path)){
-    return game.cover_path;
-  }
-
-  return GAME_COVERS[game.slug] || null;
+  if(retry) $("retryGames").addEventListener("click",loadGames);
 }
 
 function getFilteredGames(){
@@ -1184,20 +718,13 @@ function getFilteredGames(){
     if(state.filter === "coming" && ready) return false;
 
     if(state.query){
-      const searchable = [
-        game.title_ar,
-        game.title_en,
-        game.slug,
-        game.description_ar,
-        game.description_en
-      ]
-      .filter(Boolean)
-      .join(" ")
-      .toLocaleLowerCase();
+      const words = [
+        game.title_ar,game.title_en,game.slug,
+        game.description_ar,game.description_en
+      ].filter(Boolean).join(" ").toLocaleLowerCase();
 
-      if(!searchable.includes(state.query)) return false;
+      if(!words.includes(state.query)) return false;
     }
-
     return true;
   });
 }
@@ -1205,104 +732,63 @@ function getFilteredGames(){
 function renderGames(){
   const games = getFilteredGames();
 
-  $("gamesCount").textContent =
-    `${games.length.toLocaleString("ar-EG")} لعبة`;
+  $("gamesCount").textContent = `${games.length.toLocaleString("ar-EG")} لعبة`;
 
   if(!games.length){
-    renderEmpty(
-      "لا توجد نتائج مطابقة",
-      "لم نعثر على لعبة بهذا الاسم ضمن الاختيار الحالي."
-    );
+    showEmpty("لا توجد نتائج مطابقة","لم نعثر على لعبة بهذا الاسم ضمن الاختيار الحالي.");
     return;
   }
 
   $("gamesGrid").innerHTML = games.map((game,index)=>{
-    const title =
-      game.title_ar ||
-      game.title_en ||
-      "لعبة";
-
-    const description =
-      game.description_ar ||
-      game.description_en ||
-      "اكتشف هذه اللعبة من مكتبة هنون.";
-
-    const category =
-      CATEGORY_NAMES[game.category] ||
-      "ألعاب متنوعة";
-
+    const title = game.title_ar || game.title_en || "لعبة";
+    const description = game.description_ar || game.description_en || "اكتشف هذه اللعبة من مكتبة هنون.";
+    const category = CATEGORY_NAMES[game.category] || "ألعاب متنوعة";
     const ready = game.is_active === true;
     const cover = getCover(game);
     const theme = getTheme(game.slug);
-    const key = encodeURIComponent(game.slug || game.id);
+    const target = `game.html?game=${encodeURIComponent(game.slug || game.id)}`;
 
-    const imageMarkup = cover
-      ? `
-        <img
-          src="${esc(cover)}"
-          alt="${esc(title)}"
-          loading="lazy"
-          onerror="this.style.display='none'"
-        >
-      `
+    const coverMarkup = cover
+      ? `<img src="${esc(cover)}" alt="${esc(title)}" loading="lazy" onerror="this.remove()">`
       : "";
 
+    const cardContent = `
+      <div class="game-cover">
+        ${artMarkup(game.slug)}
+        ${coverMarkup}
+        <span class="game-number">${String(index+1).padStart(2,"0")}</span>
+        <span class="game-category">${esc(category)}</span>
+      </div>
+      <div class="game-info">
+        <h3 class="game-title">${esc(title)}</h3>
+        <p class="game-description">${esc(description)}</p>
+        <div class="game-footer">
+          <span class="game-status ${ready ? "ready" : ""}">
+            ${ready ? "متاحة للعب" : "قريبًا"}
+          </span>
+          <span class="game-action ${ready ? "play" : "coming"}">
+            ${ready ? "العب الآن" : "قريبًا"}
+            ${ready ? '<svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg>' : ""}
+          </span>
+        </div>
+      </div>
+    `;
+
+    if(ready){
+      return `
+        <a class="game-card is-ready"
+           href="${target}"
+           style="--game-color:${theme[0]};--game-glow:${theme[1]}"
+           aria-label="افتح لعبة ${esc(title)}">
+          ${cardContent}
+        </a>
+      `;
+    }
+
     return `
-      <article
-        class="game-card"
-        style="
-          --game-color:${theme[0]};
-          --game-glow:${theme[1]};
-        "
-      >
-        <div class="game-cover">
-
-          <div class="game-cover-fallback">
-            <svg viewBox="0 0 24 24">
-              <rect x="3" y="3" width="18" height="18" rx="4"/>
-              <path d="M8 8h8M8 12h8M8 16h5"/>
-            </svg>
-          </div>
-
-          ${imageMarkup}
-
-          <span class="game-number">
-            ${String(index+1).padStart(2,"0")}
-          </span>
-
-          <span class="game-category">
-            ${esc(category)}
-          </span>
-        </div>
-
-        <div class="game-info">
-          <h3 class="game-title">${esc(title)}</h3>
-
-          <p class="game-description">
-            ${esc(description)}
-          </p>
-
-          <div class="game-footer">
-            <span class="game-status ${ready ? "ready" : ""}">
-              ${ready ? "يمكنك اللعب الآن" : "قريبًا"}
-            </span>
-
-            ${
-              ready
-              ? `
-                <a class="game-open" href="game.html?game=${key}">
-                  العب الآن
-                  <svg viewBox="0 0 24 24">
-                    <path d="m9 18 6-6-6-6"/>
-                  </svg>
-                </a>
-              `
-              : `
-                <span class="game-coming">قريبًا</span>
-              `
-            }
-          </div>
-        </div>
+      <article class="game-card is-coming"
+        style="--game-color:${theme[0]};--game-glow:${theme[1]}">
+        ${cardContent}
       </article>
     `;
   }).join("");
@@ -1327,27 +813,15 @@ async function loadGames(){
 
     if(!state.games.length){
       $("gamesCount").textContent = "0 لعبة";
-
-      renderEmpty(
-        "مكتبة الألعاب فارغة",
-        "لا توجد ألعاب مسجلة في قاعدة البيانات حاليًا."
-      );
-
+      showEmpty("مكتبة الألعاب فارغة","لا توجد ألعاب مسجلة في قاعدة البيانات حاليًا.");
       return;
     }
 
     renderGames();
-
   }catch(error){
     console.error("HANOON games:",error);
-
     $("gamesCount").textContent = "تعذر التحميل";
-
-    renderEmpty(
-      "تعذر تحميل الألعاب",
-      "حدث خطأ أثناء الاتصال بقاعدة البيانات. حاول مرة أخرى.",
-      true
-    );
+    showEmpty("تعذر تحميل الألعاب","حدث خطأ أثناء الاتصال بقاعدة البيانات. حاول مرة أخرى.",true);
   }
 }
 
@@ -1361,13 +835,9 @@ function setupSearch(){
 function setupFilters(){
   document.querySelectorAll(".filter-btn").forEach(button=>{
     button.addEventListener("click",()=>{
-      document.querySelectorAll(".filter-btn").forEach(item=>{
-        item.classList.remove("active");
-      });
-
+      document.querySelectorAll(".filter-btn").forEach(item=>item.classList.remove("active"));
       button.classList.add("active");
       state.filter = button.dataset.filter;
-
       renderGames();
     });
   });
@@ -1378,20 +848,11 @@ async function startPage(){
     const valid = await loadSession();
     if(!valid) return;
 
-    await Promise.allSettled([
-      loadProfile(),
-      loadWallet()
-    ]);
-
+    await Promise.allSettled([loadProfile(),loadWallet()]);
     await loadGames();
-
   }catch(error){
     console.error("HANOON games startup:",error);
-
-    renderEmpty(
-      "تعذر فتح الصفحة",
-      "حدث خطأ أثناء تجهيز الصفحة. أعد تحميلها."
-    );
+    showEmpty("تعذر فتح الصفحة","حدث خطأ أثناء تجهيز الصفحة. أعد تحميلها.");
   }
 }
 
@@ -1407,4 +868,4 @@ db.auth.onAuthStateChange((event,session)=>{
 startPage();
 </script>
 </body>
-  </html>
+</html>
