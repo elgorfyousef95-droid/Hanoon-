@@ -311,15 +311,18 @@ async function adminRequest(body,token=sessionToken){
   return data;
 }
 
+/* تم إصلاح إرسال كلمة السر: لا يوجد طلب تحقق فارغ قبل الطلب الحقيقي */
 async function createAdminSession(password){
-  const data=await adminRequest({action:"check"},"");
-  // إعادة الطلب بكلمة السر في الهيدر لإنشاء جلسة جديدة.
   const {data:loginData,error}=await supabase.functions.invoke("admin-send-notification",{
     body:{action:"check"},
     headers:{"x-admin-code":password}
   });
+
   if(error)throw new Error(loginData?.error||error.message||"تعذر تسجيل الدخول.");
-  if(!loginData?.ok||!loginData?.sessionToken)throw new Error(loginData?.error||"لم يتم إنشاء جلسة الإدارة.");
+  if(!loginData?.ok||!loginData?.sessionToken){
+    throw new Error(loginData?.error||"لم يتم إنشاء جلسة الإدارة.");
+  }
+
   sessionToken=loginData.sessionToken;
   localStorage.setItem(SESSION_KEY,sessionToken);
   return loginData;
