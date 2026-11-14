@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
-<meta name="theme-color" content="#100d20">
+<meta name="theme-color" content="#090713">
 <meta name="description" content="HANOON WORLD - عالمك الاجتماعي والترفيهي">
 <title>HANOON WORLD | الرئيسية</title>
 
@@ -14,1199 +14,292 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
 <style>
-:root {
-  --bg:#100d20;
-  --surface:rgba(25,21,43,.88);
-  --surface2:rgba(35,29,57,.88);
-  --surface3:rgba(47,38,73,.88);
-  --ink:#f8f5ff;
-  --muted:#aaa1c3;
-  --primary:#a18aff;
-  --primary-dark:#7655e9;
-  --pink:#f17ab0;
-  --cyan:#55d6df;
-  --orange:#ffbd78;
-  --line:rgba(194,174,255,.15);
-  --shadow:0 15px 40px rgba(0,0,0,.28);
-  --nav-height:76px;
+:root{
+  --bg:#090713;
+  --surface:rgba(20,16,34,.90);
+  --surface2:rgba(31,24,50,.94);
+  --ink:#fffaff;
+  --muted:#b7adc9;
+  --primary:#b69aff;
+  --line:rgba(213,190,255,.16);
+  --shadow:0 18px 48px rgba(0,0,0,.38);
+  --nav-height:78px;
 }
-
-* {
-  box-sizing:border-box;
-  -webkit-tap-highlight-color:transparent;
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth;scroll-padding-top:100px;background:var(--bg)}
+body{
+  position:relative;isolation:isolate;margin:0;min-height:100vh;
+  background:var(--bg);color:var(--ink);font-family:"Cairo",sans-serif;
+  overflow-x:hidden;padding-bottom:calc(var(--nav-height) + 28px)
 }
-
-html {
-  scroll-behavior:smooth;
-  scroll-padding-top:100px;
-  background:#100d20;
-}
-
-body {
-  position:relative;
-  isolation:isolate;
-  margin:0;
-  min-height:100vh;
-  background:#100d20;
-  color:var(--ink);
-  font-family:"Cairo",sans-serif;
-  overflow-x:hidden;
-  padding-bottom:calc(var(--nav-height) + 28px);
-}
-
-/* الخلفية الرئيسية الثابتة */
-body::before {
-  content:"";
-  position:fixed;
-  inset:0;
-  z-index:-1;
-  pointer-events:none;
+body::before{
+  content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;
   background:
-    linear-gradient(
-      135deg,
-      rgba(12,9,25,.88),
-      rgba(18,12,37,.83),
-      rgba(15,12,30,.91)
-    ),
-    url("https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=2200&q=90")
-    center center / cover no-repeat;
+    linear-gradient(115deg,rgba(8,6,18,.84),rgba(17,10,31,.76) 48%,rgba(8,7,18,.91)),
+    url("https://images.unsplash.com/photo-1462331940025-496dfbfc7564?auto=format&fit=crop&w=2200&q=90") center/cover no-repeat
 }
-
-button,input {
-  font:inherit;
+body::after{
+  content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:radial-gradient(ellipse at 12% 12%,rgba(130,83,210,.16),transparent 34%),
+  radial-gradient(ellipse at 88% 42%,rgba(60,150,165,.10),transparent 32%)
 }
+button,input{font:inherit}
+button,a{-webkit-tap-highlight-color:transparent}
+button{cursor:pointer}
+a{color:inherit;text-decoration:none}
+.page-shell{width:min(100%,1120px);margin:auto}
 
-button,a {
-  -webkit-tap-highlight-color:transparent;
-}
-
-button {
-  cursor:pointer;
-}
-
-a {
-  color:inherit;
-  text-decoration:none;
-}
-
-.page-shell {
-  width:min(100%,1120px);
-  margin:auto;
-}
-
-/* HEADER */
-
-.topbar {
-  position:sticky;
-  top:0;
-  z-index:50;
-  background:rgba(15,12,29,.88);
-  backdrop-filter:blur(22px);
-  -webkit-backdrop-filter:blur(22px);
+/* الشريط العلوي */
+.topbar{
+  position:sticky;top:0;z-index:50;
+  background:rgba(12,9,23,.84);
+  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
   border-bottom:1px solid var(--line);
-  box-shadow:0 8px 25px rgba(0,0,0,.12);
-}
-
-.topbar-inner {
-  max-width:1120px;
-  min-height:76px;
-  padding:12px 19px;
-  margin:auto;
-  display:flex;
-  align-items:center;
-  gap:13px;
-}
-
-.brand {
-  display:flex;
-  align-items:center;
-  gap:10px;
-  flex-shrink:0;
-}
-
-.brand-symbol {
-  width:46px;
-  height:46px;
-  border-radius:16px;
-  display:grid;
-  place-items:center;
-  color:white;
-  font-size:23px;
-  background:linear-gradient(145deg,#b49aff,#6542d6);
-  box-shadow:0 8px 25px rgba(112,79,218,.4);
-  border:1px solid rgba(255,255,255,.25);
-}
-
-.brand-name {
-  font-size:16px;
-  line-height:1.1;
-  font-weight:1000;
-  letter-spacing:.3px;
-  color:#fff;
-}
-
-.brand-sub {
-  display:block;
-  color:#a99fc4;
-  font-size:10px;
-  font-weight:700;
-  margin-top:4px;
-  letter-spacing:1.1px;
-}
-
-.top-search {
-  height:44px;
-  flex:1;
-  max-width:440px;
-  margin-inline:auto;
-  background:rgba(255,255,255,.07);
-  border:1px solid var(--line);
-  border-radius:15px;
-  display:flex;
-  align-items:center;
-  gap:10px;
-  padding:0 14px;
-  color:#aaa0c3;
-}
-
-.top-search input {
-  width:100%;
-  min-width:0;
-  outline:0;
-  border:0;
-  background:transparent;
-  color:white;
-  font-size:12px;
-  font-weight:700;
-}
-
-.top-search input::placeholder {
-  color:#958ba9;
-}
-
-.icon-button {
-  width:42px;
-  height:42px;
-  border:1px solid var(--line);
-  background:rgba(255,255,255,.07);
-  border-radius:14px;
-  color:#e5dcff;
-  display:grid;
-  place-items:center;
-  font-size:16px;
-  transition:.2s;
-}
-
-.icon-button:active {
-  transform:scale(.94);
-}
-
-.profile-shortcut {
-  width:43px;
-  height:43px;
-  padding:2px;
-  border:2px solid #9274ee;
-  border-radius:50%;
-  background:#211a38;
-  overflow:hidden;
-  display:block;
-}
-
-.profile-shortcut img {
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  border-radius:50%;
-}
-
-/* MAIN */
-
-.main-content {
-  padding:20px 17px 35px;
-}
-
-.welcome-row {
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:12px;
-  margin:4px 0 17px;
-}
-
-.welcome-title {
-  font-size:21px;
-  font-weight:1000;
-  margin:0;
-  color:#fff;
-}
-
-.welcome-description {
-  color:var(--muted);
-  font-size:12px;
-  font-weight:700;
-  margin:3px 0 0;
-}
-
-.wallet-chip {
-  display:flex;
-  align-items:center;
-  gap:8px;
-  padding:9px 12px;
-  background:var(--surface);
-  border:1px solid var(--line);
-  border-radius:15px;
-  box-shadow:var(--shadow);
-  font-size:11px;
-  font-weight:900;
-  white-space:nowrap;
-}
-
-.wallet-chip i {
-  color:#ffc45e;
-}
-
-.wallet-chip span {
-  color:#c0aaff;
-}
-
-/* HERO */
-
-.hero {
-  position:relative;
-  min-height:245px;
-  overflow:hidden;
-  border-radius:27px;
-  isolation:isolate;
-  background:#211638;
-  border:1px solid rgba(255,255,255,.12);
-  box-shadow:0 18px 45px rgba(0,0,0,.3);
-}
-
-.hero::before {
-  content:"";
-  position:absolute;
-  inset:0;
-  z-index:-2;
-  background:
-    linear-gradient(
-      90deg,
-      rgba(18,10,37,.94),
-      rgba(34,17,61,.76) 48%,
-      rgba(37,19,60,.22)
-    ),
-    url("https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1500&q=85")
-    center 42% / cover;
-  transform:scale(1.02);
-}
-
-.hero::after {
-  content:"";
-  position:absolute;
-  width:230px;
-  height:230px;
-  border-radius:50%;
-  background:rgba(176,135,255,.22);
-  filter:blur(55px);
-  left:-70px;
-  bottom:-100px;
-  z-index:-1;
-}
-
-.hero-content {
-  position:relative;
-  z-index:2;
-  padding:28px 25px;
-  max-width:580px;
-  color:white;
-}
-
-.hero-kicker {
-  display:inline-flex;
-  align-items:center;
-  gap:7px;
-  padding:6px 11px;
-  border:1px solid rgba(255,255,255,.25);
-  background:rgba(255,255,255,.13);
-  border-radius:30px;
-  font-size:10px;
-  font-weight:800;
-  backdrop-filter:blur(10px);
-}
-
-.hero-kicker i {
-  color:#ffcb79;
-}
-
-.hero h1 {
-  font-size:clamp(25px,5vw,37px);
-  line-height:1.35;
-  font-weight:1000;
-  margin:15px 0 8px;
-  color:#fff;
-}
-
-.hero p {
-  max-width:390px;
-  color:rgba(255,255,255,.83);
-  font-size:12px;
-  line-height:2;
-  font-weight:600;
-  margin:0 0 18px;
-}
-
-.hero-buttons {
-  display:flex;
-  align-items:center;
-  flex-wrap:wrap;
-  gap:9px;
-}
-
-.hero-button {
-  min-height:42px;
-  padding:0 17px;
-  border:0;
-  border-radius:13px;
-  font-size:11px;
-  font-weight:900;
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  gap:8px;
-}
-
-.hero-button.primary {
-  color:#5435b8;
-  background:#fff;
-}
-
-.hero-button.ghost {
-  color:white;
-  background:rgba(255,255,255,.15);
-  border:1px solid rgba(255,255,255,.25);
-}
-
-.hero-decoration {
-  position:absolute;
-  left:7%;
-  top:14%;
-  width:120px;
-  height:120px;
-  border:1px solid rgba(255,255,255,.18);
-  border-radius:35px;
-  transform:rotate(-14deg);
-  pointer-events:none;
-}
-
-.hero-decoration::before,
-.hero-decoration::after {
-  content:"";
-  position:absolute;
-  border:1px solid rgba(255,255,255,.15);
-  border-radius:50%;
-}
-
-.hero-decoration::before {
-  width:70px;
-  height:70px;
-  top:20px;
-  left:20px;
-}
-
-.hero-decoration::after {
-  width:12px;
-  height:12px;
-  background:#f9b66c;
-  top:-8px;
-  right:14px;
-  border:0;
-}
-
-/* QUICK LINKS */
-
-.quick-discover {
-  display:grid;
-  grid-template-columns:repeat(4,minmax(0,1fr));
-  gap:11px;
-  margin:18px 0 25px;
-}
-
-.quick-card {
-  min-height:102px;
-  padding:13px 7px 11px;
-  background:rgba(29,23,48,.88);
-  border:1px solid var(--line);
-  border-radius:19px;
-  box-shadow:var(--shadow);
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  gap:8px;
-  text-align:center;
-  transition:.2s;
-  backdrop-filter:blur(12px);
-}
-
-.quick-card:active {
-  transform:scale(.96);
-}
-
-.quick-icon {
-  width:43px;
-  height:43px;
-  border-radius:15px;
-  display:grid;
-  place-items:center;
-  color:white;
-  font-size:17px;
-}
-
-.quick-card:nth-child(1) .quick-icon {
-  background:linear-gradient(145deg,#9e7bff,#7048df);
-}
-
-.quick-card:nth-child(2) .quick-icon {
-  background:linear-gradient(145deg,#ff91b8,#ec5d98);
-}
-
-.quick-card:nth-child(3) .quick-icon {
-  background:linear-gradient(145deg,#63d7d4,#29aebc);
-}
-
-.quick-card:nth-child(4) .quick-icon {
-  background:linear-gradient(145deg,#ffc17c,#f08b4c);
-}
-
-.quick-card strong {
-  font-size:11px;
-  font-weight:900;
-  color:#fff;
-}
-
-.quick-card small {
-  color:#a99fbd;
-  font-size:9px;
-  font-weight:700;
-}
-
-/* SECTIONS */
-
-.section {
-  margin-top:27px;
-  scroll-margin-top:95px;
-}
-
-.section-heading {
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:10px;
-  margin-bottom:13px;
-}
-
-.section-title-wrap {
-  display:flex;
-  align-items:center;
-  gap:10px;
-  min-width:0;
-}
-
-.section-symbol {
-  width:39px;
-  height:39px;
-  border-radius:13px;
-  display:grid;
-  place-items:center;
-  background:rgba(143,111,230,.18);
-  color:#bba5ff;
-  font-size:15px;
-  flex-shrink:0;
-  border:1px solid rgba(180,151,255,.13);
-}
-
-.section-title {
-  font-size:16px;
-  font-weight:1000;
-  margin:0;
-  color:#fff;
-}
-
-.section-subtitle {
-  color:var(--muted);
-  font-size:10px;
-  font-weight:700;
-  margin:2px 0 0;
-}
-
-.section-link {
-  color:#bba6ff;
-  font-size:11px;
-  font-weight:900;
-  white-space:nowrap;
-  padding:8px 0;
-}
-
-.section-link i {
-  margin-right:4px;
-  font-size:9px;
-}
-
-/* FILTERS */
-
-.filter-row {
-  display:flex;
-  align-items:center;
-  gap:8px;
-  overflow:auto;
-  padding:1px 0 12px;
-  scrollbar-width:none;
-}
-
-.filter-row::-webkit-scrollbar {
-  display:none;
-}
-
-.filter-button {
-  flex-shrink:0;
-  border:1px solid var(--line);
-  background:rgba(255,255,255,.06);
-  color:#b7accb;
-  border-radius:30px;
-  padding:8px 15px;
-  font-size:10px;
-  font-weight:900;
-}
-
-.filter-button.active {
-  background:linear-gradient(135deg,#9473f5,#7048d8);
-  border-color:transparent;
-  color:white;
-  box-shadow:0 6px 18px rgba(118,85,233,.28);
-}
-
-/* ROOMS */
-
-.rooms-grid {
-  display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:12px;
-}
-
-.room-card {
-  background:rgba(26,21,43,.94);
-  border:1px solid var(--line);
-  border-radius:19px;
-  overflow:hidden;
-  min-width:0;
-  box-shadow:var(--shadow);
-}
-
-.room-cover {
-  min-height:126px;
-  position:relative;
-  overflow:hidden;
-  background:#33244f;
-}
-
-.room-cover img {
-  width:100%;
-  height:126px;
-  display:block;
-  object-fit:cover;
-}
-
-.room-cover-placeholder {
-  height:126px;
-  display:grid;
-  place-items:center;
-  color:white;
-  font-size:32px;
-  background:
-    radial-gradient(circle at 75% 25%,rgba(255,255,255,.25),transparent 28%),
-    linear-gradient(135deg,#7655e9,#b36cb5);
-}
-
-.room-status {
-  position:absolute;
-  top:9px;
-  right:9px;
-  padding:5px 9px;
-  border-radius:20px;
-  background:rgba(20,15,35,.9);
-  border:1px solid rgba(255,255,255,.15);
-  color:#c5b3ff;
-  font-size:9px;
-  font-weight:1000;
-}
-
-.room-status.playing {
-  color:#ff91bd;
-}
-
-.room-body {
-  padding:11px;
-}
-
-.room-title {
-  font-size:12px;
-  font-weight:1000;
-  margin:0 0 7px;
-  color:#fff;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-}
-
-.room-meta {
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:5px;
-  color:var(--muted);
-  font-size:9px;
-  font-weight:800;
-}
-
-.room-host {
-  display:flex;
-  align-items:center;
-  gap:6px;
-  min-width:0;
-}
-
-.room-host img {
-  width:22px;
-  height:22px;
-  object-fit:cover;
-  border-radius:50%;
-}
-
-.room-host span {
-  overflow:hidden;
-  white-space:nowrap;
-  text-overflow:ellipsis;
-}
-
-.room-open {
-  width:100%;
-  margin-top:10px;
-  min-height:34px;
-  border:0;
-  border-radius:10px;
-  color:white;
-  background:linear-gradient(135deg,#9272f0,#7048d8);
-  font-size:10px;
-  font-weight:900;
-}
-
-/* EMPTY STATES */
-
-.empty-state {
-  grid-column:1/-1;
-  padding:25px 17px;
-  text-align:center;
-  background:rgba(28,23,46,.88);
-  border:1px dashed rgba(183,157,255,.3);
-  border-radius:20px;
-}
-
-.empty-illustration {
-  width:65px;
-  height:65px;
-  border-radius:21px;
-  margin:0 auto 12px;
-  display:grid;
-  place-items:center;
-  background:rgba(143,111,230,.18);
-  color:#bca6ff;
-  font-size:25px;
-}
-
-.empty-state h3 {
-  margin:0 0 5px;
-  font-size:13px;
-  font-weight:1000;
-  color:#fff;
-}
-
-.empty-state p {
-  max-width:320px;
-  margin:0 auto;
-  color:var(--muted);
-  font-size:10px;
-  font-weight:700;
-  line-height:1.9;
-}
-
-/* GAMES */
-
-.games-strip {
-  display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:12px;
-}
-
-.game-card {
-  min-height:145px;
-  position:relative;
-  overflow:hidden;
-  border-radius:19px;
-  color:white;
-  background:#30214e;
-  border:1px solid var(--line);
-}
-
-.game-card img {
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  object-fit:cover;
-}
-
-.game-card::after {
-  content:"";
-  position:absolute;
-  inset:0;
-  background:linear-gradient(0deg,rgba(17,11,34,.95),rgba(26,17,48,.04));
-}
-
-.game-card-content {
-  position:absolute;
-  z-index:2;
-  bottom:12px;
-  right:12px;
-  left:12px;
-}
-
-.game-card h3 {
-  margin:0 0 4px;
-  font-size:13px;
-  font-weight:1000;
-}
-
-.game-card p {
-  margin:0;
-  font-size:9px;
-  color:rgba(255,255,255,.8);
-  font-weight:700;
-}
-
-.game-card button {
-  margin-top:9px;
-  border:1px solid rgba(255,255,255,.35);
-  background:rgba(255,255,255,.15);
-  color:white;
-  border-radius:9px;
-  padding:6px 11px;
-  font-size:9px;
-  font-weight:900;
-}
-
-/* MEMBERS */
-
-.members-row {
-  display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:11px;
-}
-
-.member-card {
-  display:flex;
-  align-items:center;
-  gap:10px;
-  min-width:0;
-  padding:12px;
-  background:rgba(27,22,44,.94);
-  border:1px solid var(--line);
-  border-radius:17px;
-  box-shadow:var(--shadow);
-}
-
-.member-avatar {
-  width:47px;
-  height:47px;
-  border-radius:16px;
-  object-fit:cover;
-  flex-shrink:0;
-  background:#33264e;
-}
-
-.member-info {
-  min-width:0;
-  flex:1;
-}
-
-.member-info strong {
-  display:block;
-  font-size:11px;
-  font-weight:1000;
-  color:#fff;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-}
-
-.member-info span {
-  display:block;
-  color:var(--muted);
-  font-size:9px;
-  font-weight:700;
-  margin-top:3px;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-}
-
-.member-open {
-  width:29px;
-  height:29px;
-  flex-shrink:0;
-  border:0;
-  border-radius:10px;
-  background:rgba(143,111,230,.2);
-  color:#c4b1ff;
-}
-
-/* CONTESTS */
-
-.contest-list {
-  display:grid;
-  gap:10px;
-}
-
-.contest-card {
-  display:flex;
-  align-items:center;
-  gap:12px;
-  padding:13px;
-  background:rgba(27,22,44,.94);
-  border:1px solid var(--line);
-  border-radius:17px;
-}
-
-.contest-icon {
-  width:43px;
-  height:43px;
-  border-radius:14px;
-  display:grid;
-  place-items:center;
-  background:rgba(255,177,103,.15);
-  color:#ffbd78;
-  font-size:17px;
-  flex-shrink:0;
-}
-
-.contest-info {
-  min-width:0;
-  flex:1;
-}
-
-.contest-info strong {
-  display:block;
-  font-size:11px;
-  font-weight:1000;
-  color:#fff;
-}
-
-.contest-info span {
-  display:block;
-  color:var(--muted);
-  font-size:9px;
-  margin-top:4px;
-  font-weight:700;
-}
-
-.contest-state {
-  color:#70e0b6;
-  background:rgba(56,205,155,.13);
-  padding:6px 9px;
-  border-radius:9px;
-  font-size:9px;
-  font-weight:900;
-  white-space:nowrap;
-}
-
-/* DISCOVERY BANNER */
-
-.discovery-banner {
-  position:relative;
-  min-height:145px;
-  margin-top:26px;
-  padding:20px;
-  overflow:hidden;
-  border-radius:22px;
-  color:white;
-  border:1px solid rgba(255,255,255,.12);
-  background:
-    linear-gradient(100deg,rgba(22,13,44,.94),rgba(65,39,112,.72)),
-    url("https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&w=1200&q=80") center/cover;
-}
-
-.discovery-banner h3 {
-  margin:0 0 6px;
-  font-size:17px;
-  font-weight:1000;
-}
-
-.discovery-banner p {
-  max-width:390px;
-  margin:0 0 13px;
-  color:rgba(255,255,255,.8);
-  font-size:10px;
-  line-height:1.9;
-  font-weight:700;
-}
-
-.discovery-banner a {
-  display:inline-flex;
-  align-items:center;
-  gap:7px;
-  padding:8px 13px;
-  border-radius:10px;
-  background:#fff;
-  color:#6242c2;
-  font-size:10px;
-  font-weight:1000;
-}
-
-/* BOTTOM NAV */
-
-.bottom-nav {
-  position:fixed;
-  z-index:60;
-  bottom:0;
-  right:0;
-  left:0;
-  min-height:var(--nav-height);
-  padding:8px 8px calc(8px + env(safe-area-inset-bottom));
-  display:flex;
-  align-items:center;
-  justify-content:space-around;
-  background:rgba(17,13,32,.94);
-  border-top:1px solid var(--line);
-  backdrop-filter:blur(22px);
-  -webkit-backdrop-filter:blur(22px);
-}
-
-.nav-item {
-  min-width:57px;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  gap:5px;
-  color:#9188a8;
-  font-size:9px;
-  font-weight:800;
-}
-
-.nav-item i {
-  font-size:18px;
-}
-
-.nav-item.active {
-  color:#bba5ff;
-}
-
-.nav-item.active i {
-  filter:drop-shadow(0 4px 7px rgba(118,85,233,.4));
-}
-
-/* SEARCH */
-
-.loading-line {
-  height:3px;
-  position:fixed;
-  top:0;
-  right:0;
-  width:0;
-  z-index:100;
-  background:linear-gradient(90deg,#a78bfa,#ed75b1);
-  transition:width .25s;
-}
-
-.toast {
-  position:fixed;
-  z-index:120;
-  bottom:calc(var(--nav-height) + 18px);
-  left:50%;
-  transform:translate(-50%,20px);
-  opacity:0;
-  pointer-events:none;
-  padding:11px 17px;
-  border-radius:13px;
-  color:white;
-  background:#30234e;
-  box-shadow:var(--shadow);
-  font-size:11px;
-  font-weight:800;
-  transition:.25s;
-  max-width:calc(100% - 35px);
-  text-align:center;
-}
-
-.toast.show {
-  opacity:1;
-  transform:translate(-50%,0);
-}
-
-.search-results {
-  display:none;
-  position:fixed;
-  z-index:80;
-  top:75px;
-  right:0;
-  left:0;
-  max-width:1120px;
-  margin:auto;
-  padding:12px 17px;
-  background:rgba(22,17,38,.97);
-  border:1px solid var(--line);
-  border-top:0;
-  box-shadow:var(--shadow);
-  backdrop-filter:blur(20px);
-}
-
-.search-results.visible {
-  display:block;
-}
-
-.search-results-title {
-  color:var(--muted);
-  font-size:10px;
-  font-weight:900;
-  margin-bottom:8px;
-}
-
-.search-result-list {
-  display:flex;
-  flex-wrap:wrap;
-  gap:7px;
-}
-
-.search-result {
-  border:1px solid var(--line);
-  background:rgba(255,255,255,.06);
-  border-radius:12px;
-  padding:8px 11px;
-  font-size:10px;
-  font-weight:800;
-  color:#fff;
-}
-
-.search-result small {
-  display:block;
-  color:var(--muted);
-  margin-top:3px;
-}
-
-.screen-error {
-  display:none;
-  margin:15px 0;
-  padding:13px;
-  background:rgba(150,39,67,.2);
-  color:#ff9caf;
-  border:1px solid rgba(255,120,150,.25);
-  border-radius:14px;
-  font-size:11px;
-  font-weight:800;
-  line-height:1.8;
-}
-
-.screen-error.show {
-  display:block;
-}
-
-/* RESPONSIVE */
-
-@media(min-width:760px) {
-  .main-content {
-    padding:25px 25px 45px;
-  }
-
-  .hero {
-    min-height:290px;
-  }
-
-  .hero-content {
-    padding:39px 38px;
-  }
-
-  .rooms-grid {
-    grid-template-columns:repeat(3,minmax(0,1fr));
-  }
-
-  .games-strip {
-    grid-template-columns:repeat(3,minmax(0,1fr));
-  }
-
-  .members-row {
-    grid-template-columns:repeat(3,minmax(0,1fr));
-  }
-
-  .bottom-nav {
-    right:50%;
-    left:auto;
-    width:min(100%,650px);
-    transform:translateX(50%);
-    border:1px solid var(--line);
-    border-bottom:0;
-    border-radius:20px 20px 0 0;
-  }
-}
-
-@media(max-width:390px) {
-  .topbar-inner {
-    padding-inline:11px;
-    gap:8px;
-  }
-
-  .brand-name {
-    font-size:13px;
-  }
-
-  .brand-symbol {
-    width:40px;
-    height:40px;
-  }
-
-  .top-search {
-    height:40px;
-    padding-inline:10px;
-  }
-
-  .top-actions {
-    gap:5px;
-  }
-
-  .icon-button {
-    width:37px;
-    height:37px;
-  }
-
-  .profile-shortcut {
-    width:38px;
-    height:38px;
-  }
-
-  .quick-discover {
-    gap:7px;
-  }
-
-  .quick-card {
-    min-height:94px;
-  }
-
-  .rooms-grid,
-  .games-strip,
-  .members-row {
-    gap:8px;
-  }
-
-  .room-body {
-    padding:9px;
-  }
+  box-shadow:0 12px 35px rgba(0,0,0,.22)
+}
+.topbar-inner{
+  max-width:1120px;min-height:78px;padding:12px 19px;margin:auto;
+  display:flex;align-items:center;gap:13px
+}
+.brand{display:flex;align-items:center;gap:11px;flex-shrink:0}
+.brand-symbol{
+  width:48px;height:48px;border-radius:17px;display:grid;place-items:center;
+  color:#fff;font-size:22px;
+  background:linear-gradient(145deg,#e1c8ff,#9b73ef 42%,#5432ad);
+  box-shadow:0 0 0 5px rgba(174,139,255,.08),0 10px 28px rgba(113,72,208,.38);
+  border:1px solid rgba(255,255,255,.34)
+}
+.brand-name{font-size:16px;line-height:1.1;font-weight:1000;letter-spacing:.5px;color:#fff}
+.brand-sub{display:block;color:#c3b2e4;font-size:9px;font-weight:800;margin-top:5px;letter-spacing:1.5px}
+.top-search{
+  height:45px;flex:1;max-width:440px;margin-inline:auto;
+  background:rgba(255,255,255,.055);border:1px solid var(--line);
+  border-radius:16px;display:flex;align-items:center;gap:10px;
+  padding:0 14px;color:#c3b5dc
+}
+.top-search input{width:100%;min-width:0;outline:0;border:0;background:transparent;color:white;font-size:12px;font-weight:700}
+.top-search input::placeholder{color:#968aa9}
+.top-actions{display:flex;align-items:center;gap:8px}
+.icon-button{
+  width:43px;height:43px;border:1px solid var(--line);
+  background:rgba(255,255,255,.06);border-radius:15px;
+  color:#e9ddff;display:grid;place-items:center;font-size:16px;transition:.2s
+}
+.icon-button:active{transform:scale(.93)}
+.profile-shortcut{
+  width:45px;height:45px;padding:2px;border:2px solid #c3a1ff;
+  border-radius:50%;background:#211831;overflow:hidden;display:block;
+  box-shadow:0 0 0 4px rgba(172,132,255,.09)
+}
+.profile-shortcut img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+
+/* محتوى الصفحة */
+.main-content{padding:23px 17px 40px}
+.welcome-row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:4px 0 19px}
+.welcome-title{font-size:22px;font-weight:1000;margin:0;color:#fff;letter-spacing:-.4px}
+.welcome-description{color:var(--muted);font-size:12px;font-weight:700;margin:4px 0 0}
+.wallet-chip{
+  display:flex;align-items:center;gap:8px;padding:9px 13px;
+  background:linear-gradient(135deg,rgba(72,51,91,.72),rgba(35,26,52,.9));
+  border:1px solid rgba(235,198,129,.28);border-radius:15px;
+  box-shadow:var(--shadow);font-size:11px;font-weight:900;white-space:nowrap
+}
+.wallet-chip[hidden]{display:none}
+.wallet-chip i{color:#f3c779}
+.wallet-chip span{color:#f1d8a5}
+
+/* الواجهة السينمائية */
+.hero{
+  position:relative;min-height:278px;overflow:hidden;border-radius:30px;
+  isolation:isolate;background:#20132f;
+  border:1px solid rgba(255,255,255,.16);box-shadow:0 25px 60px rgba(0,0,0,.42)
+}
+.hero::before{
+  content:"";position:absolute;inset:0;z-index:-2;
+  background:linear-gradient(90deg,rgba(13,8,25,.96),rgba(27,13,44,.82) 46%,rgba(28,15,45,.24)),
+  url("https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&w=1600&q=90") center 42%/cover;
+  transform:scale(1.02)
+}
+.hero::after{
+  content:"";position:absolute;width:260px;height:260px;border-radius:50%;
+  background:rgba(179,132,255,.24);filter:blur(65px);
+  left:-80px;bottom:-125px;z-index:-1
+}
+.hero-content{position:relative;z-index:2;padding:33px 29px;max-width:600px;color:white}
+.hero-kicker{
+  display:inline-flex;align-items:center;gap:8px;padding:7px 12px;
+  border:1px solid rgba(239,218,255,.28);background:rgba(255,255,255,.10);
+  border-radius:30px;font-size:10px;font-weight:900;
+  backdrop-filter:blur(12px);color:#f1e7ff
+}
+.hero-kicker i{color:#f5ce83}
+.hero h1{font-size:clamp(27px,5.5vw,42px);line-height:1.32;font-weight:1000;letter-spacing:-.8px;margin:16px 0 9px;color:#fff;text-shadow:0 5px 24px rgba(0,0,0,.24)}
+.hero p{max-width:410px;color:rgba(255,255,255,.82);font-size:12px;line-height:2.05;font-weight:650;margin:0 0 19px}
+.hero-buttons{display:flex;align-items:center;flex-wrap:wrap;gap:10px}
+.hero-button{
+  min-height:44px;padding:0 18px;border:0;border-radius:14px;
+  font-size:11px;font-weight:1000;display:inline-flex;
+  align-items:center;justify-content:center;gap:9px;transition:.2s
+}
+.hero-button:active{transform:scale(.96)}
+.hero-button.primary{color:#39245f;background:linear-gradient(135deg,#fff8e9,#dfc5ff);box-shadow:0 8px 25px rgba(202,166,255,.2)}
+.hero-button.ghost{color:white;background:rgba(255,255,255,.11);border:1px solid rgba(255,255,255,.27);backdrop-filter:blur(10px)}
+.hero-decoration{
+  position:absolute;left:8%;top:15%;width:140px;height:140px;
+  border:1px solid rgba(255,255,255,.2);border-radius:42px;
+  transform:rotate(-14deg);pointer-events:none;
+  box-shadow:inset 0 0 35px rgba(255,255,255,.04)
+}
+.hero-decoration::before,.hero-decoration::after{content:"";position:absolute;border:1px solid rgba(255,255,255,.2);border-radius:50%}
+.hero-decoration::before{width:82px;height:82px;top:27px;left:27px}
+.hero-decoration::after{width:13px;height:13px;background:#f5d08d;top:-8px;right:14px;border:0;box-shadow:0 0 20px #f5d08d}
+
+/* الوصول السريع */
+.quick-discover{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:11px;margin:19px 0 29px}
+.quick-card{
+  min-height:108px;padding:14px 7px 12px;
+  background:linear-gradient(155deg,rgba(39,29,58,.94),rgba(19,15,32,.92));
+  border:1px solid var(--line);border-radius:21px;
+  box-shadow:0 12px 30px rgba(0,0,0,.23),inset 0 1px rgba(255,255,255,.045);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:8px;text-align:center;transition:transform .22s,border-color .22s;
+  backdrop-filter:blur(14px)
+}
+.quick-card:active{transform:scale(.95);border-color:rgba(205,174,255,.4)}
+.quick-icon{width:45px;height:45px;border-radius:16px;display:grid;place-items:center;color:white;font-size:17px;box-shadow:0 7px 18px rgba(0,0,0,.2)}
+.quick-card:nth-child(1) .quick-icon{background:linear-gradient(145deg,#b89aff,#7147d4)}
+.quick-card:nth-child(2) .quick-icon{background:linear-gradient(145deg,#ff9ec7,#c84e91)}
+.quick-card:nth-child(3) .quick-icon{background:linear-gradient(145deg,#7de4df,#268e9e)}
+.quick-card:nth-child(4) .quick-icon{background:linear-gradient(145deg,#f5cf91,#bd7844)}
+.quick-card strong{font-size:11px;font-weight:1000;color:#fff}
+.quick-card small{color:#b1a5c5;font-size:9px;font-weight:700}
+
+/* عناوين الأقسام */
+.section{margin-top:31px;scroll-margin-top:95px}
+.section-heading{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:15px}
+.section-title-wrap{display:flex;align-items:center;gap:11px;min-width:0}
+.section-symbol{
+  width:41px;height:41px;border-radius:14px;display:grid;place-items:center;
+  background:linear-gradient(145deg,rgba(173,136,255,.22),rgba(104,75,157,.14));
+  color:#d0b9ff;font-size:15px;flex-shrink:0;
+  border:1px solid rgba(196,165,255,.19);box-shadow:inset 0 1px rgba(255,255,255,.06)
+}
+.section-title{font-size:16px;font-weight:1000;margin:0;color:#fff}
+.section-subtitle{color:var(--muted);font-size:10px;font-weight:700;margin:3px 0 0}
+.section-link{color:#d0b5ff;font-size:11px;font-weight:900;white-space:nowrap;padding:8px 0}
+.section-link i{margin-right:4px;font-size:9px}
+
+/* فلاتر الغرف */
+.filter-row{display:flex;align-items:center;gap:8px;overflow:auto;padding:1px 0 13px;scrollbar-width:none}
+.filter-row::-webkit-scrollbar{display:none}
+.filter-button{flex-shrink:0;border:1px solid var(--line);background:rgba(255,255,255,.055);color:#c0b4d2;border-radius:30px;padding:8px 15px;font-size:10px;font-weight:900}
+.filter-button.active{background:linear-gradient(135deg,#ad8aff,#7048c9);border-color:transparent;color:white;box-shadow:0 7px 20px rgba(118,85,233,.3)}
+
+/* بطاقات الغرف */
+.rooms-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
+.room-card{background:linear-gradient(155deg,rgba(36,27,54,.97),rgba(17,14,29,.97));border:1px solid var(--line);border-radius:21px;overflow:hidden;min-width:0;box-shadow:var(--shadow);transition:transform .2s,border-color .2s}
+.room-card:active{transform:scale(.985);border-color:rgba(199,169,255,.35)}
+.room-cover{min-height:132px;position:relative;overflow:hidden;background:#33244f}
+.room-cover img{width:100%;height:132px;display:block;object-fit:cover;transition:transform .5s}
+.room-card:hover .room-cover img{transform:scale(1.05)}
+.room-cover-placeholder{height:132px;display:grid;place-items:center;color:white;font-size:32px;background:radial-gradient(circle at 75% 25%,rgba(255,255,255,.22),transparent 28%),linear-gradient(135deg,#7555b8,#382b61)}
+.room-status{position:absolute;top:10px;right:10px;padding:5px 10px;border-radius:20px;background:rgba(15,11,27,.88);border:1px solid rgba(255,255,255,.18);color:#d8c5ff;font-size:9px;font-weight:1000;backdrop-filter:blur(8px)}
+.room-status.playing{color:#ffadd0}
+.room-body{padding:12px}
+.room-title{font-size:12px;font-weight:1000;margin:0 0 8px;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.room-meta{display:flex;align-items:center;justify-content:space-between;gap:5px;color:var(--muted);font-size:9px;font-weight:800}
+.room-host{display:flex;align-items:center;gap:6px;min-width:0}
+.room-host img{width:23px;height:23px;object-fit:cover;border-radius:50%;border:1px solid rgba(255,255,255,.2)}
+.room-host span{overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.room-open{width:100%;margin-top:11px;min-height:35px;border:1px solid rgba(255,255,255,.12);border-radius:11px;color:white;background:linear-gradient(120deg,#916de4,#6443b5);font-size:10px;font-weight:1000;box-shadow:0 5px 15px rgba(89,58,157,.22)}
+
+/* الحالات الفارغة */
+.empty-state{grid-column:1/-1;padding:28px 18px;text-align:center;background:linear-gradient(145deg,rgba(35,27,52,.92),rgba(17,14,29,.92));border:1px dashed rgba(190,162,255,.32);border-radius:22px;box-shadow:inset 0 1px rgba(255,255,255,.04)}
+.empty-illustration{width:68px;height:68px;border-radius:23px;margin:0 auto 13px;display:grid;place-items:center;background:linear-gradient(145deg,rgba(170,133,255,.22),rgba(90,65,141,.13));border:1px solid rgba(195,166,255,.16);color:#d0b9ff;font-size:25px}
+.empty-state h3{margin:0 0 6px;font-size:13px;font-weight:1000;color:#fff}
+.empty-state p{max-width:320px;margin:0 auto;color:var(--muted);font-size:10px;font-weight:700;line-height:1.9}
+
+/* الألعاب */
+.games-strip{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
+.game-card{min-height:155px;position:relative;overflow:hidden;border-radius:21px;color:white;background:#30214e;border:1px solid var(--line);box-shadow:var(--shadow)}
+.game-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.game-card:hover img{transform:scale(1.06)}
+.game-card::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(12,8,24,.97),rgba(26,17,48,.02) 80%)}
+.game-card-content{position:absolute;z-index:2;bottom:13px;right:13px;left:13px}
+.game-card h3{margin:0 0 4px;font-size:13px;font-weight:1000}
+.game-card p{margin:0;font-size:9px;color:rgba(255,255,255,.82);font-weight:700}
+.game-card button{margin-top:10px;border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.13);color:white;border-radius:10px;padding:7px 12px;font-size:9px;font-weight:900;backdrop-filter:blur(8px)}
+
+/* الأعضاء */
+.members-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
+.member-card{display:flex;align-items:center;gap:10px;min-width:0;padding:13px;background:linear-gradient(145deg,rgba(37,28,55,.95),rgba(18,15,30,.95));border:1px solid var(--line);border-radius:19px;box-shadow:0 10px 25px rgba(0,0,0,.2)}
+.member-avatar{width:48px;height:48px;border-radius:17px;object-fit:cover;flex-shrink:0;background:#33264e;border:1px solid rgba(255,255,255,.13)}
+.member-info{min-width:0;flex:1}
+.member-info strong{display:block;font-size:11px;font-weight:1000;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.member-info span{display:block;color:var(--muted);font-size:9px;font-weight:700;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.member-open{width:30px;height:30px;flex-shrink:0;border:1px solid rgba(190,160,255,.17);border-radius:11px;background:rgba(143,111,230,.2);color:#d2bdff}
+
+/* بانر الاكتشاف */
+.discovery-banner{
+  position:relative;min-height:155px;margin-top:29px;padding:23px;
+  overflow:hidden;border-radius:25px;color:white;border:1px solid rgba(255,255,255,.15);
+  background:linear-gradient(100deg,rgba(15,9,28,.96),rgba(55,34,87,.7)),
+  url("https://images.unsplash.com/photo-1517457373958-b7532e35ba0b?auto=format&fit=crop&w=1300&q=85") center/cover;
+  box-shadow:var(--shadow)
+}
+.discovery-banner h3{margin:0 0 7px;font-size:18px;font-weight:1000}
+.discovery-banner p{max-width:390px;margin:0 0 14px;color:rgba(255,255,255,.82);font-size:10px;line-height:1.9;font-weight:700}
+.discovery-banner a{display:inline-flex;align-items:center;gap:7px;padding:9px 14px;border-radius:11px;background:linear-gradient(135deg,#fff7e9,#e4d1ff);color:#4d347b;font-size:10px;font-weight:1000}
+
+/* التنقل السفلي */
+.bottom-nav{
+  position:fixed;z-index:60;bottom:0;right:0;left:0;min-height:var(--nav-height);
+  padding:9px 8px calc(9px + env(safe-area-inset-bottom));
+  display:flex;align-items:center;justify-content:space-around;
+  background:rgba(12,9,23,.91);border-top:1px solid var(--line);
+  backdrop-filter:blur(25px);-webkit-backdrop-filter:blur(25px);
+  box-shadow:0 -12px 35px rgba(0,0,0,.22)
+}
+.nav-item{min-width:57px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;color:#9c91b1;font-size:9px;font-weight:800;transition:.2s}
+.nav-item i{font-size:18px}
+.nav-item.active{color:#d0b5ff}
+.nav-item.active i{filter:drop-shadow(0 4px 9px rgba(154,112,244,.55));transform:translateY(-1px)}
+
+/* البحث والتنبيهات */
+.loading-line{height:3px;position:fixed;top:0;right:0;width:0;z-index:100;background:linear-gradient(90deg,#c5a6ff,#f0c77e,#ed83bb);transition:width .25s}
+.toast{position:fixed;z-index:120;bottom:calc(var(--nav-height) + 18px);left:50%;transform:translate(-50%,20px);opacity:0;pointer-events:none;padding:11px 17px;border:1px solid var(--line);border-radius:14px;color:white;background:rgba(39,28,60,.97);box-shadow:var(--shadow);font-size:11px;font-weight:800;transition:.25s;max-width:calc(100% - 35px);text-align:center;backdrop-filter:blur(15px)}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.search-results{display:none;position:fixed;z-index:80;top:78px;right:0;left:0;max-width:1120px;margin:auto;padding:13px 17px;background:rgba(18,13,31,.97);border:1px solid var(--line);border-top:0;box-shadow:var(--shadow);backdrop-filter:blur(22px)}
+.search-results.visible{display:block}
+.search-results-title{color:var(--muted);font-size:10px;font-weight:900;margin-bottom:9px}
+.search-result-list{display:flex;flex-wrap:wrap;gap:8px}
+.search-result{border:1px solid var(--line);background:rgba(255,255,255,.055);border-radius:12px;padding:9px 12px;font-size:10px;font-weight:800;color:#fff}
+.search-result small{display:block;color:var(--muted);margin-top:3px}
+.screen-error{display:none;margin:15px 0;padding:13px;background:rgba(150,39,67,.2);color:#ff9caf;border:1px solid rgba(255,120,150,.25);border-radius:14px;font-size:11px;font-weight:800;line-height:1.8}
+.screen-error.show{display:block}
+
+@media(min-width:760px){
+  .main-content{padding:27px 25px 48px}
+  .hero{min-height:315px}
+  .hero-content{padding:42px 40px}
+  .rooms-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .games-strip{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .members-row{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .bottom-nav{right:50%;left:auto;width:min(100%,670px);transform:translateX(50%);border:1px solid var(--line);border-bottom:0;border-radius:22px 22px 0 0}
+}
+@media(max-width:390px){
+  .topbar-inner{padding-inline:11px;gap:8px}
+  .brand-name{font-size:13px}
+  .brand-symbol{width:41px;height:41px}
+  .top-search{height:40px;padding-inline:10px}
+  .icon-button{width:37px;height:37px}
+  .profile-shortcut{width:39px;height:39px}
+  .quick-discover{gap:7px}
+  .quick-card{min-height:96px}
+  .rooms-grid,.games-strip,.members-row{gap:8px}
+  .room-body{padding:9px}
+  .hero-content{padding:26px 20px}
+  .hero-decoration{opacity:.55}
 }
 </style>
 </head>
@@ -1217,12 +310,8 @@ a {
 
 <header class="topbar">
   <div class="topbar-inner">
-
     <a href="home.html" class="brand" aria-label="HANOON WORLD">
-      <div class="brand-symbol">
-        <i class="fa-solid fa-earth-americas"></i>
-      </div>
-
+      <div class="brand-symbol"><i class="fa-solid fa-earth-americas"></i></div>
       <div>
         <div class="brand-name">HANOON WORLD</div>
         <span class="brand-sub">YOUR SOCIAL WORLD</span>
@@ -1231,19 +320,17 @@ a {
 
     <label class="top-search">
       <i class="fa-solid fa-magnifying-glass"></i>
-      <input id="globalSearch" type="search" placeholder="ابحث عن عضو أو غرفة أو لعبة">
+      <input id="globalSearch" type="search" placeholder="ابحث عن عضو أو غرفة أو لعبة" autocomplete="off">
     </label>
 
     <div class="top-actions">
       <button class="icon-button" id="refreshButton" type="button" aria-label="تحديث">
         <i class="fa-solid fa-rotate"></i>
       </button>
-
       <a class="profile-shortcut" href="profile.html" aria-label="ملفي الشخصي">
         <img id="headerAvatar" src="https://placehold.co/100x100/33264e/c4b1ff?text=H" alt="الصورة الشخصية">
       </a>
     </div>
-
   </div>
 </header>
 
@@ -1259,7 +346,6 @@ a {
       <h2 class="welcome-title" id="welcomeTitle">أهلاً بك في HANOON</h2>
       <p class="welcome-description">اكتشف عالمك، وتواصل، وشارك اللحظة.</p>
     </div>
-
     <div class="wallet-chip" id="walletChip" hidden>
       <i class="fa-solid fa-coins"></i>
       <span id="walletCoins">0</span>
@@ -1270,63 +356,44 @@ a {
 
   <section class="hero">
     <div class="hero-decoration"></div>
-
     <div class="hero-content">
       <div class="hero-kicker">
         <i class="fa-solid fa-sparkles"></i>
         عالم واحد.. تجارب بلا حدود
       </div>
-
       <h1>مكانك بين الناس<br>والألعاب واللحظات الجميلة</h1>
-
-      <p>
-        اكتشف الغرف، تعرّف على أعضاء جدد، واستمتع بتجارب اجتماعية وترفيهية في عالم HANOON.
-      </p>
-
+      <p>اكتشف الغرف، تعرّف على أعضاء جدد، واستمتع بتجارب اجتماعية وترفيهية في عالم HANOON.</p>
       <div class="hero-buttons">
         <a href="rooms.html" class="hero-button primary">
-          <i class="fa-solid fa-headphones"></i>
-          اكتشف الغرف
+          <i class="fa-solid fa-headphones"></i> اكتشف الغرف
         </a>
-
         <a href="games.html" class="hero-button ghost">
-          <i class="fa-solid fa-gamepad"></i>
-          عالم الألعاب
+          <i class="fa-solid fa-gamepad"></i> عالم الألعاب
         </a>
       </div>
     </div>
   </section>
 
   <section class="quick-discover" aria-label="الوصول السريع">
-
     <a href="rooms.html" class="quick-card">
       <div class="quick-icon"><i class="fa-solid fa-headphones"></i></div>
-      <strong>الغرف</strong>
-      <small>اكتشف الغرف</small>
+      <strong>الغرف</strong><small>اكتشف الغرف</small>
     </a>
-
     <a href="games.html" class="quick-card">
       <div class="quick-icon"><i class="fa-solid fa-gamepad"></i></div>
-      <strong>الألعاب</strong>
-      <small>العب واستمتع</small>
+      <strong>الألعاب</strong><small>العب واستمتع</small>
     </a>
-
     <a href="members.html" class="quick-card">
       <div class="quick-icon"><i class="fa-solid fa-users"></i></div>
-      <strong>الأعضاء</strong>
-      <small>اكتشف أشخاصًا</small>
+      <strong>الأعضاء</strong><small>اكتشف أشخاصًا</small>
     </a>
-
     <a href="chat.html" class="quick-card">
       <div class="quick-icon"><i class="fa-solid fa-comments"></i></div>
-      <strong>المحادثات</strong>
-      <small>تواصل مع أصدقائك</small>
+      <strong>المحادثات</strong><small>تواصل مع أصدقائك</small>
     </a>
-
   </section>
 
   <section class="section" id="roomsSection">
-
     <div class="section-heading">
       <div class="section-title-wrap">
         <div class="section-symbol"><i class="fa-solid fa-headphones"></i></div>
@@ -1335,10 +402,7 @@ a {
           <p class="section-subtitle">غرف الألعاب المتاحة حاليًا</p>
         </div>
       </div>
-
-      <a href="rooms.html" class="section-link">
-        كل الغرف <i class="fa-solid fa-arrow-left"></i>
-      </a>
+      <a href="rooms.html" class="section-link">كل الغرف <i class="fa-solid fa-arrow-left"></i></a>
     </div>
 
     <div class="filter-row" id="roomFilters">
@@ -1349,18 +413,14 @@ a {
 
     <div class="rooms-grid" id="roomsGrid">
       <div class="empty-state">
-        <div class="empty-illustration">
-          <i class="fa-solid fa-circle-notch fa-spin"></i>
-        </div>
+        <div class="empty-illustration"><i class="fa-solid fa-circle-notch fa-spin"></i></div>
         <h3>جاري تحميل الغرف</h3>
         <p>نبحث عن الغرف المسجلة في قاعدة البيانات.</p>
       </div>
     </div>
-
   </section>
 
   <section class="section" id="gamesSection">
-
     <div class="section-heading">
       <div class="section-title-wrap">
         <div class="section-symbol"><i class="fa-solid fa-gamepad"></i></div>
@@ -1369,12 +429,8 @@ a {
           <p class="section-subtitle">الألعاب المفعّلة في المنصة</p>
         </div>
       </div>
-
-      <a href="games.html" class="section-link">
-        كل الألعاب <i class="fa-solid fa-arrow-left"></i>
-      </a>
+      <a href="games.html" class="section-link">كل الألعاب <i class="fa-solid fa-arrow-left"></i></a>
     </div>
-
     <div class="games-strip" id="gamesGrid">
       <div class="empty-state">
         <div class="empty-illustration"><i class="fa-solid fa-gamepad"></i></div>
@@ -1382,11 +438,9 @@ a {
         <p>سيتم عرض الألعاب المفعّلة فقط.</p>
       </div>
     </div>
-
   </section>
 
   <section class="section" id="membersSection">
-
     <div class="section-heading">
       <div class="section-title-wrap">
         <div class="section-symbol"><i class="fa-solid fa-user-group"></i></div>
@@ -1395,12 +449,8 @@ a {
           <p class="section-subtitle">أعضاء لديهم ملفات شخصية مكتملة</p>
         </div>
       </div>
-
-      <a href="members.html" class="section-link">
-        كل الأعضاء <i class="fa-solid fa-arrow-left"></i>
-      </a>
+      <a href="members.html" class="section-link">كل الأعضاء <i class="fa-solid fa-arrow-left"></i></a>
     </div>
-
     <div class="members-row" id="membersGrid">
       <div class="empty-state">
         <div class="empty-illustration"><i class="fa-solid fa-users"></i></div>
@@ -1408,74 +458,37 @@ a {
         <p>يتم جلب الملفات الشخصية الحقيقية.</p>
       </div>
     </div>
-
-  </section>
-
-  <section class="section" id="contestsSection">
-
-    <div class="section-heading">
-      <div class="section-title-wrap">
-        <div class="section-symbol"><i class="fa-solid fa-trophy"></i></div>
-        <div>
-          <h2 class="section-title">التحديات والفعاليات</h2>
-          <p class="section-subtitle">الفعاليات المنشورة في المنصة</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="contest-list" id="contestsList">
-      <div class="empty-state">
-        <div class="empty-illustration"><i class="fa-solid fa-trophy"></i></div>
-        <h3>جاري تحميل الفعاليات</h3>
-        <p>نعرض الفعاليات المنشورة فقط.</p>
-      </div>
-    </div>
-
   </section>
 
   <section class="discovery-banner">
     <h3>عالمك الاجتماعي يبدأ من هنا</h3>
     <p>انتقل بين الغرف والألعاب والأعضاء، واكتشف المساحات التي تناسب اهتماماتك.</p>
-    <a href="members.html">
-      اكتشف الأعضاء <i class="fa-solid fa-arrow-left"></i>
-    </a>
+    <a href="members.html">اكتشف الأعضاء <i class="fa-solid fa-arrow-left"></i></a>
   </section>
 
 </main>
 
 <nav class="bottom-nav">
-
   <a href="home.html" class="nav-item active">
-    <i class="fa-solid fa-house"></i>
-    <span>الرئيسية</span>
+    <i class="fa-solid fa-house"></i><span>الرئيسية</span>
   </a>
-
   <a href="rooms.html" class="nav-item">
-    <i class="fa-solid fa-headphones"></i>
-    <span>الغرف</span>
+    <i class="fa-solid fa-headphones"></i><span>الغرف</span>
   </a>
-
   <a href="games.html" class="nav-item">
-    <i class="fa-solid fa-gamepad"></i>
-    <span>الألعاب</span>
+    <i class="fa-solid fa-gamepad"></i><span>الألعاب</span>
   </a>
-
   <a href="chat.html" class="nav-item">
-    <i class="fa-solid fa-message"></i>
-    <span>الدردشة</span>
+    <i class="fa-solid fa-message"></i><span>الدردشة</span>
   </a>
-
   <a href="profile.html" class="nav-item">
-    <i class="fa-solid fa-user"></i>
-    <span>حسابي</span>
+    <i class="fa-solid fa-user"></i><span>حسابي</span>
   </a>
-
 </nav>
 
 <div class="toast" id="toast"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1/dist/umd/supabase.min.js"></script>
-
 <script>
 (() => {
   "use strict";
@@ -1483,10 +496,14 @@ a {
   const SUPABASE_URL = "https://gjtgvczvclfwvlvcquxh.supabase.co";
   const SUPABASE_KEY = "sb_publishable_4DVTUZ-xTlqU2GpFvpb7lw_g-Kxomd4";
 
-  const db = window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-  );
+  if (!window.supabase) {
+    document.getElementById("screenError").textContent =
+      "تعذر تحميل مكتبة الاتصال بقاعدة البيانات. تحقق من اتصال الإنترنت.";
+    document.getElementById("screenError").classList.add("show");
+    return;
+  }
+
+  const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
   const state = {
     user:null,
@@ -1494,7 +511,6 @@ a {
     rooms:[],
     games:[],
     members:[],
-    contests:[],
     roomFilter:"all",
     searchTimer:null
   };
@@ -1503,49 +519,35 @@ a {
 
   function escapeHTML(value) {
     return String(value ?? "").replace(/[&<>"']/g, char => ({
-      "&":"&amp;",
-      "<":"&lt;",
-      ">":"&gt;",
-      '"':"&quot;",
-      "'":"&#039;"
+      "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
     }[char]));
   }
 
-  function safeImage(path,bucket="avatars") {
+  function safeAvatar(path) {
     if (!path) return "";
-
-    if (/^https?:\/\//i.test(path)) {
-      return path;
-    }
+    if (/^https?:\/\//i.test(path)) return path;
 
     const cleanPath = String(path).replace(/^\/+/, "");
+    return db.storage.from("avatars").getPublicUrl(cleanPath).data.publicUrl;
+  }
 
-    return db.storage
-      .from(bucket)
-      .getPublicUrl(cleanPath)
-      .data.publicUrl;
+  function safeExternalImage(path) {
+    if (!path || !/^https?:\/\//i.test(path)) return "";
+    return path;
   }
 
   function showToast(message) {
     const toast = $("toast");
-
     toast.textContent = message;
     toast.classList.add("show");
-
     clearTimeout(showToast.timer);
-
-    showToast.timer = setTimeout(() => {
-      toast.classList.remove("show");
-    },2800);
+    showToast.timer = setTimeout(() => toast.classList.remove("show"), 2800);
   }
 
   function setLoading(active) {
     $("loadingLine").style.width = active ? "75%" : "100%";
-
     if (!active) {
-      setTimeout(() => {
-        $("loadingLine").style.width = "0";
-      },300);
+      setTimeout(() => $("loadingLine").style.width = "0", 300);
     }
   }
 
@@ -1560,31 +562,25 @@ a {
     $("screenError").classList.remove("show");
   }
 
-  function emptyState(icon,title,description) {
+  function emptyState(icon, title, description) {
     return `
       <div class="empty-state">
-        <div class="empty-illustration">
-          <i class="${escapeHTML(icon)}"></i>
-        </div>
+        <div class="empty-illustration"><i class="${escapeHTML(icon)}"></i></div>
         <h3>${escapeHTML(title)}</h3>
         <p>${escapeHTML(description)}</p>
-      </div>
-    `;
+      </div>`;
   }
 
   async function checkSession() {
     const {data,error} = await db.auth.getSession();
-
     if (error) throw error;
 
-    const session = data.session;
-
-    if (!session) {
+    if (!data.session) {
       window.location.replace("index.html");
       return false;
     }
 
-    state.user = session.user;
+    state.user = data.session.user;
     return true;
   }
 
@@ -1600,14 +596,9 @@ a {
     state.profile = data;
 
     if (data) {
-      $("welcomeTitle").textContent =
-        `أهلاً ${data.full_name || "بك"}`;
-
-      const avatar = safeImage(data.avatar_path);
-
-      if (avatar) {
-        $("headerAvatar").src = avatar;
-      }
+      $("welcomeTitle").textContent = `أهلاً ${data.full_name || "بك"}`;
+      const avatar = safeAvatar(data.avatar_path);
+      if (avatar) $("headerAvatar").src = avatar;
     }
   }
 
@@ -1619,24 +610,22 @@ a {
       .maybeSingle();
 
     if (error) {
-      console.warn("Wallet could not be loaded:",error.message);
+      console.warn("Wallet could not be loaded:", error.message);
       return;
     }
 
     if (data) {
       $("walletChip").hidden = false;
-
-      $("walletCoins").textContent =
-        Number(data.coins || 0).toLocaleString("ar-EG");
+      $("walletCoins").textContent = Number(data.coins || 0).toLocaleString("ar-EG");
+    } else {
+      $("walletChip").hidden = true;
     }
   }
 
   async function loadRooms() {
     const {data,error} = await db
       .from("world_game_rooms")
-      .select(
-        "id,game_id,host_user_id,room_code,status,visibility,max_players,created_at"
-      )
+      .select("id,game_id,host_user_id,room_code,status,visibility,max_players,created_at")
       .eq("visibility","public")
       .in("status",["waiting","playing"])
       .order("created_at",{ascending:false})
@@ -1645,43 +634,28 @@ a {
     if (error) throw error;
 
     const rooms = data || [];
-
-    const gameIds = [
-      ...new Set(rooms.map(room => room.game_id).filter(Boolean))
-    ];
-
-    const hostIds = [
-      ...new Set(rooms.map(room => room.host_user_id).filter(Boolean))
-    ];
+    const gameIds = [...new Set(rooms.map(room => room.game_id).filter(Boolean))];
+    const hostIds = [...new Set(rooms.map(room => room.host_user_id).filter(Boolean))];
 
     const [gamesResult,hostsResult] = await Promise.all([
-
       gameIds.length
-        ? db
-            .from("world_games_catalog")
+        ? db.from("world_games_catalog")
             .select("id,title_ar,title_en,slug,cover_path")
             .in("id",gameIds)
         : Promise.resolve({data:[],error:null}),
 
       hostIds.length
-        ? db
-            .from("profiles")
+        ? db.from("profiles")
             .select("id,full_name,avatar_path")
             .in("id",hostIds)
         : Promise.resolve({data:[],error:null})
-
     ]);
 
     if (gamesResult.error) throw gamesResult.error;
     if (hostsResult.error) throw hostsResult.error;
 
-    const gamesMap = new Map(
-      (gamesResult.data || []).map(game => [game.id,game])
-    );
-
-    const hostsMap = new Map(
-      (hostsResult.data || []).map(host => [host.id,host])
-    );
+    const gamesMap = new Map((gamesResult.data || []).map(game => [game.id,game]));
+    const hostsMap = new Map((hostsResult.data || []).map(host => [host.id,host]));
 
     state.rooms = rooms.map(room => ({
       ...room,
@@ -1695,11 +669,8 @@ a {
   async function loadGames() {
     const {data,error} = await db
       .from("world_games_catalog")
-      .select(
-        "id,slug,title_ar,title_en,description_ar,description_en,category,min_players,max_players,cover_path,route_key"
-      )
+      .select("id,title_ar,title_en,slug,cover_path,is_active")
       .eq("is_active",true)
-      .order("sort_order",{ascending:true})
       .limit(9);
 
     if (error) throw error;
@@ -1711,143 +682,67 @@ a {
   async function loadMembers() {
     const {data,error} = await db
       .from("member_directory")
-      .select(
-        "id,username,member_code,full_name,avatar_path,bio,hobbies,reading_interests,created_at"
-      )
+      .select("id,username,member_code,full_name,avatar_path,bio,hobbies,reading_interests,created_at")
       .order("created_at",{ascending:false})
       .limit(8);
 
     if (error) throw error;
 
-    state.members = (data || []).filter(
-      member => member.id !== state.user.id
-    );
-
+    state.members = (data || []).filter(member => member.id !== state.user.id);
     renderMembers();
-  }
-
-  async function loadContests() {
-    const {data,error} = await db
-      .from("contests")
-      .select(
-        "id,title,description,contest_type,status,starts_at,ends_at,minimum_points"
-      )
-      .in("status",["published","active"])
-      .order("created_at",{ascending:false})
-      .limit(5);
-
-    if (error) throw error;
-
-    const now = Date.now();
-
-    state.contests = (data || []).filter(contest => {
-      return !contest.ends_at ||
-        new Date(contest.ends_at).getTime() > now;
-    });
-
-    renderContests();
   }
 
   function renderRooms() {
     const grid = $("roomsGrid");
-
     let rooms = [...state.rooms];
 
     if (state.roomFilter !== "all") {
-      rooms = rooms.filter(
-        room => room.status === state.roomFilter
-      );
+      rooms = rooms.filter(room => room.status === state.roomFilter);
     }
 
     if (!rooms.length) {
       grid.innerHTML = emptyState(
         "fa-solid fa-headphones",
-        state.roomFilter === "all"
-          ? "لا توجد غرف متاحة حاليًا"
-          : "لا توجد غرف في هذا التصنيف",
-        "عندما يتم إنشاء غرف عامة حقيقية وتصبح متاحة، ستظهر هنا تلقائيًا."
+        state.roomFilter === "all" ? "لا توجد غرف متاحة حاليًا" : "لا توجد غرف في هذا التصنيف",
+        "عندما تتوفر غرف عامة حقيقية في المنصة ستظهر هنا تلقائيًا."
       );
       return;
     }
 
     grid.innerHTML = rooms.map(room => {
-
-      const gameTitle =
-        room.game?.title_ar ||
-        room.game?.title_en ||
-        "غرفة ألعاب";
-
-      const hostName =
-        room.host?.full_name ||
-        "مضيف الغرفة";
-
-      const hostAvatar =
-        safeImage(room.host?.avatar_path) ||
+      const gameTitle = room.game?.title_ar || room.game?.title_en || "غرفة ألعاب";
+      const hostName = room.host?.full_name || "مضيف الغرفة";
+      const hostAvatar = safeAvatar(room.host?.avatar_path) ||
         "https://placehold.co/80x80/33264e/c4b1ff?text=H";
 
-      const cover = room.game?.cover_path
-        ? safeImage(room.game.cover_path,"game-covers")
-        : "";
-
-      const statusText =
-        room.status === "playing"
-          ? "قيد اللعب"
-          : "بانتظار اللاعبين";
-
-      const statusClass =
-        room.status === "playing"
-          ? "playing"
-          : "";
+      // لا نفترض اسم Storage bucket لأغلفة الألعاب.
+      const cover = safeExternalImage(room.game?.cover_path);
+      const statusText = room.status === "playing" ? "قيد اللعب" : "بانتظار اللاعبين";
+      const statusClass = room.status === "playing" ? "playing" : "";
 
       return `
         <article class="room-card">
-
           <div class="room-cover">
-
-            ${
-              cover
+            ${cover
               ? `<img src="${escapeHTML(cover)}" alt="${escapeHTML(gameTitle)}" loading="lazy">`
-              : `<div class="room-cover-placeholder">
-                   <i class="fa-solid fa-headset"></i>
-                 </div>`
+              : `<div class="room-cover-placeholder"><i class="fa-solid fa-headset"></i></div>`
             }
-
-            <span class="room-status ${statusClass}">
-              ${statusText}
-            </span>
-
+            <span class="room-status ${statusClass}">${statusText}</span>
           </div>
-
           <div class="room-body">
-
-            <h3 class="room-title">
-              ${escapeHTML(gameTitle)}
-            </h3>
-
+            <h3 class="room-title">${escapeHTML(gameTitle)}</h3>
             <div class="room-meta">
-
               <div class="room-host">
                 <img src="${escapeHTML(hostAvatar)}" alt="" loading="lazy">
                 <span>${escapeHTML(hostName)}</span>
               </div>
-
-              <span>
-                السعة ${escapeHTML(room.max_players)}
-              </span>
-
+              <span>السعة ${escapeHTML(room.max_players ?? "—")}</span>
             </div>
-
-            <button
-              class="room-open"
-              type="button"
-              data-open-room="${escapeHTML(room.id)}"
-            >
+            <button class="room-open" type="button" data-open-room="${escapeHTML(room.id)}">
               عرض الغرفة
             </button>
-
           </div>
-        </article>
-      `;
+        </article>`;
     }).join("");
   }
 
@@ -1858,48 +753,27 @@ a {
       grid.innerHTML = emptyState(
         "fa-solid fa-gamepad",
         "لا توجد ألعاب مفعّلة حاليًا",
-        "كتالوج الألعاب موجود في قاعدة البيانات، لكن لا توجد ألعاب مفعّلة للعرض الآن."
+        "ستظهر الألعاب هنا بعد تفعيلها في كتالوج المنصة."
       );
       return;
     }
 
     grid.innerHTML = state.games.map(game => {
-
-      const title =
-        game.title_ar || game.title_en;
-
-      const description =
-        game.description_ar ||
-        game.description_en ||
-        "اكتشف اللعبة";
-
-      const image = game.cover_path
-        ? safeImage(game.cover_path,"game-covers")
-        : "";
+      const title = game.title_ar || game.title_en || "لعبة";
+      const image = safeExternalImage(game.cover_path);
 
       return `
         <article class="game-card">
-
-          ${
-            image
+          ${image
             ? `<img src="${escapeHTML(image)}" alt="${escapeHTML(title)}" loading="lazy">`
             : ""
           }
-
           <div class="game-card-content">
             <h3>${escapeHTML(title)}</h3>
-            <p>${escapeHTML(description)}</p>
-
-            <button
-              type="button"
-              data-open-game="${escapeHTML(game.id)}"
-            >
-              تفاصيل اللعبة
-            </button>
+            <p>اكتشف اللعبة في HANOON WORLD</p>
+            <button type="button" data-open-game="${escapeHTML(game.id)}">تفاصيل اللعبة</button>
           </div>
-
-        </article>
-      `;
+        </article>`;
     }).join("");
   }
 
@@ -1910,87 +784,30 @@ a {
       grid.innerHTML = emptyState(
         "fa-solid fa-user-group",
         "لا يوجد أعضاء آخرون للعرض",
-        "ستظهر هنا الحسابات التي أكملت ملفاتها الشخصية في المنصة."
+        "ستظهر هنا الحسابات التي أكملت ملفاتها الشخصية."
       );
       return;
     }
 
     grid.innerHTML = state.members.map(member => {
-
-      const avatar =
-        safeImage(member.avatar_path) ||
+      const avatar = safeAvatar(member.avatar_path) ||
         "https://placehold.co/100x100/33264e/c4b1ff?text=H";
-
       const username = member.username
         ? `@${member.username}`
         : member.member_code || "عضو";
 
       return `
         <article class="member-card">
-
-          <img
-            class="member-avatar"
-            src="${escapeHTML(avatar)}"
-            alt=""
-            loading="lazy"
-          >
-
+          <img class="member-avatar" src="${escapeHTML(avatar)}" alt="" loading="lazy">
           <div class="member-info">
             <strong>${escapeHTML(member.full_name)}</strong>
             <span>${escapeHTML(username)}</span>
           </div>
-
-          <button
-            class="member-open"
-            type="button"
-            aria-label="فتح الملف الشخصي"
-            data-open-member="${escapeHTML(member.id)}"
-          >
+          <button class="member-open" type="button" aria-label="فتح الملف الشخصي"
+            data-open-member="${escapeHTML(member.id)}">
             <i class="fa-solid fa-arrow-up-right-from-square"></i>
           </button>
-
-        </article>
-      `;
-    }).join("");
-  }
-
-  function renderContests() {
-    const list = $("contestsList");
-
-    if (!state.contests.length) {
-      list.innerHTML = emptyState(
-        "fa-solid fa-trophy",
-        "لا توجد فعاليات منشورة الآن",
-        "عندما يتم نشر تحديات أو فعاليات حقيقية ستظهر هنا."
-      );
-      return;
-    }
-
-    list.innerHTML = state.contests.map(contest => {
-
-      const status =
-        contest.status === "active"
-          ? "نشط"
-          : "منشور";
-
-      return `
-        <article class="contest-card">
-
-          <div class="contest-icon">
-            <i class="fa-solid fa-trophy"></i>
-          </div>
-
-          <div class="contest-info">
-            <strong>${escapeHTML(contest.title)}</strong>
-            <span>
-              ${escapeHTML(contest.description || "فعالية HANOON WORLD")}
-            </span>
-          </div>
-
-          <span class="contest-state">${status}</span>
-
-        </article>
-      `;
+        </article>`;
     }).join("");
   }
 
@@ -2001,68 +818,44 @@ a {
     const jobs = [
       ["الغرف",loadRooms],
       ["الألعاب",loadGames],
-      ["الأعضاء",loadMembers],
-      ["الفعاليات",loadContests]
+      ["الأعضاء",loadMembers]
     ];
 
-    const results = await Promise.allSettled(
-      jobs.map(([,job]) => job())
-    );
-
+    const results = await Promise.allSettled(jobs.map(([,job]) => job()));
     const failures = [];
 
     results.forEach((result,index) => {
-
       if (result.status !== "rejected") return;
 
-      console.error(
-        `Failed loading ${jobs[index][0]}:`,
-        result.reason
-      );
-
+      console.error(`Failed loading ${jobs[index][0]}:`,result.reason);
       failures.push(jobs[index][0]);
 
       const name = jobs[index][0];
 
       if (name === "الغرف") {
         $("roomsGrid").innerHTML = emptyState(
-          "fa-solid fa-triangle-exclamation",
-          "تعذر تحميل الغرف",
+          "fa-solid fa-triangle-exclamation","تعذر تحميل الغرف",
           "حدث خطأ أثناء الاتصال ببيانات الغرف. حاول التحديث."
         );
       }
 
       if (name === "الألعاب") {
         $("gamesGrid").innerHTML = emptyState(
-          "fa-solid fa-triangle-exclamation",
-          "تعذر تحميل الألعاب",
+          "fa-solid fa-triangle-exclamation","تعذر تحميل الألعاب",
           "حدث خطأ أثناء قراءة كتالوج الألعاب."
         );
       }
 
       if (name === "الأعضاء") {
         $("membersGrid").innerHTML = emptyState(
-          "fa-solid fa-triangle-exclamation",
-          "تعذر تحميل الأعضاء",
+          "fa-solid fa-triangle-exclamation","تعذر تحميل الأعضاء",
           "تحقق من اتصال قاعدة البيانات وصلاحيات قراءة الأعضاء."
-        );
-      }
-
-      if (name === "الفعاليات") {
-        $("contestsList").innerHTML = emptyState(
-          "fa-solid fa-triangle-exclamation",
-          "تعذر تحميل الفعاليات",
-          "حدث خطأ أثناء قراءة الفعاليات المنشورة."
         );
       }
     });
 
     if (failures.length) {
-      showError(
-        "تعذر تحميل بعض أجزاء الصفحة: " +
-        failures.join("، ") +
-        ". يمكنك المحاولة مرة أخرى."
-      );
+      showError("تعذر تحميل بعض أجزاء الصفحة: " + failures.join("، ") + ". يمكنك المحاولة مرة أخرى.");
     }
 
     setLoading(false);
@@ -2070,17 +863,14 @@ a {
 
   function setupRoomFilters() {
     $("roomFilters").addEventListener("click",event => {
-
       const button = event.target.closest("[data-room-filter]");
-
       if (!button) return;
 
       state.roomFilter = button.dataset.roomFilter;
 
-      document.querySelectorAll("[data-room-filter]")
-        .forEach(item => {
-          item.classList.toggle("active",item === button);
-        });
+      document.querySelectorAll("[data-room-filter]").forEach(item => {
+        item.classList.toggle("active",item === button);
+      });
 
       renderRooms();
     });
@@ -2092,11 +882,9 @@ a {
     const list = $("searchResultList");
 
     input.addEventListener("input",() => {
-
       clearTimeout(state.searchTimer);
 
       state.searchTimer = setTimeout(() => {
-
         const query = input.value.trim().toLowerCase();
 
         if (!query) {
@@ -2108,57 +896,39 @@ a {
         const results = [];
 
         state.members.forEach(member => {
-
           const searchable = [
-            member.full_name,
-            member.username,
-            member.member_code,
-            member.bio
+            member.full_name,member.username,member.member_code,member.bio
           ].join(" ").toLowerCase();
 
           if (searchable.includes(query)) {
             results.push({
               title:member.full_name,
-              subtitle:member.username
-                ? "@" + member.username
-                : member.member_code,
-              url:"profile.html?u=" +
-                encodeURIComponent(member.username || member.id)
+              subtitle:member.username ? "@" + member.username : member.member_code,
+              url:"profile.html?u=" + encodeURIComponent(member.username || member.id)
             });
           }
         });
 
         state.rooms.forEach(room => {
+          const title = room.game?.title_ar || room.game?.title_en || "غرفة ألعاب";
 
-          const title =
-            room.game?.title_ar ||
-            room.game?.title_en ||
-            "غرفة ألعاب";
-
-          if (
-            title.toLowerCase().includes(query) ||
-            String(room.room_code || "").toLowerCase().includes(query)
-          ) {
+          if (title.toLowerCase().includes(query) ||
+              String(room.room_code || "").toLowerCase().includes(query)) {
             results.push({
-              title:title,
+              title,
               subtitle:"غرفة ألعاب",
-              url:"rooms.html?room=" +
-                encodeURIComponent(room.id)
+              url:"rooms.html?room=" + encodeURIComponent(room.id)
             });
           }
         });
 
         state.games.forEach(game => {
-
-          const title =
-            game.title_ar || game.title_en || "";
-
+          const title = game.title_ar || game.title_en || "";
           if (title.toLowerCase().includes(query)) {
             results.push({
-              title:title,
+              title,
               subtitle:"لعبة",
-              url:"games.html?game=" +
-                encodeURIComponent(game.id)
+              url:"games.html?game=" + encodeURIComponent(game.id)
             });
           }
         });
@@ -2166,11 +936,7 @@ a {
         panel.classList.add("visible");
 
         if (!results.length) {
-          list.innerHTML = `
-            <span class="search-result">
-              لا توجد نتائج مطابقة في البيانات المتاحة.
-            </span>
-          `;
+          list.innerHTML = `<span class="search-result">لا توجد نتائج مطابقة في البيانات المتاحة.</span>`;
           return;
         }
 
@@ -2178,104 +944,62 @@ a {
           <a class="search-result" href="${escapeHTML(result.url)}">
             ${escapeHTML(result.title)}
             <small>${escapeHTML(result.subtitle || "")}</small>
-          </a>
-        `).join("");
-
+          </a>`).join("");
       },180);
     });
 
     document.addEventListener("click",event => {
-
-      if (
-        !event.target.closest(".top-search") &&
-        !event.target.closest(".search-results")
-      ) {
+      if (!event.target.closest(".top-search") &&
+          !event.target.closest(".search-results")) {
         panel.classList.remove("visible");
       }
-
     });
   }
 
   function setupCardActions() {
-
     $("roomsGrid").addEventListener("click",event => {
-
       const button = event.target.closest("[data-open-room]");
-
       if (!button) return;
-
-      window.location.href =
-        "rooms.html?room=" +
-        encodeURIComponent(button.dataset.openRoom);
+      window.location.href = "rooms.html?room=" + encodeURIComponent(button.dataset.openRoom);
     });
 
     $("gamesGrid").addEventListener("click",event => {
-
       const button = event.target.closest("[data-open-game]");
-
       if (!button) return;
-
-      window.location.href =
-        "games.html?game=" +
-        encodeURIComponent(button.dataset.openGame);
+      window.location.href = "games.html?game=" + encodeURIComponent(button.dataset.openGame);
     });
 
     $("membersGrid").addEventListener("click",event => {
-
       const button = event.target.closest("[data-open-member]");
-
       if (!button) return;
-
-      window.location.href =
-        "profile.html?id=" +
-        encodeURIComponent(button.dataset.openMember);
+      window.location.href = "profile.html?id=" + encodeURIComponent(button.dataset.openMember);
     });
   }
 
   async function refreshPage() {
-
     const button = $("refreshButton");
-
     button.disabled = true;
-    button.innerHTML =
-      '<i class="fa-solid fa-spinner fa-spin"></i>';
+    button.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
 
     try {
-
-      await Promise.all([
-        loadMyProfile(),
-        loadWallet()
-      ]);
-
+      await Promise.all([loadMyProfile(),loadWallet()]);
       await loadAllData();
-
       showToast("تم تحديث البيانات.");
-
     } catch (error) {
-
       console.error(error);
       showToast("تعذر تحديث بعض البيانات.");
-
     } finally {
-
       button.disabled = false;
-      button.innerHTML =
-        '<i class="fa-solid fa-rotate"></i>';
+      button.innerHTML = '<i class="fa-solid fa-rotate"></i>';
     }
   }
 
   async function start() {
-
     try {
-
       const authenticated = await checkSession();
-
       if (!authenticated) return;
 
-      await Promise.all([
-        loadMyProfile(),
-        loadWallet()
-      ]);
+      await Promise.all([loadMyProfile(),loadWallet()]);
 
       setupRoomFilters();
       setupSearch();
@@ -2283,31 +1007,20 @@ a {
 
       await loadAllData();
 
-      $("refreshButton").addEventListener(
-        "click",
-        refreshPage
-      );
+      $("refreshButton").addEventListener("click",refreshPage);
 
       document.addEventListener("visibilitychange",() => {
-        if (!document.hidden) {
-          loadAllData();
-        }
+        if (!document.hidden) loadAllData();
       });
 
     } catch (error) {
-
       console.error("HANOON home initialization error:",error);
-
-      showError(
-        "تعذر تشغيل الصفحة. تأكد من تسجيل الدخول واتصال قاعدة البيانات، ثم أعد تحميل الصفحة."
-      );
-
+      showError("تعذر تشغيل الصفحة. تأكد من تسجيل الدخول واتصال قاعدة البيانات، ثم أعد تحميل الصفحة.");
       setLoading(false);
     }
   }
 
   start();
-
 })();
 </script>
 
