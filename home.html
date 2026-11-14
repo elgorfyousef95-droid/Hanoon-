@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -6,515 +5,173 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <meta name="theme-color" content="#090914">
 <title>HANOON WORLD</title>
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 <style>
 :root{
-  --bg:#090914;
-  --panel:#141426;
-  --panel2:#1c1b32;
-  --purple:#9b7cff;
-  --purple2:#7654e5;
-  --cyan:#65d9d1;
-  --gold:#f0c875;
-  --text:#f8f6ff;
-  --muted:#aaa5c0;
-  --line:rgba(255,255,255,.09);
-  --shadow:0 18px 50px rgba(0,0,0,.38);
+  --bg:#090914;--panel:#141426;--panel2:#1c1b32;
+  --purple:#9b7cff;--purple2:#7654e5;--cyan:#65d9d1;
+  --gold:#f0c875;--text:#f8f6ff;--muted:#aaa5c0;
+  --line:rgba(255,255,255,.09);--shadow:0 18px 50px rgba(0,0,0,.38);
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{
-  min-height:100vh;
-  overflow-x:hidden;
-  color:var(--text);
-  font-family:Cairo,sans-serif;
-  background:var(--bg);
-  padding-bottom:105px;
-}
+body{min-height:100vh;overflow-x:hidden;color:var(--text);font-family:Cairo,sans-serif;background:var(--bg);padding-bottom:105px}
 a{text-decoration:none;color:inherit}
 button,input{font:inherit}
 button{color:inherit;border:0;cursor:pointer}
 img{display:block;max-width:100%}
-
 body:before{
-  content:"";
-  position:fixed;
-  inset:0;
-  z-index:-3;
-  background:
-    linear-gradient(180deg,rgba(8,8,19,.62),rgba(8,8,19,.92)),
-    url("https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=2000&q=90")
-    center/cover fixed;
+  content:"";position:fixed;inset:0;z-index:-3;
+  background:linear-gradient(180deg,rgba(8,8,19,.62),rgba(8,8,19,.92)),url("https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=2000&q=90") center/cover fixed;
 }
 body:after{
-  content:"";
-  position:fixed;
-  inset:0;
-  z-index:-2;
-  pointer-events:none;
-  background:
-    radial-gradient(ellipse at 5% 12%,rgba(130,91,245,.22),transparent 34%),
-    radial-gradient(ellipse at 95% 38%,rgba(40,188,190,.13),transparent 35%),
-    linear-gradient(180deg,transparent 30%,rgba(7,7,17,.48));
+  content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;
+  background:radial-gradient(ellipse at 5% 12%,rgba(130,91,245,.22),transparent 34%),radial-gradient(ellipse at 95% 38%,rgba(40,188,190,.13),transparent 35%),linear-gradient(180deg,transparent 30%,rgba(7,7,17,.48));
 }
 .app{width:min(100%,1450px);margin:auto;padding:0 22px}
-
-/* HEADER */
-.topbar{
-  height:78px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:15px;
-  position:relative;
-  z-index:20;
-}
+.topbar{height:78px;display:flex;align-items:center;justify-content:space-between;gap:15px;position:relative;z-index:20}
 .brand{display:flex;align-items:center;gap:11px;flex-shrink:0}
-.brand-mark{
-  width:46px;height:46px;border-radius:15px;
-  display:grid;place-items:center;
-  background:linear-gradient(145deg,#c0a8ff,#6845db);
-  border:1px solid rgba(255,255,255,.3);
-  box-shadow:0 8px 27px rgba(128,88,237,.38);
-}
+.brand-mark{width:46px;height:46px;border-radius:15px;display:grid;place-items:center;background:linear-gradient(145deg,#c0a8ff,#6845db);border:1px solid rgba(255,255,255,.3);box-shadow:0 8px 27px rgba(128,88,237,.38)}
 .brand-mark svg{width:29px;height:29px}
 .brand-name{font-size:18px;font-weight:900;letter-spacing:.3px}
 .brand-sub{font-size:9px;letter-spacing:2px;color:#bcb1df;margin-top:-5px}
-
 .header-actions{display:flex;align-items:center;gap:9px}
-.wallet{
-  display:flex;align-items:center;gap:10px;
-  padding:8px 10px;
-  background:linear-gradient(110deg,rgba(39,32,68,.96),rgba(19,24,43,.96));
-  border:1px solid rgba(255,255,255,.13);
-  border-radius:15px;
-  box-shadow:0 8px 25px rgba(0,0,0,.22);
-}
+.wallet{display:flex;align-items:center;gap:10px;padding:8px 10px;background:linear-gradient(110deg,rgba(39,32,68,.96),rgba(19,24,43,.96));border:1px solid rgba(255,255,255,.13);border-radius:15px;box-shadow:0 8px 25px rgba(0,0,0,.22)}
 .wallet-unit{display:flex;align-items:center;gap:5px;font-size:12px;font-weight:900;min-width:55px}
 .wallet-unit svg{width:18px;height:18px}
 .wallet-unit.coins svg{color:var(--gold)}
 .wallet-unit.gems svg{color:#7bdcf4}
-.wallet-add{
-  width:29px;height:29px;border-radius:9px;
-  display:grid;place-items:center;
-  background:linear-gradient(145deg,#ae94ff,#704cdb);
-}
+.wallet-add{width:29px;height:29px;border-radius:9px;display:grid;place-items:center;background:linear-gradient(145deg,#ae94ff,#704cdb)}
 .wallet-add svg{width:17px;height:17px;stroke:white;fill:none;stroke-width:2.5}
 .wallet-links{display:flex;gap:6px;margin-right:3px}
-.wallet-link{
-  display:flex;align-items:center;gap:5px;
-  padding:7px 9px;border-radius:9px;
-  background:rgba(255,255,255,.055);
-  font-size:10px;font-weight:800;color:#ddd7ef;
-}
+.wallet-link{display:flex;align-items:center;gap:5px;padding:7px 9px;border-radius:9px;background:rgba(255,255,255,.055);font-size:10px;font-weight:800;color:#ddd7ef}
 .wallet-link svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.7}
-.header-icon{
-  width:42px;height:42px;border-radius:13px;
-  display:grid;place-items:center;
-  background:rgba(255,255,255,.07);
-  border:1px solid var(--line);
-}
+.header-icon{width:42px;height:42px;border-radius:13px;display:grid;place-items:center;background:rgba(255,255,255,.07);border:1px solid var(--line)}
 .header-icon svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.8}
-.my-avatar{
-  width:42px;height:42px;border-radius:50%;
-  overflow:hidden;display:grid;place-items:center;
-  background:#282441;border:2px solid #9b7cff;
-}
+.my-avatar{width:42px;height:42px;border-radius:50%;overflow:hidden;display:grid;place-items:center;background:#282441;border:2px solid #9b7cff}
 .my-avatar img{width:100%;height:100%;object-fit:cover}
 .my-avatar svg{width:22px;height:22px;stroke:#c9baff;fill:none;stroke-width:1.6}
-
-/* TOP SEARCH */
-.search-area{
-  display:flex;
-  align-items:center;
-  gap:13px;
-  margin-top:7px;
-  position:relative;
-  z-index:15;
-}
-.search-box{
-  height:53px;
-  flex:1;
-  display:flex;
-  align-items:center;
-  gap:12px;
-  padding:0 17px;
-  border-radius:17px;
-  background:rgba(24,22,43,.92);
-  border:1px solid rgba(174,149,255,.22);
-  box-shadow:0 10px 30px rgba(0,0,0,.2),inset 0 1px rgba(255,255,255,.04);
-}
-.search-box:focus-within{
-  border-color:rgba(174,149,255,.65);
-  box-shadow:0 0 0 3px rgba(151,121,255,.1),0 12px 30px rgba(0,0,0,.24);
-}
+.search-area{display:flex;align-items:center;gap:13px;margin-top:7px;position:relative;z-index:15}
+.search-box{height:53px;flex:1;display:flex;align-items:center;gap:12px;padding:0 17px;border-radius:17px;background:rgba(24,22,43,.92);border:1px solid rgba(174,149,255,.22);box-shadow:0 10px 30px rgba(0,0,0,.2),inset 0 1px rgba(255,255,255,.04)}
+.search-box:focus-within{border-color:rgba(174,149,255,.65);box-shadow:0 0 0 3px rgba(151,121,255,.1),0 12px 30px rgba(0,0,0,.24)}
 .search-box svg{width:21px;height:21px;flex:none;stroke:#b9a6f5;fill:none;stroke-width:1.8}
-.search-box input{
-  flex:1;min-width:0;background:none;border:0;outline:0;
-  color:white;font-size:13px;
-}
+.search-box input{flex:1;min-width:0;background:none;border:0;outline:0;color:white;font-size:13px}
 .search-box input::placeholder{color:#9690ad}
-.search-shortcut{
-  font-size:10px;color:#9e98b6;
-  padding:5px 8px;border-radius:7px;
-  background:rgba(255,255,255,.055);
-}
-.search-filter{
-  height:53px;width:53px;flex:none;
-  display:grid;place-items:center;
-  border-radius:16px;
-  background:linear-gradient(145deg,#8e70eb,#6448ce);
-  box-shadow:0 8px 22px rgba(105,76,208,.3);
-}
+.search-shortcut{font-size:10px;color:#9e98b6;padding:5px 8px;border-radius:7px;background:rgba(255,255,255,.055)}
+.search-filter{height:53px;width:53px;flex:none;display:grid;place-items:center;border-radius:16px;background:linear-gradient(145deg,#8e70eb,#6448ce);box-shadow:0 8px 22px rgba(105,76,208,.3)}
 .search-filter svg{width:21px;height:21px;stroke:white;fill:none;stroke-width:1.8}
-.search-results{
-  display:none;
-  position:absolute;
-  top:62px;right:0;left:66px;
-  padding:12px;
-  border-radius:17px;
-  background:#19172b;
-  border:1px solid rgba(255,255,255,.13);
-  box-shadow:var(--shadow);
-  max-height:380px;
-  overflow:auto;
-}
+.search-results{display:none;position:absolute;top:62px;right:0;left:66px;padding:12px;border-radius:17px;background:#19172b;border:1px solid rgba(255,255,255,.13);box-shadow:var(--shadow);max-height:380px;overflow:auto}
 .search-results.show{display:block}
-.search-result{
-  display:flex;align-items:center;justify-content:space-between;
-  gap:10px;padding:11px;border-bottom:1px solid var(--line);
-  font-size:12px;
-}
+.search-result{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px;border-bottom:1px solid var(--line);font-size:12px}
 .search-result:last-child{border:0}
 .search-result small{color:var(--muted)}
 .search-result a{color:#c9b7ff;font-weight:800}
-
-/* INTRO */
-.intro{
-  margin-top:24px;
-  display:flex;align-items:flex-end;justify-content:space-between;gap:15px;
-}
+.intro{margin-top:24px;display:flex;align-items:flex-end;justify-content:space-between;gap:15px}
 .intro h1{font-size:clamp(23px,3vw,34px);font-weight:900;line-height:1.45}
-.intro h1 span{
-  color:#bba6ff;
-  text-shadow:0 0 28px rgba(155,124,255,.24);
-}
+.intro h1 span{color:#bba6ff;text-shadow:0 0 28px rgba(155,124,255,.24)}
 .intro p{font-size:12px;color:#b8b2cc;margin-top:3px}
-.intro-mark{
-  color:#c9baff;font-size:10px;font-weight:800;
-  padding:8px 13px;border-radius:30px;
-  border:1px solid rgba(171,145,255,.24);
-  background:rgba(132,101,222,.12);
-}
-
-/* MAIN HERO */
-.hero{
-  margin-top:21px;
-  min-height:390px;
-  border-radius:29px;
-  overflow:hidden;
-  position:relative;
-  isolation:isolate;
-  border:1px solid rgba(255,255,255,.14);
-  box-shadow:var(--shadow);
-  background:#171329;
-}
-.hero-bg{
-  position:absolute;inset:0;z-index:-2;
-  background:
-    linear-gradient(90deg,rgba(9,8,21,.96) 0%,rgba(10,8,23,.78) 40%,rgba(10,8,23,.12) 100%),
-    url("https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1900&q=90")
-    center 40%/cover;
-  transform:scale(1.02);
-}
-.hero:after{
-  content:"";position:absolute;inset:0;z-index:-1;
-  background:linear-gradient(0deg,rgba(8,7,19,.72),transparent 55%);
-}
-.hero-content{
-  min-height:390px;
-  display:flex;flex-direction:column;justify-content:center;
-  align-items:flex-start;
-  padding:40px 45px;
-  max-width:650px;
-}
-.hero-label{
-  display:flex;align-items:center;gap:9px;
-  font-size:11px;color:#c8b6ff;font-weight:900;
-  margin-bottom:14px;
-}
-.hero-label:before{
-  content:"";width:8px;height:8px;border-radius:50%;
-  background:#a88aff;box-shadow:0 0 15px #a88aff;
-}
+.intro-mark{color:#c9baff;font-size:10px;font-weight:800;padding:8px 13px;border-radius:30px;border:1px solid rgba(171,145,255,.24);background:rgba(132,101,222,.12)}
+.hero{margin-top:21px;min-height:390px;border-radius:29px;overflow:hidden;position:relative;isolation:isolate;border:1px solid rgba(255,255,255,.14);box-shadow:var(--shadow);background:#171329}
+.hero-bg{position:absolute;inset:0;z-index:-2;background:linear-gradient(90deg,rgba(9,8,21,.96) 0%,rgba(10,8,23,.78) 40%,rgba(10,8,23,.12) 100%),url("https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1900&q=90") center 40%/cover;transform:scale(1.02)}
+.hero:after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(0deg,rgba(8,7,19,.72),transparent 55%)}
+.hero-content{min-height:390px;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;padding:40px 45px;max-width:650px}
+.hero-label{display:flex;align-items:center;gap:9px;font-size:11px;color:#c8b6ff;font-weight:900;margin-bottom:14px}
+.hero-label:before{content:"";width:8px;height:8px;border-radius:50%;background:#a88aff;box-shadow:0 0 15px #a88aff}
 .hero h2{font-size:clamp(32px,4.5vw,49px);font-weight:900;line-height:1.3}
 .hero h2 span{color:#b9a1ff}
 .hero p{max-width:450px;color:#d1ccdf;font-size:13px;line-height:2;margin-top:13px}
 .hero-buttons{display:flex;gap:10px;flex-wrap:wrap;margin-top:23px}
-.btn-primary,.btn-secondary{
-  min-height:46px;padding:0 20px;border-radius:13px;
-  display:inline-flex;align-items:center;justify-content:center;gap:9px;
-  font-size:12px;font-weight:900;transition:.2s;
-}
-.btn-primary{
-  background:linear-gradient(110deg,#ad92ff,#704de0);
-  box-shadow:0 8px 25px rgba(117,80,221,.35);
-}
-.btn-secondary{
-  background:rgba(255,255,255,.09);
-  border:1px solid rgba(255,255,255,.18);
-}
+.btn-primary,.btn-secondary{min-height:46px;padding:0 20px;border-radius:13px;display:inline-flex;align-items:center;justify-content:center;gap:9px;font-size:12px;font-weight:900;transition:.2s}
+.btn-primary{background:linear-gradient(110deg,#ad92ff,#704de0);box-shadow:0 8px 25px rgba(117,80,221,.35)}
+.btn-secondary{background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.18)}
 .btn-primary:hover,.btn-secondary:hover{transform:translateY(-3px)}
 .btn-primary svg,.btn-secondary svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2}
-
-/* SECTION SYSTEM */
 .section{margin-top:39px}
-.section-head{
-  display:flex;align-items:center;justify-content:space-between;
-  gap:12px;margin-bottom:17px;
-}
+.section-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:17px}
 .section-heading{display:flex;align-items:center;gap:11px}
-.section-icon{
-  width:42px;height:42px;border-radius:14px;
-  display:grid;place-items:center;
-  background:linear-gradient(145deg,rgba(159,127,255,.22),rgba(74,65,130,.13));
-  border:1px solid rgba(164,138,255,.2);
-}
+.section-icon{width:42px;height:42px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(145deg,rgba(159,127,255,.22),rgba(74,65,130,.13));border:1px solid rgba(164,138,255,.2)}
 .section-icon svg{width:21px;height:21px;stroke:#c2adff;fill:none;stroke-width:1.8}
 .section-heading h3{font-size:19px;font-weight:900}
 .section-heading p{font-size:10px;color:var(--muted);margin-top:-3px}
 .view-all{font-size:11px;color:#c8b6ff;font-weight:900;white-space:nowrap}
 .view-all:hover{color:white}
-
-/* FEATURE CATEGORIES */
-.category-grid{
-  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;
-}
-.category-card{
-  height:175px;
-  position:relative;overflow:hidden;
-  border-radius:21px;
-  border:1px solid rgba(255,255,255,.13);
-  box-shadow:0 12px 28px rgba(0,0,0,.25);
-  display:flex;align-items:flex-end;padding:17px;
-  isolation:isolate;
-}
-.category-card:before{
-  content:"";position:absolute;inset:0;z-index:-2;
-  background-size:cover;background-position:center;
-  transition:transform .5s;
-}
+.category-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.category-card{height:175px;position:relative;overflow:hidden;border-radius:21px;border:1px solid rgba(255,255,255,.13);box-shadow:0 12px 28px rgba(0,0,0,.25);display:flex;align-items:flex-end;padding:17px;isolation:isolate}
+.category-card:before{content:"";position:absolute;inset:0;z-index:-2;background-size:cover;background-position:center;transition:transform .5s}
 .category-card:hover:before{transform:scale(1.08)}
-.category-card:after{
-  content:"";position:absolute;inset:0;z-index:-1;
-  background:linear-gradient(0deg,rgba(7,7,18,.96),rgba(7,7,18,.02) 85%);
-}
-.category-card:nth-child(1):before{
-  background-image:url("https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=800&q=85")
-}
-.category-card:nth-child(2):before{
-  background-image:url("https://images.unsplash.com/photo-1593305841991-05c297ba4575?auto=format&fit=crop&w=800&q=85")
-}
-.category-card:nth-child(3):before{
-  background-image:url("https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=800&q=85")
-}
-.category-card:nth-child(4):before{
-  background-image:url("https://images.unsplash.com/photo-1511882150382-421056c89033?auto=format&fit=crop&w=800&q=85")
-}
-.category-card .card-arrow{
-  position:absolute;top:13px;left:13px;
-  width:30px;height:30px;border-radius:10px;
-  display:grid;place-items:center;
-  background:rgba(255,255,255,.16);
-  backdrop-filter:blur(8px);
-}
+.category-card:after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(0deg,rgba(7,7,18,.96),rgba(7,7,18,.02) 85%)}
+.category-card:nth-child(1):before{background-image:url("https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=800&q=85")}
+.category-card:nth-child(3):before{background-image:url("https://images.unsplash.com/photo-1593305841991-05c297ba4575?auto=format&fit=crop&w=800&q=85")}
+.category-card:nth-child(4):before{background-image:url("https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=800&q=85")}
+.category-card:nth-child(5):before{background-image:url("https://images.unsplash.com/photo-1511882150382-421056c89033?auto=format&fit=crop&w=800&q=85")}
+.category-card.users-category:before{background-image:url("https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1000&q=90");background-position:center 42%}
+.category-card.users-category:after{background:linear-gradient(0deg,rgba(7,7,18,.97),rgba(7,7,18,.16) 78%),linear-gradient(135deg,rgba(117,82,218,.22),rgba(32,177,181,.12))}
+.category-symbol{position:absolute;top:14px;right:14px;width:43px;height:43px;border-radius:14px;display:grid;place-items:center;color:#e8dcff;background:linear-gradient(145deg,rgba(155,124,255,.82),rgba(75,58,145,.78));border:1px solid rgba(255,255,255,.28);box-shadow:0 8px 24px rgba(0,0,0,.3);backdrop-filter:blur(10px)}
+.category-symbol svg{width:23px;height:23px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.category-card.users-category strong{font-size:17px}
+.category-card.users-category small{max-width:260px;line-height:1.7}
+.category-card .card-arrow{position:absolute;top:13px;left:13px;width:30px;height:30px;border-radius:10px;display:grid;place-items:center;background:rgba(255,255,255,.16);backdrop-filter:blur(8px)}
 .card-arrow svg{width:16px;height:16px;stroke:white;fill:none;stroke-width:2}
 .category-card strong{display:block;font-size:16px;font-weight:900}
 .category-card small{display:block;color:#d1cbdc;font-size:10px;margin-top:3px}
-
-/* GAMES */
 .filter-row{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;margin-bottom:15px}
 .filter-row::-webkit-scrollbar{display:none}
-.filter-chip{
-  flex:none;padding:8px 15px;border-radius:30px;
-  background:rgba(255,255,255,.06);
-  border:1px solid var(--line);
-  color:#cbc5dc;font-size:11px;font-weight:800;
-}
-.filter-chip.active{
-  background:linear-gradient(110deg,#9475f1,#6549d1);
-  color:white;border-color:transparent;
-}
-.content-grid{
-  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:15px;
-}
-.game-card,.room-card{
-  min-width:0;overflow:hidden;
-  border-radius:20px;
-  background:linear-gradient(145deg,rgba(33,30,56,.97),rgba(16,16,30,.98));
-  border:1px solid rgba(255,255,255,.10);
-  box-shadow:0 12px 30px rgba(0,0,0,.23);
-  transition:.25s;
-}
-.game-card:hover,.room-card:hover{
-  transform:translateY(-4px);
-  border-color:rgba(174,148,255,.4);
-  box-shadow:0 18px 38px rgba(0,0,0,.34);
-}
+.filter-chip{flex:none;padding:8px 15px;border-radius:30px;background:rgba(255,255,255,.06);border:1px solid var(--line);color:#cbc5dc;font-size:11px;font-weight:800}
+.filter-chip.active{background:linear-gradient(110deg,#9475f1,#6549d1);color:white;border-color:transparent}
+.content-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:15px}
+.game-card,.room-card{min-width:0;overflow:hidden;border-radius:20px;background:linear-gradient(145deg,rgba(33,30,56,.97),rgba(16,16,30,.98));border:1px solid rgba(255,255,255,.10);box-shadow:0 12px 30px rgba(0,0,0,.23);transition:.25s}
+.game-card:hover,.room-card:hover{transform:translateY(-4px);border-color:rgba(174,148,255,.4);box-shadow:0 18px 38px rgba(0,0,0,.34)}
 .game-image{height:165px;position:relative;background:#25213d;overflow:hidden}
 .game-image img{width:100%;height:100%;object-fit:cover;transition:.45s}
 .game-card:hover .game-image img{transform:scale(1.06)}
-.game-image:after{
-  content:"";position:absolute;inset:0;
-  background:linear-gradient(0deg,rgba(9,8,19,.55),transparent 65%);
-}
+.game-image:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(9,8,19,.55),transparent 65%)}
 .game-info{padding:13px}
 .game-info h4{font-size:13px;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .game-info p{font-size:10px;color:var(--muted);margin-top:3px}
-.card-footer{
-  display:flex;align-items:center;justify-content:space-between;
-  gap:7px;margin-top:12px;
-}
+.card-footer{display:flex;align-items:center;justify-content:space-between;gap:7px;margin-top:12px}
 .card-type{font-size:10px;color:#aaa5bf}
-.card-link{
-  padding:7px 12px;border-radius:9px;
-  background:rgba(153,124,255,.17);
-  color:#d0c2ff;font-size:10px;font-weight:900;
-}
-
-/* PROMO BANNER */
-.promo{
-  min-height:220px;border-radius:25px;
-  overflow:hidden;position:relative;isolation:isolate;
-  display:flex;align-items:center;padding:30px 35px;
-  border:1px solid rgba(255,255,255,.13);
-  box-shadow:var(--shadow);
-  background:#19152d;
-}
-.promo:before{
-  content:"";position:absolute;inset:0;z-index:-2;
-  background:
-    linear-gradient(90deg,rgba(10,8,23,.96),rgba(10,8,23,.73),rgba(10,8,23,.15)),
-    url("https://images.unsplash.com/photo-1560253023-3ec5d502959f?auto=format&fit=crop&w=1500&q=85")
-    center/cover;
-}
-.promo:after{
-  content:"";position:absolute;inset:0;z-index:-1;
-  background:radial-gradient(circle at 75% 50%,rgba(147,111,255,.2),transparent 38%);
-}
+.card-link{padding:7px 12px;border-radius:9px;background:rgba(153,124,255,.17);color:#d0c2ff;font-size:10px;font-weight:900}.promo{min-height:220px;border-radius:25px;overflow:hidden;position:relative;isolation:isolate;display:flex;align-items:center;padding:30px 35px;border:1px solid rgba(255,255,255,.13);box-shadow:var(--shadow);background:#19152d}
+.promo:before{content:"";position:absolute;inset:0;z-index:-2;background:linear-gradient(90deg,rgba(10,8,23,.96),rgba(10,8,23,.73),rgba(10,8,23,.15)),url("https://images.unsplash.com/photo-1560253023-3ec5d502959f?auto=format&fit=crop&w=1500&q=85") center/cover}
+.promo:after{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(circle at 75% 50%,rgba(147,111,255,.2),transparent 38%)}
 .promo-content{max-width:490px}
 .promo-content small{font-size:10px;color:#c4b0ff;font-weight:900;letter-spacing:1px}
 .promo-content h3{font-size:26px;font-weight:900;margin-top:6px}
 .promo-content p{font-size:11px;color:#d0cadd;line-height:1.9;margin-top:5px}
 .promo-content .btn-primary{margin-top:15px}
-
-/* ROOMS */
 .room-cover{height:132px;position:relative;overflow:hidden;background:#292341}
 .room-cover img{width:100%;height:100%;object-fit:cover}
-.room-state{
-  position:absolute;top:10px;right:10px;
-  padding:5px 9px;border-radius:20px;
-  background:rgba(9,10,20,.82);
-  color:#8fe0c5;font-size:9px;font-weight:900;
-  border:1px solid rgba(143,224,197,.2);
-}
+.room-state{position:absolute;top:10px;right:10px;padding:5px 9px;border-radius:20px;background:rgba(9,10,20,.82);color:#8fe0c5;font-size:9px;font-weight:900;border:1px solid rgba(143,224,197,.2)}
 .room-info{padding:13px}
 .room-info h4{font-size:13px;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.room-details{
-  display:flex;justify-content:space-between;gap:6px;
-  margin-top:9px;color:var(--muted);font-size:10px;
-}
+.room-details{display:flex;justify-content:space-between;gap:6px;margin-top:9px;color:var(--muted);font-size:10px}
 .room-code{color:#c7b4ff;font-weight:900}
 .room-info .card-footer{margin-top:12px}
-
-/* LIVE DISCOVERY */
 .live-grid{display:grid;grid-template-columns:1.35fr 1fr 1fr;gap:13px}
-.live-card{
-  min-height:190px;position:relative;overflow:hidden;
-  border-radius:20px;border:1px solid rgba(255,255,255,.13);
-  background:#1c1830;isolation:isolate;
-  display:flex;align-items:flex-end;padding:18px;
-}
-.live-card:before{
-  content:"";position:absolute;inset:0;z-index:-2;
-  background-size:cover;background-position:center;transition:.45s;
-}
+.live-card{min-height:190px;position:relative;overflow:hidden;border-radius:20px;border:1px solid rgba(255,255,255,.13);background:#1c1830;isolation:isolate;display:flex;align-items:flex-end;padding:18px}
+.live-card:before{content:"";position:absolute;inset:0;z-index:-2;background-size:cover;background-position:center;transition:.45s}
 .live-card:hover:before{transform:scale(1.07)}
-.live-card:after{
-  content:"";position:absolute;inset:0;z-index:-1;
-  background:linear-gradient(0deg,rgba(7,7,18,.95),rgba(7,7,18,.04));
-}
-.live-card:nth-child(1):before{
-  background-image:url("https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=900&q=85")
-}
-.live-card:nth-child(2):before{
-  background-image:url("https://images.unsplash.com/photo-1593305841991-05c297ba4575?auto=format&fit=crop&w=700&q=85")
-}
-.live-card:nth-child(3):before{
-  background-image:url("https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=700&q=85")
-}
+.live-card:after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(0deg,rgba(7,7,18,.95),rgba(7,7,18,.04))}
+.live-card:nth-child(1):before{background-image:url("https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=900&q=85")}
+.live-card:nth-child(2):before{background-image:url("https://images.unsplash.com/photo-1593305841991-05c297ba4575?auto=format&fit=crop&w=700&q=85")}
+.live-card:nth-child(3):before{background-image:url("https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=700&q=85")}
 .live-card strong{font-size:15px;font-weight:900}
 .live-card p{font-size:10px;color:#d2ccdf;margin-top:3px}
-
-/* EMPTY / LOADING */
-.empty-state{
-  grid-column:1/-1;text-align:center;
-  padding:35px 20px;
-  border:1px dashed rgba(255,255,255,.17);
-  border-radius:20px;background:rgba(255,255,255,.025);
-}
-.empty-state svg{
-  width:37px;height:37px;stroke:#b09bff;fill:none;
-  stroke-width:1.5;margin:0 auto 10px;
-}
+.empty-state{grid-column:1/-1;text-align:center;padding:35px 20px;border:1px dashed rgba(255,255,255,.17);border-radius:20px;background:rgba(255,255,255,.025)}
+.empty-state svg{width:37px;height:37px;stroke:#b09bff;fill:none;stroke-width:1.5;margin:0 auto 10px}
 .empty-state h4{font-size:14px;font-weight:900}
 .empty-state p{font-size:10px;color:var(--muted);margin-top:5px}
-.loader{
-  width:28px;height:28px;margin:0 auto 12px;
-  border:2px solid rgba(255,255,255,.12);
-  border-top-color:#a98aff;border-radius:50%;
-  animation:spin .8s linear infinite;
-}
+.loader{width:28px;height:28px;margin:0 auto 12px;border:2px solid rgba(255,255,255,.12);border-top-color:#a98aff;border-radius:50%;animation:spin .8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
-
-/* BOTTOM NAV */
-.bottom-nav{
-  position:fixed;z-index:50;
-  bottom:10px;left:50%;transform:translateX(-50%);
-  width:min(calc(100% - 22px),850px);
-  min-height:72px;padding:7px 10px;
-  display:flex;align-items:center;justify-content:space-around;gap:3px;
-  background:rgba(19,18,35,.95);
-  backdrop-filter:blur(22px);
-  -webkit-backdrop-filter:blur(22px);
-  border:1px solid rgba(255,255,255,.13);
-  border-radius:22px;
-  box-shadow:0 15px 45px rgba(0,0,0,.52);
-}
-.nav-item{
-  flex:1;min-width:0;min-height:54px;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;
-  border-radius:13px;color:#aaa5bf;
-  font-size:10px;font-weight:800;transition:.2s;
-}
+.bottom-nav{position:fixed;z-index:50;bottom:10px;left:50%;transform:translateX(-50%);width:min(calc(100% - 22px),850px);min-height:72px;padding:7px 10px;display:flex;align-items:center;justify-content:space-around;gap:3px;background:rgba(19,18,35,.95);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);border:1px solid rgba(255,255,255,.13);border-radius:22px;box-shadow:0 15px 45px rgba(0,0,0,.52)}
+.nav-item{flex:1;min-width:0;min-height:54px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;border-radius:13px;color:#aaa5bf;font-size:10px;font-weight:800;transition:.2s}
 .nav-item svg{width:21px;height:21px;stroke:currentColor;fill:none;stroke-width:1.8}
 .nav-item.active{color:#c9b7ff;background:rgba(151,121,255,.14)}
 .nav-item:hover{color:white;background:rgba(255,255,255,.07)}
-
-.toast{
-  position:fixed;z-index:100;bottom:100px;left:50%;
-  transform:translate(-50%,15px);opacity:0;
-  pointer-events:none;padding:11px 17px;border-radius:12px;
-  background:#25213c;border:1px solid var(--line);
-  color:white;font-size:11px;transition:.25s;
-}
+.toast{position:fixed;z-index:100;bottom:100px;left:50%;transform:translate(-50%,15px);opacity:0;pointer-events:none;padding:11px 17px;border-radius:12px;background:#25213c;border:1px solid var(--line);color:white;font-size:11px;transition:.25s}
 .toast.show{opacity:1;transform:translate(-50%,0)}
-
 @media(max-width:1050px){
   .content-grid,.category-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
   .wallet-links{display:none}
@@ -544,11 +201,7 @@ body:after{
   .intro p{font-size:10px}
   .intro-mark{font-size:8px;padding:6px 9px}
   .hero{margin-top:16px;min-height:310px;border-radius:22px}
-  .hero-bg{
-    background:
-      linear-gradient(90deg,rgba(9,8,21,.94),rgba(10,8,23,.61)),
-      url("https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1000&q=90") center/cover;
-  }
+  .hero-bg{background:linear-gradient(90deg,rgba(9,8,21,.94),rgba(10,8,23,.61)),url("https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1000&q=90") center/cover}
   .hero-content{min-height:310px;padding:24px 21px}
   .hero h2{font-size:31px}
   .hero p{font-size:11px}
@@ -561,6 +214,10 @@ body:after{
   .view-all{font-size:10px}
   .category-grid{gap:9px}
   .category-card{height:137px;padding:12px;border-radius:16px}
+  .category-symbol{top:10px;right:10px;width:36px;height:36px;border-radius:12px}
+  .category-symbol svg{width:20px;height:20px}
+  .category-card.users-category strong{font-size:14px}
+  .category-card.users-category small{font-size:9px;line-height:1.55}
   .category-card strong{font-size:13px}
   .category-card small{font-size:9px}
   .content-grid{gap:10px}
@@ -579,10 +236,7 @@ body:after{
   .live-card{min-height:135px;padding:12px;border-radius:16px}
   .live-card:first-child{grid-column:1/-1;min-height:165px}
   .live-card strong{font-size:13px}
-  .bottom-nav{
-    bottom:7px;width:calc(100% - 14px);
-    min-height:65px;padding:5px 4px;border-radius:18px;
-  }
+  .bottom-nav{bottom:7px;width:calc(100% - 14px);min-height:65px;padding:5px 4px;border-radius:18px}
   .nav-item{min-height:52px;font-size:8px;gap:3px}
   .nav-item svg{width:19px;height:19px}
 }
@@ -594,11 +248,8 @@ body:after{
   .nav-item{font-size:7px}
 }
 </style>
-</head>
-
-<body>
+</head><body>
 <div class="app">
-
   <header class="topbar">
     <a class="brand" href="home.html">
       <div class="brand-mark">
@@ -607,71 +258,41 @@ body:after{
           <path d="M6 6h28v28H6z" stroke="white" stroke-opacity=".45" stroke-width="1.5"/>
         </svg>
       </div>
-      <div>
-        <div class="brand-name">HANOON WORLD</div>
-        <div class="brand-sub">YOUR SOCIAL UNIVERSE</div>
-      </div>
+      <div><div class="brand-name">HANOON WORLD</div><div class="brand-sub">YOUR SOCIAL UNIVERSE</div></div>
     </a>
-
     <div class="header-actions">
       <div class="wallet">
         <div class="wallet-unit coins">
-          <svg viewBox="0 0 24 24" fill="none">
-            <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.7"/>
-            <path d="M15.5 9.5c-.7-.8-1.7-1.2-3.1-1.2-1.5 0-2.5.7-2.5 1.8 0 2.8 5.4 1.1 5.4 4 0 1.2-1.1 2-2.8 2-1.3 0-2.5-.5-3.3-1.4M12 6.5v11" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
-          </svg>
+          <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.7"/><path d="M15.5 9.5c-.7-.8-1.7-1.2-3.1-1.2-1.5 0-2.5.7-2.5 1.8 0 2.8 5.4 1.1 5.4 4 0 1.2-1.1 2-2.8 2-1.3 0-2.5-.5-3.3-1.4M12 6.5v11" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
           <span id="coinBalance">—</span>
         </div>
         <div class="wallet-unit gems">
-          <svg viewBox="0 0 24 24" fill="none">
-            <path d="m12 2 8 7-8 13L4 9l8-7Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
-            <path d="m4 9 16 0M8 9l4 13 4-13" stroke="currentColor" stroke-width="1.3"/>
-          </svg>
+          <svg viewBox="0 0 24 24" fill="none"><path d="m12 2 8 7-8 13L4 9l8-7Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="m4 9 16 0M8 9l4 13 4-13" stroke="currentColor" stroke-width="1.3"/></svg>
           <span id="gemBalance">—</span>
         </div>
-        <a class="wallet-add" href="wallet.html" aria-label="إضافة رصيد">
-          <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
-        </a>
+        <a class="wallet-add" href="wallet.html" aria-label="إضافة رصيد"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></a>
         <div class="wallet-links">
-          <a class="wallet-link" href="store.html">
-            <svg viewBox="0 0 24 24"><path d="M4 8h16l-1 12H5L4 8Z"/><path d="M9 9V6a3 3 0 0 1 6 0v3"/></svg>
-            المتجر
-          </a>
-          <a class="wallet-link" href="gifts.html">
-            <svg viewBox="0 0 24 24"><path d="M3 10h18v11H3zM2 6h20v4H2zM12 6v15"/><path d="M12 6H8a2 2 0 1 1 2-2c0 1.1 2 2 2 2Zm0 0h4a2 2 0 1 0-2-2c0 1.1-2 2-2 2Z"/></svg>
-            الهدايا
-          </a>
+          <a class="wallet-link" href="store.html"><svg viewBox="0 0 24 24"><path d="M4 8h16l-1 12H5L4 8Z"/><path d="M9 9V6a3 3 0 0 1 6 0v3"/></svg>المتجر</a>
+          <a class="wallet-link" href="gifts.html"><svg viewBox="0 0 24 24"><path d="M3 10h18v11H3zM2 6h20v4H2zM12 6v15"/><path d="M12 6H8a2 2 0 1 1 2-2c0 1.1 2 2 2 2Zm0 0h4a2 2 0 1 0-2-2c0 1.1-2 2-2 2Z"/></svg>الهدايا</a>
         </div>
       </div>
-
-      <a class="header-icon" href="notifications.html" aria-label="الإشعارات">
-        <svg viewBox="0 0 24 24"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9ZM10 21h4"/></svg>
-      </a>
-
-      <a class="my-avatar" href="profile.html" id="myProfileLink" aria-label="حسابي">
-        <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 21c.5-4 3.2-6 7.5-6s7 2 7.5 6"/></svg>
-      </a>
+      <a class="header-icon" href="notifications.html" aria-label="الإشعارات"><svg viewBox="0 0 24 24"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9ZM10 21h4"/></svg></a>
+      <a class="my-avatar" href="profile.html" id="myProfileLink" aria-label="حسابي"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 21c.5-4 3.2-6 7.5-6s7 2 7.5 6"/></svg></a>
     </div>
   </header>
 
-  <!-- البحث أصبح في أعلى الصفحة -->
   <div class="search-area">
     <label class="search-box">
       <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m16 16 5 5"/></svg>
-      <input id="globalSearch" type="search" placeholder="ابحث عن لعبة أو غرفة أو عضو...">
+      <input id="globalSearch" type="search" placeholder="ابحث عن لعبة أو غرفة أو مستخدم...">
       <span class="search-shortcut">بحث</span>
     </label>
-    <a class="search-filter" href="games.html" aria-label="استكشاف">
-      <svg viewBox="0 0 24 24"><path d="M4 7h16M7 12h10M10 17h4"/><circle cx="8" cy="7" r="1.5"/><circle cx="15" cy="12" r="1.5"/></svg>
-    </a>
+    <a class="search-filter" href="games.html" aria-label="استكشاف"><svg viewBox="0 0 24 24"><path d="M4 7h16M7 12h10M10 17h4"/><circle cx="8" cy="7" r="1.5"/><circle cx="15" cy="12" r="1.5"/></svg></a>
     <div class="search-results" id="searchResults"></div>
   </div>
 
   <section class="intro">
-    <div>
-      <h1>مرحباً بك في <span>عالم هنون</span></h1>
-      <p>مساحتك للألعاب والتواصل والتجارب المختلفة</p>
-    </div>
+    <div><h1>مرحباً بك في <span>عالم هنون</span></h1><p>مساحتك للألعاب والتواصل والتجارب المختلفة</p></div>
     <div class="intro-mark">اكتشف عالمك</div>
   </section>
 
@@ -682,14 +303,8 @@ body:after{
       <h2>هنا تبدأ<br><span>حكايتك الجديدة</span></h2>
       <p>اكتشف ألعاباً مختلفة، ادخل غرف المجتمع، وشارك في عالم مليء بالتجارب والمنافسات.</p>
       <div class="hero-buttons">
-        <a class="btn-primary" href="games.html">
-          <svg viewBox="0 0 24 24"><path d="m8 5 12 7-12 7V5Z" fill="currentColor" stroke="none"/></svg>
-          اكتشف الألعاب
-        </a>
-        <a class="btn-secondary" href="rooms.html">
-          <svg viewBox="0 0 24 24"><path d="M3 20V9l9-6 9 6v11h-6v-7H9v7H3Z"/></svg>
-          ادخل الغرف
-        </a>
+        <a class="btn-primary" href="games.html"><svg viewBox="0 0 24 24"><path d="m8 5 12 7-12 7V5Z" fill="currentColor" stroke="none"/></svg>اكتشف الألعاب</a>
+        <a class="btn-secondary" href="rooms.html"><svg viewBox="0 0 24 24"><path d="M3 20V9l9-6 9 6v11h-6v-7H9v7H3Z"/></svg>ادخل الغرف</a>
       </div>
     </div>
   </section>
@@ -697,20 +312,21 @@ body:after{
   <section class="section">
     <div class="section-head">
       <div class="section-heading">
-        <div class="section-icon">
-          <svg viewBox="0 0 24 24"><path d="M12 3 14.5 9.5 21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5L12 3Z"/></svg>
-        </div>
-        <div>
-          <h3>استكشف عالم هنون</h3>
-          <p>وجهات مختلفة داخل عالم واحد</p>
-        </div>
+        <div class="section-icon"><svg viewBox="0 0 24 24"><path d="M12 3 14.5 9.5 21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5L12 3Z"/></svg></div>
+        <div><h3>استكشف عالم هنون</h3><p>وجهات مختلفة داخل عالم واحد</p></div>
       </div>
     </div>
-
     <div class="category-grid">
       <a class="category-card" href="games.html">
         <span class="card-arrow"><svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg></span>
         <div><strong>منطقة الألعاب</strong><small>اكتشف الألعاب المتاحة</small></div>
+      </a>
+      <a class="category-card users-category" href="members.html">
+        <span class="card-arrow"><svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg></span>
+        <span class="category-symbol" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M16 21v-1.5a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4V21"/><circle cx="9" cy="7" r="4"/><path d="M20 21v-1.5a4 4 0 0 0-3-3.87M16 3.2a4 4 0 0 1 0 7.6"/></svg>
+        </span>
+        <div><strong>مستخدمو التطبيق</strong><small>اكتشف الملفات الشخصية وتعرّف على مجتمع هنون</small></div>
       </a>
       <a class="category-card" href="rooms.html">
         <span class="card-arrow"><svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg></span>
@@ -730,25 +346,16 @@ body:after{
   <section class="section">
     <div class="section-head">
       <div class="section-heading">
-        <div class="section-icon">
-          <svg viewBox="0 0 24 24"><path d="M6 11h4l2-5 2 12 2-7h2"/></svg>
-        </div>
-        <div>
-          <h3>اكتشف الألعاب</h3>
-          <p>الألعاب المفعّلة في عالم هنون</p>
-        </div>
+        <div class="section-icon"><svg viewBox="0 0 24 24"><path d="M6 11h4l2-5 2 12 2-7h2"/></svg></div>
+        <div><h3>اكتشف الألعاب</h3><p>الألعاب المفعّلة في عالم هنون</p></div>
       </div>
       <a class="view-all" href="games.html">كل الألعاب ←</a>
     </div>
-
     <div class="filter-row">
       <button class="filter-chip active" data-game-filter="all">كل الألعاب</button>
       <button class="filter-chip" data-game-filter="available">المتاحة الآن</button>
     </div>
-
-    <div class="content-grid" id="gamesGrid">
-      <div class="empty-state"><div class="loader"></div><p>جارٍ تحميل الألعاب...</p></div>
-    </div>
+    <div class="content-grid" id="gamesGrid"><div class="empty-state"><div class="loader"></div><p>جارٍ تحميل الألعاب...</p></div></div>
   </section>
 
   <section class="section">
@@ -765,79 +372,43 @@ body:after{
   <section class="section">
     <div class="section-head">
       <div class="section-heading">
-        <div class="section-icon">
-          <svg viewBox="0 0 24 24"><path d="M3 20V9l9-6 9 6v11h-6v-7H9v7H3Z"/></svg>
-        </div>
-        <div>
-          <h3>الغرف العامة</h3>
-          <p>الغرف العامة المفتوحة في الوقت الحالي</p>
-        </div>
+        <div class="section-icon"><svg viewBox="0 0 24 24"><path d="M3 20V9l9-6 9 6v11h-6v-7H9v7H3Z"/></svg></div>
+        <div><h3>الغرف العامة</h3><p>الغرف العامة المفتوحة في الوقت الحالي</p></div>
       </div>
       <a class="view-all" href="rooms.html">كل الغرف ←</a>
     </div>
-
-    <div class="content-grid" id="roomsGrid">
-      <div class="empty-state"><div class="loader"></div><p>جارٍ تحميل الغرف...</p></div>
-    </div>
+    <div class="content-grid" id="roomsGrid"><div class="empty-state"><div class="loader"></div><p>جارٍ تحميل الغرف...</p></div></div>
   </section>
 
   <section class="section">
     <div class="section-head">
       <div class="section-heading">
-        <div class="section-icon">
-          <svg viewBox="0 0 24 24"><path d="M4 5h16v11H8l-4 4V5Z"/><path d="M8 9h8M8 12h5"/></svg>
-        </div>
-        <div>
-          <h3>اكتشف عالم البث</h3>
-          <p>مساحة مخصصة للتجارب المباشرة</p>
-        </div>
+        <div class="section-icon"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H8l-4 4V5Z"/><path d="M8 9h8M8 12h5"/></svg></div>
+        <div><h3>اكتشف عالم البث</h3><p>مساحة مخصصة للتجارب المباشرة</p></div>
       </div>
       <a class="view-all" href="live.html">دخول البث ←</a>
     </div>
-
     <div class="live-grid">
-      <a class="live-card" href="live.html">
-        <div><strong>تجارب البث</strong><p>اكتشف مساحة البث في هنون</p></div>
-      </a>
-      <a class="live-card" href="live.html">
-        <div><strong>الألعاب الجماعية</strong><p>عالم اللعب والمنافسة</p></div>
-      </a>
-      <a class="live-card" href="live.html">
-        <div><strong>لحظات التحدي</strong><p>اكتشف تجارب جديدة</p></div>
-      </a>
+      <a class="live-card" href="live.html"><div><strong>تجارب البث</strong><p>اكتشف مساحة البث في هنون</p></div></a>
+      <a class="live-card" href="live.html"><div><strong>الألعاب الجماعية</strong><p>عالم اللعب والمنافسة</p></div></a>
+      <a class="live-card" href="live.html"><div><strong>لحظات التحدي</strong><p>اكتشف تجارب جديدة</p></div></a>
     </div>
   </section>
 
-  <footer style="text-align:center;color:#77728e;font-size:10px;padding:35px 0 15px">
-    HANOON WORLD · YOUR SOCIAL UNIVERSE
-  </footer>
+  <footer style="text-align:center;color:#77728e;font-size:10px;padding:35px 0 15px">HANOON WORLD · YOUR SOCIAL UNIVERSE</footer>
 </div>
 
 <nav class="bottom-nav">
-  <a class="nav-item active" href="home.html">
-    <svg viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10h-6v-6H9v6H3V10Z"/></svg>
-    الرئيسية
+  <a class="nav-item active" href="home.html"><svg viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10h-6v-6H9v6H3V10Z"/></svg>الرئيسية</a>
+  <a class="nav-item" href="games.html"><svg viewBox="0 0 24 24"><path d="M7 8h10a4 4 0 0 1 4 4v4a3 3 0 0 1-5 2l-2-2h-4l-2 2a3 3 0 0 1-5-2v-4a4 4 0 0 1 4-4Z"/><path d="M8 11v4M6 13h4M16 12h.01M18 14h.01"/></svg>الألعاب</a>
+  <a class="nav-item" href="members.html" aria-label="مستخدمو التطبيق">
+    <svg viewBox="0 0 24 24"><path d="M16 21v-1.5a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4V21"/><circle cx="9" cy="7" r="4"/><path d="M20 21v-1.5a4 4 0 0 0-3-3.87M16 3.2a4 4 0 0 0 0 7.6"/></svg>
+    <span>المستخدمون</span>
   </a>
-  <a class="nav-item" href="games.html">
-    <svg viewBox="0 0 24 24"><path d="M7 8h10a4 4 0 0 1 4 4v4a3 3 0 0 1-5 2l-2-2h-4l-2 2a3 3 0 0 1-5-2v-4a4 4 0 0 1 4-4Z"/><path d="M8 11v4M6 13h4M16 12h.01M18 14h.01"/></svg>
-    الألعاب
-  </a>
-  <a class="nav-item" href="rooms.html">
-    <svg viewBox="0 0 24 24"><path d="M3 20V9l9-6 9 6v11h-6v-7H9v7H3Z"/></svg>
-    الغرف
-  </a>
-  <a class="nav-item" href="live.html">
-    <svg viewBox="0 0 24 24"><rect x="3" y="6" width="13" height="12" rx="2"/><path d="m16 10 5-3v10l-5-3"/></svg>
-    بث عشوائي
-  </a>
-  <a class="nav-item" href="chat.html">
-    <svg viewBox="0 0 24 24"><path d="M4 5h16v12H9l-5 4V5Z"/><path d="M8 9h8M8 13h5"/></svg>
-    المحادثات
-  </a>
-  <a class="nav-item" href="profile.html">
-    <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 21c.5-4 3.2-6 7.5-6s7 2 7.5 6"/></svg>
-    حسابي
-  </a>
+  <a class="nav-item" href="rooms.html"><svg viewBox="0 0 24 24"><path d="M3 20V9l9-6 9 6v11h-6v-7H9v7H3Z"/></svg>الغرف</a>
+  <a class="nav-item" href="live.html"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="13" height="12" rx="2"/><path d="m16 10 5-3v10l-5-3"/></svg>بث عشوائي</a>
+  <a class="nav-item" href="chat.html"><svg viewBox="0 0 24 24"><path d="M4 5h16v12H9l-5 4V5Z"/><path d="M8 9h8M8 13h5"/></svg>المحادثات</a>
+  <a class="nav-item" href="profile.html"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 21c.5-4 3.2-6 7.5-6s7 2 7.5 6"/></svg>حسابي</a>
 </nav>
 
 <div class="toast" id="toast"></div>
@@ -845,284 +416,116 @@ body:after{
 <script>
 const SUPABASE_URL = "https://gjtgvczvclfwvlvcquxh.supabase.co";
 const SUPABASE_KEY = "sb_publishable_4DVTUZ-xTlqU2GpFvpb7lw_g-Kxomd4";
-
 const db = window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
 
-const state = {
-  user:null,
-  games:[],
-  rooms:[],
-  members:[]
-};
-
-const $ = id => document.getElementById(id);
+const state={user:null,games:[],rooms:[],members:[]};
+const $=id=>document.getElementById(id);
 
 function esc(value){
-  return String(value ?? "").replace(/[&<>"']/g,c=>({
-    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
-  })[c]);
+  return String(value??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));
 }
-
-function isURL(value){
-  return /^https?:\/\//i.test(String(value || ""));
-}
-
+function isURL(value){return /^https?:\/\//i.test(String(value||""))}
 function publicImage(bucket,path){
-  if(!path) return "";
-  if(isURL(path)) return path;
-  const {data} = db.storage.from(bucket).getPublicUrl(path);
-  return data?.publicUrl || "";
+  if(!path)return "";
+  if(isURL(path))return path;
+  const {data}=db.storage.from(bucket).getPublicUrl(path);
+  return data?.publicUrl||"";
 }
-
 function avatarFallback(){
   return `<svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 21c.5-4 3.2-6 7.5-6s7 2 7.5 6"/></svg>`;
 }
-
 async function loadSession(){
-  const {data,error} = await db.auth.getSession();
-  if(error) throw error;
-  state.user = data.session?.user || null;
-
-  if(!state.user){
-    location.href = "index.html";
-    return false;
-  }
+  const {data,error}=await db.auth.getSession();
+  if(error)throw error;
+  state.user=data.session?.user||null;
+  if(!state.user){location.href="index.html";return false}
   return true;
 }
-
 async function loadProfile(){
-  const {data,error} = await db
-    .from("profiles")
-    .select("id,full_name,avatar_path,member_code")
-    .eq("id",state.user.id)
-    .maybeSingle();
-
-  if(error) throw error;
-
-  const avatar = publicImage("avatars",data?.avatar_path);
-  if(avatar){
-    $("myProfileLink").innerHTML =
-      `<img src="${esc(avatar)}" alt="حسابي">`;
-  }
+  const {data,error}=await db.from("profiles").select("id,full_name,avatar_path,member_code").eq("id",state.user.id).maybeSingle();
+  if(error)throw error;
+  const avatar=publicImage("avatars",data?.avatar_path);
+  if(avatar)$("myProfileLink").innerHTML=`<img src="${esc(avatar)}" alt="حسابي">`;
 }
-
 async function loadWallet(){
-  const {data,error} = await db
-    .from("world_wallets")
-    .select("coins,gems")
-    .eq("user_id",state.user.id)
-    .maybeSingle();
-
-  if(error) throw error;
-
-  $("coinBalance").textContent =
-    data?.coins == null ? "—" : Number(data.coins).toLocaleString("en-US");
-
-  $("gemBalance").textContent =
-    data?.gems == null ? "—" : Number(data.gems).toLocaleString("en-US");
+  const {data,error}=await db.from("world_wallets").select("coins,gems").eq("user_id",state.user.id).maybeSingle();
+  if(error)throw error;
+  $("coinBalance").textContent=data?.coins==null?"—":Number(data.coins).toLocaleString("en-US");
+  $("gemBalance").textContent=data?.gems==null?"—":Number(data.gems).toLocaleString("en-US");
 }
-
 async function loadGames(){
-  const {data,error} = await db
-    .from("world_games_catalog")
-    .select("id,title_ar,title_en,slug,cover_path,is_active")
-    .eq("is_active",true)
-    .order("title_ar",{ascending:true})
-    .limit(8);
-
-  if(error) throw error;
-  state.games = data || [];
+  const {data,error}=await db.from("world_games_catalog").select("id,title_ar,title_en,slug,cover_path,is_active").eq("is_active",true).order("title_ar",{ascending:true}).limit(8);
+  if(error)throw error;
+  state.games=data||[];
   renderGames(state.games);
 }
-
 async function loadRooms(){
-  const {data,error} = await db
-    .from("world_game_rooms")
-    .select("id,game_id,host_user_id,room_code,status,visibility,max_players,created_at")
-    .eq("visibility","public")
-    .in("status",["waiting","playing"])
-    .order("created_at",{ascending:false})
-    .limit(8);
-
-  if(error) throw error;
-
-  const rooms = data || [];
-  const gameIds = [...new Set(rooms.map(x=>x.game_id).filter(Boolean))];
-  const hostIds = [...new Set(rooms.map(x=>x.host_user_id).filter(Boolean))];
-
-  let games = [];
-  let hosts = [];
-
+  const {data,error}=await db.from("world_game_rooms").select("id,game_id,host_user_id,room_code,status,visibility,max_players,created_at").eq("visibility","public").in("status",["waiting","playing"]).order("created_at",{ascending:false}).limit(8);
+  if(error)throw error;
+  const rooms=data||[];
+  const gameIds=[...new Set(rooms.map(x=>x.game_id).filter(Boolean))];
+  const hostIds=[...new Set(rooms.map(x=>x.host_user_id).filter(Boolean))];
+  let games=[],hosts=[];
   if(gameIds.length){
-    const result = await db
-      .from("world_games_catalog")
-      .select("id,title_ar,title_en,cover_path")
-      .in("id",gameIds);
-    if(!result.error) games = result.data || [];
+    const result=await db.from("world_games_catalog").select("id,title_ar,title_en,cover_path").in("id",gameIds);
+    if(!result.error)games=result.data||[];
   }
-
   if(hostIds.length){
-    const result = await db
-      .from("profiles")
-      .select("id,full_name,avatar_path")
-      .in("id",hostIds);
-    if(!result.error) hosts = result.data || [];
+    const result=await db.from("profiles").select("id,full_name,avatar_path").in("id",hostIds);
+    if(!result.error)hosts=result.data||[];
   }
-
-  state.rooms = rooms.map(room=>({
-    ...room,
-    game:games.find(g=>g.id===room.game_id) || null,
-    host:hosts.find(h=>h.id===room.host_user_id) || null
-  }));
-
+  state.rooms=rooms.map(room=>({...room,game:games.find(g=>g.id===room.game_id)||null,host:hosts.find(h=>h.id===room.host_user_id)||null}));
   renderRooms(state.rooms);
 }
-
-/* الأعضاء لا يظهرون كقسم في الصفحة الرئيسية.
-   يتم تحميل بيانات دليل الأعضاء فقط لدعم البحث عند كتابة اسم عضو. */
+/* المستخدمون لا يظهرون كقائمة في الصفحة الرئيسية.
+   يتم تحميل دليل المستخدمين فقط لدعم البحث. */
 async function loadMembersForSearch(){
-  const {data,error} = await db
-    .from("member_directory")
-    .select("id,username,member_code,full_name")
-    .neq("id",state.user.id)
-    .order("created_at",{ascending:false})
-    .limit(100);
-
-  if(error) throw error;
-  state.members = data || [];
+  const {data,error}=await db.from("member_directory").select("id,username,member_code,full_name").neq("id",state.user.id).order("created_at",{ascending:false}).limit(100);
+  if(error)throw error;
+  state.members=data||[];
 }
-
 function renderGames(games){
-  const grid = $("gamesGrid");
-
+  const grid=$("gamesGrid");
   if(!games.length){
-    grid.innerHTML = `
-      <div class="empty-state">
-        <svg viewBox="0 0 24 24"><path d="M7 8h10a4 4 0 0 1 4 4v4a3 3 0 0 1-5 2l-2-2h-4l-2 2a3 3 0 0 1-5-2v-4a4 4 0 0 1 4-4Z"/></svg>
-        <h4>لا توجد ألعاب مفعّلة حاليًا</h4>
-        <p>ستظهر الألعاب هنا عند تفعيلها في قاعدة البيانات.</p>
-      </div>`;
+    grid.innerHTML=`<div class="empty-state"><svg viewBox="0 0 24 24"><path d="M7 8h10a4 4 0 0 1 4 4v4a3 3 0 0 1-5 2l-2-2h-4l-2 2a3 3 0 0 1-5-2v-4a4 4 0 0 1 4-4Z"/></svg><h4>لا توجد ألعاب مفعّلة حاليًا</h4><p>ستظهر الألعاب هنا عند تفعيلها في قاعدة البيانات.</p></div>`;
     return;
   }
-
-  grid.innerHTML = games.map(game=>{
-    const title = game.title_ar || game.title_en || "لعبة";
-    const cover = isURL(game.cover_path) ? game.cover_path : "";
-    const key = encodeURIComponent(game.slug || game.id);
-
-    return `
-      <article class="game-card">
-        <div class="game-image">
-          ${cover ? `<img src="${esc(cover)}" alt="${esc(title)}" loading="lazy">` : ""}
-        </div>
-        <div class="game-info">
-          <h4>${esc(title)}</h4>
-          <p>${esc(game.title_en || "من ألعاب هنون")}</p>
-          <div class="card-footer">
-            <span class="card-type">لعبة متاحة</span>
-            <a class="card-link" href="game.html?game=${key}">التفاصيل</a>
-          </div>
-        </div>
-      </article>`;
+  grid.innerHTML=games.map(game=>{
+    const title=game.title_ar||game.title_en||"لعبة";
+    const cover=isURL(game.cover_path)?game.cover_path:"";
+    const key=encodeURIComponent(game.slug||game.id);
+    return `<article class="game-card"><div class="game-image">${cover?`<img src="${esc(cover)}" alt="${esc(title)}" loading="lazy">`:""}</div><div class="game-info"><h4>${esc(title)}</h4><p>${esc(game.title_en||"من ألعاب هنون")}</p><div class="card-footer"><span class="card-type">لعبة متاحة</span><a class="card-link" href="game.html?game=${key}">التفاصيل</a></div></div></article>`;
   }).join("");
 }
-
 function renderRooms(rooms){
-  const grid = $("roomsGrid");
-
+  const grid=$("roomsGrid");
   if(!rooms.length){
-    grid.innerHTML = `
-      <div class="empty-state">
-        <svg viewBox="0 0 24 24"><path d="M3 20V9l9-6 9 6v11h-6v-7H9v7H3Z"/></svg>
-        <h4>لا توجد غرف عامة متاحة الآن</h4>
-        <p>ستظهر الغرف هنا عند وجود غرف عامة مفتوحة.</p>
-      </div>`;
+    grid.innerHTML=`<div class="empty-state"><svg viewBox="0 0 24 24"><path d="M3 20V9l9-6 9 6v11h-6v-7H9v7H3Z"/></svg><h4>لا توجد غرف عامة متاحة الآن</h4><p>ستظهر الغرف هنا عند وجود غرف عامة مفتوحة.</p></div>`;
     return;
   }
-
-  grid.innerHTML = rooms.map(room=>{
-    const title = room.game?.title_ar || room.game?.title_en || "غرفة ألعاب";
-    const cover = isURL(room.game?.cover_path) ? room.game.cover_path : "";
-    const host = room.host?.full_name || "عضو";
-    const status = room.status === "playing" ? "قيد اللعب" : "بانتظار اللاعبين";
-
-    return `
-      <article class="room-card">
-        <div class="room-cover">
-          ${cover ? `<img src="${esc(cover)}" alt="${esc(title)}" loading="lazy">` : ""}
-          <span class="room-state">${status}</span>
-        </div>
-        <div class="room-info">
-          <h4>${esc(title)}</h4>
-          <div class="room-details">
-            <span>المضيف: ${esc(host)}</span>
-            <span class="room-code">${esc(room.room_code || "")}</span>
-          </div>
-          <div class="card-footer">
-            <span class="card-type">الحد الأقصى: ${Number(room.max_players) || "—"}</span>
-            <a class="card-link" href="room.html?room=${encodeURIComponent(room.id)}">التفاصيل</a>
-          </div>
-        </div>
-      </article>`;
+  grid.innerHTML=rooms.map(room=>{
+    const title=room.game?.title_ar||room.game?.title_en||"غرفة ألعاب";
+    const cover=isURL(room.game?.cover_path)?room.game.cover_path:"";
+    const host=room.host?.full_name||"عضو";
+    const status=room.status==="playing"?"قيد اللعب":"بانتظار اللاعبين";
+    return `<article class="room-card"><div class="room-cover">${cover?`<img src="${esc(cover)}" alt="${esc(title)}" loading="lazy">`:""}<span class="room-state">${status}</span></div><div class="room-info"><h4>${esc(title)}</h4><div class="room-details"><span>المضيف: ${esc(host)}</span><span class="room-code">${esc(room.room_code||"")}</span></div><div class="card-footer"><span class="card-type">الحد الأقصى: ${Number(room.max_players)||"—"}</span><a class="card-link" href="room.html?room=${encodeURIComponent(room.id)}">التفاصيل</a></div></div></article>`;
   }).join("");
 }
-
 function renderSearch(query){
-  const box = $("searchResults");
-  const term = query.trim().toLowerCase();
-
-  if(!term){
-    box.classList.remove("show");
-    box.innerHTML = "";
-    return;
-  }
-
-  const foundGames = state.games.filter(g=>
-    `${g.title_ar || ""} ${g.title_en || ""}`.toLowerCase().includes(term)
-  );
-
-  const foundRooms = state.rooms.filter(r=>
-    `${r.game?.title_ar || ""} ${r.room_code || ""} ${r.host?.full_name || ""}`.toLowerCase().includes(term)
-  );
-
-  const foundMembers = state.members.filter(m=>
-    `${m.full_name || ""} ${m.username || ""} ${m.member_code || ""}`.toLowerCase().includes(term)
-  );
-
-  const items = [
-    ...foundGames.map(g=>({
-      name:g.title_ar || g.title_en,
-      type:"لعبة",
-      href:`game.html?game=${encodeURIComponent(g.slug || g.id)}`
-    })),
-    ...foundRooms.map(r=>({
-      name:r.game?.title_ar || "غرفة ألعاب",
-      type:"غرفة",
-      href:`room.html?room=${encodeURIComponent(r.id)}`
-    })),
-    ...foundMembers.map(m=>({
-      name:m.full_name || m.username || m.member_code,
-      type:"عضو",
-      href:`member.html?id=${encodeURIComponent(m.id)}`
-    }))
+  const box=$("searchResults");
+  const term=query.trim().toLowerCase();
+  if(!term){box.classList.remove("show");box.innerHTML="";return}
+  const foundGames=state.games.filter(g=>`${g.title_ar||""} ${g.title_en||""}`.toLowerCase().includes(term));
+  const foundRooms=state.rooms.filter(r=>`${r.game?.title_ar||""} ${r.room_code||""} ${r.host?.full_name||""}`.toLowerCase().includes(term));
+  const foundMembers=state.members.filter(m=>`${m.full_name||""} ${m.username||""} ${m.member_code||""}`.toLowerCase().includes(term));
+  const items=[
+    ...foundGames.map(g=>({name:g.title_ar||g.title_en,type:"لعبة",href:`game.html?game=${encodeURIComponent(g.slug||g.id)}`})),
+    ...foundRooms.map(r=>({name:r.game?.title_ar||"غرفة ألعاب",type:"غرفة",href:`room.html?room=${encodeURIComponent(r.id)}`})),
+    ...foundMembers.map(m=>({name:m.full_name||m.username||m.member_code,type:"مستخدم",href:`member.html?id=${encodeURIComponent(m.id)}`})),
   ];
-
   box.classList.add("show");
-
-  box.innerHTML = items.length ? items.map(item=>`
-    <div class="search-result">
-      <div>
-        <strong>${esc(item.name)}</strong>
-        <small> · ${item.type}</small>
-      </div>
-      <a href="${esc(item.href)}">فتح</a>
-    </div>
-  `).join("") : `
-    <div class="search-result">
-      <span>لا توجد نتائج مطابقة في البيانات المحمّلة</span>
-    </div>`;
+  box.innerHTML=items.length?items.map(item=>`<div class="search-result"><div><strong>${esc(item.name)}</strong><small> · ${item.type}</small></div><a href="${esc(item.href)}">فتح</a></div>`).join(""):`<div class="search-result"><span>لا توجد نتائج مطابقة في البيانات المحمّلة</span></div>`;
 }
-
 function setupFilters(){
   document.querySelectorAll("[data-game-filter]").forEach(button=>{
     button.addEventListener("click",()=>{
@@ -1132,19 +535,12 @@ function setupFilters(){
     });
   });
 }
-
 async function safeTask(task,label){
-  try{
-    await task();
-  }catch(error){
-    console.error(`HANOON ${label}:`,error);
-  }
+  try{await task()}catch(error){console.error(`HANOON ${label}:`,error)}
 }
-
 async function loadAll(){
-  const valid = await loadSession();
-  if(!valid) return;
-
+  const valid=await loadSession();
+  if(!valid)return;
   await Promise.allSettled([
     safeTask(loadProfile,"profile"),
     safeTask(loadWallet,"wallet"),
@@ -1153,31 +549,17 @@ async function loadAll(){
     safeTask(loadMembersForSearch,"member search")
   ]);
 }
-
-$("globalSearch").addEventListener("input",event=>{
-  renderSearch(event.target.value);
-});
-
+$("globalSearch").addEventListener("input",event=>renderSearch(event.target.value));
 document.addEventListener("click",event=>{
-  if(!event.target.closest(".search-area")){
-    $("searchResults").classList.remove("show");
-  }
+  if(!event.target.closest(".search-area"))$("searchResults").classList.remove("show");
 });
-
 setupFilters();
-
 db.auth.onAuthStateChange((event,session)=>{
-  if(event === "SIGNED_OUT" || !session){
-    location.href = "index.html";
-  }
+  if(event==="SIGNED_OUT"||!session)location.href="index.html";
 });
-
 document.addEventListener("visibilitychange",()=>{
-  if(!document.hidden && state.user){
-    loadAll();
-  }
+  if(!document.hidden&&state.user)loadAll();
 });
-
 loadAll();
 </script>
 </body>
