@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#090b18">
+<title>إكس أو | HANOON WORLD</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg:#090b18;
+  --panel:rgba(20,24,47,.88);
+  --line:rgba(255,255,255,.09);
+  --text:#f7f7ff;
+  --muted:#9ba3c2;
+  --purple:#9876ff;
+  --cyan:#42d9e8;
+  --pink:#ff6ca8;
+  --green:#4de0ad;
+}
+
+*{box-sizing:border-box}
+
+html{scroll-behavior:smooth}
+
+body{
+  margin:0;
+  min-height:100vh;
+  color:var(--text);
+  font-family:'Cairo',sans-serif;
+  background:#090b18;
+  overflow-x:hidden;
+}
+
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:-3;
+  background:
+    linear-gradient(180deg,rgba(7,9,23,.65),rgba(7,9,23,.94)),
+    url("https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=2000&q=85")
+    center/cover no-repeat;
+}
+
+body::after{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:-2;
+  pointer-events:none;
+  background:
+    radial-gradient(circle at 12% 18%,rgba(126,91,255,.22),transparent 30%),
+    radial-gradient(circle at 88% 70%,rgba(48,211,229,.15),transparent 28%);
+}
+
+button,select{font:inherit}
+
+button{
+  cursor:pointer;
+  border:0;
+  color:inherit;
+}
+
+.page{
+  width:min(1100px,100%);
+  margin:auto;
+  padding:20px 18px 45px;
+}
+
+.topbar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:28px;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:11px;
+  font-size:17px;
+  font-weight:900;
+  letter-spacing:.4px;
+}
+
+.brand-mark{
+  width:43px;
+  height:43px;
+  display:grid;
+  place-items:center;
+  border-radius:14px;
+  background:linear-gradient(135deg,#a78bff,#6345dc);
+  box-shadow:0 8px 30px #7959ff55;
+}
+
+.brand-mark svg{width:25px;height:25px}
+
+.back-btn{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:10px 15px;
+  border:1px solid var(--line);
+  border-radius:13px;
+  background:rgba(255,255,255,.06);
+  color:#dfe2ff;
+  text-decoration:none;
+  font-size:13px;
+  font-weight:800;
+  transition:.2s;
+}
+
+.back-btn:hover{
+  background:rgba(255,255,255,.12);
+  transform:translateY(-2px);
+}
+
+.back-btn svg{width:17px;height:17px}
+
+.hero{
+  position:relative;
+  min-height:220px;
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:25px;
+  padding:30px;
+  margin-bottom:22px;
+  background:
+    linear-gradient(90deg,rgba(9,11,25,.97),rgba(13,16,40,.82),rgba(13,16,40,.28)),
+    url("https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1400&q=85")
+    center/cover;
+  box-shadow:0 20px 60px #0005;
+}
+
+.hero-content{position:relative;z-index:2}
+
+.eyebrow{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  padding:6px 11px;
+  border:1px solid #a58aff55;
+  border-radius:30px;
+  color:#c6b7ff;
+  background:#8864ff1b;
+  font-size:11px;
+  font-weight:800;
+}
+
+.eyebrow span{
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:var(--green);
+  box-shadow:0 0 12px var(--green);
+}
+
+.hero h1{
+  margin:13px 0 4px;
+  font-size:clamp(29px,5vw,45px);
+  font-weight:900;
+  line-height:1.35;
+}
+
+.hero h1 strong{color:#a98cff}
+
+.hero p{
+  max-width:490px;
+  margin:5px 0 0;
+  color:#c1c5df;
+  font-size:13px;
+  line-height:2;
+}
+
+.game-layout{
+  display:grid;
+  grid-template-columns:minmax(0,1.45fr) minmax(260px,.75fr);
+  gap:18px;
+  align-items:start;
+}
+
+.panel{
+  border:1px solid var(--line);
+  border-radius:22px;
+  background:var(--panel);
+  backdrop-filter:blur(18px);
+  box-shadow:0 15px 45px #0003;
+}
+
+.board-panel{padding:22px}
+
+.section-heading{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin-bottom:17px;
+}
+
+.section-heading h2{
+  margin:0;
+  font-size:17px;
+  font-weight:900;
+}
+
+.turn-badge{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:8px 12px;
+  border-radius:12px;
+  background:#ffffff0c;
+  border:1px solid var(--line);
+  color:#dfe2ff;
+  font-size:12px;
+  font-weight:800;
+}
+
+.turn-symbol{
+  font-size:19px;
+  font-weight:900;
+  color:var(--cyan);
+}
+
+.board{
+  width:min(100%,470px);
+  aspect-ratio:1;
+  margin:0 auto;
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:10px;
+  padding:12px;
+  border-radius:22px;
+  background:linear-gradient(145deg,#22294c,#131831);
+  border:1px solid #a18aff2d;
+  box-shadow:inset 0 0 35px #0005,0 15px 35px #0004;
+}
+
+.cell{
+  position:relative;
+  display:grid;
+  place-items:center;
+  min-width:0;
+  border-radius:16px;
+  background:linear-gradient(145deg,#202747,#171d38);
+  border:1px solid #ffffff12;
+  font-size:clamp(42px,9vw,76px);
+  font-weight:900;
+  transition:background .2s,transform .2s,border-color .2s;
+  user-select:none;
+}
+
+.cell:not(:disabled):hover{
+  background:#30375d;
+  border-color:#a58aff88;
+  transform:scale(.97);
+}
+
+.cell:disabled{cursor:default}
+
+.cell.x{color:var(--cyan);text-shadow:0 0 25px #42d9e877}
+.cell.o{color:var(--pink);text-shadow:0 0 25px #ff6ca877}
+
+.cell.win{
+  background:linear-gradient(145deg,#344e63,#263d57);
+  border-color:var(--green);
+  box-shadow:0 0 24px #4de0ad30;
+  animation:winPulse .8s ease-in-out infinite alternate;
+}
+
+@keyframes winPulse{
+  from{transform:scale(1)}
+  to{transform:scale(.97)}
+}
+
+.game-message{
+  min-height:52px;
+  margin:17px 0 0;
+  padding:12px;
+  border-radius:13px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  color:#dce1ff;
+  background:#ffffff08;
+  border:1px solid #ffffff0a;
+  font-size:13px;
+  font-weight:800;
+}
+
+.game-message.success{color:var(--green)}
+.game-message.warning{color:#ffd37d}
+
+.action-row{
+  display:flex;
+  gap:10px;
+  margin-top:15px;
+}
+
+.primary-btn,.secondary-btn{
+  min-height:47px;
+  padding:10px 16px;
+  border-radius:13px;
+  font-size:13px;
+  font-weight:900;
+  transition:.2s;
+}
+
+.primary-btn{
+  flex:1;
+  background:linear-gradient(120deg,#9c7aff,#684be1);
+  box-shadow:0 8px 22px #7957ff40;
+}
+
+.primary-btn:hover{filter:brightness(1.12);transform:translateY(-2px)}
+
+.secondary-btn{
+  background:#ffffff0c;
+  border:1px solid var(--line);
+  color:#d9dcf3;
+}
+
+.secondary-btn:hover{background:#ffffff17}
+
+.side-column{
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+}
+
+.settings-panel,.stats-panel{padding:19px}
+
+.settings-panel h3,.stats-panel h3{
+  margin:0 0 15px;
+  font-size:15px;
+  font-weight:900;
+}
+
+.field-label{
+  display:block;
+  margin:13px 0 7px;
+  color:var(--muted);
+  font-size:12px;
+  font-weight:800;
+}
+
+.mode-options{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+}
+
+.mode-btn{
+  padding:12px 7px;
+  border-radius:12px;
+  background:#ffffff08;
+  border:1px solid var(--line);
+  color:#c9cde4;
+  font-size:12px;
+  font-weight:800;
+  transition:.2s;
+}
+
+.mode-btn.active{
+  color:white;
+  border-color:#a58affaa;
+  background:#8b6bff25;
+  box-shadow:inset 0 0 15px #8b6bff15;
+}
+
+.select-wrap{position:relative}
+
+select{
+  width:100%;
+  padding:12px 13px;
+  color:#f4f3ff;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:#171c35;
+  outline:none;
+}
+
+select option{background:#171c35;color:white}
+
+.select-wrap.hidden{display:none}
+
+.note{
+  margin:13px 0 0;
+  color:#8e96b6;
+  font-size:11px;
+  line-height:1.9;
+}
+
+.score-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
+}
+
+.score-card{
+  padding:13px 5px;
+  border:1px solid var(--line);
+  border-radius:13px;
+  text-align:center;
+  background:#ffffff07;
+}
+
+.score-card strong{
+  display:block;
+  font-size:24px;
+  font-weight:900;
+  line-height:1.4;
+}
+
+.score-card span{
+  color:var(--muted);
+  font-size:10px;
+  font-weight:800;
+}
+
+.score-card.wins strong{color:var(--green)}
+.score-card.losses strong{color:var(--pink)}
+.score-card.draws strong{color:#b8a5ff}
+
+.score-reset{
+  width:100%;
+  margin-top:12px;
+  padding:10px;
+  border-radius:11px;
+  border:1px solid var(--line);
+  background:#ffffff08;
+  color:#aeb5d1;
+  font-size:11px;
+  font-weight:800;
+}
+
+.rules{
+  margin-top:18px;
+  padding:17px 19px;
+}
+
+.rules h3{margin:0 0 10px;font-size:14px}
+
+.rules p{
+  margin:0;
+  color:#aeb5d1;
+  font-size:12px;
+  line-height:2.1;
+}
+
+.footer{
+  padding:25px 10px 0;
+  text-align:center;
+  color:#78809f;
+  font-size:11px;
+}
+
+.toast{
+  position:fixed;
+  bottom:20px;
+  left:50%;
+  transform:translate(-50%,20px);
+  opacity:0;
+  pointer-events:none;
+  padding:12px 18px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:#1c2340;
+  color:white;
+  font-size:12px;
+  font-weight:800;
+  transition:.25s;
+  z-index:10;
+}
+
+.toast.show{
+  opacity:1;
+  transform:translate(-50%,0);
+}
+
+@media(max-width:760px){
+  .game-layout{grid-template-columns:1fr}
+  .hero{min-height:190px;padding:23px}
+  .board-panel{padding:15px}
+  .board{gap:7px;padding:9px}
+  .cell{border-radius:12px}
+  .side-column{display:grid;grid-template-columns:1fr}
+}
+
+@media(max-width:380px){
+  .page{padding:13px 11px 30px}
+  .hero{padding:19px}
+  .hero h1{font-size:29px}
+  .board-panel{padding:11px}
+  .board{gap:5px;padding:7px}
+  .cell{font-size:43px}
+  .action-row{flex-direction:column}
+}
+</style>
+</head>
+
+<body>
+<div class="page">
+
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round">
+          <path d="M7 7l10 10M17 7L7 17"/>
+          <circle cx="12" cy="12" r="10" opacity=".35"/>
+        </svg>
+      </div>
+      <span>HANOON WORLD</span>
+    </div>
+
+    <a class="back-btn" href="../games.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M19 12H5M12 19l-7-7 7-7"/>
+      </svg>
+      العودة للألعاب
+    </a>
+  </header>
+
+  <section class="hero">
+    <div class="hero-content">
+      <div class="eyebrow"><span></span> لعبة متاحة</div>
+      <h1>إكس <strong>أو</strong></h1>
+      <p>اختبر ذكاءك، خطط لكل حركة، وحقق الفوز بثلاث علامات متتالية. هل تستطيع هزيمة الخصم؟</p>
+    </div>
+  </section>
+
+  <main class="game-layout">
+
+    <section class="panel board-panel">
+      <div class="section-heading">
+        <h2>ساحة المواجهة</h2>
+        <div class="turn-badge">
+          الدور:
+          <span class="turn-symbol" id="turnSymbol">X</span>
+        </div>
+      </div>
+
+      <div class="board" id="board" aria-label="لوحة لعبة إكس أو">
+        <button class="cell" data-index="0" aria-label="الخانة الأولى"></button>
+        <button class="cell" data-index="1" aria-label="الخانة الثانية"></button>
+        <button class="cell" data-index="2" aria-label="الخانة الثالثة"></button>
+        <button class="cell" data-index="3" aria-label="الخانة الرابعة"></button>
+        <button class="cell" data-index="4" aria-label="الخانة الخامسة"></button>
+        <button class="cell" data-index="5" aria-label="الخانة السادسة"></button>
+        <button class="cell" data-index="6" aria-label="الخانة السابعة"></button>
+        <button class="cell" data-index="7" aria-label="الخانة الثامنة"></button>
+        <button class="cell" data-index="8" aria-label="الخانة التاسعة"></button>
+      </div>
+
+      <div class="game-message" id="message" aria-live="polite">
+        اختر وضع اللعب وابدأ المباراة.
+      </div>
+
+      <div class="action-row">
+        <button class="primary-btn" id="newGame">مباراة جديدة</button>
+        <button class="secondary-btn" id="resetBoard">إعادة اللوحة</button>
+      </div>
+    </section>
+
+    <aside class="side-column">
+
+      <section class="panel settings-panel">
+        <h3>إعدادات المباراة</h3>
+
+        <span class="field-label">طريقة اللعب</span>
+        <div class="mode-options">
+          <button class="mode-btn active" data-mode="ai">ضد الكمبيوتر</button>
+          <button class="mode-btn" data-mode="local">لاعبان محليًا</button>
+        </div>
+
+        <div class="select-wrap" id="difficultyWrap">
+          <label class="field-label" for="difficulty">مستوى الذكاء الاصطناعي</label>
+          <select id="difficulty">
+            <option value="easy">سهل</option>
+            <option value="medium">متوسط</option>
+            <option value="hard">صعب</option>
+            <option value="expert">محترف</option>
+          </select>
+        </div>
+
+        <p class="note" id="modeNote">
+          أنت تلعب بعلامة X والكمبيوتر يلعب بعلامة O. اختر مستوى التحدي المناسب.
+        </p>
+      </section>
+
+      <section class="panel stats-panel">
+        <h3>نتائجك على هذا الجهاز</h3>
+
+        <div class="score-grid">
+          <div class="score-card wins">
+            <strong id="wins">0</strong>
+            <span>انتصارات</span>
+          </div>
+          <div class="score-card losses">
+            <strong id="losses">0</strong>
+            <span>خسائر</span>
+          </div>
+          <div class="score-card draws">
+            <strong id="draws">0</strong>
+            <span>تعادلات</span>
+          </div>
+        </div>
+
+        <button class="score-reset" id="clearStats">تصفير النتائج المحلية</button>
+      </section>
+
+    </aside>
+  </main>
+
+  <section class="panel rules">
+    <h3>قواعد اللعبة</h3>
+    <p>
+      يتناوب اللاعبان على وضع علامتي X و O داخل الخانات التسع.
+      الفائز هو أول من ينجح في تكوين ثلاثة رموز متطابقة أفقيًا أو رأسيًا أو قطريًا.
+      إذا امتلأت اللوحة دون تكوين خط فائز تنتهي المباراة بالتعادل.
+    </p>
+  </section>
+
+  <footer class="footer">
+    HANOON WORLD · Tic Tac Toe
+  </footer>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(() => {
+  "use strict";
+
+  const cells = [...document.querySelectorAll(".cell")];
+  const message = document.getElementById("message");
+  const turnSymbol = document.getElementById("turnSymbol");
+  const difficulty = document.getElementById("difficulty");
+  const difficultyWrap = document.getElementById("difficultyWrap");
+  const modeNote = document.getElementById("modeNote");
+  const toast = document.getElementById("toast");
+
+  const scoreElements = {
+    wins: document.getElementById("wins"),
+    losses: document.getElementById("losses"),
+    draws: document.getElementById("draws")
+  };
+
+  const WIN_LINES = [
+    [0,1,2], [3,4,5], [6,7,8],
+    [0,3,6], [1,4,7], [2,5,8],
+    [0,4,8], [2,4,6]
+  ];
+
+  let board = Array(9).fill("");
+  let currentPlayer = "X";
+  let mode = "ai";
+  let gameOver = false;
+  let thinking = false;
+  let winningLine = [];
+
+  let scores = loadScores();
+
+  function loadScores(){
+    try{
+      const saved = JSON.parse(localStorage.getItem("hanoon_xo_scores"));
+      return {
+        wins: Number(saved?.wins) || 0,
+        losses: Number(saved?.losses) || 0,
+        draws: Number(saved?.draws) || 0
+      };
+    }catch{
+      return {wins:0,losses:0,draws:0};
+    }
+  }
+
+  function saveScores(){
+    try{
+      localStorage.setItem("hanoon_xo_scores",JSON.stringify(scores));
+    }catch{}
+    renderScores();
+  }
+
+  function renderScores(){
+    Object.keys(scoreElements).forEach(key=>{
+      scoreElements[key].textContent = scores[key];
+    });
+  }
+
+  function setMessage(text,type=""){
+    message.textContent = text;
+    message.className = "game-message" + (type ? " " + type : "");
+  }
+
+  function showToast(text){
+    toast.textContent = text;
+    toast.classList.add("show");
+    clearTimeout(showToast.timer);
+    showToast.timer = setTimeout(()=>{
+      toast.classList.remove("show");
+    },2200);
+  }
+
+  function renderBoard(){
+    cells.forEach((cell,index)=>{
+      const value = board[index];
+
+      cell.textContent = value;
+      cell.className = "cell";
+
+      if(value){
+        cell.classList.add(value.toLowerCase());
+      }
+
+      if(winningLine.includes(index)){
+        cell.classList.add("win");
+      }
+
+      cell.disabled = Boolean(value) || gameOver || thinking;
+    });
+
+    turnSymbol.textContent = currentPlayer;
+    turnSymbol.style.color = currentPlayer === "X"
+      ? "var(--cyan)"
+      : "var(--pink)";
+  }
+
+  function getResult(state){
+    for(const line of WIN_LINES){
+      const [a,b,c] = line;
+
+      if(state[a] && state[a] === state[b] && state[a] === state[c]){
+        return {winner:state[a],line};
+      }
+    }
+
+    if(state.every(Boolean)){
+      return {winner:"draw",line:[]};
+    }
+
+    return null;
+  }
+
+  function finishGame(result){
+    gameOver = true;
+    thinking = false;
+    winningLine = result.line || [];
+
+    if(result.winner === "draw"){
+      setMessage("انتهت المباراة بالتعادل.", "warning");
+
+      if(mode === "ai"){
+        scores.draws++;
+      }
+    }else if(mode === "local"){
+      setMessage(
+        result.winner === "X"
+          ? "اللاعب الأول فاز بالمباراة!"
+          : "اللاعب الثاني فاز بالمباراة!",
+        "success"
+      );
+    }else if(result.winner === "X"){
+      setMessage("مبروك! لقد انتصرت على الكمبيوتر.", "success");
+      scores.wins++;
+    }else{
+      setMessage("الكمبيوتر فاز هذه المرة. حاول مجددًا!", "warning");
+      scores.losses++;
+    }
+
+    if(mode === "ai"){
+      saveScores();
+    }
+
+    renderBoard();
+  }
+
+  function switchTurn(){
+    currentPlayer = currentPlayer === "X" ? "O" : "X";
+    renderBoard();
+
+    if(mode === "ai" && currentPlayer === "O" && !gameOver){
+      computerTurn();
+    }else if(mode === "local" && !gameOver){
+      setMessage(
+        currentPlayer === "X"
+          ? "دور اللاعب الأول — X"
+          : "دور اللاعب الثاني — O"
+      );
+    }else if(mode === "ai" && !gameOver){
+      setMessage("دورك الآن — اختر خانة.");
+    }
+  }
+
+  function playCell(index){
+    if(gameOver || thinking || board[index]) return;
+    if(mode === "ai" && currentPlayer !== "X") return;
+
+    board[index] = currentPlayer;
+
+    const result = getResult(board);
+
+    if(result){
+      finishGame(result);
+      return;
+    }
+
+    switchTurn();
+  }
+
+  function availableMoves(state){
+    return state
+      .map((value,index)=>value ? -1 : index)
+      .filter(index=>index !== -1);
+  }
+
+  function winningMove(state,player){
+    for(const index of availableMoves(state)){
+      state[index] = player;
+      const won = getResult(state)?.winner === player;
+      state[index] = "";
+      if(won) return index;
+    }
+    return null;
+  }
+
+  function randomMove(state){
+    const moves = availableMoves(state);
+    return moves[Math.floor(Math.random()*moves.length)];
+  }
+
+  function mediumMove(){
+    const win = winningMove(board,"O");
+    if(win !== null) return win;
+
+    const block = winningMove(board,"X");
+    if(block !== null) return block;
+
+    if(!board[4]) return 4;
+
+    const corners = [0,2,6,8].filter(i=>!board[i]);
+    if(corners.length){
+      return corners[Math.floor(Math.random()*corners.length)];
+    }
+
+    return randomMove(board);
+  }
+
+  function minimax(state,isMaximizing,depth){
+    const result = getResult(state);
+
+    if(result){
+      if(result.winner === "O") return 10-depth;
+      if(result.winner === "X") return depth-10;
+      return 0;
+    }
+
+    const moves = availableMoves(state);
+
+    if(isMaximizing){
+      let best = -Infinity;
+
+      for(const index of moves){
+        state[index] = "O";
+        best = Math.max(best,minimax(state,false,depth+1));
+        state[index] = "";
+      }
+
+      return best;
+    }
+
+    let best = Infinity;
+
+    for(const index of moves){
+      state[index] = "X";
+      best = Math.min(best,minimax(state,true,depth+1));
+      state[index] = "";
+    }
+
+    return best;
+  }
+
+  function expertMove(){
+    let bestScore = -Infinity;
+    let bestMoves = [];
+
+    for(const index of availableMoves(board)){
+      board[index] = "O";
+      const score = minimax(board,false,0);
+      board[index] = "";
+
+      if(score > bestScore){
+        bestScore = score;
+        bestMoves = [index];
+      }else if(score === bestScore){
+        bestMoves.push(index);
+      }
+    }
+
+    return bestMoves[Math.floor(Math.random()*bestMoves.length)];
+  }
+
+  function hardMove(){
+    return expertMove();
+  }
+
+  function getComputerMove(){
+    switch(difficulty.value){
+      case "easy":
+        return randomMove(board);
+
+      case "medium":
+        return mediumMove();
+
+      case "hard":
+        return hardMove();
+
+      case "expert":
+        return expertMove();
+
+      default:
+        return randomMove(board);
+    }
+  }
+
+  function computerTurn(){
+    thinking = true;
+    setMessage("الكمبيوتر يفكر في حركته...");
+    renderBoard();
+
+    setTimeout(()=>{
+      if(gameOver || mode !== "ai") return;
+
+      const index = getComputerMove();
+
+      thinking = false;
+
+      if(index === undefined || index === null){
+        const result = getResult(board);
+        if(result) finishGame(result);
+        return;
+      }
+
+      board[index] = "O";
+
+      const result = getResult(board);
+
+      if(result){
+        finishGame(result);
+        return;
+      }
+
+      switchTurn();
+    },450);
+  }
+
+  function resetGame(){
+    board = Array(9).fill("");
+    currentPlayer = "X";
+    gameOver = false;
+    thinking = false;
+    winningLine = [];
+
+    renderBoard();
+
+    setMessage(
+      mode === "ai"
+        ? "بدأت مباراة جديدة. دورك الأول!"
+        : "بدأت مباراة جديدة. اللاعب الأول يبدأ."
+    );
+  }
+
+  function changeMode(nextMode){
+    mode = nextMode;
+
+    document.querySelectorAll(".mode-btn").forEach(button=>{
+      button.classList.toggle(
+        "active",
+        button.dataset.mode === mode
+      );
+    });
+
+    difficultyWrap.classList.toggle("hidden",mode !== "ai");
+
+    modeNote.textContent = mode === "ai"
+      ? "أنت تلعب بعلامة X والكمبيوتر يلعب بعلامة O. اختر مستوى التحدي المناسب."
+      : "اللعب بالتناوب على نفس الجهاز. اللاعب الأول X واللاعب الثاني O.";
+
+    resetGame();
+  }
+
+  cells.forEach(cell=>{
+    cell.addEventListener("click",()=>{
+      playCell(Number(cell.dataset.index));
+    });
+  });
+
+  document.querySelectorAll(".mode-btn").forEach(button=>{
+    button.addEventListener("click",()=>{
+      if(mode === button.dataset.mode) return;
+      changeMode(button.dataset.mode);
+    });
+  });
+
+  document.getElementById("newGame").addEventListener("click",()=>{
+    resetGame();
+  });
+
+  document.getElementById("resetBoard").addEventListener("click",()=>{
+    resetGame();
+    showToast("تمت إعادة اللوحة.");
+  });
+
+  difficulty.addEventListener("change",()=>{
+    resetGame();
+    showToast("تم تغيير مستوى الصعوبة.");
+  });
+
+  document.getElementById("clearStats").addEventListener("click",()=>{
+    const confirmed = confirm("هل تريد تصفير نتائج إكس أو المحفوظة على هذا الجهاز؟");
+    if(!confirmed) return;
+
+    scores = {wins:0,losses:0,draws:0};
+    saveScores();
+    showToast("تم تصفير النتائج المحلية.");
+  });
+
+  renderScores();
+  resetGame();
+
+})();
+</script>
+</body>
+</html>
