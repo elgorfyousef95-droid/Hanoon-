@@ -3,2190 +3,779 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover">
-<meta name="theme-color" content="#080b18">
-<title>إكس أو | HANOON WORLD</title>
-
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="theme-color" content="#090b18">
+<title>XO ARENA | HANOON WORLD</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-
 <style>
 :root{
-  --bg:#080b18;
-  --panel:#11172b;
-  --panel2:#171f38;
-  --line:rgba(255,255,255,.09);
-  --text:#f5f6ff;
-  --muted:#8e9ab8;
-  --purple:#9575ff;
-  --purple2:#6749df;
-  --cyan:#42d9e8;
-  --pink:#ff75b5;
-  --green:#4de0ad;
-  --gold:#ffd27a;
-  --danger:#ff7188;
-  --radius:22px;
-}
-
-*{
-  box-sizing:border-box;
-  -webkit-tap-highlight-color:transparent;
-}
-
-html,body{
-  width:100%;
-  height:100%;
-  margin:0;
-  overflow:hidden;
-  overscroll-behavior:none;
-  touch-action:pan-x pan-y;
-}
-
-body{
-  color:var(--text);
-  background:var(--bg);
-  font-family:'Cairo',sans-serif;
-  user-select:none;
-  -webkit-user-select:none;
-}
-
-button,input,select{
-  font:inherit;
-}
-
-button{
-  color:inherit;
-  border:0;
-  cursor:pointer;
-  touch-action:manipulation;
-}
-
-button:focus-visible{
-  outline:2px solid var(--cyan);
-  outline-offset:3px;
-}
-
-.app{
-  position:relative;
-  width:100%;
-  height:100dvh;
-  min-height:0;
-  overflow:hidden;
-  isolation:isolate;
-  background:
-    radial-gradient(ellipse at 15% 15%,rgba(111,76,255,.18),transparent 38%),
-    radial-gradient(ellipse at 90% 85%,rgba(35,189,220,.12),transparent 35%),
-    linear-gradient(145deg,#080b18,#0d1225 55%,#080d1c);
-}
-
-.app::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  z-index:-2;
-  pointer-events:none;
-  opacity:.19;
-  background-image:
-    linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
-  background-size:38px 38px;
-}
-
-.ambient{
-  position:absolute;
-  width:260px;
-  height:260px;
-  border-radius:50%;
-  filter:blur(80px);
-  opacity:.15;
-  pointer-events:none;
-  z-index:-1;
-}
-
-.ambient.one{
-  top:-130px;
-  right:-80px;
-  background:#7957ff;
-}
-
-.ambient.two{
-  bottom:-150px;
-  left:-90px;
-  background:#25c8dc;
-}
-
-.screen{
-  position:absolute;
-  inset:0;
-  display:none;
-  flex-direction:column;
-  min-height:0;
-  overflow:hidden;
-  padding:
-    max(15px,env(safe-area-inset-top))
-    17px
-    max(15px,env(safe-area-inset-bottom));
-  animation:screenIn .24s ease both;
-}
-
-.screen.active{
-  display:flex;
-}
-
-@keyframes screenIn{
-  from{opacity:0;transform:translateY(8px)}
-  to{opacity:1;transform:translateY(0)}
-}
-
-.topbar{
-  flex:0 0 auto;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:12px;
-  min-height:48px;
-}
-
-.brand{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  font-size:13px;
-  font-weight:900;
-  letter-spacing:.5px;
-}
-
-.brand-icon{
-  width:39px;
-  height:39px;
-  display:grid;
-  place-items:center;
-  border:1px solid rgba(255,255,255,.15);
-  border-radius:13px;
-  background:linear-gradient(145deg,#a58aff,#6041d8);
-  box-shadow:0 7px 22px #7957ff45;
-}
-
-.brand-icon svg{
-  width:24px;
-  height:24px;
-}
-
-.icon-btn{
-  width:42px;
-  height:42px;
-  display:grid;
-  place-items:center;
-  border:1px solid var(--line);
-  border-radius:13px;
-  background:rgba(255,255,255,.055);
-  color:#dce2ff;
-}
-
-.icon-btn svg{
-  width:19px;
-  height:19px;
-}
-
-.icon-btn:active{
-  transform:scale(.95);
-}
-
-.back-button{
-  display:flex;
-  align-items:center;
-  gap:7px;
-  padding:9px 13px;
-  border:1px solid var(--line);
-  border-radius:12px;
-  background:rgba(255,255,255,.055);
-  color:#dce2ff;
-  font-size:12px;
-  font-weight:800;
-}
-
-.back-button svg{
-  width:17px;
-  height:17px;
-}
-
-.screen-content{
-  flex:1;
-  min-height:0;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  width:100%;
-  max-width:620px;
-  margin:0 auto;
-}
-
-.eyebrow{
-  display:inline-flex;
-  align-items:center;
-  gap:8px;
-  width:max-content;
-  padding:7px 12px;
-  border:1px solid #a58aff44;
-  border-radius:30px;
-  background:#8b6bff16;
-  color:#c9baff;
-  font-size:11px;
-  font-weight:800;
-}
-
-.eyebrow-dot{
-  width:7px;
-  height:7px;
-  border-radius:50%;
-  background:var(--green);
-  box-shadow:0 0 12px var(--green);
-}
-
-.hero-title{
-  margin:14px 0 4px;
-  font-size:clamp(31px,7vw,48px);
-  line-height:1.3;
-  font-weight:900;
-}
-
-.hero-title span{
-  color:#a78aff;
-}
-
-.hero-description{
-  max-width:420px;
-  margin:5px 0 21px;
-  color:#aeb8d3;
-  font-size:13px;
-  line-height:2;
-}
-
-.main-menu{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:11px;
-}
-
-.menu-card{
-  position:relative;
-  min-height:120px;
-  overflow:hidden;
-  padding:17px;
-  text-align:right;
-  border:1px solid var(--line);
-  border-radius:19px;
-  background:linear-gradient(145deg,rgba(31,41,72,.96),rgba(17,24,45,.96));
-  transition:transform .18s,border-color .18s;
-}
-
-.menu-card:active{
-  transform:scale(.975);
-}
-
-.menu-card::after{
-  content:"";
-  position:absolute;
-  width:105px;
-  height:105px;
-  left:-32px;
-  bottom:-48px;
-  border-radius:50%;
-  background:var(--card-glow,rgba(144,111,255,.22));
-  filter:blur(9px);
-}
-
-.menu-card.purple{--card-glow:#8d6aff55}
-.menu-card.cyan{--card-glow:#35d9e955}
-.menu-card.gold{--card-glow:#ffd27a44}
-.menu-card.pink{--card-glow:#ff75b555}
-
-.menu-card-icon{
-  width:39px;
-  height:39px;
-  display:grid;
-  place-items:center;
-  margin-bottom:9px;
-  border:1px solid rgba(255,255,255,.13);
-  border-radius:12px;
-  background:rgba(255,255,255,.07);
-}
-
-.menu-card-icon svg{
-  width:21px;
-  height:21px;
-}
-
-.menu-card strong{
-  position:relative;
-  z-index:1;
-  display:block;
-  font-size:14px;
-  font-weight:900;
-}
-
-.menu-card small{
-  position:relative;
-  z-index:1;
-  display:block;
-  margin-top:3px;
-  color:#9eabc9;
-  font-size:10px;
-}
-
-.menu-footer{
-  margin-top:15px;
-  padding:13px 15px;
-  border:1px solid var(--line);
-  border-radius:15px;
-  background:rgba(255,255,255,.035);
-  color:#9ba8c7;
-  font-size:11px;
-  line-height:1.9;
-}
-
-/* إعداد المباراة */
-
-.screen-heading{
-  margin:20px 0 17px;
-}
-
-.screen-heading h1{
-  margin:0;
-  font-size:25px;
-  font-weight:900;
-}
-
-.screen-heading p{
-  margin:5px 0 0;
-  color:var(--muted);
-  font-size:12px;
-}
-
-.setup-card{
-  padding:18px;
-  border:1px solid var(--line);
-  border-radius:21px;
-  background:linear-gradient(145deg,rgba(25,34,61,.96),rgba(15,21,41,.96));
-  box-shadow:0 20px 55px #0003;
-}
-
-.field-title{
-  display:block;
-  margin:0 0 10px;
-  color:#aab5d0;
-  font-size:12px;
-  font-weight:800;
-}
-
-.choice-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:9px;
-  margin-bottom:20px;
-}
-
-.choice{
-  min-height:73px;
-  padding:12px;
-  text-align:right;
-  border:1px solid var(--line);
-  border-radius:14px;
-  background:rgba(255,255,255,.035);
-}
-
-.choice.active{
-  border-color:#a48aff;
-  background:linear-gradient(145deg,#8b6bff30,#6d55d91b);
-  box-shadow:inset 0 0 20px #8b6bff12;
-}
-
-.choice strong{
-  display:block;
-  font-size:13px;
-  font-weight:900;
-}
-
-.choice small{
-  display:block;
-  margin-top:3px;
-  color:#96a2c0;
-  font-size:10px;
-}
-
-.select-control{
-  width:100%;
-  height:48px;
-  padding:0 13px;
-  border:1px solid var(--line);
-  border-radius:13px;
-  outline:none;
-  background:#111a31;
-  color:white;
-  font-size:13px;
-}
-
-.select-control option{
-  background:#111a31;
-}
-
-.setup-note{
-  margin:13px 0 0;
-  color:#8795b6;
-  font-size:11px;
-  line-height:1.9;
-}
-
-.primary-button{
-  min-height:50px;
-  padding:12px 18px;
-  border-radius:14px;
-  background:linear-gradient(115deg,#a083ff,#6948e2);
-  box-shadow:0 9px 26px #7957ff3c;
-  color:white;
-  font-size:14px;
-  font-weight:900;
-  transition:filter .18s,transform .18s;
-}
-
-.primary-button:active{
-  transform:scale(.98);
-}
-
-.secondary-button{
-  min-height:46px;
-  padding:10px 15px;
-  border:1px solid var(--line);
-  border-radius:13px;
-  background:rgba(255,255,255,.055);
-  color:#d5dcf5;
-  font-size:12px;
-  font-weight:800;
-}
-
-.danger-button{
-  color:#ff9aaa;
-  border-color:#ff718833;
-  background:#ff71880d;
-}
-
-.full-button{
-  width:100%;
-  margin-top:16px;
-}
-
-/* شاشة المباراة */
-
-#matchScreen{
-  padding-left:12px;
-  padding-right:12px;
-}
-
-.match-top{
-  max-width:560px;
-  width:100%;
-  margin:0 auto;
-}
-
-.match-title{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:9px;
-  margin:9px 0 13px;
-  font-size:14px;
-  font-weight:900;
-  color:#dfe4ff;
-}
-
-.match-title span{
-  color:#a58aff;
-}
-
-.player-strip{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:9px;
-  width:100%;
-}
-
-.player-card{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  min-width:0;
-  padding:11px;
-  border:1px solid var(--line);
-  border-radius:15px;
-  background:rgba(255,255,255,.045);
-  transition:border-color .2s,background .2s;
-}
-
-.player-card.active-turn{
-  border-color:#a58aff9c;
-  background:#8b6bff19;
-  box-shadow:0 0 20px #8b6bff12;
-}
-
-.player-avatar{
-  width:38px;
-  height:38px;
-  flex:0 0 38px;
-  display:grid;
-  place-items:center;
-  border-radius:12px;
-  background:#42d9e81a;
-  color:var(--cyan);
-  font-size:20px;
-  font-weight:900;
-}
-
-.player-card:nth-child(2) .player-avatar{
-  background:#ff75b51a;
-  color:var(--pink);
-}
-
-.player-info{
-  min-width:0;
-}
-
-.player-info strong{
-  display:block;
-  overflow:hidden;
-  text-overflow:ellipsis;
-  white-space:nowrap;
-  font-size:11px;
-  font-weight:900;
-}
-
-.player-info small{
-  display:block;
-  margin-top:2px;
-  color:#94a0bf;
-  font-size:9px;
-}
-
-.turn-status{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:9px;
-  min-height:43px;
-  margin:12px auto;
-  padding:8px 12px;
-  border:1px solid var(--line);
-  border-radius:13px;
-  background:rgba(255,255,255,.04);
-  color:#cbd5f2;
-  font-size:12px;
-  font-weight:800;
-}
-
-.turn-status .turn-mark{
-  font-size:19px;
-  font-weight:900;
-  color:var(--cyan);
-}
-
-.board-wrap{
-  width:min(100%,min(72vw,390px));
-  max-width:390px;
-  margin:0 auto;
-  flex:0 1 auto;
-  aspect-ratio:1;
-  padding:10px;
-  border:1px solid #a48aff3a;
-  border-radius:25px;
-  background:
-    linear-gradient(145deg,#252d50,#151d39);
-  box-shadow:
-    inset 0 0 30px #0005,
-    0 18px 45px #0005,
-    0 0 35px #7655ff12;
-}
-
-.board{
-  width:100%;
-  height:100%;
-  display:grid;
-  grid-template-columns:repeat(3,minmax(0,1fr));
-  grid-template-rows:repeat(3,minmax(0,1fr));
-  gap:8px;
-}
-
-.cell{
-  display:grid;
-  place-items:center;
-  min-width:0;
-  min-height:0;
-  border:1px solid rgba(255,255,255,.08);
-  border-radius:16px;
-  background:linear-gradient(145deg,#202a4a,#151e39);
-  color:white;
-  font-size:clamp(43px,12vw,76px);
-  line-height:1;
-  font-weight:900;
-  transition:background .15s,border-color .15s,transform .15s;
-}
-
-.cell:active:not(:disabled){
-  transform:scale(.95);
-}
-
-.cell:disabled{
-  cursor:default;
-}
-
-.cell.x{
-  color:var(--cyan);
-  text-shadow:0 0 25px #42d9e877;
-}
-
-.cell.o{
-  color:var(--pink);
-  text-shadow:0 0 25px #ff75b577;
-}
-
-.cell.winner{
-  border-color:var(--green);
-  background:linear-gradient(145deg,#28544e,#1a3b40);
-  box-shadow:0 0 20px #4de0ad35;
-}
-
-.match-message{
-  width:min(100%,440px);
-  min-height:42px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  margin:12px auto 0;
-  padding:8px 12px;
-  border-radius:12px;
-  background:rgba(255,255,255,.035);
-  color:#aebbd8;
-  text-align:center;
-  font-size:11px;
-  font-weight:800;
-}
-
-.match-actions{
-  display:flex;
-  justify-content:center;
-  gap:9px;
-  width:min(100%,440px);
-  margin:11px auto 0;
-}
-
-.match-actions button{
-  flex:1;
-  min-height:43px;
-}
-
-.match-bottom{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:8px;
-  margin-top:auto;
-  padding-top:10px;
-}
-
-.match-bottom button{
-  min-height:38px;
-  padding:8px 12px;
-  border:1px solid var(--line);
-  border-radius:11px;
-  background:rgba(255,255,255,.035);
-  color:#9eabc9;
-  font-size:10px;
-  font-weight:800;
-}
-
-/* النتيجة */
-
-.result-content{
-  text-align:center;
-}
-
-.result-symbol{
-  width:92px;
-  height:92px;
-  display:grid;
-  place-items:center;
-  margin:0 auto 19px;
-  border:1px solid #a48aff66;
-  border-radius:29px;
-  background:linear-gradient(145deg,#8b6bff36,#42d9e814);
-  box-shadow:0 0 50px #7957ff24;
-}
-
-.result-symbol svg{
-  width:46px;
-  height:46px;
-}
-
-.result-content h1{
-  margin:0;
-  font-size:30px;
-  font-weight:900;
-}
-
-.result-content p{
-  margin:7px 0 22px;
-  color:#9eabc9;
-  font-size:12px;
-}
-
-.result-score{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:9px;
-  margin-bottom:19px;
-}
-
-.result-score div{
-  padding:13px 5px;
-  border:1px solid var(--line);
-  border-radius:14px;
-  background:rgba(255,255,255,.04);
-}
-
-.result-score strong{
-  display:block;
-  font-size:24px;
-  font-weight:900;
-}
-
-.result-score span{
-  color:#98a5c4;
-  font-size:10px;
-}
-
-.result-buttons{
-  display:grid;
-  gap:9px;
-}
-
-/* الإحصائيات */
-
-.data-panel{
-  padding:17px;
-  border:1px solid var(--line);
-  border-radius:18px;
-  background:rgba(255,255,255,.035);
-}
-
-.stats-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:9px;
-}
-
-.stat-box{
-  padding:15px 5px;
-  border:1px solid var(--line);
-  border-radius:14px;
-  background:rgba(255,255,255,.035);
-  text-align:center;
-}
-
-.stat-box strong{
-  display:block;
-  font-size:25px;
-  font-weight:900;
-}
-
-.stat-box span{
-  display:block;
-  margin-top:3px;
-  color:#9ba8c7;
-  font-size:10px;
-}
-
-.stat-box.win strong{color:var(--green)}
-.stat-box.loss strong{color:var(--pink)}
-.stat-box.draw strong{color:#bca8ff}
-
-.section-label{
-  margin:19px 0 10px;
-  color:#cbd4ef;
-  font-size:13px;
-  font-weight:900;
-}
-
-.history-list{
-  display:flex;
-  flex-direction:column;
-  gap:8px;
-  max-height:230px;
-  overflow-y:auto;
-  overscroll-behavior:contain;
-}
-
-.history-item{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:10px;
-  padding:11px 12px;
-  border:1px solid var(--line);
-  border-radius:12px;
-  background:rgba(255,255,255,.03);
-}
-
-.history-item strong{
-  display:block;
-  font-size:11px;
-}
-
-.history-item small{
-  display:block;
-  margin-top:3px;
-  color:#8997b6;
-  font-size:9px;
-}
-
-.history-result{
-  font-size:11px;
-  font-weight:900;
-}
-
-.history-result.win{color:var(--green)}
-.history-result.loss{color:var(--pink)}
-.history-result.draw{color:var(--gold)}
-
-.empty-history{
-  padding:22px 10px;
-  border:1px dashed #ffffff20;
-  border-radius:13px;
-  color:#8794b2;
-  text-align:center;
-  font-size:11px;
-}
-
-/* الإعدادات */
-
-.settings-list{
-  display:flex;
-  flex-direction:column;
-  gap:9px;
-}
-
-.setting-row{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:12px;
-  min-height:58px;
-  padding:10px 13px;
-  border:1px solid var(--line);
-  border-radius:13px;
-  background:rgba(255,255,255,.035);
-}
-
-.setting-row strong{
-  display:block;
-  font-size:12px;
-}
-
-.setting-row small{
-  display:block;
-  margin-top:3px;
-  color:#8997b6;
-  font-size:10px;
-}
-
-.toggle{
-  position:relative;
-  width:44px;
-  height:25px;
-  flex:0 0 44px;
-  border-radius:30px;
-  background:#39425e;
-  transition:background .2s;
-}
-
-.toggle::after{
-  content:"";
-  position:absolute;
-  top:3px;
-  right:3px;
-  width:19px;
-  height:19px;
-  border-radius:50%;
-  background:white;
-  transition:transform .2s;
-}
-
-.toggle.on{
-  background:#8061ef;
-}
-
-.toggle.on::after{
-  transform:translateX(-19px);
-}
-
-.setting-description{
-  margin-top:14px;
-  color:#8997b6;
-  font-size:10px;
-  line-height:1.9;
-}
-
-/* إشعار */
-
-.toast{
-  position:absolute;
-  z-index:20;
-  bottom:max(22px,env(safe-area-inset-bottom));
-  left:50%;
-  width:max-content;
-  max-width:calc(100% - 35px);
-  padding:11px 17px;
-  border:1px solid var(--line);
-  border-radius:12px;
-  background:#202a48;
-  color:white;
-  font-size:11px;
-  font-weight:800;
-  text-align:center;
-  opacity:0;
-  pointer-events:none;
-  transform:translate(-50%,15px);
-  transition:.22s;
-}
-
-.toast.show{
-  opacity:1;
-  transform:translate(-50%,0);
-}
-
-.hidden{
-  display:none!important;
-}
-
+ --bg:#090b18;--panel:#12182b;--panel2:#19223b;--panel3:#202b49;
+ --line:rgba(255,255,255,.09);--text:#f5f6ff;--muted:#91a0c0;
+ --purple:#9878ff;--purple2:#6848dc;--cyan:#49d8e8;
+ --pink:#ff79b8;--green:#48dfac;--gold:#ffd17b;--red:#ff7189;
+ --radius:22px;--cell:#1b2542;--glow:rgba(143,111,255,.2);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;width:100%;min-height:100%;background:var(--bg);color:var(--text);font-family:Cairo,sans-serif}
+body{overflow:hidden;overscroll-behavior:none}
+button,input,select{font:inherit}
+button{color:inherit;border:0;cursor:pointer}
+button:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
+button:disabled{opacity:.42;cursor:not-allowed}
+.app{position:relative;width:100%;height:100dvh;min-height:0;overflow:hidden;isolation:isolate;background:
+ radial-gradient(ellipse at 10% 5%,rgba(109,77,230,.22),transparent 36%),
+ radial-gradient(ellipse at 95% 95%,rgba(25,177,202,.13),transparent 34%),
+ linear-gradient(145deg,#080b17,#10172b 55%,#080c19)}
+.app:before{content:"";position:absolute;inset:0;z-index:-2;pointer-events:none;opacity:.13;background-image:linear-gradient(#fff 1px,transparent 1px),linear-gradient(90deg,#fff 1px,transparent 1px);background-size:36px 36px}
+.orb{position:absolute;z-index:-1;width:240px;height:240px;border-radius:50%;filter:blur(85px);opacity:.17;pointer-events:none}
+.orb.a{top:-140px;right:-90px;background:#835dff}.orb.b{bottom:-150px;left:-90px;background:#25c6da}
+.screen{position:absolute;inset:0;display:none;flex-direction:column;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding:max(14px,env(safe-area-inset-top)) 16px max(15px,env(safe-area-inset-bottom));scrollbar-width:thin;scrollbar-color:#414b6c transparent}
+.screen.active{display:flex;animation:enter .2s ease both}
+@keyframes enter{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:10px;flex:0 0 auto;min-height:47px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:900;font-size:12px;letter-spacing:.6px}
+.brand-icon{width:39px;height:39px;display:grid;place-items:center;border-radius:13px;background:linear-gradient(145deg,#a68bff,#6040d4);box-shadow:0 8px 24px #7654ef55}
+.brand-icon svg{width:24px;height:24px}
+.icon-btn,.back-btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-width:42px;height:42px;padding:0 12px;border:1px solid var(--line);border-radius:13px;background:#ffffff09;color:#dce3ff}
+.icon-btn svg,.back-btn svg{width:18px;height:18px}
+.wrap{width:100%;max-width:680px;margin:0 auto}
+.hero{padding:clamp(20px,5vh,46px) 0 20px}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;padding:7px 12px;border:1px solid #a58aff44;border-radius:30px;background:#8b6bff16;color:#cbbdff;font-size:10px;font-weight:900;letter-spacing:.4px}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 12px var(--green)}
+.hero h1{font-size:clamp(38px,10vw,65px);line-height:1.15;margin:15px 0 7px;font-weight:900}
+.hero h1 span{color:#a58aff}
+.hero p{max-width:470px;color:#aab6d3;font-size:13px;line-height:2;margin:0}
+.hero-art{position:relative;display:flex;align-items:center;justify-content:center;gap:clamp(15px,5vw,35px);height:125px;margin:15px 0 20px;border:1px solid #ffffff10;border-radius:24px;background:linear-gradient(120deg,#8a6aff18,#42d9e80c,#ff75b510);overflow:hidden}
+.hero-art:before,.hero-art:after{content:"";position:absolute;width:180px;height:180px;border:1px solid #ffffff10;border-radius:50%}
+.hero-art:after{width:240px;height:240px}
+.glyph{position:relative;z-index:1;font-size:clamp(54px,13vw,76px);font-weight:900;line-height:1}
+.glyph.x{color:var(--cyan);text-shadow:0 0 30px #42d9e877}
+.glyph.o{color:var(--pink);text-shadow:0 0 30px #ff75b577}
+.hero-stat{position:absolute;bottom:9px;left:13px;color:#9eabc8;font-size:9px}
+.section-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:17px 0 11px}
+.section-head h2{font-size:15px;margin:0;font-weight:900}
+.section-head small{font-size:10px;color:var(--muted)}
+.menu-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.menu-card{position:relative;min-height:116px;padding:15px;text-align:right;overflow:hidden;border:1px solid var(--line);border-radius:19px;background:linear-gradient(145deg,#202b49,#121a30);transition:transform .16s,border-color .16s}
+.menu-card:active{transform:scale(.975)}
+.menu-card:after{content:"";position:absolute;width:100px;height:100px;left:-36px;bottom:-50px;border-radius:50%;background:var(--tint,#8b6bff55);filter:blur(12px)}
+.menu-card .mi{display:grid;place-items:center;width:39px;height:39px;margin-bottom:9px;border-radius:12px;background:#ffffff0d;border:1px solid #ffffff14}
+.mi svg{width:21px;height:21px}
+.menu-card strong,.menu-card small{position:relative;z-index:1;display:block}
+.menu-card strong{font-size:13px;font-weight:900}
+.menu-card small{font-size:10px;color:#9eabc8;margin-top:3px}
+.menu-card.purple{--tint:#9673ff66}.menu-card.cyan{--tint:#42d9e866}.menu-card.pink{--tint:#ff75b566}.menu-card.gold{--tint:#ffd27a55}
+.info-strip{margin-top:13px;padding:13px 15px;border:1px solid var(--line);border-radius:15px;background:#ffffff07;color:#aab6d2;font-size:11px;line-height:1.9}
+.page-title{margin:20px 0 16px}
+.page-title h1{margin:0;font-size:25px;font-weight:900}
+.page-title p{margin:5px 0 0;color:var(--muted);font-size:11px}
+.panel{padding:17px;border:1px solid var(--line);border-radius:20px;background:linear-gradient(145deg,#1b2540ed,#11182ded);box-shadow:0 16px 40px #0002}
+.field-label{display:block;margin:0 0 9px;color:#b8c3df;font-size:11px;font-weight:900}
+.choice-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-bottom:19px}
+.choice{min-height:66px;padding:11px;text-align:right;border:1px solid var(--line);border-radius:14px;background:#ffffff06}
+.choice.active{border-color:#a58aff;background:#8b6bff22;box-shadow:inset 0 0 18px #8b6bff12}
+.choice strong{display:block;font-size:12px;font-weight:900}
+.choice small{display:block;margin-top:3px;color:#97a5c4;font-size:9px;line-height:1.6}
+.select{width:100%;height:47px;padding:0 12px;border:1px solid var(--line);border-radius:12px;background:#101a32;color:white;outline:none;font-size:12px}
+.select option{background:#101a32}
+.form-row{margin-bottom:17px}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.primary,.secondary,.danger{min-height:47px;padding:11px 16px;border-radius:13px;font-size:12px;font-weight:900}
+.primary{background:linear-gradient(115deg,#a083ff,#6948e2);box-shadow:0 8px 24px #7957ff3c;color:white}
+.secondary{border:1px solid var(--line);background:#ffffff09;color:#dce3ff}
+.danger{border:1px solid #ff718833;background:#ff718811;color:#ff9aaa}
+.primary:active,.secondary:active,.danger:active{transform:scale(.98)}
+.full{width:100%}
+.note{color:#8998b8;font-size:10px;line-height:1.9;margin:12px 0 0}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border:1px solid var(--line);border-radius:30px;background:#ffffff08;color:#aebbd8;font-size:9px;font-weight:800}
+.pill b{color:var(--green)}
+/* Match */
+#matchScreen{padding-left:12px;padding-right:12px;overflow:hidden}
+.match-shell{width:100%;max-width:560px;margin:0 auto;display:flex;flex-direction:column;min-height:0;flex:1}
+.match-head{display:flex;align-items:center;justify-content:space-between;gap:8px;flex:0 0 auto}
+.match-head .back-btn{height:37px;font-size:10px}
+.match-mode{color:#b9c5e2;font-size:11px;font-weight:900;text-align:center}
+.match-tools{display:flex;gap:6px}
+.match-tools button{height:36px;min-width:36px;border:1px solid var(--line);border-radius:11px;background:#ffffff08;font-size:10px}
+.players{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:11px 0 8px}
+.player{display:flex;align-items:center;gap:9px;min-width:0;padding:9px;border:1px solid var(--line);border-radius:14px;background:#ffffff06;transition:.2s}
+.player.active{border-color:#a58affaa;background:#8b6bff1c;box-shadow:0 0 20px #8b6bff13}
+.avatar{width:36px;height:36px;flex:0 0 36px;display:grid;place-items:center;border-radius:11px;background:#42d9e81a;color:var(--cyan);font-size:20px;font-weight:900}
+.player:nth-child(2) .avatar{background:#ff75b51a;color:var(--pink)}
+.player-info{min-width:0}
+.player-info strong{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:10px}
+.player-info small{display:block;color:#91a0c0;font-size:9px}
+.turnbar{display:flex;align-items:center;justify-content:center;gap:9px;min-height:37px;margin-bottom:9px;border:1px solid var(--line);border-radius:12px;background:#ffffff07;color:#d5def8;font-size:11px;font-weight:900}
+.turnbar .turn-symbol{font-size:18px;color:var(--cyan)}
+.board-area{display:flex;align-items:center;justify-content:center;flex:1;min-height:0}
+.board-frame{width:min(100%,min(78vw,410px),calc(100dvh - 310px));aspect-ratio:1;padding:9px;border:1px solid #a48aff44;border-radius:23px;background:linear-gradient(145deg,#283454,#151e38);box-shadow:inset 0 0 30px #0005,0 18px 45px #0005,0 0 35px #7655ff14}
+.board{width:100%;height:100%;display:grid;gap:7px;grid-template-columns:repeat(var(--size,3),minmax(0,1fr));grid-template-rows:repeat(var(--size,3),minmax(0,1fr))}
+.cell{display:grid;place-items:center;min-width:0;min-height:0;border:1px solid #ffffff10;border-radius:clamp(7px,2.5vw,15px);background:linear-gradient(145deg,#222e4e,#151e38);font-size:clamp(27px,10vw,70px);line-height:1;font-weight:900;transition:background .15s,border-color .15s,transform .15s}
+.cell:active:not(:disabled){transform:scale(.94)}
+.cell.x{color:var(--cyan);text-shadow:0 0 22px #42d9e877}
+.cell.o{color:var(--pink);text-shadow:0 0 22px #ff75b577}
+.cell.winner{border-color:var(--green);background:linear-gradient(145deg,#28544e,#1a3b40);box-shadow:0 0 17px #4de0ad33}
+.cell.last{outline:1px solid #a58aff77}
+.match-message{min-height:34px;display:flex;align-items:center;justify-content:center;text-align:center;color:#aebbd8;font-size:10px;font-weight:800}
+.match-actions{display:flex;gap:8px;flex:0 0 auto}
+.match-actions button{flex:1;min-height:39px;padding:8px 10px;font-size:10px}
+.match-foot{display:flex;align-items:center;justify-content:center;gap:7px;margin-top:8px;flex:0 0 auto}
+.match-foot button{min-height:32px;padding:6px 10px;border:1px solid var(--line);border-radius:10px;background:#ffffff06;color:#9eabc8;font-size:9px;font-weight:800}
+.timer{font-variant-numeric:tabular-nums;color:var(--gold);font-size:10px}
+/* Results / stats / settings */
+.result-content{width:100%;max-width:520px;margin:auto;text-align:center}
+.result-medal{width:88px;height:88px;display:grid;place-items:center;margin:0 auto 17px;border:1px solid #a48aff66;border-radius:27px;background:linear-gradient(145deg,#8b6bff35,#42d9e815);box-shadow:0 0 45px #7957ff24}
+.result-medal svg{width:44px;height:44px}
+.result-content h1{font-size:29px;margin:0;font-weight:900}
+.result-content p{font-size:11px;color:#9eabc9;margin:7px 0 20px}
+.score-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:17px}
+.score-box{padding:13px 5px;border:1px solid var(--line);border-radius:13px;background:#ffffff06}
+.score-box strong{display:block;font-size:23px}
+.score-box span{font-size:9px;color:#9ba8c7}
+.score-box.win strong{color:var(--green)}.score-box.loss strong{color:var(--pink)}.score-box.draw strong{color:var(--gold)}
+.result-buttons{display:grid;gap:8px}
+.stats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}
+.stat{padding:16px 10px;text-align:center;border:1px solid var(--line);border-radius:15px;background:#ffffff06}
+.stat strong{display:block;font-size:25px;font-weight:900}
+.stat span{color:#9ba8c7;font-size:10px}
+.history{display:flex;flex-direction:column;gap:8px;max-height:34vh;overflow:auto}
+.history-item{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 12px;border:1px solid var(--line);border-radius:12px;background:#ffffff05}
+.history-item strong{display:block;font-size:10px}.history-item small{display:block;color:#8e9cba;font-size:9px;margin-top:3px}
+.history-result{font-size:10px;font-weight:900}.history-result.win{color:var(--green)}.history-result.loss{color:var(--pink)}.history-result.draw{color:var(--gold)}
+.empty{padding:23px 12px;border:1px dashed #ffffff22;border-radius:14px;text-align:center;color:#91a0c0;font-size:11px;line-height:1.9}
+.setting-row{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:57px;padding:10px 13px;border:1px solid var(--line);border-radius:13px;background:#ffffff06;margin-bottom:8px}
+.setting-row strong{display:block;font-size:11px}.setting-row small{display:block;color:#8f9dbb;font-size:9px;margin-top:3px}
+.toggle{position:relative;width:43px;height:24px;flex:0 0 43px;border-radius:30px;background:#39425e}
+.toggle:after{content:"";position:absolute;top:3px;right:3px;width:18px;height:18px;border-radius:50%;background:white;transition:transform .2s}
+.toggle.on{background:#8061ef}.toggle.on:after{transform:translateX(-19px)}
+.theme-options{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.theme-option{height:58px;border:2px solid transparent;border-radius:13px;background:#202a49}
+.theme-option.active{border-color:white}
+.theme-option span{display:block;font-size:9px;margin-top:5px;color:#fff}
+.rule-card{padding:14px;margin-bottom:9px;border:1px solid var(--line);border-radius:14px;background:#ffffff06}
+.rule-card h3{margin:0 0 5px;font-size:12px}.rule-card p{margin:0;color:#a4b0cc;font-size:10px;line-height:1.9}
+.toast{position:absolute;z-index:30;bottom:max(20px,env(safe-area-inset-bottom));left:50%;width:max-content;max-width:calc(100% - 30px);padding:11px 16px;border:1px solid var(--line);border-radius:12px;background:#263252;color:white;font-size:10px;font-weight:900;text-align:center;opacity:0;pointer-events:none;transform:translate(-50%,12px);transition:.2s}
+.toast.show{opacity:1;transform:translate(-50%,0)}
 @media(max-height:690px){
-  .screen{
-    padding-top:max(9px,env(safe-area-inset-top));
-    padding-bottom:max(9px,env(safe-area-inset-bottom));
-  }
-
-  .hero-title{font-size:30px;margin-top:8px}
-  .hero-description{margin-bottom:12px;font-size:11px}
-  .menu-card{min-height:100px;padding:12px}
-  .menu-card-icon{width:33px;height:33px;margin-bottom:5px}
-  .menu-footer{margin-top:10px;padding:9px}
-  .screen-heading{margin:10px 0}
-  .setup-card{padding:14px}
-  .choice{min-height:62px}
-  .board-wrap{width:min(100%,min(62vh,350px))}
-  .player-card{padding:8px}
-  .player-avatar{width:32px;height:32px;flex-basis:32px}
-  .turn-status{margin:8px auto;min-height:35px}
-  .match-message{margin-top:8px;min-height:35px}
-  .match-actions{margin-top:7px}
-  .match-bottom{padding-top:6px}
+ .screen{padding-top:max(8px,env(safe-area-inset-top));padding-bottom:max(8px,env(safe-area-inset-bottom))}
+ .hero{padding:12px 0}.hero-art{height:85px;margin:8px 0 12px}.hero h1{font-size:35px;margin:8px 0}
+ .menu-card{min-height:94px;padding:11px}.menu-card .mi{width:32px;height:32px;margin-bottom:5px}
+ .board-frame{width:min(100%,min(65vw,350px),calc(100dvh - 265px))}
+ .players{margin:7px 0 5px}.player{padding:6px}.avatar{width:30px;height:30px;flex-basis:30px}
+ .turnbar{min-height:31px;margin-bottom:5px}.match-message{min-height:27px}.match-foot{margin-top:4px}
 }
-
-@media(max-width:360px){
-  .screen{padding-left:11px;padding-right:11px}
-  .main-menu{gap:8px}
-  .menu-card{min-height:108px;padding:12px}
-  .board-wrap{width:min(100%,min(70vw,350px))}
-  .cell{border-radius:12px}
-  .player-info strong{font-size:10px}
-}
-
-@media(min-width:700px){
-  .screen{padding-left:30px;padding-right:30px}
-  .board-wrap{width:min(100%,390px)}
-}
+@media(max-width:350px){.screen{padding-left:10px;padding-right:10px}.menu-grid{gap:7px}.board-frame{width:min(100%,min(75vw,calc(100dvh - 280px)))}.cell{font-size:clamp(23px,9vw,48px)}}
 </style>
 </head>
-
 <body>
 <div class="app">
-  <div class="ambient one"></div>
-  <div class="ambient two"></div>
+<div class="orb a"></div><div class="orb b"></div>
 
-  <!-- الشاشة الرئيسية -->
-  <section class="screen active" id="homeScreen">
-    <header class="topbar">
-      <div class="brand">
-        <div class="brand-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round">
-            <path d="M7 7l10 10M17 7L7 17"/>
-            <circle cx="12" cy="12" r="10" opacity=".35"/>
-          </svg>
-        </div>
-        <span>HANOON WORLD</span>
-      </div>
-      <button class="icon-btn" data-screen="settingsScreen" aria-label="الإعدادات">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-          <circle cx="12" cy="12" r="3"/>
-          <path d="M19.4 15a1.7 1.7 0 0 0 .34 1.88l.06.06-1.7 2.94-.09-.02a1.7 1.7 0 0 0-1.75.48l-.06.07h-3.4l-.02-.09a1.7 1.7 0 0 0-1.2-1.28 1.7 1.7 0 0 0-1.86.4l-.06.06-2.94-1.7.02-.09a1.7 1.7 0 0 0-.48-1.75l-.07-.06v-3.4l.09-.02a1.7 1.7 0 0 0 1.28-1.2 1.7 1.7 0 0 0-.4-1.86l-.06-.06 1.7-2.94.09.02a1.7 1.7 0 0 0 1.75-.48l.06-.07h3.4l.02.09a1.7 1.7 0 0 0 1.2 1.28 1.7 1.7 0 0 0 1.86-.4l.06-.06 2.94 1.7-.02.09a1.7 1.7 0 0 0 .48 1.75l.07.06v3.4z"/>
-        </svg>
-      </button>
-    </header>
+<!-- HOME -->
+<section class="screen active" id="homeScreen">
+ <header class="topbar">
+  <div class="brand"><div class="brand-icon"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round"><path d="M7 7l10 10M17 7L7 17"/><circle cx="12" cy="12" r="10" opacity=".35"/></svg></div> HANOON GAME ARENA</div>
+  <button class="icon-btn" data-go="settingsScreen" aria-label="الإعدادات"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.88l.06.06-1.7 2.94-.09-.02a1.7 1.7 0 0 0-1.75.48l-.06.07h-3.4l-.02-.09a1.7 1.7 0 0 0-1.2-1.28 1.7 1.7 0 0 0-1.86.4l-.06.06-2.94-1.7.02-.09a1.7 1.7 0 0 0-.48-1.75l-.07-.06v-3.4l.09-.02a1.7 1.7 0 0 0 1.28-1.2 1.7 1.7 0 0 0-.4-1.86l-.06-.06 1.7-2.94.09.02a1.7 1.7 0 0 0 1.75-.48l.06-.07h3.4l.02.09a1.7 1.7 0 0 0 1.2 1.28 1.7 1.7 0 0 0 1.86-.4l.06-.06 2.94 1.7-.02.09a1.7 1.7 0 0 0 .48 1.75l.07.06v3.4z"/></svg></button>
+ </header>
+ <main class="wrap">
+  <div class="hero">
+   <div class="eyebrow"><span class="dot"></span> ARENA EDITION</div>
+   <h1>إكس <span>أو</span></h1>
+   <p>ادخل ساحة المواجهة، اختبر ذكاءك، واختر أسلوب اللعب الذي يناسبك. كل حركة تصنع فرقًا.</p>
+  </div>
+  <div class="hero-art"><span class="glyph x">×</span><span class="glyph o">○</span><span class="hero-stat">STRATEGY · FOCUS · VICTORY</span></div>
+  <div class="section-head"><h2>ابدأ المواجهة</h2><small>اختر طريقة اللعب</small></div>
+  <div class="menu-grid">
+   <button class="menu-card purple" data-go="setupScreen"><span class="mi"><svg viewBox="0 0 24 24" fill="none" stroke="#c7b6ff" stroke-width="1.8"><path d="M7 7l10 10M17 7L7 17"/><circle cx="12" cy="12" r="9"/></svg></span><strong>مباراة جديدة</strong><small>اختر النمط والخصم</small></button>
+   <button class="menu-card cyan" data-go="statsScreen"><span class="mi"><svg viewBox="0 0 24 24" fill="none" stroke="#63e4ed" stroke-width="1.8"><path d="M4 19V5m0 14h17M8 15l4-4 3 2 5-7"/></svg></span><strong>إحصائياتي</strong><small>نتائجك وسجل مواجهاتك</small></button>
+   <button class="menu-card pink" data-go="rulesScreen"><span class="mi"><svg viewBox="0 0 24 24" fill="none" stroke="#ff9bc8" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M9.6 9a2.5 2.5 0 1 1 4.2 1.8c-1.2 1-1.8 1.4-1.8 2.7M12 17h.01"/></svg></span><strong>القواعد والأنماط</strong><small>تعرف على طرق الفوز</small></button>
+   <button class="menu-card gold" data-go="settingsScreen"><span class="mi"><svg viewBox="0 0 24 24" fill="none" stroke="#ffdb94" stroke-width="1.8"><path d="M12 3l2.5 5.5L20 11l-5.5 2.5L12 19l-2.5-5.5L4 11l5.5-2.5z"/></svg></span><strong>التخصيص</strong><small>المظهر والصوت والتحكم</small></button>
+  </div>
+  <div class="info-strip">تعمل اللعبة محليًا على جهازك. يمكنك اللعب ضد الكمبيوتر أو مع لاعب آخر على نفس الجهاز. المباريات عبر الإنترنت والبطولات غير مفعلة في هذه النسخة.</div>
+ </main>
+</section>
 
-    <main class="screen-content">
-      <div class="eyebrow"><span class="eyebrow-dot"></span> HANOON GAME ARENA</div>
-      <h1 class="hero-title">إكس <span>أو</span></h1>
-      <p class="hero-description">
-        مواجهة ذكاء وتركيز. خطط لحركاتك، اقرأ خطوات خصمك، واصنع طريقك نحو الفوز.
-      </p>
-
-      <div class="main-menu">
-        <button class="menu-card purple" data-screen="setupScreen">
-          <span class="menu-card-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="#bba8ff" stroke-width="1.9" stroke-linecap="round">
-              <path d="M7 7l10 10M17 7L7 17"/>
-            </svg>
-          </span>
-          <strong>ابدأ مباراة</strong>
-          <small>اختر خصمك وابدأ التحدي</small>
-        </button>
-
-        <button class="menu-card cyan" data-screen="statsScreen">
-          <span class="menu-card-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="#65e5ee" stroke-width="1.8" stroke-linecap="round">
-              <path d="M4 19V5M4 19h17M8 15l4-4 3 2 5-7"/>
-            </svg>
-          </span>
-          <strong>الإحصائيات</strong>
-          <small>نتائجك وسجل مبارياتك</small>
-        </button>
-
-        <button class="menu-card gold" data-screen="settingsScreen">
-          <span class="menu-card-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="#ffd27a" stroke-width="1.8">
-              <circle cx="12" cy="12" r="3"/>
-              <path d="M19.4 15a1.7 1.7 0 0 0 .34 1.88l.06.06-1.7 2.94-.09-.02a1.7 1.7 0 0 0-1.75.48l-.06.07h-3.4l-.02-.09a1.7 1.7 0 0 0-1.2-1.28 1.7 1.7 0 0 0-1.86.4l-.06.06-2.94-1.7.02-.09a1.7 1.7 0 0 0-.48-1.75l-.07-.06v-3.4l.09-.02a1.7 1.7 0 0 0 1.28-1.2 1.7 1.7 0 0 0-.4-1.86l-.06-.06 1.7-2.94.09.02a1.7 1.7 0 0 0 1.75-.48l.06-.07h3.4l.02.09a1.7 1.7 0 0 0 1.2 1.28 1.7 1.7 0 0 0 1.86-.4l.06-.06 2.94 1.7-.02.09a1.7 1.7 0 0 0 .48 1.75l.07.06v3.4z"/>
-            </svg>
-          </span>
-          <strong>إعدادات اللعبة</strong>
-          <small>تحكم في تجربة اللعب</small>
-        </button>
-
-        <button class="menu-card pink" data-screen="rulesScreen">
-          <span class="menu-card-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="#ff91c3" stroke-width="1.8" stroke-linecap="round">
-              <circle cx="12" cy="12" r="9"/>
-              <path d="M9.5 9a2.5 2.5 0 1 1 4.1 1.9c-1 .8-1.6 1.2-1.6 2.6M12 17h.01"/>
-            </svg>
-          </span>
-          <strong>قواعد اللعبة</strong>
-          <small>تعرف على طريقة الفوز</small>
-        </button>
-      </div>
-
-      <div class="menu-footer">
-        اختر وضع اللعب الذي يناسبك. يمكنك اللعب ضد الكمبيوتر أو مواجهة لاعب آخر على نفس الجهاز.
-      </div>
-    </main>
-  </section>
-
-  <!-- إعداد المباراة -->
-  <section class="screen" id="setupScreen">
-    <header class="topbar">
-      <button class="back-button" data-screen="homeScreen">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M19 12H5M12 19l-7-7 7-7"/>
-        </svg>
-        الرئيسية
-      </button>
-      <div class="brand">إعداد المباراة</div>
-    </header>
-
-    <main class="screen-content">
-      <div class="screen-heading">
-        <div class="eyebrow"><span class="eyebrow-dot"></span> MATCH SETUP</div>
-        <h1>جهّز المواجهة</h1>
-        <p>اختر طريقة اللعب ومستوى التحدي قبل البداية.</p>
-      </div>
-
-      <div class="setup-card">
-        <span class="field-title">طريقة اللعب</span>
-        <div class="choice-grid">
-          <button class="choice active" data-mode="ai">
-            <strong>ضد الكمبيوتر</strong>
-            <small>تحدَّ الذكاء الاصطناعي</small>
-          </button>
-          <button class="choice" data-mode="local">
-            <strong>لاعبان محليًا</strong>
-            <small>مواجهة على نفس الجهاز</small>
-          </button>
-        </div>
-
-        <div id="difficultyArea">
-          <label class="field-title" for="difficulty">مستوى الخصم</label>
-          <select class="select-control" id="difficulty">
-            <option value="easy">سهل — بداية مريحة</option>
-            <option value="medium" selected>متوسط — تحدٍّ متوازن</option>
-            <option value="hard">صعب — خصم ذكي</option>
-            <option value="expert">محترف — أفضل الحركات</option>
-          </select>
-          <p class="setup-note">
-            مستويات الصعوبة تختلف في طريقة اختيار الحركة. المستويان الصعب والمحترف يستخدمان خوارزمية بحث كاملة.
-          </p>
-        </div>
-
-        <button class="primary-button full-button" id="startMatch">ابدأ المباراة</button>
-      </div>
-    </main>
-  </section>
-
-  <!-- شاشة المباراة -->
-  <section class="screen" id="matchScreen">
-    <div class="match-top">
-      <header class="topbar">
-        <button class="icon-btn" id="exitMatch" aria-label="إنهاء المباراة">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M15 18l-6-6 6-6"/>
-          </svg>
-        </button>
-        <div class="brand">HANOON <span style="color:#a78aff">ARENA</span></div>
-        <button class="icon-btn" id="restartMatch" aria-label="إعادة المباراة">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
-            <path d="M20 7v5h-5M4 17v-5h5"/>
-            <path d="M5.6 9A7 7 0 0 1 18 6l2 2M4 16l2 2a7 7 0 0 0 12.4-3"/>
-          </svg>
-        </button>
-      </header>
-
-      <div class="match-title">المباراة <span>الحالية</span></div>
-
-      <div class="player-strip">
-        <div class="player-card active-turn" id="playerX">
-          <div class="player-avatar">X</div>
-          <div class="player-info">
-            <strong id="playerXName">أنت</strong>
-            <small>العلامة X</small>
-          </div>
-        </div>
-
-        <div class="player-card" id="playerO">
-          <div class="player-avatar">O</div>
-          <div class="player-info">
-            <strong id="playerOName">الكمبيوتر</strong>
-            <small>العلامة O</small>
-          </div>
-        </div>
-      </div>
-
-      <div class="turn-status" id="turnStatus">
-        <span>دورك الآن</span>
-        <span class="turn-mark" id="turnMark">X</span>
-      </div>
+<!-- SETUP -->
+<section class="screen" id="setupScreen">
+ <header class="topbar"><button class="back-btn" data-go="homeScreen">رجوع</button><div class="brand">إعداد المواجهة</div><span class="pill">MATCH SETUP</span></header>
+ <main class="wrap">
+  <div class="page-title"><h1>جهّز مباراتك</h1><p>اختر القواعد والخصم قبل دخول الساحة.</p></div>
+  <div class="panel">
+   <div class="form-row"><label class="field-label">طريقة اللعب</label>
+    <div class="choice-grid" id="modeChoices">
+     <button class="choice active" data-mode="ai"><strong>ضد الكمبيوتر</strong><small>خصم ذكي بأربع درجات</small></button>
+     <button class="choice" data-mode="local"><strong>لاعبان على الجهاز</strong><small>مواجهة مباشرة بين لاعبين</small></button>
     </div>
+   </div>
+   <div class="form-row" id="difficultyRow"><label class="field-label" for="difficulty">مستوى الكمبيوتر</label>
+    <select class="select" id="difficulty"><option value="easy">سهل — للتدريب</option><option value="medium" selected>متوسط — متوازن</option><option value="hard">صعب — منافس قوي</option><option value="expert">محترف — أفضل حركة متاحة</option></select>
+   </div>
+   <div class="form-row"><label class="field-label" for="gameVariant">نمط اللعبة</label>
+    <select class="select" id="gameVariant">
+     <option value="classic">كلاسيك 3×3 — ثلاثة متتالية</option>
+     <option value="four">لوحة 4×4 — أربعة متتالية</option>
+     <option value="five">لوحة 5×5 — أربعة متتالية</option>
+     <option value="misere">Misère — تجنب تكوين ثلاثة</option>
+    </select>
+   </div>
+   <div class="two-col">
+    <div class="form-row"><label class="field-label" for="symbolChoice">رمزك</label><select class="select" id="symbolChoice"><option value="X">X — يبدأ أولًا</option><option value="O">O — يبدأ ثانيًا</option></select></div>
+    <div class="form-row"><label class="field-label" for="starterChoice">بداية اللعب</label><select class="select" id="starterChoice"><option value="X">اللاعب X</option><option value="O">اللاعب O</option><option value="random">اختيار عشوائي</option></select></div>
+   </div>
+   <div class="form-row"><label class="field-label" for="timerChoice">مؤقت المباراة</label><select class="select" id="timerChoice"><option value="0">بدون مؤقت</option><option value="30">30 ثانية لكل حركة</option><option value="60">60 ثانية لكل حركة</option></select></div>
+   <button class="primary full" id="startMatch">دخول ساحة اللعب</button>
+   <p class="note">ملاحظة: مستوى المحترف يستخدم بحثًا كاملًا في لوحة 3×3، واستراتيجية تقييم متقدمة في اللوحات الأكبر.</p>
+  </div>
+ </main>
+</section>
 
-    <div class="board-wrap">
-      <div class="board" id="board">
-        <button class="cell" data-index="0" aria-label="الخانة 1"></button>
-        <button class="cell" data-index="1" aria-label="الخانة 2"></button>
-        <button class="cell" data-index="2" aria-label="الخانة 3"></button>
-        <button class="cell" data-index="3" aria-label="الخانة 4"></button>
-        <button class="cell" data-index="4" aria-label="الخانة 5"></button>
-        <button class="cell" data-index="5" aria-label="الخانة 6"></button>
-        <button class="cell" data-index="6" aria-label="الخانة 7"></button>
-        <button class="cell" data-index="7" aria-label="الخانة 8"></button>
-        <button class="cell" data-index="8" aria-label="الخانة 9"></button>
-      </div>
-    </div>
+<!-- MATCH -->
+<section class="screen" id="matchScreen">
+ <div class="match-shell">
+  <div class="match-head">
+   <button class="back-btn" id="exitMatch">إنهاء</button>
+   <div class="match-mode" id="matchModeLabel">CLASSIC MATCH</div>
+   <div class="match-tools"><button id="undoMove" title="تراجع عن الحركة">تراجع</button><button id="restartMatch" title="إعادة المباراة">إعادة</button></div>
+  </div>
+  <div class="players">
+   <div class="player active" id="playerX"><div class="avatar">X</div><div class="player-info"><strong id="playerXName">اللاعب X</strong><small id="playerXSub">دور اللاعب</small></div></div>
+   <div class="player" id="playerO"><div class="avatar">O</div><div class="player-info"><strong id="playerOName">اللاعب O</strong><small id="playerOSub">ينتظر دوره</small></div></div>
+  </div>
+  <div class="turnbar"><span class="turn-symbol" id="turnSymbol">X</span><span id="turnText">دور اللاعب X</span><span class="timer" id="turnTimer"></span></div>
+  <div class="board-area"><div class="board-frame"><div class="board" id="board" style="--size:3"></div></div></div>
+  <div class="match-message" id="matchMessage">اختر خانتك الأولى.</div>
+  <div class="match-actions"><button class="secondary" id="soundQuick">الصوت: تشغيل</button><button class="secondary" id="hintButton">تلميح</button></div>
+  <div class="match-foot"><button id="matchRules">قواعد النمط</button><button id="saveAndHome">حفظ والعودة للقائمة</button><span class="pill" id="moveCount">0 حركة</span></div>
+ </div>
+</section>
 
-    <div class="match-message" id="matchMessage" aria-live="polite">
-      اختر أول حركة لبدء المواجهة.
-    </div>
+<!-- RESULT -->
+<section class="screen" id="resultScreen">
+ <header class="topbar"><button class="back-btn" data-go="homeScreen">القائمة الرئيسية</button><span class="brand">نتيجة المواجهة</span><span class="pill">MATCH RESULT</span></header>
+ <main class="result-content">
+  <div class="result-medal" id="resultIcon"><svg viewBox="0 0 24 24" fill="none" stroke="#4de0ad" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 12l3 3 7-7"/><circle cx="12" cy="12" r="10"/></svg></div>
+  <h1 id="resultTitle">انتهت المباراة</h1><p id="resultDescription">نتيجة المواجهة</p>
+  <div class="score-grid"><div class="score-box win"><strong id="resultWins">0</strong><span>فوزك ضد الكمبيوتر</span></div><div class="score-box loss"><strong id="resultLosses">0</strong><span>خساراتك ضد الكمبيوتر</span></div><div class="score-box draw"><strong id="resultDraws">0</strong><span>تعادلاتك</span></div></div>
+  <div class="panel" style="margin-bottom:13px;text-align:right"><div class="section-head" style="margin-top:0"><h2>ملخص المباراة</h2><span class="pill" id="resultVariant">كلاسيك</span></div><div id="resultSummary" class="note" style="margin:0"></div></div>
+  <div class="result-buttons"><button class="primary full" id="playAgain">مواجهة جديدة بنفس الإعدادات</button><button class="secondary full" id="resultStats">عرض سجل المباريات</button><button class="secondary full" data-go="setupScreen">تغيير إعدادات المباراة</button></div>
+ </main>
+</section>
 
-    <div class="match-actions">
-      <button class="primary-button" id="matchNewGame">مباراة جديدة</button>
-      <button class="secondary-button" id="matchHome">القائمة الرئيسية</button>
-    </div>
+<!-- STATS -->
+<section class="screen" id="statsScreen">
+ <header class="topbar"><button class="back-btn" data-go="homeScreen">رجوع</button><span class="brand">مركز الإحصائيات</span><span class="pill">YOUR RECORD</span></header>
+ <main class="wrap">
+  <div class="page-title"><h1>أداؤك في الساحة</h1><p>الأرقام هنا مبنية على المباريات المكتملة على هذا الجهاز.</p></div>
+  <div class="stats-grid">
+   <div class="stat"><strong id="statTotal">0</strong><span>إجمالي المباريات</span></div>
+   <div class="stat"><strong id="statWins" style="color:var(--green)">0</strong><span>فوز ضد الكمبيوتر</span></div>
+   <div class="stat"><strong id="statLosses" style="color:var(--pink)">0</strong><span>خسارة ضد الكمبيوتر</span></div>
+   <div class="stat"><strong id="statDraws" style="color:var(--gold)">0</strong><span>تعادل</span></div>
+  </div>
+  <div class="section-head"><h2>سجل المواجهات</h2><button class="danger" id="clearHistory" style="min-height:32px;padding:5px 10px;font-size:9px">مسح السجل</button></div>
+  <div class="history" id="historyList"><div class="empty">لا توجد مباريات مسجلة حتى الآن.</div></div>
+  <p class="note">يتم حفظ الإحصائيات محليًا في متصفح هذا الجهاز، ولا تُرسل إلى حسابك أو قاعدة البيانات.</p>
+ </main>
+</section>
 
-    <div class="match-bottom">
-      <button id="soundQuick">الصوت: تشغيل</button>
-      <button id="rulesQuick" data-screen="rulesScreen">قواعد اللعب</button>
-    </div>
-  </section>
+<!-- SETTINGS -->
+<section class="screen" id="settingsScreen">
+ <header class="topbar"><button class="back-btn" data-go="homeScreen">رجوع</button><span class="brand">تخصيص اللعبة</span><span class="pill">PREFERENCES</span></header>
+ <main class="wrap">
+  <div class="page-title"><h1>اضبط تجربتك</h1><p>تحكم في شكل الساحة وطريقة التفاعل.</p></div>
+  <div class="panel">
+   <div class="section-head" style="margin-top:0"><h2>مظهر الساحة</h2><small>اختر الثيم</small></div>
+   <div class="theme-options">
+    <button class="theme-option active" data-theme="violet" style="background:linear-gradient(145deg,#283454,#6848dc)"><span>Violet</span></button>
+    <button class="theme-option" data-theme="ocean" style="background:linear-gradient(145deg,#123c54,#087f9c)"><span>Ocean</span></button>
+    <button class="theme-option" data-theme="ruby" style="background:linear-gradient(145deg,#51253f,#a33c67)"><span>Ruby</span></button>
+   </div>
+   <div class="section-head"><h2>الصوت والتحكم</h2></div>
+   <div class="setting-row"><div><strong>المؤثرات الصوتية</strong><small>صوت الحركة والفوز</small></div><button class="toggle on" id="soundToggle" role="switch" aria-checked="true"></button></div>
+   <div class="setting-row"><div><strong>الاهتزاز</strong><small>اهتزاز خفيف عند الحركة</small></div><button class="toggle on" id="vibrationToggle" role="switch" aria-checked="true"></button></div>
+   <div class="setting-row"><div><strong>تأكيد إعادة المباراة</strong><small>منع إعادة الجولة بالخطأ</small></div><button class="toggle on" id="confirmToggle" role="switch" aria-checked="true"></button></div>
+   <div class="setting-row"><div><strong>حفظ المباراة الحالية</strong><small>حفظ تلقائي أثناء اللعب</small></div><span class="pill"><b>مفعل</b></span></div>
+   <button class="secondary full" id="resetSettings" style="margin-top:10px">استعادة الإعدادات الافتراضية</button>
+  </div>
+ </main>
+</section>
 
-  <!-- شاشة النتيجة -->
-  <section class="screen" id="resultScreen">
-    <header class="topbar">
-      <button class="back-button" data-screen="homeScreen">
-        العودة للرئيسية
-      </button>
-      <div class="brand">نتيجة المباراة</div>
-    </header>
+<!-- RULES -->
+<section class="screen" id="rulesScreen">
+ <header class="topbar"><button class="back-btn" data-go="homeScreen">رجوع</button><span class="brand">دليل اللعب</span><span class="pill">GAME GUIDE</span></header>
+ <main class="wrap">
+  <div class="page-title"><h1>اعرف قواعد المواجهة</h1><p>كل نمط له طريقة لعب وشرط فوز مختلف.</p></div>
+  <div class="rule-card"><h3>كلاسيك 3×3</h3><p>يتبادل اللاعبان وضع X وO على لوحة من تسع خانات. يفوز من يصنع ثلاثة رموز متتالية أفقيًا أو رأسيًا أو قطريًا. إذا امتلأت اللوحة دون فائز تنتهي بالتعادل.</p></div>
+  <div class="rule-card"><h3>لوحة 4×4</h3><p>لوحة أكبر من 16 خانة. تحتاج إلى أربعة رموز متتالية في خط أفقي أو رأسي أو قطري للفوز.</p></div>
+  <div class="rule-card"><h3>لوحة 5×5</h3><p>مساحة أوسع وتخطيط أطول. المطلوب تكوين أربعة رموز متتالية. راقب أكثر من اتجاه ولا تترك خصمك يصنع خطًا مفتوحًا.</p></div>
+  <div class="rule-card"><h3>Misère</h3><p>قواعد كلاسيك على لوحة 3×3، لكن الهدف معكوس: اللاعب الذي يُكمل ثلاثة رموز متتالية يخسر الجولة، ويفوز خصمه.</p></div>
+  <div class="rule-card"><h3>التراجع والتلميح</h3><p>في اللعب ضد الكمبيوتر، التراجع يرجع آخر حركة لك وحركة الكمبيوتر معًا إن وُجدتا. التلميح يقترح حركة جيدة ولا ينفذها نيابة عنك. في اللعب المحلي، التراجع يرجع حركة واحدة.</p></div>
+  <div class="rule-card"><h3>مستويات الكمبيوتر</h3><p>السهل يختار حركة متاحة عشوائيًا. المتوسط يحاول الفوز أو منعك. الصعب يستخدم تقييمًا تكتيكيًا أعمق. المحترف يبحث عن أفضل نتيجة ممكنة في الكلاسيك، ويستخدم تقييمًا أوسع للأنماط الأكبر.</p></div>
+  <button class="primary full" data-go="setupScreen">ابدأ اللعب</button>
+ </main>
+</section>
 
-    <main class="screen-content result-content">
-      <div class="result-symbol" id="resultIcon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#b8a5ff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M7 12l3 3 7-7"/>
-          <circle cx="12" cy="12" r="10"/>
-        </svg>
-      </div>
-
-      <h1 id="resultTitle">انتهت المباراة</h1>
-      <p id="resultDescription">إليك نتيجة المواجهة.</p>
-
-      <div class="result-score">
-        <div>
-          <strong id="resultWins">0</strong>
-          <span>انتصارات</span>
-        </div>
-        <div>
-          <strong id="resultLosses">0</strong>
-          <span>خسائر</span>
-        </div>
-        <div>
-          <strong id="resultDraws">0</strong>
-          <span>تعادلات</span>
-        </div>
-      </div>
-
-      <div class="result-buttons">
-        <button class="primary-button" id="playAgain">العب مرة أخرى</button>
-        <button class="secondary-button" id="resultStats">عرض الإحصائيات</button>
-        <button class="secondary-button" id="resultHome">العودة للقائمة</button>
-      </div>
-    </main>
-  </section>
-
-  <!-- الإحصائيات -->
-  <section class="screen" id="statsScreen">
-    <header class="topbar">
-      <button class="back-button" data-screen="homeScreen">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M19 12H5M12 19l-7-7 7-7"/>
-        </svg>
-        الرئيسية
-      </button>
-      <div class="brand">إحصائياتي</div>
-    </header>
-
-    <main class="screen-content" style="justify-content:flex-start;padding-top:17px">
-      <div class="screen-heading">
-        <div class="eyebrow">PLAYER RECORD</div>
-        <h1>أداؤك في اللعبة</h1>
-        <p>الأرقام هنا مبنية على مبارياتك المحفوظة على هذا الجهاز.</p>
-      </div>
-
-      <div class="data-panel">
-        <div class="stats-grid">
-          <div class="stat-box win">
-            <strong id="statWins">0</strong>
-            <span>انتصارات</span>
-          </div>
-          <div class="stat-box loss">
-            <strong id="statLosses">0</strong>
-            <span>خسائر</span>
-          </div>
-          <div class="stat-box draw">
-            <strong id="statDraws">0</strong>
-            <span>تعادلات</span>
-          </div>
-        </div>
-
-        <div class="section-label">إجمالي المباريات</div>
-        <div class="stat-box">
-          <strong id="statTotal">0</strong>
-          <span>مباراة مسجلة</span>
-        </div>
-
-        <div class="section-label">سجل آخر المباريات</div>
-        <div class="history-list" id="historyList">
-          <div class="empty-history">لا توجد مباريات مسجلة حتى الآن.</div>
-        </div>
-
-        <button class="secondary-button danger-button full-button" id="clearHistory">
-          مسح السجل والإحصائيات
-        </button>
-      </div>
-    </main>
-  </section>
-
-  <!-- الإعدادات -->
-  <section class="screen" id="settingsScreen">
-    <header class="topbar">
-      <button class="back-button" data-screen="homeScreen">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M19 12H5M12 19l-7-7 7-7"/>
-        </svg>
-        الرئيسية
-      </button>
-      <div class="brand">إعدادات اللعبة</div>
-    </header>
-
-    <main class="screen-content">
-      <div class="screen-heading">
-        <div class="eyebrow">GAME PREFERENCES</div>
-        <h1>تخصيص التجربة</h1>
-        <p>تحكم في المؤثرات وطريقة عرض اللعبة.</p>
-      </div>
-
-      <div class="setup-card">
-        <div class="settings-list">
-          <div class="setting-row">
-            <div>
-              <strong>المؤثرات الصوتية</strong>
-              <small>صوت عند الحركة ونهاية المباراة</small>
-            </div>
-            <button class="toggle on" id="soundToggle" role="switch" aria-checked="true" aria-label="المؤثرات الصوتية"></button>
-          </div>
-
-          <div class="setting-row">
-            <div>
-              <strong>الاهتزاز</strong>
-              <small>اهتزاز خفيف عند الحركة إذا كان الجهاز يدعم ذلك</small>
-            </div>
-            <button class="toggle on" id="vibrationToggle" role="switch" aria-checked="true" aria-label="الاهتزاز"></button>
-          </div>
-
-          <div class="setting-row">
-            <div>
-              <strong>تأكيد بدء مباراة جديدة</strong>
-              <small>طلب تأكيد قبل إعادة المباراة أثناء اللعب</small>
-            </div>
-            <button class="toggle on" id="confirmToggle" role="switch" aria-checked="true" aria-label="تأكيد إعادة المباراة"></button>
-          </div>
-        </div>
-
-        <p class="setting-description">
-          يتم حفظ تفضيلاتك على هذا الجهاز. لا يتم إرسال سجل المباريات أو الإعدادات إلى حسابك أو قاعدة البيانات في هذه النسخة.
-        </p>
-
-        <button class="secondary-button full-button" id="resetSettings">استعادة الإعدادات الافتراضية</button>
-      </div>
-    </main>
-  </section>
-
-  <!-- القواعد -->
-  <section class="screen" id="rulesScreen">
-    <header class="topbar">
-      <button class="back-button" data-screen="homeScreen">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M19 12H5M12 19l-7-7 7-7"/>
-        </svg>
-        الرئيسية
-      </button>
-      <div class="brand">قواعد إكس أو</div>
-    </header>
-
-    <main class="screen-content">
-      <div class="screen-heading">
-        <div class="eyebrow">HOW TO PLAY</div>
-        <h1>كيف تحقق الفوز؟</h1>
-        <p>قواعد بسيطة، لكن الفوز يحتاج إلى تركيز وتخطيط.</p>
-      </div>
-
-      <div class="setup-card">
-        <div class="section-label">1 — بداية المباراة</div>
-        <p class="setup-note">تتكون اللوحة من تسع خانات. يبدأ اللاعب X أولًا، ثم يأتي دور اللاعب O.</p>
-
-        <div class="section-label">2 — طريقة اللعب</div>
-        <p class="setup-note">يختار كل لاعب خانة فارغة واحدة في دوره. لا يمكن تغيير العلامة بعد وضعها.</p>
-
-        <div class="section-label">3 — الفوز</div>
-        <p class="setup-note">الفائز هو أول لاعب يكوّن ثلاثة رموز متطابقة في خط أفقي أو رأسي أو قطري.</p>
-
-        <div class="section-label">4 — التعادل</div>
-        <p class="setup-note">إذا امتلأت الخانات التسع ولم ينجح أي لاعب في تكوين خط متصل، تنتهي المباراة بالتعادل.</p>
-
-        <div class="section-label">5 — مستويات الكمبيوتر</div>
-        <p class="setup-note">السهل يختار حركات عشوائية، والمتوسط يحاول الفوز أو منع فوزك، والصعب والمحترف يبحثان عن أفضل حركة ممكنة.</p>
-
-        <button class="primary-button full-button" data-screen="setupScreen">ابدأ اللعب</button>
-      </div>
-    </main>
-  </section>
-
-  <div class="toast" id="toast"></div>
+<div class="toast" id="toast"></div>
 </div>
 
 <script>
-(() => {
+(()=>{
 "use strict";
-
-/* =========================================
-   عناصر التطبيق والحالة العامة
-========================================= */
-
-const $ = selector => document.querySelector(selector);
-const $$ = selector => [...document.querySelectorAll(selector)];
-
-const screens = $$(".screen");
-const cells = $$(".cell");
-const messageElement = $("#matchMessage");
-const turnMark = $("#turnMark");
-const turnStatus = $("#turnStatus");
-
-const STORAGE_KEYS = {
-  scores:"hanoon_xo_v2_scores",
-  history:"hanoon_xo_v2_history",
-  settings:"hanoon_xo_v2_settings"
+const $=s=>document.querySelector(s);
+const $$=s=>[...document.querySelectorAll(s)];
+const KEYS={stats:"hanoon_xo_stats_v3",history:"hanoon_xo_history_v3",settings:"hanoon_xo_settings_v3",session:"hanoon_xo_active_session_v3"};
+const CONFIG={
+ classic:{size:3,win:3,label:"كلاسيك 3×3"},
+ four:{size:4,win:4,label:"لوحة 4×4"},
+ five:{size:5,win:4,label:"لوحة 5×5"},
+ misere:{size:3,win:3,label:"Misère"}
 };
+const defaults={sound:true,vibration:true,confirmRestart:true,theme:"violet"};
+let settings=load(KEYS.settings,defaults);
+let stats=load(KEYS.stats,{total:0,wins:0,losses:0,draws:0});
+let history=load(KEYS.history,[]);
+let screenId="homeScreen";
+let game=null;
+let computerTimer=null,turnTimer=null,timerInterval=null,toastTimer=null,audio=null;
+let lastCompleted=null;
 
-const WIN_LINES = [
-  [0,1,2],
-  [3,4,5],
-  [6,7,8],
-  [0,3,6],
-  [1,4,7],
-  [2,5,8],
-  [0,4,8],
-  [2,4,6]
-];
-
-let board = Array(9).fill("");
-let currentPlayer = "X";
-let gameMode = "ai";
-let difficulty = "medium";
-let gameOver = false;
-let thinking = false;
-let winningLine = [];
-let lastResult = null;
-let computerTimer = null;
-let toastTimer = null;
-let audioContext = null;
-
-let scores = loadJSON(STORAGE_KEYS.scores,{
-  wins:0,
-  losses:0,
-  draws:0,
-  total:0
-});
-
-let history = loadJSON(STORAGE_KEYS.history,[]);
-
-let settings = loadJSON(STORAGE_KEYS.settings,{
-  sound:true,
-  vibration:true,
-  confirmRestart:true
-});
-
-/* =========================================
-   التخزين المحلي
-========================================= */
-
-function loadJSON(key,fallback){
-  try{
-    const value = JSON.parse(localStorage.getItem(key));
-    return value && typeof value === "object" ? value : fallback;
-  }catch{
-    return fallback;
-  }
+function load(key,fallback){
+ try{const v=JSON.parse(localStorage.getItem(key));return v&&typeof v==="object"?v:fallback}catch{return fallback}
 }
-
-function saveData(){
-  try{
-    localStorage.setItem(STORAGE_KEYS.scores,JSON.stringify(scores));
-    localStorage.setItem(STORAGE_KEYS.history,JSON.stringify(history.slice(0,50)));
-    localStorage.setItem(STORAGE_KEYS.settings,JSON.stringify(settings));
-  }catch(error){
-    console.warn("Local storage unavailable",error);
-  }
+function save(key,value){try{localStorage.setItem(key,JSON.stringify(value))}catch{}}
+function persistSession(){
+ try{
+  if(game)sessionStorage.setItem(KEYS.session,JSON.stringify({screenId,game}));
+  else sessionStorage.removeItem(KEYS.session);
+ }catch{}
 }
-
-/* =========================================
-   التنقل بين الشاشات
-========================================= */
-
-function showScreen(id){
-  const target = document.getElementById(id);
-  if(!target) return;
-
-  screens.forEach(screen=>{
-    screen.classList.toggle("active",screen === target);
+function restoreSession(){
+ try{
+  const raw=sessionStorage.getItem(KEYS.session);if(!raw)return false;
+  const saved=JSON.parse(raw);
+  if(!saved||!saved.game||!Array.isArray(saved.game.board))return false;
+  game=saved.game;
+  if(game.finished){screenId="resultScreen";renderResult(game.result)}
+  else screenId=saved.screenId==="matchScreen"?"matchScreen":"homeScreen";
+  showScreen(screenId,false);
+  if(screenId==="matchScreen"){renderMatch();if(game.mode==="ai"&&game.turn==="O"&&!game.finished)computerTurn()}
+  return true;
+ }catch{return false}
+}
+function showScreen(id,remember=true){
+ const el=document.getElementById(id);if(!el)return;
+ $$(".screen").forEach(s=>s.classList.toggle("active",s===el));
+ screenId=id;
+ if(id==="statsScreen")renderStats();
+ if(id==="settingsScreen")renderSettings();
+ if(id==="matchScreen")renderMatch();
+ if(remember)persistSession();
+}
+$$("[data-go]").forEach(b=>b.addEventListener("click",()=>showScreen(b.dataset.go)));
+function toast(message){
+ const t=$("#toast");t.textContent=message;t.classList.add("show");
+ clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove("show"),2200);
+}
+function beep(type="move"){
+ if(!settings.sound)return;
+ try{
+  const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return;
+  audio ||= new AC();if(audio.state==="suspended")audio.resume();
+  const osc=audio.createOscillator(),gain=audio.createGain();
+  osc.connect(gain);gain.connect(audio.destination);
+  const now=audio.currentTime;
+  const freq={move:500,win:760,loss:220,draw:390}[type]||500;
+  osc.frequency.setValueAtTime(freq,now);osc.type="sine";
+  gain.gain.setValueAtTime(.0001,now);gain.gain.exponentialRampToValueAtTime(.09,now+.025);gain.gain.exponentialRampToValueAtTime(.0001,now+.2);
+  osc.start(now);osc.stop(now+.22);
+ }catch{}
+}
+function buzz(pattern=16){if(settings.vibration&&navigator.vibrate){try{navigator.vibrate(pattern)}catch{}}}
+function clearClocks(){clearTimeout(computerTimer);clearInterval(timerInterval);clearTimeout(turnTimer)}
+function themeApply(){
+ const themes={
+  violet:{bg:"#090b18",panel:"#12182b",panel2:"#19223b",purple:"#9878ff",purple2:"#6848dc",cell:"#1b2542"},
+  ocean:{bg:"#07131d",panel:"#102334",panel2:"#16334a",purple:"#39b9d5",purple2:"#147b9c",cell:"#15354a"},
+  ruby:{bg:"#170b18",panel:"#291426",panel2:"#3b1b34",purple:"#e477ae",purple2:"#a63d72",cell:"#3a2036"}
+ };
+ const t=themes[settings.theme]||themes.violet;
+ Object.entries(t).forEach(([k,v])=>document.documentElement.style.setProperty("--"+k,v));
+ $$(".theme-option").forEach(b=>b.classList.toggle("active",b.dataset.theme===settings.theme));
+}
+function currentConfig(){return CONFIG[game?.variant||"classic"]||CONFIG.classic}
+function setupValues(){
+ return{
+  mode:$$("[data-mode].active")[0]?.dataset.mode||"ai",
+  difficulty:$("#difficulty").value,
+  variant:$("#gameVariant").value,
+  humanSymbol:$("#symbolChoice").value,
+  starter:$("#starterChoice").value,
+  timer:Number($("#timerChoice").value)
+ };
+}
+$$("[data-mode]").forEach(b=>b.addEventListener("click",()=>{
+ $$("[data-mode]").forEach(x=>x.classList.toggle("active",x===b));
+ $("#difficultyRow").style.display=b.dataset.mode==="ai"?"block":"none";
+}));
+$("#startMatch").addEventListener("click",()=>startGame(setupValues()));
+function makeLines(size,win){
+ const lines=[];
+ for(let r=0;r<size;r++)for(let c=0;c<=size-win;c++){
+  const line=[];for(let k=0;k<win;k++)line.push(r*size+c+k);lines.push(line);
+ }
+ for(let c=0;c<size;c++)for(let r=0;r<=size-win;r++){
+  const line=[];for(let k=0;k<win;k++)line.push((r+k)*size+c);lines.push(line);
+ }
+ for(let r=0;r<=size-win;r++)for(let c=0;c<=size-win;c++){
+  const a=[],b=[];for(let k=0;k<win;k++){a.push((r+k)*size+c+k);b.push((r+k)*size+c+win-1-k)}lines.push(a,b);
+ }
+ return lines;
+}
+function startGame(opts){
+ clearClocks();
+ const cfg=CONFIG[opts.variant];
+ let starter=opts.starter==="random"?(Math.random()<.5?"X":"O"):opts.starter;
+ game={
+  mode:opts.mode,difficulty:opts.difficulty,variant:opts.variant,
+  size:cfg.size,win:cfg.win,humanSymbol:opts.humanSymbol,
+  turn:starter,starter,timerSeconds:opts.timer,secondsLeft:opts.timer,
+  board:Array(cfg.size*cfg.size).fill(""),moves:[],finished:false,result:null,
+  winningLine:[],lastMove:-1,startedAt:Date.now(),elapsed:0,
+  hintIndex:null,moveStartedAt:Date.now()
+ };
+ if(game.mode==="ai"){
+  $("#playerXName").textContent=game.humanSymbol==="X"?"أنت":"الكمبيوتر";
+  $("#playerOName").textContent=game.humanSymbol==="O"?"أنت":"الكمبيوتر";
+ }else{
+  $("#playerXName").textContent="اللاعب X";
+  $("#playerOName").textContent="اللاعب O";
+ }
+ showScreen("matchScreen");
+ renderMatch();
+ if(game.mode==="ai"&&game.turn!==game.humanSymbol)computerTurn();
+ else startTurnClock();
+ persistSession();
+}
+function renderMatch(){
+ if(!game)return;
+ const cfg=currentConfig();
+ $("#matchModeLabel").textContent=cfg.label.toUpperCase();
+ $("#board").style.setProperty("--size",game.size);
+ $("#board").innerHTML="";
+ game.board.forEach((value,index)=>{
+  const cell=document.createElement("button");
+  cell.className="cell"+(value?" "+value.toLowerCase():"");
+  if(game.winningLine.includes(index))cell.classList.add("winner");
+  if(game.lastMove===index)cell.classList.add("last");
+  cell.type="button";cell.dataset.index=index;
+  cell.textContent=value;
+  cell.setAttribute("aria-label",value?`الخانة ${index+1}: ${value}`:`الخانة ${index+1} فارغة`);
+  cell.disabled=Boolean(value)||game.finished||isComputerTurn();
+  cell.addEventListener("click",()=>playMove(index));
+  $("#board").appendChild(cell);
+ });
+ $("#playerX").classList.toggle("active",game.turn==="X"&&!game.finished);
+ $("#playerO").classList.toggle("active",game.turn==="O"&&!game.finished);
+ $("#playerXSub").textContent=game.turn==="X"&&!game.finished?"يلعب الآن":"ينتظر دوره";
+ $("#playerOSub").textContent=game.turn==="O"&&!game.finished?"يلعب الآن":"ينتظر دوره";
+ $("#turnSymbol").textContent=game.turn;
+ $("#turnSymbol").style.color=game.turn==="X"?"var(--cyan)":"var(--pink)";
+ $("#turnText").textContent=game.finished?"انتهت المباراة":(game.mode==="ai"&&game.turn===game.humanSymbol?"دورك الآن":game.mode==="ai"?"الكمبيوتر يفكر":"دور اللاعب "+game.turn);
+ $("#moveCount").textContent=game.moves.length+" حركة";
+ $("#undoMove").disabled=game.finished||game.moves.length===0||isComputerTurn();
+ $("#hintButton").disabled=game.finished||isComputerTurn();
+ $("#soundQuick").textContent=settings.sound?"الصوت: تشغيل":"الصوت: إيقاف";
+ if(game.hintIndex!==null&&!game.finished)$("#matchMessage").textContent="التلميح: جرّب الخانة رقم "+(game.hintIndex+1);
+}
+function isComputerTurn(){return game&&game.mode==="ai"&&game.turn!==game.humanSymbol}
+function startTurnClock(){
+ clearInterval(timerInterval);clearTimeout(turnTimer);
+ if(!game||game.finished||!game.timerSeconds){$("#turnTimer").textContent="";return}
+ game.secondsLeft=game.timerSeconds;game.moveStartedAt=Date.now();
+ const update=()=>{
+  if(!game||game.finished)return;
+  const spent=Math.floor((Date.now()-game.moveStartedAt)/1000);
+  const left=Math.max(0,game.timerSeconds-spent);
+  $("#turnTimer").textContent=left+"ث";
+  if(left<=0){
+   clearInterval(timerInterval);
+   if(game.mode==="ai"){
+    // لا تُسجل خسارة تلقائية بسبب مؤقت المتصفح؛ تنتهي الجولة بفوز الخصم.
+    finishGame({winner:game.turn===game.humanSymbol?opponent(game.turn):opponent(game.turn),line:[],reason:"انتهى وقت الحركة"});
+   }else{
+    finishGame({winner:opponent(game.turn),line:[],reason:"انتهى وقت الحركة"});
+   }
+  }
+ };
+ update();timerInterval=setInterval(update,250);
+}
+function opponent(p){return p==="X"?"O":"X"}
+function playMove(index,actor="human"){
+ if(!game||game.finished||game.board[index]||isComputerTurn()&&actor==="human")return;
+ if(actor==="human"&&game.mode==="ai"&&game.turn!==game.humanSymbol)return;
+ clearInterval(timerInterval);clearTimeout(turnTimer);
+ const player=game.turn;
+ game.board[index]=player;game.moves.push({index,player});game.lastMove=index;game.hintIndex=null;
+ beep("move");buzz();
+ const result=checkResult(game.board);
+ if(result){finishGame(result);return}
+ game.turn=opponent(game.turn);game.moveStartedAt=Date.now();
+ renderMatch();persistSession();
+ if(isComputerTurn())computerTurn();else startTurnClock();
+}
+function checkResult(board){
+ const lines=makeLines(game.size,game.win);
+ for(const line of lines){
+  const first=board[line[0]];
+  if(first&&line.every(i=>board[i]===first)){
+   if(game.variant==="misere")return{winner:opponent(first),loser:first,line,reason:"تكوّن ثلاثة متتالية في نمط Misère"};
+   return{winner:first,line,reason:"تكوين خط متتالي"};
+  }
+ }
+ if(board.every(Boolean))return{winner:"draw",line:[],reason:"امتلأت اللوحة دون فائز"};
+ return null;
+}
+/* AI */
+function available(board){const a=[];board.forEach((v,i)=>{if(!v)a.push(i)});return a}
+function findImmediate(board,player){
+ for(const i of available(board)){
+  board[i]=player;const result=checkResult(board);board[i]="";
+  if(result&&((game.variant==="misere"&&result.winner!==player)||(game.variant!=="misere"&&result.winner===player)))return i;
+ }
+ return null;
+}
+function scoreBoard(board,player){
+ const lines=makeLines(game.size,game.win);let score=0;
+ for(const line of lines){
+  let own=0,opp=0;
+  line.forEach(i=>{if(board[i]===player)own++;else if(board[i]===opponent(player))opp++});
+  if(!opp&&own)score+=Math.pow(5,own);
+  if(!own&&opp)score-=Math.pow(5,opp)*1.12;
+ }
+ const center=(game.size-1)/2;
+ board.forEach((v,i)=>{if(v===player){const r=Math.floor(i/game.size),c=i%game.size;score+=(game.size-Math.abs(center-r)-Math.abs(center-c))*.3}});
+ return score;
+}
+function tacticalMove(board,player,level){
+ const moves=available(board);if(!moves.length)return null;
+ if(game.variant==="misere"){
+  const safe=moves.filter(i=>{
+   board[i]=player;const loses=checkResult(board)?.winner===opponent(player);board[i]="";return !loses;
   });
-
-  if(id === "statsScreen"){
-    renderStats();
-  }
-
-  if(id === "settingsScreen"){
-    renderSettings();
-  }
-
-  if(id === "matchScreen"){
-    renderBoard();
-  }
+  if(!safe.length)return moves[0];
+  if(level==="medium"||level==="easy")return safe[Math.floor(Math.random()*safe.length)];
+  return chooseByEvaluation(board,safe,player);
+ }
+ const win=findImmediate(board,player);if(win!==null)return win;
+ const block=findImmediate(board,opponent(player));if(block!==null&&level!=="easy")return block;
+ if(level==="easy")return moves[Math.floor(Math.random()*moves.length)];
+ if(game.variant==="classic"&&level==="hard"){
+  const strategic=[4,0,2,6,8].filter(i=>moves.includes(i));
+  if(strategic.length)return strategic[Math.floor(Math.random()*strategic.length)];
+ }
+ return chooseByEvaluation(board,moves,player);
 }
-
-$$("[data-screen]").forEach(button=>{
-  button.addEventListener("click",()=>{
-    showScreen(button.dataset.screen);
-  });
-});
-
-/* =========================================
-   الإشعارات
-========================================= */
-
-function toast(text){
-  const element = $("#toast");
-  element.textContent = text;
-  element.classList.add("show");
-
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(()=>{
-    element.classList.remove("show");
-  },2100);
+function chooseByEvaluation(board,moves,player){
+ let best=-Infinity,candidates=[];
+ for(const i of moves){
+  board[i]=player;
+  let score=scoreBoard(board,player);
+  const result=checkResult(board);
+  if(result&&result.winner===player)score+=100000;
+  if(result&&result.winner===opponent(player))score-=100000;
+  board[i]="";
+  if(score>best){best=score;candidates=[i]}else if(score===best)candidates.push(i);
+ }
+ return candidates[Math.floor(Math.random()*candidates.length)];
 }
-
-/* =========================================
-   الصوت والاهتزاز
-========================================= */
-
-function playTone(type="move"){
-  if(!settings.sound) return;
-
-  try{
-    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
-    if(!AudioContextClass) return;
-
-    audioContext ||= new AudioContextClass();
-
-    if(audioContext.state === "suspended"){
-      audioContext.resume();
-    }
-
-    const oscillator = audioContext.createOscillator();
-    const gain = audioContext.createGain();
-
-    oscillator.connect(gain);
-    gain.connect(audioContext.destination);
-
-    const now = audioContext.currentTime;
-
-    const frequencies = {
-      move:520,
-      win:740,
-      lose:210,
-      draw:390
-    };
-
-    oscillator.frequency.setValueAtTime(frequencies[type] || 520,now);
-    oscillator.type = "sine";
-
-    gain.gain.setValueAtTime(.0001,now);
-    gain.gain.exponentialRampToValueAtTime(.10,now+.025);
-    gain.gain.exponentialRampToValueAtTime(.0001,now+.22);
-
-    oscillator.start(now);
-    oscillator.stop(now+.24);
-  }catch(error){
-    console.warn("Audio unavailable",error);
-  }
+function minimax3(board,player,depth,alpha,beta){
+ const res=checkResult(board);
+ if(res){
+  if(res.winner==="draw")return 0;
+  return res.winner===game.humanSymbol?-10+depth:10-depth;
+ }
+ const maximizing=player!==game.humanSymbol;
+ let best=maximizing?-Infinity:Infinity;
+ for(const i of available(board)){
+  board[i]=player;
+  const score=minimax3(board,opponent(player),depth+1,alpha,beta);
+  board[i]="";
+  if(maximizing){best=Math.max(best,score);alpha=Math.max(alpha,best)}
+  else{best=Math.min(best,score);beta=Math.min(beta,best)}
+  if(beta<=alpha)break;
+ }
+ return best;
 }
-
-function vibrate(pattern=18){
-  if(!settings.vibration) return;
-  if(!navigator.vibrate) return;
-
-  try{
-    navigator.vibrate(pattern);
-  }catch{}
+function expertClassicMove(){
+ let best=-Infinity,candidates=[];
+ for(const i of available(game.board)){
+  game.board[i]=game.turn;
+  const value=minimax3(game.board,opponent(game.turn),0,-Infinity,Infinity);
+  game.board[i]="";
+  if(value>best){best=value;candidates=[i]}else if(value===best)candidates.push(i);
+ }
+ return candidates[Math.floor(Math.random()*candidates.length)];
 }
-
-/* =========================================
-   إعداد المباراة
-========================================= */
-
-$$("[data-mode]").forEach(button=>{
-  button.addEventListener("click",()=>{
-    gameMode = button.dataset.mode;
-
-    $$("[data-mode]").forEach(item=>{
-      item.classList.toggle("active",item === button);
-    });
-
-    $("#difficultyArea").classList.toggle("hidden",gameMode !== "ai");
-  });
-});
-
-$("#difficulty").addEventListener("change",event=>{
-  difficulty = event.target.value;
-});
-
-$("#startMatch").addEventListener("click",()=>{
-  difficulty = $("#difficulty").value;
-  startNewMatch();
-});
-
-function startNewMatch(){
-  clearTimeout(computerTimer);
-
-  board = Array(9).fill("");
-  currentPlayer = "X";
-  gameOver = false;
-  thinking = false;
-  winningLine = [];
-  lastResult = null;
-
-  $("#playerXName").textContent = gameMode === "ai" ? "أنت" : "اللاعب الأول";
-  $("#playerOName").textContent = gameMode === "ai" ? "الكمبيوتر" : "اللاعب الثاني";
-
-  showScreen("matchScreen");
-  setMatchMessage(gameMode === "ai" ? "دورك الآن. اختر خانة البداية." : "اللاعب الأول يبدأ.");
-  renderBoard();
+function getAIMove(){
+ const level=game.difficulty;
+ if(game.variant==="classic"&&level==="expert")return expertClassicMove();
+ return tacticalMove(game.board,game.turn,level);
 }
-
-/* =========================================
-   عرض اللوحة والدور
-========================================= */
-
-function renderBoard(){
-  cells.forEach((cell,index)=>{
-    const value = board[index];
-
-    cell.textContent = value;
-    cell.className = "cell";
-
-    if(value){
-      cell.classList.add(value.toLowerCase());
-    }
-
-    if(winningLine.includes(index)){
-      cell.classList.add("winner");
-    }
-
-    const computerTurn = gameMode === "ai" && currentPlayer === "O";
-
-    cell.disabled = Boolean(value) || gameOver || thinking || computerTurn;
-  });
-
-  turnMark.textContent = currentPlayer;
-  turnMark.style.color = currentPlayer === "X" ? "var(--cyan)" : "var(--pink)";
-
-  $("#playerX").classList.toggle("active-turn",currentPlayer === "X" && !gameOver);
-  $("#playerO").classList.toggle("active-turn",currentPlayer === "O" && !gameOver);
-
-  if(gameMode === "ai"){
-    turnStatus.firstElementChild.textContent =
-      currentPlayer === "X" ? "دورك الآن" : "دور الكمبيوتر";
-  }else{
-    turnStatus.firstElementChild.textContent =
-      currentPlayer === "X" ? "دور اللاعب الأول" : "دور اللاعب الثاني";
-  }
-}
-
-function setMatchMessage(text){
-  messageElement.textContent = text;
-}
-
-/* =========================================
-   منطق الفوز والتعادل
-========================================= */
-
-function getResult(state){
-  for(const line of WIN_LINES){
-    const [a,b,c] = line;
-
-    if(
-      state[a] &&
-      state[a] === state[b] &&
-      state[a] === state[c]
-    ){
-      return {
-        winner:state[a],
-        line
-      };
-    }
-  }
-
-  if(state.every(Boolean)){
-    return {
-      winner:"draw",
-      line:[]
-    };
-  }
-
-  return null;
-}
-
-function availableMoves(state){
-  const moves = [];
-
-  for(let i=0;i<state.length;i++){
-    if(!state[i]) moves.push(i);
-  }
-
-  return moves;
-}
-
-function makeMove(index){
-  if(gameOver || thinking || board[index]) return;
-  if(gameMode === "ai" && currentPlayer !== "X") return;
-
-  board[index] = currentPlayer;
-
-  playTone("move");
-  vibrate();
-
-  const result = getResult(board);
-
-  if(result){
-    finishMatch(result);
-    return;
-  }
-
-  switchTurn();
-}
-
-cells.forEach(cell=>{
-  cell.addEventListener("click",()=>{
-    makeMove(Number(cell.dataset.index));
-  });
-});
-
-function switchTurn(){
-  currentPlayer = currentPlayer === "X" ? "O" : "X";
-
-  renderBoard();
-
-  if(gameMode === "ai" && currentPlayer === "O"){
-    computerTurn();
-  }else{
-    setMatchMessage(
-      gameMode === "ai"
-        ? "حان دورك. اختر حركتك التالية."
-        : currentPlayer === "X"
-          ? "دور اللاعب الأول."
-          : "دور اللاعب الثاني."
-    );
-  }
-}
-
-/* =========================================
-   الذكاء الاصطناعي
-========================================= */
-
-function findWinningMove(state,player){
-  for(const index of availableMoves(state)){
-    state[index] = player;
-    const won = getResult(state)?.winner === player;
-    state[index] = "";
-
-    if(won) return index;
-  }
-
-  return null;
-}
-
-function randomChoice(items){
-  if(!items.length) return null;
-  return items[Math.floor(Math.random()*items.length)];
-}
-
-function easyMove(){
-  return randomChoice(availableMoves(board));
-}
-
-function mediumMove(){
-  const win = findWinningMove(board,"O");
-  if(win !== null) return win;
-
-  const block = findWinningMove(board,"X");
-  if(block !== null) return block;
-
-  if(!board[4]) return 4;
-
-  const corners = [0,2,6,8].filter(index=>!board[index]);
-  if(corners.length) return randomChoice(corners);
-
-  return randomChoice(availableMoves(board));
-}
-
-function minimax(state,maximizing,depth){
-  const result = getResult(state);
-
-  if(result){
-    if(result.winner === "O") return 10-depth;
-    if(result.winner === "X") return depth-10;
-    return 0;
-  }
-
-  const moves = availableMoves(state);
-
-  if(maximizing){
-    let best = -Infinity;
-
-    for(const index of moves){
-      state[index] = "O";
-      best = Math.max(best,minimax(state,false,depth+1));
-      state[index] = "";
-    }
-
-    return best;
-  }
-
-  let best = Infinity;
-
-  for(const index of moves){
-    state[index] = "X";
-    best = Math.min(best,minimax(state,true,depth+1));
-    state[index] = "";
-  }
-
-  return best;
-}
-
-function expertMove(){
-  let bestScore = -Infinity;
-  let bestMoves = [];
-
-  for(const index of availableMoves(board)){
-    board[index] = "O";
-
-    const score = minimax(board,false,0);
-
-    board[index] = "";
-
-    if(score > bestScore){
-      bestScore = score;
-      bestMoves = [index];
-    }else if(score === bestScore){
-      bestMoves.push(index);
-    }
-  }
-
-  return randomChoice(bestMoves);
-}
-
-function getComputerMove(){
-  switch(difficulty){
-    case "easy":
-      return easyMove();
-
-    case "medium":
-      return mediumMove();
-
-    case "hard":
-    case "expert":
-      return expertMove();
-
-    default:
-      return mediumMove();
-  }
-}
-
 function computerTurn(){
-  thinking = true;
-  setMatchMessage("الكمبيوتر يحلل اللوحة...");
-  renderBoard();
-
-  computerTimer = setTimeout(()=>{
-    if(gameOver || gameMode !== "ai") return;
-
-    const index = getComputerMove();
-
-    thinking = false;
-
-    if(index === null || index === undefined){
-      const result = getResult(board);
-      if(result) finishMatch(result);
-      return;
-    }
-
-    board[index] = "O";
-
-    playTone("move");
-    vibrate(12);
-
-    const result = getResult(board);
-
-    if(result){
-      finishMatch(result);
-      return;
-    }
-
-    switchTurn();
-  },difficulty === "easy" ? 300 : 480);
+ if(!game||game.finished||!isComputerTurn())return;
+ clearInterval(timerInterval);
+ $("#matchMessage").textContent="الكمبيوتر يحلل اللوحة...";
+ renderMatch();
+ const delay=game.difficulty==="easy"?350:game.difficulty==="medium"?520:720;
+ computerTimer=setTimeout(()=>{
+  if(!game||game.finished||!isComputerTurn())return;
+  const index=getAIMove();
+  if(index===null||index===undefined){const r=checkResult(game.board);if(r)finishGame(r);return}
+  playMove(index,"computer");
+ },delay);
 }
-
-/* =========================================
-   إنهاء المباراة وحفظ النتيجة
-========================================= */
-
-function finishMatch(result){
-  clearTimeout(computerTimer);
-
-  gameOver = true;
-  thinking = false;
-  winningLine = result.line || [];
-  lastResult = result.winner;
-
-  if(result.winner === "draw"){
-    setMatchMessage("تعادل! لم يتمكن أي لاعب من تكوين خط فائز.");
-    playTone("draw");
-    vibrate([25,45,25]);
-  }else if(gameMode === "local"){
-    setMatchMessage(
-      result.winner === "X"
-        ? "اللاعب الأول حقق الفوز!"
-        : "اللاعب الثاني حقق الفوز!"
-    );
-
-    playTone("win");
-    vibrate([30,50,30]);
-  }else if(result.winner === "X"){
-    setMatchMessage("فوز رائع! لقد تغلبت على الكمبيوتر.");
-    playTone("win");
-    vibrate([35,50,35]);
-  }else{
-    setMatchMessage("الكمبيوتر فاز هذه المرة. حاول من جديد.");
-    playTone("lose");
-    vibrate([70,50,70]);
-  }
-
-  renderBoard();
-
-  if(gameMode === "ai"){
-    if(result.winner === "X") scores.wins++;
-    else if(result.winner === "O") scores.losses++;
-    else scores.draws++;
-
-    scores.total++;
-
-    history.unshift({
-      result:result.winner === "X" ? "win" : result.winner === "O" ? "loss" : "draw",
-      mode:"computer",
-      difficulty,
-      date:new Date().toISOString()
-    });
-
-    history = history.slice(0,50);
-    saveData();
-  }else{
-    scores.total++;
-
-    history.unshift({
-      result:result.winner === "draw" ? "draw" : "local",
-      winner:result.winner,
-      mode:"local",
-      date:new Date().toISOString()
-    });
-
-    history = history.slice(0,50);
-    saveData();
-  }
-
-  setTimeout(()=>{
-    showResult(result);
-  },850);
-}
-
-function showResult(result){
-  const title = $("#resultTitle");
-  const description = $("#resultDescription");
-  const icon = $("#resultIcon");
-
-  if(result.winner === "draw"){
-    title.textContent = "تعادل!";
-    description.textContent = "مباراة متوازنة. جرّب مواجهة جديدة.";
-  }else if(gameMode === "local"){
-    title.textContent = result.winner === "X" ? "فوز اللاعب الأول" : "فوز اللاعب الثاني";
-    description.textContent = "انتهت المواجهة بفوز أحد اللاعبين.";
-  }else if(result.winner === "X"){
-    title.textContent = "أحسنت! فزت";
-    description.textContent = "لقد نجحت في التغلب على الكمبيوتر.";
-  }else{
-    title.textContent = "انتهت المباراة";
-    description.textContent = "هذه الجولة للكمبيوتر. يمكنك المحاولة مرة أخرى.";
-  }
-
-  icon.innerHTML = result.winner === "draw"
-    ? '<svg viewBox="0 0 24 24" fill="none" stroke="#ffd27a" stroke-width="1.8" stroke-linecap="round"><path d="M7 12h10"/><circle cx="12" cy="12" r="10"/></svg>'
-    : result.winner === "X" && gameMode === "ai"
-      ? '<svg viewBox="0 0 24 24" fill="none" stroke="#4de0ad" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 12l3 3 7-7"/><circle cx="12" cy="12" r="10"/></svg>'
-      : '<svg viewBox="0 0 24 24" fill="none" stroke="#b8a5ff" stroke-width="1.8" stroke-linecap="round"><path d="M7 7l10 10M17 7L7 17"/><circle cx="12" cy="12" r="10"/></svg>';
-
-  $("#resultWins").textContent = scores.wins;
-  $("#resultLosses").textContent = scores.losses;
-  $("#resultDraws").textContent = scores.draws;
-
-  showScreen("resultScreen");
-}
-
-/* =========================================
-   إعادة المباراة والخروج
-========================================= */
-
-function requestRestart(){
-  if(settings.confirmRestart && board.some(Boolean) && !gameOver){
-    const accepted = confirm("هل تريد إنهاء المباراة الحالية وبدء مباراة جديدة؟");
-    if(!accepted) return;
-  }
-
-  startNewMatch();
-}
-
-$("#restartMatch").addEventListener("click",requestRestart);
-$("#matchNewGame").addEventListener("click",requestRestart);
-$("#playAgain").addEventListener("click",startNewMatch);
-
-$("#exitMatch").addEventListener("click",()=>{
-  if(!gameOver && board.some(Boolean)){
-    const accepted = confirm("هل تريد الخروج من المباراة الحالية؟ لن يتم تسجيل نتيجة غير مكتملة.");
-    if(!accepted) return;
-  }
-
-  clearTimeout(computerTimer);
-  showScreen("homeScreen");
+/* Undo */
+$("#undoMove").addEventListener("click",()=>{
+ if(!game||game.finished||isComputerTurn()||!game.moves.length)return;
+ const count=game.mode==="ai"?Math.min(2,game.moves.length):1;
+ for(let n=0;n<count;n++){
+  const move=game.moves.pop();if(move)game.board[move.index]="";
+ }
+ game.turn=game.moves.length?opponent(game.moves[game.moves.length-1].player):game.starter;
+ game.lastMove=game.moves.length?game.moves[game.moves.length-1].index:-1;
+ game.hintIndex=null;game.moveStartedAt=Date.now();
+ renderMatch();persistSession();startTurnClock();toast("تم التراجع عن الحركة.");
 });
-
-$("#matchHome").addEventListener("click",()=>{
-  if(!gameOver && board.some(Boolean)){
-    const accepted = confirm("هل تريد العودة للقائمة وإنهاء المباراة الحالية؟");
-    if(!accepted) return;
-  }
-
-  clearTimeout(computerTimer);
-  showScreen("homeScreen");
+/* Hint */
+$("#hintButton").addEventListener("click",()=>{
+ if(!game||game.finished||isComputerTurn())return;
+ let index;
+ if(game.variant==="classic"&&game.difficulty==="expert"&&game.mode==="ai")index=expertClassicMove();
+ else index=tacticalMove(game.board,game.turn,"hard");
+ if(index===null||index===undefined){toast("لا توجد حركة مقترحة.");return}
+ game.hintIndex=index;renderMatch();persistSession();
 });
-
-$("#resultHome").addEventListener("click",()=>showScreen("homeScreen"));
+/* Finish */
+function finishGame(result){
+ if(!game||game.finished)return;
+ clearClocks();clearTimeout(computerTimer);
+ game.finished=true;game.result=result;game.winningLine=result.line||[];game.elapsed=Math.max(0,Date.now()-game.startedAt);
+ if(game.mode==="ai"){
+  if(result.winner===game.humanSymbol)stats.wins++;
+  else if(result.winner==="draw")stats.draws++;
+  else stats.losses++;
+ }
+ stats.total++;
+ save(KEYS.stats,stats);
+ const record={
+  mode:game.mode,variant:game.variant,difficulty:game.difficulty,
+  result:result.winner==="draw"?"draw":game.mode==="ai"?(result.winner===game.humanSymbol?"win":"loss"):(result.winner==="X"?"xwin":"owin"),
+  winner:result.winner,reason:result.reason,date:new Date().toISOString(),moves:game.moves.length
+ };
+ history.unshift(record);history=history.slice(0,60);save(KEYS.history,history);
+ lastCompleted=record;
+ beep(result.winner==="draw"?"draw":result.winner===game.humanSymbol?"win":"loss");
+ buzz(result.winner==="draw"?[20,40,20]:[35,50,35]);
+ renderMatch();persistSession();
+ setTimeout(()=>{if(game&&game.finished){renderResult(result);showScreen("resultScreen")}},650);
+}
+function renderResult(result){
+ if(!game)return;
+ let title,desc;
+ if(result.winner==="draw"){title="تعادل!";desc="مواجهة متوازنة. جرّب جولة أخرى."}
+ else if(game.mode==="local"){title="فوز اللاعب "+result.winner;desc="انتهت المواجهة بفوز اللاعب "+result.winner+"."}
+ else if(result.winner===game.humanSymbol){title="انتصار رائع!";desc="لقد تغلبت على الكمبيوتر في هذه المواجهة."}
+ else{title="الكمبيوتر فاز";desc="لم تكن هذه جولتك. حلّل حركات الخصم وحاول مجددًا."}
+ $("#resultTitle").textContent=title;$("#resultDescription").textContent=desc;
+ $("#resultWins").textContent=stats.wins;$("#resultLosses").textContent=stats.losses;$("#resultDraws").textContent=stats.draws;
+ $("#resultVariant").textContent=CONFIG[game.variant].label;
+ $("#resultSummary").textContent=`${CONFIG[game.variant].label} · ${game.mode==="ai"?"ضد الكمبيوتر ("+difficultyName(game.difficulty)+")":"لاعبان على نفس الجهاز"} · ${game.moves.length} حركة · ${result.reason||"انتهت المباراة"}.`;
+ $("#resultIcon").innerHTML=result.winner==="draw"
+ ?'<svg viewBox="0 0 24 24" fill="none" stroke="#ffd27a" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M7 12h10"/></svg>'
+ :'<svg viewBox="0 0 24 24" fill="none" stroke="#4de0ad" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 12l3 3 7-7"/><circle cx="12" cy="12" r="10"/></svg>';
+}
+function difficultyName(v){return({easy:"سهل",medium:"متوسط",hard:"صعب",expert:"محترف"})[v]||"متوسط"}
+function newSameGame(){
+ if(!game)return;
+ const opts={mode:game.mode,difficulty:game.difficulty,variant:game.variant,humanSymbol:game.humanSymbol,starter:game.starter,timer:game.timerSeconds};
+ startGame(opts);
+}
+$("#playAgain").addEventListener("click",newSameGame);
 $("#resultStats").addEventListener("click",()=>showScreen("statsScreen"));
-
-/* =========================================
-   الإحصائيات وسجل المباريات
-========================================= */
-
+/* Exit / save / restart */
+function restartAsk(){
+ if(!game)return;
+ if(settings.confirmRestart&&game.moves.length&&!game.finished&&!confirm("هل تريد إعادة المباراة الحالية؟"))return;
+ newSameGame();
+}
+$("#restartMatch").addEventListener("click",restartAsk);
+function leaveMatch(){
+ if(!game)return;
+ if(!game.finished&&game.moves.length&&!confirm("هل تريد إنهاء المباراة والعودة للقائمة؟ سيتم حفظ الحالة لتستطيع الرجوع إليها."))return;
+ clearClocks();persistSession();showScreen("homeScreen");
+}
+$("#exitMatch").addEventListener("click",leaveMatch);
+$("#saveAndHome").addEventListener("click",()=>{
+ clearClocks();persistSession();showScreen("homeScreen");toast("تم حفظ حالة المباراة على هذا الجهاز.");
+});
+$("#matchRules").addEventListener("click",()=>{persistSession();showScreen("rulesScreen")});
+$("#soundQuick").addEventListener("click",()=>{settings.sound=!settings.sound;save(KEYS.settings,settings);renderSettings();$("#soundQuick").textContent=settings.sound?"الصوت: تشغيل":"الصوت: إيقاف";toast(settings.sound?"تم تشغيل الصوت":"تم إيقاف الصوت")});
+/* Stats */
 function renderStats(){
-  $("#statWins").textContent = scores.wins;
-  $("#statLosses").textContent = scores.losses;
-  $("#statDraws").textContent = scores.draws;
-  $("#statTotal").textContent = scores.total;
-
-  const list = $("#historyList");
-
-  if(!history.length){
-    list.innerHTML = '<div class="empty-history">لا توجد مباريات مسجلة حتى الآن.</div>';
-    return;
-  }
-
-  list.innerHTML = history.slice(0,30).map(item=>{
-    let label = "مباراة";
-    let className = "draw";
-
-    if(item.result === "win"){
-      label = "فوز";
-      className = "win";
-    }else if(item.result === "loss"){
-      label = "خسارة";
-      className = "loss";
-    }else if(item.result === "local"){
-      label = item.winner === "X" ? "فوز اللاعب الأول" : "فوز اللاعب الثاني";
-      className = "win";
-    }else{
-      label = "تعادل";
-      className = "draw";
-    }
-
-    const modeLabel = item.mode === "local"
-      ? "لاعبان محليًا"
-      : "ضد الكمبيوتر — " + difficultyLabel(item.difficulty);
-
-    const date = new Date(item.date);
-    const dateLabel = Number.isNaN(date.getTime())
-      ? ""
-      : date.toLocaleDateString("ar-EG",{day:"numeric",month:"short",year:"numeric"});
-
-    return `
-      <div class="history-item">
-        <div>
-          <strong>${label}</strong>
-          <small>${modeLabel} · ${dateLabel}</small>
-        </div>
-        <span class="history-result ${className}">${label}</span>
-      </div>
-    `;
-  }).join("");
+ $("#statTotal").textContent=stats.total;$("#statWins").textContent=stats.wins;$("#statLosses").textContent=stats.losses;$("#statDraws").textContent=stats.draws;
+ const list=$("#historyList");
+ if(!history.length){list.innerHTML='<div class="empty">لا توجد مباريات مكتملة حتى الآن.<br>ابدأ أول مواجهة لتكوين سجلك.</div>';return}
+ list.innerHTML="";
+ history.slice(0,40).forEach(item=>{
+  const labels={win:"فوز",loss:"خسارة",draw:"تعادل",xwin:"فوز اللاعب X",owin:"فوز اللاعب O"};
+  const cls=item.result==="win"||item.result==="xwin"||item.result==="owin"?"win":item.result==="loss"?"loss":"draw";
+  const mode=item.mode==="ai"?"ضد الكمبيوتر · "+difficultyName(item.difficulty):"لاعبان محليًا";
+  const date=new Date(item.date);
+  const dateText=Number.isNaN(date.getTime())?"":date.toLocaleString("ar-EG",{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"});
+  const row=document.createElement("div");row.className="history-item";
+  const info=document.createElement("div"),strong=document.createElement("strong"),small=document.createElement("small"),result=document.createElement("span");
+  strong.textContent=CONFIG[item.variant]?.label||"XO";small.textContent=mode+" · "+dateText;
+  result.className="history-result "+cls;result.textContent=labels[item.result]||"مباراة";
+  info.append(strong,small);row.append(info,result);list.append(row);
+ });
 }
-
-function difficultyLabel(value){
-  return ({
-    easy:"سهل",
-    medium:"متوسط",
-    hard:"صعب",
-    expert:"محترف"
-  })[value] || "متوسط";
-}
-
 $("#clearHistory").addEventListener("click",()=>{
-  const accepted = confirm("هل تريد مسح سجل المباريات والإحصائيات نهائيًا من هذا الجهاز؟");
-  if(!accepted) return;
-
-  scores = {
-    wins:0,
-    losses:0,
-    draws:0,
-    total:0
-  };
-
-  history = [];
-  saveData();
-  renderStats();
-  toast("تم مسح السجل والإحصائيات.");
+ if(!confirm("هل تريد مسح سجل المباريات وإحصائياتك من هذا الجهاز؟"))return;
+ history=[];stats={total:0,wins:0,losses:0,draws:0};
+ save(KEYS.history,history);save(KEYS.stats,stats);renderStats();toast("تم مسح السجل.");
 });
-
-/* =========================================
-   الإعدادات
-========================================= */
-
-function renderToggle(button,value){
-  button.classList.toggle("on",Boolean(value));
-  button.setAttribute("aria-checked",String(Boolean(value)));
-}
-
+/* Settings */
 function renderSettings(){
-  renderToggle($("#soundToggle"),settings.sound);
-  renderToggle($("#vibrationToggle"),settings.vibration);
-  renderToggle($("#confirmToggle"),settings.confirmRestart);
-
-  $("#soundQuick").textContent = settings.sound ? "الصوت: تشغيل" : "الصوت: إيقاف";
+ themeApply();
+ $("#soundToggle").classList.toggle("on",settings.sound);$("#soundToggle").setAttribute("aria-checked",String(settings.sound));
+ $("#vibrationToggle").classList.toggle("on",settings.vibration);$("#vibrationToggle").setAttribute("aria-checked",String(settings.vibration));
+ $("#confirmToggle").classList.toggle("on",settings.confirmRestart);$("#confirmToggle").setAttribute("aria-checked",String(settings.confirmRestart));
 }
-
 function bindToggle(id,key){
-  $(id).addEventListener("click",()=>{
-    settings[key] = !settings[key];
-    saveData();
-    renderSettings();
-    renderToggle($(id),settings[key]);
-  });
+ $(id).addEventListener("click",()=>{settings[key]=!settings[key];save(KEYS.settings,settings);renderSettings()});
 }
-
-bindToggle("#soundToggle","sound");
-bindToggle("#vibrationToggle","vibration");
-bindToggle("#confirmToggle","confirmRestart");
-
-$("#soundQuick").addEventListener("click",()=>{
-  settings.sound = !settings.sound;
-  saveData();
-  renderSettings();
-  toast(settings.sound ? "تم تشغيل الصوت." : "تم إيقاف الصوت.");
+bindToggle("#soundToggle","sound");bindToggle("#vibrationToggle","vibration");bindToggle("#confirmToggle","confirmRestart");
+$$("[data-theme]").forEach(b=>b.addEventListener("click",()=>{settings.theme=b.dataset.theme;save(KEYS.settings,settings);renderSettings()}));
+$("#resetSettings").addEventListener("click",()=>{settings={...defaults};save(KEYS.settings,settings);renderSettings();toast("تمت استعادة الإعدادات.")});
+/* Lifecycle: preserve exact in-page location and active match */
+document.addEventListener("visibilitychange",()=>{
+ if(document.visibilityState==="hidden"){persistSession();if(game&&screenId==="matchScreen"&&!game.finished)game.elapsed+=Date.now()-game.startedAt}
+ else if(game&&screenId==="matchScreen"&&!game.finished){
+  game.startedAt=Date.now();renderMatch();
+  if(isComputerTurn())computerTurn();else startTurnClock();
+ }
 });
-
-$("#resetSettings").addEventListener("click",()=>{
-  settings = {
-    sound:true,
-    vibration:true,
-    confirmRestart:true
-  };
-
-  saveData();
-  renderSettings();
-  toast("تمت استعادة الإعدادات.");
+window.addEventListener("pagehide",persistSession);
+window.addEventListener("pageshow",event=>{
+ if(event.persisted&&game&&screenId==="matchScreen"){
+  renderMatch();if(isComputerTurn())computerTurn();else startTurnClock();
+ }
 });
-
-/* =========================================
-   تهيئة التطبيق
-========================================= */
-
-renderSettings();
-renderStats();
-
+/* Initialization */
+renderSettings();renderStats();
+if(!restoreSession())showScreen("homeScreen",false);
 })();
 </script>
 </body>
