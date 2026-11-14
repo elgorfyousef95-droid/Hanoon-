@@ -1,5 +1,12 @@
 
-const $ = (id) => document.getElementById(id);
+import { supabase } from "../supabase.js";
+
+/* =========================================
+   HANOON WORLD — DOMINO ENGINE
+   Local gameplay + AI + Supabase preparation
+========================================= */
+
+const $ = id => document.getElementById(id);
 
 const state = {
   variant: "draw",
@@ -7,18 +14,23 @@ const state = {
   playType: "ai",
   aiLevel: "medium",
   targetScore: 200,
+
   players: [],
   board: [],
   boneyard: [],
+  excludedTile: null,
+
   currentTurn: 0,
   selectedTile: null,
+
   started: false,
   finished: false,
-  scores: [],
-  round: 1,
-  direction: 1,
   busy: false,
-  roundStarter: 0
+
+  round: 1,
+  roundPasses: 0,
+  scores: [],
+  lastMessage: ""
 };
 
 const PIP_POSITIONS = {
@@ -31,13 +43,28 @@ const PIP_POSITIONS = {
   6: [0, 2, 3, 5, 6, 8]
 };
 
+const ICON_CHECK = `
+<svg viewBox="0 0 24 24" fill="none"
+stroke="currentColor" stroke-width="2.5">
+<path d="m5 12 4 4L19 6"/>
+</svg>`;
+
+/* =========================================
+   UTILITIES
+========================================= */
+
 function toast(message) {
-  const el = $("toast");
-  if (!el) return;
-  el.textContent = message;
-  el.classList.add("show");
+  const element = $("toast");
+  if (!element) return;
+
+  element.textContent = message;
+  element.classList.add("show");
+
   clearTimeout(toast.timer);
-  toast.timer = setTimeout(() => el.classList.remove("show"), 2600);
+
+  toast.timer = setTimeout(() => {
+    element.classList.remove("show");
+  }, 2800);
 }
 
 function escapeHTML(value) {
@@ -48,43 +75,6 @@ function escapeHTML(value) {
     '"': "&quot;",
     "'": "&#039;"
   })[char]);
-}
-
-function makePips(value) {
-  const positions = PIP_POSITIONS[value] || [];
-  return `
-    <div class="pips">
-      ${Array.from({ length: 9 }, (_, index) => `
-        <i class="pip ${positions.includes(index) ? "" : "off"}"></i>
-      `).join("")}
-    </div>
-  `;
-}
-
-function tileHTML(a, b, vertical = false) {
-  return `
-    <div class="${vertical ? "hand-tile" : "domino-tile"}">
-      ${makePips(a)}
-      ${makePips(b)}
-    </div>
-  `;
-}
-
-function makeDeck() {
-  const deck = [];
-  let id = 0;
-
-  for (let a = 0; a <= 6; a++) {
-    for (let b = a; b <= 6; b++) {
-      deck.push({
-        id: `tile-${++id}`,
-        a,
-        b
-      });
-    }
-  }
-
-  return deck;
 }
 
 function shuffle(array) {
@@ -98,86 +88,175 @@ function shuffle(array) {
   return result;
 }
 
+function delay(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+function setStatus(message, detail = "") {
+  state.lastMessage = message;
+
+  if ($("gameStatus")) {
+    $("gameStatus").textContent = message;
+  }
+
+  if ($("gameStatusDetail")) {
+    $("gameStatusDetail").textContent = detail;
+  }
+}
+
+/* =========================================
+   DOMINO GRAPHICS
+========================================= */
+
+function makePips(value) {
+  const positions = PIP_POSITIONS[value] || [];
+
+  return `
+    <div class="pips">
+      ${Array.from({ length: 9 }, (_, index) => `
+        <i class="pip ${positions.includes(index) ? "" : "off"}"></i>
+      `).join("")}
+    </div>
+  `;
+}
+
+function makeHalf(value) {
+  const positions = PIP_POSITIONS[value] || [];
+
+  return `
+    <div class="domino-half">
+      ${Array.from({ length: 9 }, (_, index) => `
+        <i class="${positions.includes(index) ? "" : "off"}"></i>
+      `).join("")}
+    </div>
+  `;
+}
+
+function makeTileHTML(a, b, vertical = false) {
+  return `
+    <div class="${vertical ? "domino-tile vertical" : "domino-tile"}">
+      ${makeHalf(a)}
+      ${makeHalf(b)}
+    </div>
+  `;
+}
+
+/* =========================================
+   DECK AND DISTRIBUTION
+========================================= */
+
+function makeDeck() {
+  const deck = [];
+  let id = 0;
+
+  for (let a = 0; a <= 6; a++) {
+    for (let b = a; b <= 6; b++) {
+      deck.push({
+        id: `domino-${++id}`,
+        a,
+        b
+      });
+    }
+  }
+
+  return deck;
+}
+
 function tilePoints(tile) {
   return tile.a + tile.b;
 }
 
-function getPlayerNames() {
-  if (state.playType === "local") {
-    return ["اللاعب الأول", "اللاعب الثاني", "اللاعب الثالث", "اللاعب الرابع"];
+function getDealSize() {
+  return state.playersCount === 3 ? 9 : 7;
+}
+
+function getDistributionDescription() {
+  if (state.playersCount === 2) {
+    return "7 قطع لكل لاعب، ويتبقى 14 قطعة في كومة السحب.";
   }
 
-  return ["أنت", "الكمبيوتر 1", "الكمبيوتر 2", "الكمبيوتر 3"];
+  if (state.playersCount === 3) {
+    return "9 قطع لكل لاعب، والقطعة 0-0 مستبعدة تمامًا من اللعب.";
+  }
+
+  return "7 قطع لكل لاعب، جميع القطع موزعة ولا توجد كومة سحب.";
+}
+
+function updateDealDescription() {
+  const element = $("dealDescription");
+
+  if (element) {
+    element.textContent = getDistributionDescription();
+  }
+}
+
+function getPlayerNames() {
+  if (state.playType === "local") {
+    return [
+      "اللاعب الأول",
+      "اللاعب الثاني",
+      "اللاعب الثالث",
+      "اللاعب الرابع"
+    ];
+  }
+
+  return [
+    "أنت",
+    "الكمبيوتر 1",
+    "الكمبيوتر 2",
+    "الكمبيوتر 3"
+  ];
 }
 
 function createPlayers() {
   const names = getPlayerNames();
 
-  state.players = Array.from({ length: state.playersCount }, (_, index) => ({
-    id: index,
-    name: names[index],
-    hand: [],
-    score: state.scores[index] || 0,
-    isHuman: state.playType === "local" || index === 0
-  }));
-
-  if (state.playType === "ai") {
-    state.players[0].name = "أنت";
-  }
-}
-
-function getDealSize() {
-  if (state.playersCount === 3) return 9;
-  return 7;
-}
-
-function getDistributionDescription() {
-  if (state.playersCount === 2) {
-    return "كل لاعب يأخذ 7 قطع، ويتبقى 14 قطعة في كومة السحب.";
-  }
-
-  if (state.playersCount === 3) {
-    return "كل لاعب يأخذ 9 قطع، والقطعة المتبقية خارج اللعب ولا تدخل في الحساب.";
-  }
-
-  return "كل لاعب يأخذ 7 قطع، ولا توجد كومة سحب.";
-}
-
-function updateDealDescription() {
-  const description = $("dealDescription");
-  if (description) description.textContent = getDistributionDescription();
-}
-
-function chooseStartingPlayer() {
-  let bestPlayer = 0;
-  let bestValue = -1;
-
-  state.players.forEach((player, index) => {
-    const doubles = player.hand
-      .filter(tile => tile.a === tile.b)
-      .sort((x, y) => y.a - x.a);
-
-    if (doubles.length) {
-      const value = 100 + doubles[0].a;
-
-      if (value > bestValue) {
-        bestValue = value;
-        bestPlayer = index;
-      }
-    } else {
-      const highest = Math.max(...player.hand.map(tile => tilePoints(tile)));
-      if (bestValue < 100 && highest > bestValue) {
-        bestValue = highest;
-        bestPlayer = index;
-      }
-    }
-  });
-
-  return bestPlayer;
+  state.players = Array.from(
+    { length: state.playersCount },
+    (_, index) => ({
+      id: index,
+      name: names[index],
+      hand: [],
+      score: state.scores[index] || 0,
+      isHuman:
+        state.playType === "local" ||
+        index === 0
+    })
+  );
 }
 
 function dealRound() {
-  const deck = shuffle(makeDeck());
+  let deck = shuffle(makeDeck());
+
+  state.excludedTile = null;
+
+  /*
+    قواعد التوزيع المعتمدة:
+
+    لاعبان:
+    7 + 7 = 14
+    14 قطعة للسحب.
+
+    ثلاثة لاعبين:
+    استبعاد 0-0 تحديدًا.
+    9 × 3 = 27 قطعة.
+    لا توجد كومة سحب.
+
+    أربعة لاعبين:
+    7 × 4 = 28 قطعة.
+    لا توجد كومة سحب.
+  */
+
+  if (state.playersCount === 3) {
+    const blankIndex = deck.findIndex(
+      tile => tile.a === 0 && tile.b === 0
+    );
+
+    if (blankIndex !== -1) {
+      state.excludedTile = deck.splice(blankIndex, 1)[0];
+    }
+  }
+
   const dealSize = getDealSize();
 
   state.players.forEach(player => {
@@ -192,35 +271,57 @@ function dealRound() {
     }
   }
 
-  /*
-    التوزيع المتفق عليه:
-    2 لاعبين: 7 لكل لاعب، والباقي للسحب.
-    3 لاعبين: 9 لكل لاعب، وتبقى قطعة واحدة خارج اللعب.
-    4 لاعبين: 7 لكل لاعب، ولا توجد كومة سحب.
-  */
-
   if (state.playersCount === 2) {
     state.boneyard = deck.slice(cursor);
-  } else if (state.playersCount === 3) {
-    state.boneyard = [];
-    state.excludedTile = deck[cursor] || null;
   } else {
     state.boneyard = [];
-    state.excludedTile = null;
   }
 
   state.board = [];
-  state.currentTurn = chooseStartingPlayer();
-  state.roundStarter = state.currentTurn;
+  state.roundPasses = 0;
   state.selectedTile = null;
-  state.direction = 1;
   state.finished = false;
   state.busy = false;
+
+  state.currentTurn = chooseStartingPlayer();
 }
 
-function getNextPlayer(index) {
-  return (index + state.direction + state.playersCount) % state.playersCount;
+function chooseStartingPlayer() {
+  let bestPlayer = 0;
+  let bestValue = -1;
+
+  state.players.forEach((player, index) => {
+    const doubles = player.hand
+      .filter(tile => tile.a === tile.b)
+      .sort((a, b) => b.a - a.a);
+
+    if (doubles.length) {
+      const value = 100 + doubles[0].a;
+
+      if (value > bestValue) {
+        bestValue = value;
+        bestPlayer = index;
+      }
+
+      return;
+    }
+
+    const highest = Math.max(
+      ...player.hand.map(tilePoints)
+    );
+
+    if (bestValue < 100 && highest > bestValue) {
+      bestValue = highest;
+      bestPlayer = index;
+    }
+  });
+
+  return bestPlayer;
 }
+
+/* =========================================
+   BOARD AND LEGAL MOVES
+========================================= */
 
 function getEnds() {
   if (!state.board.length) return null;
@@ -234,7 +335,7 @@ function getEnds() {
 function getLegalMoves(playerIndex) {
   const player = state.players[playerIndex];
 
-  if (!player || !player.hand.length) return [];
+  if (!player) return [];
 
   if (!state.board.length) {
     return player.hand.map(tile => ({
@@ -264,14 +365,6 @@ function getLegalMoves(playerIndex) {
       });
     }
 
-    if (tile.a === ends.right) {
-      moves.push({
-        tile,
-        side: "right",
-        flip: false
-      });
-    }
-
     if (tile.b === ends.right) {
       moves.push({
         tile,
@@ -279,30 +372,26 @@ function getLegalMoves(playerIndex) {
         flip: true
       });
     }
+
+    if (tile.a === ends.right) {
+      moves.push({
+        tile,
+        side: "right",
+        flip: false
+      });
+    }
   }
 
   const unique = new Map();
 
   moves.forEach(move => {
-    unique.set(`${move.tile.id}-${move.side}`, move);
+    unique.set(
+      `${move.tile.id}-${move.side}`,
+      move
+    );
   });
 
   return [...unique.values()];
-}
-
-function getOpenEndsTotal() {
-  if (!state.board.length) return 0;
-
-  const ends = getEnds();
-  return ends.left + ends.right;
-}
-
-function getFivesScore() {
-  if (state.variant !== "fives" || !state.board.length) return 0;
-
-  const total = getOpenEndsTotal();
-
-  return total % 5 === 0 ? total : 0;
 }
 
 function addBoardTile(tile, side, flip) {
@@ -313,12 +402,11 @@ function addBoardTile(tile, side, flip) {
     [left, right] = [right, left];
   }
 
-  if (state.board.length === 0) {
+  if (!state.board.length) {
     state.board.push({
       tileId: tile.id,
       left,
-      right,
-      double: left === right
+      right
     });
 
     return;
@@ -332,9 +420,9 @@ function addBoardTile(tile, side, flip) {
     state.board.unshift({
       tileId: tile.id,
       left,
-      right,
-      double: left === right
+      right
     });
+
   } else {
     if (left !== getEnds().right) {
       [left, right] = [right, left];
@@ -343,132 +431,90 @@ function addBoardTile(tile, side, flip) {
     state.board.push({
       tileId: tile.id,
       left,
-      right,
-      double: left === right
+      right
     });
   }
 }
 
 function removeTileFromHand(playerIndex, tileId) {
-  const player = state.players[playerIndex];
-  const index = player.hand.findIndex(tile => tile.id === tileId);
+  const hand = state.players[playerIndex].hand;
 
-  if (index < 0) return null;
+  const index = hand.findIndex(
+    tile => tile.id === tileId
+  );
 
-  return player.hand.splice(index, 1)[0];
+  if (index === -1) return null;
+
+  return hand.splice(index, 1)[0];
 }
 
 function calculateHandPoints(player) {
-  return player.hand.reduce((sum, tile) => sum + tilePoints(tile), 0);
+  return player.hand.reduce(
+    (sum, tile) => sum + tilePoints(tile),
+    0
+  );
 }
 
-function calculateRoundWinner() {
-  const emptyPlayer = state.players.find(player => player.hand.length === 0);
-
-  if (emptyPlayer) {
-    return {
-      winner: emptyPlayer.id,
-      reason: "empty"
-    };
+function getFivesScore() {
+  if (state.variant !== "fives" || !state.board.length) {
+    return 0;
   }
 
-  if (state.players.every(player => player.hand.length > 0)) {
-    const allBlocked = state.players.every(player => getLegalMoves(player.id).length === 0);
+  const ends = getEnds();
+  const total = ends.left + ends.right;
 
-    if (allBlocked && state.boneyard.length === 0) {
-      const points = state.players.map(player => calculateHandPoints(player));
-      const minimum = Math.min(...points);
-      const winners = points
-        .map((value, index) => value === minimum ? index : -1)
-        .filter(index => index !== -1);
-
-      return {
-        winner: winners.length === 1 ? winners[0] : null,
-        winners,
-        reason: "blocked"
-      };
-    }
-  }
-
-  return null;
+  return total > 0 && total % 5 === 0
+    ? total
+    : 0;
 }
 
-function finishRound(result) {
+/* =========================================
+   TURN MANAGEMENT
+========================================= */
+
+function getNextPlayer(index) {
+  return (index + 1) % state.playersCount;
+}
+
+function advanceTurn() {
   if (state.finished) return;
 
-  state.finished = true;
-
-  const points = state.players.map(player => calculateHandPoints(player));
-  let message = "";
-
-  if (result.winner !== null && result.winner !== undefined) {
-    const winner = state.players[result.winner];
-
-    if (result.reason === "empty") {
-      const earned = points.reduce((sum, value, index) =>
-        index === result.winner ? sum : sum + value, 0);
-
-      winner.score += earned;
-      message = `${winner.name} فاز بالجولة! حصل على ${earned} نقطة.`;
-    } else {
-      const earned = points.reduce((sum, value, index) =>
-        index === result.winner ? sum : sum + value, 0);
-
-      winner.score += earned;
-      message = `${winner.name} فاز بعد توقف اللعب. نقاط الجولة: ${earned}.`;
-    }
-  } else {
-    const winners = result.winners || [];
-    message = "انتهت الجولة بالتعادل بين: " +
-      winners.map(index => state.players[index].name).join(" و ");
-  }
+  state.currentTurn = getNextPlayer(state.currentTurn);
+  state.selectedTile = null;
 
   renderAll();
-  setStatus(message);
 
-  const champion = state.players.find(player => player.score >= state.targetScore);
+  const player = state.players[state.currentTurn];
 
-  if (champion) {
-    setTimeout(() => {
-      alert(`انتهت المباراة! الفائز هو ${champion.name} برصيد ${champion.score} نقطة.`);
-      state.scores = state.players.map(player => player.score);
-      returnToSetup();
-    }, 350);
-    return;
+  setStatus(
+    `الدور الآن: ${player.name}`,
+    `لديه ${player.hand.length} قطعة`
+  );
+
+  if (
+    state.playType === "ai" &&
+    !player.isHuman
+  ) {
+    scheduleAI();
   }
-
-  const nextButton = document.createElement("button");
-  nextButton.className = "primary-btn";
-  nextButton.textContent = "ابدأ الجولة التالية";
-  nextButton.style.marginTop = "12px";
-  nextButton.addEventListener("click", startNextRound);
-
-  $("gameStatus").appendChild(document.createElement("br"));
-  $("gameStatus").appendChild(nextButton);
-}
-
-function checkEnd() {
-  const result = calculateRoundWinner();
-
-  if (result) {
-    finishRound(result);
-    return true;
-  }
-
-  return false;
 }
 
 function playTile(playerIndex, tileId, side) {
-  if (!state.started || state.finished || state.busy) return false;
-  if (playerIndex !== state.currentTurn) return false;
+  if (
+    !state.started ||
+    state.finished ||
+    state.busy ||
+    playerIndex !== state.currentTurn
+  ) {
+    return false;
+  }
 
   const player = state.players[playerIndex];
-  const tile = player.hand.find(item => item.id === tileId);
 
-  if (!tile) return false;
-
-  const move = getLegalMoves(playerIndex).find(item =>
-    item.tile.id === tileId && item.side === side
+  const move = getLegalMoves(playerIndex).find(
+    item =>
+      item.tile.id === tileId &&
+      item.side === side
   );
 
   if (!move) {
@@ -476,19 +522,29 @@ function playTile(playerIndex, tileId, side) {
     return false;
   }
 
-  const removed = removeTileFromHand(playerIndex, tileId);
+  const tile = removeTileFromHand(playerIndex, tileId);
 
-  addBoardTile(removed, side, move.flip);
+  if (!tile) return false;
+
+  addBoardTile(tile, side, move.flip);
 
   state.selectedTile = null;
+  state.roundPasses = 0;
 
   const earned = getFivesScore();
 
   if (earned > 0) {
     player.score += earned;
-    setStatus(`${player.name} سجل ${earned} نقطة من نظام الخمسات.`);
+
+    setStatus(
+      `${player.name} سجل ${earned} نقطة.`,
+      "تم احتساب مجموع الطرفين المفتوحين."
+    );
   } else {
-    setStatus(`${player.name} لعب قطعة ${removed.a} - ${removed.b}.`);
+    setStatus(
+      `${player.name} لعب ${tile.a} - ${tile.b}.`,
+      "تم وضع القطعة على الطاولة."
+    );
   }
 
   renderAll();
@@ -496,186 +552,494 @@ function playTile(playerIndex, tileId, side) {
   if (checkEnd()) return true;
 
   advanceTurn();
+
   return true;
 }
 
-function advanceTurn() {
-  state.currentTurn = getNextPlayer(state.currentTurn);
-  state.selectedTile = null;
-
-  renderAll();
-
-  if (state.playType === "ai" && state.currentTurn !== 0) {
-    scheduleAI();
-  } else {
-    setStatus(`الدور الآن: ${state.players[state.currentTurn].name}`);
-  }
-}
+/* =========================================
+   DRAWING AND PASSING
+========================================= */
 
 function drawTile() {
-  if (state.finished || state.busy) return;
+  if (
+    state.finished ||
+    state.busy ||
+    !state.started
+  ) return;
 
   const player = state.players[state.currentTurn];
 
-  if (state.playType === "ai" && state.currentTurn !== 0) return;
+  if (!player.isHuman) return;
+
+  if (state.variant === "block") {
+    toast("نظام الحجب لا يسمح بالسحب.");
+    return;
+  }
 
   if (state.playersCount !== 2) {
     toast("لا توجد كومة سحب في هذا التوزيع.");
     return;
   }
 
-  if (state.variant === "block") {
-    toast("نظام البلوك لا يحتوي على سحب.");
+  if (getLegalMoves(state.currentTurn).length) {
+    toast("لديك حركة قانونية. العب قطعة أولًا.");
     return;
   }
 
-  if (state.boneyard.length === 0) {
-    toast("كومة السحب فارغة.");
-    return;
-  }
-
-  if (getLegalMoves(state.currentTurn).length > 0) {
-    toast("لديك قطعة يمكنك لعبها، لا يمكنك السحب الآن.");
+  if (!state.boneyard.length) {
+    toast("انتهت كومة السحب. يمكنك تمرير الدور.");
     return;
   }
 
   const tile = state.boneyard.pop();
+
   player.hand.push(tile);
 
   renderAll();
 
-  if (getLegalMoves(state.currentTurn).length > 0) {
-    setStatus("تم سحب قطعة. اختر القطعة المناسبة للعب.");
-  } else if (state.boneyard.length > 0) {
-    setStatus("القطعة المسحوبة لا تناسب. يمكنك السحب مرة أخرى.");
+  if (getLegalMoves(state.currentTurn).length) {
+    setStatus(
+      "تم سحب قطعة جديدة.",
+      "اختر القطعة المناسبة للعب."
+    );
+  } else if (state.boneyard.length) {
+    setStatus(
+      "القطعة لا تناسب الأطراف.",
+      "يمكنك سحب قطعة أخرى."
+    );
   } else {
-    setStatus("انتهت كومة السحب. يمكنك تمرير الدور.");
+    setStatus(
+      "انتهت كومة السحب.",
+      "يمكنك تمرير الدور."
+    );
   }
 }
 
 function passTurn() {
-  if (state.finished || state.busy) return;
+  if (
+    state.finished ||
+    state.busy ||
+    !state.started
+  ) return;
 
-  if (state.playType === "ai" && state.currentTurn !== 0) return;
+  const player = state.players[state.currentTurn];
 
-  if (getLegalMoves(state.currentTurn).length > 0) {
-    toast("لديك حركة قانونية. لا يمكنك تمرير الدور.");
+  if (!player.isHuman) return;
+
+  if (getLegalMoves(state.currentTurn).length) {
+    toast("لديك حركة قانونية ولا يمكنك تخطي الدور.");
     return;
   }
 
-  if (state.variant !== "block" && state.boneyard.length > 0) {
-    toast("يجب سحب قطعة أولاً.");
+  if (
+    state.variant !== "block" &&
+    state.playersCount === 2 &&
+    state.boneyard.length
+  ) {
+    toast("يجب سحب قطعة أولًا.");
     return;
   }
 
-  const playerName = state.players[state.currentTurn].name;
-  setStatus(`${playerName} مرر الدور.`);
+  registerPass();
+}
 
-  if (checkEnd()) return;
+function registerPass() {
+  const player = state.players[state.currentTurn];
+
+  state.roundPasses++;
+
+  setStatus(
+    `${player.name} مرر الدور.`,
+    `مرور ${state.roundPasses} من ${state.playersCount}`
+  );
+
+  if (state.roundPasses >= state.playersCount) {
+    const result = {
+      reason: "blocked",
+      winner: null
+    };
+
+    const totals = state.players.map(
+      calculateHandPoints
+    );
+
+    const minimum = Math.min(...totals);
+
+    const winners = totals
+      .map((value, index) =>
+        value === minimum ? index : -1
+      )
+      .filter(index => index !== -1);
+
+    result.winners = winners;
+
+    if (winners.length === 1) {
+      result.winner = winners[0];
+    }
+
+    finishRound(result);
+    return;
+  }
 
   advanceTurn();
 }
 
-function chooseAIMove(playerIndex) {
-  const moves = getLegalMoves(playerIndex);
-  if (!moves.length) return null;
+/* =========================================
+   ROUND RESULTS
+========================================= */
 
-  const level = state.aiLevel;
+function calculateRoundWinner() {
+  const emptyIndex = state.players.findIndex(
+    player => player.hand.length === 0
+  );
 
-  const ranked = moves.map(move => {
-    const tile = move.tile;
-    let score = tilePoints(tile);
-
-    if (tile.a === tile.b) score += 5;
-
-    if (state.variant === "fives") {
-      const ends = getEnds();
-
-      let nextLeft = ends ? ends.left : tile.a;
-      let nextRight = ends ? ends.right : tile.b;
-
-      if (move.side === "left") {
-        nextLeft = move.flip ? tile.a : tile.b;
-      } else {
-        nextRight = move.flip ? tile.b : tile.a;
-      }
-
-      const total = nextLeft + nextRight;
-
-      if (total % 5 === 0) score += 15;
-    }
-
-    return { move, score };
-  });
-
-  ranked.sort((a, b) => b.score - a.score);
-
-  if (level === "easy") {
-    return moves[Math.floor(Math.random() * moves.length)];
+  if (emptyIndex !== -1) {
+    return {
+      winner: emptyIndex,
+      reason: "empty"
+    };
   }
 
-  if (level === "medium") {
-    const top = ranked.slice(0, Math.min(3, ranked.length));
-    return top[Math.floor(Math.random() * top.length)].move;
-  }
-
-  return ranked[0].move;
+  return null;
 }
 
-function scheduleAI() {
-  if (state.finished || state.playType !== "ai") return;
+function checkEnd() {
+  const result = calculateRoundWinner();
 
-  state.busy = true;
+  if (!result) return false;
+
+  finishRound(result);
+  return true;
+}
+
+function finishRound(result) {
+  if (state.finished) return;
+
+  state.finished = true;
+  state.busy = false;
+
+  const points = state.players.map(
+    calculateHandPoints
+  );
+
+  let message = "";
+
+  if (
+    result.winner !== null &&
+    result.winner !== undefined
+  ) {
+    const winner = state.players[result.winner];
+
+    const earned = points.reduce(
+      (sum, value, index) =>
+        index === result.winner ? sum : sum + value,
+      0
+    );
+
+    winner.score += earned;
+
+    message =
+      `${winner.name} فاز بالجولة! ` +
+      `حصل على ${earned} نقطة.`;
+
+  } else {
+    const winners = result.winners || [];
+
+    message =
+      "انتهت الجولة بالتعادل بين: " +
+      winners.map(index =>
+        state.players[index].name
+      ).join(" و ");
+  }
+
+  renderAll();
   renderControls();
 
-  setTimeout(() => {
+  setStatus(
+    message,
+    "يمكنك بدء جولة جديدة أو إنهاء المباراة."
+  );
+
+  const champion = state.players.find(
+    player => player.score >= state.targetScore
+  );
+
+  if (champion) {
+    setStatus(
+      `انتهت المباراة! الفائز هو ${champion.name}.`,
+      `مجموع نقاطه ${champion.score}`
+    );
+
+    toast(`الفائز بالمباراة: ${champion.name}`);
+    addNextRoundButton("العودة للإعدادات");
+
+  } else {
+    addNextRoundButton("ابدأ الجولة التالية");
+  }
+}
+
+function addNextRoundButton(label) {
+  const status = $("gameStatus");
+
+  if (!status) return;
+
+  const oldButton = $("nextRoundButton");
+
+  if (oldButton) oldButton.remove();
+
+  const button = document.createElement("button");
+
+  button.id = "nextRoundButton";
+  button.className = "primary-btn";
+  button.textContent = label;
+  button.style.marginTop = "12px";
+
+  button.addEventListener("click", () => {
+    if (state.players.some(
+      player => player.score >= state.targetScore
+    )) {
+      returnToSetup();
+    } else {
+      startNextRound();
+    }
+  });
+
+  status.parentElement.appendChild(button);
+}
+
+function startNextRound() {
+  state.round++;
+
+  createPlayers();
+
+  dealRound();
+
+  state.started = true;
+
+  const button = $("nextRoundButton");
+  if (button) button.remove();
+
+  setStatus(
+    "بدأت الجولة الجديدة.",
+    `الجولة رقم ${state.round}`
+  );
+
+  renderAll();
+
+  if (
+    state.playType === "ai" &&
+    !state.players[state.currentTurn].isHuman
+  ) {
+    scheduleAI();
+  }
+}
+
+/* =========================================
+   AI ENGINE
+========================================= */
+
+function evaluateMove(move, playerIndex) {
+  const tile = move.tile;
+
+  let score = tilePoints(tile) * 1.2;
+
+  if (tile.a === tile.b) {
+    score += 5;
+  }
+
+  const player = state.players[playerIndex];
+
+  const remaining = player.hand.filter(
+    item => item.id !== tile.id
+  );
+
+  const matching = remaining.filter(
+    item =>
+      item.a === tile.a ||
+      item.b === tile.a ||
+      item.a === tile.b ||
+      item.b === tile.b
+  ).length;
+
+  score += matching * 1.7;
+
+  if (state.variant === "fives") {
+    const ends = getEnds();
+
+    let left = ends ? ends.left : tile.a;
+    let right = ends ? ends.right : tile.b;
+
+    if (move.side === "left") {
+      left = move.flip ? tile.a : tile.b;
+    } else {
+      right = move.flip ? tile.b : tile.a;
+    }
+
+    const total = left + right;
+
+    if (total % 5 === 0) {
+      score += 15;
+    }
+  }
+
+  return score;
+}
+
+function chooseAIMove(playerIndex) {
+  const moves = getLegalMoves(playerIndex);
+
+  if (!moves.length) return null;
+
+  const ranked = moves
+    .map(move => ({
+      move,
+      score: evaluateMove(move, playerIndex)
+    }))
+    .sort((a, b) => b.score - a.score);
+
+  if (state.aiLevel === "easy") {
+    return moves[
+      Math.floor(Math.random() * moves.length)
+    ];
+  }
+
+  if (state.aiLevel === "medium") {
+    const candidates = ranked.slice(
+      0,
+      Math.min(3, ranked.length)
+    );
+
+    return candidates[
+      Math.floor(Math.random() * candidates.length)
+    ].move;
+  }
+
+  if (state.aiLevel === "hard") {
+    return ranked[0].move;
+  }
+
+  // Expert: prefer moves that reduce future options
+  // available to opponents, while keeping useful tiles.
+  const opponentIndex = getNextPlayer(playerIndex);
+
+  return ranked
+    .map(item => {
+      const move = item.move;
+      let extra = 0;
+
+      const ends = getEnds();
+
+      if (ends) {
+        const exposed = move.side === "left"
+          ? (move.flip ? move.tile.a : move.tile.b)
+          : (move.flip ? move.tile.b : move.tile.a);
+
+        const opponent = state.players[opponentIndex];
+
+        const opponentCanMatch = opponent.hand.filter(
+          tile =>
+            tile.a === exposed ||
+            tile.b === exposed
+        ).length;
+
+        extra -= opponentCanMatch * 2;
+      }
+
+      return {
+        move,
+        score: item.score + extra
+      };
+    })
+    .sort((a, b) => b.score - a.score)[0].move;
+}
+
+async function scheduleAI() {
+  if (
+    state.finished ||
+    state.busy ||
+    state.playType !== "ai"
+  ) return;
+
+  const player = state.players[state.currentTurn];
+
+  if (!player || player.isHuman) return;
+
+  state.busy = true;
+  renderAll();
+
+  const waitTime = {
+    easy: 550,
+    medium: 800,
+    hard: 1050,
+    expert: 1300
+  }[state.aiLevel] || 800;
+
+  await delay(waitTime);
+
+  if (state.finished) {
+    state.busy = false;
+    return;
+  }
+
+  const moves = getLegalMoves(state.currentTurn);
+
+  if (moves.length) {
+    const chosen = chooseAIMove(state.currentTurn);
+
     state.busy = false;
 
-    if (state.finished || state.currentTurn === 0) return;
-
-    const player = state.players[state.currentTurn];
-    const moves = getLegalMoves(state.currentTurn);
-
-    if (moves.length) {
-      const chosen = chooseAIMove(state.currentTurn);
-
-      if (chosen) {
-        playTile(state.currentTurn, chosen.tile.id, chosen.side);
-      }
-
-      return;
+    if (chosen) {
+      playTile(
+        state.currentTurn,
+        chosen.tile.id,
+        chosen.side
+      );
     }
 
-    if (
-      state.variant !== "block" &&
-      state.playersCount === 2 &&
-      state.boneyard.length > 0
-    ) {
-      const tile = state.boneyard.pop();
-      player.hand.push(tile);
+    return;
+  }
 
-      renderAll();
+  if (
+    state.variant !== "block" &&
+    state.playersCount === 2 &&
+    state.boneyard.length
+  ) {
+    const tile = state.boneyard.pop();
 
-      if (getLegalMoves(state.currentTurn).length > 0) {
-        scheduleAI();
-      } else if (state.boneyard.length > 0) {
-        scheduleAI();
-      } else {
-        advanceTurn();
-      }
+    player.hand.push(tile);
 
-      return;
+    state.busy = false;
+    renderAll();
+
+    if (getLegalMoves(state.currentTurn).length) {
+      scheduleAI();
+    } else if (state.boneyard.length) {
+      scheduleAI();
+    } else {
+      registerPass();
     }
 
-    advanceTurn();
-  }, state.aiLevel === "easy" ? 650 : 950);
+    return;
+  }
+
+  state.busy = false;
+  registerPass();
 }
+
+/* =========================================
+   RENDER PLAYERS
+========================================= */
 
 function renderSeat(index, position) {
   const element = $(position);
+
   if (!element) return;
 
-  if (index === null || index === undefined || index >= state.players.length) {
+  if (
+    index === null ||
+    index === undefined ||
+    index >= state.players.length
+  ) {
     element.classList.add("hidden");
     return;
   }
@@ -685,14 +1049,27 @@ function renderSeat(index, position) {
 
   element.classList.remove("hidden");
   element.classList.toggle("current", active);
+  element.classList.remove("inactive");
 
   const avatar = element.querySelector(".player-avatar");
   const name = element.querySelector("strong");
   const details = element.querySelector("small");
 
-  avatar.textContent = player.name === "أنت" ? "أ" : player.name.slice(0, 1);
-  name.innerHTML = `${active ? '<span class="turn-dot"></span>' : ""}${escapeHTML(player.name)}`;
-  details.textContent = `${player.hand.length} قطعة • ${player.score} نقطة`;
+  if (avatar) {
+    avatar.textContent =
+      player.name === "أنت"
+        ? "أ"
+        : player.name.slice(0, 1);
+  }
+
+  if (name) {
+    name.textContent = player.name;
+  }
+
+  if (details) {
+    details.textContent =
+      `${player.hand.length} قطعة • ${player.score} نقطة`;
+  }
 }
 
 function renderSeats() {
@@ -702,10 +1079,12 @@ function renderSeats() {
     renderSeat(1, "seatTop");
     renderSeat(null, "seatLeft");
     renderSeat(null, "seatRight");
+
   } else if (state.playersCount === 3) {
     renderSeat(1, "seatTop");
     renderSeat(2, "seatLeft");
     renderSeat(null, "seatRight");
+
   } else {
     renderSeat(2, "seatTop");
     renderSeat(3, "seatLeft");
@@ -713,32 +1092,47 @@ function renderSeats() {
   }
 }
 
+/* =========================================
+   RENDER BOARD
+========================================= */
+
 function renderBoard() {
   const board = $("dominoBoard");
+
+  if (!board) return;
 
   if (!state.board.length) {
     board.innerHTML = `
       <div class="board-placeholder">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4">
+        <svg viewBox="0 0 24 24" fill="none"
+        stroke="currentColor" stroke-width="1.5">
           <rect x="4" y="3" width="16" height="18" rx="3"/>
-          <path d="M4 12h16"/>
+          <path d="M12 3v18"/>
         </svg>
         ابدأ بوضع أول قطعة على الطاولة
       </div>
     `;
+
     return;
   }
 
   board.innerHTML = state.board.map(tile => `
     <div class="domino-tile">
-      ${makePips(tile.left)}
-      ${makePips(tile.right)}
+      ${makeHalf(tile.left)}
+      ${makeHalf(tile.right)}
     </div>
   `).join("");
 }
 
+/* =========================================
+   RENDER HAND
+========================================= */
+
 function renderHand() {
   const hand = $("playerHand");
+
+  if (!hand) return;
+
   const player = state.players[state.currentTurn];
 
   if (!player) {
@@ -746,20 +1140,38 @@ function renderHand() {
     return;
   }
 
-  $("handCount").textContent = `${player.hand.length} قطعة`;
+  const count = $("handCount");
 
-  if (state.playType === "ai" && state.currentTurn !== 0) {
+  if (count) {
+    count.textContent = `${player.hand.length} قطعة`;
+  }
+
+  if (!player.isHuman) {
     hand.innerHTML = `
-      <div class="setting-note">الكمبيوتر يفكر في حركته...</div>
+      <div class="hand-empty">
+        الكمبيوتر يفكر في حركته...
+      </div>
     `;
+
     return;
+  }
+
+  if (state.playType === "local") {
+    hand.innerHTML = `
+      <div class="hand-empty">
+        دور ${escapeHTML(player.name)}
+      </div>
+    `;
   }
 
   hand.innerHTML = player.hand.map(tile => `
     <button
-      class="hand-tile ${state.selectedTile === tile.id ? "selected" : ""}"
+      class="hand-tile ${
+        state.selectedTile === tile.id ? "selected" : ""
+      }"
       data-tile-id="${escapeHTML(tile.id)}"
-      ${state.busy || state.finished ? "disabled" : ""}
+      type="button"
+      ${state.finished || state.busy ? "disabled" : ""}
       aria-label="قطعة ${tile.a} و ${tile.b}"
     >
       ${makePips(tile.a)}
@@ -769,115 +1181,157 @@ function renderHand() {
 
   hand.querySelectorAll("[data-tile-id]").forEach(button => {
     button.addEventListener("click", () => {
+      if (state.busy || state.finished) return;
+
       state.selectedTile = button.dataset.tileId;
+
       renderHand();
       renderControls();
     });
   });
 }
 
+/* =========================================
+   RENDER CONTROLS
+========================================= */
+
 function renderControls() {
-  const playerIndex = state.currentTurn;
-  const isHuman = state.playType === "local" || playerIndex === 0;
-  const legal = getLegalMoves(playerIndex);
+  const player = state.players[state.currentTurn];
+
+  if (!player) return;
+
+  const humanTurn = player.isHuman;
+
+  const legalMoves = getLegalMoves(state.currentTurn);
+
+  const selectedMoves = legalMoves.filter(
+    move => move.tile.id === state.selectedTile
+  );
+
+  const leftButton = $("playLeftButton");
+  const rightButton = $("playRightButton");
+  const drawButton = $("drawTileButton");
+  const passButton = $("passTurnButton");
+
+  const disabled =
+    state.finished ||
+    state.busy ||
+    !humanTurn;
+
+  if (leftButton) {
+    leftButton.disabled =
+      disabled ||
+      !selectedMoves.some(move => move.side === "left");
+  }
+
+  if (rightButton) {
+    rightButton.disabled =
+      disabled ||
+      !selectedMoves.some(move => move.side === "right");
+  }
 
   const canDraw =
-    state.playersCount === 2 &&
     state.variant !== "block" &&
+    state.playersCount === 2 &&
     state.boneyard.length > 0 &&
-    legal.length === 0 &&
-    isHuman &&
-    !state.finished &&
-    !state.busy;
+    legalMoves.length === 0;
+
+  if (drawButton) {
+    drawButton.disabled = disabled || !canDraw;
+  }
 
   const canPass =
-    legal.length === 0 &&
-    (!state.boneyard.length || state.variant === "block") &&
-    isHuman &&
-    !state.finished &&
-    !state.busy;
+    legalMoves.length === 0 &&
+    (
+      state.variant === "block" ||
+      state.playersCount !== 2 ||
+      state.boneyard.length === 0
+    );
 
-  $("playLeftButton").disabled =
-    !isHuman || !state.selectedTile ||
-    !legal.some(move => move.tile.id === state.selectedTile && move.side === "left") ||
-    state.finished || state.busy;
+  if (passButton) {
+    passButton.disabled = disabled || !canPass;
+  }
 
-  $("playRightButton").disabled =
-    !isHuman || !state.selectedTile ||
-    !legal.some(move => move.tile.id === state.selectedTile && move.side === "right") ||
-    state.finished || state.busy;
+  const info = $("gameInfo");
 
-  $("drawTileButton").disabled = !canDraw;
-  $("passTurnButton").disabled = !canPass;
-
-  $("drawTileButton").textContent =
-    `اسحب قطعة (${state.boneyard.length})`;
+  if (info) {
+    info.textContent =
+      `الجولة ${state.round} • السحب ${state.boneyard.length}`;
+  }
 }
 
-function renderAll() {
-  if (!state.players.length) return;
+/* =========================================
+   RENDER EVERYTHING
+========================================= */
 
+function renderAll() {
   renderSeats();
   renderBoard();
   renderHand();
   renderControls();
 
-  $("gameInfo").textContent =
-    `${variantName()} • ${state.playersCount} لاعبين • الجولة ${state.round}`;
-}
+  if ($("gameModeLabel")) {
+    const labels = {
+      draw: "دومينو السحب",
+      block: "دومينو الحجب",
+      fives: "دومينو الخمسات"
+    };
 
-function variantName() {
-  return {
-    draw: "دومينو السحب",
-    block: "دومينو البلوك",
-    fives: "دومينو الخمسات"
-  }[state.variant];
-}
-
-function setStatus(message) {
-  $("gameStatus").textContent = message;
-}
-
-function startNextRound() {
-  state.round++;
-  dealRound();
-  renderAll();
-
-  setStatus(`بدأت الجولة ${state.round}. الدور على ${state.players[state.currentTurn].name}.`);
-
-  if (state.playType === "ai" && state.currentTurn !== 0) {
-    scheduleAI();
+    $("gameModeLabel").textContent =
+      `${state.playersCount} لاعبين · ${labels[state.variant]}`;
   }
 }
+
+/* =========================================
+   START AND EXIT
+========================================= */
 
 function startGame() {
   if (state.playType === "online") {
-    toast("اللعب الأونلاين يحتاج ربط نظام المباريات وقاعدة البيانات أولاً.");
+    toast(
+      "اللعب الأونلاين لم يُربط بعد. اختر اللعب المحلي أو الكمبيوتر."
+    );
     return;
   }
 
-  state.variant = document.querySelector("[data-variant].active")?.dataset.variant || "draw";
-  state.playersCount = Number(document.querySelector("[data-players].active")?.dataset.players || 2);
-  state.playType = document.querySelector("[data-playtype].active")?.dataset.playtype || "ai";
-  state.aiLevel = $("aiLevel").value;
+  state.variant =
+    document.querySelector(
+      "#variantOptions .active"
+    )?.dataset.value || "draw";
 
-  const selectedTarget = $("targetScore").value;
-  state.targetScore = selectedTarget === "custom"
-    ? Number($("customScore").value)
-    : Number(selectedTarget);
+  state.playersCount = Number(
+    document.querySelector(
+      "#playerOptions .active"
+    )?.dataset.value || 2
+  );
 
-  if (!Number.isFinite(state.targetScore) || state.targetScore < 50) {
-    toast("اكتب عدد نقاط صحيح لا يقل عن 50.");
+  state.playType =
+    document.querySelector(
+      "#playTypeOptions .active"
+    )?.dataset.value || "ai";
+
+  if (state.playType === "online") {
+    toast("نظام المباريات الأونلاين قيد الربط.");
     return;
   }
 
-  if (state.playType === "local" && state.playersCount < 2) {
-    toast("يجب وجود لاعبين على الأقل.");
-    return;
-  }
+  state.aiLevel = $("aiLevel")?.value || "medium";
 
-  state.scores = Array(state.playersCount).fill(0);
+  const selectedScore = Number(
+    $("targetScore")?.value || 200
+  );
+
+  const customScore = Number(
+    $("customScore")?.value || 0
+  );
+
+  state.targetScore =
+    customScore >= 50 && customScore <= 1000
+      ? customScore
+      : selectedScore;
+
   state.round = 1;
+  state.scores = Array(state.playersCount).fill(0);
 
   createPlayers();
   dealRound();
@@ -885,14 +1339,26 @@ function startGame() {
   state.started = true;
   state.finished = false;
 
-  $("setupScreen").style.display = "none";
-  $("gameScreen").style.display = "block";
+  const setup = $("setupScreen");
+  const game = $("gameScreen");
+
+  if (setup) setup.style.display = "none";
+  if (game) game.style.display = "block";
+
+  const oldButton = $("nextRoundButton");
+  if (oldButton) oldButton.remove();
+
+  setStatus(
+    `بدأت المباراة. الدور الأول: ${state.players[state.currentTurn].name}`,
+    getDistributionDescription()
+  );
 
   renderAll();
 
-  setStatus(`بدأت المباراة. أول دور: ${state.players[state.currentTurn].name}.`);
-
-  if (state.playType === "ai" && state.currentTurn !== 0) {
+  if (
+    state.playType === "ai" &&
+    !state.players[state.currentTurn].isHuman
+  ) {
     scheduleAI();
   }
 }
@@ -900,137 +1366,248 @@ function startGame() {
 function returnToSetup() {
   state.started = false;
   state.finished = false;
-  state.players = [];
-  state.board = [];
-  state.boneyard = [];
-  state.selectedTile = null;
+  state.busy = false;
 
-  $("gameScreen").style.display = "none";
-  $("setupScreen").style.display = "block";
+  const setup = $("setupScreen");
+  const game = $("gameScreen");
+
+  if (setup) setup.style.display = "block";
+  if (game) game.style.display = "none";
+
+  const button = $("nextRoundButton");
+  if (button) button.remove();
+
+  updateDealDescription();
 }
 
-function openModal(id) {
-  $(id)?.classList.add("open");
-}
+/* =========================================
+   OPTION SELECTION
+========================================= */
 
-function closeModal(id) {
-  $(id)?.classList.remove("open");
-}
-
-function selectExclusive(containerId, selector) {
+function setupOptionGroup(containerId, callback) {
   const container = $(containerId);
+
   if (!container) return;
 
-  container.querySelectorAll(selector).forEach(button => {
+  container.querySelectorAll("[data-value]").forEach(button => {
     button.addEventListener("click", () => {
-      container.querySelectorAll(selector).forEach(item =>
-        item.classList.remove("active")
-      );
+      container.querySelectorAll("[data-value]").forEach(item => {
+        item.classList.remove("active");
+      });
 
       button.classList.add("active");
 
-      if (containerId === "playerOptions") {
-        state.playersCount = Number(button.dataset.players);
-        updateDealDescription();
-      }
-
-      if (containerId === "playTypeOptions") {
-        $("aiSettings").classList.toggle(
-          "hidden",
-          button.dataset.playtype !== "ai"
-        );
+      if (callback) {
+        callback(button.dataset.value);
       }
     });
   });
 }
 
-function updateRoomCodeVisibility() {
-  const privateRoom = $("roomVisibility").value === "private";
-  $("roomCodeGroup").classList.toggle("hidden", !privateRoom);
+function updateAISettings(value) {
+  const settings = $("aiSettings");
+
+  if (!settings) return;
+
+  settings.style.display =
+    value === "ai" ? "block" : "none";
 }
+
+function openModal(id) {
+  const modal = $(id);
+  if (modal) modal.classList.add("open");
+}
+
+function closeModal(id) {
+  const modal = $(id);
+  if (modal) modal.classList.remove("open");
+}
+
+/* =========================================
+   SUPABASE CONNECTION CHECK
+========================================= */
+
+async function checkSignedInUser() {
+  try {
+    const {
+      data,
+      error
+    } = await supabase.auth.getUser();
+
+    if (error) throw error;
+
+    return data.user || null;
+
+  } catch (error) {
+    console.warn(
+      "Domino: user session not available",
+      error.message
+    );
+
+    return null;
+  }
+}
+
+/*
+  Online integration is intentionally not activated here.
+
+  Existing database functions need a verified match ID,
+  confirmed participant state, and exact RPC response
+  contracts before they can safely initialize an online
+  game or publish realtime updates.
+
+  No client-side wallet, score rewards, or coin changes
+  are performed by this file.
+*/
+
+/* =========================================
+   EVENTS
+========================================= */
 
 function bindEvents() {
-  selectExclusive("variantOptions", "[data-variant]");
-  selectExclusive("playerOptions", "[data-players]");
-  selectExclusive("playTypeOptions", "[data-playtype]");
+  setupOptionGroup(
+    "variantOptions",
+    () => updateDealDescription()
+  );
 
-  $("startGameButton").addEventListener("click", startGame);
+  setupOptionGroup(
+    "playerOptions",
+    () => updateDealDescription()
+  );
 
-  $("playLeftButton").addEventListener("click", () => {
-    if (!state.selectedTile) return;
-    playTile(state.currentTurn, state.selectedTile, "left");
-  });
+  setupOptionGroup(
+    "playTypeOptions",
+    value => updateAISettings(value)
+  );
 
-  $("playRightButton").addEventListener("click", () => {
-    if (!state.selectedTile) return;
-    playTile(state.currentTurn, state.selectedTile, "right");
-  });
+  $("startGameButton")?.addEventListener(
+    "click",
+    startGame
+  );
 
-  $("drawTileButton").addEventListener("click", drawTile);
-  $("passTurnButton").addEventListener("click", passTurn);
+  $("playLeftButton")?.addEventListener(
+    "click",
+    () => {
+      if (!state.selectedTile) {
+        toast("اختر قطعة أولًا.");
+        return;
+      }
 
-  $("leaveGameButton").addEventListener("click", () => {
-    if (confirm("هل تريد مغادرة الطاولة والعودة للإعدادات؟")) {
-      returnToSetup();
+      playTile(
+        state.currentTurn,
+        state.selectedTile,
+        "left"
+      );
     }
-  });
+  );
 
-  $("gameRulesButton").addEventListener("click", () => openModal("rulesModal"));
-  $("rulesButton").addEventListener("click", () => openModal("rulesModal"));
+  $("playRightButton")?.addEventListener(
+    "click",
+    () => {
+      if (!state.selectedTile) {
+        toast("اختر قطعة أولًا.");
+        return;
+      }
 
-  document.querySelectorAll("[data-close]").forEach(button => {
-    button.addEventListener("click", () => closeModal(button.dataset.close));
-  });
+      playTile(
+        state.currentTurn,
+        state.selectedTile,
+        "right"
+      );
+    }
+  );
 
-  document.querySelectorAll(".modal-backdrop").forEach(backdrop => {
-    backdrop.addEventListener("click", event => {
-      if (event.target === backdrop) {
-        backdrop.classList.remove("open");
+  $("drawTileButton")?.addEventListener(
+    "click",
+    drawTile
+  );
+
+  $("passTurnButton")?.addEventListener(
+    "click",
+    passTurn
+  );
+
+  $("leaveGameButton")?.addEventListener(
+    "click",
+    () => {
+      if (confirm("هل تريد مغادرة الطاولة الحالية؟")) {
+        returnToSetup();
+      }
+    }
+  );
+
+  $("rulesButton")?.addEventListener(
+    "click",
+    () => openModal("rulesModal")
+  );
+
+  $("gameRulesButton")?.addEventListener(
+    "click",
+    () => openModal("rulesModal")
+  );
+
+  $("closeRulesButton")?.addEventListener(
+    "click",
+    () => closeModal("rulesModal")
+  );
+
+  $("closeRulesConfirm")?.addEventListener(
+    "click",
+    () => closeModal("rulesModal")
+  );
+
+  $("closeRoomButton")?.addEventListener(
+    "click",
+    () => closeModal("roomModal")
+  );
+
+  $("cancelRoomButton")?.addEventListener(
+    "click",
+    () => closeModal("roomModal")
+  );
+
+  $("gameMenuButton")?.addEventListener(
+    "click",
+    () => openModal("rulesModal")
+  );
+
+  document.querySelectorAll(".modal").forEach(modal => {
+    modal.addEventListener("click", event => {
+      if (event.target === modal) {
+        modal.classList.remove("open");
       }
     });
   });
 
-  $("targetScore").addEventListener("change", () => {
-    $("customScore").classList.toggle(
-      "hidden",
-      $("targetScore").value !== "custom"
-    );
-  });
-
-  $("roomVisibility").addEventListener("change", updateRoomCodeVisibility);
-
-  $("createRoomButton").addEventListener("click", () => {
-    $("roomModalTitle").textContent = "إنشاء طاولة جديدة";
-    $("roomCodeGroup").classList.add("hidden");
-    openModal("roomModal");
-  });
-
-  $("joinRoomButton").addEventListener("click", () => {
-    $("roomModalTitle").textContent = "دخول طاولة";
-    $("roomCodeGroup").classList.remove("hidden");
-    $("roomVisibility").value = "private";
-    openModal("roomModal");
-  });
-
-  $("confirmRoomButton").addEventListener("click", () => {
-    toast("نظام الغرف يحتاج ربطه بقاعدة بيانات الغرف قبل إنشاء طاولة فعلية.");
-  });
-
-  $("quickMatchButton").addEventListener("click", () => {
-    toast("البحث عن لاعب أونلاين سيتاح بعد ربط نظام المطابقة.");
-  });
-
-  $("inviteFriendButton").addEventListener("click", () => {
-    toast("دعوات الأصدقاء ستعمل بعد ربط نظام الدعوات.");
+  [
+    "createRoomButton",
+    "joinRoomButton",
+    "quickMatchButton",
+    "inviteFriendButton"
+  ].forEach(id => {
+    $(id)?.addEventListener("click", () => {
+      toast("نظام الغرف والبحث عن اللاعبين لم يُربط بعد.");
+    });
   });
 }
 
-function init() {
+/* =========================================
+   INITIALIZATION
+========================================= */
+
+async function initializeDomino() {
   bindEvents();
   updateDealDescription();
 
-  $("aiSettings").classList.remove("hidden");
-  $("customScore").classList.add("hidden");
+  updateAISettings(
+    document.querySelector(
+      "#playTypeOptions .active"
+    )?.dataset.value || "ai"
+  );
+
+  await checkSignedInUser();
+
+  console.info("HANOON DOMINO ENGINE READY");
 }
 
-init();
+initializeDomino();
