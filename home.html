@@ -2,1664 +2,1481 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
-  <meta name="theme-color" content="#090a10">
-  <title>HANOON WORLD</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta name="theme-color" content="#090b13">
+  <title>HANOON WORLD — عالمك الاجتماعي</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
   <style>
     :root {
-      --bg: #090a10;
-      --panel: #131521;
-      --panel2: #1b1e2b;
-      --gold: #d8b46b;
-      --gold-light: #f1d69a;
-      --text: #f5f3ed;
-      --muted: #9296a7;
-      --line: rgba(255,255,255,.08);
-      --green: #52d6a3;
-      --red: #ff687b;
+      --bg:#090b13;
+      --panel:#111522;
+      --panel2:#171d2d;
+      --line:rgba(255,255,255,.08);
+      --text:#f5f6ff;
+      --muted:#8992a8;
+      --purple:#9875ff;
+      --cyan:#42d9d0;
+      --pink:#f276b8;
+      --gold:#f5c66b;
+      --radius:22px;
     }
 
-    * {
-      box-sizing: border-box;
-      -webkit-tap-highlight-color: transparent;
-    }
+    * { box-sizing:border-box; }
 
-    html, body {
-      margin: 0;
-      width: 100%;
-      min-height: 100%;
-      background: var(--bg);
-      color: var(--text);
-      font-family: "Cairo", sans-serif;
-      overscroll-behavior: none;
-      touch-action: pan-y;
+    html {
+      scroll-behavior:smooth;
+      background:var(--bg);
     }
 
     body {
-      min-height: 100vh;
-      min-height: 100dvh;
-      overflow-x: hidden;
-    }
-
-    button, input, textarea {
-      font: inherit;
-    }
-
-    button {
-      cursor: pointer;
-    }
-
-    .app {
-      min-height: 100vh;
-      min-height: 100dvh;
-      max-width: 1500px;
-      margin: auto;
-      display: grid;
-      grid-template-columns: 78px minmax(0, 1fr);
+      margin:0;
+      min-height:100vh;
       background:
-        linear-gradient(rgba(9,10,16,.94), rgba(9,10,16,.97)),
-        url("https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=1800&q=85")
-        center / cover fixed;
+        radial-gradient(ellipse at 85% 0%,rgba(125,91,255,.12),transparent 36%),
+        radial-gradient(ellipse at 5% 45%,rgba(47,190,194,.07),transparent 32%),
+        var(--bg);
+      color:var(--text);
+      font-family:"Cairo",sans-serif;
+      overflow-x:hidden;
     }
 
-    .rail {
-      position: sticky;
-      top: 0;
-      height: 100vh;
-      height: 100dvh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 13px;
-      padding: 18px 9px;
-      border-left: 1px solid var(--line);
-      background: rgba(13,15,23,.94);
-      z-index: 20;
+    button,input,textarea { font:inherit; }
+    button { cursor:pointer; }
+
+    .topbar {
+      position:sticky;
+      top:0;
+      z-index:20;
+      height:72px;
+      padding:0 5%;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      background:rgba(9,11,19,.91);
+      backdrop-filter:blur(20px);
+      border-bottom:1px solid var(--line);
+    }
+
+    .brand {
+      display:flex;
+      align-items:center;
+      gap:12px;
+      font-size:20px;
+      font-weight:900;
+      letter-spacing:.5px;
     }
 
     .brand-mark {
-      width: 48px;
-      height: 48px;
-      display: grid;
-      place-items: center;
-      border-radius: 17px;
-      color: #21190c;
-      font-weight: 900;
-      font-size: 24px;
-      background: linear-gradient(145deg, #f4dfa9, #b98c43);
-      box-shadow: 0 8px 25px rgba(216,180,107,.18);
-      margin-bottom: 15px;
+      width:42px;
+      height:42px;
+      display:grid;
+      place-items:center;
+      border-radius:15px;
+      background:linear-gradient(140deg,#9c78ff,#5540bd);
+      box-shadow:0 7px 25px #7658e955;
+      font-size:21px;
+      font-weight:900;
     }
 
-    .rail-btn {
-      width: 49px;
-      height: 49px;
-      border: 1px solid transparent;
-      border-radius: 15px;
-      background: transparent;
-      color: #85899a;
-      display: grid;
-      place-items: center;
-      font-size: 20px;
-      transition: .2s;
-      position: relative;
-    }
-
-    .rail-btn.active {
-      color: var(--gold-light);
-      background: rgba(216,180,107,.11);
-      border-color: rgba(216,180,107,.2);
-    }
-
-    .rail-btn:hover {
-      color: var(--gold-light);
-      background: rgba(255,255,255,.05);
-    }
-
-    .rail-bottom {
-      margin-top: auto;
-    }
-
-    .main {
-      min-width: 0;
-      padding: 20px 24px 35px;
-    }
-
-    .topbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 15px;
-      margin-bottom: 22px;
-    }
-
-    .welcome h1 {
-      font-size: 22px;
-      margin: 0;
-      font-weight: 900;
-    }
-
-    .welcome p {
-      color: var(--muted);
-      font-size: 12px;
-      margin: 2px 0 0;
+    .brand small {
+      display:block;
+      color:var(--muted);
+      font-size:9px;
+      letter-spacing:2px;
+      line-height:1;
+      margin-top:2px;
     }
 
     .top-actions {
-      display: flex;
-      align-items: center;
-      gap: 9px;
+      display:flex;
+      align-items:center;
+      gap:9px;
     }
 
     .icon-btn {
-      height: 43px;
-      min-width: 43px;
-      border-radius: 13px;
-      border: 1px solid var(--line);
-      color: var(--text);
-      background: var(--panel);
-      display: grid;
-      place-items: center;
-      font-size: 17px;
+      width:42px;
+      height:42px;
+      border:1px solid var(--line);
+      border-radius:14px;
+      color:white;
+      background:var(--panel);
+      display:grid;
+      place-items:center;
+      font-size:18px;
+    }
+
+    .icon-btn:active,.action-btn:active {
+      transform:scale(.96);
     }
 
     .profile-mini {
-      display: flex;
-      align-items: center;
-      gap: 9px;
-      padding: 5px 11px 5px 6px;
-      border: 1px solid var(--line);
-      background: var(--panel);
-      border-radius: 30px;
-      max-width: 190px;
+      width:42px;
+      height:42px;
+      border-radius:50%;
+      object-fit:cover;
+      border:2px solid var(--purple);
+      background:var(--panel2);
     }
 
-    .profile-mini img {
-      width: 34px;
-      height: 34px;
-      border-radius: 50%;
-      object-fit: cover;
-      background: var(--panel2);
+    .layout {
+      width:min(1450px,94%);
+      margin:25px auto 100px;
+      display:grid;
+      grid-template-columns:245px minmax(0,1fr) 285px;
+      gap:22px;
+      align-items:start;
     }
 
-    .profile-mini strong {
-      font-size: 11px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
+    .sidebar {
+      position:sticky;
+      top:94px;
+      display:flex;
+      flex-direction:column;
+      gap:15px;
     }
 
-    .hero {
-      min-height: 225px;
-      border-radius: 23px;
-      padding: 26px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-      position: relative;
-      overflow: hidden;
-      border: 1px solid rgba(216,180,107,.2);
+    .side-card,.card {
+      background:linear-gradient(145deg,rgba(24,30,46,.97),rgba(15,19,31,.97));
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      overflow:hidden;
+    }
+
+    .side-card { padding:17px; }
+
+    .side-profile {
+      text-align:center;
+      padding:10px 5px 15px;
+    }
+
+    .side-profile img {
+      width:78px;
+      height:78px;
+      border-radius:25px;
+      object-fit:cover;
+      border:2px solid var(--purple);
+      background:var(--panel2);
+    }
+
+    .side-profile h3 {
+      margin:9px 0 0;
+      font-size:16px;
+    }
+
+    .side-profile p {
+      margin:0;
+      color:var(--muted);
+      font-size:12px;
+    }
+
+    .menu {
+      display:grid;
+      gap:7px;
+    }
+
+    .menu a {
+      text-decoration:none;
+      color:#c9cee0;
+      display:flex;
+      align-items:center;
+      gap:12px;
+      padding:11px 12px;
+      border-radius:13px;
+      font-size:13px;
+      transition:.2s;
+    }
+
+    .menu a:hover,.menu a.active {
+      color:white;
+      background:rgba(151,116,255,.15);
+    }
+
+    .menu-icon {
+      width:29px;
+      height:29px;
+      display:grid;
+      place-items:center;
+      border-radius:10px;
+      background:rgba(255,255,255,.06);
+      font-size:15px;
+    }
+
+    .section-title {
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      margin:0 0 15px;
+    }
+
+    .section-title h2 {
+      margin:0;
+      font-size:18px;
+      font-weight:800;
+    }
+
+    .section-title p {
+      margin:3px 0 0;
+      color:var(--muted);
+      font-size:11px;
+    }
+
+    .section-title a {
+      color:#b49eff;
+      text-decoration:none;
+      font-size:12px;
+    }
+
+    .main-column {
+      min-width:0;
+      display:flex;
+      flex-direction:column;
+      gap:20px;
+    }
+
+    .welcome {
+      min-height:210px;
+      padding:25px;
+      position:relative;
+      display:flex;
+      align-items:center;
+      overflow:hidden;
+      border-radius:26px;
+      border:1px solid rgba(173,145,255,.2);
       background:
-        linear-gradient(90deg, rgba(10,11,18,.93), rgba(10,11,18,.55)),
-        url("https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=1400&q=85")
-        center / cover;
-      margin-bottom: 22px;
+        linear-gradient(90deg,rgba(12,13,27,.9),rgba(34,24,69,.65)),
+        url("https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=1400&q=85") center/cover;
     }
 
-    .hero::after {
-      content: "";
-      width: 230px;
-      height: 230px;
-      border-radius: 50%;
-      position: absolute;
-      left: -65px;
-      top: -95px;
-      border: 1px solid rgba(216,180,107,.23);
-      box-shadow: 0 0 0 25px rgba(216,180,107,.035), 0 0 0 55px rgba(216,180,107,.025);
+    .welcome::after {
+      content:"";
+      position:absolute;
+      width:240px;
+      height:240px;
+      left:-60px;
+      top:-100px;
+      border-radius:50%;
+      background:#a17aff;
+      filter:blur(100px);
+      opacity:.25;
     }
 
-    .hero-content {
-      position: relative;
-      z-index: 1;
-      max-width: 570px;
+    .welcome-content {
+      position:relative;
+      z-index:1;
+      max-width:470px;
     }
 
-    .eyebrow {
-      color: var(--gold-light);
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 1px;
+    .welcome-tag {
+      display:inline-flex;
+      padding:5px 12px;
+      border-radius:20px;
+      background:#9c7aff25;
+      border:1px solid #b69bff55;
+      color:#c9b9ff;
+      font-size:11px;
+      margin-bottom:9px;
     }
 
-    .hero h2 {
-      font-size: clamp(24px, 4vw, 37px);
-      margin: 8px 0;
-      line-height: 1.5;
-      font-weight: 900;
+    .welcome h1 {
+      font-size:27px;
+      line-height:1.5;
+      margin:0;
+      font-weight:900;
     }
 
-    .hero p {
-      color: #c3c3cc;
-      font-size: 12px;
-      line-height: 2;
-      margin: 0 0 17px;
+    .welcome p {
+      color:#d0cce0;
+      font-size:13px;
+      margin:7px 0 17px;
     }
 
-    .gold-btn {
-      border: 0;
-      border-radius: 12px;
-      min-height: 43px;
-      padding: 9px 20px;
-      color: #21190c;
-      background: linear-gradient(135deg, #f3dfa9, #c69b53);
-      font-weight: 900;
-      font-size: 12px;
+    .primary-btn {
+      border:0;
+      padding:10px 20px;
+      border-radius:12px;
+      color:white;
+      font-weight:800;
+      background:linear-gradient(120deg,#a184ff,#7054d6);
+      box-shadow:0 8px 22px #7958db35;
     }
 
-    .hero-emblem {
-      position: relative;
-      z-index: 1;
-      width: 145px;
-      height: 145px;
-      flex: 0 0 145px;
-      border-radius: 50%;
-      display: grid;
-      place-items: center;
-      border: 1px solid rgba(216,180,107,.45);
-      box-shadow: 0 0 0 12px rgba(216,180,107,.05), inset 0 0 40px rgba(216,180,107,.12);
-      color: var(--gold-light);
-      font-size: 55px;
-      font-weight: 900;
+    .stories {
+      padding:18px;
     }
 
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 13px;
-      margin-bottom: 25px;
+    .story-list {
+      display:flex;
+      gap:13px;
+      overflow-x:auto;
+      padding:4px 1px 8px;
+      scrollbar-width:none;
     }
 
-    .stat {
-      background: rgba(19,21,33,.93);
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      padding: 15px;
-      min-width: 0;
+    .story-list::-webkit-scrollbar { display:none; }
+
+    .story {
+      flex:0 0 72px;
+      text-align:center;
+      color:#dce0ef;
+      font-size:10px;
     }
 
-    .stat-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 7px;
+    .story-ring {
+      width:65px;
+      height:65px;
+      margin:auto auto 5px;
+      padding:3px;
+      border-radius:21px;
+      background:linear-gradient(140deg,#a17bff,#36d9d1,#e87bbd);
     }
 
-    .stat-icon {
-      width: 35px;
-      height: 35px;
-      display: grid;
-      place-items: center;
-      border-radius: 11px;
-      background: rgba(216,180,107,.1);
-      color: var(--gold-light);
-      font-size: 17px;
+    .story-ring img {
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      border-radius:18px;
+      border:3px solid #141827;
+      background:var(--panel2);
     }
 
-    .stat small {
-      color: var(--muted);
-      font-size: 10px;
+    .story-add {
+      display:grid;
+      place-items:center;
+      font-size:27px;
+      color:#c1adff;
+      background:linear-gradient(140deg,#30264f,#1d2940);
     }
 
-    .stat strong {
-      display: block;
-      margin-top: 8px;
-      font-size: 21px;
-      direction: ltr;
-      text-align: right;
+    .composer {
+      padding:17px;
     }
 
-    .section {
-      display: none;
-      animation: appear .25s ease;
+    .composer-head {
+      display:flex;
+      align-items:center;
+      gap:11px;
     }
 
-    .section.active {
-      display: block;
+    .composer-head img {
+      width:43px;
+      height:43px;
+      object-fit:cover;
+      border-radius:15px;
+      background:var(--panel2);
     }
 
-    @keyframes appear {
-      from { opacity: 0; transform: translateY(7px); }
-      to { opacity: 1; transform: translateY(0); }
+    .composer textarea {
+      width:100%;
+      min-height:75px;
+      resize:vertical;
+      margin-top:12px;
+      padding:13px;
+      color:white;
+      background:#0d1220;
+      border:1px solid var(--line);
+      border-radius:15px;
+      outline:none;
     }
 
-    .section-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-      margin: 25px 0 14px;
-    }
-
-    .section-head h2 {
-      font-size: 17px;
-      margin: 0;
-      font-weight: 900;
-    }
-
-    .section-head p {
-      color: var(--muted);
-      font-size: 10px;
-      margin: 3px 0 0;
-    }
-
-    .subtle-btn {
-      color: var(--gold-light);
-      background: transparent;
-      border: 1px solid rgba(216,180,107,.24);
-      border-radius: 10px;
-      padding: 7px 12px;
-      font-size: 10px;
-      font-weight: 800;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 13px;
-    }
-
-    .feature-card {
-      min-height: 150px;
-      border-radius: 17px;
-      overflow: hidden;
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      padding: 15px;
-      background: #171a27;
-      border: 1px solid var(--line);
-      cursor: pointer;
-      transition: transform .2s, border-color .2s;
-    }
-
-    .feature-card:hover {
-      transform: translateY(-3px);
-      border-color: rgba(216,180,107,.4);
-    }
-
-    .feature-card::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(0deg, rgba(7,8,13,.95), rgba(7,8,13,.08));
-      z-index: 1;
-    }
-
-    .feature-card img {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      opacity: .72;
-    }
-
-    .feature-card .feature-content {
-      position: relative;
-      z-index: 2;
-    }
-
-    .feature-card strong {
-      font-size: 14px;
-      display: block;
-    }
-
-    .feature-card span {
-      color: #c2c2cc;
-      font-size: 10px;
-    }
-
-    .feed-layout {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) 290px;
-      gap: 18px;
-      align-items: start;
-    }
-
-    .post-composer,
-    .post-card,
-    .side-card,
-    .room-card,
-    .game-card,
-    .profile-card {
-      background: rgba(19,21,33,.95);
-      border: 1px solid var(--line);
-      border-radius: 17px;
-    }
-
-    .post-composer {
-      padding: 15px;
-      margin-bottom: 14px;
-    }
-
-    .composer-top {
-      display: flex;
-      gap: 10px;
-      align-items: flex-start;
-    }
-
-    .composer-top img {
-      width: 39px;
-      height: 39px;
-      border-radius: 50%;
-      object-fit: cover;
-    }
-
-    .composer-top textarea {
-      flex: 1;
-      min-height: 75px;
-      resize: vertical;
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      padding: 11px;
-      background: #0b0d15;
-      color: var(--text);
-      outline: none;
-      font-size: 12px;
+    .composer textarea:focus {
+      border-color:#9576ff;
     }
 
     .composer-bottom {
-      display: flex;
-      justify-content: flex-end;
-      margin-top: 10px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+      margin-top:10px;
     }
 
-    .post-card {
-      padding: 15px;
-      margin-bottom: 13px;
+    .composer-note {
+      color:var(--muted);
+      font-size:11px;
+    }
+
+    .feed {
+      display:flex;
+      flex-direction:column;
+      gap:16px;
+    }
+
+    .post {
+      padding:17px;
     }
 
     .post-head {
-      display: flex;
-      align-items: center;
-      gap: 9px;
-      margin-bottom: 12px;
+      display:flex;
+      align-items:center;
+      gap:11px;
     }
 
-    .post-head img {
-      width: 39px;
-      height: 39px;
-      border-radius: 50%;
-      object-fit: cover;
-      background: var(--panel2);
+    .post-avatar {
+      width:45px;
+      height:45px;
+      border-radius:15px;
+      object-fit:cover;
+      background:var(--panel2);
     }
 
-    .post-author {
-      min-width: 0;
+    .post-user {
+      flex:1;
+      min-width:0;
     }
 
-    .post-author strong {
-      font-size: 12px;
-      display: block;
+    .post-user strong {
+      display:block;
+      font-size:13px;
     }
 
-    .post-author small {
-      color: var(--muted);
-      font-size: 10px;
+    .post-user span {
+      display:block;
+      color:var(--muted);
+      font-size:10px;
     }
 
-    .post-body {
-      font-size: 12px;
-      line-height: 2;
-      white-space: pre-wrap;
-      overflow-wrap: anywhere;
+    .post-content {
+      white-space:pre-wrap;
+      line-height:1.9;
+      font-size:13px;
+      color:#e5e8f3;
+      margin:13px 0;
+      overflow-wrap:anywhere;
+    }
+
+    .post-media {
+      width:100%;
+      max-height:450px;
+      object-fit:cover;
+      border-radius:16px;
+      background:#0b0e18;
+    }
+
+    .post-stats {
+      display:flex;
+      justify-content:space-between;
+      color:var(--muted);
+      font-size:11px;
+      padding:12px 2px 8px;
     }
 
     .post-actions {
-      display: flex;
-      gap: 12px;
-      border-top: 1px solid var(--line);
-      margin-top: 13px;
-      padding-top: 11px;
+      display:flex;
+      gap:8px;
+      border-top:1px solid var(--line);
+      padding-top:10px;
     }
 
-    .post-actions button {
-      border: 0;
-      background: transparent;
-      color: var(--muted);
-      font-size: 11px;
+    .action-btn {
+      flex:1;
+      padding:9px 5px;
+      border:0;
+      border-radius:11px;
+      color:#aeb7cc;
+      background:transparent;
+      font-size:12px;
     }
 
-    .post-actions button.liked {
-      color: var(--red);
+    .action-btn:hover {
+      background:#ffffff0b;
+      color:white;
     }
 
-    .side-card {
-      padding: 15px;
-      margin-bottom: 13px;
+    .action-btn.liked { color:#ff79a9; }
+
+    .right-section { padding:17px; }
+
+    .room-item {
+      display:flex;
+      gap:11px;
+      padding:11px 0;
+      border-bottom:1px solid var(--line);
     }
 
-    .side-card h3 {
-      margin: 0 0 12px;
-      font-size: 13px;
+    .room-item:last-child { border-bottom:0; }
+
+    .room-cover {
+      width:68px;
+      height:68px;
+      border-radius:15px;
+      object-fit:cover;
+      background:#242b40;
     }
 
-    .member-code {
-      color: var(--gold-light);
-      font-weight: 900;
-      direction: ltr;
-      font-size: 15px;
-      text-align: right;
-    }
-
-    .muted {
-      color: var(--muted);
-    }
-
-    .empty {
-      border: 1px dashed rgba(216,180,107,.22);
-      border-radius: 15px;
-      padding: 25px 15px;
-      text-align: center;
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 2;
-      background: rgba(19,21,33,.55);
-    }
-
-    .empty-icon {
-      font-size: 28px;
-      color: var(--gold);
-      display: block;
-      margin-bottom: 8px;
-    }
-
-    .room-card {
-      padding: 14px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 10px;
-    }
+    .room-info { flex:1; min-width:0; }
 
     .room-info strong {
-      font-size: 12px;
-      display: block;
+      display:block;
+      font-size:12px;
+      margin:2px 0;
     }
 
-    .room-info small {
-      color: var(--muted);
-      font-size: 10px;
+    .room-info span {
+      display:block;
+      color:var(--muted);
+      font-size:10px;
     }
 
     .room-status {
-      font-size: 10px;
-      color: var(--green);
-      margin-top: 4px;
+      display:inline-block;
+      color:#64e5ba !important;
+      margin-top:5px;
     }
 
     .game-card {
-      overflow: hidden;
+      display:flex;
+      align-items:center;
+      gap:11px;
+      margin:12px 0;
+      padding:11px;
+      border-radius:15px;
+      background:#ffffff06;
     }
 
-    .game-card img {
-      width: 100%;
-      height: 135px;
-      object-fit: cover;
-      display: block;
+    .game-cover {
+      width:57px;
+      height:57px;
+      border-radius:13px;
+      object-fit:cover;
+      background:#272d44;
     }
 
-    .game-info {
-      padding: 12px;
+    .game-card strong {
+      display:block;
+      font-size:12px;
     }
 
-    .game-info strong {
-      font-size: 12px;
+    .game-card span {
+      color:var(--muted);
+      font-size:10px;
     }
 
-    .game-info p {
-      font-size: 10px;
-      color: var(--muted);
-      line-height: 1.8;
-      margin: 5px 0 0;
+    .event-item {
+      padding:13px;
+      border-radius:14px;
+      background:linear-gradient(120deg,#292143,#191e31);
+      margin-top:10px;
     }
 
-    .profile-cover {
-      height: 190px;
-      border-radius: 18px 18px 0 0;
-      background: #252837 center / cover;
+    .event-item strong {
+      display:block;
+      font-size:12px;
     }
 
-    .profile-card {
-      overflow: hidden;
+    .event-item span {
+      display:block;
+      font-size:10px;
+      color:#b9b4ce;
+      margin-top:4px;
     }
 
-    .profile-body {
-      padding: 0 20px 20px;
+    .empty {
+      text-align:center;
+      padding:25px 12px;
+      color:var(--muted);
+      font-size:12px;
+      border:1px dashed #ffffff18;
+      border-radius:15px;
     }
 
-    .profile-avatar {
-      width: 94px;
-      height: 94px;
-      border: 4px solid var(--panel);
-      border-radius: 50%;
-      object-fit: cover;
-      margin-top: -47px;
-      background: var(--panel2);
-    }
-
-    .profile-body h2 {
-      font-size: 19px;
-      margin: 8px 0 0;
-    }
-
-    .profile-body .username {
-      color: var(--muted);
-      font-size: 11px;
-      direction: ltr;
-      text-align: right;
-    }
-
-    .profile-details {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 10px;
-      margin-top: 18px;
-    }
-
-    .detail {
-      background: #0b0d15;
-      border: 1px solid var(--line);
-      padding: 12px;
-      border-radius: 12px;
-      min-width: 0;
-    }
-
-    .detail small {
-      display: block;
-      color: var(--muted);
-      font-size: 10px;
-    }
-
-    .detail strong {
-      font-size: 12px;
-      overflow-wrap: anywhere;
-    }
-
-    .mobile-nav {
-      display: none;
-    }
-
-    .toast {
-      position: fixed;
-      bottom: 25px;
-      left: 50%;
-      transform: translate(-50%, 20px);
-      background: #242838;
-      border: 1px solid rgba(216,180,107,.3);
-      border-radius: 12px;
-      color: var(--text);
-      padding: 11px 17px;
-      font-size: 11px;
-      z-index: 100;
-      opacity: 0;
-      pointer-events: none;
-      transition: .25s;
-      max-width: calc(100% - 30px);
-      text-align: center;
-    }
-
-    .toast.show {
-      opacity: 1;
-      transform: translate(-50%, 0);
+    .empty-icon {
+      font-size:25px;
+      display:block;
+      margin-bottom:8px;
     }
 
     .loading {
-      padding: 30px;
-      text-align: center;
-      color: var(--muted);
-      font-size: 12px;
+      text-align:center;
+      padding:24px;
+      color:var(--muted);
+      font-size:12px;
     }
 
-    .error-text {
-      color: #ff9eaa;
+    .loading::after {
+      content:"";
+      display:block;
+      width:22px;
+      height:22px;
+      border:2px solid #ffffff20;
+      border-top-color:var(--purple);
+      border-radius:50%;
+      margin:10px auto 0;
+      animation:spin .8s linear infinite;
     }
 
-    @media (max-width: 900px) {
-      .feed-layout {
-        grid-template-columns: 1fr;
-      }
+    @keyframes spin { to { transform:rotate(360deg); } }
 
-      .feed-sidebar {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 10px;
-      }
-
-      .grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
+    .wallet {
+      display:flex;
+      gap:9px;
+      margin-top:13px;
     }
 
-    @media (max-width: 650px) {
-      .app {
-        display: block;
-        padding-bottom: 72px;
-      }
+    .wallet-item {
+      flex:1;
+      padding:10px 6px;
+      border-radius:12px;
+      text-align:center;
+      background:#ffffff08;
+      font-size:12px;
+    }
 
-      .rail {
-        display: none;
-      }
+    .wallet-item span {
+      display:block;
+      color:var(--muted);
+      font-size:10px;
+    }
 
-      .main {
-        padding: 15px 13px 25px;
-      }
+    .mobile-nav {
+      display:none;
+    }
 
+    .toast {
+      position:fixed;
+      bottom:25px;
+      left:50%;
+      transform:translate(-50%,20px);
+      opacity:0;
+      pointer-events:none;
+      z-index:100;
+      padding:12px 20px;
+      border:1px solid var(--line);
+      border-radius:14px;
+      background:#20283b;
+      color:white;
+      font-size:12px;
+      transition:.25s;
+      max-width:90%;
+      text-align:center;
+    }
+
+    .toast.show {
+      opacity:1;
+      transform:translate(-50%,0);
+    }
+
+    .error-note {
+      color:#ff8d9e;
+      text-align:center;
+      font-size:12px;
+      padding:12px;
+    }
+
+    @media(max-width:1100px) {
+      .layout {
+        grid-template-columns:210px minmax(0,1fr);
+      }
+      .right-sidebar { display:none; }
+    }
+
+    @media(max-width:700px) {
       .topbar {
-        margin-bottom: 16px;
+        height:62px;
+        padding:0 14px;
       }
 
-      .welcome h1 {
-        font-size: 17px;
+      .brand { font-size:17px; }
+      .brand-mark { width:37px;height:37px; }
+
+      .layout {
+        width:100%;
+        margin:0 auto 90px;
+        display:block;
       }
 
-      .welcome p {
-        font-size: 10px;
+      .sidebar,.right-sidebar { display:none; }
+
+      .main-column {
+        gap:13px;
+        padding:13px;
       }
 
-      .profile-mini {
-        max-width: 135px;
+      .welcome {
+        min-height:190px;
+        padding:20px;
+        border-radius:21px;
       }
 
-      .profile-mini strong {
-        max-width: 75px;
-      }
-
-      .hero {
-        min-height: 185px;
-        padding: 19px;
-        margin-bottom: 14px;
-      }
-
-      .hero-emblem {
-        width: 80px;
-        height: 80px;
-        flex-basis: 80px;
-        font-size: 30px;
-      }
-
-      .hero h2 {
-        font-size: 22px;
-      }
-
-      .hero p {
-        font-size: 10px;
-      }
-
-      .stats {
-        gap: 8px;
-        margin-bottom: 20px;
-      }
-
-      .stat {
-        padding: 10px;
-      }
-
-      .stat-icon {
-        width: 29px;
-        height: 29px;
-        font-size: 14px;
-      }
-
-      .stat strong {
-        font-size: 16px;
-      }
-
-      .stat small {
-        font-size: 9px;
-      }
-
-      .section-head h2 {
-        font-size: 15px;
-      }
-
-      .grid {
-        gap: 9px;
-      }
-
-      .feature-card {
-        min-height: 130px;
-        padding: 11px;
-      }
-
-      .feature-card strong {
-        font-size: 12px;
-      }
-
-      .feed-sidebar {
-        grid-template-columns: 1fr;
-      }
+      .welcome h1 { font-size:23px; }
+      .stories,.composer,.post { padding:14px; }
+      .section-title h2 { font-size:16px; }
 
       .mobile-nav {
-        position: fixed;
-        z-index: 50;
-        bottom: 0;
-        right: 0;
-        left: 0;
-        height: 67px;
-        padding: 6px 7px calc(6px + env(safe-area-inset-bottom));
-        display: grid;
-        grid-template-columns: repeat(5, 1fr);
-        background: rgba(14,16,25,.97);
-        border-top: 1px solid var(--line);
-        backdrop-filter: blur(18px);
+        display:flex;
+        position:fixed;
+        bottom:0;
+        right:0;
+        left:0;
+        z-index:30;
+        height:68px;
+        padding:6px 9px calc(6px + env(safe-area-inset-bottom));
+        background:rgba(13,17,29,.96);
+        border-top:1px solid var(--line);
+        backdrop-filter:blur(20px);
+        justify-content:space-around;
       }
 
-      .mobile-nav button {
-        color: #85899a;
-        border: 0;
-        background: transparent;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 2px;
-        font-size: 17px;
+      .mobile-nav a {
+        flex:1;
+        text-align:center;
+        color:var(--muted);
+        text-decoration:none;
+        font-size:10px;
       }
 
-      .mobile-nav button span {
-        font-size: 9px;
+      .mobile-nav a span {
+        display:block;
+        font-size:20px;
+        margin-bottom:1px;
       }
 
-      .mobile-nav button.active {
-        color: var(--gold-light);
-      }
-    }
-
-    @media (max-width: 380px) {
-      .hero-emblem {
-        display: none;
-      }
-
-      .stats {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-      }
-
-      .profile-details {
-        grid-template-columns: 1fr;
-      }
+      .mobile-nav a.active { color:#b59dff; }
     }
   </style>
 </head>
 
 <body>
 
-  <div class="app">
-
-    <aside class="rail">
-      <div class="brand-mark">H</div>
-
-      <button class="rail-btn active" data-page="dashboard" title="الرئيسية">⌂</button>
-      <button class="rail-btn" data-page="feed" title="المنشورات">▤</button>
-      <button class="rail-btn" data-page="rooms" title="الغرف">◉</button>
-      <button class="rail-btn" data-page="games" title="الألعاب">♟</button>
-      <button class="rail-btn" data-page="profile" title="حسابي">♙</button>
-
-      <div class="rail-bottom">
-        <button class="rail-btn" id="logoutBtn" title="تسجيل الخروج">⇥</button>
-      </div>
-    </aside>
-
-    <main class="main">
-
-      <header class="topbar">
-        <div class="welcome">
-          <h1 id="welcomeTitle">مرحبًا بك في هنون</h1>
-          <p>مساحتك الخاصة للقاء والتواصل واللعب</p>
-        </div>
-
-        <div class="top-actions">
-          <button class="icon-btn" id="refreshBtn" title="تحديث">↻</button>
-
-          <div class="profile-mini">
-            <img id="topAvatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80" alt="">
-            <strong id="topName">عضو هنون</strong>
-          </div>
-        </div>
-      </header>
-
-      <!-- DASHBOARD -->
-      <section class="section active" id="page-dashboard">
-
-        <div class="hero">
-          <div class="hero-content">
-            <div class="eyebrow">HANOON WORLD</div>
-            <h2>عالم يجمعنا<br>ولحظات تصنع الذكريات</h2>
-            <p>اكتشف مجتمع هنون، وتابع أصدقاءك، وشارك لحظاتك في مكان واحد.</p>
-            <button class="gold-btn" data-go="feed">اكتشف المجتمع</button>
-          </div>
-          <div class="hero-emblem">H</div>
-        </div>
-
-        <div class="stats">
-          <div class="stat">
-            <div class="stat-top">
-              <small>العملات</small>
-              <span class="stat-icon">◈</span>
-            </div>
-            <strong id="coinsCount">—</strong>
-          </div>
-
-          <div class="stat">
-            <div class="stat-top">
-              <small>الجواهر</small>
-              <span class="stat-icon">◇</span>
-            </div>
-            <strong id="gemsCount">—</strong>
-          </div>
-
-          <div class="stat">
-            <div class="stat-top">
-              <small>الغرف المتاحة</small>
-              <span class="stat-icon">◉</span>
-            </div>
-            <strong id="roomsCount">—</strong>
-          </div>
-        </div>
-
-        <div class="section-head">
-          <div>
-            <h2>اكتشف عالم هنون</h2>
-            <p>انتقل إلى القسم الذي تريد استكشافه</p>
-          </div>
-        </div>
-
-        <div class="grid">
-          <div class="feature-card" data-go="rooms">
-            <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=700&q=80" alt="">
-            <div class="feature-content">
-              <strong>الغرف</strong>
-              <span>اكتشف الغرف المتاحة</span>
-            </div>
-          </div>
-
-          <div class="feature-card" data-go="games">
-            <img src="https://images.unsplash.com/photo-1611996575749-79a3a250f948?auto=format&fit=crop&w=700&q=80" alt="">
-            <div class="feature-content">
-              <strong>الألعاب</strong>
-              <span>اكتشف الألعاب المفعلة</span>
-            </div>
-          </div>
-
-          <div class="feature-card" data-go="feed">
-            <img src="https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&w=700&q=80" alt="">
-            <div class="feature-content">
-              <strong>المجتمع</strong>
-              <span>منشورات الأعضاء</span>
-            </div>
-          </div>
-
-          <div class="feature-card" data-go="profile">
-            <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=700&q=80" alt="">
-            <div class="feature-content">
-              <strong>ملفي الشخصي</strong>
-              <span>بيانات عضويتك</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="section-head">
-          <div>
-            <h2>أحدث المنشورات</h2>
-            <p>آخر ما شاركه أعضاء هنون</p>
-          </div>
-          <button class="subtle-btn" data-go="feed">عرض الكل</button>
-        </div>
-
-        <div id="dashboardPosts" class="loading">جارٍ تحميل المنشورات...</div>
-      </section>
-
-      <!-- FEED -->
-      <section class="section" id="page-feed">
-
-        <div class="section-head">
-          <div>
-            <h2>مجتمع هنون</h2>
-            <p>شارك أفكارك وتابع منشورات الأعضاء</p>
-          </div>
-          <button class="subtle-btn" id="feedRefresh">تحديث</button>
-        </div>
-
-        <div class="feed-layout">
-          <div>
-            <div class="post-composer">
-              <div class="composer-top">
-                <img id="composerAvatar" src="" alt="">
-                <textarea id="postContent" maxlength="3000" placeholder="ماذا تريد أن تشارك مع مجتمع هنون؟"></textarea>
-              </div>
-              <div class="composer-bottom">
-                <button class="gold-btn" id="publishPost">نشر المنشور</button>
-              </div>
-            </div>
-
-            <div id="postsList" class="loading">جارٍ تحميل المنشورات...</div>
-          </div>
-
-          <aside class="feed-sidebar">
-            <div class="side-card">
-              <h3>بطاقة عضويتك</h3>
-              <div class="member-code" id="sideMemberCode">—</div>
-              <p class="muted" style="font-size:10px">رقم العضوية الخاص بك في هنون.</p>
-            </div>
-
-            <div class="side-card">
-              <h3>مرحبًا بك في المجتمع</h3>
-              <p class="muted" style="font-size:11px;line-height:2;margin:0">
-                شارك باحترام، وتواصل مع الأعضاء، واجعل تجربتك ممتعة للجميع.
-              </p>
-            </div>
-          </aside>
-        </div>
-      </section>
-
-      <!-- ROOMS -->
-      <section class="section" id="page-rooms">
-        <div class="section-head">
-          <div>
-            <h2>الغرف المتاحة</h2>
-            <p>الغرف العامة التي يمكن للأعضاء رؤيتها</p>
-          </div>
-          <button class="subtle-btn" id="roomsRefresh">تحديث الغرف</button>
-        </div>
-
-        <div id="roomsList" class="loading">جارٍ تحميل الغرف...</div>
-      </section>
-
-      <!-- GAMES -->
-      <section class="section" id="page-games">
-        <div class="section-head">
-          <div>
-            <h2>مركز الألعاب</h2>
-            <p>الألعاب التي تم تفعيلها في عالم هنون</p>
-          </div>
-          <button class="subtle-btn" id="gamesRefresh">تحديث الألعاب</button>
-        </div>
-
-        <div id="gamesList" class="loading">جارٍ تحميل الألعاب...</div>
-      </section>
-
-      <!-- PROFILE -->
-      <section class="section" id="page-profile">
-        <div class="section-head">
-          <div>
-            <h2>ملفي الشخصي</h2>
-            <p>بيانات عضويتك في عالم هنون</p>
-          </div>
-        </div>
-
-        <div class="profile-card">
-          <div class="profile-cover" id="profileCover"></div>
-
-          <div class="profile-body">
-            <img class="profile-avatar" id="profileAvatar" src="" alt="">
-            <h2 id="profileName">—</h2>
-            <div class="username" id="profileUsername">@—</div>
-
-            <div class="profile-details">
-              <div class="detail">
-                <small>اللقب</small>
-                <strong id="profileNickname">—</strong>
-              </div>
-              <div class="detail">
-                <small>السن</small>
-                <strong id="profileAge">—</strong>
-              </div>
-              <div class="detail">
-                <small>رقم العضوية</small>
-                <strong id="profileMemberCode">—</strong>
-              </div>
-              <div class="detail">
-                <small>تاريخ الانضمام</small>
-                <strong id="profileCreatedAt">—</strong>
-              </div>
-            </div>
-
-            <p class="muted" id="profileBio" style="font-size:12px;line-height:2;margin-top:16px"></p>
-          </div>
-        </div>
-      </section>
-
-    </main>
+<header class="topbar">
+  <div class="brand">
+    <div class="brand-mark">H</div>
+    <div>
+      HANOON
+      <small>WORLD COMMUNITY</small>
+    </div>
   </div>
 
-  <nav class="mobile-nav">
-    <button class="active" data-page="dashboard">⌂<span>الرئيسية</span></button>
-    <button data-page="feed">▤<span>المجتمع</span></button>
-    <button data-page="rooms">◉<span>الغرف</span></button>
-    <button data-page="games">♟<span>الألعاب</span></button>
-    <button data-page="profile">♙<span>حسابي</span></button>
-  </nav>
+  <div class="top-actions">
+    <button class="icon-btn" id="refreshBtn" title="تحديث">↻</button>
+    <button class="icon-btn" id="logoutBtn" title="تسجيل الخروج">⇥</button>
+    <img class="profile-mini" id="topAvatar" alt="الصورة الشخصية">
+  </div>
+</header>
 
-  <div class="toast" id="toast"></div>
+<div class="layout">
 
-  <script type="module">
-    import { supabase } from "./supabase.js";
+  <aside class="sidebar">
+    <section class="side-card">
+      <div class="side-profile">
+        <img id="sideAvatar" alt="الصورة الشخصية">
+        <h3 id="sideName">مرحبًا بك</h3>
+        <p id="sideUsername">@member</p>
+      </div>
 
-    const $ = (id) => document.getElementById(id);
+      <div class="wallet">
+        <div class="wallet-item">🪙 <b id="coins">0</b><span>العملات</span></div>
+        <div class="wallet-item">💎 <b id="gems">0</b><span>الجواهر</span></div>
+      </div>
+    </section>
 
-    let currentUser = null;
-    let currentProfile = null;
-    let currentPage = "dashboard";
-    let toastTimer = null;
+    <section class="side-card">
+      <nav class="menu">
+        <a class="active" href="#feed"><span class="menu-icon">⌂</span> الرئيسية</a>
+        <a href="#rooms"><span class="menu-icon">◉</span> الغرف</a>
+        <a href="#games"><span class="menu-icon">🎮</span> الألعاب</a>
+        <a href="#events"><span class="menu-icon">✦</span> الأحداث</a>
+        <a href="#members"><span class="menu-icon">♧</span> الأعضاء</a>
+        <a href="messages.html"><span class="menu-icon">✉</span> الرسائل</a>
+        <a href="profile.html"><span class="menu-icon">◎</span> ملفي الشخصي</a>
+      </nav>
+    </section>
+  </aside>
 
-    const defaultAvatar =
-      "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80";
+  <main class="main-column" id="feed">
 
-    function toast(message) {
-      const element = $("toast");
-      element.textContent = message;
-      element.classList.add("show");
+    <section class="welcome">
+      <div class="welcome-content">
+        <span class="welcome-tag">✦ عالمك يبدأ من هنا</span>
+        <h1>أهلًا بك في عالم هنون</h1>
+        <p>اكتشف الأصدقاء والغرف والألعاب، وتابع كل جديد يحدث في مجتمعك.</p>
+        <button class="primary-btn" onclick="document.getElementById('composer').scrollIntoView({behavior:'smooth'})">
+          شارك لحظتك
+        </button>
+      </div>
+    </section>
 
-      clearTimeout(toastTimer);
-      toastTimer = setTimeout(() => {
-        element.classList.remove("show");
-      }, 2800);
-    }
-
-    function escapeHTML(value) {
-      return String(value ?? "").replace(/[&<>"']/g, (char) => ({
-        "&": "&amp;",
-        "<": "&lt;",
-        ">": "&gt;",
-        '"': "&quot;",
-        "'": "&#039;"
-      })[char]);
-    }
-
-    function formatDate(value) {
-      if (!value) return "—";
-
-      return new Intl.DateTimeFormat("ar-EG", {
-        year: "numeric",
-        month: "short",
-        day: "numeric"
-      }).format(new Date(value));
-    }
-
-    function formatNumber(value) {
-      return new Intl.NumberFormat("ar-EG").format(Number(value || 0));
-    }
-
-    async function getImageUrl(path, bucket = "avatars") {
-      if (!path) return defaultAvatar;
-
-      if (/^https?:\/\//i.test(path)) return path;
-
-      if (bucket === "avatars" || bucket === "post-media") {
-        const { data } = supabase.storage.from(bucket).getPublicUrl(path);
-        return data.publicUrl;
-      }
-
-      const { data, error } = await supabase.storage
-        .from(bucket)
-        .createSignedUrl(path, 3600);
-
-      if (error) return defaultAvatar;
-      return data.signedUrl;
-    }
-
-    function showPage(page) {
-      const allowed = ["dashboard", "feed", "rooms", "games", "profile"];
-      if (!allowed.includes(page)) return;
-
-      currentPage = page;
-
-      document.querySelectorAll(".section").forEach((section) => {
-        section.classList.toggle("active", section.id === "page-" + page);
-      });
-
-      document.querySelectorAll("[data-page]").forEach((button) => {
-        button.classList.toggle("active", button.dataset.page === page);
-      });
-
-      if (page === "feed") loadPosts();
-      if (page === "rooms") loadRooms();
-      if (page === "games") loadGames();
-    }
-
-    document.querySelectorAll("[data-page]").forEach((button) => {
-      button.addEventListener("click", () => showPage(button.dataset.page));
-    });
-
-    document.querySelectorAll("[data-go]").forEach((button) => {
-      button.addEventListener("click", () => showPage(button.dataset.go));
-    });
-
-    async function loadProfile() {
-      const { data, error } = await supabase
-        .from("profiles")
-        .select("id,member_code,full_name,nickname,username,avatar_path,cover_path,bio,age,created_at,profile_completed")
-        .eq("id", currentUser.id)
-        .single();
-
-      if (error) throw error;
-
-      if (!data.profile_completed) {
-        throw new Error("بيانات الحساب غير مكتملة. لا يمكن فتح الصفحة الرئيسية.");
-      }
-
-      currentProfile = data;
-
-      const avatar = await getImageUrl(data.avatar_path);
-      const cover = data.cover_path
-        ? await getImageUrl(data.cover_path)
-        : "";
-
-      $("topAvatar").src = avatar;
-      $("composerAvatar").src = avatar;
-      $("profileAvatar").src = avatar;
-
-      $("topName").textContent = data.nickname || data.full_name;
-      $("welcomeTitle").textContent = "أهلًا، " + (data.nickname || data.full_name);
-
-      $("profileName").textContent = data.full_name;
-      $("profileUsername").textContent = "@" + data.username;
-      $("profileNickname").textContent = data.nickname || "—";
-      $("profileAge").textContent = data.age ? formatNumber(data.age) : "—";
-      $("profileMemberCode").textContent = data.member_code || "—";
-      $("profileCreatedAt").textContent = formatDate(data.created_at);
-      $("profileBio").textContent = data.bio || "لم يضف المستخدم نبذة تعريفية بعد.";
-      $("sideMemberCode").textContent = data.member_code || "—";
-
-      $("profileCover").style.backgroundImage = cover
-        ? `url("${cover}")`
-        : "linear-gradient(135deg,#262333,#11131d)";
-    }
-
-    async function loadWallet() {
-      const { data, error } = await supabase
-        .from("world_wallets")
-        .select("coins,gems")
-        .eq("user_id", currentUser.id)
-        .maybeSingle();
-
-      if (error) {
-        $("coinsCount").textContent = "—";
-        $("gemsCount").textContent = "—";
-        return;
-      }
-
-      $("coinsCount").textContent = data ? formatNumber(data.coins) : "0";
-      $("gemsCount").textContent = data ? formatNumber(data.gems) : "0";
-    }
-
-    async function loadRooms() {
-      const container = $("roomsList");
-      container.innerHTML = '<div class="loading">جارٍ تحميل الغرف...</div>';
-
-      const { data, error } = await supabase
-        .from("world_game_rooms")
-        .select("id,game_id,host_user_id,room_code,status,visibility,max_players,created_at")
-        .eq("visibility", "public")
-        .in("status", ["waiting", "playing"])
-        .order("created_at", { ascending: false })
-        .limit(30);
-
-      if (error) {
-        container.innerHTML =
-          '<div class="empty error-text">تعذر تحميل الغرف. تحقق من الاتصال والصلاحيات.</div>';
-        $("roomsCount").textContent = "—";
-        return;
-      }
-
-      $("roomsCount").textContent = formatNumber(data.length);
-
-      if (!data.length) {
-        container.innerHTML = `
-          <div class="empty">
-            <span class="empty-icon">◉</span>
-            لا توجد غرف عامة متاحة حاليًا.
-          </div>
-        `;
-        return;
-      }
-
-      const gameIds = [...new Set(data.map((room) => room.game_id).filter(Boolean))];
-
-      let gamesById = {};
-
-      if (gameIds.length) {
-        const { data: games } = await supabase
-          .from("world_games_catalog")
-          .select("id,title_ar,title_en")
-          .in("id", gameIds);
-
-        for (const game of games || []) {
-          gamesById[game.id] = game;
-        }
-      }
-
-      container.innerHTML = data.map((room) => {
-        const game = gamesById[room.game_id];
-        const title = game?.title_ar || game?.title_en || "غرفة ألعاب";
-        const status = room.status === "playing" ? "اللعب جارٍ" : "في انتظار اللاعبين";
-
-        return `
-          <article class="room-card">
-            <div class="room-info">
-              <strong>${escapeHTML(title)}</strong>
-              <small>رمز الغرفة: ${escapeHTML(room.room_code || "غير محدد")}</small>
-              <div class="room-status">${escapeHTML(status)}</div>
-            </div>
-            <span class="muted" style="font-size:11px">
-              ${formatNumber(room.max_players || 0)} لاعبين
-            </span>
-          </article>
-        `;
-      }).join("");
-    }
-
-    async function loadGames() {
-      const container = $("gamesList");
-      container.innerHTML = '<div class="loading">جارٍ تحميل الألعاب...</div>';
-
-      const { data, error } = await supabase
-        .from("world_games_catalog")
-        .select("id,slug,title_ar,title_en,description_ar,cover_path,route_key,min_players,max_players")
-        .eq("is_active", true)
-        .order("sort_order", { ascending: true });
-
-      if (error) {
-        container.innerHTML =
-          '<div class="empty error-text">تعذر تحميل الألعاب. حاول التحديث.</div>';
-        return;
-      }
-
-      if (!data.length) {
-        container.innerHTML = `
-          <div class="empty">
-            <span class="empty-icon">♟</span>
-            لا توجد ألعاب مفعّلة حاليًا في قاعدة البيانات.
-          </div>
-        `;
-        return;
-      }
-
-      container.innerHTML = `
-        <div class="grid">
-          ${data.map((game) => `
-            <article class="game-card">
-              ${game.cover_path
-                ? `<img src="${escapeHTML(game.cover_path)}" alt="${escapeHTML(game.title_ar || game.title_en)}">`
-                : `<div style="height:135px;background:linear-gradient(135deg,#292536,#11131d);display:grid;place-items:center;color:#d8b46b;font-size:38px">♟</div>`
-              }
-              <div class="game-info">
-                <strong>${escapeHTML(game.title_ar || game.title_en || game.slug)}</strong>
-                <p>${escapeHTML(game.description_ar || "لعبة من ألعاب عالم هنون.")}</p>
-                <p>من ${formatNumber(game.min_players || 1)} إلى ${formatNumber(game.max_players || 2)} لاعبين</p>
-              </div>
-            </article>
-          `).join("")}
+    <section class="card stories">
+      <div class="section-title">
+        <div>
+          <h2>لحظات المجتمع</h2>
+          <p>تابع ما يشاركه أعضاء هنون</p>
         </div>
-      `;
+      </div>
+
+      <div class="story-list" id="stories">
+        <div class="story">
+          <div class="story-ring story-add">+</div>
+          <span>لحظتك</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="card composer" id="composer">
+      <div class="composer-head">
+        <img id="composerAvatar" alt="">
+        <div>
+          <strong id="composerName">ماذا يحدث معك؟</strong>
+          <div style="color:var(--muted);font-size:11px">شارك مجتمع هنون لحظاتك</div>
+        </div>
+      </div>
+
+      <textarea id="postText" maxlength="3000" placeholder="اكتب شيئًا تريد مشاركته مع مجتمع هنون..."></textarea>
+
+      <div class="composer-bottom">
+        <span class="composer-note">منشور نصي • حتى 3000 حرف</span>
+        <button class="primary-btn" id="publishBtn">نشر المنشور</button>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-title">
+        <div>
+          <h2>يحدث الآن في هنون</h2>
+          <p>أحدث المنشورات والمشاركات من الأعضاء</p>
+        </div>
+        <a href="#" id="feedRefresh">تحديث الموجز ↻</a>
+      </div>
+
+      <div class="feed" id="postsFeed">
+        <div class="loading">جاري تحميل المنشورات</div>
+      </div>
+    </section>
+
+  </main>
+
+  <aside class="sidebar right-sidebar">
+
+    <section class="card right-section" id="rooms">
+      <div class="section-title">
+        <div>
+          <h2>الغرف الجديدة</h2>
+          <p>غرف الألعاب التي أنشأها الأعضاء</p>
+        </div>
+        <a href="rooms.html">عرض الكل</a>
+      </div>
+      <div id="roomsList">
+        <div class="loading">جاري تحميل الغرف</div>
+      </div>
+    </section>
+
+    <section class="card right-section" id="games">
+      <div class="section-title">
+        <div>
+          <h2>عالم الألعاب</h2>
+          <p>الألعاب المتاحة حاليًا</p>
+        </div>
+        <a href="games.html">عرض الكل</a>
+      </div>
+      <div id="gamesList">
+        <div class="loading">جاري تحميل الألعاب</div>
+      </div>
+    </section>
+
+    <section class="card right-section" id="events">
+      <div class="section-title">
+        <div>
+          <h2>الأحداث والتحديات</h2>
+          <p>المسابقات والفعاليات المنشورة</p>
+        </div>
+        <a href="events.html">عرض الكل</a>
+      </div>
+      <div id="eventsList">
+        <div class="loading">جاري تحميل الأحداث</div>
+      </div>
+    </section>
+
+    <section class="card right-section" id="members">
+      <div class="section-title">
+        <div>
+          <h2>أعضاء هنون</h2>
+          <p>أحدث الأعضاء المسجلين</p>
+        </div>
+      </div>
+      <div id="membersList">
+        <div class="loading">جاري تحميل الأعضاء</div>
+      </div>
+    </section>
+
+  </aside>
+</div>
+
+<nav class="mobile-nav">
+  <a class="active" href="#feed"><span>⌂</span>الرئيسية</a>
+  <a href="#rooms"><span>◉</span>الغرف</a>
+  <a href="#games"><span>🎮</span>الألعاب</a>
+  <a href="#events"><span>✦</span>الأحداث</a>
+  <a href="messages.html"><span>✉</span>الرسائل</a>
+</nav>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* =========================================
+   HANOON WORLD — HOME
+   Supabase connection
+========================================= */
+
+const SUPABASE_URL = "https://gjtgvczvclfwvlvcquxh.supabase.co";
+const SUPABASE_KEY = "sb_publishable_4DVTUZ-xTlqU2GpFvpb7lw_g-Kxomd4";
+
+const db = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+
+let currentUser = null;
+let currentProfile = null;
+let likedPosts = new Set();
+let busy = false;
+
+const $ = (selector) => document.querySelector(selector);
+
+function toast(message) {
+  const el = $("#toast");
+  el.textContent = message;
+  el.classList.add("show");
+  clearTimeout(toast.timer);
+  toast.timer = setTimeout(() => el.classList.remove("show"), 2600);
+}
+
+function escapeHTML(value = "") {
+  return String(value).replace(/[&<>"']/g, char => ({
+    "&":"&amp;",
+    "<":"&lt;",
+    ">":"&gt;",
+    '"':"&quot;",
+    "'":"&#039;"
+  })[char]);
+}
+
+function imageURL(bucket, path) {
+  if (!path) return "";
+  if (/^https?:\/\//i.test(path)) return path;
+
+  return db.storage.from(bucket).getPublicUrl(path).data.publicUrl;
+}
+
+function avatar(path) {
+  return imageURL("avatars", path) ||
+    "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=120";
+}
+
+function formatDate(value) {
+  if (!value) return "";
+  const date = new Date(value);
+
+  return new Intl.DateTimeFormat("ar-EG", {
+    day:"numeric",
+    month:"short",
+    hour:"numeric",
+    minute:"2-digit"
+  }).format(date);
+}
+
+function setEmpty(id, icon, message) {
+  $(id).innerHTML = `
+    <div class="empty">
+      <span class="empty-icon">${icon}</span>
+      ${escapeHTML(message)}
+    </div>
+  `;
+}
+
+async function checkSession() {
+  const { data, error } = await db.auth.getSession();
+
+  if (error || !data.session) {
+    location.replace("index.html");
+    return false;
+  }
+
+  currentUser = data.session.user;
+  return true;
+}
+
+async function loadProfile() {
+  const { data, error } = await db
+    .from("profiles")
+    .select("*")
+    .eq("id", currentUser.id)
+    .maybeSingle();
+
+  if (error || !data) {
+    toast("تعذر تحميل بيانات الحساب");
+    return;
+  }
+
+  currentProfile = data;
+
+  const name = data.nickname || data.full_name || "عضو هنون";
+  const photo = avatar(data.avatar_path);
+
+  $("#sideName").textContent = name;
+  $("#sideUsername").textContent = data.username ? "@" + data.username : "";
+  $("#composerName").textContent = name;
+
+  $("#sideAvatar").src = photo;
+  $("#topAvatar").src = photo;
+  $("#composerAvatar").src = photo;
+
+  loadWallet();
+}
+
+async function loadWallet() {
+  const { data } = await db
+    .from("world_wallets")
+    .select("coins,gems")
+    .eq("user_id", currentUser.id)
+    .maybeSingle();
+
+  if (!data) return;
+
+  $("#coins").textContent = Number(data.coins || 0).toLocaleString("en-US");
+  $("#gems").textContent = Number(data.gems || 0).toLocaleString("en-US");
+}
+
+/* =========================================
+   SOCIAL FEED
+========================================= */
+
+async function loadPosts() {
+  const container = $("#postsFeed");
+  container.innerHTML = '<div class="loading">جاري تحميل المنشورات</div>';
+
+  const { data: posts, error } = await db
+    .from("posts")
+    .select("*")
+    .order("created_at", { ascending:false })
+    .limit(25);
+
+  if (error) {
+    container.innerHTML = '<div class="error-note">تعذر تحميل المنشورات. حاول التحديث.</div>';
+    return;
+  }
+
+  if (!posts || posts.length === 0) {
+    setEmpty("#postsFeed", "✦", "لا توجد منشورات حتى الآن. كن أول من يشارك لحظته!");
+    return;
+  }
+
+  const ids = posts.map(post => post.user_id);
+  const postIds = posts.map(post => post.id);
+
+  const [profilesResult, likesResult, commentsResult, mineResult] = await Promise.all([
+    db.from("member_directory")
+      .select("id,full_name,username,avatar_path")
+      .in("id", ids),
+
+    db.from("post_likes")
+      .select("post_id,user_id")
+      .in("post_id", postIds),
+
+    db.from("post_comments")
+      .select("post_id")
+      .in("post_id", postIds),
+
+    db.from("post_likes")
+      .select("post_id")
+      .eq("user_id", currentUser.id)
+      .in("post_id", postIds)
+  ]);
+
+  const profiles = profilesResult.data || [];
+  const likes = likesResult.data || [];
+  const comments = commentsResult.data || [];
+  likedPosts = new Set((mineResult.data || []).map(item => item.post_id));
+
+  const profileMap = new Map(profiles.map(profile => [profile.id, profile]));
+
+  container.innerHTML = posts.map(post => {
+    const owner = profileMap.get(post.user_id) || {};
+    const displayName = owner.full_name || owner.username || "عضو هنون";
+
+    const likeCount = likes.filter(item => item.post_id === post.id).length;
+    const commentCount = comments.filter(item => item.post_id === post.id).length;
+    const liked = likedPosts.has(post.id);
+
+    let media = "";
+
+    if (post.media_path) {
+      const source = imageURL("post-media", post.media_path);
+      if (post.media_type === "video") {
+        media = `
+          <video class="post-media" controls preload="metadata">
+            <source src="${escapeHTML(source)}">
+          </video>
+        `;
+      } else {
+        media = `
+          <img class="post-media"
+               src="${escapeHTML(source)}"
+               alt="مرفق المنشور"
+               loading="lazy">
+        `;
+      }
     }
 
-    async function loadPosts(target = "postsList", limit = 30) {
-      const container = $(target);
-      if (!container) return;
-
-      container.innerHTML = '<div class="loading">جارٍ تحميل المنشورات...</div>';
-
-      const { data: posts, error } = await supabase
-        .from("posts")
-        .select("id,user_id,content,media_path,media_type,created_at")
-        .order("created_at", { ascending: false })
-        .limit(limit);
-
-      if (error) {
-        container.innerHTML =
-          '<div class="empty error-text">تعذر تحميل المنشورات. تحقق من الاتصال.</div>';
-        return;
-      }
-
-      if (!posts.length) {
-        container.innerHTML = `
-          <div class="empty">
-            <span class="empty-icon">▤</span>
-            لا توجد منشورات ظاهرة حتى الآن.
+    return `
+      <article class="card post" data-post="${post.id}">
+        <div class="post-head">
+          <img class="post-avatar"
+               src="${escapeHTML(avatar(owner.avatar_path))}"
+               alt="">
+          <div class="post-user">
+            <strong>${escapeHTML(displayName)}</strong>
+            <span>${formatDate(post.created_at)}</span>
           </div>
-        `;
-        return;
-      }
+          <span style="color:#a995ff;font-size:18px">•••</span>
+        </div>
 
-      const userIds = [...new Set(posts.map((post) => post.user_id))];
+        ${post.content ? `<div class="post-content">${escapeHTML(post.content)}</div>` : ""}
+        ${media}
 
-      const { data: profiles } = await supabase
-        .from("profiles")
-        .select("id,full_name,nickname,avatar_path")
-        .in("id", userIds);
+        <div class="post-stats">
+          <span>♥ ${likeCount} إعجاب</span>
+          <span>${commentCount} تعليق</span>
+        </div>
 
-      const profilesById = {};
+        <div class="post-actions">
+          <button class="action-btn ${liked ? "liked" : ""}"
+                  onclick="toggleLike('${post.id}',this)">
+            ${liked ? "♥ أعجبني" : "♡ إعجاب"}
+          </button>
 
-      for (const profile of profiles || []) {
-        profilesById[profile.id] = profile;
-      }
+          <button class="action-btn"
+                  onclick="toast('صفحة التعليقات ستكون ضمن ملف التفاعل القادم')">
+            ◌ التعليقات
+          </button>
 
-      const postIds = posts.map((post) => post.id);
+          <button class="action-btn"
+                  onclick="sharePost('${post.id}')">
+            ↗ مشاركة
+          </button>
+        </div>
+      </article>
+    `;
+  }).join("");
+}
 
-      const { data: likes } = await supabase
-        .from("post_likes")
-        .select("post_id,user_id")
-        .in("post_id", postIds);
+async function publishPost() {
+  if (busy) return;
 
-      const likesByPost = {};
+  const content = $("#postText").value.trim();
 
-      for (const like of likes || []) {
-        if (!likesByPost[like.post_id]) likesByPost[like.post_id] = [];
-        likesByPost[like.post_id].push(like.user_id);
-      }
+  if (!content) {
+    toast("اكتب محتوى المنشور أولًا");
+    return;
+  }
 
-      const avatarUrls = {};
+  busy = true;
+  $("#publishBtn").disabled = true;
+  $("#publishBtn").textContent = "جاري النشر...";
 
-      await Promise.all((profiles || []).map(async (profile) => {
-        avatarUrls[profile.id] = await getImageUrl(profile.avatar_path);
-      }));
+  const { error } = await db
+    .from("posts")
+    .insert({
+      user_id:currentUser.id,
+      content,
+      media_path:null,
+      media_type:null
+    });
 
-      container.innerHTML = posts.map((post) => {
-        const profile = profilesById[post.user_id] || {};
-        const name = profile.nickname || profile.full_name || "عضو هنون";
-        const avatar = avatarUrls[post.user_id] || defaultAvatar;
-        const postLikes = likesByPost[post.id] || [];
-        const liked = postLikes.includes(currentUser.id);
+  busy = false;
+  $("#publishBtn").disabled = false;
+  $("#publishBtn").textContent = "نشر المنشور";
 
-        return `
-          <article class="post-card" data-post="${escapeHTML(post.id)}">
-            <div class="post-head">
-              <img src="${escapeHTML(avatar)}" alt="">
-              <div class="post-author">
-                <strong>${escapeHTML(name)}</strong>
-                <small>${formatDate(post.created_at)}</small>
-              </div>
-            </div>
+  if (error) {
+    console.error(error);
+    toast("لم يتم نشر المنشور. تحقق من اتصال الحساب.");
+    return;
+  }
 
-            <div class="post-body">${escapeHTML(post.content || "")}</div>
+  $("#postText").value = "";
+  toast("تم نشر منشورك بنجاح");
+  await loadPosts();
+}
 
-            <div class="post-actions">
-              <button class="${liked ? "liked" : ""}" data-like="${escapeHTML(post.id)}">
-                ${liked ? "♥" : "♡"} ${formatNumber(postLikes.length)} إعجاب
-              </button>
-            </div>
-          </article>
-        `;
-      }).join("");
+async function toggleLike(postId, button) {
+  if (busy) return;
 
-      container.querySelectorAll("[data-like]").forEach((button) => {
-        button.addEventListener("click", () => toggleLike(button.dataset.like, button));
+  busy = true;
+
+  const alreadyLiked = likedPosts.has(postId);
+
+  if (alreadyLiked) {
+    const { error } = await db
+      .from("post_likes")
+      .delete()
+      .eq("post_id", postId)
+      .eq("user_id", currentUser.id);
+
+    if (error) {
+      toast("تعذر إزالة الإعجاب");
+      busy = false;
+      return;
+    }
+
+    likedPosts.delete(postId);
+  } else {
+    const { error } = await db
+      .from("post_likes")
+      .insert({
+        post_id:postId,
+        user_id:currentUser.id
       });
+
+    if (error) {
+      toast("تعذر تسجيل الإعجاب");
+      busy = false;
+      return;
     }
 
-    async function toggleLike(postId, button) {
-      button.disabled = true;
+    likedPosts.add(postId);
+  }
 
-      try {
-        const { data: existing, error: readError } = await supabase
-          .from("post_likes")
-          .select("post_id")
-          .eq("post_id", postId)
-          .eq("user_id", currentUser.id)
-          .maybeSingle();
+  busy = false;
+  await loadPosts();
+}
 
-        if (readError) throw readError;
+async function sharePost(postId) {
+  const url = new URL(location.href);
+  url.hash = "post-" + postId;
 
-        if (existing) {
-          const { error } = await supabase
-            .from("post_likes")
-            .delete()
-            .eq("post_id", postId)
-            .eq("user_id", currentUser.id);
+  if (navigator.share) {
+    try {
+      await navigator.share({
+        title:"منشور من HANOON WORLD",
+        url:url.href
+      });
+    } catch (error) {}
+  } else if (navigator.clipboard) {
+    await navigator.clipboard.writeText(url.href);
+    toast("تم نسخ رابط المنشور");
+  } else {
+    toast("المشاركة غير مدعومة على هذا الجهاز");
+  }
+}
 
-          if (error) throw error;
-        } else {
-          const { error } = await supabase
-            .from("post_likes")
-            .insert({
-              post_id: postId,
-              user_id: currentUser.id
-            });
+/* =========================================
+   GAME ROOMS
+========================================= */
 
-          if (error) throw error;
-        }
+async function loadRooms() {
+  const container = $("#roomsList");
 
-        await loadPosts(
-          currentPage === "dashboard" ? "dashboardPosts" : "postsList",
-          currentPage === "dashboard" ? 5 : 30
-        );
+  const { data, error } = await db
+    .from("world_game_rooms")
+    .select("*")
+    .eq("visibility", "public")
+    .in("status", ["waiting","playing"])
+    .order("created_at", { ascending:false })
+    .limit(5);
 
-      } catch (error) {
-        console.error(error);
-        toast("تعذر تحديث الإعجاب.");
-      } finally {
-        button.disabled = false;
-      }
-    }
+  if (error) {
+    setEmpty("#roomsList", "◉", "تعذر تحميل الغرف حاليًا");
+    return;
+  }
 
-    async function publishPost() {
-      const button = $("publishPost");
-      const content = $("postContent").value.trim();
+  if (!data || !data.length) {
+    setEmpty("#roomsList", "◉", "لا توجد غرف عامة نشطة حاليًا. انتظر الغرف الجديدة!");
+    return;
+  }
 
-      if (!content) {
-        toast("اكتب شيئًا قبل النشر.");
-        return;
-      }
+  const gameIds = [...new Set(data.map(room => room.game_id))];
+  const hostIds = [...new Set(data.map(room => room.host_user_id))];
 
-      button.disabled = true;
-      button.textContent = "جارٍ النشر...";
+  const [gamesResult, hostsResult, playersResult] = await Promise.all([
+    db.from("world_games_catalog")
+      .select("id,title_ar,title_en,cover_path")
+      .in("id", gameIds),
 
-      try {
-        const { error } = await supabase
-          .from("posts")
-          .insert({
-            user_id: currentUser.id,
-            content
-          });
+    db.from("member_directory")
+      .select("id,full_name,username")
+      .in("id", hostIds),
 
-        if (error) throw error;
+    db.from("world_game_room_players")
+      .select("room_id,user_id")
+      .in("room_id", data.map(room => room.id))
+  ]);
 
-        $("postContent").value = "";
-        toast("تم نشر منشورك.");
-        await loadPosts();
+  const games = new Map((gamesResult.data || []).map(x => [x.id,x]));
+  const hosts = new Map((hostsResult.data || []).map(x => [x.id,x]));
+  const players = playersResult.data || [];
 
-      } catch (error) {
-        console.error(error);
-        toast("تعذر نشر المنشور. حاول مرة أخرى.");
-      } finally {
-        button.disabled = false;
-        button.textContent = "نشر المنشور";
-      }
-    }
+  container.innerHTML = data.map(room => {
+    const game = games.get(room.game_id) || {};
+    const host = hosts.get(room.host_user_id) || {};
+    const count = players.filter(p => p.room_id === room.id).length;
+    const title = game.title_ar || game.title_en || "غرفة ألعاب";
 
-    $("publishPost").addEventListener("click", publishPost);
+    return `
+      <div class="room-item">
+        <img class="room-cover"
+             src="${escapeHTML(imageURL("post-media", game.cover_path) || "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=200")}"
+             alt="">
+        <div class="room-info">
+          <strong>${escapeHTML(title)}</strong>
+          <span>بواسطة ${escapeHTML(host.full_name || host.username || "عضو")}</span>
+          <span>${count} / ${room.max_players} لاعب</span>
+          <span class="room-status">${room.status === "playing" ? "● جارية" : "● تنتظر اللاعبين"}</span>
+        </div>
+      </div>
+    `;
+  }).join("");
+}
 
-    $("feedRefresh").addEventListener("click", () => loadPosts());
-    $("roomsRefresh").addEventListener("click", loadRooms);
-    $("gamesRefresh").addEventListener("click", loadGames);
+/* =========================================
+   ACTIVE GAMES
+========================================= */
 
-    $("refreshBtn").addEventListener("click", async () => {
-      await refreshAll();
-      toast("تم تحديث البيانات.");
-    });
+async function loadGames() {
+  const { data, error } = await db
+    .from("world_games_catalog")
+    .select("*")
+    .eq("is_active", true)
+    .order("sort_order", { ascending:true })
+    .limit(5);
 
-    async function refreshAll() {
-      await Promise.all([
-        loadWallet(),
-        loadRooms(),
-        loadPosts("dashboardPosts", 5)
-      ]);
+  if (error) {
+    setEmpty("#gamesList", "🎮", "تعذر تحميل الألعاب");
+    return;
+  }
 
-      if (currentPage === "feed") await loadPosts();
-      if (currentPage === "games") await loadGames();
-      if (currentPage === "rooms") await loadRooms();
-    }
+  if (!data || !data.length) {
+    setEmpty("#gamesList", "🎮", "الألعاب الجديدة ستظهر هنا بمجرد تفعيلها.");
+    return;
+  }
 
-    $("logoutBtn").addEventListener("click", async () => {
-      const confirmed = window.confirm("هل تريد تسجيل الخروج من حسابك؟");
-      if (!confirmed) return;
+  $("#gamesList").innerHTML = data.map(game => `
+    <div class="game-card">
+      <img class="game-cover"
+           src="${escapeHTML(imageURL("post-media",game.cover_path) || "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=200")}"
+           alt="">
+      <div>
+        <strong>${escapeHTML(game.title_ar || game.title_en || "لعبة هنون")}</strong>
+        <span>${escapeHTML(game.description_ar || "اكتشف اللعبة")}</span>
+      </div>
+    </div>
+  `).join("");
+}
 
-      const { error } = await supabase.auth.signOut();
+/* =========================================
+   EVENTS & CONTESTS
+========================================= */
 
-      if (error) {
-        toast("تعذر تسجيل الخروج.");
-        return;
-      }
+async function loadEvents() {
+  const { data, error } = await db
+    .from("contests")
+    .select("*")
+    .in("status", ["published","active"])
+    .order("starts_at", { ascending:true, nullsFirst:false })
+    .limit(5);
 
-      window.location.href = "./register.html";
-    });
+  if (error) {
+    setEmpty("#eventsList", "✦", "تعذر تحميل الفعاليات");
+    return;
+  }
 
-    async function initialize() {
-      try {
-        const { data: sessionData, error: sessionError } =
-          await supabase.auth.getSession();
+  if (!data || !data.length) {
+    setEmpty("#eventsList", "✦", "لا توجد فعاليات منشورة حاليًا.");
+    return;
+  }
 
-        if (sessionError) throw sessionError;
+  $("#eventsList").innerHTML = data.map(event => `
+    <div class="event-item">
+      <strong>${escapeHTML(event.title)}</strong>
+      <span>${escapeHTML(event.description || "فعالية من مجتمع هنون")}</span>
+      <span>${event.starts_at ? "البداية: " + formatDate(event.starts_at) : "موعد الفعالية سيعلن لاحقًا"}</span>
+    </div>
+  `).join("");
+}
 
-        const session = sessionData.session;
+/* =========================================
+   COMMUNITY MEMBERS
+========================================= */
 
-        if (!session) {
-          window.location.replace("./register.html");
-          return;
-        }
+async function loadMembers() {
+  const { data, error } = await db
+    .from("member_directory")
+    .select("id,username,full_name,avatar_path,created_at")
+    .order("created_at", { ascending:false })
+    .limit(5);
 
-        currentUser = session.user;
+  if (error || !data || !data.length) {
+    setEmpty("#membersList", "♧", "سيظهر الأعضاء هنا عند توفرهم.");
+    return;
+  }
 
-        await loadProfile();
-        await refreshAll();
+  $("#membersList").innerHTML = data.map(member => `
+    <div class="room-item">
+      <img class="post-avatar"
+           src="${escapeHTML(avatar(member.avatar_path))}"
+           alt="">
+      <div class="room-info">
+        <strong>${escapeHTML(member.full_name || member.username || "عضو هنون")}</strong>
+        <span>${member.username ? "@" + escapeHTML(member.username) : "عضو في هنون"}</span>
+      </div>
+    </div>
+  `).join("");
+}
 
-      } catch (error) {
-        console.error("HANOON home:", error);
-        document.querySelector(".main").innerHTML = `
-          <div class="empty error-text" style="margin:30px auto;max-width:500px">
-            تعذر تحميل حسابك أو بيانات الصفحة الرئيسية.
-            <br>
-            ${escapeHTML(error.message || "حدث خطأ غير معروف.")}
-            <br><br>
-            <button class="gold-btn" onclick="location.href='./register.html'">
-              العودة إلى تسجيل الدخول
-            </button>
-          </div>
-        `;
-      }
-    }
+/* =========================================
+   REFRESH ALL CONTENT
+========================================= */
 
-    initialize();
-  </script>
+async function refreshHome() {
+  await Promise.all([
+    loadPosts(),
+    loadRooms(),
+    loadGames(),
+    loadEvents(),
+    loadMembers()
+  ]);
+}
+
+async function logout() {
+  const confirmed = confirm("هل تريد تسجيل الخروج من حسابك؟");
+  if (!confirmed) return;
+
+  const { error } = await db.auth.signOut();
+
+  if (error) {
+    toast("تعذر تسجيل الخروج");
+    return;
+  }
+
+  location.replace("index.html");
+}
+
+/* =========================================
+   STARTUP
+========================================= */
+
+async function startHome() {
+  const valid = await checkSession();
+  if (!valid) return;
+
+  await loadProfile();
+  await refreshHome();
+}
+
+$("#publishBtn").addEventListener("click", publishPost);
+$("#refreshBtn").addEventListener("click", refreshHome);
+$("#feedRefresh").addEventListener("click", event => {
+  event.preventDefault();
+  refreshHome();
+});
+$("#logoutBtn").addEventListener("click", logout);
+
+startHome();
+</script>
 
 </body>
-  </html>
+</html>
