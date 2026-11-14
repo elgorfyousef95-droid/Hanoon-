@@ -133,7 +133,8 @@ body:after{
 .game-info p{font-size:10px;color:var(--muted);margin-top:3px}
 .card-footer{display:flex;align-items:center;justify-content:space-between;gap:7px;margin-top:12px}
 .card-type{font-size:10px;color:#aaa5bf}
-.card-link{padding:7px 12px;border-radius:9px;background:rgba(153,124,255,.17);color:#d0c2ff;font-size:10px;font-weight:900}.promo{min-height:220px;border-radius:25px;overflow:hidden;position:relative;isolation:isolate;display:flex;align-items:center;padding:30px 35px;border:1px solid rgba(255,255,255,.13);box-shadow:var(--shadow);background:#19152d}
+.card-link{padding:7px 12px;border-radius:9px;background:rgba(153,124,255,.17);color:#d0c2ff;font-size:10px;font-weight:900}
+.promo{min-height:220px;border-radius:25px;overflow:hidden;position:relative;isolation:isolate;display:flex;align-items:center;padding:30px 35px;border:1px solid rgba(255,255,255,.13);box-shadow:var(--shadow);background:#19152d}
 .promo:before{content:"";position:absolute;inset:0;z-index:-2;background:linear-gradient(90deg,rgba(10,8,23,.96),rgba(10,8,23,.73),rgba(10,8,23,.15)),url("https://images.unsplash.com/photo-1560253023-3ec5d502959f?auto=format&fit=crop&w=1500&q=85") center/cover}
 .promo:after{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(circle at 75% 50%,rgba(147,111,255,.2),transparent 38%)}
 .promo-content{max-width:490px}
@@ -347,13 +348,9 @@ body:after{
     <div class="section-head">
       <div class="section-heading">
         <div class="section-icon"><svg viewBox="0 0 24 24"><path d="M6 11h4l2-5 2 12 2-7h2"/></svg></div>
-        <div><h3>اكتشف الألعاب</h3><p>الألعاب المفعّلة في عالم هنون</p></div>
+        <div><h3>الألعاب الأكثر لعبًا</h3><p>ترتيب حقيقي حسب مرات اللعب المسجلة</p></div>
       </div>
       <a class="view-all" href="games.html">كل الألعاب ←</a>
-    </div>
-    <div class="filter-row">
-      <button class="filter-chip active" data-game-filter="all">كل الألعاب</button>
-      <button class="filter-chip" data-game-filter="available">المتاحة الآن</button>
     </div>
     <div class="content-grid" id="gamesGrid"><div class="empty-state"><div class="loader"></div><p>جارٍ تحميل الألعاب...</p></div></div>
   </section>
@@ -454,7 +451,7 @@ async function loadWallet(){
   $("gemBalance").textContent=data?.gems==null?"—":Number(data.gems).toLocaleString("en-US");
 }
 async function loadGames(){
-  const {data,error}=await db.from("world_games_catalog").select("id,title_ar,title_en,slug,cover_path,is_active").eq("is_active",true).order("title_ar",{ascending:true}).limit(8);
+  const {data,error}=await db.rpc("get_trending_games",{p_limit:5});
   if(error)throw error;
   state.games=data||[];
   renderGames(state.games);
@@ -487,14 +484,15 @@ async function loadMembersForSearch(){
 function renderGames(games){
   const grid=$("gamesGrid");
   if(!games.length){
-    grid.innerHTML=`<div class="empty-state"><svg viewBox="0 0 24 24"><path d="M7 8h10a4 4 0 0 1 4 4v4a3 3 0 0 1-5 2l-2-2h-4l-2 2a3 3 0 0 1-5-2v-4a4 4 0 0 1 4-4Z"/></svg><h4>لا توجد ألعاب مفعّلة حاليًا</h4><p>ستظهر الألعاب هنا عند تفعيلها في قاعدة البيانات.</p></div>`;
+    grid.innerHTML=`<div class="empty-state"><svg viewBox="0 0 24 24"><path d="M7 8h10a4 4 0 0 1 4 4v4a3 3 0 0 1-5 2l-2-2h-4l-2 2a3 3 0 0 1-5-2v-4a4 4 0 0 1 4-4Z"/></svg><h4>لا توجد بيانات لعب مسجلة بعد</h4><p>سيظهر هنا أفضل خمس ألعاب بعد تسجيل جلسات لعب حقيقية. لن نعرض ترتيبًا تخمينيًا.</p></div>`;
     return;
   }
   grid.innerHTML=games.map(game=>{
     const title=game.title_ar||game.title_en||"لعبة";
     const cover=isURL(game.cover_path)?game.cover_path:"";
-    const key=encodeURIComponent(game.slug||game.id);
-    return `<article class="game-card"><div class="game-image">${cover?`<img src="${esc(cover)}" alt="${esc(title)}" loading="lazy">`:""}</div><div class="game-info"><h4>${esc(title)}</h4><p>${esc(game.title_en||"من ألعاب هنون")}</p><div class="card-footer"><span class="card-type">لعبة متاحة</span><a class="card-link" href="game.html?game=${key}">التفاصيل</a></div></div></article>`;
+    const key=encodeURIComponent(game.slug||game.game_id);
+    const plays=Number(game.play_count)||0;
+    return `<article class="game-card"><div class="game-image">${cover?`<img src="${esc(cover)}" alt="${esc(title)}" loading="lazy">`:""}</div><div class="game-info"><h4>${esc(title)}</h4><p>${esc(game.title_en||"من ألعاب هنون")}</p><div class="card-footer"><span class="card-type">${plays.toLocaleString("ar-EG")} مرات لعب</span><a class="card-link" href="game.html?game=${key}">التفاصيل</a></div></div></article>`;
   }).join("");
 }
 function renderRooms(rooms){
@@ -526,15 +524,7 @@ function renderSearch(query){
   box.classList.add("show");
   box.innerHTML=items.length?items.map(item=>`<div class="search-result"><div><strong>${esc(item.name)}</strong><small> · ${item.type}</small></div><a href="${esc(item.href)}">فتح</a></div>`).join(""):`<div class="search-result"><span>لا توجد نتائج مطابقة في البيانات المحمّلة</span></div>`;
 }
-function setupFilters(){
-  document.querySelectorAll("[data-game-filter]").forEach(button=>{
-    button.addEventListener("click",()=>{
-      document.querySelectorAll("[data-game-filter]").forEach(x=>x.classList.remove("active"));
-      button.classList.add("active");
-      renderGames(state.games);
-    });
-  });
-}
+
 async function safeTask(task,label){
   try{await task()}catch(error){console.error(`HANOON ${label}:`,error)}
 }
@@ -553,7 +543,6 @@ $("globalSearch").addEventListener("input",event=>renderSearch(event.target.valu
 document.addEventListener("click",event=>{
   if(!event.target.closest(".search-area"))$("searchResults").classList.remove("show");
 });
-setupFilters();
 db.auth.onAuthStateChange((event,session)=>{
   if(event==="SIGNED_OUT"||!session)location.href="index.html";
 });
