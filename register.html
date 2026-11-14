@@ -1,0 +1,422 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#090d1c">
+  <title>إنشاء حساب | HANOON WORLD</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --gold:#e8c77b;
+      --gold-light:#ffe6a5;
+      --text:#f8f5ff;
+      --muted:#aaa8bd;
+      --panel:rgba(12,15,32,.86);
+    }
+    body{
+      min-height:100vh;
+      min-height:100dvh;
+      background:#080d1c;
+      color:var(--text);
+      font-family:"Cairo",sans-serif;
+      overflow-x:hidden;
+    }
+    .background{
+      position:fixed;
+      inset:0;
+      z-index:-2;
+      background:
+        url("https://cdn.pixabay.com/photo/2019/04/16/20/01/architecture-4132660_1280.jpg")
+        center/cover no-repeat;
+    }
+    .background:after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:linear-gradient(90deg,rgba(5,9,24,.45),rgba(5,9,24,.88)),
+      linear-gradient(0deg,rgba(5,8,22,.9),transparent);
+    }
+    .page{
+      min-height:100vh;
+      min-height:100dvh;
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      align-items:center;
+      gap:35px;
+      padding:45px 8%;
+    }
+    .intro{max-width:600px;padding:20px}
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:15px;
+      margin-bottom:35px;
+    }
+    .brand-mark{
+      width:65px;height:65px;
+      display:grid;place-items:center;
+      border-radius:21px;
+      background:linear-gradient(145deg,#f6df9f,#a77b39);
+      box-shadow:0 10px 40px #d8b15b35;
+    }
+    .brand-mark svg{width:42px;height:42px}
+    .brand-name{
+      color:var(--gold-light);
+      font-size:25px;
+      font-weight:900;
+      letter-spacing:2px;
+    }
+    .brand-caption{
+      color:#c7c3d6;
+      font-size:11px;
+      letter-spacing:3px;
+    }
+    .intro h1{
+      font-size:clamp(34px,5vw,60px);
+      line-height:1.5;
+      font-weight:900;
+      margin-bottom:12px;
+    }
+    .intro h1 span{color:var(--gold-light)}
+    .intro p{
+      color:#d2d0df;
+      line-height:2.1;
+      max-width:470px;
+      font-size:15px;
+    }
+    .line{
+      width:85px;height:3px;
+      margin-top:25px;
+      background:linear-gradient(90deg,var(--gold),transparent);
+    }
+    .form-side{
+      display:flex;
+      justify-content:center;
+      width:100%;
+    }
+    .card{
+      width:min(100%,450px);
+      padding:35px;
+      border:1px solid #ffffff20;
+      border-radius:27px;
+      background:var(--panel);
+      backdrop-filter:blur(22px);
+      -webkit-backdrop-filter:blur(22px);
+      box-shadow:0 30px 90px #0007,inset 0 1px #ffffff12;
+    }
+    .heading{margin-bottom:24px}
+    .heading h2{font-size:27px;font-weight:900}
+    .heading p{font-size:13px;color:var(--muted)}
+    .field{margin-bottom:16px}
+    label{
+      display:block;
+      margin-bottom:8px;
+      font-size:13px;
+      font-weight:700;
+      color:#e9e5f4;
+    }
+    .input-wrap{position:relative}
+    input{
+      width:100%;
+      height:54px;
+      padding:0 15px;
+      border-radius:13px;
+      outline:none;
+      border:1px solid #ffffff20;
+      background:#ffffff0d;
+      color:white;
+      font-family:inherit;
+      font-size:14px;
+      transition:.2s;
+    }
+    input:focus{
+      border-color:var(--gold);
+      box-shadow:0 0 0 3px #e8c77b18;
+    }
+    input::placeholder{color:#85869b}
+    .password-input{padding-left:55px}
+    .toggle{
+      position:absolute;
+      left:12px;
+      top:50%;
+      transform:translateY(-50%);
+      border:0;
+      background:none;
+      color:#c2bed0;
+      cursor:pointer;
+      font-family:inherit;
+      font-size:12px;
+    }
+    .hint{
+      color:#89879d;
+      font-size:11px;
+      margin-top:6px;
+    }
+    .create-btn{
+      width:100%;
+      height:56px;
+      margin-top:10px;
+      border:0;
+      border-radius:14px;
+      background:linear-gradient(110deg,#f4dfa5,#c99c50);
+      color:#211707;
+      font-family:inherit;
+      font-size:16px;
+      font-weight:900;
+      cursor:pointer;
+      transition:.2s;
+    }
+    .create-btn:hover{transform:translateY(-2px)}
+    .create-btn:disabled{opacity:.6;cursor:wait;transform:none}
+    .message{
+      display:none;
+      margin-top:15px;
+      padding:12px;
+      border-radius:11px;
+      font-size:12px;
+      line-height:1.8;
+    }
+    .message.error{
+      display:block;
+      color:#ffbdc6;
+      background:#dc37501c;
+      border:1px solid #ff647833;
+    }
+    .message.success{
+      display:block;
+      color:#a9f4d4;
+      background:#2db47d1c;
+      border:1px solid #46dca033;
+    }
+    .login-link{
+      text-align:center;
+      margin-top:22px;
+      color:var(--muted);
+      font-size:13px;
+    }
+    .login-link a{
+      color:var(--gold-light);
+      text-decoration:none;
+      font-weight:800;
+    }
+    .footer{
+      position:fixed;
+      bottom:13px;
+      left:0;right:0;
+      text-align:center;
+      color:#ffffff80;
+      font-size:11px;
+      pointer-events:none;
+    }
+    @media(max-width:850px){
+      .page{
+        grid-template-columns:1fr;
+        gap:20px;
+        padding:25px 18px 55px;
+      }
+      .intro{text-align:center;margin:auto;padding:5px}
+      .brand{justify-content:center;margin-bottom:12px}
+      .brand-mark{width:52px;height:52px;border-radius:17px}
+      .brand-mark svg{width:34px;height:34px}
+      .brand-name{font-size:20px}
+      .brand-caption{font-size:9px}
+      .intro h1{font-size:27px;margin-bottom:5px}
+      .intro p{font-size:12px;line-height:1.8;margin:auto}
+      .line{margin:12px auto}
+      .card{padding:27px 22px}
+    }
+    @media(max-width:380px){
+      .page{padding-left:13px;padding-right:13px}
+      .card{padding:23px 17px}
+    }
+  </style>
+</head>
+
+<body>
+  <div class="background"></div>
+
+  <main class="page">
+    <section class="intro">
+      <div class="brand">
+        <div class="brand-mark">
+          <svg viewBox="0 0 64 64" fill="none">
+            <path d="M32 5L39 18L54 21L44 32L46 47L32 40L18 47L20 32L10 21L25 18L32 5Z"
+              stroke="#38250D" stroke-width="2.8" stroke-linejoin="round"/>
+            <circle cx="32" cy="28" r="6" fill="#38250D"/>
+            <path d="M19 53H45" stroke="#38250D" stroke-width="3" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div>
+          <div class="brand-name">HANOON WORLD</div>
+          <div class="brand-caption">CONNECT • PLAY • ENJOY</div>
+        </div>
+      </div>
+
+      <h1>ابدأ رحلتك<br><span>في عالم هنون</span></h1>
+      <p>
+        أنشئ حسابك وانضم إلى مجتمع هنون،
+        كوّن صداقات جديدة، واكتشف الغرف
+        والألعاب والتجارب الممتعة.
+      </p>
+      <div class="line"></div>
+    </section>
+
+    <section class="form-side">
+      <div class="card">
+        <div class="heading">
+          <h2>إنشاء حساب جديد</h2>
+          <p>أدخل بياناتك لإنشاء حسابك في HANOON WORLD</p>
+        </div>
+
+        <form id="registerForm">
+          <div class="field">
+            <label for="username">اسم المستخدم</label>
+            <input
+              id="username"
+              type="text"
+              placeholder="مثال: hanoon_user"
+              autocomplete="username"
+              minlength="3"
+              maxlength="24"
+              pattern="[A-Za-z0-9_]{3,24}"
+              required
+            >
+            <div class="hint">
+              من 3 إلى 24 حرفًا إنجليزيًا أو رقمًا أو _
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="password">كلمة المرور</label>
+            <div class="input-wrap">
+              <input
+                id="password"
+                class="password-input"
+                type="password"
+                placeholder="أنشئ كلمة مرور قوية"
+                autocomplete="new-password"
+                minlength="8"
+                maxlength="72"
+                required
+              >
+              <button class="toggle" type="button" data-target="password">
+                إظهار
+              </button>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="confirmPassword">تأكيد كلمة المرور</label>
+            <div class="input-wrap">
+              <input
+                id="confirmPassword"
+                class="password-input"
+                type="password"
+                placeholder="أعد كتابة كلمة المرور"
+                autocomplete="new-password"
+                required
+              >
+              <button class="toggle" type="button" data-target="confirmPassword">
+                إظهار
+              </button>
+            </div>
+          </div>
+
+          <button class="create-btn" id="createButton" type="submit">
+            إنشاء الحساب
+          </button>
+
+          <div id="message" class="message" role="status" aria-live="polite"></div>
+        </form>
+
+        <div class="login-link">
+          لديك حساب بالفعل؟
+          <a href="login.html">تسجيل الدخول</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="footer">
+    © HANOON WORLD — جميع الحقوق محفوظة
+  </div>
+
+  <script type="module">
+    import { signUp } from "./auth.js";
+
+    const form = document.getElementById("registerForm");
+    const usernameInput = document.getElementById("username");
+    const passwordInput = document.getElementById("password");
+    const confirmInput = document.getElementById("confirmPassword");
+    const button = document.getElementById("createButton");
+    const message = document.getElementById("message");
+
+    function showMessage(text, type) {
+      message.textContent = text;
+      message.className = "message " + type;
+    }
+
+    document.querySelectorAll(".toggle").forEach(toggle => {
+      toggle.addEventListener("click", () => {
+        const input = document.getElementById(toggle.dataset.target);
+        const visible = input.type === "password";
+
+        input.type = visible ? "text" : "password";
+        toggle.textContent = visible ? "إخفاء" : "إظهار";
+      });
+    });
+
+    form.addEventListener("submit", async event => {
+      event.preventDefault();
+      message.className = "message";
+
+      const username = usernameInput.value.trim();
+      const password = passwordInput.value;
+      const confirmPassword = confirmInput.value;
+
+      if (password !== confirmPassword) {
+        showMessage("كلمتا المرور غير متطابقتين.", "error");
+        return;
+      }
+
+      if (!/^[a-zA-Z0-9_]{3,24}$/.test(username)) {
+        showMessage("اسم المستخدم يجب أن يكون من 3 إلى 24 حرفًا إنجليزيًا أو رقمًا أو _.", "error");
+        return;
+      }
+
+      if (password.length < 8 || password.length > 72) {
+        showMessage("كلمة المرور يجب أن تكون من 8 إلى 72 حرفًا.", "error");
+        return;
+      }
+
+      button.disabled = true;
+      button.textContent = "جارٍ إنشاء الحساب...";
+
+      try {
+        await signUp(username, password);
+
+        showMessage("تم إنشاء حسابك بنجاح. جارٍ الانتقال...", "success");
+
+        setTimeout(() => {
+          window.location.href = "profile-setup.html";
+        }, 900);
+
+      } catch (error) {
+        showMessage(
+          error.message || "تعذر إنشاء الحساب. حاول مرة أخرى.",
+          "error"
+        );
+
+        button.disabled = false;
+        button.textContent = "إنشاء الحساب";
+      }
+    });
+  </script>
+</body>
+</html>
