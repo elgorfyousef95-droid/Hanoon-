@@ -3,7 +3,7 @@ import { supabase } from "./supabase.js";
 
 /* =========================================
    HANOON WORLD — APPLICATION CORE
-   Fixed startup + session restoration
+   Startup / Authentication / Profile / Pages
 ========================================= */
 
 const $ = (selector, parent = document) =>
@@ -14,110 +14,99 @@ const $$ = (selector, parent = document) =>
 
 const state = {
   user: null,
-  profile: null,
   session: null,
+  profile: null,
   language: localStorage.getItem("hanoon_language") || "ar",
   authMode: "login",
+  registerStep: 1,
+  selectedAvatar: null,
+  loading: false,
   currentPage: "home",
   games: [],
-  rooms: [],
-  wallet: null,
-  loading: false,
-  initialized: false
+  wallet: null
 };
+
+const REGISTER_STEPS = [
+  "بيانات الحساب",
+  "البيانات الشخصية",
+  "الصورة الشخصية",
+  "مراجعة الحساب"
+];
 
 const TEXT = {
   ar: {
     login: "تسجيل الدخول",
     register: "إنشاء حساب",
-    logout: "تسجيل الخروج",
-    home: "الرئيسية",
-    rooms: "الغرف",
-    games: "الألعاب",
-    tournaments: "البطولات",
-    chats: "المحادثات",
-    friends: "الأصدقاء",
-    store: "المتجر والهدايا",
-    wallet: "المحفظة",
-    profile: "ملفي الشخصي",
-    notifications: "الإشعارات",
-    settings: "الإعدادات",
-    username: "اسم المستخدم",
-    password: "كلمة المرور",
-    welcome: "عالمك يبدأ من هنا",
-    availableRooms: "الغرف المتاحة الآن",
-    discoverGames: "اكتشف الألعاب",
-    onlineFriends: "الأصدقاء المتصلون",
-    createRoom: "إنشاء غرفة جديدة",
-    noRooms: "لا توجد غرف متاحة حاليًا",
-    noGames: "لا توجد ألعاب نشطة حاليًا",
-    noStore: "المتجر لا يحتوي على منتجات متاحة حاليًا",
-    noData: "لا توجد بيانات لعرضها حاليًا",
-    loading: "جارٍ تحميل البيانات...",
-    error: "حدث خطأ. حاول مرة أخرى.",
-    comingSoon: "قيد التجهيز",
-    loginSuccess: "تم تسجيل الدخول بنجاح",
-    registerSuccess: "تم إنشاء الحساب وتسجيل الدخول",
-    logoutSuccess: "تم تسجيل الخروج",
-    invalidUsername: "اسم المستخدم يجب أن يكون من 3 إلى 24 حرفًا إنجليزيًا أو رقمًا أو شرطة سفلية",
-    invalidPassword: "كلمة المرور يجب ألا تقل عن 8 أحرف",
-    authError: "تعذر إتمام العملية. راجع بيانات الدخول وحاول مرة أخرى.",
-    roomSystemPending: "نظام الغرف العامة يحتاج إلى جداول الغرف والأعضاء في قاعدة البيانات قبل تفعيل الإنشاء.",
-    gamePending: "هذه اللعبة لم تصبح قابلة للعب بعد.",
-    retry: "إعادة المحاولة",
+    loading: "جارٍ التحميل...",
+    invalidUsername: "اسم المستخدم يجب أن يكون من 3 إلى 24 حرفًا إنجليزيًا أو رقمًا أو شرطة سفلية.",
+    invalidPassword: "كلمة المرور يجب ألا تقل عن 8 أحرف.",
+    passwordMismatch: "كلمتا المرور غير متطابقتين.",
+    fullNameRequired: "اكتب الاسم الظاهر.",
+    avatarRequired: "اختر صورة شخصية للمتابعة.",
+    loginSuccess: "تم تسجيل الدخول بنجاح.",
+    registerSuccess: "تم إنشاء الحساب بنجاح.",
+    authError: "تعذر إتمام العملية. راجع البيانات وحاول مرة أخرى.",
+    profileError: "تعذر حفظ بيانات الملف الشخصي.",
+    noRooms: "لا توجد غرف متاحة حاليًا.",
+    noGames: "لا توجد ألعاب نشطة حاليًا.",
+    noStore: "لا توجد منتجات متاحة حاليًا.",
+    noData: "لا توجد بيانات لعرضها حاليًا.",
+    noWallet: "لم يتم العثور على محفظة لهذا الحساب.",
+    comingSoon: "هذا القسم قيد التجهيز.",
     points: "النقاط",
     coins: "العملات",
-    gems: "الجواهر"
+    gems: "الجواهر",
+    previous: "السابق",
+    next: "التالي",
+    createAccount: "إنشاء الحساب",
+    uploadError: "تعذر رفع الصورة. حاول اختيار صورة أخرى.",
+    logout: "تم تسجيل الخروج."
   },
 
   en: {
     login: "Sign in",
     register: "Create account",
-    logout: "Log out",
-    home: "Home",
-    rooms: "Rooms",
-    games: "Games",
-    tournaments: "Tournaments",
-    chats: "Chats",
-    friends: "Friends",
-    store: "Store & Gifts",
-    wallet: "Wallet",
-    profile: "My Profile",
-    notifications: "Notifications",
-    settings: "Settings",
-    username: "Username",
-    password: "Password",
-    welcome: "Your world starts here",
-    availableRooms: "Available rooms",
-    discoverGames: "Discover games",
-    onlineFriends: "Online friends",
-    createRoom: "Create a room",
-    noRooms: "No rooms are available yet",
-    noGames: "No active games are available yet",
-    noStore: "No store products are currently available",
-    noData: "Nothing to display yet",
     loading: "Loading...",
-    error: "Something went wrong. Try again.",
-    comingSoon: "Coming soon",
-    loginSuccess: "Signed in successfully",
-    registerSuccess: "Account created and signed in",
-    logoutSuccess: "Signed out",
-    invalidUsername: "Username must be 3–24 English letters, numbers or underscores",
-    invalidPassword: "Password must be at least 8 characters",
-    authError: "Unable to complete the request. Check your details and try again.",
-    roomSystemPending: "Public room creation requires the rooms and room-members database tables.",
-    gamePending: "This game is not playable yet.",
-    retry: "Retry",
+    invalidUsername: "Username must be 3–24 English letters, numbers or underscores.",
+    invalidPassword: "Password must contain at least 8 characters.",
+    passwordMismatch: "Passwords do not match.",
+    fullNameRequired: "Please enter your display name.",
+    avatarRequired: "Please choose a profile picture.",
+    loginSuccess: "Signed in successfully.",
+    registerSuccess: "Account created successfully.",
+    authError: "Unable to complete the request. Check your details.",
+    profileError: "Unable to save profile information.",
+    noRooms: "No rooms are available yet.",
+    noGames: "No active games are available yet.",
+    noStore: "No products are available yet.",
+    noData: "Nothing to display yet.",
+    noWallet: "No wallet was found for this account.",
+    comingSoon: "This section is being prepared.",
     points: "Points",
     coins: "Coins",
-    gems: "Gems"
+    gems: "Gems",
+    previous: "Previous",
+    next: "Next",
+    createAccount: "Create account",
+    uploadError: "Unable to upload the picture.",
+    logout: "Signed out."
   }
 };
 
-const t = key => TEXT[state.language][key] || key;
+const t = key => TEXT[state.language]?.[key] || key;
+
+function escapeHTML(value = "") {
+  return String(value).replace(/[&<>"']/g, char => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#039;"
+  })[char]);
+}
 
 /* =========================================
-   TOAST NOTIFICATIONS
+   TOAST
 ========================================= */
 
 function toast(message, type = "info") {
@@ -129,9 +118,11 @@ function toast(message, type = "info") {
   item.textContent = message;
 
   if (type === "error") {
-    item.style.borderColor = "rgba(255,100,127,.5)";
-  } else if (type === "success") {
-    item.style.borderColor = "rgba(69,214,160,.5)";
+    item.style.borderColor = "rgba(255,100,127,.55)";
+  }
+
+  if (type === "success") {
+    item.style.borderColor = "rgba(69,214,160,.55)";
   }
 
   root.appendChild(item);
@@ -140,177 +131,62 @@ function toast(message, type = "info") {
 }
 
 /* =========================================
-   PAGE NAVIGATION
+   LOADING OVERLAY
 ========================================= */
 
-function showPage(pageName) {
-  const target = $(`#page-${pageName}`);
+function setLoading(active, message = "") {
+  const overlay = $("#loading-overlay");
+  const label = $("#loading-message");
 
-  if (!target) {
-    console.warn("HANOON page not found:", pageName);
-    toast(t("error"), "error");
-    return;
-  }
+  if (!overlay) return;
 
-  $$(".page").forEach(page => {
-    page.classList.remove("active");
-  });
+  overlay.classList.toggle("hidden", !active);
 
-  target.classList.add("active");
-  state.currentPage = pageName;
-
-  $$(".nav-item").forEach(button => {
-    button.classList.toggle(
-      "active",
-      button.dataset.page === pageName
-    );
-  });
-
-  const content = $(".page-content", target);
-  if (content) content.scrollTop = 0;
-
-  if (pageName === "home") loadHome();
-  if (pageName === "rooms") loadRooms();
-  if (pageName === "games") loadGames();
-  if (pageName === "store") loadStore();
-  if (pageName === "wallet") loadWallet();
-  if (pageName === "profile") loadProfile();
-}
-
-function navigate(page) {
-  if (!state.user) return;
-  showPage(page);
-}
-
-document.addEventListener("click", event => {
-  const nav = event.target.closest("[data-page]");
-
-  if (nav && nav.classList.contains("nav-item")) {
-    navigate(nav.dataset.page);
-    return;
-  }
-
-  const pageLink = event.target.closest("[data-page-link]");
-
-  if (pageLink) {
-    navigate(pageLink.dataset.pageLink);
-    return;
-  }
-
-  const action = event.target.closest("[data-action]");
-
-  if (action) {
-    handleAction(action.dataset.action);
-  }
-});
-
-function handleAction(action) {
-  if (action === "create-room") {
-    navigate("create-room");
-    toast(t("roomSystemPending"));
+  if (label && message) {
+    label.textContent = message;
   }
 }
 
 /* =========================================
-   LANGUAGE
+   SPLASH SCREEN
+   Minimum visible duration = 5000ms
 ========================================= */
 
-function applyLanguage() {
-  const lang = state.language;
+const splashStartedAt = performance.now();
 
-  document.documentElement.lang = lang;
-  document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
+function waitForSplashMinimum() {
+  const elapsed = performance.now() - splashStartedAt;
+  const remaining = Math.max(0, 5000 - elapsed);
 
-  const toggle = $("#language-toggle");
-
-  if (toggle) {
-    toggle.textContent = lang === "ar" ? "EN" : "AR";
-  }
-
-  $$("[data-ar][data-en]").forEach(element => {
-    element.textContent =
-      lang === "ar"
-        ? element.dataset.ar
-        : element.dataset.en;
+  return new Promise(resolve => {
+    window.setTimeout(resolve, remaining);
   });
-
-  const usernameLabel = $("#auth-form label[for='username']");
-  const passwordLabel = $("#auth-form label[for='password']");
-
-  if (usernameLabel) usernameLabel.textContent = t("username");
-  if (passwordLabel) passwordLabel.textContent = t("password");
-
-  const usernameInput = $("#username");
-  const passwordInput = $("#password");
-
-  if (usernameInput) usernameInput.placeholder = t("username");
-  if (passwordInput) passwordInput.placeholder = t("password");
-
-  updateAuthButton();
 }
 
-$("#language-toggle")?.addEventListener("click", () => {
-  state.language = state.language === "ar" ? "en" : "ar";
+function hideSplash() {
+  const splash = $("#splash");
 
-  localStorage.setItem("hanoon_language", state.language);
+  if (!splash) return;
 
-  applyLanguage();
-  refreshVisiblePage();
-});
+  splash.classList.add("hidden");
+}
 
-function refreshVisiblePage() {
-  if (!state.user) return;
+function showAuthentication() {
+  hideSplash();
 
-  if (state.currentPage === "home") loadHome();
-  if (state.currentPage === "rooms") loadRooms();
-  if (state.currentPage === "games") loadGames();
-  if (state.currentPage === "store") loadStore();
-  if (state.currentPage === "wallet") loadWallet();
-  if (state.currentPage === "profile") loadProfile();
+  $("#app")?.classList.add("hidden");
+  $("#auth-screen")?.classList.remove("hidden");
+}
+
+function showApplication() {
+  hideSplash();
+
+  $("#auth-screen")?.classList.add("hidden");
+  $("#app")?.classList.remove("hidden");
 }
 
 /* =========================================
-   AUTH TABS
-========================================= */
-
-function setAuthMode(mode) {
-  state.authMode = mode;
-
-  $$(".auth-tab").forEach(tab => {
-    tab.classList.toggle(
-      "active",
-      tab.dataset.auth === mode
-    );
-  });
-
-  const password = $("#password");
-
-  if (password) {
-    password.autocomplete =
-      mode === "register" ? "new-password" : "current-password";
-  }
-
-  updateAuthButton();
-}
-
-function updateAuthButton() {
-  const submit = $("#auth-submit");
-
-  if (submit) {
-    submit.textContent = t(
-      state.authMode === "register" ? "register" : "login"
-    );
-  }
-}
-
-$$(".auth-tab").forEach(tab => {
-  tab.addEventListener("click", () => {
-    setAuthMode(tab.dataset.auth);
-  });
-});
-
-/* =========================================
-   USERNAME AUTHENTICATION
+   AUTHENTICATION SERVICE
 ========================================= */
 
 function validUsername(username) {
@@ -335,22 +211,27 @@ async function authenticate(username, password, action) {
     {
       body: {
         action,
-        username,
+        username: username.trim().toLowerCase(),
         password
       }
     }
   );
 
-  if (error) throw error;
-  if (data?.error) throw new Error(data.error);
+  if (error) {
+    throw new Error(data?.error || error.message || t("authError"));
+  }
+
+  if (data?.error) {
+    throw new Error(data.error);
+  }
 
   const session = getReturnedSession(data);
 
   if (!session) {
-    throw new Error("AUTH_SESSION_MISSING");
+    throw new Error("لم يتم استلام جلسة تسجيل الدخول.");
   }
 
-  const { data: sessionData, error: sessionError } =
+  const { data: result, error: sessionError } =
     await supabase.auth.setSession({
       access_token: session.access_token,
       refresh_token: session.refresh_token
@@ -358,234 +239,496 @@ async function authenticate(username, password, action) {
 
   if (sessionError) throw sessionError;
 
-  return sessionData;
+  return result.session;
 }
+
+/* =========================================
+   AUTH TABS
+========================================= */
+
+function setAuthMode(mode) {
+  state.authMode = mode;
+  state.registerStep = 1;
+
+  $$(".auth-tab").forEach(tab => {
+    tab.classList.toggle("active", tab.dataset.auth === mode);
+  });
+
+  $("#login-fields")?.classList.toggle("hidden", mode !== "login");
+  $("#register-fields")?.classList.toggle("hidden", mode !== "register");
+
+  $("#auth-title").textContent =
+    mode === "login" ? "مرحبًا بعودتك" : "انضم إلى HANOON WORLD";
+
+  $("#auth-subtitle").textContent =
+    mode === "login"
+      ? "سجّل دخولك لمتابعة عالمك"
+      : "أنشئ حسابك وابدأ رحلتك";
+
+  $("#auth-submit")?.classList.toggle("hidden", mode === "register");
+
+  $("#auth-message").textContent = "";
+
+  updateRegisterStep();
+  updateAuthButton();
+}
+
+function updateAuthButton() {
+  const button = $("#auth-submit");
+  if (!button) return;
+
+  button.textContent = t(
+    state.authMode === "register" ? "register" : "login"
+  );
+}
+
+$$(".auth-tab").forEach(tab => {
+  tab.addEventListener("click", () => {
+    setAuthMode(tab.dataset.auth);
+  });
+});
+
+/* =========================================
+   PASSWORD VISIBILITY
+========================================= */
+
+document.addEventListener("click", event => {
+  const button = event.target.closest("[data-password-toggle]");
+  if (!button) return;
+
+  const input = $("#" + button.dataset.passwordToggle);
+  if (!input) return;
+
+  input.type = input.type === "password" ? "text" : "password";
+});
+
+/* =========================================
+   LOGIN
+========================================= */
 
 $("#auth-form")?.addEventListener("submit", async event => {
   event.preventDefault();
 
-  if (state.loading) return;
+  if (state.authMode !== "login" || state.loading) return;
 
   const username = $("#username")?.value.trim().toLowerCase();
   const password = $("#password")?.value;
-
   const message = $("#auth-message");
-  const submit = $("#auth-submit");
+  const button = $("#auth-submit");
 
   if (!validUsername(username)) {
-    if (message) message.textContent = t("invalidUsername");
+    message.textContent = t("invalidUsername");
     return;
   }
 
   if (!password || password.length < 8) {
-    if (message) message.textContent = t("invalidPassword");
+    message.textContent = t("invalidPassword");
     return;
   }
 
   state.loading = true;
-
-  if (submit) {
-    submit.disabled = true;
-    submit.textContent = t("loading");
-  }
-
-  if (message) message.textContent = "";
+  message.textContent = "";
+  button.disabled = true;
+  button.textContent = t("loading");
 
   try {
-    await authenticate(
-      username,
-      password,
-      state.authMode === "register" ? "signup" : "signin"
-    );
+    const session = await authenticate(username, password, "signin");
 
-    toast(
-      state.authMode === "register"
-        ? t("registerSuccess")
-        : t("loginSuccess"),
-      "success"
-    );
+    await openApplication(session);
 
-    await openApplication();
+    toast(t("loginSuccess"), "success");
 
   } catch (error) {
-    console.error("HANOON authentication:", error);
-
-    if (message) {
-      message.textContent =
-        error.message === "AUTH_SESSION_MISSING"
-          ? t("authError")
-          : (error.message || t("authError"));
-    }
+    console.error("HANOON login:", error);
+    message.textContent = error.message || t("authError");
 
   } finally {
     state.loading = false;
-
-    if (submit) {
-      submit.disabled = false;
-      updateAuthButton();
-    }
+    button.disabled = false;
+    updateAuthButton();
   }
 });
 
 /* =========================================
-   APPLICATION VISIBILITY
+   REGISTRATION — FOUR STEPS
 ========================================= */
 
-function showAuthentication() {
-  $("#splash")?.classList.add("hidden");
-  $("#app")?.classList.add("hidden");
-  $("#auth-screen")?.classList.remove("hidden");
+function getRegisterValues() {
+  return {
+    username: $("#register-username")?.value.trim().toLowerCase() || "",
+    password: $("#register-password")?.value || "",
+    confirmation: $("#register-password-confirm")?.value || "",
+    fullName: $("#register-fullname")?.value.trim() || "",
+    bio: $("#register-bio")?.value.trim() || "",
+    avatar: state.selectedAvatar
+  };
 }
 
-function showApplication() {
-  $("#splash")?.classList.add("hidden");
-  $("#auth-screen")?.classList.add("hidden");
-  $("#app")?.classList.remove("hidden");
+function showAuthMessage(message, isError = true) {
+  const target = $("#auth-message");
+  if (!target) return;
+
+  target.textContent = message;
+  target.style.color = isError ? "#ff8295" : "#42d6a4";
 }
 
-async function openApplication(sessionOverride) {
-  let session = sessionOverride;
+function validateRegisterStep(step) {
+  const data = getRegisterValues();
 
-  if (session === undefined) {
-    const { data, error } = await supabase.auth.getSession();
+  if (step === 1) {
+    if (!validUsername(data.username)) {
+      showAuthMessage(t("invalidUsername"));
+      return false;
+    }
 
-    if (error) throw error;
+    if (data.password.length < 8) {
+      showAuthMessage(t("invalidPassword"));
+      return false;
+    }
 
-    session = data.session;
+    if (data.password !== data.confirmation) {
+      showAuthMessage(t("passwordMismatch"));
+      return false;
+    }
   }
 
-  state.session = session;
-  state.user = session?.user || null;
+  if (step === 2 && !data.fullName) {
+    showAuthMessage(t("fullNameRequired"));
+    return false;
+  }
 
-  if (!state.user) {
-    showAuthentication();
+  if (step === 3 && !data.avatar) {
+    showAuthMessage(t("avatarRequired"));
+    return false;
+  }
+
+  showAuthMessage("", false);
+  return true;
+}
+
+function updateRegisterStep() {
+  const step = state.registerStep;
+
+  $$(".register-step").forEach(element => {
+    const active = Number(element.dataset.registerStep) === step;
+
+    element.classList.toggle("active", active);
+    element.classList.toggle("hidden", !active);
+  });
+
+  const progress = $("#register-progress-fill");
+
+  if (progress) {
+    progress.style.width = `${step * 25}%`;
+  }
+
+  const label = $("#register-step-label");
+  const name = $("#register-step-name");
+
+  if (label) {
+    label.textContent = `الخطوة ${step} من 4`;
+  }
+
+  if (name) {
+    name.textContent = REGISTER_STEPS[step - 1];
+  }
+
+  $("#register-back")?.classList.toggle("hidden", step === 1);
+  $("#register-next")?.classList.toggle("hidden", step === 4);
+  $("#register-finish")?.classList.toggle("hidden", step !== 4);
+
+  if (step === 4) {
+    const data = getRegisterValues();
+
+    $("#review-username").textContent = data.username;
+    $("#review-fullname").textContent = data.fullName;
+    $("#review-avatar").textContent = "تم اختيار الصورة الشخصية";
+  }
+}
+
+$("#register-next")?.addEventListener("click", () => {
+  if (!validateRegisterStep(state.registerStep)) return;
+
+  if (state.registerStep < 4) {
+    state.registerStep++;
+    updateRegisterStep();
+  }
+});
+
+$("#register-back")?.addEventListener("click", () => {
+  if (state.registerStep > 1) {
+    state.registerStep--;
+    updateRegisterStep();
+    showAuthMessage("", false);
+  }
+});
+
+/* =========================================
+   AVATAR PREVIEW
+========================================= */
+
+$("#register-avatar")?.addEventListener("change", event => {
+  const file = event.target.files?.[0];
+
+  if (!file) return;
+
+  const allowed = ["image/jpeg", "image/png", "image/webp"];
+
+  if (!allowed.includes(file.type)) {
+    showAuthMessage("اختر صورة بصيغة JPG أو PNG أو WEBP.");
+    event.target.value = "";
     return;
   }
 
-  // إظهار التطبيق أولًا
-  showApplication();
-  showPage("home");
+  if (file.size > 5 * 1024 * 1024) {
+    showAuthMessage("حجم الصورة يجب ألا يتجاوز 5 ميجابايت.");
+    event.target.value = "";
+    return;
+  }
 
-  // تحميل البيانات دون تعطيل ظهور الشاشة
-  Promise.allSettled([
-    loadProfile(),
-    loadWallet(),
-    loadHome()
-  ]);
+  state.selectedAvatar = file;
+
+  const preview = $("#register-avatar-preview");
+  const filename = $("#avatar-file-name");
+
+  if (preview) {
+    const localURL = URL.createObjectURL(file);
+    preview.src = localURL;
+  }
+
+  if (filename) {
+    filename.textContent = file.name;
+  }
+
+  showAuthMessage("", false);
+});
+
+/* =========================================
+   AVATAR STORAGE
+========================================= */
+
+async function uploadAvatar(userId, file) {
+  if (!file) return null;
+
+  const extension = file.name.split(".").pop()?.toLowerCase() || "jpg";
+  const path = `${userId}/avatar-${Date.now()}.${extension}`;
+
+  const { error } = await supabase.storage
+    .from("avatars")
+    .upload(path, file, {
+      cacheControl: "3600",
+      upsert: true,
+      contentType: file.type
+    });
+
+  if (error) throw error;
+
+  return path;
 }
 
 /* =========================================
-   PROFILE DATA
+   SAVE PROFILE
 ========================================= */
 
-async function loadProfile() {
-  if (!state.user) return;
+async function saveNewProfile(userId, values) {
+  const avatarPath = await uploadAvatar(userId, values.avatar);
 
-  try {
-    const { data, error } = await supabase
-      .from("profiles")
-      .select("*")
-      .eq("id", state.user.id)
-      .maybeSingle();
+  const profileData = {
+    username: values.username,
+    full_name: values.fullName,
+    bio: values.bio || "",
+    avatar_path: avatarPath,
+    profile_completed: true
+  };
 
-    if (error) throw error;
+  const { error } = await supabase
+    .from("profiles")
+    .update(profileData)
+    .eq("id", userId);
 
-    state.profile = data;
+  if (error) throw error;
 
-    const username =
-      data?.username ||
-      data?.full_name ||
-      state.user.user_metadata?.username ||
-      "HANOON Member";
-
-    const sidebarName = $("#sidebar-username");
-
-    if (sidebarName) sidebarName.textContent = username;
-
-    const memberId = $("#sidebar-member-id");
-
-    if (memberId) {
-      memberId.textContent =
-        data?.member_code || data?.member_id || "HANOON";
-    }
-
-    const avatar =
-      data?.avatar_url ||
-      data?.photo_url ||
-      data?.profile_image;
-
-    if (avatar) {
-      if ($("#sidebar-avatar")) $("#sidebar-avatar").src = avatar;
-      if ($("#topbar-avatar")) $("#topbar-avatar").src = avatar;
-    }
-
-    renderProfile(data);
-
-  } catch (error) {
-    console.error("Profile loading:", error);
-    toast(t("error"), "error");
-  }
+  return avatarPath;
 }
 
-function renderProfile(profile) {
-  const root = $("#profile-content");
+/* =========================================
+   FINISH REGISTRATION
+========================================= */
 
-  if (!root) return;
+$("#register-finish")?.addEventListener("click", async () => {
+  if (state.loading) return;
+  if (!validateRegisterStep(4)) return;
 
-  if (!profile) {
-    root.innerHTML =
-      `<div class="empty-state">${escapeHTML(t("noData"))}</div>`;
-    return;
+  const values = getRegisterValues();
+
+  state.loading = true;
+
+  const button = $("#register-finish");
+  button.disabled = true;
+  button.textContent = t("loading");
+
+  try {
+    const session = await authenticate(
+      values.username,
+      values.password,
+      "signup"
+    );
+
+    if (!session?.user?.id) {
+      throw new Error("لم يتم إنشاء هوية المستخدم.");
+    }
+
+    await saveNewProfile(session.user.id, values);
+
+    await openApplication(session);
+
+    toast(t("registerSuccess"), "success");
+
+  } catch (error) {
+    console.error("HANOON registration:", error);
+
+    showAuthMessage(
+      error.message || t("authError")
+    );
+
+    /*
+      لو الحساب اتعمل بالفعل لكن رفع الصورة أو حفظ
+      الملف الشخصي فشل، نحاول إظهار الحساب بدل
+      تكرار إنشاء نفس اسم المستخدم.
+    */
+
+    const { data } = await supabase.auth.getSession();
+
+    if (data?.session) {
+      await openApplication(data.session);
+    }
+
+  } finally {
+    state.loading = false;
+    button.disabled = false;
+    button.textContent = t("createAccount");
+  }
+});
+
+/* =========================================
+   PROFILE LOADING
+========================================= */
+
+function getAvatarURL(profile) {
+  if (!profile?.avatar_path) {
+    return null;
   }
 
-  const name =
-    profile.full_name ||
-    profile.username ||
+  const { data } = supabase.storage
+    .from("avatars")
+    .getPublicUrl(profile.avatar_path);
+
+  return data?.publicUrl || null;
+}
+
+async function loadProfile() {
+  if (!state.user) return null;
+
+  const { data, error } = await supabase
+    .from("profiles")
+    .select("*")
+    .eq("id", state.user.id)
+    .maybeSingle();
+
+  if (error) throw error;
+
+  state.profile = data;
+
+  if (!data) return null;
+
+  const displayName =
+    data.full_name ||
+    data.username ||
     "HANOON Member";
 
-  const username = profile.username || "";
+  const memberCode = data.member_code || "—";
+  const avatarURL = getAvatarURL(data);
 
-  const memberCode =
-    profile.member_code ||
-    profile.member_id ||
-    "";
+  if ($("#sidebar-username")) {
+    $("#sidebar-username").textContent = displayName;
+  }
 
-  const avatar =
-    profile.avatar_url ||
-    profile.photo_url ||
-    profile.profile_image ||
-    "";
+  if ($("#sidebar-member-id")) {
+    $("#sidebar-member-id").textContent = memberCode;
+  }
+
+  if (avatarURL) {
+    if ($("#sidebar-avatar")) $("#sidebar-avatar").src = avatarURL;
+    if ($("#topbar-avatar")) $("#topbar-avatar").src = avatarURL;
+  }
+
+  renderProfile(data, avatarURL);
+
+  return data;
+}
+
+/* =========================================
+   PROFILE PAGE + MEMBER QR
+========================================= */
+
+function renderProfile(profile, avatarURL) {
+  const root = $("#profile-content");
+  if (!root) return;
 
   root.replaceChildren();
 
-  const container = document.createElement("div");
-  container.className = "content-panel";
-
-  const heading = document.createElement("h2");
-  heading.textContent = name;
-
-  const usernameText = document.createElement("p");
-  usernameText.textContent = username ? `@${username}` : "";
-
-  const codeText = document.createElement("p");
-  codeText.textContent = memberCode;
-
-  if (avatar) {
-    const image = document.createElement("img");
-
-    image.className = "profile-avatar";
-    image.src = avatar;
-    image.alt = name;
-
-    container.appendChild(image);
+  if (!profile) {
+    renderEmpty(root, t("noData"));
+    return;
   }
 
-  container.append(heading, usernameText, codeText);
-  root.appendChild(container);
+  const wrapper = document.createElement("div");
+  wrapper.className = "content-panel profile-card";
+
+  const heading = document.createElement("h2");
+  heading.textContent = profile.full_name || profile.username || "HANOON";
+
+  const username = document.createElement("p");
+  username.textContent = profile.username ? `@${profile.username}` : "";
+
+  const member = document.createElement("p");
+  member.textContent = `رقم العضوية: ${profile.member_code || "—"}`;
+
+  const bio = document.createElement("p");
+  bio.textContent = profile.bio || "";
+
+  if (avatarURL) {
+    const image = document.createElement("img");
+    image.className = "profile-avatar";
+    image.src = avatarURL;
+    image.alt = "الصورة الشخصية";
+    wrapper.appendChild(image);
+  }
+
+  wrapper.append(heading, username, member, bio);
+
+  if (profile.member_code) {
+    const qrTitle = document.createElement("h3");
+    qrTitle.textContent = "رمز QR الخاص بعضويتك";
+
+    const qr = document.createElement("img");
+    qr.className = "member-qr";
+    qr.alt = "QR Code";
+    qr.width = 180;
+    qr.height = 180;
+
+    qr.src =
+      "https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=" +
+      encodeURIComponent(profile.member_code);
+
+    wrapper.append(qrTitle, qr);
+  }
+
+  root.appendChild(wrapper);
 }
 
 /* =========================================
-   WALLET DATA
+   WALLET
 ========================================= */
 
 async function loadWallet() {
@@ -604,48 +747,27 @@ async function loadWallet() {
     renderWallet(data);
 
   } catch (error) {
-    console.error("Wallet loading:", error);
+    console.error("Wallet:", error);
     renderWallet(null);
   }
 }
 
 function renderWallet(wallet) {
-  const coins =
-    wallet?.coins ??
-    wallet?.coin_balance ??
-    "--";
+  const points = wallet?.points ?? wallet?.points_balance ?? "—";
+  const coins = wallet?.coins ?? wallet?.coin_balance ?? "—";
+  const gems = wallet?.gems ?? wallet?.gem_balance ?? "—";
 
-  const gems =
-    wallet?.gems ??
-    wallet?.gem_balance ??
-    "--";
-
-  const points =
-    wallet?.points ??
-    wallet?.points_balance ??
-    "--";
-
-  if ($("#home-coins")) {
-    $("#home-coins").textContent = coins;
-  }
-
-  if ($("#home-gems")) {
-    $("#home-gems").textContent = gems;
-  }
-
-  if ($("#home-points")) {
-    $("#home-points").textContent = points;
-  }
+  if ($("#home-points")) $("#home-points").textContent = points;
+  if ($("#home-coins")) $("#home-coins").textContent = coins;
+  if ($("#home-gems")) $("#home-gems").textContent = gems;
 
   const root = $("#wallet-content");
-
   if (!root) return;
 
   root.replaceChildren();
 
   if (!wallet) {
-    root.innerHTML =
-      `<div class="empty-state">${escapeHTML(t("noData"))}</div>`;
+    renderEmpty(root, t("noWallet"));
     return;
   }
 
@@ -674,7 +796,114 @@ function renderWallet(wallet) {
 }
 
 /* =========================================
-   HOME PAGE
+   GAMES CATALOG
+========================================= */
+
+async function loadGames(homeOnly = false) {
+  const root = homeOnly ? $("#home-games") : $("#games-list");
+
+  if (!root) return;
+
+  root.replaceChildren();
+
+  try {
+    const { data, error } = await supabase
+      .from("world_games_catalog")
+      .select("*")
+      .eq("is_active", true)
+      .order("created_at", { ascending: true });
+
+    if (error) throw error;
+
+    state.games = data || [];
+
+    if (!state.games.length) {
+      renderEmpty(root, t("noGames"));
+      return;
+    }
+
+    state.games.forEach(game => {
+      const card = document.createElement("article");
+      card.className = "game-card";
+
+      const title = document.createElement("h3");
+      title.textContent = game.name || game.title || "Game";
+
+      const description = document.createElement("p");
+      description.textContent = game.description || "";
+
+      card.append(title, description);
+      root.appendChild(card);
+    });
+
+  } catch (error) {
+    console.error("Games:", error);
+    renderEmpty(root, t("noData"));
+  }
+}
+
+/* =========================================
+   ROOMS
+========================================= */
+
+function renderRoomsUnavailable(root) {
+  if (!root) return;
+
+  root.replaceChildren();
+  renderEmpty(root, t("noRooms"));
+}
+
+async function loadRooms(homeOnly = false) {
+  const root = homeOnly ? $("#home-rooms") : $("#rooms-list");
+  renderRoomsUnavailable(root);
+}
+
+/* =========================================
+   STORE
+========================================= */
+
+async function loadStore() {
+  const root = $("#store-items");
+  if (!root) return;
+
+  root.replaceChildren();
+
+  try {
+    const { data, error } = await supabase
+      .from("world_store_items")
+      .select("*")
+      .eq("is_active", true)
+      .order("created_at", { ascending: false });
+
+    if (error) throw error;
+
+    if (!data?.length) {
+      renderEmpty(root, t("noStore"));
+      return;
+    }
+
+    data.forEach(item => {
+      const card = document.createElement("article");
+      card.className = "store-card";
+
+      const title = document.createElement("h3");
+      title.textContent = item.name || item.title || "Item";
+
+      const description = document.createElement("p");
+      description.textContent = item.description || "";
+
+      card.append(title, description);
+      root.appendChild(card);
+    });
+
+  } catch (error) {
+    console.error("Store:", error);
+    renderEmpty(root, t("noData"));
+  }
+}
+
+/* =========================================
+   HOME
 ========================================= */
 
 async function loadHome() {
@@ -682,34 +911,119 @@ async function loadHome() {
 
   await Promise.allSettled([
     loadGames(true),
-    loadRooms(true)
+    loadRooms(true),
+    loadWallet()
   ]);
 }
 
 /* =========================================
-   ROOMS
+   EMPTY STATES
 ========================================= */
 
-async function loadRooms(homeOnly = false) {
-  const root = homeOnly
-    ? $("#home-rooms")
-    : $("#rooms-list");
-
+function renderEmpty(root, message) {
   if (!root) return;
 
-  root.replaceChildren();
+  const box = document.createElement("div");
+  box.className = "empty-state";
 
-  const empty = document.createElement("div");
-  empty.className = "empty-state";
+  const text = document.createElement("p");
+  text.textContent = message;
 
-  const heading = document.createElement("h3");
-  heading.textContent = t("noRooms");
+  box.appendChild(text);
+  root.appendChild(box);
+}
 
-  const description = document.createElement("p");
-  description.textContent = t("roomSystemPending");
+/* =========================================
+   PAGE NAVIGATION
+========================================= */
 
-  empty.append(heading, description);
-  root.appendChild(empty);
+const PAGE_LOADERS = {
+  home: loadHome,
+  rooms: loadRooms,
+  games: loadGames,
+  store: loadStore,
+  wallet: loadWallet,
+  profile: loadProfile
+};
+
+function showPage(pageName) {
+  const target = $(`#page-${pageName}`);
+
+  if (!target) {
+    console.warn("HANOON page not found:", pageName);
+    return;
+  }
+
+  $$(".page").forEach(page => {
+    page.classList.remove("active");
+  });
+
+  target.classList.add("active");
+  state.currentPage = pageName;
+
+  $$("[data-page]").forEach(button => {
+    button.classList.toggle(
+      "active",
+      button.dataset.page === pageName
+    );
+  });
+
+  const main = $("#main-content");
+
+  if (main) {
+    main.scrollTop = 0;
+  }
+
+  const loader = PAGE_LOADERS[pageName];
+
+  if (loader && state.user) {
+    Promise.resolve(loader()).catch(error => {
+      console.error(`Page ${pageName}:`, error);
+    });
+  }
+
+  if (!loader) {
+    const content = target.querySelector(
+      ".content-panel, .content-grid, [id$='-list']"
+    );
+
+    if (content && !content.children.length) {
+      renderEmpty(content, t("comingSoon"));
+    }
+  }
+}
+
+function navigate(pageName) {
+  if (!state.user) return;
+  showPage(pageName);
+}
+
+document.addEventListener("click", event => {
+  const nav = event.target.closest("[data-page]");
+
+  if (nav) {
+    navigate(nav.dataset.page);
+    return;
+  }
+
+  const link = event.target.closest("[data-page-link]");
+
+  if (link) {
+    navigate(link.dataset.pageLink);
+    return;
+  }
+
+  const action = event.target.closest("[data-action]");
+
+  if (action) {
+    handleAction(action.dataset.action);
+  }
+});
+
+function handleAction(action) {
+  if (action === "create-room") {
+    navigate("create-room");
+  }
 }
 
 /* =========================================
@@ -722,264 +1036,88 @@ $("#create-room-form")?.addEventListener("submit", event => {
   const message = $("#create-room-message");
 
   if (message) {
-    message.textContent = t("roomSystemPending");
+    message.textContent =
+      "إنشاء الغرف العامة سيتم تفعيله بعد توصيل نظام الغرف والأعضاء.";
   }
-
-  toast(t("roomSystemPending"));
 });
 
 /* =========================================
-   GAMES CATALOG
+   GLOBAL SEARCH
 ========================================= */
 
-const GAME_IMAGES = [
-  "https://images.unsplash.com/photo-1611996575749-79a3a250f948?w=700&q=80",
-  "https://images.unsplash.com/photo-1606503153255-59d8b8b8216b?w=700&q=80",
-  "https://images.unsplash.com/photo-1614294149010-950b698f72c0?w=700&q=80",
-  "https://images.unsplash.com/photo-1511512578047-dfb367046420?w=700&q=80",
-  "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=700&q=80",
-  "https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?w=700&q=80"
-];
+async function performSearch() {
+  const input = $("#global-search-input");
+  const query = input?.value.trim();
 
-async function loadGames(homeOnly = false) {
-  if (!state.user) return;
+  if (!query) return;
 
-  const root = homeOnly
-    ? $("#home-games")
-    : $("#games-list");
-
-  if (!root) return;
-
-  root.replaceChildren();
-
-  try {
-    const { data, error } = await supabase
-      .from("world_games_catalog")
-      .select("*")
-      .order("created_at", { ascending: true });
-
-    if (error) throw error;
-
-    state.games = data || [];
-
-    const visibleGames = homeOnly
-      ? state.games.slice(0, 4)
-      : state.games;
-
-    if (!visibleGames.length) {
-      root.innerHTML =
-        `<div class="empty-state">${escapeHTML(t("noGames"))}</div>`;
-      return;
-    }
-
-    visibleGames.forEach((game, index) => {
-      const title =
-        game.title ||
-        game.name ||
-        game.game_name ||
-        "HANOON Game";
-
-      const description =
-        game.description ||
-        t("comingSoon");
-
-      const active = game.is_active === true;
-
-      const card = document.createElement("article");
-      card.className = "game-card";
-
-      const cover = document.createElement("div");
-      cover.className = "card-cover";
-
-      const image = document.createElement("img");
-
-      image.src =
-        game.image_url ||
-        GAME_IMAGES[index % GAME_IMAGES.length];
-
-      image.alt = title;
-      image.loading = "lazy";
-
-      image.onerror = () => {
-        image.onerror = null;
-        image.src = GAME_IMAGES[index % GAME_IMAGES.length];
-      };
-
-      cover.appendChild(image);
-
-      const body = document.createElement("div");
-      body.className = "card-body";
-
-      const heading = document.createElement("h3");
-      heading.textContent = title;
-
-      const text = document.createElement("p");
-      text.textContent = description;
-
-      const actions = document.createElement("div");
-      actions.className = "card-actions";
-
-      const button = document.createElement("button");
-      button.type = "button";
-
-      button.textContent =
-        active ? "فتح اللعبة" : t("comingSoon");
-
-      button.disabled = !active;
-
-      if (!active) {
-        button.style.opacity = ".55";
-        button.style.cursor = "not-allowed";
-      } else {
-        button.addEventListener("click", () => openGame(game));
-      }
-
-      actions.appendChild(button);
-
-      body.append(heading, text, actions);
-      card.append(cover, body);
-
-      root.appendChild(card);
-    });
-
-  } catch (error) {
-    console.error("Games loading:", error);
-
-    root.innerHTML =
-      `<div class="empty-state">${escapeHTML(t("error"))}</div>`;
-  }
+  toast("البحث الشامل قيد التجهيز.");
 }
 
-function openGame(game) {
-  if (!game?.is_active) {
-    toast(t("gamePending"));
+$("#global-search-button")?.addEventListener("click", performSearch);
+
+$("#global-search-input")?.addEventListener("keydown", event => {
+  if (event.key === "Enter") {
+    performSearch();
+  }
+});
+
+/* =========================================
+   FRIEND SEARCH
+========================================= */
+
+$("#friend-search-button")?.addEventListener("click", () => {
+  const query = $("#friend-search")?.value.trim();
+
+  if (!query) {
+    toast("اكتب اسم المستخدم أو رقم العضوية أولًا.");
     return;
   }
 
-  const root = $("#game-details-content");
+  toast("البحث عن الأصدقاء سيتم توصيله في مرحلة نظام العلاقات.");
+});
 
-  if (root) {
-    root.replaceChildren();
+/* =========================================
+   LANGUAGE
+========================================= */
 
-    const panel = document.createElement("div");
-    panel.className = "content-panel";
+function applyLanguage() {
+  const language = state.language;
 
-    const heading = document.createElement("h2");
-    heading.textContent =
-      game.title || game.name || "HANOON Game";
+  document.documentElement.lang = language;
+  document.documentElement.dir =
+    language === "ar" ? "rtl" : "ltr";
 
-    const message = document.createElement("p");
-    message.textContent = t("comingSoon");
+  const toggle = $("#language-toggle");
 
-    panel.append(heading, message);
-    root.appendChild(panel);
+  if (toggle) {
+    toggle.textContent = language === "ar" ? "EN" : "AR";
   }
 
-  navigate("game-details");
+  $$("[data-ar][data-en]").forEach(element => {
+    element.textContent =
+      language === "ar"
+        ? element.dataset.ar
+        : element.dataset.en;
+  });
+
+  updateAuthButton();
 }
 
-/* =========================================
-   STORE
-========================================= */
+$("#language-toggle")?.addEventListener("click", () => {
+  state.language = state.language === "ar" ? "en" : "ar";
 
-async function loadStore() {
-  if (!state.user) return;
+  localStorage.setItem("hanoon_language", state.language);
 
-  const root = $("#store-items");
+  applyLanguage();
 
-  if (!root) return;
-
-  root.replaceChildren();
-
-  try {
-    const { data, error } = await supabase
-      .from("world_store_items")
-      .select("*")
-      .eq("is_active", true);
-
-    if (error) throw error;
-
-    if (!data?.length) {
-      root.innerHTML =
-        `<div class="empty-state">${escapeHTML(t("noStore"))}</div>`;
-      return;
-    }
-
-    data.forEach(item => {
-      const card = document.createElement("article");
-      card.className = "store-card card-body";
-
-      const heading = document.createElement("h3");
-      heading.textContent =
-        item.title || item.name || "HANOON Item";
-
-      const description = document.createElement("p");
-      description.textContent = item.description || "";
-
-      card.append(heading, description);
-      root.appendChild(card);
-    });
-
-  } catch (error) {
-    console.error("Store loading:", error);
-
-    root.innerHTML =
-      `<div class="empty-state">${escapeHTML(t("error"))}</div>`;
-  }
-}
-
-/* =========================================
-   FRIENDS / CHATS / NOTIFICATIONS
-========================================= */
-
-function showPendingContent(elementId) {
-  const root = $(`#${elementId}`);
-
-  if (!root) return;
-
-  root.replaceChildren();
-
-  const empty = document.createElement("div");
-  empty.className = "empty-state";
-  empty.textContent = t("noData");
-
-  root.appendChild(empty);
-}
-
-showPendingContent("conversations-list");
-showPendingContent("friends-content");
-showPendingContent("notifications-list");
-showPendingContent("tournaments-list");
-showPendingContent("settings-content");
-showPendingContent("home-online-friends");
-
-/* =========================================
-   LOGOUT
-========================================= */
-
-$("#logout-button")?.addEventListener("click", async () => {
-  try {
-    const { error } = await supabase.auth.signOut();
-
-    if (error) throw error;
-
-    state.user = null;
-    state.profile = null;
-    state.session = null;
-    state.wallet = null;
-
-    showAuthentication();
-
-    toast(t("logoutSuccess"), "success");
-
-  } catch (error) {
-    console.error("Logout:", error);
-    toast(t("error"), "error");
+  if (state.user) {
+    showPage(state.currentPage);
   }
 });
 
 /* =========================================
-   TOPBAR PROFILE
+   PROFILE SHORTCUTS
 ========================================= */
 
 $("#profile-shortcut")?.addEventListener("click", () => {
@@ -991,102 +1129,127 @@ $("#notifications-button")?.addEventListener("click", () => {
 });
 
 /* =========================================
-   SAFE TEXT
+   LOGOUT
 ========================================= */
 
-function escapeHTML(value) {
-  return String(value ?? "").replace(/[&<>"']/g, char => ({
-    "&": "&amp;",
-    "<": "&lt;",
-    ">": "&gt;",
-    '"': "&quot;",
-    "'": "&#39;"
-  })[char]);
-}
+$("#logout-button")?.addEventListener("click", async () => {
+  if (state.loading) return;
+
+  try {
+    const { error } = await supabase.auth.signOut();
+
+    if (error) throw error;
+
+    state.user = null;
+    state.session = null;
+    state.profile = null;
+    state.wallet = null;
+
+    $("#auth-form")?.reset();
+
+    showAuthentication();
+
+    toast(t("logout"), "success");
+
+  } catch (error) {
+    console.error("Logout:", error);
+    toast(t("authError"), "error");
+  }
+});
 
 /* =========================================
-   SESSION RESTORE + SPLASH
+   OPEN APPLICATION
 ========================================= */
 
-async function initializeApp() {
-  if (state.initialized) return;
+async function openApplication(sessionOverride) {
+  let session = sessionOverride;
 
-  state.initialized = true;
+  if (session === undefined) {
+    const { data, error } = await supabase.auth.getSession();
 
-  applyLanguage();
-  setAuthMode("login");
+    if (error) throw error;
 
-  // يبدأ مؤقت شاشة البداية فور تشغيل التطبيق
-  const splashTimer = new Promise(resolve => {
-    window.setTimeout(resolve, 5000);
-  });
-
-  let sessionResolved = false;
-  let restoredSession = null;
-
-  // استعادة الجلسة بالتوازي مع المؤقت
-  const sessionPromise = supabase.auth.getSession()
-    .then(({ data, error }) => {
-      if (error) throw error;
-
-      restoredSession = data.session || null;
-
-      state.session = restoredSession;
-      state.user = restoredSession?.user || null;
-
-      sessionResolved = true;
-
-      return restoredSession;
-    })
-    .catch(error => {
-      console.error("Session restore:", error);
-
-      restoredSession = null;
-      state.session = null;
-      state.user = null;
-
-      sessionResolved = true;
-
-      return null;
-    });
-
-  // لا ننتظر تحميل الجلسة قبل انتهاء الخمس ثواني
-  await splashTimer;
-
-  if (sessionResolved) {
-    await openApplication(restoredSession);
-    return;
+    session = data.session;
   }
 
-  // إذا تأخرت الجلسة، نعرض تسجيل الدخول بدل تعليق شاشة البداية
-  showAuthentication();
-
-  // نستمر في انتظار الجلسة في الخلفية
-  const session = await sessionPromise;
-
-  if (session) {
-    await openApplication(session);
-  }
-}
-
-/* =========================================
-   AUTH SESSION CHANGES
-========================================= */
-
-supabase.auth.onAuthStateChange((event, session) => {
   state.session = session;
   state.user = session?.user || null;
 
+  if (!state.user) {
+    showAuthentication();
+    return;
+  }
+
+  showApplication();
+
+  try {
+    await loadProfile();
+  } catch (error) {
+    console.error("Initial profile:", error);
+    toast(t("profileError"), "error");
+  }
+
+  showPage("home");
+
+  /*
+    بيانات الصفحة تُحمّل بعد إظهار التطبيق.
+    هذا يحافظ على سرعة الانتقال دون تعطيل الشاشة.
+  */
+  Promise.allSettled([
+    loadWallet(),
+    loadHome()
+  ]);
+}
+
+/* =========================================
+   AUTH STATE CHANGES
+========================================= */
+
+supabase.auth.onAuthStateChange((event, session) => {
   if (event === "SIGNED_OUT") {
+    state.user = null;
+    state.session = null;
     state.profile = null;
-    state.wallet = null;
 
     showAuthentication();
   }
 });
 
 /* =========================================
+   APPLICATION INITIALIZATION
+========================================= */
+
+async function initializeHanoon() {
+  applyLanguage();
+
+  /*
+    نبدأ فحص الجلسة بالتوازي مع مدة شاشة البداية.
+    لن تختفي شاشة البداية قبل مرور 5 ثوانٍ.
+  */
+
+  const sessionPromise = supabase.auth.getSession();
+
+  await waitForSplashMinimum();
+
+  try {
+    const { data, error } = await sessionPromise;
+
+    if (error) throw error;
+
+    if (data?.session) {
+      await openApplication(data.session);
+    } else {
+      showAuthentication();
+    }
+
+  } catch (error) {
+    console.error("HANOON initialization:", error);
+    showAuthentication();
+  }
+}
+
+/* =========================================
    START
 ========================================= */
 
-initializeApp();
+initializeHanoon();
