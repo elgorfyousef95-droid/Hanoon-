@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -82,6 +83,7 @@
       border-radius:15px;
       background:rgba(255,255,255,.055);
       color:white;
+      position:relative;
     }
 
     .icon-btn svg{
@@ -92,6 +94,32 @@
       stroke-width:1.8;
       stroke-linecap:round;
       stroke-linejoin:round;
+    }
+
+    /* Notification badge */
+    .notification-badge{
+      position:absolute;
+      top:-5px;
+      left:-5px;
+      min-width:19px;
+      height:19px;
+      padding:0 5px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      border:2px solid #0a0b16;
+      border-radius:20px;
+      background:linear-gradient(135deg,#ff647e,#e83258);
+      color:#fff;
+      font-family:Arial,sans-serif;
+      font-size:10px;
+      font-weight:900;
+      line-height:1;
+      box-shadow:0 3px 12px #ff456655;
+    }
+
+    .notification-badge[hidden]{
+      display:none!important;
     }
 
     .brand{
@@ -622,14 +650,24 @@
         </div>
       </div>
 
-      <button class="icon-btn" id="shareButton" aria-label="مشاركة الملف">
-        <svg viewBox="0 0 24 24">
-          <circle cx="18" cy="5" r="3"/>
-          <circle cx="6" cy="12" r="3"/>
-          <circle cx="18" cy="19" r="3"/>
-          <path d="m8.7 10.7 6.6-4.4M8.7 13.3l6.6 4.4"/>
-        </svg>
-      </button>
+      <div class="top-side">
+        <a class="icon-btn" href="notifications.html" aria-label="الإشعارات">
+          <svg viewBox="0 0 24 24">
+            <path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9Z"/>
+            <path d="M10 21h4"/>
+          </svg>
+          <span class="notification-badge" data-notification-count hidden></span>
+        </a>
+
+        <button class="icon-btn" id="shareButton" aria-label="مشاركة الملف">
+          <svg viewBox="0 0 24 24">
+            <circle cx="18" cy="5" r="3"/>
+            <circle cx="6" cy="12" r="3"/>
+            <circle cx="18" cy="19" r="3"/>
+            <path d="m8.7 10.7 6.6-4.4M8.7 13.3l6.6 4.4"/>
+          </svg>
+        </button>
+      </div>
     </header>
 
     <div id="loadingState" class="loading">
@@ -893,7 +931,7 @@
 
       element.onerror = ()=>{
         element.onerror = null;
-        element.src = fallback;
+        if(fallback) element.src = fallback;
       };
 
       element.src = url || fallback;
@@ -1219,5 +1257,48 @@
 
     initialize();
   </script>
+
+  <!-- HANOON CENTRAL NOTIFICATION SYSTEM -->
+  <script type="module">
+    import {
+      initializeNotificationCore,
+      updateNotificationBadge
+    } from "./notification-core.js";
+
+    async function refreshMemberNotifications(){
+      try{
+        const count = await updateNotificationBadge();
+
+        const badge = document.querySelector(
+          "[data-notification-count]"
+        );
+
+        if(!badge) return;
+
+        badge.textContent = count > 99 ? "99+" : String(count);
+        badge.hidden = count === 0;
+
+      }catch(error){
+        console.error(
+          "HANOON member notification badge:",
+          error
+        );
+      }
+    }
+
+    try{
+      await initializeNotificationCore(
+        refreshMemberNotifications
+      );
+
+      await refreshMemberNotifications();
+
+    }catch(error){
+      console.error(
+        "HANOON member notifications:",
+        error
+      );
+    }
+  </script>
 </body>
-  </html>
+</html>
