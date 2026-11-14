@@ -1,0 +1,598 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#0b0a17">
+<title>الإشعارات | HANOON WORLD</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg:#0b0a17;
+  --panel:#171529;
+  --panel2:#211d39;
+  --purple:#a58aff;
+  --purple2:#7654df;
+  --cyan:#69dcd2;
+  --gold:#f1cb7b;
+  --text:#faf8ff;
+  --muted:#aaa4c1;
+  --line:rgba(255,255,255,.09);
+  --shadow:0 22px 65px rgba(0,0,0,.38);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  min-height:100vh;
+  color:var(--text);
+  font-family:Cairo,sans-serif;
+  background:var(--bg);
+  overflow-x:hidden;
+}
+body:before{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:-3;
+  background:
+    linear-gradient(180deg,rgba(9,8,22,.76),rgba(9,8,22,.96)),
+    url("https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=1800&q=85") center/cover;
+}
+body:after{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:-2;
+  pointer-events:none;
+  background:
+    radial-gradient(ellipse at 8% 10%,rgba(137,94,255,.22),transparent 34%),
+    radial-gradient(ellipse at 94% 38%,rgba(48,194,193,.13),transparent 32%),
+    radial-gradient(ellipse at 50% 100%,rgba(110,75,190,.12),transparent 42%);
+}
+button,a{font:inherit}
+button{cursor:pointer;border:0;color:inherit}
+a{color:inherit;text-decoration:none}
+.page{width:min(100%,1100px);margin:auto;padding:0 20px 55px}
+
+/* TOP BAR */
+.topbar{
+  height:76px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  border-bottom:1px solid var(--line);
+}
+.brand{display:flex;align-items:center;gap:11px}
+.brand-mark{
+  width:43px;height:43px;border-radius:14px;
+  display:grid;place-items:center;
+  background:linear-gradient(145deg,#c4adff,#6846d9);
+  box-shadow:0 8px 25px rgba(125,87,224,.35);
+  border:1px solid rgba(255,255,255,.25);
+}
+.brand-mark svg{width:25px;height:25px}
+.brand-name{font-size:16px;font-weight:900;letter-spacing:.4px}
+.brand-sub{font-size:9px;color:#bcb1dc;letter-spacing:2px;margin-top:-5px}
+.back{
+  width:42px;height:42px;border-radius:13px;
+  display:grid;place-items:center;
+  background:rgba(255,255,255,.07);
+  border:1px solid var(--line);
+}
+.back svg{width:20px;height:20px;stroke:#ded6ff;fill:none;stroke-width:1.8}
+
+/* INTRO */
+.intro{
+  position:relative;
+  margin-top:27px;
+  padding:27px;
+  min-height:170px;
+  overflow:hidden;
+  border-radius:25px;
+  border:1px solid rgba(183,158,255,.2);
+  background:
+    linear-gradient(110deg,rgba(30,23,58,.97),rgba(17,23,42,.92)),
+    url("https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=1200&q=80") center/cover;
+  box-shadow:var(--shadow);
+}
+.intro:before{
+  content:"";
+  position:absolute;
+  width:230px;height:230px;
+  left:-65px;top:-105px;
+  border-radius:50%;
+  border:1px solid rgba(194,171,255,.18);
+  box-shadow:0 0 0 25px rgba(177,147,255,.035),0 0 0 55px rgba(177,147,255,.025);
+}
+.intro-content{position:relative;z-index:1}
+.eyebrow{
+  display:flex;align-items:center;gap:8px;
+  color:#c8b7ff;font-size:10px;font-weight:900;
+  letter-spacing:1px;
+}
+.eyebrow span{
+  width:7px;height:7px;border-radius:50%;
+  background:var(--cyan);box-shadow:0 0 13px var(--cyan);
+}
+.intro h1{font-size:clamp(25px,4vw,34px);font-weight:900;margin-top:7px}
+.intro p{font-size:12px;color:#c4bfd4;margin-top:3px}
+.intro-icon{
+  position:absolute;left:28px;top:50%;
+  transform:translateY(-50%);
+  width:95px;height:95px;border-radius:28px;
+  display:grid;place-items:center;
+  background:linear-gradient(145deg,rgba(181,153,255,.25),rgba(90,69,160,.16));
+  border:1px solid rgba(205,187,255,.28);
+  box-shadow:inset 0 1px rgba(255,255,255,.12),0 15px 35px rgba(0,0,0,.2);
+}
+.intro-icon svg{width:43px;height:43px;stroke:#d8caff;fill:none;stroke-width:1.35}
+
+/* SUMMARY */
+.summary{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:12px;margin-top:17px;
+}
+.stat{
+  padding:15px 17px;border-radius:17px;
+  background:linear-gradient(145deg,rgba(34,30,58,.94),rgba(19,19,36,.96));
+  border:1px solid var(--line);
+  display:flex;align-items:center;gap:12px;
+}
+.stat-icon{
+  width:39px;height:39px;flex:none;border-radius:12px;
+  display:grid;place-items:center;
+  background:rgba(164,133,255,.13);
+  border:1px solid rgba(177,151,255,.15);
+}
+.stat-icon svg{width:20px;height:20px;stroke:#c5b2ff;fill:none;stroke-width:1.7}
+.stat strong{display:block;font-size:19px;font-weight:900;line-height:1.2}
+.stat small{font-size:10px;color:var(--muted)}
+
+/* TOOLBAR */
+.toolbar{
+  margin-top:27px;
+  display:flex;align-items:center;justify-content:space-between;
+  gap:12px;flex-wrap:wrap;
+}
+.section-title{font-size:19px;font-weight:900}
+.section-sub{font-size:10px;color:var(--muted);margin-top:-3px}
+.read-all{
+  display:flex;align-items:center;gap:7px;
+  padding:9px 13px;border-radius:11px;
+  color:#d2c4ff;background:rgba(157,126,255,.12);
+  border:1px solid rgba(172,146,255,.2);
+  font-size:10px;font-weight:800;
+}
+.read-all svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2}
+
+/* FILTERS */
+.filters{
+  display:flex;gap:8px;overflow-x:auto;
+  padding:17px 0 13px;scrollbar-width:none;
+}
+.filters::-webkit-scrollbar{display:none}
+.filter{
+  flex:none;padding:8px 16px;border-radius:30px;
+  color:#c5bfd6;background:rgba(255,255,255,.055);
+  border:1px solid var(--line);
+  font-size:10px;font-weight:800;
+  transition:.2s;
+}
+.filter.active{
+  color:white;border-color:transparent;
+  background:linear-gradient(110deg,#a58aff,#704bd6);
+  box-shadow:0 6px 18px rgba(119,82,220,.25);
+}
+
+/* NOTIFICATION LIST */
+.notice-list{display:grid;gap:11px}
+.notice{
+  position:relative;
+  display:grid;
+  grid-template-columns:52px minmax(0,1fr) auto;
+  gap:13px;
+  align-items:center;
+  padding:16px;
+  min-height:95px;
+  border-radius:19px;
+  border:1px solid rgba(255,255,255,.085);
+  background:linear-gradient(110deg,rgba(31,28,51,.96),rgba(18,20,37,.97));
+  box-shadow:0 9px 24px rgba(0,0,0,.17);
+  cursor:pointer;
+  transition:transform .2s,border-color .2s,background .2s;
+}
+.notice:hover{
+  transform:translateY(-2px);
+  border-color:rgba(174,148,255,.35);
+  background:linear-gradient(110deg,rgba(43,36,70,.98),rgba(20,26,45,.98));
+}
+.notice.unread{
+  border-color:rgba(166,137,255,.22);
+  background:linear-gradient(110deg,rgba(44,35,76,.92),rgba(20,23,43,.97));
+}
+.notice.unread:after{
+  content:"";
+  position:absolute;right:0;top:18px;bottom:18px;
+  width:3px;border-radius:4px;
+  background:linear-gradient(180deg,#c0aaff,#7b5be3);
+}
+.notice-icon{
+  width:50px;height:50px;border-radius:16px;
+  display:grid;place-items:center;
+  background:rgba(157,128,255,.13);
+  border:1px solid rgba(177,151,255,.2);
+}
+.notice-icon svg{width:23px;height:23px;stroke:#c8b6ff;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.notice[data-type="message"] .notice-icon{background:rgba(83,199,190,.12);border-color:rgba(83,199,190,.2)}
+.notice[data-type="message"] .notice-icon svg{stroke:#78ded3}
+.notice[data-type="gift"] .notice-icon{background:rgba(239,192,103,.12);border-color:rgba(239,192,103,.2)}
+.notice[data-type="gift"] .notice-icon svg{stroke:#f1cb7b}
+.notice[data-type="friend"] .notice-icon{background:rgba(116,156,255,.12);border-color:rgba(116,156,255,.2)}
+.notice[data-type="friend"] .notice-icon svg{stroke:#91b4ff}
+.notice[data-type="room"] .notice-icon{background:rgba(190,130,255,.12)}
+.notice[data-type="room"] .notice-icon svg{stroke:#d0a1ff}
+.notice-content{min-width:0}
+.notice-heading{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.notice-heading strong{font-size:12px;font-weight:900}
+.new-label{
+  padding:2px 7px;border-radius:20px;
+  font-size:8px;font-weight:900;
+  color:#d5c8ff;background:rgba(162,132,255,.17);
+}
+.notice-content p{
+  color:#bcb7ce;font-size:10px;line-height:1.9;
+  margin-top:3px;overflow-wrap:anywhere;
+}
+.notice-content p b{color:#eee8ff;font-weight:800}
+.notice-time{font-size:9px;color:#89839f;white-space:nowrap;align-self:start;padding-top:3px}
+.notice-arrow{
+  position:absolute;left:14px;bottom:13px;
+  width:16px;height:16px;opacity:.45;
+}
+.notice-arrow svg{width:100%;height:100%;stroke:#d4c8ff;fill:none;stroke-width:1.7}
+
+/* EMPTY / STATUS */
+.empty{
+  display:none;
+  padding:45px 20px;
+  text-align:center;
+  border-radius:21px;
+  border:1px dashed rgba(183,157,255,.23);
+  background:rgba(26,23,45,.7);
+}
+.empty.show{display:block}
+.empty-icon{
+  width:70px;height:70px;margin:0 auto 14px;
+  display:grid;place-items:center;border-radius:23px;
+  background:rgba(159,128,255,.12);
+  border:1px solid rgba(179,151,255,.2);
+}
+.empty-icon svg{width:32px;height:32px;stroke:#c7b4ff;fill:none;stroke-width:1.5}
+.empty h3{font-size:16px;font-weight:900}
+.empty p{font-size:11px;color:var(--muted);margin-top:5px}
+.connection{
+  margin-top:15px;padding:10px 13px;
+  border-radius:12px;background:rgba(255,255,255,.045);
+  color:#aaa4bd;font-size:10px;line-height:1.8;
+  border:1px solid var(--line);
+}
+.connection strong{color:#d6c9ff}
+
+/* FOOTER */
+.footer{
+  margin-top:30px;text-align:center;
+  color:#77718d;font-size:9px;
+}
+.footer span{color:#b5a2f5;font-weight:900}
+
+/* MOBILE */
+@media(max-width:650px){
+  .page{padding:0 13px 35px}
+  .topbar{height:66px}
+  .intro{padding:22px 18px;min-height:155px}
+  .intro-icon{width:65px;height:65px;left:16px;border-radius:20px}
+  .intro-icon svg{width:31px;height:31px}
+  .intro h1{font-size:25px}
+  .intro p{max-width:220px;font-size:10px}
+  .summary{gap:7px}
+  .stat{padding:11px 8px;gap:7px;flex-direction:column;align-items:flex-start}
+  .stat-icon{width:32px;height:32px;border-radius:10px}
+  .stat-icon svg{width:17px;height:17px}
+  .stat strong{font-size:17px}
+  .stat small{font-size:9px}
+  .toolbar{margin-top:23px}
+  .section-title{font-size:17px}
+  .notice{grid-template-columns:43px minmax(0,1fr);gap:10px;padding:13px;min-height:88px}
+  .notice-icon{width:42px;height:42px;border-radius:13px}
+  .notice-icon svg{width:20px;height:20px}
+  .notice-time{grid-column:2;grid-row:2;padding:0;margin-top:-5px}
+  .notice-content{grid-column:2;grid-row:1}
+  .notice-arrow{left:11px;bottom:11px}
+  .notice-content strong{font-size:11px}
+  .notice-content p{font-size:9px}
+}
+</style>
+</head>
+
+<body>
+<div class="page">
+
+  <header class="topbar">
+    <a class="brand" href="home.html" aria-label="الصفحة الرئيسية">
+      <span class="brand-mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8">
+          <path d="M4 17.5 12 4l8 13.5H4Z"/>
+          <path d="M8 17.5 12 11l4 6.5"/>
+        </svg>
+      </span>
+      <span>
+        <span class="brand-name">HANOON WORLD</span>
+        <span class="brand-sub">CONNECT • PLAY • ENJOY</span>
+      </span>
+    </a>
+
+    <a class="back" href="home.html" aria-label="العودة للرئيسية">
+      <svg viewBox="0 0 24 24"><path d="m15 18-6-6 6-6M9 12h11"/></svg>
+    </a>
+  </header>
+
+  <section class="intro">
+    <div class="intro-content">
+      <div class="eyebrow"><span></span> مركز التنبيهات</div>
+      <h1>كل جديد في عالمك</h1>
+      <p>تابع رسائلك وهداياك ودعوات أصدقائك من مكان واحد</p>
+    </div>
+    <div class="intro-icon">
+      <svg viewBox="0 0 24 24">
+        <path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9Z"/>
+        <path d="M10 21h4"/>
+        <path d="M9 3.5 8 2M15 3.5 16 2"/>
+      </svg>
+    </div>
+  </section>
+
+  <section class="summary">
+    <div class="stat">
+      <div class="stat-icon">
+        <svg viewBox="0 0 24 24"><path d="M4 5h16v12H8l-4 3V5Z"/></svg>
+      </div>
+      <div><strong id="allCount">0</strong><small>كل الإشعارات</small></div>
+    </div>
+    <div class="stat">
+      <div class="stat-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 3v18M3 12h18"/></svg>
+      </div>
+      <div><strong id="unreadCount">0</strong><small>غير المقروءة</small></div>
+    </div>
+    <div class="stat">
+      <div class="stat-icon">
+        <svg viewBox="0 0 24 24"><path d="M5 12.5 9.5 17 19 7"/></svg>
+      </div>
+      <div><strong id="readCount">0</strong><small>تمت قراءتها</small></div>
+    </div>
+  </section>
+
+  <section class="toolbar">
+    <div>
+      <h2 class="section-title">صندوق الإشعارات</h2>
+      <p class="section-sub">كل التنبيهات الخاصة بحسابك</p>
+    </div>
+    <button class="read-all" id="readAll" type="button">
+      <svg viewBox="0 0 24 24"><path d="m4 12 5 5L20 6"/><path d="m4 6 2 2"/></svg>
+      تحديد الكل كمقروء
+    </button>
+  </section>
+
+  <nav class="filters" aria-label="تصنيفات الإشعارات">
+    <button class="filter active" data-filter="all">الكل</button>
+    <button class="filter" data-filter="message">الرسائل</button>
+    <button class="filter" data-filter="friend">الأصدقاء</button>
+    <button class="filter" data-filter="room">الغرف والدعوات</button>
+    <button class="filter" data-filter="gift">الهدايا</button>
+    <button class="filter" data-filter="wallet">المحفظة</button>
+    <button class="filter" data-filter="system">النظام</button>
+  </nav>
+
+  <main class="notice-list" id="noticeList"></main>
+
+  <section class="empty" id="emptyState">
+    <div class="empty-icon">
+      <svg viewBox="0 0 24 24">
+        <path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9Z"/>
+        <path d="M10 21h4"/>
+      </svg>
+    </div>
+    <h3>لا توجد إشعارات هنا</h3>
+    <p>عندما يصلك إشعار جديد ستجده في هذا المكان</p>
+  </section>
+
+  <div class="connection" id="connection">
+    <strong>حالة مركز الإشعارات:</strong>
+    الواجهة جاهزة، وربط الإشعارات الحقيقية يحتاج تجهيز جدول الإشعارات وسياسات الوصول الآمنة في قاعدة البيانات.
+  </div>
+
+  <footer class="footer">
+    <span>HANOON WORLD</span> — عالمك، أصدقاؤك، وكل جديد
+  </footer>
+</div>
+
+<script type="module">
+import { supabase } from "./supabase.js";
+
+const list = document.getElementById("noticeList");
+const empty = document.getElementById("emptyState");
+const allCount = document.getElementById("allCount");
+const unreadCount = document.getElementById("unreadCount");
+const readCount = document.getElementById("readCount");
+const connection = document.getElementById("connection");
+
+let notifications = [];
+let currentFilter = "all";
+
+const icons = {
+  message: '<svg viewBox="0 0 24 24"><path d="M4 5h16v12H8l-4 3V5Z"/><path d="M8 10h8M8 13h5"/></svg>',
+  friend: '<svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.5-3.8 2.8-5.7 6.5-5.7 2 0 3.5.6 4.6 1.7"/><path d="M18 11v7M14.5 14.5h7"/></svg>',
+  room: '<svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M8 10h8M8 14h5"/></svg>',
+  gift: '<svg viewBox="0 0 24 24"><path d="M3 10h18v11H3zM2 6h20v4H2zM12 6v15"/><path d="M12 6H8a2 2 0 1 1 2-2c0 1.1 2 2 2 2Zm0 0h4a2 2 0 1 0-2-2c0 1.1-2 2-2 2Z"/></svg>',
+  wallet: '<svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="15" rx="3"/><path d="M3 9h18M16 14h2"/></svg>',
+  system: '<svg viewBox="0 0 24 24"><path d="M12 3 14 5.5l3.2-.2.8 3 2.7 1.7-1 3 1 3-2.7 1.7-.8 3-3.2-.2L12 21l-2-2.5-3.2.2-.8-3-2.7-1.7 1-3-1-3 2.7-1.7.8-3 3.2.2L12 3Z"/><path d="m9 12 2 2 4-4"/></svg>'
+};
+
+function escapeHTML(value=""){
+  return String(value).replace(/[&<>"']/g, char => ({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+  })[char]);
+}
+
+function formatTime(value){
+  if(!value) return "";
+  const date = new Date(value);
+  if(Number.isNaN(date.getTime())) return "";
+  return new Intl.DateTimeFormat("ar-EG",{
+    day:"numeric",month:"short",hour:"numeric",minute:"2-digit"
+  }).format(date);
+}
+
+function updateCounters(){
+  const unread = notifications.filter(item => !item.is_read).length;
+  allCount.textContent = notifications.length;
+  unreadCount.textContent = unread;
+  readCount.textContent = notifications.length - unread;
+}
+
+function render(){
+  updateCounters();
+
+  const filtered = notifications.filter(item =>
+    currentFilter === "all" || item.type === currentFilter
+  );
+
+  list.innerHTML = filtered.map(item => {
+    const type = icons[item.type] ? item.type : "system";
+    const title = escapeHTML(item.title || "إشعار جديد");
+    const body = escapeHTML(item.body || "");
+    const time = formatTime(item.created_at);
+
+    return `
+      <article class="notice ${item.is_read ? "" : "unread"}"
+        data-id="${escapeHTML(item.id)}"
+        data-type="${type}"
+        tabindex="0"
+        role="button"
+        aria-label="${title}">
+        <div class="notice-icon">${icons[type]}</div>
+        <div class="notice-content">
+          <div class="notice-heading">
+            <strong>${title}</strong>
+            ${item.is_read ? "" : '<span class="new-label">جديد</span>'}
+          </div>
+          <p>${body}</p>
+        </div>
+        <time class="notice-time">${time}</time>
+        <span class="notice-arrow">
+          <svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg>
+        </span>
+      </article>
+    `;
+  }).join("");
+
+  empty.classList.toggle("show", filtered.length === 0);
+  list.style.display = filtered.length ? "grid" : "none";
+}
+
+async function loadNotifications(){
+  try{
+    const {data:{user},error:authError} = await supabase.auth.getUser();
+
+    if(authError || !user){
+      connection.innerHTML =
+        "<strong>يلزم تسجيل الدخول:</strong> سجّل دخولك أولًا لعرض إشعارات حسابك.";
+      list.innerHTML = "";
+      empty.classList.add("show");
+      return;
+    }
+
+    /*
+      سيتم توصيل الاستعلام الفعلي بعد إنشاء جدول notifications
+      وتحديد أعمدته وسياسات RLS الخاصة به.
+      لا نعرض بيانات تجريبية على أنها إشعارات حقيقية.
+    */
+    const {error} = await supabase
+      .from("notifications")
+      .select("id")
+      .limit(1);
+
+    if(error){
+      connection.innerHTML =
+        "<strong>قاعدة الإشعارات غير مجهزة بعد:</strong> لم يتم إنشاء جدول notifications أو ضبط صلاحياته. لم يتم عرض إشعارات وهمية.";
+      notifications = [];
+      render();
+      return;
+    }
+
+    connection.innerHTML =
+      "<strong>تم العثور على جدول الإشعارات.</strong> نحتاج مطابقة أعمدته قبل تشغيل العرض الكامل.";
+    notifications = [];
+    render();
+
+  }catch(error){
+    console.error("HANOON notifications:",error);
+    connection.innerHTML =
+      "<strong>تعذر الاتصال:</strong> تحقق من اتصال الإنترنت ثم حاول مرة أخرى.";
+  }
+}
+
+document.querySelectorAll(".filter").forEach(button=>{
+  button.addEventListener("click",()=>{
+    document.querySelectorAll(".filter").forEach(item=>
+      item.classList.toggle("active",item === button)
+    );
+    currentFilter = button.dataset.filter;
+    render();
+  });
+});
+
+document.getElementById("readAll").addEventListener("click",async()=>{
+  if(!notifications.length) return;
+
+  /*
+    تحديث حالة القراءة سيُفعّل بعد اعتماد مخطط الجدول
+    وسياسة التحديث التي تسمح للمستخدم بتحديث إشعاراته فقط.
+  */
+  connection.innerHTML =
+    "<strong>تحديد الكل كمقروء:</strong> سيتم تفعيله بعد تجهيز صلاحيات تحديث الإشعارات في قاعدة البيانات.";
+});
+
+list.addEventListener("click",async event=>{
+  const card = event.target.closest(".notice");
+  if(!card) return;
+
+  const item = notifications.find(note => String(note.id) === card.dataset.id);
+  if(!item) return;
+
+  /*
+    التوجيه النهائي يعتمد على target_route و target_id
+    بعد اعتماد أعمدة الإشعارات وربطها بالأحداث الفعلية.
+  */
+  if(item.target_route){
+    window.location.href = item.target_route;
+  }
+});
+
+list.addEventListener("keydown",event=>{
+  if(event.key === "Enter" || event.key === " "){
+    const card = event.target.closest(".notice");
+    if(card){
+      event.preventDefault();
+      card.click();
+    }
+  }
+});
+
+loadNotifications();
+</script>
+</body>
+</html>
