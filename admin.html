@@ -3,209 +3,699 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
-<meta name="theme-color" content="#090b16">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#090711">
 <title>مركز تحكم هَنون | HANOON WORLD</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
 <style>
-:root{--bg:#090b16;--panel:#141a2b;--line:#ffffff18;--text:#f5f4ff;--muted:#929bb5;--purple:#a58aff;--green:#53d6a2;--red:#ff7188}
+:root{
+  --bg:#090711;
+  --panel:rgba(15,13,27,.78);
+  --panel2:rgba(20,17,35,.86);
+  --line:rgba(255,255,255,.13);
+  --text:#f8f5ff;
+  --muted:#aaa1bd;
+  --purple:#b18aff;
+  --green:#53d6a2;
+  --red:#ff7188;
+}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:Cairo,sans-serif}
-body{overflow-x:hidden}
+html,body{
+  width:100%;height:100%;margin:0;
+  overflow:hidden;background:var(--bg);
+  color:var(--text);font-family:Cairo,sans-serif;
+  overscroll-behavior:none;
+}
+body{position:fixed;inset:0}
 button,input,textarea,select{font:inherit}
 button{cursor:pointer}
 a{color:inherit;text-decoration:none}
 [hidden]{display:none!important}
-svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-.app{min-height:100vh;background:radial-gradient(ellipse at 80% 0%,#7e5be222,transparent 35%),var(--bg)}
-.topbar{height:76px;position:fixed;inset:0 0 auto;z-index:30;display:flex;align-items:center;justify-content:space-between;padding:0 27px;background:#090b16ed;border-bottom:1px solid var(--line);backdrop-filter:blur(22px)}
+svg{
+  width:20px;height:20px;fill:none;stroke:currentColor;
+  stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round
+}
+
+/* خلفية الجوكر الثابتة */
+.app{
+  position:fixed;inset:0;
+  height:100dvh;width:100%;
+  overflow:hidden;
+  isolation:isolate;
+  background:#090711;
+}
+.app::before{
+  content:"";
+  position:absolute;inset:0;z-index:-2;
+  background-image:url("https://images.hdqwalls.com/download/joker-ghost-in-dark-rt-2048x2048.jpg");
+  background-size:cover;
+  background-position:center 35%;
+  background-repeat:no-repeat;
+  transform:scale(1.015);
+}
+.app::after{
+  content:"";
+  position:absolute;inset:0;z-index:-1;
+  background:
+    linear-gradient(90deg,rgba(7,5,14,.88),rgba(9,7,18,.72) 48%,rgba(8,6,16,.84)),
+    linear-gradient(0deg,rgba(5,4,11,.88),rgba(8,6,15,.42));
+  pointer-events:none;
+}
+
+/* الشريط العلوي */
+.topbar{
+  height:72px;position:absolute;inset:0 0 auto;z-index:50;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 25px;
+  background:rgba(8,6,16,.76);
+  border-bottom:1px solid var(--line);
+  backdrop-filter:blur(22px);
+}
 .brand{display:flex;align-items:center;gap:12px}
-.brand-mark{width:43px;height:43px;display:grid;place-items:center;border-radius:15px;background:linear-gradient(145deg,#c3aaff,#7653d6);color:#171128}
+.brand-mark{
+  width:43px;height:43px;display:grid;place-items:center;
+  border-radius:15px;
+  background:linear-gradient(145deg,#d0b7ff,#7650c9);
+  color:#171128;box-shadow:0 0 24px #9b70ff35
+}
 .brand-mark svg{width:25px;height:25px;stroke:#171128}
 .brand-name{font-size:14px;font-weight:900;letter-spacing:1px}
-.brand-sub{font-size:9px;color:var(--muted);letter-spacing:2px}
+.brand-sub{font-size:9px;color:#b5a7d4;letter-spacing:2px}
 .top-actions{display:flex;align-items:center;gap:10px}
-.admin-label{padding:8px 13px;border:1px solid #a58aff35;border-radius:30px;background:#a58aff12;color:#c9baff;font-size:10px;font-weight:900}
-.icon-btn{width:42px;height:42px;display:grid;place-items:center;border:1px solid var(--line);border-radius:14px;background:#ffffff06;color:#d9d8eb}
-.layout{display:grid;grid-template-columns:265px minmax(0,1fr);min-height:100vh;padding-top:76px}
-.sidebar{position:fixed;top:76px;bottom:0;right:0;width:265px;padding:24px 16px;overflow-y:auto;background:#0e1221f2;border-left:1px solid var(--line)}
-.side-caption{padding:8px 13px 12px;color:#727d9b;font-size:9px;font-weight:900;letter-spacing:1.5px}
-.nav-btn{width:100%;min-height:49px;display:flex;align-items:center;gap:12px;padding:0 13px;margin:4px 0;border:1px solid transparent;border-radius:14px;background:transparent;color:#aeb5ca;text-align:right;font-size:12px;font-weight:800}
-.nav-btn.active,.nav-btn:hover{border-color:#a58aff38;background:#a58aff18;color:#e0d5ff}
-.side-separator{height:1px;background:var(--line);margin:18px 7px}
-.sidebar-bottom{margin:25px 5px 0;padding:15px;border:1px solid var(--line);border-radius:17px;background:#ffffff04}
+.admin-label{
+  padding:8px 13px;border:1px solid #b18aff55;
+  border-radius:30px;background:#a58aff20;
+  color:#e0d0ff;font-size:10px;font-weight:900
+}
+.icon-btn{
+  width:42px;height:42px;display:grid;place-items:center;
+  border:1px solid var(--line);border-radius:14px;
+  background:#ffffff0c;color:#eee8ff
+}
+
+/* تخطيط ثابت */
+.layout{
+  position:absolute;inset:72px 0 0;
+  display:grid;grid-template-columns:260px minmax(0,1fr);
+  min-height:0;height:calc(100% - 72px);
+}
+.sidebar{
+  position:absolute;top:0;right:0;bottom:0;width:260px;
+  padding:22px 15px;overflow-y:auto;
+  background:rgba(10,8,19,.82);
+  border-left:1px solid var(--line);
+  backdrop-filter:blur(24px);
+  scrollbar-width:thin;
+  scrollbar-color:#7654a8 transparent;
+}
+.side-caption{
+  padding:8px 13px 12px;color:#a99abd;
+  font-size:9px;font-weight:900;letter-spacing:1.5px
+}
+.nav-btn{
+  width:100%;min-height:48px;display:flex;align-items:center;
+  gap:12px;padding:0 13px;margin:4px 0;
+  border:1px solid transparent;border-radius:14px;
+  background:transparent;color:#d0c8df;
+  text-align:right;font-size:12px;font-weight:800
+}
+.nav-btn.active,.nav-btn:hover{
+  border-color:#b18aff55;
+  background:linear-gradient(100deg,#a77aff28,#ffffff08);
+  color:#f1e7ff
+}
+.nav-icon{
+  width:30px;height:30px;display:grid;place-items:center;
+  border-radius:10px;background:#b18aff18;color:#cbb2ff;
+  flex-shrink:0
+}
+.nav-icon svg{width:17px;height:17px}
+.side-separator{height:1px;background:var(--line);margin:17px 7px}
+.sidebar-bottom{
+  margin:24px 5px 0;padding:15px;
+  border:1px solid var(--line);border-radius:17px;
+  background:#ffffff08
+}
 .sidebar-bottom strong{font-size:11px}
-.sidebar-bottom p{margin:7px 0 0;color:var(--muted);font-size:10px;line-height:1.9}
-.secure-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--green);margin-left:7px}
-.main{min-width:0;margin-right:265px;padding:31px clamp(16px,3vw,42px) 55px}
-.page-head{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;margin-bottom:27px}
-.eyebrow{color:var(--purple);font-size:10px;font-weight:900;letter-spacing:1.6px}
+.sidebar-bottom p{
+  margin:7px 0 0;color:var(--muted);
+  font-size:10px;line-height:1.9
+}
+.secure-dot{
+  display:inline-block;width:7px;height:7px;
+  border-radius:50%;background:var(--green);margin-left:7px
+}
+
+/* منطقة المحتوى: التمرير داخلها فقط */
+.main{
+  position:absolute;top:0;right:260px;left:0;bottom:0;
+  min-width:0;min-height:0;
+  padding:27px clamp(15px,3vw,40px) 45px;
+  overflow-y:auto;overflow-x:hidden;
+  overscroll-behavior:contain;
+  scrollbar-width:thin;
+  scrollbar-color:#8061aa transparent;
+}
+.page-head{
+  display:flex;align-items:flex-start;justify-content:space-between;
+  gap:18px;margin-bottom:24px
+}
+.eyebrow{color:#c3a4ff;font-size:10px;font-weight:900;letter-spacing:1.6px}
 .page-head h1{font-size:clamp(22px,3vw,30px);margin:5px 0 3px;font-weight:900}
-.page-head p{margin:0;color:var(--muted);font-size:11px}
-.live-status{display:flex;align-items:center;gap:8px;padding:9px 13px;border:1px solid #53d6a229;border-radius:30px;background:#53d6a20b;color:#9ce9c9;font-size:10px;font-weight:800;white-space:nowrap}
+.page-head p{margin:0;color:#c0b6d1;font-size:11px}
+.live-status{
+  display:flex;align-items:center;gap:8px;padding:9px 13px;
+  border:1px solid #53d6a255;border-radius:30px;
+  background:#53d6a218;color:#a9f2d2;
+  font-size:10px;font-weight:800;white-space:nowrap
+}
 .live-status i{width:7px;height:7px;border-radius:50%;background:var(--green)}
 .view{display:none}
 .view.active{display:block}
-.welcome{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:27px 30px;margin-bottom:20px;border:1px solid #a58aff2c;border-radius:24px;background:linear-gradient(110deg,#201b3a,#171b31 62%,#14202d)}
+
+/* البطاقات */
+.welcome{
+  display:flex;align-items:center;justify-content:space-between;gap:20px;
+  padding:26px 29px;margin-bottom:18px;
+  border:1px solid #b18aff55;border-radius:23px;
+  background:linear-gradient(110deg,rgba(34,20,55,.88),rgba(17,20,37,.82));
+  backdrop-filter:blur(18px);
+  box-shadow:0 15px 45px #0003
+}
 .welcome h2{margin:0;font-size:20px;font-weight:900}
-.welcome p{margin:7px 0 0;color:#b5b1cc;font-size:11px;line-height:2}
-.welcome-icon{width:66px;height:66px;display:grid;place-items:center;border:1px solid #d4c2ff42;border-radius:21px;background:#a58aff18;color:#d5c7ff}
-.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px;margin-bottom:21px}
-.stat-card{min-height:123px;padding:17px;border:1px solid var(--line);border-radius:19px;background:linear-gradient(145deg,#171d30,#111626)}
-.stat-name{font-size:10px;color:var(--muted);font-weight:800;margin-top:13px}
-.stat-value{font-size:19px;font-weight:900;margin-top:2px}
-.stat-icon{width:36px;height:36px;display:grid;place-items:center;border-radius:12px;background:#a58aff14;color:#bba7ff}
-.content-grid{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(250px,.8fr);gap:16px}
-.panel,.form-panel{padding:21px;border:1px solid var(--line);border-radius:21px;background:linear-gradient(145deg,#151b2d,#101525)}
-.panel-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:17px}
+.welcome p{margin:7px 0 0;color:#d0c5df;font-size:11px;line-height:2}
+.welcome-icon{
+  width:65px;height:65px;display:grid;place-items:center;
+  border:1px solid #d4c2ff65;border-radius:20px;
+  background:#a58aff25;color:#e1d1ff;flex-shrink:0
+}
+.stats{
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:12px;margin-bottom:19px
+}
+.stat-card{
+  min-height:116px;padding:16px;
+  border:1px solid var(--line);border-radius:18px;
+  background:rgba(17,15,29,.78);backdrop-filter:blur(16px)
+}
+.stat-name{font-size:10px;color:#c2b7d3;font-weight:800;margin-top:12px}
+.stat-value{font-size:17px;font-weight:900;margin-top:3px}
+.stat-icon{
+  width:35px;height:35px;display:grid;place-items:center;
+  border-radius:12px;background:#a58aff24;color:#d1baff
+}
+.content-grid{
+  display:grid;grid-template-columns:minmax(0,1.4fr) minmax(240px,.8fr);
+  gap:15px
+}
+.panel,.form-panel{
+  padding:20px;border:1px solid var(--line);
+  border-radius:20px;background:rgba(15,13,27,.82);
+  backdrop-filter:blur(18px);box-shadow:0 12px 35px #0002
+}
+.panel-head{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:10px;margin-bottom:16px
+}
 .panel-head h3{font-size:13px;margin:0;font-weight:900}
-.panel-head span{font-size:9px;color:var(--muted)}
+.panel-head span{font-size:9px;color:#b6abc9}
 .quick-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-.quick-action{min-height:83px;display:flex;align-items:center;gap:12px;padding:13px;border:1px solid var(--line);border-radius:15px;background:#ffffff04;text-align:right;color:var(--text)}
+.quick-action{
+  min-height:78px;display:flex;align-items:center;gap:12px;
+  padding:12px;border:1px solid var(--line);border-radius:15px;
+  background:#ffffff09;text-align:right;color:var(--text)
+}
 .quick-action strong{display:block;font-size:11px}
 .quick-action small{display:block;margin-top:4px;color:var(--muted);font-size:9px}
-.q-icon{width:38px;height:38px;display:grid;place-items:center;border-radius:12px;background:#a58aff14;color:#c5b3ff}
-.activity-empty{padding:24px 10px;text-align:center;color:var(--muted);font-size:11px;line-height:2}
+.q-icon{
+  width:37px;height:37px;display:grid;place-items:center;
+  border-radius:12px;background:#a58aff20;color:#d2baff
+}
+.activity-empty{
+  padding:24px 10px;text-align:center;
+  color:#bdb2cf;font-size:11px;line-height:2
+}
+
+/* النماذج */
 .section-title{margin:0 0 5px;font-size:20px;font-weight:900}
-.section-description{margin:0 0 22px;color:var(--muted);font-size:11px;line-height:2}
-.form-layout{display:grid;grid-template-columns:minmax(0,1fr) 310px;gap:17px;align-items:start}
-.field{margin-bottom:17px}
-.field label{display:block;margin-bottom:8px;color:#d4d8e9;font-size:11px;font-weight:800}
-.field input,.field textarea,.field select,.member-tools input{width:100%;min-height:47px;padding:12px 14px;border:1px solid #ffffff16;border-radius:13px;outline:none;background:#0c1120;color:var(--text);font-size:12px}
-.field textarea{min-height:125px;resize:vertical;line-height:1.9}
-.field-hint{margin-top:6px;color:#7f89a4;font-size:9px;line-height:1.8}
-.primary-btn{min-height:48px;display:inline-flex;align-items:center;justify-content:center;gap:9px;padding:0 20px;border:0;border-radius:14px;background:linear-gradient(110deg,#b69cff,#805ce1);color:#171128;font-size:12px;font-weight:900}
+.section-description{margin:0 0 20px;color:#c0b6d1;font-size:11px;line-height:2}
+.form-layout{
+  display:grid;grid-template-columns:minmax(0,1fr) 300px;
+  gap:16px;align-items:start
+}
+.field{margin-bottom:16px}
+.field label{
+  display:block;margin-bottom:8px;color:#e1d8ee;
+  font-size:11px;font-weight:800
+}
+.field input,.field textarea,.field select,.member-tools input{
+  width:100%;min-height:46px;padding:11px 14px;
+  border:1px solid #ffffff20;border-radius:13px;
+  outline:none;background:rgba(8,7,16,.82);
+  color:var(--text);font-size:12px
+}
+.field textarea{min-height:120px;resize:vertical;line-height:1.9}
+.field input:focus,.field textarea:focus,.field select:focus,
+.member-tools input:focus{border-color:#b18affaa}
+.field-hint{margin-top:6px;color:#aaa0bd;font-size:9px;line-height:1.8}
+.primary-btn{
+  min-height:47px;display:inline-flex;align-items:center;
+  justify-content:center;gap:9px;padding:0 20px;
+  border:0;border-radius:13px;
+  background:linear-gradient(110deg,#c5a6ff,#8055d9);
+  color:#171128;font-size:12px;font-weight:900
+}
 .primary-btn:disabled{opacity:.55;cursor:not-allowed}
-.secondary-btn{min-height:43px;padding:0 15px;border:1px solid var(--line);border-radius:13px;background:#ffffff08;color:#d9d9e9;font-size:11px;font-weight:800}
-.preview-card{position:sticky;top:100px;padding:18px;border:1px solid #a58aff2c;border-radius:19px;background:linear-gradient(145deg,#201c37,#151b2e)}
-.preview-top{display:flex;align-items:center;gap:10px;margin-bottom:17px}
+.secondary-btn{
+  min-height:41px;padding:0 14px;
+  border:1px solid var(--line);border-radius:12px;
+  background:#ffffff0c;color:#eee8f8;font-size:11px;font-weight:800
+}
+.preview-card{
+  padding:18px;border:1px solid #b18aff44;border-radius:18px;
+  background:rgba(26,19,42,.86);backdrop-filter:blur(18px)
+}
+.preview-top{display:flex;align-items:center;gap:10px;margin-bottom:16px}
 .preview-top strong{font-size:11px}
 .preview-top small{display:block;color:var(--muted);font-size:9px;margin-top:3px}
-.preview-label{font-size:9px;color:#a99bcf;font-weight:900;margin-bottom:7px}
+.preview-label{font-size:9px;color:#c2a6f3;font-weight:900;margin-bottom:7px}
 .preview-title{font-size:14px;font-weight:900;overflow-wrap:anywhere}
-.preview-body{margin-top:8px;color:#c0c3d4;font-size:11px;line-height:2;white-space:pre-wrap}
-.preview-destination{margin-top:15px;padding-top:13px;border-top:1px solid var(--line);font-size:9px;color:#9ca5bc}
-.notice{padding:12px 14px;border:1px solid #e8c98d2c;border-radius:13px;background:#e8c98d0b;color:#e8d4a8;font-size:10px;line-height:2;margin-bottom:17px}
-.toast{position:fixed;z-index:100;bottom:25px;left:50%;transform:translate(-50%,20px);opacity:0;pointer-events:none;padding:13px 19px;border:1px solid var(--line);border-radius:14px;background:#1b2236;color:white;font-size:11px;font-weight:800;transition:.25s;max-width:90%;text-align:center}
-.toast.show{opacity:1;transform:translate(-50%,0)}
-.toast.error{border-color:#ff718855;color:#ffb0bd}
-.access-screen{position:fixed;inset:0;z-index:200;display:flex;align-items:center;justify-content:center;padding:22px;background:#090b16}
-.access-card{width:min(430px,100%);padding:35px 27px;text-align:center;border:1px solid var(--line);border-radius:25px;background:#141a2b;box-shadow:0 25px 90px #0008}
-.access-mark{width:65px;height:65px;display:grid;place-items:center;margin:0 auto 18px;border-radius:21px;background:#a58aff19;color:#c6b4ff}
-.access-card h2{margin:0;font-size:19px}
-.access-card p{margin:9px 0 20px;color:var(--muted);font-size:11px;line-height:2}
-.access-input{width:100%;height:50px;margin:0 0 13px;padding:0 15px;border:1px solid #ffffff20;border-radius:13px;outline:none;background:#0c1120;color:var(--text);font:inherit;font-size:13px;text-align:center;letter-spacing:2px}
-.access-input:focus{border-color:#a58affaa}
-.access-card .primary-btn{width:100%}
+.preview-body{margin-top:8px;color:#d0c9dc;font-size:11px;line-height:2;white-space:pre-wrap}
+.preview-destination{
+  margin-top:14px;padding-top:12px;border-top:1px solid var(--line);
+  font-size:9px;color:#bdb2cf
+}
+.notice{
+  padding:12px 14px;border:1px solid #e8c98d45;
+  border-radius:13px;background:#e8c98d12;
+  color:#f0dcae;font-size:10px;line-height:2;margin-bottom:16px
+}
+
+/* الأعضاء */
 .member-tools{display:flex;gap:10px;align-items:center;margin-bottom:16px}
 .member-tools input{flex:1;min-width:0}
 .member-results{display:grid;gap:10px}
-.member-row{display:flex;align-items:center;gap:13px;padding:14px;border:1px solid var(--line);border-radius:16px;background:#ffffff05}
-.member-avatar{width:45px;height:45px;flex-shrink:0;display:grid;place-items:center;border-radius:15px;background:#a58aff1c;color:#cbbaff;font-weight:900}
+.member-row{
+  display:flex;align-items:center;gap:13px;padding:13px;
+  border:1px solid var(--line);border-radius:15px;
+  background:#ffffff09
+}
+.member-avatar{
+  width:44px;height:44px;flex-shrink:0;display:grid;
+  place-items:center;border-radius:14px;
+  background:#a58aff2a;color:#e0cfff;font-weight:900
+}
 .member-info{flex:1;min-width:0}
 .member-info strong{display:block;font-size:12px;overflow-wrap:anywhere}
-.member-info small{display:block;margin-top:4px;color:var(--muted);font-size:10px;overflow-wrap:anywhere}
+.member-info small{
+  display:block;margin-top:4px;color:#b8aec9;
+  font-size:10px;overflow-wrap:anywhere
+}
 .member-meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:7px}
-.member-tag{padding:3px 8px;border:1px solid var(--line);border-radius:20px;color:#b9c1d8;font-size:9px}
-.member-open{min-height:38px;padding:0 12px;border:1px solid #a58aff44;border-radius:11px;background:#a58aff12;color:#d6c9ff;font-size:10px;font-weight:900}
-.member-empty{padding:28px 12px;text-align:center;color:var(--muted);font-size:11px;line-height:2;border:1px dashed var(--line);border-radius:15px}
-.member-pagination{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:15px;color:var(--muted);font-size:10px}
-.footer-note{text-align:center;color:#59647e;font-size:9px;margin-top:30px}
+.member-tag{
+  padding:3px 8px;border:1px solid var(--line);
+  border-radius:20px;color:#d0c6df;font-size:9px
+}
+.member-open{
+  min-height:37px;padding:0 12px;
+  border:1px solid #b18aff55;border-radius:11px;
+  background:#a58aff20;color:#e0d0ff;
+  font-size:10px;font-weight:900
+}
+.member-empty{
+  padding:26px 12px;text-align:center;color:#bdb2cf;
+  font-size:11px;line-height:2;
+  border:1px dashed var(--line);border-radius:15px
+}
+.member-pagination{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:10px;margin-top:15px;color:#bdb2cf;font-size:10px
+}
+
+/* تفاصيل العضو داخل اللوحة */
+.member-detail{
+  position:fixed;inset:0;z-index:150;
+  display:flex;align-items:center;justify-content:center;
+  padding:18px;background:#05040bd9;backdrop-filter:blur(12px)
+}
+.member-detail-card{
+  width:min(520px,100%);max-height:85%;
+  overflow-y:auto;padding:22px;
+  border:1px solid #b18aff55;border-radius:21px;
+  background:rgba(17,13,29,.97);
+  box-shadow:0 25px 80px #0009
+}
+.detail-head{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:12px;margin-bottom:18px
+}
+.detail-head h3{margin:0;font-size:16px}
+.detail-close{
+  width:38px;height:38px;border:1px solid var(--line);
+  border-radius:12px;background:#ffffff0b;color:white
+}
+.detail-avatar{
+  width:66px;height:66px;display:grid;place-items:center;
+  margin:0 auto 10px;border-radius:20px;
+  background:#a58aff2c;color:#e3d2ff;font-size:25px;font-weight:900
+}
+.detail-name{text-align:center;font-size:16px;font-weight:900}
+.detail-username{text-align:center;color:#b9aecb;font-size:11px;margin-top:4px}
+.detail-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-top:20px}
+.detail-item{
+  padding:12px;border:1px solid var(--line);
+  border-radius:12px;background:#ffffff08;min-width:0
+}
+.detail-item small{display:block;color:#b7abc9;font-size:9px}
+.detail-item strong{display:block;margin-top:5px;font-size:11px;overflow-wrap:anywhere}
+
+/* شاشة الدخول والتنبيهات */
+.toast{
+  position:fixed;z-index:250;bottom:20px;left:50%;
+  transform:translate(-50%,20px);opacity:0;pointer-events:none;
+  padding:12px 18px;border:1px solid var(--line);
+  border-radius:13px;background:#1b1730;color:white;
+  font-size:11px;font-weight:800;transition:.25s;
+  max-width:90%;text-align:center
+}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.toast.error{border-color:#ff718855;color:#ffb0bd}
+.access-screen{
+  position:fixed;inset:0;z-index:200;
+  display:flex;align-items:center;justify-content:center;
+  padding:20px;overflow:auto;
+  background:linear-gradient(#090711a8,#090711dc),
+    url("https://images.hdqwalls.com/download/joker-ghost-in-dark-rt-2048x2048.jpg") center/cover no-repeat
+}
+.access-card{
+  width:min(430px,100%);padding:32px 25px;text-align:center;
+  border:1px solid #ffffff28;border-radius:24px;
+  background:rgba(14,11,24,.88);backdrop-filter:blur(22px);
+  box-shadow:0 25px 90px #000b
+}
+.access-mark{
+  width:65px;height:65px;display:grid;place-items:center;
+  margin:0 auto 17px;border-radius:20px;
+  background:#a58aff28;color:#d9c5ff
+}
+.access-card h2{margin:0;font-size:19px}
+.access-card p{margin:9px 0 20px;color:#c0b6d1;font-size:11px;line-height:2}
+.access-input{
+  width:100%;height:49px;margin:0 0 13px;padding:0 15px;
+  border:1px solid #ffffff25;border-radius:13px;outline:none;
+  background:#090711;color:var(--text);font:inherit;
+  font-size:13px;text-align:center;letter-spacing:2px
+}
+.access-input:focus{border-color:#b18affaa}
+.access-card .primary-btn{width:100%}
+.footer-note{text-align:center;color:#a89bbd;font-size:9px;margin-top:28px}
 .mobile-menu{display:none}
-@media(max-width:1100px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.form-layout{grid-template-columns:minmax(0,1fr) 260px}}
-@media(max-width:800px){.layout{display:block}.sidebar{width:265px;transform:translateX(105%);transition:transform .25s;z-index:40;box-shadow:-20px 0 60px #0008}.sidebar.open{transform:translateX(0)}.main{margin:0;padding:23px 17px 45px}.mobile-menu{display:grid}.content-grid,.form-layout{grid-template-columns:1fr}.preview-card{position:static}.topbar{padding:0 15px}}
-@media(max-width:520px){.topbar{height:67px}.layout{padding-top:67px}.sidebar{top:67px}.brand-name{font-size:11px}.admin-label{font-size:9px;padding:7px 9px}.main{padding:19px 13px 35px}.welcome{padding:21px}.welcome h2{font-size:16px}.stats{gap:9px}.stat-card{min-height:110px;padding:13px}.stat-value{font-size:17px}.panel,.form-panel{padding:16px}.quick-grid,.form-row{grid-template-columns:1fr}.member-tools{flex-direction:column;align-items:stretch}.member-tools .primary-btn{width:100%}.member-row{align-items:flex-start;flex-wrap:wrap}.member-open{margin-right:58px}}
+
+/* ضبط أحجام العرض حسب الجهاز دون تكبير تلقائي */
+@media(max-width:1050px){
+  .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .form-layout{grid-template-columns:minmax(0,1fr) 260px}
+}
+@media(max-width:800px){
+  .layout{display:block}
+  .sidebar{
+    width:260px;right:0;top:0;bottom:0;
+    transform:translateX(105%);transition:transform .22s;
+    z-index:70;box-shadow:-20px 0 60px #0009
+  }
+  .sidebar.open{transform:translateX(0)}
+  .main{right:0;padding:21px 16px 35px}
+  .mobile-menu{display:grid}
+  .content-grid,.form-layout{grid-template-columns:1fr}
+  .topbar{padding:0 14px}
+  .preview-card{position:static}
+}
+@media(max-width:520px){
+  .topbar{height:64px}
+  .layout{inset:64px 0 0;height:calc(100% - 64px)}
+  .brand-name{font-size:11px}
+  .admin-label{font-size:9px;padding:7px 9px}
+  .main{padding:18px 12px 30px}
+  .welcome{padding:19px}
+  .welcome h2{font-size:16px}
+  .welcome-icon{width:52px;height:52px}
+  .stats{gap:8px}
+  .stat-card{min-height:105px;padding:12px}
+  .stat-value{font-size:15px}
+  .panel,.form-panel{padding:15px}
+  .quick-grid{grid-template-columns:1fr}
+  .member-tools{flex-direction:column;align-items:stretch}
+  .member-tools .primary-btn{width:100%}
+  .member-row{align-items:flex-start;flex-wrap:wrap}
+  .member-open{margin-right:57px}
+  .detail-grid{grid-template-columns:1fr 1fr}
+}
 </style>
 </head>
+
 <body>
 <div class="app">
+
 <header class="topbar">
   <div class="brand">
-    <div class="brand-mark"><svg viewBox="0 0 40 40"><path d="M8 29V11h6v7h12v-7h6v18h-6v-6H14v6H8Z"/></svg></div>
-    <div><div class="brand-name">HANOON WORLD</div><div class="brand-sub">CONTROL CENTER</div></div>
+    <div class="brand-mark">
+      <svg viewBox="0 0 40 40"><path d="M8 29V11h6v7h12v-7h6v18h-6v-6H14v6H8Z"/></svg>
+    </div>
+    <div>
+      <div class="brand-name">HANOON WORLD</div>
+      <div class="brand-sub">CONTROL CENTER</div>
+    </div>
   </div>
   <div class="top-actions">
     <span class="admin-label">لوحة المدير</span>
-    <button class="icon-btn mobile-menu" id="menuButton" aria-label="القائمة"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
-    <button class="icon-btn" id="logoutButton" title="تسجيل الخروج" aria-label="تسجيل الخروج"><svg viewBox="0 0 24 24"><path d="M10 17l5-5-5-5M15 12H3"/><path d="M12 3h6a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-6"/></svg></button>
+    <button class="icon-btn mobile-menu" id="menuButton" aria-label="القائمة">
+      <svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+    </button>
+    <button class="icon-btn" id="logoutButton" title="تسجيل الخروج" aria-label="تسجيل الخروج">
+      <svg viewBox="0 0 24 24"><path d="M10 17l5-5-5-5M15 12H3"/><path d="M12 3h6a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-6"/></svg>
+    </button>
   </div>
 </header>
 
 <div class="layout">
 <aside class="sidebar" id="sidebar">
   <div class="side-caption">الإدارة الرئيسية</div>
-  <button class="nav-btn active" data-view="dashboard">الرئيسية</button>
-  <button class="nav-btn" data-view="members">إدارة الأعضاء</button>
-  <button class="nav-btn" data-view="notifications">إرسال الإشعارات</button>
+
+  <button class="nav-btn active" data-view="dashboard">
+    <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-6v-7h-4v7H4a1 1 0 0 1-1-1Z"/></svg></span>
+    الرئيسية
+  </button>
+
+  <button class="nav-btn" data-view="members">
+    <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM20 8v6M23 11h-6"/></svg></span>
+    إدارة الأعضاء
+  </button>
+
+  <button class="nav-btn" data-view="notifications">
+    <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9ZM10 21h4"/></svg></span>
+    إرسال الإشعارات
+  </button>
+
   <div class="side-separator"></div>
   <div class="side-caption">روابط الموقع</div>
+
   <a class="nav-btn" href="home.html">موقع هَنون</a>
   <a class="nav-btn" href="members.html">دليل الأعضاء</a>
   <a class="nav-btn" href="games.html">الألعاب</a>
-  <div class="sidebar-bottom"><strong><i class="secure-dot"></i>حماية لوحة الإدارة</strong><p>يتم التحقق من كلمة السر على الخادم قبل السماح باستخدام أدوات الإدارة.</p></div>
+
+  <div class="sidebar-bottom">
+    <strong><i class="secure-dot"></i>حماية لوحة الإدارة</strong>
+    <p>يتم التحقق من كلمة السر على الخادم قبل السماح باستخدام أدوات الإدارة.</p>
+  </div>
 </aside>
 
-<main class="main">
+<main class="main" id="mainContent">
+
 <section class="view active" id="view-dashboard">
-  <div class="page-head"><div><div class="eyebrow">HANOON / ADMINISTRATION</div><h1>مركز التحكم</h1><p>إدارة موقع هَنون من مكان واحد.</p></div><div class="live-status"><i></i> اتصال الإدارة نشط</div></div>
-  <div class="welcome"><div><h2>أهلًا بك في مركز تحكم هَنون</h2><p>من هنا تبدأ إدارة مجتمعك وإرسال التنبيهات للأعضاء.<br>كل عملية إدارية يتم تنفيذها بعد التحقق.</p></div><div class="welcome-icon"><svg viewBox="0 0 24 24"><path d="M12 3 4 6v5c0 5 3.4 8.4 8 10 4.6-1.6 8-5 8-10V6l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg></div></div>
+  <div class="page-head">
+    <div>
+      <div class="eyebrow">HANOON / ADMINISTRATION</div>
+      <h1>مركز التحكم</h1>
+      <p>إدارة موقع هَنون من مكان واحد.</p>
+    </div>
+    <div class="live-status"><i></i> مركز الإدارة</div>
+  </div>
+
+  <div class="welcome">
+    <div>
+      <h2>أهلًا بك في مركز تحكم هَنون</h2>
+      <p>لوحة الإدارة الخاصة بموقع هَنون.<br>اختر القسم الذي تريد إدارته من القائمة الجانبية.</p>
+    </div>
+    <div class="welcome-icon">
+      <svg viewBox="0 0 24 24"><path d="M12 3 4 6v5c0 5 3.4 8.4 8 10 4.6-1.6 8-5 8-10V6l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg>
+    </div>
+  </div>
+
   <div class="stats">
     <div class="stat-card"><div class="stat-icon">01</div><div class="stat-name">إدارة الأعضاء</div><div class="stat-value">مركز الأعضاء</div></div>
     <div class="stat-card"><div class="stat-icon">02</div><div class="stat-name">التواصل مع الأعضاء</div><div class="stat-value">الإشعارات</div></div>
-    <div class="stat-card"><div class="stat-icon">03</div><div class="stat-name">المكافآت والهدايا</div><div class="stat-value">إدارة الهدايا</div></div>
-    <div class="stat-card"><div class="stat-icon">04</div><div class="stat-name">الأرصدة والمكافآت</div><div class="stat-value">إدارة المحفظة</div></div>
+    <div class="stat-card"><div class="stat-icon">03</div><div class="stat-name">المكافآت والهدايا</div><div class="stat-value">مرحلة لاحقة</div></div>
+    <div class="stat-card"><div class="stat-icon">04</div><div class="stat-name">الأرصدة والمكافآت</div><div class="stat-value">مرحلة لاحقة</div></div>
   </div>
+
   <div class="content-grid">
-    <div class="panel"><div class="panel-head"><h3>اختصارات الإدارة</h3><span>وصول سريع</span></div><div class="quick-grid">
-      <button class="quick-action" data-open-view="notifications"><span class="q-icon">N</span><span><strong>إرسال إشعار</strong><small>إلى عضو أو مجموعة أو الجميع</small></span></button>
-      <button class="quick-action" data-open-view="members"><span class="q-icon">M</span><span><strong>إدارة الأعضاء</strong><small>البحث وفتح ملفات الأعضاء</small></span></button>
-    </div></div>
-    <div class="panel"><div class="panel-head"><h3>حالة مركز التحكم</h3><span>الأمان</span></div><div class="activity-empty">تم التحقق من كلمة سر الإدارة من الخادم عند الدخول.</div></div>
+    <div class="panel">
+      <div class="panel-head"><h3>اختصارات الإدارة</h3><span>وصول سريع</span></div>
+      <div class="quick-grid">
+        <button class="quick-action" data-open-view="notifications">
+          <span class="q-icon">N</span>
+          <span><strong>إرسال إشعار</strong><small>إلى عضو أو مجموعة أو الجميع</small></span>
+        </button>
+        <button class="quick-action" data-open-view="members">
+          <span class="q-icon">M</span>
+          <span><strong>إدارة الأعضاء</strong><small>عرض القائمة والبحث عن عضو</small></span>
+        </button>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-head"><h3>حالة مركز التحكم</h3><span>الأمان</span></div>
+      <div class="activity-empty">تم التحقق من كلمة سر الإدارة من الخادم عند الدخول.</div>
+    </div>
   </div>
 </section>
 
 <section class="view" id="view-members">
-  <div class="page-head"><div><div class="eyebrow">MEMBER MANAGEMENT</div><h1>إدارة الأعضاء</h1><p>ابحث عن الأعضاء وافتح ملفاتهم الشخصية.</p></div><div class="live-status"><i></i> بحث عبر الخادم</div></div>
+  <div class="page-head">
+    <div>
+      <div class="eyebrow">MEMBER MANAGEMENT</div>
+      <h1>إدارة الأعضاء</h1>
+      <p>قائمة الأعضاء تظهر تلقائيًا ويمكنك البحث بالاسم أو الكود أو المعرّف.</p>
+    </div>
+    <div class="live-status"><i></i> بيانات الأعضاء</div>
+  </div>
+
   <div class="panel">
-    <div class="panel-head"><h3>دليل أعضاء هَنون</h3><span id="memberCount">جاهز للبحث</span></div>
-    <form class="member-tools" id="memberSearchForm"><input id="memberSearchInput" type="search" maxlength="80" placeholder="ابحث بالاسم أو اسم المستخدم أو كود العضوية" autocomplete="off"><button class="primary-btn" id="memberSearchButton" type="submit">بحث عن عضو</button></form>
-    <div class="member-results" id="memberResults"><div class="member-empty">اكتب اسم العضو أو كود العضوية ثم اضغط بحث.</div></div>
-    <div class="member-pagination" id="memberPagination" hidden><button class="secondary-btn" id="memberPrev" type="button">السابق</button><span id="memberPageLabel"></span><button class="secondary-btn" id="memberNext" type="button">التالي</button></div>
+    <div class="panel-head">
+      <h3>دليل أعضاء هَنون</h3>
+      <span id="memberCount">جارٍ التحضير</span>
+    </div>
+
+    <form class="member-tools" id="memberSearchForm">
+      <input id="memberSearchInput" type="search" maxlength="80"
+        placeholder="بحث بالاسم أو اسم المستخدم أو كود العضوية أو ID"
+        autocomplete="off">
+      <button class="primary-btn" id="memberSearchButton" type="submit">بحث</button>
+      <button class="secondary-btn" id="memberRefreshButton" type="button">تحديث القائمة</button>
+    </form>
+
+    <div class="member-results" id="memberResults">
+      <div class="member-empty">جارٍ تحميل قائمة الأعضاء...</div>
+    </div>
+
+    <div class="member-pagination" id="memberPagination" hidden>
+      <button class="secondary-btn" id="memberPrev" type="button">السابق</button>
+      <span id="memberPageLabel"></span>
+      <button class="secondary-btn" id="memberNext" type="button">التالي</button>
+    </div>
   </div>
 </section>
 
 <section class="view" id="view-notifications">
-  <div class="page-head"><div><div class="eyebrow">COMMUNICATION CENTER</div><h1>إرسال الإشعارات</h1><p>أرسل تنبيهًا مباشرًا إلى أعضاء هَنون.</p></div><div class="live-status"><i></i> جاهز للإرسال</div></div>
+  <div class="page-head">
+    <div>
+      <div class="eyebrow">COMMUNICATION CENTER</div>
+      <h1>إرسال الإشعارات</h1>
+      <p>أرسل تنبيهًا مباشرًا إلى أعضاء هَنون.</p>
+    </div>
+    <div class="live-status"><i></i> جاهز للإرسال</div>
+  </div>
+
   <h2 class="section-title">إنشاء إشعار جديد</h2>
   <p class="section-description">حدد المستلمين، واكتب محتوى الإشعار، واختر وجهة الضغط عليه.</p>
   <div class="notice">الإشعار سيُحفظ في حسابات المستلمين من خلال خدمة الإدارة الآمنة.</div>
+
   <div class="form-layout">
     <form class="form-panel" id="notificationForm">
-      <div class="field"><label for="audience">إرسال الإشعار إلى</label><select id="audience" required><option value="all">جميع الأعضاء</option><option value="completed">الأعضاء أصحاب الملفات المكتملة</option><option value="member">عضو محدد</option></select></div>
-      <div class="field" id="memberCodeField" hidden><label for="memberCode">كود العضو</label><input id="memberCode" type="text" autocomplete="off" placeholder="اكتب كود العضو"></div>
-      <div class="field"><label for="notificationTitle">عنوان الإشعار</label><input id="notificationTitle" type="text" maxlength="180" required placeholder="اكتب عنوانًا واضحًا للإشعار"></div>
-      <div class="field"><label for="notificationBody">نص الإشعار</label><textarea id="notificationBody" maxlength="2000" required placeholder="اكتب تفاصيل الإشعار هنا..."></textarea><div class="field-hint">الحد الأقصى 2000 حرف.</div></div>
-      <div class="field"><label for="targetRoute">عند الضغط على الإشعار ينتقل العضو إلى</label><select id="targetRoute"><option value="">صفحة الإشعارات</option><option value="home.html">الرئيسية</option><option value="members.html">الأعضاء</option><option value="games.html">الألعاب</option><option value="notifications.html">الإشعارات</option><option value="profile.html">الملف الشخصي</option></select></div>
+      <div class="field">
+        <label for="audience">إرسال الإشعار إلى</label>
+        <select id="audience" required>
+          <option value="all">جميع الأعضاء</option>
+          <option value="completed">الأعضاء أصحاب الملفات المكتملة</option>
+          <option value="member">عضو محدد</option>
+        </select>
+      </div>
+
+      <div class="field" id="memberCodeField" hidden>
+        <label for="memberCode">كود العضو</label>
+        <input id="memberCode" type="text" autocomplete="off" placeholder="اكتب كود العضو">
+      </div>
+
+      <div class="field">
+        <label for="notificationTitle">عنوان الإشعار</label>
+        <input id="notificationTitle" type="text" maxlength="180" required placeholder="اكتب عنوانًا واضحًا للإشعار">
+      </div>
+
+      <div class="field">
+        <label for="notificationBody">نص الإشعار</label>
+        <textarea id="notificationBody" maxlength="2000" required placeholder="اكتب تفاصيل الإشعار هنا..."></textarea>
+        <div class="field-hint">الحد الأقصى 2000 حرف.</div>
+      </div>
+
+      <div class="field">
+        <label for="targetRoute">عند الضغط على الإشعار ينتقل العضو إلى</label>
+        <select id="targetRoute">
+          <option value="">صفحة الإشعارات</option>
+          <option value="home.html">الرئيسية</option>
+          <option value="members.html">الأعضاء</option>
+          <option value="games.html">الألعاب</option>
+          <option value="notifications.html">الإشعارات</option>
+          <option value="profile.html">الملف الشخصي</option>
+        </select>
+      </div>
+
       <button class="primary-btn" id="sendButton" type="submit">إرسال الإشعار</button>
     </form>
-    <aside class="preview-card"><div class="preview-top"><div><strong>معاينة الإشعار</strong><small>هكذا سيظهر للمستلم</small></div></div><div class="preview-label">HANOON WORLD</div><div class="preview-title" id="previewTitle">عنوان الإشعار سيظهر هنا</div><div class="preview-body" id="previewBody">اكتب نص الإشعار لتظهر المعاينة هنا مباشرة.</div><div class="preview-destination">وجهة الضغط: <strong id="previewDestination">صفحة الإشعارات</strong></div></aside>
+
+    <aside class="preview-card">
+      <div class="preview-top">
+        <div><strong>معاينة الإشعار</strong><small>هكذا سيظهر للمستلم</small></div>
+      </div>
+      <div class="preview-label">HANOON WORLD</div>
+      <div class="preview-title" id="previewTitle">عنوان الإشعار سيظهر هنا</div>
+      <div class="preview-body" id="previewBody">اكتب نص الإشعار لتظهر المعاينة هنا مباشرة.</div>
+      <div class="preview-destination">وجهة الضغط: <strong id="previewDestination">صفحة الإشعارات</strong></div>
+    </aside>
   </div>
 </section>
+
 <div class="footer-note">HANOON WORLD · PRIVATE ADMINISTRATION CENTER</div>
 </main>
 </div>
 </div>
 
+<div class="member-detail" id="memberDetail" hidden>
+  <div class="member-detail-card">
+    <div class="detail-head">
+      <h3>ملف العضو</h3>
+      <button class="detail-close" id="closeMemberDetail" type="button" aria-label="إغلاق">×</button>
+    </div>
+    <div class="detail-avatar" id="detailAvatar">؟</div>
+    <div class="detail-name" id="detailName">عضو هَنون</div>
+    <div class="detail-username" id="detailUsername"></div>
+    <div class="detail-grid" id="detailGrid"></div>
+  </div>
+</div>
+
 <div class="toast" id="toast" role="status"></div>
+
 <div class="access-screen" id="accessScreen">
-<form class="access-card" id="accessForm">
-  <div class="access-mark"><svg viewBox="0 0 24 24"><path d="M12 3 4 6v5c0 5 3.4 8.4 8 10 4.6-1.6 8-5 8-10V6l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg></div>
-  <h2 id="accessTitle">الدخول إلى لوحة الإدارة</h2>
-  <p id="accessMessage">اكتب كلمة سر الإدارة للمتابعة.</p>
-  <input class="access-input" id="adminPassword" type="password" autocomplete="current-password" placeholder="كلمة سر الإدارة" required>
-  <button class="primary-btn" id="accessAction" type="submit">دخول إلى لوحة التحكم</button>
-</form>
+  <form class="access-card" id="accessForm">
+    <div class="access-mark">
+      <svg viewBox="0 0 24 24"><path d="M12 3 4 6v5c0 5 3.4 8.4 8 10 4.6-1.6 8-5 8-10V6l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg>
+    </div>
+    <h2 id="accessTitle">الدخول إلى لوحة الإدارة</h2>
+    <p id="accessMessage">اكتب كلمة سر الإدارة للمتابعة.</p>
+    <input class="access-input" id="adminPassword" type="password" autocomplete="current-password" placeholder="كلمة سر الإدارة" required>
+    <button class="primary-btn" id="accessAction" type="submit">دخول إلى لوحة التحكم</button>
+  </form>
 </div>
 
 <script type="module">
@@ -229,13 +719,16 @@ function showAccessError(title,message){
   $("accessMessage").textContent=message;
   $("accessScreen").hidden=false;
 }
-function showDashboard(){$("accessScreen").hidden=true}
+function showDashboard(){
+  $("accessScreen").hidden=true;
+}
 
 async function adminRequest(body){
   const {data,error}=await supabase.functions.invoke("admin-send-notification",{
     body,
     headers:{"x-admin-code":adminCode}
   });
+
   if(error){
     let message="";
     try{
@@ -252,7 +745,11 @@ async function adminRequest(body){
 
 async function verifyAdmin(code){
   adminCode=String(code||"").trim();
-  if(!adminCode){showAccessError("كلمة السر مطلوبة","اكتب كلمة سر الإدارة للمتابعة.");return false}
+  if(!adminCode){
+    showAccessError("كلمة السر مطلوبة","اكتب كلمة سر الإدارة للمتابعة.");
+    return false;
+  }
+
   try{
     const data=await adminRequest({action:"check"});
     if(!data?.ok||!data?.isAdmin)throw new Error("كلمة السر غير صحيحة.");
@@ -286,98 +783,194 @@ $("logoutButton").addEventListener("click",()=>{
   location.reload();
 });
 
+/* التنقل داخل نفس اللوحة */
 function openView(name){
   document.querySelectorAll(".view").forEach(v=>v.classList.remove("active"));
-  document.querySelectorAll(".nav-btn[data-view]").forEach(b=>b.classList.toggle("active",b.dataset.view===name));
+  document.querySelectorAll(".nav-btn[data-view]").forEach(b=>{
+    b.classList.toggle("active",b.dataset.view===name);
+  });
+
   const view=$("view-"+name);
   if(view)view.classList.add("active");
-  $("sidebar").classList.remove("open");
-  window.scrollTo({top:0,behavior:"smooth"});
-}
-document.querySelectorAll("[data-view]").forEach(b=>b.addEventListener("click",()=>openView(b.dataset.view)));
-document.querySelectorAll("[data-open-view]").forEach(b=>b.addEventListener("click",()=>openView(b.dataset.openView)));
-$("menuButton").addEventListener("click",()=>$("sidebar").classList.toggle("open"));
-$("audience").addEventListener("change",()=>$("memberCodeField").hidden=$("audience").value!=="member");
 
+  $("sidebar").classList.remove("open");
+  $("mainContent").scrollTop=0;
+
+  if(name==="members"&&!membersLoaded){
+    searchMembers(true);
+  }
+}
+
+document.querySelectorAll("[data-view]").forEach(button=>{
+  button.addEventListener("click",()=>openView(button.dataset.view));
+});
+document.querySelectorAll("[data-open-view]").forEach(button=>{
+  button.addEventListener("click",()=>openView(button.dataset.openView));
+});
+$("menuButton").addEventListener("click",()=>$("sidebar").classList.toggle("open"));
+$("audience").addEventListener("change",()=>{
+  $("memberCodeField").hidden=$("audience").value!=="member";
+});
+
+/* إدارة الأعضاء */
 const MEMBER_PAGE_SIZE=20;
 let memberSearchOffset=0;
 let memberSearchTotal=0;
+let membersLoaded=false;
+let lastMembers=[];
 
 function memberInitial(member){
   const name=String(member.full_name||member.nickname||member.username||"؟").trim();
   return name.slice(0,1)||"؟";
 }
+
+function showMemberDetails(member){
+  $("detailAvatar").textContent=memberInitial(member);
+  $("detailName").textContent=member.full_name||member.nickname||"عضو هَنون";
+  $("detailUsername").textContent=member.username?"@"+member.username:"";
+
+  const fields=[
+    ["كود العضوية",member.member_code],
+    ["المعرّف",member.id],
+    ["اسم المستخدم",member.username],
+    ["الاسم الكامل",member.full_name],
+    ["الاسم المستعار",member.nickname],
+    ["حالة الملف",member.profile_completed?"مكتمل":"غير مكتمل"],
+    ["الصلاحية",member.role==="admin"?"مدير":"عضو"],
+    ["تاريخ الانضمام",member.created_at?new Date(member.created_at).toLocaleDateString("ar-EG"):"غير متاح"]
+  ];
+
+  const grid=$("detailGrid");
+  grid.replaceChildren();
+
+  fields.forEach(([label,value])=>{
+    if(value===null||value===undefined||value==="")return;
+    const item=document.createElement("div");
+    item.className="detail-item";
+    const small=document.createElement("small");
+    small.textContent=label;
+    const strong=document.createElement("strong");
+    strong.textContent=String(value);
+    item.append(small,strong);
+    grid.appendChild(item);
+  });
+
+  $("memberDetail").hidden=false;
+}
+
+$("closeMemberDetail").addEventListener("click",()=>$("memberDetail").hidden=true);
+$("memberDetail").addEventListener("click",event=>{
+  if(event.target===$("memberDetail"))$("memberDetail").hidden=true;
+});
+
 function renderMembers(members){
   const container=$("memberResults");
   container.replaceChildren();
+  lastMembers=members;
+
   if(!members.length){
     const empty=document.createElement("div");
     empty.className="member-empty";
-    empty.textContent="لم يتم العثور على أعضاء بهذه البيانات.";
+    empty.textContent="لا يوجد أعضاء لعرضهم.";
     container.appendChild(empty);
     return;
   }
+
   members.forEach(member=>{
     const row=document.createElement("article");
     row.className="member-row";
+
     const avatar=document.createElement("div");
     avatar.className="member-avatar";
     avatar.textContent=memberInitial(member);
+
     const info=document.createElement("div");
     info.className="member-info";
+
     const name=document.createElement("strong");
     name.textContent=member.full_name||member.nickname||"عضو هَنون";
+
     const details=document.createElement("small");
-    details.textContent=[member.username?"@"+member.username:"",member.member_code||""].filter(Boolean).join(" · ");
+    details.textContent=[
+      member.username?"@"+member.username:"",
+      member.member_code||""
+    ].filter(Boolean).join(" · ");
+
     const meta=document.createElement("div");
     meta.className="member-meta";
+
     const status=document.createElement("span");
     status.className="member-tag";
     status.textContent=member.profile_completed?"الملف مكتمل":"الملف غير مكتمل";
     meta.appendChild(status);
+
     if(member.role==="admin"){
       const tag=document.createElement("span");
       tag.className="member-tag";
       tag.textContent="مدير";
       meta.appendChild(tag);
     }
+
     info.append(name,details,meta);
+
     const open=document.createElement("button");
     open.type="button";
     open.className="member-open";
-    open.textContent="فتح الملف";
-    open.addEventListener("click",()=>location.href="member.html?id="+encodeURIComponent(member.id));
+    open.textContent="عرض التفاصيل";
+    open.addEventListener("click",()=>showMemberDetails(member));
+
     row.append(avatar,info,open);
     container.appendChild(row);
   });
 }
+
 function updateMemberPagination(){
   const page=Math.floor(memberSearchOffset/MEMBER_PAGE_SIZE)+1;
   const pages=Math.max(1,Math.ceil(memberSearchTotal/MEMBER_PAGE_SIZE));
+
   $("memberPagination").hidden=memberSearchTotal<=MEMBER_PAGE_SIZE;
-  $("memberPageLabel").textContent="صفحة "+page+" من "+pages+" · "+memberSearchTotal+" عضو";
+  $("memberPageLabel").textContent=
+    "صفحة "+page+" من "+pages+" · "+memberSearchTotal+" عضو";
+
   $("memberPrev").disabled=memberSearchOffset<=0;
-  $("memberNext").disabled=memberSearchOffset+MEMBER_PAGE_SIZE>=memberSearchTotal;
+  $("memberNext").disabled=
+    memberSearchOffset+MEMBER_PAGE_SIZE>=memberSearchTotal;
 }
+
 async function searchMembers(reset=true){
   if(reset)memberSearchOffset=0;
+
   const query=$("memberSearchInput").value.trim();
   const button=$("memberSearchButton");
+
   button.disabled=true;
-  button.textContent="جارٍ البحث...";
-  $("memberCount").textContent="جارٍ تحميل النتائج";
+  button.textContent="جارٍ التحميل...";
+  $("memberCount").textContent="جارٍ تحميل القائمة";
+
   $("memberResults").replaceChildren();
   const loading=document.createElement("div");
   loading.className="member-empty";
-  loading.textContent="جارٍ البحث في أعضاء هَنون...";
+  loading.textContent="جارٍ تحميل أعضاء هَنون...";
   $("memberResults").appendChild(loading);
   $("memberPagination").hidden=true;
+
   try{
-    const data=await adminRequest({action:"search_members",query,limit:MEMBER_PAGE_SIZE,offset:memberSearchOffset});
-    if(!data?.ok)throw new Error(data?.error||"تعذر البحث عن الأعضاء.");
+    const data=await adminRequest({
+      action:"search_members",
+      query,
+      limit:MEMBER_PAGE_SIZE,
+      offset:memberSearchOffset
+    });
+
+    if(!data?.ok)throw new Error(data?.error||"تعذر تحميل الأعضاء.");
+
+    membersLoaded=true;
     memberSearchTotal=Number(data.total||0);
     renderMembers(Array.isArray(data.members)?data.members:[]);
-    $("memberCount").textContent=memberSearchTotal.toLocaleString("ar-EG")+" عضو";
+
+    $("memberCount").textContent=
+      memberSearchTotal.toLocaleString("ar-EG")+" عضو";
+
     updateMemberPagination();
   }catch(error){
     $("memberResults").replaceChildren();
@@ -385,54 +978,113 @@ async function searchMembers(reset=true){
     empty.className="member-empty";
     empty.textContent=error.message||"حدث خطأ أثناء تحميل الأعضاء.";
     $("memberResults").appendChild(empty);
-    $("memberCount").textContent="تعذر تحميل النتائج";
-    toast(error.message||"تعذر البحث عن الأعضاء.",true);
+    $("memberCount").textContent="تعذر تحميل القائمة";
+    toast(error.message||"تعذر تحميل الأعضاء.",true);
   }finally{
     button.disabled=false;
-    button.textContent="بحث عن عضو";
+    button.textContent="بحث";
   }
 }
-$("memberSearchForm").addEventListener("submit",event=>{event.preventDefault();searchMembers(true)});
+
+$("memberSearchForm").addEventListener("submit",event=>{
+  event.preventDefault();
+  searchMembers(true);
+});
+
+$("memberRefreshButton").addEventListener("click",()=>{
+  membersLoaded=false;
+  searchMembers(true);
+});
+
 $("memberPrev").addEventListener("click",()=>{
   if(memberSearchOffset<=0)return;
   memberSearchOffset=Math.max(0,memberSearchOffset-MEMBER_PAGE_SIZE);
   searchMembers(false);
 });
+
 $("memberNext").addEventListener("click",()=>{
   if(memberSearchOffset+MEMBER_PAGE_SIZE>=memberSearchTotal)return;
   memberSearchOffset+=MEMBER_PAGE_SIZE;
   searchMembers(false);
 });
 
+/* معاينة الإشعار */
 function updatePreview(){
-  $("previewTitle").textContent=$("notificationTitle").value.trim()||"عنوان الإشعار سيظهر هنا";
-  $("previewBody").textContent=$("notificationBody").value.trim()||"اكتب نص الإشعار لتظهر المعاينة هنا مباشرة.";
-  const routes={"":"صفحة الإشعارات","home.html":"الرئيسية","members.html":"الأعضاء","games.html":"الألعاب","notifications.html":"الإشعارات","profile.html":"الملف الشخصي"};
-  $("previewDestination").textContent=routes[$("targetRoute").value]||"صفحة الإشعارات";
+  $("previewTitle").textContent=
+    $("notificationTitle").value.trim()||"عنوان الإشعار سيظهر هنا";
+
+  $("previewBody").textContent=
+    $("notificationBody").value.trim()||
+    "اكتب نص الإشعار لتظهر المعاينة هنا مباشرة.";
+
+  const routes={
+    "":"صفحة الإشعارات",
+    "home.html":"الرئيسية",
+    "members.html":"الأعضاء",
+    "games.html":"الألعاب",
+    "notifications.html":"الإشعارات",
+    "profile.html":"الملف الشخصي"
+  };
+
+  $("previewDestination").textContent=
+    routes[$("targetRoute").value]||"صفحة الإشعارات";
 }
+
 ["notificationTitle","notificationBody","targetRoute"].forEach(id=>{
   $(id).addEventListener("input",updatePreview);
   $(id).addEventListener("change",updatePreview);
 });
 
+/* إرسال الإشعارات */
 $("notificationForm").addEventListener("submit",async event=>{
   event.preventDefault();
+
   const audience=$("audience").value;
   const memberCode=$("memberCode").value.trim();
   const title=$("notificationTitle").value.trim();
   const body=$("notificationBody").value.trim();
   const targetRoute=$("targetRoute").value;
-  if(!title||!body){toast("اكتب عنوان الإشعار ونصه أولًا.",true);return}
-  if(audience==="member"&&!memberCode){toast("اكتب كود العضو المستهدف.",true);$("memberCode").focus();return}
-  const names={all:"جميع الأعضاء",completed:"الأعضاء أصحاب الملفات المكتملة",member:"العضو المحدد"};
+
+  if(!title||!body){
+    toast("اكتب عنوان الإشعار ونصه أولًا.",true);
+    return;
+  }
+
+  if(audience==="member"&&!memberCode){
+    toast("اكتب كود العضو المستهدف.",true);
+    $("memberCode").focus();
+    return;
+  }
+
+  const names={
+    all:"جميع الأعضاء",
+    completed:"الأعضاء أصحاب الملفات المكتملة",
+    member:"العضو المحدد"
+  };
+
   if(!confirm("تأكيد إرسال الإشعار إلى: "+names[audience]+"؟"))return;
+
   const button=$("sendButton");
   button.disabled=true;
   button.textContent="جارٍ إرسال الإشعار...";
+
   try{
-    const data=await adminRequest({action:"send",audience,memberCode,title,body,targetRoute});
+    const data=await adminRequest({
+      action:"send",
+      audience,
+      memberCode,
+      title,
+      body,
+      targetRoute
+    });
+
     if(!data?.ok)throw new Error(data?.error||"تعذر إرسال الإشعار.");
-    toast("تم حفظ الإشعار وإرساله إلى "+Number(data.sent||0).toLocaleString("en-US")+" عضو.");
+
+    toast(
+      "تم حفظ الإشعار وإرساله إلى "+
+      Number(data.sent||0).toLocaleString("en-US")+" عضو."
+    );
+
     $("notificationForm").reset();
     $("memberCodeField").hidden=true;
     updatePreview();
@@ -444,10 +1096,13 @@ $("notificationForm").addEventListener("submit",async event=>{
   }
 });
 
+/* استعادة جلسة الإدارة */
 const savedAdminCode=sessionStorage.getItem("hanoon_admin_code")||"";
+
 if(savedAdminCode){
   $("adminPassword").value=savedAdminCode;
-  await verifyAdmin(savedAdminCode);
+  const entered=await verifyAdmin(savedAdminCode);
+  if(entered)updatePreview();
 }else{
   showAccessError("الدخول إلى لوحة الإدارة","اكتب كلمة سر الإدارة للمتابعة.");
 }
