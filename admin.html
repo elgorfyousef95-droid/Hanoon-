@@ -1,0 +1,634 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#090b16">
+<title>مركز تحكم هَنون | HANOON WORLD</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg:#090b16;
+  --panel:#111525;
+  --panel2:#171d30;
+  --panel3:#202840;
+  --line:rgba(205,214,255,.11);
+  --text:#f5f4ff;
+  --muted:#929bb5;
+  --purple:#a58aff;
+  --purple2:#7958df;
+  --gold:#e8c98d;
+  --green:#53d6a2;
+  --red:#ff7188;
+  --radius:22px;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:"Cairo",sans-serif}
+body{overflow-x:hidden}
+button,input,textarea,select{font:inherit}
+button{cursor:pointer}
+a{color:inherit;text-decoration:none}
+[hidden]{display:none!important}
+svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.app{min-height:100vh;background:
+radial-gradient(ellipse at 80% 0%,rgba(126,91,226,.13),transparent 35%),
+radial-gradient(ellipse at 0% 100%,rgba(72,166,190,.07),transparent 35%),
+var(--bg)}
+.topbar{
+  height:76px;position:fixed;inset:0 0 auto;z-index:30;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 27px;background:rgba(9,11,22,.91);
+  border-bottom:1px solid var(--line);backdrop-filter:blur(22px)
+}
+.brand{display:flex;align-items:center;gap:12px}
+.brand-mark{
+  width:43px;height:43px;display:grid;place-items:center;
+  border-radius:15px;background:linear-gradient(145deg,#c3aaff,#7653d6);
+  color:#171128;box-shadow:0 8px 28px #8662e744
+}
+.brand-mark svg{width:25px;height:25px;stroke:#171128;stroke-width:2.3}
+.brand-name{font-size:14px;font-weight:900;letter-spacing:1.2px}
+.brand-sub{font-size:9px;color:var(--muted);letter-spacing:2px;margin-top:2px}
+.top-actions{display:flex;align-items:center;gap:10px}
+.admin-label{padding:8px 13px;border:1px solid #a58aff35;border-radius:30px;background:#a58aff12;color:#c9baff;font-size:10px;font-weight:900}
+.icon-btn{
+  width:42px;height:42px;display:grid;place-items:center;
+  border:1px solid var(--line);border-radius:14px;background:#ffffff06;color:#d9d8eb
+}
+.icon-btn:hover{background:#ffffff12}
+.layout{display:grid;grid-template-columns:265px minmax(0,1fr);min-height:100vh;padding-top:76px}
+.sidebar{
+  position:fixed;top:76px;bottom:0;right:0;width:265px;
+  padding:24px 16px;overflow-y:auto;
+  background:rgba(14,18,33,.94);border-left:1px solid var(--line)
+}
+.side-caption{padding:8px 13px 12px;color:#727d9b;font-size:9px;font-weight:900;letter-spacing:1.5px}
+.nav-btn{
+  width:100%;min-height:49px;display:flex;align-items:center;gap:12px;
+  padding:0 13px;margin:4px 0;border:1px solid transparent;border-radius:14px;
+  background:transparent;color:#aeb5ca;text-align:right;font-size:12px;font-weight:800
+}
+.nav-btn svg{width:19px;height:19px;color:#8992ad}
+.nav-btn:hover{background:#ffffff08;color:white}
+.nav-btn.active{
+  border-color:#a58aff38;
+  background:linear-gradient(100deg,#a58aff20,#7958df0d);
+  color:#e0d5ff
+}
+.nav-btn.active svg{color:var(--purple)}
+.side-separator{height:1px;background:var(--line);margin:18px 7px}
+.sidebar-bottom{
+  margin:25px 5px 0;padding:15px;border:1px solid var(--line);
+  border-radius:17px;background:#ffffff04
+}
+.secure-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--green);margin-left:7px;box-shadow:0 0 12px #53d6a2}
+.sidebar-bottom strong{font-size:11px}
+.sidebar-bottom p{margin:7px 0 0;color:var(--muted);font-size:10px;line-height:1.9}
+.main{min-width:0;margin-right:265px;padding:31px clamp(16px,3vw,42px) 55px}
+.page-head{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;margin-bottom:27px}
+.eyebrow{color:var(--purple);font-size:10px;font-weight:900;letter-spacing:1.6px}
+.page-head h1{font-size:clamp(22px,3vw,30px);margin:5px 0 3px;font-weight:900}
+.page-head p{margin:0;color:var(--muted);font-size:11px}
+.live-status{display:flex;align-items:center;gap:8px;padding:9px 13px;border:1px solid #53d6a229;border-radius:30px;background:#53d6a20b;color:#9ce9c9;font-size:10px;font-weight:800;white-space:nowrap}
+.live-status i{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 12px #53d6a2}
+.view{display:none;animation:appear .22s ease}
+.view.active{display:block}
+@keyframes appear{from{opacity:.35;transform:translateY(5px)}to{opacity:1;transform:none}}
+.welcome{
+  position:relative;overflow:hidden;display:flex;align-items:center;justify-content:space-between;gap:20px;
+  padding:27px 30px;margin-bottom:20px;border:1px solid #a58aff2c;border-radius:24px;
+  background:linear-gradient(110deg,#201b3a,#171b31 62%,#14202d);
+  box-shadow:0 18px 55px #0003
+}
+.welcome:after{
+  content:"";position:absolute;width:230px;height:230px;left:-65px;top:-120px;
+  border:1px solid #c0a9ff25;border-radius:50%;
+  box-shadow:0 0 0 22px #c0a9ff08,0 0 0 48px #c0a9ff05
+}
+.welcome h2{margin:0;font-size:20px;font-weight:900}
+.welcome p{margin:7px 0 0;color:#b5b1cc;font-size:11px;line-height:2}
+.welcome-icon{width:66px;height:66px;flex-shrink:0;display:grid;place-items:center;border:1px solid #d4c2ff42;border-radius:21px;background:#a58aff18;color:#d5c7ff}
+.welcome-icon svg{width:31px;height:31px}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px;margin-bottom:21px}
+.stat-card{
+  min-height:123px;padding:17px;border:1px solid var(--line);
+  border-radius:19px;background:linear-gradient(145deg,#171d30,#111626)
+}
+.stat-top{display:flex;justify-content:space-between;align-items:center}
+.stat-icon{width:36px;height:36px;display:grid;place-items:center;border-radius:12px;background:#a58aff14;color:#bba7ff}
+.stat-icon svg{width:18px;height:18px}
+.stat-name{font-size:10px;color:var(--muted);font-weight:800;margin-top:13px}
+.stat-value{font-size:19px;font-weight:900;margin-top:2px}
+.content-grid{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(250px,.8fr);gap:16px}
+.panel{padding:21px;border:1px solid var(--line);border-radius:21px;background:linear-gradient(145deg,#151b2d,#101525)}
+.panel-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:17px}
+.panel-head h3{font-size:13px;margin:0;font-weight:900}
+.panel-head span{font-size:9px;color:var(--muted)}
+.quick-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.quick-action{
+  min-height:83px;display:flex;align-items:center;gap:12px;padding:13px;
+  border:1px solid var(--line);border-radius:15px;background:#ffffff04;text-align:right
+}
+.quick-action:hover{border-color:#a58aff55;background:#a58aff0b}
+.quick-action .q-icon{width:38px;height:38px;flex-shrink:0;display:grid;place-items:center;border-radius:12px;background:#a58aff14;color:#c5b3ff}
+.quick-action strong{display:block;font-size:11px}
+.quick-action small{display:block;margin-top:4px;color:var(--muted);font-size:9px}
+.activity-empty{padding:24px 10px;text-align:center;color:var(--muted);font-size:11px;line-height:2}
+.activity-empty svg{display:block;width:28px;height:28px;margin:0 auto 10px;color:#a58aff}
+.section-title{margin:0 0 5px;font-size:20px;font-weight:900}
+.section-description{margin:0 0 22px;color:var(--muted);font-size:11px;line-height:2}
+.form-layout{display:grid;grid-template-columns:minmax(0,1fr) 310px;gap:17px;align-items:start}
+.form-panel{padding:23px;border:1px solid var(--line);border-radius:21px;background:linear-gradient(145deg,#151b2d,#101525)}
+.field{margin-bottom:17px}
+.field label{display:block;margin-bottom:8px;color:#d4d8e9;font-size:11px;font-weight:800}
+.field input,.field textarea,.field select{
+  width:100%;min-height:47px;padding:12px 14px;border:1px solid #ffffff16;
+  border-radius:13px;outline:none;background:#0c1120;color:var(--text);font-size:12px
+}
+.field textarea{min-height:125px;resize:vertical;line-height:1.9}
+.field input:focus,.field textarea:focus,.field select:focus{border-color:#a58aff88;box-shadow:0 0 0 3px #a58aff12}
+.field input::placeholder,.field textarea::placeholder{color:#68728c}
+.field-hint{margin-top:6px;color:#7f89a4;font-size:9px;line-height:1.8}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.primary-btn{
+  min-height:48px;display:inline-flex;align-items:center;justify-content:center;gap:9px;
+  padding:0 20px;border:0;border-radius:14px;
+  background:linear-gradient(110deg,#b69cff,#805ce1);color:#171128;
+  font-size:12px;font-weight:900;box-shadow:0 9px 25px #805ce133
+}
+.primary-btn:hover{filter:brightness(1.08)}
+.primary-btn:disabled{opacity:.55;cursor:not-allowed}
+.secondary-btn{
+  min-height:43px;padding:0 15px;border:1px solid var(--line);
+  border-radius:13px;background:#ffffff08;color:#d9d9e9;font-size:11px;font-weight:800
+}
+.preview-card{position:sticky;top:100px;padding:18px;border:1px solid #a58aff2c;border-radius:19px;background:linear-gradient(145deg,#201c37,#151b2e)}
+.preview-top{display:flex;align-items:center;gap:10px;margin-bottom:17px}
+.preview-bell{width:37px;height:37px;display:grid;place-items:center;border-radius:12px;background:#a58aff1a;color:#cbbaff}
+.preview-top strong{font-size:11px}
+.preview-top small{display:block;color:var(--muted);font-size:9px;margin-top:3px}
+.preview-label{font-size:9px;color:#a99bcf;font-weight:900;margin-bottom:7px}
+.preview-title{font-size:14px;font-weight:900;overflow-wrap:anywhere}
+.preview-body{margin-top:8px;color:#c0c3d4;font-size:11px;line-height:2;overflow-wrap:anywhere;white-space:pre-wrap}
+.preview-destination{margin-top:15px;padding-top:13px;border-top:1px solid var(--line);font-size:9px;color:#9ca5bc}
+.preview-destination strong{color:#c7b7ff}
+.notice{padding:12px 14px;border:1px solid #e8c98d2c;border-radius:13px;background:#e8c98d0b;color:#e8d4a8;font-size:10px;line-height:2;margin-bottom:17px}
+.notice svg{width:15px;height:15px;vertical-align:middle;margin-left:5px}
+.toast{
+  position:fixed;z-index:100;bottom:25px;left:50%;transform:translate(-50%,20px);
+  opacity:0;pointer-events:none;padding:13px 19px;border:1px solid var(--line);
+  border-radius:14px;background:#1b2236;color:white;font-size:11px;font-weight:800;
+  box-shadow:0 12px 35px #0009;transition:.25s;max-width:90%;text-align:center
+}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.toast.error{border-color:#ff718855;color:#ffb0bd}
+.access-screen{
+  position:fixed;inset:0;z-index:200;display:flex;align-items:center;justify-content:center;
+  padding:22px;background:#090b16
+}
+.access-card{width:min(430px,100%);padding:35px 27px;text-align:center;border:1px solid var(--line);border-radius:25px;background:#141a2b;box-shadow:0 25px 90px #0008}
+.access-mark{width:65px;height:65px;display:grid;place-items:center;margin:0 auto 18px;border-radius:21px;background:#a58aff19;color:#c6b4ff}
+.access-mark svg{width:30px;height:30px}
+.access-card h2{margin:0;font-size:19px}
+.access-card p{margin:9px 0 20px;color:var(--muted);font-size:11px;line-height:2}
+.access-card .primary-btn{width:100%}
+.mobile-menu{display:none}
+.footer-note{text-align:center;color:#59647e;font-size:9px;margin-top:30px}
+@media(max-width:1100px){
+  .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .form-layout{grid-template-columns:minmax(0,1fr) 260px}
+}
+@media(max-width:800px){
+  .layout{display:block}
+  .sidebar{width:265px;transform:translateX(105%);transition:transform .25s;z-index:40;box-shadow:-20px 0 60px #0008}
+  .sidebar.open{transform:translateX(0)}
+  .main{margin:0;padding:23px 17px 45px}
+  .mobile-menu{display:grid}
+  .content-grid{grid-template-columns:1fr}
+  .form-layout{grid-template-columns:1fr}
+  .preview-card{position:static}
+  .topbar{padding:0 15px}
+}
+@media(max-width:520px){
+  .topbar{height:67px}
+  .layout{padding-top:67px}
+  .sidebar{top:67px}
+  .brand-mark{width:38px;height:38px}
+  .brand-name{font-size:11px}
+  .brand-sub{font-size:8px}
+  .admin-label{font-size:9px;padding:7px 9px}
+  .main{padding:19px 13px 35px}
+  .page-head{align-items:center}
+  .page-head h1{font-size:22px}
+  .welcome{padding:21px;border-radius:19px}
+  .welcome h2{font-size:16px}
+  .welcome-icon{width:52px;height:52px}
+  .stats{gap:9px}
+  .stat-card{min-height:110px;padding:13px}
+  .stat-value{font-size:17px}
+  .panel,.form-panel{padding:16px}
+  .quick-grid{grid-template-columns:1fr}
+  .form-row{grid-template-columns:1fr;gap:0}
+  .live-status{font-size:9px;padding:7px 9px}
+}
+</style>
+</head>
+
+<body>
+<div class="app">
+
+<header class="topbar">
+  <div class="brand">
+    <div class="brand-mark">
+      <svg viewBox="0 0 40 40"><path d="M8 29V11h6v7h12v-7h6v18h-6v-6H14v6H8Z"/></svg>
+    </div>
+    <div>
+      <div class="brand-name">HANOON WORLD</div>
+      <div class="brand-sub">CONTROL CENTER</div>
+    </div>
+  </div>
+  <div class="top-actions">
+    <span class="admin-label">لوحة المدير</span>
+    <button class="icon-btn mobile-menu" id="menuButton" aria-label="القائمة">
+      <svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+    </button>
+    <button class="icon-btn" id="logoutButton" title="تسجيل الخروج" aria-label="تسجيل الخروج">
+      <svg viewBox="0 0 24 24"><path d="M10 17l5-5-5-5M15 12H3"/><path d="M12 3h6a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-6"/></svg>
+    </button>
+  </div>
+</header>
+
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="side-caption">الإدارة الرئيسية</div>
+    <button class="nav-btn active" data-view="dashboard">
+      <svg viewBox="0 0 24 24"><rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="5" rx="2"/><rect x="13" y="10" width="8" height="11" rx="2"/><rect x="3" y="13" width="8" height="8" rx="2"/></svg>
+      الرئيسية
+    </button>
+    <button class="nav-btn" data-view="notifications">
+      <svg viewBox="0 0 24 24"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9ZM10 21h4"/></svg>
+      إرسال الإشعارات
+    </button>
+    <div class="side-separator"></div>
+    <div class="side-caption">روابط الموقع</div>
+    <a class="nav-btn" href="home.html">
+      <svg viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1V10Z"/></svg>
+      موقع هَنون
+    </a>
+    <a class="nav-btn" href="members.html">
+      <svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M20 21v-2a4 4 0 0 0-3-3.87"/></svg>
+      دليل الأعضاء
+    </a>
+    <a class="nav-btn" href="games.html">
+      <svg viewBox="0 0 24 24"><path d="M7 8h10a4 4 0 0 1 4 4v4a3 3 0 0 1-5 2l-2-2h-4l-2 2a3 3 0 0 1-5-2v-4a4 4 0 0 1 4-4Z"/></svg>
+      الألعاب
+    </a>
+    <div class="sidebar-bottom">
+      <strong><i class="secure-dot"></i>حماية لوحة الإدارة</strong>
+      <p>يتم التحقق من صلاحية المدير من الخادم قبل السماح بفتح أدوات الإدارة.</p>
+    </div>
+  </aside>
+
+  <main class="main">
+    <section class="view active" id="view-dashboard">
+      <div class="page-head">
+        <div>
+          <div class="eyebrow">HANOON / ADMINISTRATION</div>
+          <h1>مركز التحكم</h1>
+          <p>إدارة موقع هَنون من مكان واحد.</p>
+        </div>
+        <div class="live-status"><i></i> اتصال الإدارة نشط</div>
+      </div>
+
+      <div class="welcome">
+        <div>
+          <h2>أهلًا بك في مركز تحكم هَنون</h2>
+          <p>من هنا تبدأ إدارة مجتمعك وإرسال التنبيهات للأعضاء.<br>كل عملية إدارية يتم تنفيذها بصلاحية موثقة.</p>
+        </div>
+        <div class="welcome-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 3 4 6v5c0 5 3.4 8.4 8 10 4.6-1.6 8-5 8-10V6l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg>
+        </div>
+      </div>
+
+      <div class="stats">
+        <div class="stat-card">
+          <div class="stat-top"><div class="stat-icon"><svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M20 21v-2a4 4 0 0 0-3-3.87"/></svg></div></div>
+          <div class="stat-name">إدارة الأعضاء</div>
+          <div class="stat-value">مركز الأعضاء</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-top"><div class="stat-icon"><svg viewBox="0 0 24 24"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9ZM10 21h4"/></svg></div></div>
+          <div class="stat-name">التواصل مع الأعضاء</div>
+          <div class="stat-value">الإشعارات</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-top"><div class="stat-icon"><svg viewBox="0 0 24 24"><path d="M20 12v8H4v-8M2 7h20v5H2zM12 7v13"/><path d="M12 7H7.5a2.5 2.5 0 1 1 2.5-2.5L12 7ZM12 7h4.5A2.5 2.5 0 1 0 14 4.5L12 7Z"/></svg></div></div>
+          <div class="stat-name">المكافآت والهدايا</div>
+          <div class="stat-value">إدارة الهدايا</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-top"><div class="stat-icon"><svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7H14a3.5 3.5 0 0 1 0 7H6"/></svg></div></div>
+          <div class="stat-name">الأرصدة والمكافآت</div>
+          <div class="stat-value">إدارة المحفظة</div>
+        </div>
+      </div>
+
+      <div class="content-grid">
+        <div class="panel">
+          <div class="panel-head"><h3>اختصارات الإدارة</h3><span>وصول سريع</span></div>
+          <div class="quick-grid">
+            <button class="quick-action" data-open-view="notifications">
+              <span class="q-icon"><svg viewBox="0 0 24 24"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9ZM10 21h4"/></svg></span>
+              <span><strong>إرسال إشعار</strong><small>إلى عضو أو مجموعة أو الجميع</small></span>
+            </button>
+            <a class="quick-action" href="members.html">
+              <span class="q-icon"><svg viewBox="0 0 24 24"><circle cx="9" cy="7" r="4"/><path d="M2 21v-2a4 4 0 0 1 4-4h6a4 4 0 0 1 4 4v2"/></svg></span>
+              <span><strong>دليل الأعضاء</strong><small>فتح صفحة أعضاء الموقع</small></span>
+            </a>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><h3>حالة مركز التحكم</h3><span>الأمان</span></div>
+          <div class="activity-empty">
+            <svg viewBox="0 0 24 24"><path d="M12 3 4 6v5c0 5 3.4 8.4 8 10 4.6-1.6 8-5 8-10V6l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg>
+            تم التحقق من صلاحية حساب الإدارة.
+            <br>الأدوات الإدارية لا تعمل إلا بعد التحقق من الخادم.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="view" id="view-notifications">
+      <div class="page-head">
+        <div>
+          <div class="eyebrow">COMMUNICATION CENTER</div>
+          <h1>إرسال الإشعارات</h1>
+          <p>أرسل تنبيهًا مباشرًا إلى أعضاء هَنون.</p>
+        </div>
+        <div class="live-status"><i></i> جاهز للإرسال</div>
+      </div>
+
+      <h2 class="section-title">إنشاء إشعار جديد</h2>
+      <p class="section-description">حدد المستلمين، واكتب محتوى الإشعار، واختر المكان الذي ينتقل إليه العضو عند الضغط عليه.</p>
+
+      <div class="notice">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+        الإشعار سيُحفظ في حسابات المستلمين من خلال خدمة الإدارة الآمنة. لا يتم كشف مفاتيح الإدارة داخل الصفحة.
+      </div>
+
+      <div class="form-layout">
+        <form class="form-panel" id="notificationForm">
+          <div class="field">
+            <label for="audience">إرسال الإشعار إلى</label>
+            <select id="audience" required>
+              <option value="all">جميع الأعضاء</option>
+              <option value="completed">الأعضاء أصحاب الملفات المكتملة</option>
+              <option value="member">عضو محدد</option>
+            </select>
+          </div>
+
+          <div class="field" id="memberCodeField" hidden>
+            <label for="memberCode">كود العضو</label>
+            <input id="memberCode" type="text" autocomplete="off" placeholder="اكتب كود العضو">
+            <div class="field-hint">اكتب كود العضوية الخاص بالشخص الذي تريد إرسال الإشعار إليه.</div>
+          </div>
+
+          <div class="field">
+            <label for="notificationTitle">عنوان الإشعار</label>
+            <input id="notificationTitle" type="text" maxlength="180" required placeholder="اكتب عنوانًا واضحًا للإشعار">
+          </div>
+
+          <div class="field">
+            <label for="notificationBody">نص الإشعار</label>
+            <textarea id="notificationBody" maxlength="2000" required placeholder="اكتب تفاصيل الإشعار هنا..."></textarea>
+            <div class="field-hint">الحد الأقصى 2000 حرف.</div>
+          </div>
+
+          <div class="field">
+            <label for="targetRoute">عند الضغط على الإشعار ينتقل العضو إلى</label>
+            <select id="targetRoute">
+              <option value="">صفحة الإشعارات</option>
+              <option value="home.html">الرئيسية</option>
+              <option value="members.html">الأعضاء</option>
+              <option value="games.html">الألعاب</option>
+              <option value="notifications.html">الإشعارات</option>
+              <option value="profile.html">الملف الشخصي</option>
+            </select>
+            <div class="field-hint">يمكن تخصيص رابط داخلي لاحقًا حسب نوع العملية الإدارية.</div>
+          </div>
+
+          <button class="primary-btn" id="sendButton" type="submit">
+            <svg viewBox="0 0 24 24"><path d="m22 2-7 20-4-9-9-4 20-7Z"/><path d="M22 2 11 13"/></svg>
+            إرسال الإشعار
+          </button>
+        </form>
+
+        <aside class="preview-card">
+          <div class="preview-top">
+            <div class="preview-bell"><svg viewBox="0 0 24 24"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9ZM10 21h4"/></svg></div>
+            <div><strong>معاينة الإشعار</strong><small>هكذا سيظهر للمستلم</small></div>
+          </div>
+          <div class="preview-label">HANOON WORLD</div>
+          <div class="preview-title" id="previewTitle">عنوان الإشعار سيظهر هنا</div>
+          <div class="preview-body" id="previewBody">اكتب نص الإشعار لتظهر المعاينة هنا مباشرة.</div>
+          <div class="preview-destination">وجهة الضغط: <strong id="previewDestination">صفحة الإشعارات</strong></div>
+        </aside>
+      </div>
+    </section>
+
+    <div class="footer-note">HANOON WORLD · PRIVATE ADMINISTRATION CENTER</div>
+  </main>
+</div>
+</div>
+
+<div class="toast" id="toast" role="status"></div>
+
+<div class="access-screen" id="accessScreen">
+  <div class="access-card">
+    <div class="access-mark"><svg viewBox="0 0 24 24"><path d="M12 3 4 6v5c0 5 3.4 8.4 8 10 4.6-1.6 8-5 8-10V6l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg></div>
+    <h2 id="accessTitle">جارٍ التحقق من صلاحية الدخول</h2>
+    <p id="accessMessage">نتحقق من حسابك وصلاحية الإدارة قبل فتح مركز التحكم.</p>
+    <button class="primary-btn" id="accessAction" hidden>العودة إلى تسجيل الدخول</button>
+  </div>
+</div>
+
+<script type="module">
+import { supabase } from "./supabase.js";
+
+const $ = id => document.getElementById(id);
+let toastTimer;
+
+function toast(message,error=false){
+  const el=$("toast");
+  el.textContent=message;
+  el.classList.toggle("error",error);
+  el.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>el.classList.remove("show"),3500);
+}
+
+function showAccessError(title,message,showButton=true){
+  $("accessTitle").textContent=title;
+  $("accessMessage").textContent=message;
+  $("accessAction").hidden=!showButton;
+  $("accessScreen").hidden=false;
+}
+
+function showDashboard(){
+  $("accessScreen").hidden=true;
+}
+
+async function verifyAdmin(){
+  const {data:{session},error:sessionError}=await supabase.auth.getSession();
+
+  if(sessionError) throw sessionError;
+
+  if(!session){
+    showAccessError("تسجيل الدخول مطلوب","سجّل الدخول بحساب المدير المصرح له لفتح لوحة التحكم.");
+    return false;
+  }
+
+  const {data,error}=await supabase.functions.invoke("admin-send-notification",{
+    body:{action:"check"}
+  });
+
+  if(error) throw error;
+
+  if(!data?.ok || !data?.isAdmin){
+    showAccessError("غير مصرح بالدخول","هذا الحساب لا يمتلك صلاحية إدارة موقع هَنون.");
+    return false;
+  }
+
+  showDashboard();
+  return true;
+}
+
+$("accessAction").addEventListener("click",async()=>{
+  await supabase.auth.signOut();
+  location.replace("index.html");
+});
+
+$("logoutButton").addEventListener("click",async()=>{
+  if(!confirm("هل تريد تسجيل الخروج من مركز الإدارة؟")) return;
+  await supabase.auth.signOut();
+  location.replace("index.html");
+});
+
+function openView(name){
+  document.querySelectorAll(".view").forEach(view=>view.classList.remove("active"));
+  document.querySelectorAll(".nav-btn[data-view]").forEach(button=>button.classList.toggle("active",button.dataset.view===name));
+  const view=$("view-"+name);
+  if(view) view.classList.add("active");
+  $("sidebar").classList.remove("open");
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+document.querySelectorAll("[data-view]").forEach(button=>{
+  button.addEventListener("click",()=>openView(button.dataset.view));
+});
+
+document.querySelectorAll("[data-open-view]").forEach(button=>{
+  button.addEventListener("click",()=>openView(button.dataset.openView));
+});
+
+$("menuButton").addEventListener("click",()=>$("sidebar").classList.toggle("open"));
+
+$("audience").addEventListener("change",()=>{
+  $("memberCodeField").hidden=$("audience").value!=="member";
+});
+
+function updatePreview(){
+  $("previewTitle").textContent=$("notificationTitle").value.trim()||"عنوان الإشعار سيظهر هنا";
+  $("previewBody").textContent=$("notificationBody").value.trim()||"اكتب نص الإشعار لتظهر المعاينة هنا مباشرة.";
+  const routes={
+    "":"صفحة الإشعارات",
+    "home.html":"الرئيسية",
+    "members.html":"الأعضاء",
+    "games.html":"الألعاب",
+    "notifications.html":"الإشعارات",
+    "profile.html":"الملف الشخصي"
+  };
+  $("previewDestination").textContent=routes[$("targetRoute").value]||"صفحة الإشعارات";
+}
+
+["notificationTitle","notificationBody","targetRoute"].forEach(id=>{
+  $(id).addEventListener("input",updatePreview);
+  $(id).addEventListener("change",updatePreview);
+});
+
+$("notificationForm").addEventListener("submit",async event=>{
+  event.preventDefault();
+
+  const audience=$("audience").value;
+  const memberCode=$("memberCode").value.trim();
+  const title=$("notificationTitle").value.trim();
+  const body=$("notificationBody").value.trim();
+  const targetRoute=$("targetRoute").value;
+
+  if(!title||!body){
+    toast("اكتب عنوان الإشعار ونصه أولًا.",true);
+    return;
+  }
+
+  if(audience==="member"&&!memberCode){
+    toast("اكتب كود العضو المستهدف.",true);
+    $("memberCode").focus();
+    return;
+  }
+
+  const audienceNames={
+    all:"جميع الأعضاء",
+    completed:"الأعضاء أصحاب الملفات المكتملة",
+    member:"العضو المحدد"
+  };
+
+  if(!confirm(`تأكيد إرسال الإشعار إلى: ${audienceNames[audience]}؟`)) return;
+
+  const button=$("sendButton");
+  button.disabled=true;
+  button.textContent="جارٍ إرسال الإشعار...";
+
+  try{
+    const {data,error}=await supabase.functions.invoke("admin-send-notification",{
+      body:{
+        action:"send",
+        audience,
+        memberCode,
+        title,
+        body,
+        targetRoute
+      }
+    });
+
+    if(error) throw error;
+    if(!data?.ok) throw new Error(data?.error||"تعذر إرسال الإشعار.");
+
+    toast(`تم حفظ الإشعار وإرساله إلى ${Number(data.sent||0).toLocaleString("en-US")} عضو.`);
+    $("notificationForm").reset();
+    $("memberCodeField").hidden=true;
+    updatePreview();
+
+  }catch(error){
+    console.error("HANOON ADMIN NOTIFICATION:",error);
+    toast(error.message||"حدث خطأ أثناء إرسال الإشعار.",true);
+
+  }finally{
+    button.disabled=false;
+    button.innerHTML='<svg viewBox="0 0 24 24"><path d="m22 2-7 20-4-9-9-4 20-7Z"/><path d="M22 2 11 13"/></svg> إرسال الإشعار';
+  }
+});
+
+try{
+  const allowed=await verifyAdmin();
+  if(!allowed) return;
+}catch(error){
+  console.error("HANOON ADMIN ACCESS:",error);
+  showAccessError("تعذر التحقق من صلاحية الإدارة","تأكد من تسجيل الدخول، ثم أعد تحميل الصفحة. إذا استمرت المشكلة راجع إعدادات خدمة الإدارة.");
+}
+</script>
+</body>
+</html>
