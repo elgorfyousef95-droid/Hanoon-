@@ -4,394 +4,423 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#10101c">
-  <meta name="description" content="HANOON WORLD - عالمك الاجتماعي والترفيهي">
+  <meta name="theme-color" content="#090d1b">
+  <meta name="description" content="HANOON WORLD - عالمك، تواصلك، متعتك بلا حدود">
   <title>HANOON WORLD</title>
-
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="./style.css">
 </head>
 
 <body>
 
-  <!-- شاشة البداية -->
-  <section id="splash" class="screen splash-screen">
+  <!-- SPLASH SCREEN -->
+  <section id="splash" class="splash-screen">
+    <div class="splash-background"></div>
+    <div class="splash-shade"></div>
+    <div class="splash-orbit orbit-one"></div>
+    <div class="splash-orbit orbit-two"></div>
+
     <div class="splash-content">
-      <div class="splash-logo">H</div>
-      <h1>HANOON WORLD</h1>
-      <p>عالم يجمعنا</p>
-      <div class="splash-loader"></div>
+      <div class="brand-emblem">
+        <svg viewBox="0 0 100 100" role="img" aria-label="HANOON WORLD">
+          <defs>
+            <linearGradient id="brandGradient" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#72e5dc"/>
+              <stop offset="55%" stop-color="#8e83ff"/>
+              <stop offset="100%" stop-color="#d58cff"/>
+            </linearGradient>
+          </defs>
+          <circle cx="50" cy="50" r="43" fill="none" stroke="url(#brandGradient)" stroke-width="2.5"/>
+          <path d="M22 49c0-15 12-27 27-27 9 0 17 4 22 11" fill="none" stroke="url(#brandGradient)" stroke-width="3" stroke-linecap="round"/>
+          <path d="M78 51c0 15-12 27-27 27-9 0-17-4-22-11" fill="none" stroke="url(#brandGradient)" stroke-width="3" stroke-linecap="round"/>
+          <path d="M34 40h32a8 8 0 0 1 8 8v8a8 8 0 0 1-8 8H49l-11 8v-8h-4a8 8 0 0 1-8-8v-8a8 8 0 0 1 8-8Z" fill="url(#brandGradient)" opacity=".95"/>
+          <circle cx="42" cy="52" r="3" fill="#11152b"/>
+          <circle cx="51" cy="52" r="3" fill="#11152b"/>
+          <circle cx="60" cy="52" r="3" fill="#11152b"/>
+        </svg>
+      </div>
+
+      <div class="splash-brand">HANOON <span>WORLD</span></div>
+      <div class="splash-tagline">عالمك.. تواصلك.. متعتك بلا حدود</div>
+      <p class="splash-description">
+        اجتمع مع أصدقائك، اكتشف الألعاب، واصنع لحظات لا تُنسى
+      </p>
+
+      <div class="splash-loader">
+        <div class="loader-ring"></div>
+        <span>نجهّز عالمك الآن</span>
+      </div>
+    </div>
+
+    <div class="splash-footer">A WORLD THAT BRINGS US TOGETHER</div>
+  </section>
+
+  <!-- AUTHENTICATION -->
+  <section id="auth-screen" class="auth-screen hidden">
+    <div class="auth-background"></div>
+    <div class="auth-overlay"></div>
+
+    <div class="auth-layout">
+      <div class="auth-intro">
+        <div class="mini-brand">
+          <span class="mini-brand-icon">H</span>
+          <span>HANOON WORLD</span>
+        </div>
+        <p class="eyebrow">YOUR WORLD. YOUR PEOPLE.</p>
+        <h1>كل عالمك<br><span>في مكان واحد</span></h1>
+        <p class="auth-intro-text">
+          تواصل مع أصدقائك، ادخل غرفك المفضلة، واكتشف عالمًا مليئًا بالألعاب والتحديات.
+        </p>
+        <div class="intro-points">
+          <span>تواصل</span>
+          <span>ألعاب</span>
+          <span>مجتمعات</span>
+        </div>
+      </div>
+
+      <div class="auth-card glass-panel">
+        <div class="auth-card-heading">
+          <div class="auth-card-mark">H</div>
+          <div>
+            <h2>مرحبًا بك</h2>
+            <p>ادخل إلى عالم HANOON WORLD</p>
+          </div>
+        </div>
+
+        <div class="auth-tabs">
+          <button type="button" class="auth-tab active" data-auth="login">تسجيل الدخول</button>
+          <button type="button" class="auth-tab" data-auth="register">حساب جديد</button>
+        </div>
+
+        <form id="auth-form">
+          <label for="username">اسم المستخدم</label>
+          <div class="input-wrap">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>
+            <input id="username" name="username" type="text" placeholder="اكتب اسم المستخدم" autocomplete="username" required minlength="3" maxlength="24">
+          </div>
+
+          <label for="password">كلمة المرور</label>
+          <div class="input-wrap">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+            <input id="password" name="password" type="password" placeholder="اكتب كلمة المرور" autocomplete="current-password" required minlength="8">
+          </div>
+
+          <p id="auth-message" class="auth-message" aria-live="polite"></p>
+          <button id="auth-submit" class="primary-button auth-submit" type="submit">تسجيل الدخول</button>
+        </form>
+
+        <div class="auth-security">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 4 6v5c0 5 3.4 8.5 8 10 4.6-1.5 8-5 8-10V6l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg>
+          <span>حسابك وبياناتك في أمان</span>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- تسجيل الدخول -->
-  <section id="auth-screen" class="screen auth-screen hidden">
-    <div class="auth-container">
-      <div class="auth-brand">
-        <div class="brand-logo">H</div>
-        <h1>HANOON WORLD</h1>
-        <p>ادخل عالمك وابدأ رحلتك</p>
-      </div>
-
-      <div class="auth-tabs">
-        <button type="button" class="auth-tab active" data-auth="login">
-          تسجيل الدخول
-        </button>
-        <button type="button" class="auth-tab" data-auth="register">
-          إنشاء حساب
-        </button>
-      </div>
-
-      <form id="auth-form">
-        <label for="username">اسم المستخدم</label>
-        <input
-          id="username"
-          name="username"
-          type="text"
-          autocomplete="username"
-          placeholder="اكتب اسم المستخدم"
-          minlength="3"
-          maxlength="24"
-          required
-        >
-
-        <label for="password">كلمة المرور</label>
-        <input
-          id="password"
-          name="password"
-          type="password"
-          autocomplete="current-password"
-          placeholder="اكتب كلمة المرور"
-          minlength="8"
-          required
-        >
-
-        <button id="auth-submit" type="submit">
-          تسجيل الدخول
-        </button>
-
-        <p id="auth-message" role="status"></p>
-      </form>
-    </div>
-  </section>
-
-  <!-- التطبيق -->
+  <!-- APPLICATION -->
   <div id="app" class="app-shell hidden">
 
-    <!-- الشريط العلوي الثابت -->
+    <!-- TOPBAR -->
     <header class="topbar">
       <div class="topbar-brand">
-        <div class="brand-logo small">H</div>
-        <span>HANOON WORLD</span>
+        <div class="topbar-logo">H</div>
+        <div class="topbar-brand-text">
+          <strong>HANOON <span>WORLD</span></strong>
+          <small>عالمك بلا حدود</small>
+        </div>
+      </div>
+
+      <div class="topbar-center">
+        <div class="global-search">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+          <input type="search" placeholder="ابحث في HANOON WORLD">
+          <kbd>⌘ K</kbd>
+        </div>
       </div>
 
       <div class="topbar-actions">
-        <button type="button" id="language-toggle" class="icon-button">
-          EN
+        <button id="language-toggle" class="icon-button language-button" type="button" aria-label="Change language">EN</button>
+        <button id="notifications-button" class="icon-button notification-button" type="button" aria-label="Notifications">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/></svg>
+          <i></i>
         </button>
-
-        <button type="button" id="notifications-button" class="icon-button"
-          aria-label="الإشعارات">
-          <span class="icon">♧</span>
-        </button>
-
-        <button type="button" id="profile-shortcut" class="profile-shortcut">
-          <img id="topbar-avatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop" alt="الصورة الشخصية">
+        <button id="profile-shortcut" class="topbar-profile" type="button" aria-label="My profile">
+          <img id="topbar-avatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&q=80" alt="Profile">
         </button>
       </div>
     </header>
 
     <div class="app-body">
 
-      <!-- القائمة الجانبية الثابتة -->
+      <!-- SIDEBAR -->
       <aside class="sidebar">
         <div class="sidebar-user">
-          <img id="sidebar-avatar"
-            src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop"
-            alt="الصورة الشخصية">
-
+          <div class="sidebar-avatar-wrap">
+            <img id="sidebar-avatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&q=80" alt="User avatar">
+            <span class="online-dot"></span>
+          </div>
           <div class="sidebar-user-info">
-            <strong id="sidebar-username">مستخدم HANOON</strong>
-            <span id="sidebar-member-id">عضو HANOON</span>
+            <strong id="sidebar-username">HANOON Member</strong>
+            <small id="sidebar-member-id">HANOON WORLD</small>
           </div>
         </div>
 
-        <nav class="main-navigation" aria-label="القائمة الرئيسية">
-
-          <button class="nav-item active" data-page="home">
-            <span>⌂</span><span data-ar="الرئيسية" data-en="Home">الرئيسية</span>
+        <div class="sidebar-label">القائمة الرئيسية</div>
+        <nav class="sidebar-nav">
+          <button class="nav-item active" data-page="home" type="button">
+            <svg viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1Z"/></svg>
+            <span>الرئيسية</span>
           </button>
-
-          <button class="nav-item" data-page="rooms">
-            <span>◉</span><span data-ar="الغرف" data-en="Rooms">الغرف</span>
+          <button class="nav-item" data-page="rooms" type="button">
+            <svg viewBox="0 0 24 24"><path d="M4 19V9l8-5 8 5v10"/><path d="M8 19v-6h8v6M2 19h20"/></svg>
+            <span>الغرف</span><b class="nav-count">NEW</b>
           </button>
-
-          <button class="nav-item" data-page="games">
-            <span>▣</span><span data-ar="الألعاب" data-en="Games">الألعاب</span>
+          <button class="nav-item" data-page="games" type="button">
+            <svg viewBox="0 0 24 24"><path d="M6 8h12a4 4 0 0 1 3.8 5l-1.2 4a3 3 0 0 1-4.8 1.4L13 16h-2l-2.8 2.4A3 3 0 0 1 3.4 17l-1.2-4A4 4 0 0 1 6 8Z"/><path d="M7 11v4m-2-2h4m7-1h.01M18 14h.01"/></svg>
+            <span>الألعاب</span>
           </button>
-
-          <button class="nav-item" data-page="tournaments">
-            <span>♜</span><span data-ar="البطولات" data-en="Tournaments">البطولات</span>
+          <button class="nav-item" data-page="tournaments" type="button">
+            <svg viewBox="0 0 24 24"><path d="M8 21h8m-4-4v4M7 4h10v5a5 5 0 0 1-10 0Z"/><path d="M7 6H4v2a4 4 0 0 0 4 4m9-6h3v2a4 4 0 0 1-4 4"/></svg>
+            <span>البطولات</span>
           </button>
-
-          <button class="nav-item" data-page="chats">
-            <span>▤</span><span data-ar="المحادثات" data-en="Chats">المحادثات</span>
-          </button>
-
-          <button class="nav-item" data-page="friends">
-            <span>♧</span><span data-ar="الأصدقاء" data-en="Friends">الأصدقاء</span>
-          </button>
-
-          <button class="nav-item" data-page="store">
-            <span>◇</span><span data-ar="المتجر والهدايا" data-en="Store">المتجر والهدايا</span>
-          </button>
-
-          <button class="nav-item" data-page="wallet">
-            <span>◈</span><span data-ar="المحفظة" data-en="Wallet">المحفظة</span>
-          </button>
-
-          <button class="nav-item" data-page="profile">
-            <span>◎</span><span data-ar="ملفي الشخصي" data-en="Profile">ملفي الشخصي</span>
-          </button>
-
-          <button class="nav-item" data-page="notifications">
-            <span>♢</span><span data-ar="الإشعارات" data-en="Notifications">الإشعارات</span>
-          </button>
-
-          <button class="nav-item" data-page="settings">
-            <span>⚙</span><span data-ar="الإعدادات" data-en="Settings">الإعدادات</span>
-          </button>
-
         </nav>
 
-        <button type="button" id="logout-button" class="logout-button">
-          تسجيل الخروج
-        </button>
+        <div class="sidebar-label">التواصل الاجتماعي</div>
+        <nav class="sidebar-nav">
+          <button class="nav-item" data-page="chats" type="button">
+            <svg viewBox="0 0 24 24"><path d="M20 11.5a7.5 7.5 0 0 1-7.5 7.5H5l-2 2v-6.5A7.5 7.5 0 1 1 20 11.5Z"/><path d="M8 11h8m-8 3h5"/></svg>
+            <span>المحادثات</span>
+          </button>
+          <button class="nav-item" data-page="friends" type="button">
+            <svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/></svg>
+            <span>الأصدقاء</span>
+          </button>
+        </nav>
+
+        <div class="sidebar-label">عالم HANOON</div>
+        <nav class="sidebar-nav">
+          <button class="nav-item" data-page="store" type="button">
+            <svg viewBox="0 0 24 24"><path d="M3 9h18l-2-6H5L3 9Z"/><path d="M5 9v12h14V9M9 21v-7h6v7"/></svg>
+            <span>المتجر والهدايا</span>
+          </button>
+          <button class="nav-item" data-page="wallet" type="button">
+            <svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="15" rx="3"/><path d="M2 9h20m-5 4h2"/></svg>
+            <span>المحفظة</span>
+          </button>
+          <button class="nav-item" data-page="profile" type="button">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>
+            <span>ملفي الشخصي</span>
+          </button>
+        </nav>
+
+        <div class="sidebar-bottom">
+          <button class="nav-item" data-page="notifications" type="button">
+            <svg viewBox="0 0 24 24"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/></svg>
+            <span>الإشعارات</span>
+          </button>
+          <button class="nav-item" data-page="settings" type="button">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="m19.4 15 .1.1 1.4 1.1-1.5 2.6-1.7-.6a8 8 0 0 1-1.5.9l-.3 1.8h-3l-.3-1.8a8 8 0 0 1-1.5-.9l-1.7.6-1.5-2.6 1.4-1.1a8 8 0 0 1 0-1.8l-1.4-1.1 1.5-2.6 1.7.6a8 8 0 0 1 1.5-.9l.3-1.8h3l.3 1.8a8 8 0 0 1 1.5.9l1.7-.6 1.5 2.6-1.4 1.1a8 8 0 0 1 0 1.8Z"/></svg>
+            <span>الإعدادات</span>
+          </button>
+          <button id="logout-button" class="nav-item logout-item" type="button">
+            <svg viewBox="0 0 24 24"><path d="M10 17l5-5-5-5m5 5H3"/><path d="M12 3h7a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-7"/></svg>
+            <span>تسجيل الخروج</span>
+          </button>
+        </div>
       </aside>
 
-      <!-- مساحة الصفحات الثابتة -->
-      <main id="page-viewport" class="page-viewport">
+      <!-- MAIN CONTENT -->
+      <main class="main-content">
 
-        <!-- 1: الرئيسية -->
-        <section class="page active" id="page-home" data-page="home">
+        <!-- HOME -->
+        <section id="page-home" class="page active">
           <div class="page-content">
-            <div class="home-hero">
-              <div class="hero-copy">
-                <span class="eyebrow">WELCOME TO HANOON</span>
-                <h1>عالمك يبدأ من هنا</h1>
-                <p>اكتشف الغرف، العب مع أصدقائك، واصنع لحظاتك.</p>
-                <button type="button" data-action="create-room">
-                  إنشاء غرفة جديدة
-                </button>
+            <div class="welcome-banner">
+              <div class="welcome-copy">
+                <span class="eyebrow">WELCOME TO YOUR WORLD</span>
+                <h1>أهلاً بك في <span>HANOON WORLD</span></h1>
+                <p>مكان واحد يجمع أصدقاءك وألعابك ولحظاتك المميزة.</p>
+                <button class="primary-button" data-page-link="games" type="button">اكتشف عالم الألعاب</button>
+              </div>
+              <div class="welcome-art">
+                <div class="welcome-orb orb-a"></div>
+                <div class="welcome-orb orb-b"></div>
+                <div class="welcome-glass-icon">
+                  <svg viewBox="0 0 100 100"><path d="M20 48c0-17 13-30 30-30s30 13 30 30-13 30-30 30H30L17 88l4-18a29 29 0 0 1-1-22Z"/><path d="M35 48h30M35 59h19"/></svg>
+                </div>
               </div>
             </div>
 
-            <div class="wallet-summary">
-              <article class="summary-card">
-                <span>النقاط</span>
-                <strong id="home-points">--</strong>
+            <div class="section-heading">
+              <div><span class="eyebrow">YOUR BALANCE</span><h2>ملخص حسابك</h2></div>
+              <button class="text-link" data-page-link="wallet" type="button">عرض المحفظة</button>
+            </div>
+
+            <div class="balance-grid">
+              <article class="balance-card points-card">
+                <span class="balance-icon">P</span><small>النقاط</small><strong id="home-points">--</strong>
               </article>
-              <article class="summary-card">
-                <span>العملات</span>
-                <strong id="home-coins">--</strong>
+              <article class="balance-card coins-card">
+                <span class="balance-icon">C</span><small>العملات</small><strong id="home-coins">--</strong>
               </article>
-              <article class="summary-card">
-                <span>الجواهر</span>
-                <strong id="home-gems">--</strong>
+              <article class="balance-card gems-card">
+                <span class="balance-icon">G</span><small>الجواهر</small><strong id="home-gems">--</strong>
               </article>
             </div>
 
-            <section class="content-section">
-              <div class="section-heading">
-                <div>
-                  <h2>الغرف المتاحة الآن</h2>
-                  <p>انضم إلى الأصدقاء والمجتمعات</p>
+            <div class="home-columns">
+              <section class="home-panel">
+                <div class="section-heading compact">
+                  <div><span class="eyebrow">PLAY TOGETHER</span><h2>الغرف المتاحة</h2></div>
+                  <button class="text-link" data-page-link="rooms" type="button">كل الغرف</button>
                 </div>
-                <button type="button" data-page-link="rooms">عرض الكل</button>
-              </div>
-              <div id="home-rooms" class="cards-grid"></div>
-            </section>
+                <div id="home-rooms" class="home-room-list"></div>
+              </section>
 
-            <section class="content-section">
-              <div class="section-heading">
-                <div>
-                  <h2>اكتشف الألعاب</h2>
-                  <p>اختر لعبتك وابدأ التحدي</p>
+              <section class="home-panel">
+                <div class="section-heading compact">
+                  <div><span class="eyebrow">MEET & CONNECT</span><h2>الأصدقاء المتصلون</h2></div>
+                  <button class="text-link" data-page-link="friends" type="button">الأصدقاء</button>
                 </div>
-                <button type="button" data-page-link="games">كل الألعاب</button>
-              </div>
-              <div id="home-games" class="cards-grid"></div>
-            </section>
+                <div id="home-online-friends" class="online-friends-list"></div>
+              </section>
+            </div>
 
-            <section class="content-section">
-              <div class="section-heading">
-                <h2>الأصدقاء المتصلون</h2>
-              </div>
-              <div id="home-online-friends" class="cards-grid"></div>
-            </section>
+            <div class="section-heading">
+              <div><span class="eyebrow">CHOOSE YOUR GAME</span><h2>ألعاب مقترحة</h2></div>
+              <button class="text-link" data-page-link="games" type="button">كل الألعاب</button>
+            </div>
+            <div id="home-games" class="games-grid home-games-grid"></div>
           </div>
         </section>
 
-        <!-- 2: الغرف المتاحة -->
-        <section class="page" id="page-rooms" data-page="rooms">
+        <!-- ROOMS -->
+        <section id="page-rooms" class="page">
           <div class="page-content">
-            <div class="page-heading">
-              <h1>الغرف المتاحة</h1>
-              <p>اكتشف الغرف وانضم إلى أصدقائك</p>
-              <button type="button" data-action="create-room">+ إنشاء غرفة</button>
+            <div class="page-hero rooms-hero">
+              <span class="eyebrow">MEET YOUR COMMUNITY</span>
+              <h1>الغرف</h1>
+              <p>اجتمع مع أصدقائك وابدأ لحظات جديدة.</p>
+              <button class="primary-button" data-action="create-room" type="button">إنشاء غرفة جديدة</button>
             </div>
-            <div class="filter-bar" id="room-filters"></div>
-            <div id="rooms-list" class="cards-grid"></div>
+            <div class="section-heading"><div><h2>الغرف المتاحة</h2><p>اكتشف الغرف وانضم إلى مجتمعك</p></div></div>
+            <div id="rooms-list" class="rooms-grid"></div>
           </div>
         </section>
 
-        <!-- 3: إنشاء غرفة -->
-        <section class="page" id="page-create-room" data-page="create-room">
+        <!-- CREATE ROOM -->
+        <section id="page-create-room" class="page">
           <div class="page-content">
-            <div class="page-heading">
-              <h1>إنشاء غرفة جديدة</h1>
-              <p>أنشئ مساحتك واجمع أصدقاءك</p>
-            </div>
-
+            <div class="page-heading"><span class="eyebrow">CREATE YOUR SPACE</span><h1>إنشاء غرفة</h1><p>جهّز مساحتك الخاصة.</p></div>
             <form id="create-room-form" class="form-panel">
               <label for="room-name">اسم الغرفة</label>
-              <input id="room-name" name="room_name" maxlength="50" required>
-
+              <input id="room-name" type="text" placeholder="اكتب اسم الغرفة">
               <label for="room-description">وصف الغرفة</label>
-              <textarea id="room-description" name="description" maxlength="300"></textarea>
-
-              <label for="room-type">نوع الغرفة</label>
-              <select id="room-type" name="room_type">
-                <option value="social">اجتماعية</option>
-                <option value="gaming">ألعاب</option>
-                <option value="voice">دردشة صوتية</option>
-              </select>
-
-              <label for="room-privacy">الخصوصية</label>
-              <select id="room-privacy" name="privacy">
-                <option value="public">عامة</option>
-                <option value="private">خاصة</option>
-              </select>
-
-              <button type="submit">إنشاء الغرفة</button>
-              <p id="create-room-message" role="status"></p>
+              <textarea id="room-description" rows="4" placeholder="اكتب وصفًا قصيرًا"></textarea>
+              <label for="room-privacy">نوع الغرفة</label>
+              <select id="room-privacy"><option value="public">عامة</option><option value="private">خاصة</option></select>
+              <p id="create-room-message" class="form-message"></p>
+              <button class="primary-button" type="submit">إنشاء الغرفة</button>
             </form>
           </div>
         </section>
 
-        <!-- 4: تفاصيل الغرفة -->
-        <section class="page" id="page-room-details" data-page="room-details">
-          <div class="page-content">
-            <div id="room-details-content"></div>
-          </div>
+        <!-- ROOM DETAILS -->
+        <section id="page-room-details" class="page">
+          <div class="page-content"><div id="room-details-content" class="details-container"></div></div>
         </section>
 
-        <!-- 5: الألعاب -->
-        <section class="page" id="page-games" data-page="games">
+        <!-- GAMES -->
+        <section id="page-games" class="page">
           <div class="page-content">
-            <div class="page-heading">
+            <div class="page-hero games-hero">
+              <span class="eyebrow">PLAY • COMPETE • WIN</span>
               <h1>عالم الألعاب</h1>
-              <p>اختر اللعبة التي تناسبك</p>
+              <p>اختار لعبتك، تحدّى أصدقاءك، واصنع إنجازك.</p>
             </div>
-            <div id="games-categories" class="filter-bar"></div>
-            <div id="games-list" class="cards-grid"></div>
+            <div class="section-heading"><div><h2>مكتبة الألعاب</h2><p>ألعاب HANOON WORLD</p></div></div>
+            <div id="games-list" class="games-grid"></div>
           </div>
         </section>
 
-        <!-- 6: صفحة اللعبة المستقلة -->
-        <section class="page" id="page-game-details" data-page="game-details">
-          <div class="page-content">
-            <div id="game-details-content"></div>
-          </div>
+        <!-- GAME DETAILS -->
+        <section id="page-game-details" class="page">
+          <div class="page-content"><div id="game-details-content" class="details-container"></div></div>
         </section>
 
-        <!-- 7: البطولات والتحديات -->
-        <section class="page" id="page-tournaments" data-page="tournaments">
+        <!-- TOURNAMENTS -->
+        <section id="page-tournaments" class="page">
           <div class="page-content">
-            <div class="page-heading">
+            <div class="page-hero tournaments-hero">
+              <span class="eyebrow">RISE TO THE TOP</span>
               <h1>البطولات والتحديات</h1>
-              <p>نافس اللاعبين وحقق الإنجازات</p>
+              <p>نافس، اجمع النقاط، وكن من أبطال HANOON.</p>
             </div>
-            <div id="tournaments-list" class="cards-grid"></div>
+            <div id="tournaments-list" class="content-grid"></div>
           </div>
         </section>
 
-        <!-- 8: المحادثات -->
-        <section class="page" id="page-chats" data-page="chats">
+        <!-- CHATS -->
+        <section id="page-chats" class="page">
           <div class="page-content">
-            <div class="page-heading">
-              <h1>المحادثات</h1>
-              <p>تواصل مع أصدقائك</p>
-            </div>
-            <div id="conversations-list"></div>
+            <div class="page-heading"><span class="eyebrow">STAY CONNECTED</span><h1>المحادثات</h1><p>كل محادثاتك في مكان واحد.</p></div>
+            <div id="conversations-list" class="content-panel"></div>
           </div>
         </section>
 
-        <!-- 9: الأصدقاء -->
-        <section class="page" id="page-friends" data-page="friends">
+        <!-- FRIENDS -->
+        <section id="page-friends" class="page">
           <div class="page-content">
-            <div class="page-heading">
-              <h1>الأصدقاء</h1>
-              <p>أصدقاؤك وطلبات الصداقة</p>
-            </div>
-            <div id="friends-content"></div>
+            <div class="page-heading"><span class="eyebrow">YOUR PEOPLE</span><h1>الأصدقاء</h1><p>اكتشف أصدقاءك وتواصل معهم.</p></div>
+            <div id="friends-content" class="content-panel"></div>
           </div>
         </section>
 
-        <!-- 10: المتجر والهدايا -->
-        <section class="page" id="page-store" data-page="store">
+        <!-- STORE -->
+        <section id="page-store" class="page">
           <div class="page-content">
-            <div class="page-heading">
+            <div class="page-hero store-hero">
+              <span class="eyebrow">MAKE IT SPECIAL</span>
               <h1>المتجر والهدايا</h1>
-              <p>اكتشف العناصر والهدايا المتاحة</p>
+              <p>اكتشف الهدايا والعناصر المميزة.</p>
             </div>
-            <div id="store-categories" class="filter-bar"></div>
-            <div id="store-items" class="cards-grid"></div>
+            <div id="store-items" class="store-grid"></div>
           </div>
         </section>
 
-        <!-- 11: المحفظة -->
-        <section class="page" id="page-wallet" data-page="wallet">
+        <!-- WALLET -->
+        <section id="page-wallet" class="page">
           <div class="page-content">
-            <div class="page-heading">
-              <h1>المحفظة</h1>
-              <p>رصيدك وسجل معاملاتك</p>
-            </div>
-            <div id="wallet-content"></div>
-            <div id="wallet-transactions"></div>
+            <div class="page-heading"><span class="eyebrow">YOUR WORLD BALANCE</span><h1>المحفظة</h1><p>تابع نقاطك وعملاتك وجواهرك.</p></div>
+            <div id="wallet-content" class="wallet-content"></div>
+            <div class="section-heading"><div><h2>آخر المعاملات</h2></div></div>
+            <div id="wallet-transactions" class="content-panel"></div>
           </div>
         </section>
 
-        <!-- 12: الملف الشخصي -->
-        <section class="page" id="page-profile" data-page="profile">
+        <!-- PROFILE -->
+        <section id="page-profile" class="page">
           <div class="page-content">
-            <div class="page-heading">
-              <h1>ملفي الشخصي</h1>
-            </div>
-            <div id="profile-content"></div>
+            <div class="page-heading"><span class="eyebrow">YOUR IDENTITY</span><h1>ملفي الشخصي</h1><p>مساحتك الخاصة في HANOON WORLD.</p></div>
+            <div id="profile-content" class="profile-content"></div>
           </div>
         </section>
 
-        <!-- 13: الإشعارات -->
-        <section class="page" id="page-notifications" data-page="notifications">
+        <!-- NOTIFICATIONS -->
+        <section id="page-notifications" class="page">
           <div class="page-content">
-            <div class="page-heading">
-              <h1>الإشعارات</h1>
-            </div>
-            <div id="notifications-list"></div>
+            <div class="page-heading"><span class="eyebrow">WHAT'S NEW</span><h1>الإشعارات</h1><p>تابع آخر أخبارك وتنبيهاتك.</p></div>
+            <div id="notifications-list" class="content-panel"></div>
           </div>
         </section>
 
-        <!-- 14: الإعدادات -->
-        <section class="page" id="page-settings" data-page="settings">
+        <!-- SETTINGS -->
+        <section id="page-settings" class="page">
           <div class="page-content">
-            <div class="page-heading">
-              <h1>الإعدادات والخصوصية</h1>
-            </div>
-            <div id="settings-content"></div>
+            <div class="page-heading"><span class="eyebrow">MAKE IT YOURS</span><h1>الإعدادات</h1><p>تحكم في تجربتك داخل التطبيق.</p></div>
+            <div id="settings-content" class="content-panel"></div>
           </div>
         </section>
 
@@ -399,17 +428,8 @@
     </div>
   </div>
 
-  <!-- النوافذ المنبثقة -->
-  <div id="modal-root" class="modal-root hidden">
-    <div class="modal-backdrop" data-modal-close></div>
-    <div class="modal-panel" role="dialog" aria-modal="true">
-      <button type="button" class="modal-close" data-modal-close aria-label="إغلاق">×</button>
-      <div id="modal-content"></div>
-    </div>
-  </div>
-
   <div id="toast-root" class="toast-root" aria-live="polite"></div>
 
-  <script type="module" src="app.js"></script>
+  <script type="module" src="./app.js"></script>
 </body>
 </html>
