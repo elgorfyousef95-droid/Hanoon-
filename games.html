@@ -1,1127 +1,1228 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
-  <meta name="theme-color" content="#090b18">
-  <title>الألعاب | HANOON WORLD</title>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-  <style>
-    :root {
-      --bg:#090b18;
-      --panel:#171a30;
-      --purple:#a18aff;
-      --gold:#edca83;
-      --cyan:#68d9d5;
-      --text:#f7f5ff;
-      --muted:#a6a8bd;
-      --line:rgba(255,255,255,.09);
-    }
-
-    * {
-      box-sizing:border-box;
-      margin:0;
-      padding:0;
-      -webkit-tap-highlight-color:transparent;
-    }
-
-    html { min-height:100%; scroll-behavior:smooth; }
-
-    body {
-      min-height:100vh;
-      overflow-x:hidden;
-      padding-bottom:105px;
-      background:var(--bg);
-      color:var(--text);
-      font-family:"Cairo",sans-serif;
-    }
-
-    button,input { font:inherit; }
-    button { cursor:pointer; color:inherit; }
-    a { color:inherit; text-decoration:none; }
-
-    .background {
-      position:fixed;
-      inset:0;
-      z-index:-2;
-      background:
-        linear-gradient(180deg,rgba(7,9,20,.55),rgba(7,9,20,.91) 60%,#090b18),
-        url("https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=2000&q=85")
-        center top/cover no-repeat;
-    }
-
-    .app {
-      width:min(100%,1450px);
-      margin:auto;
-      padding:0 24px;
-    }
-
-    /* HEADER */
-
-    .topbar {
-      min-height:78px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      border-bottom:1px solid var(--line);
-    }
-
-    .brand {
-      display:flex;
-      align-items:center;
-      gap:11px;
-    }
-
-    .brand-icon {
-      width:45px;
-      height:45px;
-      display:grid;
-      place-items:center;
-      border-radius:14px;
-      background:linear-gradient(145deg,#b49aff,#6845ce);
-      box-shadow:0 8px 28px #7954d455;
-    }
-
-    .brand-icon svg {
-      width:26px;
-      height:26px;
-      stroke:white;
-      fill:none;
-      stroke-width:1.7;
-    }
-
-    .brand-name { font-size:16px; font-weight:900; }
-    .brand-sub {
-      display:block;
-      margin-top:-5px;
-      color:var(--gold);
-      font-size:9px;
-      letter-spacing:2px;
-    }
-
-    .header-actions {
-      display:flex;
-      align-items:center;
-      gap:9px;
-    }
-
-    .wallet {
-      display:flex;
-      align-items:center;
-      gap:10px;
-      padding:7px 9px;
-      border:1px solid var(--line);
-      border-radius:14px;
-      background:#171a30e8;
-    }
-
-    .wallet-unit {
-      display:flex;
-      align-items:center;
-      gap:5px;
-      font-size:12px;
-      font-weight:900;
-    }
-
-    .wallet-unit svg {
-      width:17px;
-      height:17px;
-      stroke:var(--gold);
-      fill:none;
-      stroke-width:1.8;
-    }
-
-    .wallet-unit.gems svg { stroke:var(--cyan); }
-
-    .wallet-add {
-      width:29px;
-      height:29px;
-      display:grid;
-      place-items:center;
-      border-radius:9px;
-      background:linear-gradient(145deg,#aa91ff,#704ed4);
-    }
-
-    .wallet-add svg {
-      width:17px;
-      height:17px;
-      stroke:white;
-      fill:none;
-      stroke-width:2.4;
-    }
-
-    .profile-link {
-      width:42px;
-      height:42px;
-      overflow:hidden;
-      display:grid;
-      place-items:center;
-      border:2px solid var(--purple);
-      border-radius:50%;
-      background:#24243d;
-    }
-
-    .profile-link img {
-      width:100%;
-      height:100%;
-      object-fit:cover;
-    }
-
-    .profile-link svg {
-      width:22px;
-      height:22px;
-      stroke:#cbbdff;
-      fill:none;
-      stroke-width:1.7;
-    }
-
-    /* HERO */
-
-    .hero {
-      position:relative;
-      min-height:310px;
-      margin-top:23px;
-      padding:38px;
-      display:flex;
-      align-items:center;
-      overflow:hidden;
-      isolation:isolate;
-      border:1px solid #beabff33;
-      border-radius:28px;
-      background:
-        linear-gradient(90deg,rgba(10,11,28,.97),rgba(12,12,30,.72),rgba(12,12,30,.22)),
-        url("https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1800&q=90")
-        center/cover no-repeat;
-      box-shadow:0 20px 60px #0006;
-    }
-
-    .hero-content { max-width:590px; }
-
-    .hero-label {
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding:7px 13px;
-      border:1px solid #edca8340;
-      border-radius:30px;
-      background:#edca8312;
-      color:var(--gold);
-      font-size:11px;
-      font-weight:900;
-    }
-
-    .hero-label span {
-      width:6px;
-      height:6px;
-      border-radius:50%;
-      background:var(--gold);
-      box-shadow:0 0 12px var(--gold);
-    }
-
-    .hero h1 {
-      margin-top:17px;
-      font-size:clamp(32px,5vw,52px);
-      line-height:1.4;
-      font-weight:900;
-    }
-
-    .hero h1 strong { color:#c2adff; }
-
-    .hero p {
-      max-width:470px;
-      margin-top:10px;
-      color:#d0cce0;
-      font-size:13px;
-      line-height:2.1;
-    }
-
-    .hero-art {
-      position:absolute;
-      left:7%;
-      top:50%;
-      transform:translateY(-50%);
-      width:175px;
-      height:175px;
-      display:grid;
-      place-items:center;
-      border:1px solid #ffffff20;
-      border-radius:50%;
-      background:#ffffff08;
-      box-shadow:0 0 80px #9170ff25;
-    }
-
-    .hero-art::before {
-      content:"";
-      position:absolute;
-      inset:14px;
-      border:1px solid #beabff30;
-      border-radius:50%;
-    }
-
-    .hero-art svg {
-      width:75px;
-      height:75px;
-      stroke:#c8b8ff;
-      fill:none;
-      stroke-width:1.1;
-    }
-
-    /* SEARCH */
-
-    .search-section { margin-top:25px; }
-
-    .search-box {
-      min-height:56px;
-      display:flex;
-      align-items:center;
-      gap:13px;
-      padding:0 17px;
-      border:1px solid #ae97ff30;
-      border-radius:16px;
-      background:#15182ceF;
-    }
-
-    .search-box svg {
-      width:22px;
-      height:22px;
-      flex:none;
-      stroke:#bbaaff;
-      fill:none;
-      stroke-width:1.8;
-    }
-
-    .search-box input {
-      width:100%;
-      min-width:0;
-      border:0;
-      outline:0;
-      background:transparent;
-      color:white;
-      font-size:13px;
-    }
-
-    .search-box input::placeholder { color:#888ba4; }
-
-    /* SECTION */
-
-    .section-heading {
-      margin:32px 0 17px;
-      display:flex;
-      align-items:flex-end;
-      justify-content:space-between;
-      gap:12px;
-    }
-
-    .section-title { font-size:21px; font-weight:900; }
-
-    .section-subtitle {
-      display:block;
-      margin-top:3px;
-      color:var(--muted);
-      font-size:11px;
-    }
-
-    .games-count {
-      color:var(--gold);
-      font-size:11px;
-      font-weight:900;
-      white-space:nowrap;
-    }
-
-    /* GAME CARDS */
-
-    .games-grid {
-      display:grid;
-      grid-template-columns:repeat(3,minmax(0,1fr));
-      gap:18px;
-    }
-
-    .game-card {
-      min-width:0;
-      overflow:hidden;
-      border:1px solid #ffffff13;
-      border-radius:20px;
-      background:linear-gradient(155deg,#1f233cf7,#0f1324fa);
-      box-shadow:0 15px 38px #0004;
-      transition:transform .25s,border-color .25s;
-    }
-
-    .game-card:hover {
-      transform:translateY(-5px);
-      border-color:#b097ff70;
-    }
-
-    .game-cover {
-      position:relative;
-      height:205px;
-      overflow:hidden;
-      background:#24213d;
-    }
-
-    .game-cover img {
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      transition:transform .5s;
-    }
-
-    .game-card:hover .game-cover img { transform:scale(1.06); }
-
-    .game-cover::after {
-      content:"";
-      position:absolute;
-      inset:35% 0 0;
-      background:linear-gradient(transparent,#0a0c19d9);
-      pointer-events:none;
-    }
-
-    .game-number {
-      position:absolute;
-      z-index:2;
-      top:12px;
-      right:12px;
-      min-width:31px;
-      height:29px;
-      padding:0 8px;
-      display:grid;
-      place-items:center;
-      border:1px solid #ffffff30;
-      border-radius:9px;
-      background:#080a16b8;
-      color:white;
-      font-size:10px;
-      font-weight:900;
-      backdrop-filter:blur(12px);
-    }
-
-    .game-category {
-      position:absolute;
-      z-index:2;
-      bottom:12px;
-      right:13px;
-      padding:5px 10px;
-      border:1px solid #ffffff2b;
-      border-radius:20px;
-      background:#090b18a8;
-      color:#e8deff;
-      font-size:9px;
-      font-weight:800;
-      backdrop-filter:blur(10px);
-    }
-
-    .game-info { padding:15px; }
-
-    .game-title {
-      font-size:15px;
-      font-weight:900;
-      line-height:1.7;
-    }
-
-    .game-description {
-      min-height:39px;
-      margin-top:5px;
-      color:var(--muted);
-      font-size:10px;
-      line-height:1.9;
-    }
-
-    .game-footer {
-      margin-top:13px;
-      padding-top:12px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:8px;
-      border-top:1px solid #ffffff12;
-    }
-
-    .game-status {
-      display:flex;
-      align-items:center;
-      gap:7px;
-      color:#edca83;
-      font-size:10px;
-      font-weight:900;
-    }
-
-    .game-status::before {
-      content:"";
-      width:6px;
-      height:6px;
-      border-radius:50%;
-      background:#edca83;
-      box-shadow:0 0 9px #edca8380;
-    }
-
-    .game-status.active { color:#8fe2bd; }
-    .game-status.active::before {
-      background:#63d7a0;
-      box-shadow:0 0 9px #63d7a080;
-    }
-
-    .game-open {
-      min-height:35px;
-      padding:6px 13px;
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:7px;
-      border-radius:10px;
-      background:linear-gradient(120deg,#9277f1,#7050d2);
-      color:white;
-      font-size:10px;
-      font-weight:900;
-    }
-
-    .game-open svg {
-      width:13px;
-      height:13px;
-      stroke:white;
-      fill:none;
-      stroke-width:2;
-    }
-
-    /* EMPTY */
-
-    .state-panel {
-      grid-column:1/-1;
-      min-height:260px;
-      padding:30px 20px;
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      justify-content:center;
-      text-align:center;
-      border:1px solid var(--line);
-      border-radius:22px;
-      background:#171a30eF;
-    }
-
-    .state-panel h3 { margin-top:15px; font-size:17px; }
-    .state-panel p {
-      max-width:390px;
-      margin-top:7px;
-      color:var(--muted);
-      font-size:12px;
-      line-height:2;
-    }
-
-    .state-icon {
-      width:70px;
-      height:70px;
-      display:grid;
-      place-items:center;
-      border:1px solid #9d81ff40;
-      border-radius:21px;
-      background:#9d81ff19;
-    }
-
-    .state-icon svg {
-      width:35px;
-      height:35px;
-      stroke:#c1b1ff;
-      fill:none;
-      stroke-width:1.4;
-    }
-
-    .retry-button {
-      margin-top:18px;
-      padding:9px 18px;
-      border:0;
-      border-radius:10px;
-      background:linear-gradient(120deg,#9277f1,#7050d2);
-      color:white;
-      font-size:11px;
-      font-weight:900;
-    }
-
-    .skeleton {
-      min-height:310px;
-      border:1px solid var(--line);
-      border-radius:20px;
-      background:linear-gradient(110deg,#1b1f35 8%,#30304b 18%,#1b1f35 33%);
-      background-size:200% 100%;
-      animation:shimmer 1.5s linear infinite;
-    }
-
-    @keyframes shimmer {
-      to { background-position-x:-200%; }
-    }
-
-    /* NAVIGATION */
-
-    .bottom-nav {
-      position:fixed;
-      z-index:50;
-      right:50%;
-      bottom:max(12px,env(safe-area-inset-bottom));
-      transform:translateX(50%);
-      width:min(calc(100% - 26px),610px);
-      min-height:67px;
-      padding:8px 10px;
-      display:flex;
-      align-items:center;
-      justify-content:space-around;
-      gap:4px;
-      border:1px solid #ffffff20;
-      border-radius:21px;
-      background:#0d1020ed;
-      box-shadow:0 15px 45px #0008;
-      backdrop-filter:blur(22px);
-    }
-
-    .nav-item {
-      min-width:0;
-      flex:1;
-      min-height:49px;
-      padding:5px 3px;
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      justify-content:center;
-      gap:2px;
-      border-radius:13px;
-      color:#9295ac;
-      font-size:9px;
-      font-weight:800;
-    }
-
-    .nav-item svg {
-      width:21px;
-      height:21px;
-      stroke:currentColor;
-      fill:none;
-      stroke-width:1.7;
-    }
-
-    .nav-item.active {
-      color:#c7b8ff;
-      background:#9477f524;
-    }
-
-    /* RESPONSIVE */
-
-    @media(max-width:1050px) {
-      .games-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
-      .hero-art { width:140px;height:140px; }
-    }
-
-    @media(max-width:650px) {
-      .app { padding:0 13px; }
-      .topbar { min-height:69px; }
-      .brand-icon { width:39px;height:39px; }
-      .brand-name { font-size:12px; }
-      .brand-sub { font-size:7px;letter-spacing:1.5px; }
-      .header-actions { gap:5px; }
-      .wallet { gap:6px;padding:6px; }
-      .wallet-unit { font-size:9px; }
-      .wallet-unit svg { width:14px;height:14px; }
-      .wallet-add { width:24px;height:24px; }
-      .profile-link { width:36px;height:36px; }
-
-      .hero {
-        min-height:265px;
-        margin-top:15px;
-        padding:22px 18px;
-        border-radius:22px;
-        background-position:58% center;
-      }
-
-      .hero-content { position:relative;z-index:2;max-width:88%; }
-      .hero h1 { font-size:31px; }
-      .hero p { font-size:10px; }
-      .hero-art {
-        left:-18px;
-        width:90px;
-        height:90px;
-        opacity:.65;
-      }
-
-      .hero-art svg { width:42px;height:42px; }
-
-      .games-grid { gap:10px; }
-      .game-cover { height:137px; }
-      .game-info { padding:11px; }
-      .game-title { font-size:12px; }
-      .game-description { font-size:9px;min-height:47px; }
-      .game-footer { align-items:flex-start;flex-direction:column; }
-      .game-open { width:100%; }
-      .section-title { font-size:18px; }
-    }
-
-    @media(max-width:360px) {
-      .wallet { gap:4px; }
-      .games-grid { gap:8px; }
-      .game-cover { height:115px; }
-      .game-info { padding:9px; }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#090b18">
+<title>الألعاب | HANOON WORLD</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+:root{
+  --bg:#090b18;
+  --panel:#171a30;
+  --purple:#a18aff;
+  --gold:#edca83;
+  --cyan:#68d9d5;
+  --text:#f7f5ff;
+  --muted:#a6a8bd;
+  --line:rgba(255,255,255,.09);
+}
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  -webkit-tap-highlight-color:transparent;
+}
+
+html{min-height:100%;scroll-behavior:smooth}
+
+body{
+  min-height:100vh;
+  overflow-x:hidden;
+  padding-bottom:110px;
+  background:var(--bg);
+  color:var(--text);
+  font-family:"Cairo",sans-serif;
+}
+
+button,input{font:inherit}
+button{cursor:pointer;color:inherit}
+a{color:inherit;text-decoration:none}
+
+.background{
+  position:fixed;
+  inset:0;
+  z-index:-2;
+  background:
+    linear-gradient(180deg,rgba(7,9,20,.35),rgba(7,9,20,.86) 55%,#090b18),
+    url("https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=2000&q=90")
+    center top/cover no-repeat;
+}
+
+/* HEADER */
+
+.app{
+  width:min(100%,1500px);
+  margin:auto;
+  padding:0 24px;
+}
+
+.topbar{
+  min-height:78px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  border-bottom:1px solid var(--line);
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:11px;
+}
+
+.brand-icon{
+  width:45px;
+  height:45px;
+  display:grid;
+  place-items:center;
+  border-radius:14px;
+  background:linear-gradient(145deg,#b49aff,#6845ce);
+  box-shadow:0 8px 28px #7954d455;
+}
+
+.brand-icon svg{
+  width:26px;
+  height:26px;
+  stroke:white;
+  fill:none;
+  stroke-width:1.7;
+}
+
+.brand-name{font-size:16px;font-weight:900}
+.brand-sub{
+  display:block;
+  margin-top:-5px;
+  color:var(--gold);
+  font-size:9px;
+  letter-spacing:2px;
+}
+
+.header-actions{
+  display:flex;
+  align-items:center;
+  gap:9px;
+}
+
+.wallet{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:7px 9px;
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:#171a30e8;
+}
+
+.wallet-unit{
+  display:flex;
+  align-items:center;
+  gap:5px;
+  font-size:12px;
+  font-weight:900;
+}
+
+.wallet-unit svg{
+  width:17px;
+  height:17px;
+  stroke:var(--gold);
+  fill:none;
+  stroke-width:1.8;
+}
+
+.wallet-unit.gems svg{stroke:var(--cyan)}
+
+.wallet-add{
+  width:29px;
+  height:29px;
+  display:grid;
+  place-items:center;
+  border-radius:9px;
+  background:linear-gradient(145deg,#aa91ff,#704ed4);
+}
+
+.wallet-add svg{
+  width:17px;
+  height:17px;
+  stroke:white;
+  fill:none;
+  stroke-width:2.4;
+}
+
+.profile-link{
+  width:42px;
+  height:42px;
+  overflow:hidden;
+  display:grid;
+  place-items:center;
+  border:2px solid var(--purple);
+  border-radius:50%;
+  background:#24243d;
+}
+
+.profile-link img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.profile-link svg{
+  width:22px;
+  height:22px;
+  stroke:#cbbdff;
+  fill:none;
+  stroke-width:1.7;
+}
+
+/* HERO */
+
+.hero{
+  position:relative;
+  min-height:320px;
+  margin-top:23px;
+  padding:38px;
+  display:flex;
+  align-items:center;
+  overflow:hidden;
+  isolation:isolate;
+  border:1px solid #beabff33;
+  border-radius:28px;
+  background:
+    linear-gradient(90deg,rgba(10,11,28,.96),rgba(12,12,30,.70),rgba(12,12,30,.18)),
+    url("https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1800&q=90")
+    center/cover no-repeat;
+  box-shadow:0 20px 60px #0006;
+}
+
+.hero-content{
+  position:relative;
+  z-index:2;
+  max-width:590px;
+}
+
+.hero-label{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:7px 13px;
+  border:1px solid #edca8340;
+  border-radius:30px;
+  background:#edca8312;
+  color:var(--gold);
+  font-size:11px;
+  font-weight:900;
+}
+
+.hero-label span{
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  background:var(--gold);
+  box-shadow:0 0 12px var(--gold);
+}
+
+.hero h1{
+  margin-top:17px;
+  font-size:clamp(32px,5vw,52px);
+  line-height:1.4;
+  font-weight:900;
+}
+
+.hero h1 strong{color:#c2adff}
+
+.hero p{
+  max-width:470px;
+  margin-top:10px;
+  color:#d0cce0;
+  font-size:13px;
+  line-height:2.1;
+}
+
+.hero-art{
+  position:absolute;
+  left:7%;
+  top:50%;
+  transform:translateY(-50%);
+  width:175px;
+  height:175px;
+  display:grid;
+  place-items:center;
+  border:1px solid #ffffff20;
+  border-radius:50%;
+  background:#ffffff08;
+  box-shadow:0 0 80px #9170ff25;
+}
+
+.hero-art::before{
+  content:"";
+  position:absolute;
+  inset:14px;
+  border:1px solid #beabff30;
+  border-radius:50%;
+}
+
+.hero-art svg{
+  width:75px;
+  height:75px;
+  stroke:#c8b8ff;
+  fill:none;
+  stroke-width:1.1;
+}
+
+/* SEARCH */
+
+.search-section{margin-top:25px}
+
+.search-box{
+  min-height:56px;
+  display:flex;
+  align-items:center;
+  gap:13px;
+  padding:0 17px;
+  border:1px solid #ae97ff30;
+  border-radius:16px;
+  background:#15182cef;
+}
+
+.search-box svg{
+  width:22px;
+  height:22px;
+  flex:none;
+  stroke:#bbaaff;
+  fill:none;
+  stroke-width:1.8;
+}
+
+.search-box input{
+  width:100%;
+  min-width:0;
+  border:0;
+  outline:0;
+  background:transparent;
+  color:white;
+  font-size:13px;
+}
+
+.search-box input::placeholder{color:#888ba4}
+
+/* FILTERS */
+
+.filters{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  margin-top:19px;
+  overflow-x:auto;
+  scrollbar-width:none;
+  padding-bottom:4px;
+}
+
+.filters::-webkit-scrollbar{display:none}
+
+.filter-btn{
+  flex:none;
+  padding:9px 18px;
+  border:1px solid #ffffff16;
+  border-radius:30px;
+  background:#171a30d9;
+  color:#b9bad0;
+  font-size:11px;
+  font-weight:800;
+  transition:.2s;
+}
+
+.filter-btn.active{
+  border-color:#a18aff80;
+  background:#a18aff24;
+  color:#d6caff;
+}
+
+/* SECTION */
+
+.section-heading{
+  margin:28px 0 17px;
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:12px;
+}
+
+.section-title{font-size:21px;font-weight:900}
+
+.section-subtitle{
+  display:block;
+  margin-top:3px;
+  color:var(--muted);
+  font-size:11px;
+}
+
+.games-count{
+  color:var(--gold);
+  font-size:11px;
+  font-weight:900;
+  white-space:nowrap;
+}
+
+/* GAME CARDS */
+
+.games-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));
+  gap:19px;
+}
+
+.game-card{
+  min-width:0;
+  overflow:hidden;
+  border:1px solid #ffffff16;
+  border-radius:21px;
+  background:linear-gradient(155deg,#1f233cf7,#0f1324fa);
+  box-shadow:0 15px 38px #0005;
+  transition:transform .25s,border-color .25s,box-shadow .25s;
+}
+
+.game-card:hover{
+  transform:translateY(-5px);
+  border-color:#b097ff75;
+  box-shadow:0 20px 45px #0008;
+}
+
+.game-cover{
+  position:relative;
+  height:215px;
+  overflow:hidden;
+  background:#24213d;
+}
+
+.game-cover img{
+  width:100%;
+  height:100%;
+  display:block;
+  object-fit:cover;
+  transition:transform .55s;
+}
+
+.game-card:hover .game-cover img{transform:scale(1.07)}
+
+.game-cover::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(180deg,rgba(5,7,18,.05) 15%,transparent 38%,rgba(5,7,18,.88) 100%);
+  pointer-events:none;
+}
+
+.game-number{
+  position:absolute;
+  z-index:2;
+  top:12px;
+  right:12px;
+  min-width:32px;
+  height:30px;
+  padding:0 8px;
+  display:grid;
+  place-items:center;
+  border:1px solid #ffffff35;
+  border-radius:9px;
+  background:#080a16bd;
+  color:white;
+  font-size:10px;
+  font-weight:900;
+  backdrop-filter:blur(12px);
+}
+
+.game-category{
+  position:absolute;
+  z-index:2;
+  bottom:13px;
+  right:14px;
+  padding:5px 11px;
+  border:1px solid #ffffff2b;
+  border-radius:20px;
+  background:#090b18b5;
+  color:#e8deff;
+  font-size:9px;
+  font-weight:800;
+  backdrop-filter:blur(10px);
+}
+
+.game-info{padding:16px}
+
+.game-title{
+  font-size:16px;
+  font-weight:900;
+  line-height:1.7;
+}
+
+.game-description{
+  min-height:42px;
+  margin-top:5px;
+  color:var(--muted);
+  font-size:10px;
+  line-height:1.9;
+}
+
+.game-footer{
+  margin-top:14px;
+  padding-top:12px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  border-top:1px solid #ffffff12;
+}
+
+.game-status{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  color:#edca83;
+  font-size:10px;
+  font-weight:900;
+}
+
+.game-status::before{
+  content:"";
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  background:#edca83;
+  box-shadow:0 0 9px #edca8380;
+}
+
+.game-status.active{color:#8fe2bd}
+
+.game-status.active::before{
+  background:#63d7a0;
+  box-shadow:0 0 9px #63d7a080;
+}
+
+.game-open{
+  min-height:37px;
+  padding:7px 15px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:7px;
+  border:0;
+  border-radius:10px;
+  background:linear-gradient(120deg,#9277f1,#7050d2);
+  color:white;
+  font-size:10px;
+  font-weight:900;
+}
+
+.game-open svg{
+  width:13px;
+  height:13px;
+  stroke:white;
+  fill:none;
+  stroke-width:2;
+}
+
+.game-coming{
+  min-height:37px;
+  padding:7px 15px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  border:1px solid #edca8340;
+  border-radius:10px;
+  background:#edca8312;
+  color:#edca83;
+  font-size:10px;
+  font-weight:900;
+  cursor:default;
+}
+
+/* EMPTY AND LOADING */
+
+.state-panel{
+  grid-column:1/-1;
+  min-height:260px;
+  padding:30px 20px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  border:1px solid var(--line);
+  border-radius:22px;
+  background:#171a30ef;
+}
+
+.state-panel h3{margin-top:15px;font-size:17px}
+
+.state-panel p{
+  max-width:390px;
+  margin-top:7px;
+  color:var(--muted);
+  font-size:12px;
+  line-height:2;
+}
+
+.state-icon{
+  width:70px;
+  height:70px;
+  display:grid;
+  place-items:center;
+  border:1px solid #9d81ff40;
+  border-radius:21px;
+  background:#9d81ff19;
+}
+
+.state-icon svg{
+  width:35px;
+  height:35px;
+  stroke:#c1b1ff;
+  fill:none;
+  stroke-width:1.4;
+}
+
+.retry-button{
+  margin-top:18px;
+  padding:9px 18px;
+  border:0;
+  border-radius:10px;
+  background:linear-gradient(120deg,#9277f1,#7050d2);
+  color:white;
+  font-size:11px;
+  font-weight:900;
+}
+
+.skeleton{
+  min-height:310px;
+  border:1px solid var(--line);
+  border-radius:20px;
+  background:linear-gradient(110deg,#1b1f35 8%,#30304b 18%,#1b1f35 33%);
+  background-size:200% 100%;
+  animation:shimmer 1.5s linear infinite;
+}
+
+@keyframes shimmer{
+  to{background-position-x:-200%}
+}
+
+/* BOTTOM NAV */
+
+.bottom-nav{
+  position:fixed;
+  z-index:50;
+  right:50%;
+  bottom:max(12px,env(safe-area-inset-bottom));
+  transform:translateX(50%);
+  width:min(calc(100% - 26px),610px);
+  min-height:67px;
+  padding:8px 10px;
+  display:flex;
+  align-items:center;
+  justify-content:space-around;
+  gap:4px;
+  border:1px solid #ffffff20;
+  border-radius:21px;
+  background:#0d1020ed;
+  box-shadow:0 15px 45px #0008;
+  backdrop-filter:blur(22px);
+}
+
+.nav-item{
+  min-width:0;
+  flex:1;
+  min-height:49px;
+  padding:5px 3px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:2px;
+  border-radius:13px;
+  color:#9295ac;
+  font-size:9px;
+  font-weight:800;
+}
+
+.nav-item svg{
+  width:21px;
+  height:21px;
+  stroke:currentColor;
+  fill:none;
+  stroke-width:1.7;
+}
+
+.nav-item.active{
+  color:#c7b8ff;
+  background:#9477f524;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:650px){
+  .app{padding:0 13px}
+  .topbar{min-height:69px}
+  .brand-icon{width:39px;height:39px}
+  .brand-name{font-size:12px}
+  .brand-sub{font-size:7px;letter-spacing:1.5px}
+  .header-actions{gap:5px}
+  .wallet{gap:6px;padding:6px}
+  .wallet-unit{font-size:9px}
+  .wallet-unit svg{width:14px;height:14px}
+  .wallet-add{width:24px;height:24px}
+  .profile-link{width:36px;height:36px}
+
+  .hero{
+    min-height:265px;
+    margin-top:15px;
+    padding:22px 18px;
+    border-radius:22px;
+    background-position:58% center;
+  }
+
+  .hero-content{max-width:90%}
+  .hero h1{font-size:31px}
+  .hero p{font-size:10px}
+  .hero-art{
+    left:-18px;
+    width:90px;
+    height:90px;
+    opacity:.65;
+  }
+
+  .hero-art svg{width:42px;height:42px}
+
+  .games-grid{
+    grid-template-columns:repeat(auto-fit,minmax(min(100%,155px),1fr));
+    gap:11px;
+  }
+
+  .game-cover{height:145px}
+  .game-info{padding:11px}
+  .game-title{font-size:12px}
+  .game-description{font-size:9px;min-height:48px}
+  .game-footer{align-items:flex-start;flex-direction:column}
+  .game-open,.game-coming{width:100%}
+  .section-title{font-size:18px}
+}
+
+@media(max-width:360px){
+  .wallet{gap:4px}
+  .games-grid{gap:8px}
+  .game-cover{height:120px}
+  .game-info{padding:9px}
+}
+</style>
 </head>
 
 <body>
-  <div class="background"></div>
+<div class="background"></div>
 
-  <div class="app">
+<div class="app">
 
-    <header class="topbar">
-      <a class="brand" href="home.html">
-        <span class="brand-icon">
-          <svg viewBox="0 0 24 24">
-            <path d="M7 8h10a4 4 0 0 1 4 4v4a3 3 0 0 1-5 2l-2-2h-4l-2 2a3 3 0 0 1-5-2v-4a4 4 0 0 1 4-4Z"/>
-            <path d="M8 11v4M6 13h4M16 12h.01M18 14h.01"/>
-          </svg>
-        </span>
-        <span>
-          <span class="brand-name">HANOON WORLD</span>
-          <span class="brand-sub">GAMES EXPERIENCE</span>
-        </span>
-      </a>
-
-      <div class="header-actions">
-        <div class="wallet">
-          <div class="wallet-unit">
-            <svg viewBox="0 0 24 24">
-              <circle cx="12" cy="12" r="9"/>
-              <path d="M12 7v10M15 9.5c-.5-1-1.5-1.5-3-1.5-1.4 0-2.5.7-2.5 1.7 0 3 5.5 1.2 5.5 4.2 0 1.1-1.1 2.1-3 2.1-1.4 0-2.5-.5-3.2-1.5"/>
-            </svg>
-            <span id="coinBalance">—</span>
-          </div>
-
-          <div class="wallet-unit gems">
-            <svg viewBox="0 0 24 24">
-              <path d="m12 2 9 7-9 13L3 9l9-7Z"/>
-              <path d="m3 9 18 0M8 9l4 13 4-13M8 9l4-7 4 7"/>
-            </svg>
-            <span id="gemBalance">—</span>
-          </div>
-
-          <a class="wallet-add" href="wallet.html" aria-label="إضافة رصيد">
-            <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
-          </a>
-        </div>
-
-        <a class="profile-link" id="myProfileLink" href="profile.html" aria-label="حسابي">
-          <svg viewBox="0 0 24 24">
-            <circle cx="12" cy="8" r="3.5"/>
-            <path d="M4.5 21c.5-4 3.2-6 7.5-6s7 2 7.5 6"/>
-          </svg>
-        </a>
-      </div>
-    </header>
-
-    <main>
-      <section class="hero">
-        <div class="hero-content">
-          <span class="hero-label"><span></span> عالم المنافسة والتحدي</span>
-          <h1>اكتشف عالم<br><strong>الألعاب</strong></h1>
-          <p>
-            مكتبة ألعاب HANOON WORLD، لكل لعبة عالمها وصورتها الخاصة.
-            اختر لعبتك القادمة واستعد للتحدي.
-          </p>
-        </div>
-
-        <div class="hero-art">
-          <svg viewBox="0 0 24 24">
-            <path d="M7 8h10a4 4 0 0 1 4 4v4a3 3 0 0 1-5 2l-2-2h-4l-2 2a3 3 0 0 1-5-2v-4a4 4 0 0 1 4-4Z"/>
-            <path d="M8 11v4M6 13h4M16 12h.01M18 14h.01"/>
-          </svg>
-        </div>
-      </section>
-
-      <section class="search-section">
-        <label class="search-box">
-          <svg viewBox="0 0 24 24">
-            <circle cx="10.8" cy="10.8" r="7"/>
-            <path d="m16 16 5 5"/>
-          </svg>
-          <input id="gameSearch" type="search" placeholder="ابحث عن لعبة..." autocomplete="off">
-        </label>
-      </section>
-
-      <section>
-        <div class="section-heading">
-          <div>
-            <h2 class="section-title">مكتبة الألعاب</h2>
-            <span class="section-subtitle">اكتشف جميع ألعاب عالم هنون</span>
-          </div>
-          <span class="games-count" id="gamesCount">جارٍ التحميل</span>
-        </div>
-
-        <div class="games-grid" id="gamesGrid">
-          <div class="skeleton"></div>
-          <div class="skeleton"></div>
-          <div class="skeleton"></div>
-        </div>
-      </section>
-    </main>
-  </div>
-
-  <nav class="bottom-nav">
-    <a class="nav-item" href="home.html">
-      <svg viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-6v-7h-4v7H4a1 1 0 0 1-1-1V10Z"/></svg>
-      <span>الرئيسية</span>
-    </a>
-
-    <a class="nav-item" href="rooms.html">
-      <svg viewBox="0 0 24 24"><path d="M3 20V9l9-6 9 6v11h-6v-7H9v7H3Z"/></svg>
-      <span>الغرف</span>
-    </a>
-
-    <a class="nav-item active" href="games.html">
+<header class="topbar">
+  <a class="brand" href="home.html">
+    <span class="brand-icon">
       <svg viewBox="0 0 24 24">
         <path d="M7 8h10a4 4 0 0 1 4 4v4a3 3 0 0 1-5 2l-2-2h-4l-2 2a3 3 0 0 1-5-2v-4a4 4 0 0 1 4-4Z"/>
         <path d="M8 11v4M6 13h4M16 12h.01M18 14h.01"/>
       </svg>
-      <span>الألعاب</span>
+    </span>
+    <span>
+      <span class="brand-name">HANOON WORLD</span>
+      <span class="brand-sub">GAMES EXPERIENCE</span>
+    </span>
+  </a>
+
+  <div class="header-actions">
+    <div class="wallet">
+      <div class="wallet-unit">
+        <svg viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="9"/>
+          <path d="M12 7v10M15 9.5c-.5-1-1.5-1.5-3-1.5-1.4 0-2.5.7-2.5 1.7 0 3 5.5 1.2 5.5 4.2 0 1.1-1.1 2.1-3 2.1-1.4 0-2.5-.5-3.2-1.5"/>
+        </svg>
+        <span id="coinBalance">—</span>
+      </div>
+
+      <div class="wallet-unit gems">
+        <svg viewBox="0 0 24 24">
+          <path d="m12 2 9 7-9 13L3 9l9-7Z"/>
+          <path d="m3 9 18 0M8 9l4 13 4-13M8 9l4-7 4 7"/>
+        </svg>
+        <span id="gemBalance">—</span>
+      </div>
+
+      <a class="wallet-add" href="wallet.html" aria-label="المحفظة">
+        <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+      </a>
+    </div>
+
+    <a class="profile-link" id="myProfileLink" href="profile.html" aria-label="حسابي">
+      <svg viewBox="0 0 24 24">
+        <circle cx="12" cy="8" r="3.5"/>
+        <path d="M4.5 21c.5-4 3.2-6 7.5-6s7 2 7.5 6"/>
+      </svg>
     </a>
+  </div>
+</header>
 
-    <a class="nav-item" href="chat.html">
-      <svg viewBox="0 0 24 24"><path d="M4 5h16v12H9l-5 4V5Z"/><path d="M8 9h8M8 13h5"/></svg>
-      <span>المحادثات</span>
-    </a>
+<main>
+  <section class="hero">
+    <div class="hero-content">
+      <span class="hero-label"><span></span> عالم المنافسة والتحدي</span>
+      <h1>اكتشف عالم<br><strong>الألعاب</strong></h1>
+      <p>
+        استمتع بمجموعة متنوعة من الألعاب والتحديات.
+        لكل لعبة عالمها الخاص، اختر لعبتك واستعد للمنافسة.
+      </p>
+    </div>
 
-    <a class="nav-item" href="profile.html">
-      <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 21c.5-4 3.2-6 7.5-6s7 2 7.5 6"/></svg>
-      <span>حسابي</span>
-    </a>
-  </nav>
+    <div class="hero-art">
+      <svg viewBox="0 0 24 24">
+        <path d="M7 8h10a4 4 0 0 1 4 4v4a3 3 0 0 1-5 2l-2-2h-4l-2 2a3 3 0 0 1-5-2v-4a4 4 0 0 1 4-4Z"/>
+        <path d="M8 11v4M6 13h4M16 12h.01M18 14h.01"/>
+      </svg>
+    </div>
+  </section>
 
-  <script>
-    const SUPABASE_URL = "https://gjtgvczvclfwvlvcquxh.supabase.co";
-    const SUPABASE_KEY = "sb_publishable_4DVTUZ-xTlqU2GpFvpb7lw_g-Kxomd4";
+  <section class="search-section">
+    <label class="search-box">
+      <svg viewBox="0 0 24 24">
+        <circle cx="10.8" cy="10.8" r="7"/>
+        <path d="m16 16 5 5"/>
+      </svg>
+      <input id="gameSearch" type="search" placeholder="ابحث عن لعبة..." autocomplete="off">
+    </label>
+  </section>
 
-    const db = window.supabase.createClient(
-      SUPABASE_URL,
-      SUPABASE_KEY
+  <div class="filters">
+    <button class="filter-btn active" data-filter="all">كل الألعاب</button>
+    <button class="filter-btn" data-filter="active">متاحة للعب</button>
+    <button class="filter-btn" data-filter="coming">قريبًا</button>
+  </div>
+
+  <section>
+    <div class="section-heading">
+      <div>
+        <h2 class="section-title">مكتبة الألعاب</h2>
+        <span class="section-subtitle">اكتشف جميع ألعاب عالم هنون</span>
+      </div>
+      <span class="games-count" id="gamesCount">جارٍ التحميل</span>
+    </div>
+
+    <div class="games-grid" id="gamesGrid">
+      <div class="skeleton"></div>
+      <div class="skeleton"></div>
+      <div class="skeleton"></div>
+    </div>
+  </section>
+</main>
+</div>
+
+<nav class="bottom-nav">
+  <a class="nav-item" href="home.html">
+    <svg viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-6v-7h-4v7H4a1 1 0 0 1-1-1V10Z"/></svg>
+    <span>الرئيسية</span>
+  </a>
+
+  <a class="nav-item" href="rooms.html">
+    <svg viewBox="0 0 24 24"><path d="M3 20V9l9-6 9 6v11h-6v-7H9v7H3Z"/></svg>
+    <span>الغرف</span>
+  </a>
+
+  <a class="nav-item active" href="games.html">
+    <svg viewBox="0 0 24 24">
+      <path d="M7 8h10a4 4 0 0 1 4 4v4a3 3 0 0 1-5 2l-2-2h-4l-2 2a3 3 0 0 1-5-2v-4a4 4 0 0 1 4-4Z"/>
+      <path d="M8 11v4M6 13h4M16 12h.01M18 14h.01"/>
+    </svg>
+    <span>الألعاب</span>
+  </a>
+
+  <a class="nav-item" href="chat.html">
+    <svg viewBox="0 0 24 24"><path d="M4 5h16v12H9l-5 4V5Z"/><path d="M8 9h8M8 13h5"/></svg>
+    <span>المحادثات</span>
+  </a>
+
+  <a class="nav-item" href="profile.html">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 21c.5-4 3.2-6 7.5-6s7 2 7.5 6"/></svg>
+    <span>حسابي</span>
+  </a>
+</nav>
+
+<script>
+const SUPABASE_URL = "https://gjtgvczvclfwvlvcquxh.supabase.co";
+const SUPABASE_KEY = "sb_publishable_4DVTUZ-xTlqU2GpFvpb7lw_g-Kxomd4";
+
+const db = window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+
+const state = {
+  user:null,
+  games:[],
+  filter:"all",
+  query:""
+};
+
+const $ = id => document.getElementById(id);
+
+/*
+  صور مستقلة ومختلفة لكل لعبة.
+  الصور تأتي من Unsplash Source عبر LoremFlickr،
+  مع كلمات بحث خاصة بكل لعبة ورقم ثابت لكل صورة.
+*/
+
+const GAME_COVERS = {
+  "ludo":"https://loremflickr.com/1200/800/ludo,boardgame,dice?lock=201",
+  "domino":"https://loremflickr.com/1200/800/domino,tiles,game?lock=202",
+  "chess":"https://loremflickr.com/1200/800/chess,wooden,chessboard?lock=203",
+  "tic-tac-toe":"https://loremflickr.com/1200/800/tic,tac,toe,game?lock=204",
+  "connect-four":"https://loremflickr.com/1200/800/connect,four,boardgame?lock=205",
+  "checkers":"https://loremflickr.com/1200/800/checkers,draughts,board?lock=206",
+  "jackaroo":"https://loremflickr.com/1200/800/jackaroo,playing,cards?lock=207",
+  "trivia":"https://loremflickr.com/1200/800/trivia,quiz,questions?lock=208",
+  "draw-guess":"https://loremflickr.com/1200/800/drawing,sketch,art?lock=209",
+  "word-duel":"https://loremflickr.com/1200/800/wordgame,letters,tiles?lock=210",
+  "memory-match":"https://loremflickr.com/1200/800/memory,cards,matching?lock=211",
+  "mafia":"https://loremflickr.com/1200/800/mystery,detective,cards?lock=212",
+  "backgammon":"https://loremflickr.com/1200/800/backgammon,dice,board?lock=213",
+  "carrom":"https://loremflickr.com/1200/800/carrom,board,game?lock=214",
+  "mancala":"https://loremflickr.com/1200/800/mancala,wooden,board?lock=215",
+  "rummy":"https://loremflickr.com/1200/800/rummy,playing,cards?lock=216",
+  "solitaire":"https://loremflickr.com/1200/800/solitaire,playing,cards?lock=217",
+  "number-cards":"https://loremflickr.com/1200/800/number,cards,game?lock=218",
+  "sudoku":"https://loremflickr.com/1200/800/sudoku,number,puzzle?lock=219",
+  "2048":"https://loremflickr.com/1200/800/number,tiles,puzzle?lock=220",
+  "word-search":"https://loremflickr.com/1200/800/wordsearch,letters,puzzle?lock=221",
+  "guess-character":"https://loremflickr.com/1200/800/portrait,character,guess?lock=222",
+  "snakes-ladders":"https://loremflickr.com/1200/800/snakes,ladders,boardgame?lock=223",
+  "battleship":"https://loremflickr.com/1200/800/battleship,ships,naval?lock=224",
+  "five-in-row":"https://loremflickr.com/1200/800/gomoku,stones,board?lock=225",
+  "puzzle-box":"https://loremflickr.com/1200/800/wooden,puzzle,box?lock=226",
+  "reaction-rush":"https://loremflickr.com/1200/800/arcade,game,buttons?lock=227",
+  "mahjong":"https://loremflickr.com/1200/800/mahjong,tiles,game?lock=228",
+  "dots-and-boxes":"https://loremflickr.com/1200/800/dots,lines,paper,game?lock=229",
+  "property-trading":"https://loremflickr.com/1200/800/boardgame,houses,property?lock=230"
+};
+
+const CATEGORY_NAMES = {
+  board:"ألعاب الطاولة",
+  strategy:"استراتيجية",
+  cards:"ألعاب الورق",
+  quick:"ألعاب سريعة",
+  party:"ألعاب جماعية",
+  puzzle:"ألغاز وذكاء",
+  classic:"ألعاب كلاسيكية"
+};
+
+function esc(value){
+  return String(value ?? "").replace(/[&<>"']/g,char=>({
+    "&":"&amp;",
+    "<":"&lt;",
+    ">":"&gt;",
+    '"':"&quot;",
+    "'":"&#039;"
+  })[char]);
+}
+
+function validHttpUrl(value){
+  try{
+    const url = new URL(value);
+    return url.protocol === "https:" || url.protocol === "http:";
+  }catch{
+    return false;
+  }
+}
+
+async function loadSession(){
+  const {data,error} = await db.auth.getSession();
+
+  if(error) throw error;
+
+  state.user = data.session?.user || null;
+
+  if(!state.user){
+    location.replace("index.html");
+    return false;
+  }
+
+  return true;
+}
+
+async function loadProfile(){
+  const {data,error} = await db
+    .from("profiles")
+    .select("id,avatar_path")
+    .eq("id",state.user.id)
+    .maybeSingle();
+
+  if(error) throw error;
+  if(!data?.avatar_path) return;
+
+  const {data:imageData} = db.storage
+    .from("avatars")
+    .getPublicUrl(data.avatar_path);
+
+  if(imageData?.publicUrl){
+    $("myProfileLink").innerHTML = `
+      <img src="${esc(imageData.publicUrl)}" alt="حسابي">
+    `;
+  }
+}
+
+async function loadWallet(){
+  const {data,error} = await db
+    .from("world_wallets")
+    .select("coins,gems")
+    .eq("user_id",state.user.id)
+    .maybeSingle();
+
+  if(error) throw error;
+
+  $("coinBalance").textContent =
+    data?.coins == null ? "—" :
+    Number(data.coins).toLocaleString("en-US");
+
+  $("gemBalance").textContent =
+    data?.gems == null ? "—" :
+    Number(data.gems).toLocaleString("en-US");
+}
+
+function stateIcon(){
+  return `
+    <div class="state-icon">
+      <svg viewBox="0 0 24 24">
+        <path d="M7 8h10a4 4 0 0 1 4 4v4a3 3 0 0 1-5 2l-2-2h-4l-2 2a3 3 0 0 1-5-2v-4a4 4 0 0 1 4-4Z"/>
+        <path d="M8 11v4M6 13h4M16 12h.01M18 14h.01"/>
+      </svg>
+    </div>
+  `;
+}
+
+function renderEmpty(title,description,retry=false){
+  $("gamesGrid").innerHTML = `
+    <div class="state-panel">
+      ${stateIcon()}
+      <h3>${esc(title)}</h3>
+      <p>${esc(description)}</p>
+      ${retry ? '<button class="retry-button" id="retryGames">إعادة المحاولة</button>' : ""}
+    </div>
+  `;
+
+  if(retry){
+    $("retryGames").addEventListener("click",loadGames);
+  }
+}
+
+function getCover(game){
+  if(game.cover_path && validHttpUrl(game.cover_path)){
+    return game.cover_path;
+  }
+
+  return GAME_COVERS[game.slug] || GAME_COVERS["puzzle-box"];
+}
+
+function getFilteredGames(){
+  return state.games.filter(game=>{
+    const active = game.is_active === true;
+
+    if(state.filter === "active" && !active) return false;
+    if(state.filter === "coming" && active) return false;
+
+    if(state.query){
+      const searchable = [
+        game.title_ar,
+        game.title_en,
+        game.slug,
+        game.description_ar,
+        game.description_en
+      ].filter(Boolean).join(" ").toLocaleLowerCase();
+
+      if(!searchable.includes(state.query)) return false;
+    }
+
+    return true;
+  });
+}
+
+function renderGames(){
+  const games = getFilteredGames();
+
+  $("gamesCount").textContent =
+    `${games.length.toLocaleString("ar-EG")} لعبة`;
+
+  if(!games.length){
+    renderEmpty(
+      "لا توجد نتائج مطابقة",
+      "لم نعثر على لعبة بهذا الاسم ضمن الاختيار الحالي."
     );
+    return;
+  }
 
-    const state = {
-      user: null,
-      games: [],
-      filteredGames: []
-    };
+  $("gamesGrid").innerHTML = games.map((game,index)=>{
+    const title = game.title_ar || game.title_en || "لعبة";
 
-    const $ = id => document.getElementById(id);
+    const description =
+      game.description_ar ||
+      game.description_en ||
+      "اكتشف هذه اللعبة من مكتبة هنون.";
 
-    /*
-      صورة مستقلة لكل لعبة.
-      إذا كان للعبة cover_path في قاعدة البيانات فسيُستخدم أولاً.
-      وإلا تُستخدم صورتها الخاصة هنا.
-    */
+    const category =
+      CATEGORY_NAMES[game.category] || "ألعاب متنوعة";
 
-    const GAME_COVERS = {
-      "ludo": "https://loremflickr.com/960/640/boardgame,dice,colorful?lock=101",
-      "domino": "https://loremflickr.com/960/640/domino,tiles,table?lock=102",
-      "chess": "https://loremflickr.com/960/640/chess,board,pieces?lock=103",
-      "tic-tac-toe": "https://loremflickr.com/960/640/tictactoe,game,board?lock=104",
-      "connect-four": "https://loremflickr.com/960/640/connectfour,boardgame?lock=105",
-      "checkers": "https://loremflickr.com/960/640/checkers,draughts,board?lock=106",
-      "jackaroo": "https://loremflickr.com/960/640/cards,boardgame,table?lock=107",
-      "trivia": "https://loremflickr.com/960/640/quiz,question,game?lock=108",
-      "draw-guess": "https://loremflickr.com/960/640/drawing,sketch,game?lock=109",
-      "word-duel": "https://loremflickr.com/960/640/letters,wordgame,tiles?lock=110",
-      "memory-match": "https://loremflickr.com/960/640/memory,cards,game?lock=111",
-      "mafia": "https://loremflickr.com/960/640/mystery,cards,game?lock=112",
-      "backgammon": "https://loremflickr.com/960/640/backgammon,dice,board?lock=113",
-      "carrom": "https://loremflickr.com/960/640/carrom,boardgame?lock=114",
-      "mancala": "https://loremflickr.com/960/640/mancala,wooden,game?lock=115",
-      "rummy": "https://loremflickr.com/960/640/rummy,playingcards?lock=116",
-      "solitaire": "https://loremflickr.com/960/640/solitaire,cards,table?lock=117",
-      "number-cards": "https://loremflickr.com/960/640/number,cards,game?lock=118",
-      "sudoku": "https://loremflickr.com/960/640/sudoku,number,puzzle?lock=119",
-      "2048": "https://loremflickr.com/960/640/number,tiles,puzzle?lock=120",
-      "word-search": "https://loremflickr.com/960/640/wordsearch,letters,puzzle?lock=121",
-      "guess-character": "https://loremflickr.com/960/640/portrait,guessing,game?lock=122",
-      "snakes-ladders": "https://loremflickr.com/960/640/snakes,ladders,boardgame?lock=123",
-      "battleship": "https://loremflickr.com/960/640/battleship,ships,boardgame?lock=124",
-      "five-in-row": "https://loremflickr.com/960/640/gomoku,boardgame,stones?lock=125",
-      "puzzle-box": "https://loremflickr.com/960/640/wooden,puzzle,box?lock=126",
-      "reaction-rush": "https://loremflickr.com/960/640/arcade,buttons,game?lock=127",
-      "mahjong": "https://loremflickr.com/960/640/mahjong,tiles,game?lock=128",
-      "dots-and-boxes": "https://loremflickr.com/960/640/dots,lines,paper,game?lock=129",
-      "property-trading": "https://loremflickr.com/960/640/boardgame,houses,money?lock=130"
-    };
+    const active = game.is_active === true;
+    const cover = getCover(game);
+    const key = encodeURIComponent(game.slug || game.id);
 
-    const CATEGORY_NAMES = {
-      board: "ألعاب الطاولة",
-      strategy: "استراتيجية",
-      cards: "ألعاب الورق",
-      quick: "ألعاب سريعة",
-      party: "ألعاب جماعية",
-      puzzle: "ألغاز وذكاء",
-      classic: "ألعاب كلاسيكية"
-    };
+    return `
+      <article class="game-card">
+        <div class="game-cover">
+          <img
+            src="${esc(cover)}"
+            alt="${esc(title)}"
+            loading="lazy"
+            onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=1200&q=85';"
+          >
 
-    function esc(value) {
-      return String(value ?? "").replace(/[&<>"']/g, char => ({
-        "&":"&amp;",
-        "<":"&lt;",
-        ">":"&gt;",
-        '"':"&quot;",
-        "'":"&#039;"
-      })[char]);
-    }
+          <span class="game-number">
+            ${String(index+1).padStart(2,"0")}
+          </span>
 
-    function validHttpUrl(value) {
-      try {
-        const url = new URL(value);
-        return url.protocol === "https:" || url.protocol === "http:";
-      } catch {
-        return false;
-      }
-    }
-
-    async function loadSession() {
-      const { data, error } = await db.auth.getSession();
-
-      if (error) throw error;
-
-      state.user = data.session?.user || null;
-
-      if (!state.user) {
-        location.replace("index.html");
-        return false;
-      }
-
-      return true;
-    }
-
-    async function loadProfile() {
-      const { data, error } = await db
-        .from("profiles")
-        .select("id,avatar_path")
-        .eq("id", state.user.id)
-        .maybeSingle();
-
-      if (error) throw error;
-
-      if (!data?.avatar_path) return;
-
-      const { data: imageData } = db.storage
-        .from("avatars")
-        .getPublicUrl(data.avatar_path);
-
-      if (imageData?.publicUrl) {
-        $("myProfileLink").innerHTML = `
-          <img src="${esc(imageData.publicUrl)}" alt="حسابي">
-        `;
-      }
-    }
-
-    async function loadWallet() {
-      const { data, error } = await db
-        .from("world_wallets")
-        .select("coins,gems")
-        .eq("user_id", state.user.id)
-        .maybeSingle();
-
-      if (error) throw error;
-
-      $("coinBalance").textContent =
-        data?.coins == null ? "—" :
-        Number(data.coins).toLocaleString("en-US");
-
-      $("gemBalance").textContent =
-        data?.gems == null ? "—" :
-        Number(data.gems).toLocaleString("en-US");
-    }
-
-    function stateIcon() {
-      return `
-        <div class="state-icon">
-          <svg viewBox="0 0 24 24">
-            <path d="M7 8h10a4 4 0 0 1 4 4v4a3 3 0 0 1-5 2l-2-2h-4l-2 2a3 3 0 0 1-5-2v-4a4 4 0 0 1 4-4Z"/>
-            <path d="M8 11v4M6 13h4M16 12h.01M18 14h.01"/>
-          </svg>
+          <span class="game-category">${esc(category)}</span>
         </div>
-      `;
-    }
 
-    function renderEmpty(title, description, retry = false) {
-      $("gamesGrid").innerHTML = `
-        <div class="state-panel">
-          ${stateIcon()}
-          <h3>${esc(title)}</h3>
-          <p>${esc(description)}</p>
-          ${retry ? '<button class="retry-button" id="retryGames">إعادة المحاولة</button>' : ""}
-        </div>
-      `;
+        <div class="game-info">
+          <h3 class="game-title">${esc(title)}</h3>
 
-      if (retry) {
-        $("retryGames").addEventListener("click", loadGames);
-      }
-    }
+          <p class="game-description">
+            ${esc(description)}
+          </p>
 
-    function getCover(game) {
-      if (game.cover_path && validHttpUrl(game.cover_path)) {
-        return game.cover_path;
-      }
+          <div class="game-footer">
+            <span class="game-status ${active ? "active" : ""}">
+              ${active ? "متاحة للعب" : "قريبًا"}
+            </span>
 
-      return GAME_COVERS[game.slug] ||
-        "https://loremflickr.com/960/640/boardgame,game?lock=199";
-    }
-
-    function renderGames(games) {
-      $("gamesCount").textContent =
-        `${games.length.toLocaleString("ar-EG")} لعبة`;
-
-      if (!games.length) {
-        renderEmpty(
-          state.games.length ? "لا توجد نتائج مطابقة" : "لا توجد ألعاب في المكتبة",
-          state.games.length
-            ? "جرّب البحث باسم لعبة آخر."
-            : "لا توجد سجلات ألعاب في قاعدة البيانات حاليًا."
-        );
-        return;
-      }
-
-      $("gamesGrid").innerHTML = games.map((game, index) => {
-        const title = game.title_ar || game.title_en || "لعبة";
-        const description =
-          game.description_ar ||
-          game.description_en ||
-          "اكتشف هذه اللعبة من مكتبة هنون.";
-
-        const category =
-          CATEGORY_NAMES[game.category] || "ألعاب متنوعة";
-
-        const active = game.is_active === true;
-        const cover = getCover(game);
-        const key = encodeURIComponent(game.slug || game.id);
-
-        return `
-          <article class="game-card">
-            <div class="game-cover">
-              <img
-                src="${esc(cover)}"
-                alt="${esc(title)}"
-                loading="lazy"
-                onerror="this.style.display='none'"
-              >
-
-              <span class="game-number">
-                ${String(index + 1).padStart(2,"0")}
-              </span>
-
-              <span class="game-category">
-                ${esc(category)}
-              </span>
-            </div>
-
-            <div class="game-info">
-              <h3 class="game-title">${esc(title)}</h3>
-
-              <p class="game-description">
-                ${esc(description)}
-              </p>
-
-              <div class="game-footer">
-                <span class="game-status ${active ? "active" : ""}">
-                  ${active ? "متاحة للعب" : "قريبًا"}
-                </span>
-
+            ${
+              active
+              ? `
                 <a class="game-open" href="game.html?game=${key}">
-                  التفاصيل
+                  العب الآن
                   <svg viewBox="0 0 24 24">
                     <path d="m9 18 6-6-6-6"/>
                   </svg>
                 </a>
-              </div>
-            </div>
-          </article>
-        `;
-      }).join("");
+              `
+              : `
+                <span class="game-coming">قريبًا</span>
+              `
+            }
+          </div>
+        </div>
+      </article>
+    `;
+  }).join("");
+}
+
+async function loadGames(){
+  $("gamesGrid").innerHTML = `
+    <div class="skeleton"></div>
+    <div class="skeleton"></div>
+    <div class="skeleton"></div>
+  `;
+
+  try{
+    const {data,error} = await db
+      .from("world_games_catalog")
+      .select("*")
+      .order("sort_order",{ascending:true});
+
+    if(error) throw error;
+
+    state.games = data || [];
+
+    if(!state.games.length){
+      $("gamesCount").textContent = "0 لعبة";
+
+      renderEmpty(
+        "مكتبة الألعاب فارغة",
+        "لا توجد ألعاب مسجلة في قاعدة البيانات حاليًا."
+      );
+
+      return;
     }
 
-    async function loadGames() {
-      $("gamesGrid").innerHTML = `
-        <div class="skeleton"></div>
-        <div class="skeleton"></div>
-        <div class="skeleton"></div>
-      `;
+    renderGames();
 
-      try {
-        const { data, error } = await db
-          .from("world_games_catalog")
-          .select("*")
-          .order("sort_order", { ascending: true });
+  }catch(error){
+    console.error("HANOON games:",error);
 
-        if (error) throw error;
+    $("gamesCount").textContent = "تعذر التحميل";
 
-        state.games = data || [];
-        state.filteredGames = [...state.games];
+    renderEmpty(
+      "تعذر تحميل الألعاب",
+      "حدث خطأ أثناء الاتصال بقاعدة البيانات. حاول مرة أخرى.",
+      true
+    );
+  }
+}
 
-        renderGames(state.filteredGames);
+function setupSearch(){
+  $("gameSearch").addEventListener("input",event=>{
+    state.query = event.target.value.trim().toLocaleLowerCase();
+    renderGames();
+  });
+}
 
-      } catch (error) {
-        console.error("HANOON games:", error);
-
-        $("gamesCount").textContent = "تعذر التحميل";
-
-        renderEmpty(
-          "تعذر تحميل الألعاب",
-          "حدث خطأ أثناء الاتصال بقاعدة البيانات. حاول مرة أخرى.",
-          true
-        );
-      }
-    }
-
-    function setupSearch() {
-      $("gameSearch").addEventListener("input", event => {
-        const query = event.target.value.trim().toLocaleLowerCase();
-
-        state.filteredGames = state.games.filter(game => {
-          const text = [
-            game.title_ar,
-            game.title_en,
-            game.slug,
-            game.description_ar
-          ].filter(Boolean).join(" ").toLocaleLowerCase();
-
-          return text.includes(query);
-        });
-
-        renderGames(state.filteredGames);
+function setupFilters(){
+  document.querySelectorAll(".filter-btn").forEach(button=>{
+    button.addEventListener("click",()=>{
+      document.querySelectorAll(".filter-btn").forEach(item=>{
+        item.classList.remove("active");
       });
-    }
 
-    async function startPage() {
-      try {
-        const valid = await loadSession();
-        if (!valid) return;
-
-        await Promise.allSettled([
-          loadProfile(),
-          loadWallet()
-        ]);
-
-        await loadGames();
-
-      } catch (error) {
-        console.error("HANOON games startup:", error);
-
-        renderEmpty(
-          "تعذر فتح الصفحة",
-          "حدث خطأ أثناء تجهيز الصفحة. أعد تحميلها."
-        );
-      }
-    }
-
-    setupSearch();
-
-    db.auth.onAuthStateChange((event, session) => {
-      if (event === "SIGNED_OUT" || !session) {
-        location.replace("index.html");
-      }
+      button.classList.add("active");
+      state.filter = button.dataset.filter;
+      renderGames();
     });
+  });
+}
 
-    startPage();
-  </script>
+async function startPage(){
+  try{
+    const valid = await loadSession();
+    if(!valid) return;
+
+    await Promise.allSettled([
+      loadProfile(),
+      loadWallet()
+    ]);
+
+    await loadGames();
+
+  }catch(error){
+    console.error("HANOON games startup:",error);
+
+    renderEmpty(
+      "تعذر فتح الصفحة",
+      "حدث خطأ أثناء تجهيز الصفحة. أعد تحميلها."
+    );
+  }
+}
+
+setupSearch();
+setupFilters();
+
+db.auth.onAuthStateChange((event,session)=>{
+  if(event === "SIGNED_OUT" || !session){
+    location.replace("index.html");
+  }
+});
+
+startPage();
+</script>
 </body>
 </html>
