@@ -2,1160 +2,1183 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-  <meta name="theme-color" content="#0b0b16">
-  <title>HANOON WORLD — عالمك الاجتماعي</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#090914">
+<title>HANOON WORLD</title>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+:root{
+  --bg:#090914;
+  --panel:#141426;
+  --panel2:#1c1b32;
+  --purple:#9b7cff;
+  --purple2:#7654e5;
+  --cyan:#65d9d1;
+  --gold:#f0c875;
+  --text:#f8f6ff;
+  --muted:#aaa5c0;
+  --line:rgba(255,255,255,.09);
+  --shadow:0 18px 50px rgba(0,0,0,.38);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  min-height:100vh;
+  overflow-x:hidden;
+  color:var(--text);
+  font-family:Cairo,sans-serif;
+  background:var(--bg);
+  padding-bottom:105px;
+}
+a{text-decoration:none;color:inherit}
+button,input{font:inherit}
+button{color:inherit;border:0;cursor:pointer}
+img{display:block;max-width:100%}
 
-  <style>
-    :root{
-      --bg:#090914;
-      --panel:#141426;
-      --panel2:#1b1b31;
-      --panel3:#22223a;
-      --purple:#9b7cff;
-      --purple2:#7254e8;
-      --cyan:#54d9d0;
-      --gold:#f2c875;
-      --text:#f7f5ff;
-      --muted:#a5a2bc;
-      --line:rgba(255,255,255,.09);
-      --danger:#ff6684;
-      --radius:22px;
-      --shadow:0 18px 55px rgba(0,0,0,.38);
-    }
+body:before{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:-3;
+  background:
+    linear-gradient(180deg,rgba(8,8,19,.62),rgba(8,8,19,.92)),
+    url("https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=2000&q=90")
+    center/cover fixed;
+}
+body:after{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:-2;
+  pointer-events:none;
+  background:
+    radial-gradient(ellipse at 5% 12%,rgba(130,91,245,.22),transparent 34%),
+    radial-gradient(ellipse at 95% 38%,rgba(40,188,190,.13),transparent 35%),
+    linear-gradient(180deg,transparent 30%,rgba(7,7,17,.48));
+}
+.app{width:min(100%,1450px);margin:auto;padding:0 22px}
 
-    *{box-sizing:border-box;margin:0;padding:0}
-    html{scroll-behavior:smooth}
-    body{
-      min-height:100vh;
-      overflow-x:hidden;
-      color:var(--text);
-      font-family:'Cairo',sans-serif;
-      background:var(--bg);
-      padding-bottom:100px;
-    }
-    button,input{font:inherit}
-    button,a{-webkit-tap-highlight-color:transparent}
-    a{color:inherit;text-decoration:none}
-    button{border:0;cursor:pointer;color:inherit}
-    img{display:block;max-width:100%}
+/* HEADER */
+.topbar{
+  height:78px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+  position:relative;
+  z-index:20;
+}
+.brand{display:flex;align-items:center;gap:11px;flex-shrink:0}
+.brand-mark{
+  width:46px;height:46px;border-radius:15px;
+  display:grid;place-items:center;
+  background:linear-gradient(145deg,#c0a8ff,#6845db);
+  border:1px solid rgba(255,255,255,.3);
+  box-shadow:0 8px 27px rgba(128,88,237,.38);
+}
+.brand-mark svg{width:29px;height:29px}
+.brand-name{font-size:18px;font-weight:900;letter-spacing:.3px}
+.brand-sub{font-size:9px;letter-spacing:2px;color:#bcb1df;margin-top:-5px}
 
-    body::before{
-      content:"";
-      position:fixed;
-      inset:0;
-      z-index:-3;
-      background:
-        linear-gradient(180deg,rgba(8,8,20,.70),rgba(8,8,20,.91)),
-        url("https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=2000&q=90")
-        center/cover no-repeat;
-      transform:scale(1.03);
-    }
-    body::after{
-      content:"";
-      position:fixed;
-      inset:0;
-      z-index:-2;
-      pointer-events:none;
-      background:
-        radial-gradient(ellipse at 10% 10%,rgba(121,83,232,.20),transparent 36%),
-        radial-gradient(ellipse at 90% 35%,rgba(40,190,190,.10),transparent 35%),
-        linear-gradient(180deg,rgba(9,9,20,.05),rgba(9,9,20,.52));
-    }
+.header-actions{display:flex;align-items:center;gap:9px}
+.wallet{
+  display:flex;align-items:center;gap:10px;
+  padding:8px 10px;
+  background:linear-gradient(110deg,rgba(39,32,68,.96),rgba(19,24,43,.96));
+  border:1px solid rgba(255,255,255,.13);
+  border-radius:15px;
+  box-shadow:0 8px 25px rgba(0,0,0,.22);
+}
+.wallet-unit{display:flex;align-items:center;gap:5px;font-size:12px;font-weight:900;min-width:55px}
+.wallet-unit svg{width:18px;height:18px}
+.wallet-unit.coins svg{color:var(--gold)}
+.wallet-unit.gems svg{color:#7bdcf4}
+.wallet-add{
+  width:29px;height:29px;border-radius:9px;
+  display:grid;place-items:center;
+  background:linear-gradient(145deg,#ae94ff,#704cdb);
+}
+.wallet-add svg{width:17px;height:17px;stroke:white;fill:none;stroke-width:2.5}
+.wallet-links{display:flex;gap:6px;margin-right:3px}
+.wallet-link{
+  display:flex;align-items:center;gap:5px;
+  padding:7px 9px;border-radius:9px;
+  background:rgba(255,255,255,.055);
+  font-size:10px;font-weight:800;color:#ddd7ef;
+}
+.wallet-link svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.7}
+.header-icon{
+  width:42px;height:42px;border-radius:13px;
+  display:grid;place-items:center;
+  background:rgba(255,255,255,.07);
+  border:1px solid var(--line);
+}
+.header-icon svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.8}
+.my-avatar{
+  width:42px;height:42px;border-radius:50%;
+  overflow:hidden;display:grid;place-items:center;
+  background:#282441;border:2px solid #9b7cff;
+}
+.my-avatar img{width:100%;height:100%;object-fit:cover}
+.my-avatar svg{width:22px;height:22px;stroke:#c9baff;fill:none;stroke-width:1.6}
 
-    .app{width:min(100%,1500px);margin:auto;padding:0 22px}
-    .topbar{
-      height:82px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:18px;
-      position:relative;
-      z-index:20;
-    }
-    .brand{display:flex;align-items:center;gap:12px;min-width:190px}
-    .brand-mark{
-      width:48px;height:48px;border-radius:16px;
-      display:grid;place-items:center;
-      background:linear-gradient(145deg,#b79aff,#6845df);
-      box-shadow:0 8px 28px rgba(133,94,255,.35);
-      border:1px solid rgba(255,255,255,.3);
-    }
-    .brand-mark svg{width:29px;height:29px}
-    .brand-name{font-size:19px;font-weight:900;letter-spacing:.3px}
-    .brand-sub{font-size:10px;color:#b8afd9;margin-top:-5px;letter-spacing:1.8px}
+/* TOP SEARCH */
+.search-area{
+  display:flex;
+  align-items:center;
+  gap:13px;
+  margin-top:7px;
+  position:relative;
+  z-index:15;
+}
+.search-box{
+  height:53px;
+  flex:1;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:0 17px;
+  border-radius:17px;
+  background:rgba(24,22,43,.92);
+  border:1px solid rgba(174,149,255,.22);
+  box-shadow:0 10px 30px rgba(0,0,0,.2),inset 0 1px rgba(255,255,255,.04);
+}
+.search-box:focus-within{
+  border-color:rgba(174,149,255,.65);
+  box-shadow:0 0 0 3px rgba(151,121,255,.1),0 12px 30px rgba(0,0,0,.24);
+}
+.search-box svg{width:21px;height:21px;flex:none;stroke:#b9a6f5;fill:none;stroke-width:1.8}
+.search-box input{
+  flex:1;min-width:0;background:none;border:0;outline:0;
+  color:white;font-size:13px;
+}
+.search-box input::placeholder{color:#9690ad}
+.search-shortcut{
+  font-size:10px;color:#9e98b6;
+  padding:5px 8px;border-radius:7px;
+  background:rgba(255,255,255,.055);
+}
+.search-filter{
+  height:53px;width:53px;flex:none;
+  display:grid;place-items:center;
+  border-radius:16px;
+  background:linear-gradient(145deg,#8e70eb,#6448ce);
+  box-shadow:0 8px 22px rgba(105,76,208,.3);
+}
+.search-filter svg{width:21px;height:21px;stroke:white;fill:none;stroke-width:1.8}
+.search-results{
+  display:none;
+  position:absolute;
+  top:62px;right:0;left:66px;
+  padding:12px;
+  border-radius:17px;
+  background:#19172b;
+  border:1px solid rgba(255,255,255,.13);
+  box-shadow:var(--shadow);
+  max-height:380px;
+  overflow:auto;
+}
+.search-results.show{display:block}
+.search-result{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:10px;padding:11px;border-bottom:1px solid var(--line);
+  font-size:12px;
+}
+.search-result:last-child{border:0}
+.search-result small{color:var(--muted)}
+.search-result a{color:#c9b7ff;font-weight:800}
 
-    .top-actions{display:flex;align-items:center;gap:10px}
-    .icon-btn{
-      width:43px;height:43px;border-radius:14px;
-      display:grid;place-items:center;
-      background:rgba(255,255,255,.075);
-      border:1px solid var(--line);
-      transition:.2s;
-    }
-    .icon-btn:hover{background:rgba(155,124,255,.2);transform:translateY(-2px)}
-    .icon-btn svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.8}
-    .profile-shortcut{
-      width:43px;height:43px;border-radius:50%;
-      overflow:hidden;border:2px solid rgba(166,137,255,.8);
-      background:#24223b;display:grid;place-items:center;
-    }
-    .profile-shortcut img{width:100%;height:100%;object-fit:cover}
-    .profile-shortcut svg{width:22px;stroke:#bcb2df;fill:none;stroke-width:1.7}
+/* INTRO */
+.intro{
+  margin-top:24px;
+  display:flex;align-items:flex-end;justify-content:space-between;gap:15px;
+}
+.intro h1{font-size:clamp(23px,3vw,34px);font-weight:900;line-height:1.45}
+.intro h1 span{
+  color:#bba6ff;
+  text-shadow:0 0 28px rgba(155,124,255,.24);
+}
+.intro p{font-size:12px;color:#b8b2cc;margin-top:3px}
+.intro-mark{
+  color:#c9baff;font-size:10px;font-weight:800;
+  padding:8px 13px;border-radius:30px;
+  border:1px solid rgba(171,145,255,.24);
+  background:rgba(132,101,222,.12);
+}
 
-    .wallet-bar{
-      display:flex;align-items:center;gap:9px;
-      padding:10px 13px;
-      border:1px solid rgba(255,255,255,.12);
-      background:linear-gradient(110deg,rgba(32,28,59,.95),rgba(20,24,42,.94));
-      border-radius:17px;
-      box-shadow:0 10px 30px rgba(0,0,0,.2);
-    }
-    .wallet-unit{
-      display:flex;align-items:center;gap:7px;
-      font-weight:800;font-size:13px;
-      min-width:68px;
-    }
-    .wallet-unit svg{width:19px;height:19px}
-    .wallet-unit.coins svg{color:var(--gold)}
-    .wallet-unit.gems svg{color:#7fdcf4}
-    .wallet-add{
-      width:29px;height:29px;border-radius:10px;
-      display:grid;place-items:center;
-      background:linear-gradient(145deg,#a58aff,#6949db);
-      box-shadow:0 5px 15px rgba(122,83,230,.35);
-    }
-    .wallet-add svg{width:17px;height:17px;stroke:white;fill:none;stroke-width:2.5}
-    .wallet-links{display:flex;align-items:center;gap:7px;margin-right:5px}
-    .wallet-link{
-      display:flex;align-items:center;gap:6px;
-      color:#d9d4ed;font-size:11px;font-weight:700;
-      padding:7px 9px;border-radius:10px;
-      background:rgba(255,255,255,.045);
-    }
-    .wallet-link svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.7}
+/* MAIN HERO */
+.hero{
+  margin-top:21px;
+  min-height:390px;
+  border-radius:29px;
+  overflow:hidden;
+  position:relative;
+  isolation:isolate;
+  border:1px solid rgba(255,255,255,.14);
+  box-shadow:var(--shadow);
+  background:#171329;
+}
+.hero-bg{
+  position:absolute;inset:0;z-index:-2;
+  background:
+    linear-gradient(90deg,rgba(9,8,21,.96) 0%,rgba(10,8,23,.78) 40%,rgba(10,8,23,.12) 100%),
+    url("https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1900&q=90")
+    center 40%/cover;
+  transform:scale(1.02);
+}
+.hero:after{
+  content:"";position:absolute;inset:0;z-index:-1;
+  background:linear-gradient(0deg,rgba(8,7,19,.72),transparent 55%);
+}
+.hero-content{
+  min-height:390px;
+  display:flex;flex-direction:column;justify-content:center;
+  align-items:flex-start;
+  padding:40px 45px;
+  max-width:650px;
+}
+.hero-label{
+  display:flex;align-items:center;gap:9px;
+  font-size:11px;color:#c8b6ff;font-weight:900;
+  margin-bottom:14px;
+}
+.hero-label:before{
+  content:"";width:8px;height:8px;border-radius:50%;
+  background:#a88aff;box-shadow:0 0 15px #a88aff;
+}
+.hero h2{font-size:clamp(32px,4.5vw,49px);font-weight:900;line-height:1.3}
+.hero h2 span{color:#b9a1ff}
+.hero p{max-width:450px;color:#d1ccdf;font-size:13px;line-height:2;margin-top:13px}
+.hero-buttons{display:flex;gap:10px;flex-wrap:wrap;margin-top:23px}
+.btn-primary,.btn-secondary{
+  min-height:46px;padding:0 20px;border-radius:13px;
+  display:inline-flex;align-items:center;justify-content:center;gap:9px;
+  font-size:12px;font-weight:900;transition:.2s;
+}
+.btn-primary{
+  background:linear-gradient(110deg,#ad92ff,#704de0);
+  box-shadow:0 8px 25px rgba(117,80,221,.35);
+}
+.btn-secondary{
+  background:rgba(255,255,255,.09);
+  border:1px solid rgba(255,255,255,.18);
+}
+.btn-primary:hover,.btn-secondary:hover{transform:translateY(-3px)}
+.btn-primary svg,.btn-secondary svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2}
 
-    .welcome{
-      margin-top:15px;
-      display:flex;align-items:center;justify-content:space-between;gap:20px;
-    }
-    .welcome h1{font-size:clamp(22px,3vw,32px);font-weight:900;line-height:1.5}
-    .welcome h1 span{
-      background:linear-gradient(90deg,#c9b6ff,#8bdbef);
-      -webkit-background-clip:text;background-clip:text;color:transparent;
-    }
-    .welcome p{color:#b8b4ce;font-size:13px;margin-top:1px}
-    .welcome-tag{
-      padding:9px 15px;border:1px solid rgba(173,145,255,.25);
-      border-radius:30px;background:rgba(126,94,218,.12);
-      color:#d8cbff;font-size:11px;font-weight:800;
-    }
+/* SECTION SYSTEM */
+.section{margin-top:39px}
+.section-head{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:12px;margin-bottom:17px;
+}
+.section-heading{display:flex;align-items:center;gap:11px}
+.section-icon{
+  width:42px;height:42px;border-radius:14px;
+  display:grid;place-items:center;
+  background:linear-gradient(145deg,rgba(159,127,255,.22),rgba(74,65,130,.13));
+  border:1px solid rgba(164,138,255,.2);
+}
+.section-icon svg{width:21px;height:21px;stroke:#c2adff;fill:none;stroke-width:1.8}
+.section-heading h3{font-size:19px;font-weight:900}
+.section-heading p{font-size:10px;color:var(--muted);margin-top:-3px}
+.view-all{font-size:11px;color:#c8b6ff;font-weight:900;white-space:nowrap}
+.view-all:hover{color:white}
 
-    .hero{
-      min-height:330px;
-      margin-top:24px;
-      position:relative;overflow:hidden;
-      border-radius:30px;
-      border:1px solid rgba(255,255,255,.13);
-      box-shadow:var(--shadow);
-      background:#19152b;
-      isolation:isolate;
-    }
-    .hero-bg{
-      position:absolute;inset:0;z-index:-2;
-      background:
-        linear-gradient(90deg,rgba(11,9,24,.97) 0%,rgba(13,10,28,.78) 43%,rgba(12,10,25,.18) 100%),
-        url("https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1800&q=90")
-        center 42%/cover no-repeat;
-      transform:scale(1.02);
-    }
-    .hero::after{
-      content:"";position:absolute;inset:0;z-index:-1;
-      background:linear-gradient(0deg,rgba(10,9,23,.62),transparent 55%);
-    }
-    .hero-content{
-      min-height:330px;padding:42px 42px;
-      display:flex;flex-direction:column;justify-content:center;
-      align-items:flex-start;max-width:610px;
-    }
-    .hero-kicker{
-      display:flex;align-items:center;gap:8px;
-      color:#c9b7ff;font-size:12px;font-weight:800;
-      margin-bottom:12px;
-    }
-    .hero-kicker span{
-      width:7px;height:7px;border-radius:50%;
-      background:#8b73ff;box-shadow:0 0 15px #9b7cff;
-    }
-    .hero h2{font-size:clamp(28px,4vw,43px);font-weight:900;line-height:1.35}
-    .hero h2 em{font-style:normal;color:#b7a1ff}
-    .hero p{color:#d0cadd;font-size:14px;line-height:2;margin-top:12px;max-width:440px}
-    .hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:23px}
-    .primary-btn,.secondary-btn{
-      min-height:46px;padding:0 20px;border-radius:13px;
-      display:inline-flex;align-items:center;justify-content:center;gap:9px;
-      font-size:13px;font-weight:800;transition:.2s;
-    }
-    .primary-btn{
-      background:linear-gradient(110deg,#a58aff,#7654e5);
-      box-shadow:0 9px 25px rgba(119,82,225,.3);
-    }
-    .secondary-btn{
-      background:rgba(255,255,255,.09);
-      border:1px solid rgba(255,255,255,.17);
-    }
-    .primary-btn:hover,.secondary-btn:hover{transform:translateY(-3px)}
-    .primary-btn svg,.secondary-btn svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2}
+/* FEATURE CATEGORIES */
+.category-grid{
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;
+}
+.category-card{
+  height:175px;
+  position:relative;overflow:hidden;
+  border-radius:21px;
+  border:1px solid rgba(255,255,255,.13);
+  box-shadow:0 12px 28px rgba(0,0,0,.25);
+  display:flex;align-items:flex-end;padding:17px;
+  isolation:isolate;
+}
+.category-card:before{
+  content:"";position:absolute;inset:0;z-index:-2;
+  background-size:cover;background-position:center;
+  transition:transform .5s;
+}
+.category-card:hover:before{transform:scale(1.08)}
+.category-card:after{
+  content:"";position:absolute;inset:0;z-index:-1;
+  background:linear-gradient(0deg,rgba(7,7,18,.96),rgba(7,7,18,.02) 85%);
+}
+.category-card:nth-child(1):before{
+  background-image:url("https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=800&q=85")
+}
+.category-card:nth-child(2):before{
+  background-image:url("https://images.unsplash.com/photo-1593305841991-05c297ba4575?auto=format&fit=crop&w=800&q=85")
+}
+.category-card:nth-child(3):before{
+  background-image:url("https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=800&q=85")
+}
+.category-card:nth-child(4):before{
+  background-image:url("https://images.unsplash.com/photo-1511882150382-421056c89033?auto=format&fit=crop&w=800&q=85")
+}
+.category-card .card-arrow{
+  position:absolute;top:13px;left:13px;
+  width:30px;height:30px;border-radius:10px;
+  display:grid;place-items:center;
+  background:rgba(255,255,255,.16);
+  backdrop-filter:blur(8px);
+}
+.card-arrow svg{width:16px;height:16px;stroke:white;fill:none;stroke-width:2}
+.category-card strong{display:block;font-size:16px;font-weight:900}
+.category-card small{display:block;color:#d1cbdc;font-size:10px;margin-top:3px}
 
-    .section{margin-top:38px}
-    .section-head{
-      display:flex;align-items:center;justify-content:space-between;
-      gap:15px;margin-bottom:17px;
-    }
-    .section-title{display:flex;align-items:center;gap:11px}
-    .section-icon{
-      width:39px;height:39px;border-radius:13px;
-      display:grid;place-items:center;
-      background:rgba(151,121,255,.15);
-      border:1px solid rgba(160,133,255,.2);
-    }
-    .section-icon svg{width:20px;height:20px;stroke:#bca9ff;fill:none;stroke-width:1.8}
-    .section-title h3{font-size:19px;font-weight:900}
-    .section-title p{font-size:11px;color:var(--muted);margin-top:-3px}
-    .view-all{font-size:12px;color:#c4b2ff;font-weight:800;white-space:nowrap}
-    .view-all:hover{color:white}
+/* GAMES */
+.filter-row{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;margin-bottom:15px}
+.filter-row::-webkit-scrollbar{display:none}
+.filter-chip{
+  flex:none;padding:8px 15px;border-radius:30px;
+  background:rgba(255,255,255,.06);
+  border:1px solid var(--line);
+  color:#cbc5dc;font-size:11px;font-weight:800;
+}
+.filter-chip.active{
+  background:linear-gradient(110deg,#9475f1,#6549d1);
+  color:white;border-color:transparent;
+}
+.content-grid{
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:15px;
+}
+.game-card,.room-card{
+  min-width:0;overflow:hidden;
+  border-radius:20px;
+  background:linear-gradient(145deg,rgba(33,30,56,.97),rgba(16,16,30,.98));
+  border:1px solid rgba(255,255,255,.10);
+  box-shadow:0 12px 30px rgba(0,0,0,.23);
+  transition:.25s;
+}
+.game-card:hover,.room-card:hover{
+  transform:translateY(-4px);
+  border-color:rgba(174,148,255,.4);
+  box-shadow:0 18px 38px rgba(0,0,0,.34);
+}
+.game-image{height:165px;position:relative;background:#25213d;overflow:hidden}
+.game-image img{width:100%;height:100%;object-fit:cover;transition:.45s}
+.game-card:hover .game-image img{transform:scale(1.06)}
+.game-image:after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(0deg,rgba(9,8,19,.55),transparent 65%);
+}
+.game-info{padding:13px}
+.game-info h4{font-size:13px;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.game-info p{font-size:10px;color:var(--muted);margin-top:3px}
+.card-footer{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:7px;margin-top:12px;
+}
+.card-type{font-size:10px;color:#aaa5bf}
+.card-link{
+  padding:7px 12px;border-radius:9px;
+  background:rgba(153,124,255,.17);
+  color:#d0c2ff;font-size:10px;font-weight:900;
+}
 
-    .discovery-grid{
-      display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;
-    }
-    .discovery-card{
-      min-height:142px;position:relative;overflow:hidden;
-      border-radius:20px;padding:18px;
-      display:flex;flex-direction:column;justify-content:flex-end;
-      border:1px solid rgba(255,255,255,.12);
-      box-shadow:0 12px 30px rgba(0,0,0,.22);
-      isolation:isolate;
-    }
-    .discovery-card::before{
-      content:"";position:absolute;inset:0;z-index:-2;
-      background-size:cover;background-position:center;
-      transition:transform .5s;
-    }
-    .discovery-card:hover::before{transform:scale(1.08)}
-    .discovery-card::after{
-      content:"";position:absolute;inset:0;z-index:-1;
-      background:linear-gradient(0deg,rgba(8,8,20,.94),rgba(8,8,20,.05));
-    }
-    .discovery-card:nth-child(1)::before{background-image:url("https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=700&q=85")}
-    .discovery-card:nth-child(2)::before{background-image:url("https://images.unsplash.com/photo-1593305841991-05c297ba4575?auto=format&fit=crop&w=700&q=85")}
-    .discovery-card:nth-child(3)::before{background-image:url("https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=700&q=85")}
-    .discovery-card:nth-child(4)::before{background-image:url("https://images.unsplash.com/photo-1511882150382-421056c89033?auto=format&fit=crop&w=700&q=85")}
-    .discovery-card strong{font-size:16px;font-weight:900}
-    .discovery-card small{font-size:11px;color:#d4cfe2;margin-top:2px}
-    .discovery-arrow{
-      position:absolute;top:13px;left:13px;
-      width:29px;height:29px;border-radius:10px;
-      background:rgba(255,255,255,.15);display:grid;place-items:center;
-    }
-    .discovery-arrow svg{width:15px;height:15px;stroke:white;fill:none;stroke-width:2}
+/* PROMO BANNER */
+.promo{
+  min-height:220px;border-radius:25px;
+  overflow:hidden;position:relative;isolation:isolate;
+  display:flex;align-items:center;padding:30px 35px;
+  border:1px solid rgba(255,255,255,.13);
+  box-shadow:var(--shadow);
+  background:#19152d;
+}
+.promo:before{
+  content:"";position:absolute;inset:0;z-index:-2;
+  background:
+    linear-gradient(90deg,rgba(10,8,23,.96),rgba(10,8,23,.73),rgba(10,8,23,.15)),
+    url("https://images.unsplash.com/photo-1560253023-3ec5d502959f?auto=format&fit=crop&w=1500&q=85")
+    center/cover;
+}
+.promo:after{
+  content:"";position:absolute;inset:0;z-index:-1;
+  background:radial-gradient(circle at 75% 50%,rgba(147,111,255,.2),transparent 38%);
+}
+.promo-content{max-width:490px}
+.promo-content small{font-size:10px;color:#c4b0ff;font-weight:900;letter-spacing:1px}
+.promo-content h3{font-size:26px;font-weight:900;margin-top:6px}
+.promo-content p{font-size:11px;color:#d0cadd;line-height:1.9;margin-top:5px}
+.promo-content .btn-primary{margin-top:15px}
 
-    .category-row{
-      display:flex;gap:10px;overflow-x:auto;padding:2px 0 8px;
-      scrollbar-width:none;
-    }
-    .category-row::-webkit-scrollbar{display:none}
-    .category{
-      flex:0 0 auto;padding:10px 16px;border-radius:30px;
-      border:1px solid var(--line);background:rgba(255,255,255,.055);
-      color:#d5d1e5;font-size:12px;font-weight:700;
-    }
-    .category.active{
-      background:linear-gradient(110deg,#8f70ef,#6548d2);
-      color:white;border-color:transparent;
-      box-shadow:0 7px 20px rgba(111,78,218,.25);
-    }
+/* ROOMS */
+.room-cover{height:132px;position:relative;overflow:hidden;background:#292341}
+.room-cover img{width:100%;height:100%;object-fit:cover}
+.room-state{
+  position:absolute;top:10px;right:10px;
+  padding:5px 9px;border-radius:20px;
+  background:rgba(9,10,20,.82);
+  color:#8fe0c5;font-size:9px;font-weight:900;
+  border:1px solid rgba(143,224,197,.2);
+}
+.room-info{padding:13px}
+.room-info h4{font-size:13px;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.room-details{
+  display:flex;justify-content:space-between;gap:6px;
+  margin-top:9px;color:var(--muted);font-size:10px;
+}
+.room-code{color:#c7b4ff;font-weight:900}
+.room-info .card-footer{margin-top:12px}
 
-    .cards-grid{
-      display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:15px;
-    }
-    .game-card,.room-card,.member-card{
-      min-width:0;overflow:hidden;
-      border:1px solid rgba(255,255,255,.10);
-      border-radius:20px;
-      background:linear-gradient(145deg,rgba(32,30,54,.95),rgba(17,17,31,.96));
-      box-shadow:0 12px 30px rgba(0,0,0,.2);
-      transition:.25s;
-    }
-    .game-card:hover,.room-card:hover,.member-card:hover{
-      transform:translateY(-4px);
-      border-color:rgba(170,144,255,.38);
-      box-shadow:0 18px 38px rgba(0,0,0,.3);
-    }
-    .game-cover{
-      height:155px;position:relative;overflow:hidden;
-      background:linear-gradient(135deg,#27233f,#17172a);
-    }
-    .game-cover img{width:100%;height:100%;object-fit:cover;transition:.4s}
-    .game-card:hover .game-cover img{transform:scale(1.06)}
-    .cover-shade{position:absolute;inset:0;background:linear-gradient(0deg,rgba(10,10,20,.7),transparent 65%)}
-    .game-info{padding:13px}
-    .game-info h4{font-size:14px;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-    .game-info p{font-size:11px;color:var(--muted);margin-top:3px}
-    .card-bottom{display:flex;align-items:center;justify-content:space-between;margin-top:12px;gap:8px}
-    .mini-link{
-      padding:7px 12px;border-radius:9px;
-      background:rgba(148,119,255,.16);
-      color:#cabbff;font-size:11px;font-weight:800;
-    }
-    .mini-link:hover{background:rgba(148,119,255,.28)}
+/* LIVE DISCOVERY */
+.live-grid{display:grid;grid-template-columns:1.35fr 1fr 1fr;gap:13px}
+.live-card{
+  min-height:190px;position:relative;overflow:hidden;
+  border-radius:20px;border:1px solid rgba(255,255,255,.13);
+  background:#1c1830;isolation:isolate;
+  display:flex;align-items:flex-end;padding:18px;
+}
+.live-card:before{
+  content:"";position:absolute;inset:0;z-index:-2;
+  background-size:cover;background-position:center;transition:.45s;
+}
+.live-card:hover:before{transform:scale(1.07)}
+.live-card:after{
+  content:"";position:absolute;inset:0;z-index:-1;
+  background:linear-gradient(0deg,rgba(7,7,18,.95),rgba(7,7,18,.04));
+}
+.live-card:nth-child(1):before{
+  background-image:url("https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=900&q=85")
+}
+.live-card:nth-child(2):before{
+  background-image:url("https://images.unsplash.com/photo-1593305841991-05c297ba4575?auto=format&fit=crop&w=700&q=85")
+}
+.live-card:nth-child(3):before{
+  background-image:url("https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=700&q=85")
+}
+.live-card strong{font-size:15px;font-weight:900}
+.live-card p{font-size:10px;color:#d2ccdf;margin-top:3px}
 
-    .feature-banner{
-      min-height:190px;border-radius:24px;overflow:hidden;
-      position:relative;isolation:isolate;
-      display:flex;align-items:center;padding:28px 32px;
-      border:1px solid rgba(255,255,255,.12);
-      background:#19152b;
-    }
-    .feature-banner::before{
-      content:"";position:absolute;inset:0;z-index:-2;
-      background:
-        linear-gradient(90deg,rgba(12,10,25,.97),rgba(12,10,25,.65),rgba(12,10,25,.15)),
-        url("https://images.unsplash.com/photo-1560253023-3ec5d502959f?auto=format&fit=crop&w=1400&q=85") center/cover;
-    }
-    .feature-banner::after{
-      content:"";position:absolute;inset:0;z-index:-1;
-      background:radial-gradient(circle at 75% 45%,rgba(151,111,255,.17),transparent 35%);
-    }
-    .feature-copy{max-width:480px}
-    .feature-copy small{color:#bba9ff;font-size:11px;font-weight:800}
-    .feature-copy h3{font-size:24px;font-weight:900;margin-top:5px}
-    .feature-copy p{font-size:12px;color:#c7c2d6;margin-top:5px;line-height:1.9}
-    .feature-copy a{display:inline-flex;margin-top:14px}
+/* EMPTY / LOADING */
+.empty-state{
+  grid-column:1/-1;text-align:center;
+  padding:35px 20px;
+  border:1px dashed rgba(255,255,255,.17);
+  border-radius:20px;background:rgba(255,255,255,.025);
+}
+.empty-state svg{
+  width:37px;height:37px;stroke:#b09bff;fill:none;
+  stroke-width:1.5;margin:0 auto 10px;
+}
+.empty-state h4{font-size:14px;font-weight:900}
+.empty-state p{font-size:10px;color:var(--muted);margin-top:5px}
+.loader{
+  width:28px;height:28px;margin:0 auto 12px;
+  border:2px solid rgba(255,255,255,.12);
+  border-top-color:#a98aff;border-radius:50%;
+  animation:spin .8s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
 
-    .room-cover{
-      height:125px;position:relative;overflow:hidden;
-      background:linear-gradient(135deg,#34265c,#172d42);
-    }
-    .room-cover img{width:100%;height:100%;object-fit:cover}
-    .room-status{
-      position:absolute;top:10px;right:10px;
-      padding:5px 9px;border-radius:20px;
-      background:rgba(10,10,20,.75);
-      color:#8de3c5;font-size:10px;font-weight:800;
-      border:1px solid rgba(141,227,197,.22);
-    }
-    .room-info{padding:13px}
-    .room-info h4{font-size:14px;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-    .room-meta{display:flex;align-items:center;justify-content:space-between;margin-top:10px;color:var(--muted);font-size:10px}
-    .room-code{color:#c9baff;font-weight:800}
+/* BOTTOM NAV */
+.bottom-nav{
+  position:fixed;z-index:50;
+  bottom:10px;left:50%;transform:translateX(-50%);
+  width:min(calc(100% - 22px),850px);
+  min-height:72px;padding:7px 10px;
+  display:flex;align-items:center;justify-content:space-around;gap:3px;
+  background:rgba(19,18,35,.95);
+  backdrop-filter:blur(22px);
+  -webkit-backdrop-filter:blur(22px);
+  border:1px solid rgba(255,255,255,.13);
+  border-radius:22px;
+  box-shadow:0 15px 45px rgba(0,0,0,.52);
+}
+.nav-item{
+  flex:1;min-width:0;min-height:54px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;
+  border-radius:13px;color:#aaa5bf;
+  font-size:10px;font-weight:800;transition:.2s;
+}
+.nav-item svg{width:21px;height:21px;stroke:currentColor;fill:none;stroke-width:1.8}
+.nav-item.active{color:#c9b7ff;background:rgba(151,121,255,.14)}
+.nav-item:hover{color:white;background:rgba(255,255,255,.07)}
 
-    .empty-state{
-      grid-column:1/-1;text-align:center;padding:35px 20px;
-      border:1px dashed rgba(255,255,255,.16);
-      border-radius:20px;background:rgba(255,255,255,.025);
-    }
-    .empty-state svg{width:37px;height:37px;stroke:#a994f6;fill:none;stroke-width:1.5;margin:0 auto 10px}
-    .empty-state h4{font-size:15px;font-weight:800}
-    .empty-state p{font-size:11px;color:var(--muted);margin-top:5px}
+.toast{
+  position:fixed;z-index:100;bottom:100px;left:50%;
+  transform:translate(-50%,15px);opacity:0;
+  pointer-events:none;padding:11px 17px;border-radius:12px;
+  background:#25213c;border:1px solid var(--line);
+  color:white;font-size:11px;transition:.25s;
+}
+.toast.show{opacity:1;transform:translate(-50%,0)}
 
-    .member-card{padding:18px 12px;text-align:center}
-    .member-avatar{
-      width:66px;height:66px;border-radius:50%;
-      margin:0 auto 10px;overflow:hidden;
-      background:linear-gradient(135deg,#47346e,#202e46);
-      border:2px solid rgba(174,148,255,.55);
-      display:grid;place-items:center;
-    }
-    .member-avatar img{width:100%;height:100%;object-fit:cover}
-    .member-avatar svg{width:28px;height:28px;stroke:#c5b8f0;fill:none;stroke-width:1.5}
-    .member-card h4{font-size:13px;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-    .member-card p{font-size:10px;color:var(--muted);margin-top:3px}
-    .member-card a{
-      display:inline-flex;margin-top:11px;
-      padding:6px 13px;border-radius:9px;
-      background:rgba(151,121,255,.14);
-      color:#c9baff;font-size:10px;font-weight:800;
-    }
-
-    .live-discovery{
-      display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:14px;
-    }
-    .live-tile{
-      min-height:170px;position:relative;overflow:hidden;
-      border-radius:20px;border:1px solid rgba(255,255,255,.12);
-      background:#19152b;isolation:isolate;
-      display:flex;align-items:flex-end;padding:18px;
-    }
-    .live-tile::before{
-      content:"";position:absolute;inset:0;z-index:-2;
-      background-size:cover;background-position:center;transition:.4s;
-    }
-    .live-tile:hover::before{transform:scale(1.06)}
-    .live-tile::after{
-      content:"";position:absolute;inset:0;z-index:-1;
-      background:linear-gradient(0deg,rgba(8,8,20,.92),rgba(8,8,20,.05));
-    }
-    .live-tile:nth-child(1)::before{background-image:url("https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=900&q=85")}
-    .live-tile:nth-child(2)::before{background-image:url("https://images.unsplash.com/photo-1593305841991-05c297ba4575?auto=format&fit=crop&w=700&q=85")}
-    .live-tile:nth-child(3)::before{background-image:url("https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=700&q=85")}
-    .live-tile strong{font-size:15px;font-weight:900}
-    .live-tile p{font-size:10px;color:#d2ccdf;margin-top:3px}
-
-    .search-box{
-      display:flex;align-items:center;gap:10px;
-      height:47px;padding:0 14px;border-radius:14px;
-      background:rgba(255,255,255,.07);
-      border:1px solid var(--line);
-      max-width:390px;width:100%;
-    }
-    .search-box svg{width:18px;height:18px;stroke:#aaa3c4;fill:none;stroke-width:2;flex:none}
-    .search-box input{
-      min-width:0;flex:1;background:none;border:0;outline:0;
-      color:white;font-size:12px;
-    }
-    .search-box input::placeholder{color:#89849f}
-    .search-results{display:none;margin-top:12px}
-    .search-results.show{display:block}
-
-    .bottom-nav{
-      position:fixed;z-index:50;bottom:12px;left:50%;
-      transform:translateX(-50%);
-      width:min(calc(100% - 28px),850px);
-      min-height:72px;padding:8px 12px;
-      display:flex;align-items:center;justify-content:space-around;gap:4px;
-      background:rgba(19,18,35,.94);
-      backdrop-filter:blur(22px);
-      -webkit-backdrop-filter:blur(22px);
-      border:1px solid rgba(255,255,255,.12);
-      border-radius:22px;
-      box-shadow:0 15px 45px rgba(0,0,0,.5);
-    }
-    .nav-item{
-      flex:1;min-width:0;min-height:54px;
-      display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;
-      border-radius:14px;color:#aaa5bf;
-      font-size:10px;font-weight:700;transition:.2s;
-    }
-    .nav-item svg{width:21px;height:21px;stroke:currentColor;fill:none;stroke-width:1.8}
-    .nav-item.active{color:#c4b2ff;background:rgba(151,121,255,.13)}
-    .nav-item:hover{color:white;background:rgba(255,255,255,.07)}
-
-    .toast{
-      position:fixed;z-index:100;bottom:100px;left:50%;
-      transform:translate(-50%,20px);
-      opacity:0;pointer-events:none;
-      padding:11px 17px;border-radius:12px;
-      background:#24213a;border:1px solid rgba(255,255,255,.13);
-      color:white;font-size:12px;box-shadow:var(--shadow);
-      transition:.25s;
-    }
-    .toast.show{opacity:1;transform:translate(-50%,0)}
-    .loading-line{
-      height:3px;width:100%;background:rgba(255,255,255,.05);
-      overflow:hidden;border-radius:5px;margin-top:12px;
-    }
-    .loading-line::after{
-      content:"";display:block;width:35%;height:100%;
-      background:linear-gradient(90deg,#8060e8,#66d6d0);
-      animation:loading 1.2s infinite ease-in-out;
-    }
-    @keyframes loading{from{transform:translateX(300%)}to{transform:translateX(-300%)}}
-
-    @media(max-width:1050px){
-      .cards-grid,.discovery-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
-      .wallet-links{display:none}
-    }
-    @media(max-width:700px){
-      .app{padding:0 14px}
-      .topbar{height:70px;gap:8px}
-      .brand{min-width:unset;gap:8px}
-      .brand-mark{width:40px;height:40px;border-radius:13px}
-      .brand-name{font-size:15px}
-      .brand-sub{font-size:8px}
-      .top-actions{gap:6px}
-      .icon-btn,.profile-shortcut{width:37px;height:37px}
-      .wallet-bar{padding:7px 8px;gap:5px;border-radius:13px}
-      .wallet-unit{font-size:10px;min-width:48px;gap:4px}
-      .wallet-unit svg{width:16px;height:16px}
-      .wallet-add{width:25px;height:25px}
-      .welcome{margin-top:12px}
-      .welcome h1{font-size:22px}
-      .welcome p{font-size:11px}
-      .welcome-tag{font-size:9px;padding:7px 10px}
-      .hero{margin-top:17px;min-height:300px;border-radius:23px}
-      .hero-bg{
-        background:
-          linear-gradient(90deg,rgba(11,9,24,.93),rgba(13,10,28,.64)),
-          url("https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1000&q=90") center/cover;
-      }
-      .hero-content{min-height:300px;padding:25px 22px}
-      .hero h2{font-size:29px}
-      .hero p{font-size:12px}
-      .section{margin-top:29px}
-      .section-title h3{font-size:16px}
-      .section-title p{font-size:9px}
-      .section-icon{width:34px;height:34px}
-      .cards-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-      .discovery-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-      .discovery-card{min-height:125px;padding:13px}
-      .game-cover{height:125px}
-      .game-info{padding:10px}
-      .game-info h4{font-size:12px}
-      .feature-banner{min-height:180px;padding:22px}
-      .feature-copy h3{font-size:20px}
-      .live-discovery{grid-template-columns:1fr 1fr;gap:9px}
-      .live-tile{min-height:135px;padding:13px}
-      .live-tile:first-child{grid-column:1/-1;min-height:165px}
-      .search-box{max-width:100%}
-      .bottom-nav{bottom:8px;width:calc(100% - 16px);min-height:66px;padding:6px 5px}
-      .nav-item{font-size:9px;min-height:52px;gap:3px}
-      .nav-item svg{width:19px;height:19px}
-    }
-    @media(max-width:380px){
-      .brand-sub{display:none}
-      .brand-name{font-size:13px}
-      .wallet-unit{min-width:42px}
-      .welcome-tag{display:none}
-      .nav-item{font-size:8px}
-    }
-  </style>
+@media(max-width:1050px){
+  .content-grid,.category-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .wallet-links{display:none}
+}
+@media(max-width:700px){
+  .app{padding:0 13px}
+  .topbar{height:68px;gap:7px}
+  .brand{gap:7px}
+  .brand-mark{width:39px;height:39px;border-radius:12px}
+  .brand-name{font-size:13px}
+  .brand-sub{font-size:7px;letter-spacing:1.3px}
+  .header-actions{gap:5px}
+  .header-icon,.my-avatar{width:36px;height:36px}
+  .wallet{padding:6px 7px;gap:5px;border-radius:12px}
+  .wallet-unit{min-width:43px;font-size:10px;gap:3px}
+  .wallet-unit svg{width:15px;height:15px}
+  .wallet-add{width:24px;height:24px}
+  .search-area{margin-top:8px;gap:8px}
+  .search-box{height:47px;padding:0 12px;gap:8px;border-radius:14px}
+  .search-box input{font-size:11px}
+  .search-box svg{width:18px;height:18px}
+  .search-shortcut{display:none}
+  .search-filter{height:47px;width:47px;border-radius:14px}
+  .search-results{top:55px;left:55px}
+  .intro{margin-top:19px}
+  .intro h1{font-size:22px}
+  .intro p{font-size:10px}
+  .intro-mark{font-size:8px;padding:6px 9px}
+  .hero{margin-top:16px;min-height:310px;border-radius:22px}
+  .hero-bg{
+    background:
+      linear-gradient(90deg,rgba(9,8,21,.94),rgba(10,8,23,.61)),
+      url("https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1000&q=90") center/cover;
+  }
+  .hero-content{min-height:310px;padding:24px 21px}
+  .hero h2{font-size:31px}
+  .hero p{font-size:11px}
+  .hero-label{font-size:9px}
+  .btn-primary,.btn-secondary{min-height:42px;padding:0 14px;font-size:10px}
+  .section{margin-top:29px}
+  .section-heading h3{font-size:16px}
+  .section-heading p{font-size:9px}
+  .section-icon{width:35px;height:35px;border-radius:11px}
+  .view-all{font-size:10px}
+  .category-grid{gap:9px}
+  .category-card{height:137px;padding:12px;border-radius:16px}
+  .category-card strong{font-size:13px}
+  .category-card small{font-size:9px}
+  .content-grid{gap:10px}
+  .game-image{height:120px}
+  .game-info{padding:10px}
+  .game-info h4,.room-info h4{font-size:11px}
+  .game-info p{font-size:9px}
+  .card-link{font-size:9px;padding:6px 9px}
+  .promo{min-height:180px;padding:20px;border-radius:20px}
+  .promo-content h3{font-size:20px}
+  .promo-content p{font-size:10px}
+  .room-cover{height:110px}
+  .room-info{padding:10px}
+  .room-details{font-size:9px}
+  .live-grid{grid-template-columns:1fr 1fr;gap:9px}
+  .live-card{min-height:135px;padding:12px;border-radius:16px}
+  .live-card:first-child{grid-column:1/-1;min-height:165px}
+  .live-card strong{font-size:13px}
+  .bottom-nav{
+    bottom:7px;width:calc(100% - 14px);
+    min-height:65px;padding:5px 4px;border-radius:18px;
+  }
+  .nav-item{min-height:52px;font-size:8px;gap:3px}
+  .nav-item svg{width:19px;height:19px}
+}
+@media(max-width:370px){
+  .brand-sub{display:none}
+  .brand-name{font-size:12px}
+  .wallet-unit{min-width:38px}
+  .intro-mark{display:none}
+  .nav-item{font-size:7px}
+}
+</style>
 </head>
 
 <body>
-  <div class="app">
-    <header class="topbar">
-      <a class="brand" href="home.html" aria-label="Hanoon World">
-        <div class="brand-mark">
-          <svg viewBox="0 0 40 40" fill="none">
-            <path d="M9 29V11h5v7h12v-7h5v18h-5v-7H14v7H9Z" fill="white"/>
-            <path d="M6 6h28v28H6z" stroke="white" stroke-opacity=".45" stroke-width="1.5" rx="8"/>
+<div class="app">
+
+  <header class="topbar">
+    <a class="brand" href="home.html">
+      <div class="brand-mark">
+        <svg viewBox="0 0 40 40" fill="none">
+          <path d="M9 29V11h5v7h12v-7h5v18h-5v-7H14v7H9Z" fill="white"/>
+          <path d="M6 6h28v28H6z" stroke="white" stroke-opacity=".45" stroke-width="1.5"/>
+        </svg>
+      </div>
+      <div>
+        <div class="brand-name">HANOON WORLD</div>
+        <div class="brand-sub">YOUR SOCIAL UNIVERSE</div>
+      </div>
+    </a>
+
+    <div class="header-actions">
+      <div class="wallet">
+        <div class="wallet-unit coins">
+          <svg viewBox="0 0 24 24" fill="none">
+            <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.7"/>
+            <path d="M15.5 9.5c-.7-.8-1.7-1.2-3.1-1.2-1.5 0-2.5.7-2.5 1.8 0 2.8 5.4 1.1 5.4 4 0 1.2-1.1 2-2.8 2-1.3 0-2.5-.5-3.3-1.4M12 6.5v11" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
           </svg>
+          <span id="coinBalance">—</span>
         </div>
-        <div>
-          <div class="brand-name">HANOON WORLD</div>
-          <div class="brand-sub">YOUR SOCIAL UNIVERSE</div>
+        <div class="wallet-unit gems">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="m12 2 8 7-8 13L4 9l8-7Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+            <path d="m4 9 16 0M8 9l4 13 4-13" stroke="currentColor" stroke-width="1.3"/>
+          </svg>
+          <span id="gemBalance">—</span>
         </div>
+        <a class="wallet-add" href="wallet.html" aria-label="إضافة رصيد">
+          <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+        </a>
+        <div class="wallet-links">
+          <a class="wallet-link" href="store.html">
+            <svg viewBox="0 0 24 24"><path d="M4 8h16l-1 12H5L4 8Z"/><path d="M9 9V6a3 3 0 0 1 6 0v3"/></svg>
+            المتجر
+          </a>
+          <a class="wallet-link" href="gifts.html">
+            <svg viewBox="0 0 24 24"><path d="M3 10h18v11H3zM2 6h20v4H2zM12 6v15"/><path d="M12 6H8a2 2 0 1 1 2-2c0 1.1 2 2 2 2Zm0 0h4a2 2 0 1 0-2-2c0 1.1-2 2-2 2Z"/></svg>
+            الهدايا
+          </a>
+        </div>
+      </div>
+
+      <a class="header-icon" href="notifications.html" aria-label="الإشعارات">
+        <svg viewBox="0 0 24 24"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9ZM10 21h4"/></svg>
       </a>
 
-      <div class="top-actions">
-        <div class="wallet-bar">
-          <div class="wallet-unit coins">
-            <svg viewBox="0 0 24 24" fill="none">
-              <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.7"/>
-              <path d="M15.5 9.5c-.7-.8-1.7-1.2-3.1-1.2-1.5 0-2.5.7-2.5 1.8 0 2.8 5.4 1.1 5.4 4 0 1.2-1.1 2-2.8 2-1.3 0-2.5-.5-3.3-1.4M12 6.5v11" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
-            </svg>
-            <span id="coinBalance">—</span>
-          </div>
-          <div class="wallet-unit gems">
-            <svg viewBox="0 0 24 24" fill="none">
-              <path d="m12 2 8 7-8 13L4 9l8-7Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
-              <path d="m4 9 16 0M8 9l4 13 4-13M9 5h6" stroke="currentColor" stroke-width="1.3"/>
-            </svg>
-            <span id="gemBalance">—</span>
-          </div>
-          <a class="wallet-add" href="wallet.html" aria-label="إضافة رصيد">
-            <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
-          </a>
-          <div class="wallet-links">
-            <a class="wallet-link" href="store.html">
-              <svg viewBox="0 0 24 24"><path d="M4 8h16l-1 12H5L4 8Z"/><path d="M9 9V6a3 3 0 0 1 6 0v3"/></svg>
-              المتجر
-            </a>
-            <a class="wallet-link" href="gifts.html">
-              <svg viewBox="0 0 24 24"><path d="M3 10h18v11H3zM2 6h20v4H2zM12 6v15"/><path d="M12 6H8a2 2 0 1 1 2-2c0 1.1 2 2 2 2Zm0 0h4a2 2 0 1 0-2-2c0 1.1-2 2-2 2Z"/></svg>
-              الهدايا
-            </a>
-          </div>
-        </div>
+      <a class="my-avatar" href="profile.html" id="myProfileLink" aria-label="حسابي">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 21c.5-4 3.2-6 7.5-6s7 2 7.5 6"/></svg>
+      </a>
+    </div>
+  </header>
 
-        <a class="icon-btn" href="notifications.html" aria-label="الإشعارات">
-          <svg viewBox="0 0 24 24"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9ZM10 21h4"/></svg>
-        </a>
-        <a class="profile-shortcut" href="profile.html" id="myProfileLink" aria-label="حسابي">
-          <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 21c.5-4 3.2-6 7.5-6s7 2 7.5 6"/></svg>
-        </a>
-      </div>
-    </header>
-
-    <section class="welcome">
-      <div>
-        <h1>أهلاً بك في <span>عالم هنون</span></h1>
-        <p>اكتشف عالمًا مليئًا بالألعاب والتحديات والأصدقاء</p>
-      </div>
-      <div class="welcome-tag">عالم واحد.. تجارب بلا حدود</div>
-    </section>
-
-    <section class="hero">
-      <div class="hero-bg"></div>
-      <div class="hero-content">
-        <div class="hero-kicker"><span></span> عالمك يبدأ من هنا</div>
-        <h2>عيش التجربة<br><em>والعب مع العالم</em></h2>
-        <p>ادخل غرف الألعاب، اكتشف أعضاء جدد، وشارك في تجارب اجتماعية وترفيهية داخل عالم هنون.</p>
-        <div class="hero-actions">
-          <a class="primary-btn" href="games.html">
-            <svg viewBox="0 0 24 24"><path d="m8 5 12 7-12 7V5Z" fill="currentColor" stroke="none"/></svg>
-            اكتشف الألعاب
-          </a>
-          <a class="secondary-btn" href="rooms.html">
-            <svg viewBox="0 0 24 24"><path d="M3 20V9l9-6 9 6v11h-6v-7H9v7H3Z"/></svg>
-            تصفح الغرف
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="section-head">
-        <div class="section-title">
-          <div class="section-icon">
-            <svg viewBox="0 0 24 24"><path d="M12 3 14.5 9.5 21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5L12 3Z"/></svg>
-          </div>
-          <div><h3>اكتشف عالم هنون</h3><p>اختار التجربة اللي تناسبك</p></div>
-        </div>
-      </div>
-
-      <div class="discovery-grid">
-        <a class="discovery-card" href="games.html">
-          <span class="discovery-arrow"><svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg></span>
-          <strong>عالم الألعاب</strong><small>اكتشف الألعاب المتاحة</small>
-        </a>
-        <a class="discovery-card" href="rooms.html">
-          <span class="discovery-arrow"><svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg></span>
-          <strong>غرف المجتمع</strong><small>تصفح الغرف العامة</small>
-        </a>
-        <a class="discovery-card" href="live.html">
-          <span class="discovery-arrow"><svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg></span>
-          <strong>عالم البث</strong><small>اكتشف تجارب البث</small>
-        </a>
-        <a class="discovery-card" href="contests.html">
-          <span class="discovery-arrow"><svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg></span>
-          <strong>التحديات</strong><small>مساحة المنافسات والفعاليات</small>
-        </a>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="section-head">
-        <div class="section-title">
-          <div class="section-icon">
-            <svg viewBox="0 0 24 24"><path d="M6 11h4l2-5 2 12 2-7h2"/></svg>
-          </div>
-          <div><h3>الألعاب</h3><p>الألعاب المتاحة في عالم هنون</p></div>
-        </div>
-        <a class="view-all" href="games.html">عرض كل الألعاب</a>
-      </div>
-
-      <div class="category-row">
-        <button class="category active" type="button" data-game-filter="all">الكل</button>
-        <button class="category" type="button" data-game-filter="available">الألعاب المتاحة</button>
-      </div>
-      <div class="cards-grid" id="gamesGrid">
-        <div class="empty-state">
-          <div class="loading-line"></div>
-          <p>جارٍ تحميل الألعاب...</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="feature-banner">
-        <div class="feature-copy">
-          <small>HANOON WORLD EXPERIENCE</small>
-          <h3>كل لحظة لها حكاية</h3>
-          <p>من الألعاب الجماعية إلى الغرف والتحديات، اكتشف تجارب جديدة واجعل عالمك أكثر تفاعلاً.</p>
-          <a class="primary-btn" href="rooms.html">اكتشف الغرف</a>
-        </div>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="section-head">
-        <div class="section-title">
-          <div class="section-icon">
-            <svg viewBox="0 0 24 24"><path d="M3 20V9l9-6 9 6v11h-6v-7H9v7H3Z"/></svg>
-          </div>
-          <div><h3>الغرف العامة</h3><p>الغرف المتاحة للانضمام والتصفح</p></div>
-        </div>
-        <a class="view-all" href="rooms.html">عرض كل الغرف</a>
-      </div>
-      <div class="cards-grid" id="roomsGrid">
-        <div class="empty-state"><div class="loading-line"></div><p>جارٍ تحميل الغرف...</p></div>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="section-head">
-        <div class="section-title">
-          <div class="section-icon">
-            <svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-4 2-6 6-6s6 2 6 6M16 5a3 3 0 0 1 0 6M17 14c2.5.5 4 2.5 4 5"/></svg>
-          </div>
-          <div><h3>أعضاء المجتمع</h3><p>اكتشف أعضاء عالم هنون</p></div>
-        </div>
-        <a class="view-all" href="members.html">عرض الأعضاء</a>
-      </div>
-      <div class="cards-grid" id="membersGrid">
-        <div class="empty-state"><div class="loading-line"></div><p>جارٍ تحميل الأعضاء...</p></div>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="section-head">
-        <div class="section-title">
-          <div class="section-icon">
-            <svg viewBox="0 0 24 24"><path d="M4 5h16v11H8l-4 4V5Z"/><path d="M8 9h8M8 12h5"/></svg>
-          </div>
-          <div><h3>استكشف عالم البث</h3><p>انتقل إلى مساحة البث والتجارب المباشرة</p></div>
-        </div>
-        <a class="view-all" href="live.html">دخول عالم البث</a>
-      </div>
-      <div class="live-discovery">
-        <a class="live-tile" href="live.html">
-          <div><strong>تجارب البث</strong><p>اكتشف مساحة البث في هنون</p></div>
-        </a>
-        <a class="live-tile" href="live.html">
-          <div><strong>الألعاب الجماعية</strong><p>تابع عالم المنافسات</p></div>
-        </a>
-        <a class="live-tile" href="live.html">
-          <div><strong>لحظات التحدي</strong><p>اكتشف تجارب جديدة</p></div>
-        </a>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="section-head">
-        <div class="section-title">
-          <div class="section-icon">
-            <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m16 16 5 5"/></svg>
-          </div>
-          <div><h3>ابحث في عالم هنون</h3><p>ابحث بين الأعضاء والألعاب والغرف المحمّلة</p></div>
-        </div>
-      </div>
-      <label class="search-box">
-        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m16 16 5 5"/></svg>
-        <input id="globalSearch" type="search" placeholder="ابحث عن عضو أو لعبة أو غرفة...">
-      </label>
-      <div class="search-results cards-grid" id="searchResults"></div>
-    </section>
-
-    <footer style="text-align:center;color:#77738e;font-size:10px;padding:35px 0 15px">
-      HANOON WORLD · عالمك الاجتماعي والترفيهي
-    </footer>
+  <!-- البحث أصبح في أعلى الصفحة -->
+  <div class="search-area">
+    <label class="search-box">
+      <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m16 16 5 5"/></svg>
+      <input id="globalSearch" type="search" placeholder="ابحث عن لعبة أو غرفة أو عضو...">
+      <span class="search-shortcut">بحث</span>
+    </label>
+    <a class="search-filter" href="games.html" aria-label="استكشاف">
+      <svg viewBox="0 0 24 24"><path d="M4 7h16M7 12h10M10 17h4"/><circle cx="8" cy="7" r="1.5"/><circle cx="15" cy="12" r="1.5"/></svg>
+    </a>
+    <div class="search-results" id="searchResults"></div>
   </div>
 
-  <nav class="bottom-nav">
-    <a class="nav-item active" href="home.html">
-      <svg viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10h-6v-6H9v6H3V10Z"/></svg>
-      الرئيسية
-    </a>
-    <a class="nav-item" href="games.html">
-      <svg viewBox="0 0 24 24"><path d="M7 8h10a4 4 0 0 1 4 4v4a3 3 0 0 1-5 2l-2-2h-4l-2 2a3 3 0 0 1-5-2v-4a4 4 0 0 1 4-4Z"/><path d="M8 11v4M6 13h4M16 12h.01M18 14h.01"/></svg>
-      الألعاب
-    </a>
-    <a class="nav-item" href="rooms.html">
-      <svg viewBox="0 0 24 24"><path d="M3 20V9l9-6 9 6v11h-6v-7H9v7H3Z"/></svg>
-      الغرف
-    </a>
-    <a class="nav-item" href="live.html">
-      <svg viewBox="0 0 24 24"><rect x="3" y="6" width="13" height="12" rx="2"/><path d="m16 10 5-3v10l-5-3"/></svg>
-      بث عشوائي
-    </a>
-    <a class="nav-item" href="chat.html">
-      <svg viewBox="0 0 24 24"><path d="M4 5h16v12H9l-5 4V5Z"/><path d="M8 9h8M8 13h5"/></svg>
-      المحادثات
-    </a>
-    <a class="nav-item" href="profile.html">
-      <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 21c.5-4 3.2-6 7.5-6s7 2 7.5 6"/></svg>
-      حسابي
-    </a>
-  </nav>
+  <section class="intro">
+    <div>
+      <h1>مرحباً بك في <span>عالم هنون</span></h1>
+      <p>مساحتك للألعاب والتواصل والتجارب المختلفة</p>
+    </div>
+    <div class="intro-mark">اكتشف عالمك</div>
+  </section>
 
-  <div class="toast" id="toast"></div>
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <div class="hero-label">HANOON WORLD EXPERIENCE</div>
+      <h2>هنا تبدأ<br><span>حكايتك الجديدة</span></h2>
+      <p>اكتشف ألعاباً مختلفة، ادخل غرف المجتمع، وشارك في عالم مليء بالتجارب والمنافسات.</p>
+      <div class="hero-buttons">
+        <a class="btn-primary" href="games.html">
+          <svg viewBox="0 0 24 24"><path d="m8 5 12 7-12 7V5Z" fill="currentColor" stroke="none"/></svg>
+          اكتشف الألعاب
+        </a>
+        <a class="btn-secondary" href="rooms.html">
+          <svg viewBox="0 0 24 24"><path d="M3 20V9l9-6 9 6v11h-6v-7H9v7H3Z"/></svg>
+          ادخل الغرف
+        </a>
+      </div>
+    </div>
+  </section>
 
-  <script>
-    const SUPABASE_URL = "https://gjtgvczvclfwvlvcquxh.supabase.co";
-    const SUPABASE_KEY = "sb_publishable_4DVTUZ-xTlqU2GpFvpb7lw_g-Kxomd4";
+  <section class="section">
+    <div class="section-head">
+      <div class="section-heading">
+        <div class="section-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 3 14.5 9.5 21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5L12 3Z"/></svg>
+        </div>
+        <div>
+          <h3>استكشف عالم هنون</h3>
+          <p>وجهات مختلفة داخل عالم واحد</p>
+        </div>
+      </div>
+    </div>
 
-    const supabaseClient = window.supabase.createClient(
-      SUPABASE_URL,
-      SUPABASE_KEY
-    );
+    <div class="category-grid">
+      <a class="category-card" href="games.html">
+        <span class="card-arrow"><svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg></span>
+        <div><strong>منطقة الألعاب</strong><small>اكتشف الألعاب المتاحة</small></div>
+      </a>
+      <a class="category-card" href="rooms.html">
+        <span class="card-arrow"><svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg></span>
+        <div><strong>عالم الغرف</strong><small>غرف المجتمع والألعاب</small></div>
+      </a>
+      <a class="category-card" href="live.html">
+        <span class="card-arrow"><svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg></span>
+        <div><strong>منطقة البث</strong><small>اكتشف تجارب البث</small></div>
+      </a>
+      <a class="category-card" href="contests.html">
+        <span class="card-arrow"><svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg></span>
+        <div><strong>التحديات</strong><small>المنافسات والفعاليات</small></div>
+      </a>
+    </div>
+  </section>
 
-    const state = {
-      user:null,
-      profile:null,
-      games:[],
-      rooms:[],
-      members:[]
-    };
+  <section class="section">
+    <div class="section-head">
+      <div class="section-heading">
+        <div class="section-icon">
+          <svg viewBox="0 0 24 24"><path d="M6 11h4l2-5 2 12 2-7h2"/></svg>
+        </div>
+        <div>
+          <h3>اكتشف الألعاب</h3>
+          <p>الألعاب المفعّلة في عالم هنون</p>
+        </div>
+      </div>
+      <a class="view-all" href="games.html">كل الألعاب ←</a>
+    </div>
 
-    const $ = id => document.getElementById(id);
+    <div class="filter-row">
+      <button class="filter-chip active" data-game-filter="all">كل الألعاب</button>
+      <button class="filter-chip" data-game-filter="available">المتاحة الآن</button>
+    </div>
 
-    function escapeHTML(value){
-      return String(value ?? "").replace(/[&<>"']/g, char => ({
-        "&":"&amp;",
-        "<":"&lt;",
-        ">":"&gt;",
-        '"':"&quot;",
-        "'":"&#039;"
-      })[char]);
-    }
+    <div class="content-grid" id="gamesGrid">
+      <div class="empty-state"><div class="loader"></div><p>جارٍ تحميل الألعاب...</p></div>
+    </div>
+  </section>
 
-    function showToast(message){
-      const toast = $("toast");
-      toast.textContent = message;
-      toast.classList.add("show");
-      clearTimeout(showToast.timer);
-      showToast.timer = setTimeout(() => toast.classList.remove("show"),2600);
-    }
+  <section class="section">
+    <div class="promo">
+      <div class="promo-content">
+        <small>YOUR WORLD · YOUR EXPERIENCE</small>
+        <h3>مكانك بين أصدقائك</h3>
+        <p>تصفح الغرف العامة واكتشف مساحات اللعب والتفاعل داخل مجتمع هنون.</p>
+        <a class="btn-primary" href="rooms.html">اكتشف الغرف</a>
+      </div>
+    </div>
+  </section>
 
-    function isFullURL(value){
-      return /^https?:\/\//i.test(String(value || ""));
-    }
+  <section class="section">
+    <div class="section-head">
+      <div class="section-heading">
+        <div class="section-icon">
+          <svg viewBox="0 0 24 24"><path d="M3 20V9l9-6 9 6v11h-6v-7H9v7H3Z"/></svg>
+        </div>
+        <div>
+          <h3>الغرف العامة</h3>
+          <p>الغرف العامة المفتوحة في الوقت الحالي</p>
+        </div>
+      </div>
+      <a class="view-all" href="rooms.html">كل الغرف ←</a>
+    </div>
 
-    function storageImage(bucket,path){
-      if(!path) return "";
-      if(isFullURL(path)) return path;
-      const {data} = supabaseClient.storage.from(bucket).getPublicUrl(path);
-      return data?.publicUrl || "";
-    }
+    <div class="content-grid" id="roomsGrid">
+      <div class="empty-state"><div class="loader"></div><p>جارٍ تحميل الغرف...</p></div>
+    </div>
+  </section>
 
-    function defaultAvatar(){
-      return `
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <circle cx="12" cy="8" r="3.5"/>
-          <path d="M4.5 21c.5-4 3.2-6 7.5-6s7 2 7.5 6"/>
-        </svg>`;
-    }
+  <section class="section">
+    <div class="section-head">
+      <div class="section-heading">
+        <div class="section-icon">
+          <svg viewBox="0 0 24 24"><path d="M4 5h16v11H8l-4 4V5Z"/><path d="M8 9h8M8 12h5"/></svg>
+        </div>
+        <div>
+          <h3>اكتشف عالم البث</h3>
+          <p>مساحة مخصصة للتجارب المباشرة</p>
+        </div>
+      </div>
+      <a class="view-all" href="live.html">دخول البث ←</a>
+    </div>
 
-    function imageOrFallback(url,alt=""){
-      if(!url) return defaultAvatar();
-      return `<img src="${escapeHTML(url)}" alt="${escapeHTML(alt)}" loading="lazy"
-        onerror="this.parentElement.innerHTML='${defaultAvatar().replace(/'/g,"&#39;")}'">`;
-    }
+    <div class="live-grid">
+      <a class="live-card" href="live.html">
+        <div><strong>تجارب البث</strong><p>اكتشف مساحة البث في هنون</p></div>
+      </a>
+      <a class="live-card" href="live.html">
+        <div><strong>الألعاب الجماعية</strong><p>عالم اللعب والمنافسة</p></div>
+      </a>
+      <a class="live-card" href="live.html">
+        <div><strong>لحظات التحدي</strong><p>اكتشف تجارب جديدة</p></div>
+      </a>
+    </div>
+  </section>
 
-    async function loadSession(){
-      const {data,error} = await supabaseClient.auth.getSession();
-      if(error) throw error;
-      state.user = data.session?.user || null;
+  <footer style="text-align:center;color:#77728e;font-size:10px;padding:35px 0 15px">
+    HANOON WORLD · YOUR SOCIAL UNIVERSE
+  </footer>
+</div>
 
-      if(!state.user){
-        location.href = "index.html";
-        return false;
-      }
-      return true;
-    }
+<nav class="bottom-nav">
+  <a class="nav-item active" href="home.html">
+    <svg viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10h-6v-6H9v6H3V10Z"/></svg>
+    الرئيسية
+  </a>
+  <a class="nav-item" href="games.html">
+    <svg viewBox="0 0 24 24"><path d="M7 8h10a4 4 0 0 1 4 4v4a3 3 0 0 1-5 2l-2-2h-4l-2 2a3 3 0 0 1-5-2v-4a4 4 0 0 1 4-4Z"/><path d="M8 11v4M6 13h4M16 12h.01M18 14h.01"/></svg>
+    الألعاب
+  </a>
+  <a class="nav-item" href="rooms.html">
+    <svg viewBox="0 0 24 24"><path d="M3 20V9l9-6 9 6v11h-6v-7H9v7H3Z"/></svg>
+    الغرف
+  </a>
+  <a class="nav-item" href="live.html">
+    <svg viewBox="0 0 24 24"><rect x="3" y="6" width="13" height="12" rx="2"/><path d="m16 10 5-3v10l-5-3"/></svg>
+    بث عشوائي
+  </a>
+  <a class="nav-item" href="chat.html">
+    <svg viewBox="0 0 24 24"><path d="M4 5h16v12H9l-5 4V5Z"/><path d="M8 9h8M8 13h5"/></svg>
+    المحادثات
+  </a>
+  <a class="nav-item" href="profile.html">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 21c.5-4 3.2-6 7.5-6s7 2 7.5 6"/></svg>
+    حسابي
+  </a>
+</nav>
 
-    async function loadMyProfile(){
-      const {data,error} = await supabaseClient
-        .from("profiles")
-        .select("id,full_name,avatar_path,member_code")
-        .eq("id",state.user.id)
-        .maybeSingle();
+<div class="toast" id="toast"></div>
 
-      if(error) throw error;
-      state.profile = data;
+<script>
+const SUPABASE_URL = "https://gjtgvczvclfwvlvcquxh.supabase.co";
+const SUPABASE_KEY = "sb_publishable_4DVTUZ-xTlqU2GpFvpb7lw_g-Kxomd4";
 
-      const avatar = storageImage("avatars",data?.avatar_path);
-      if(avatar){
-        $("myProfileLink").innerHTML = `<img src="${escapeHTML(avatar)}" alt="حسابي">`;
-      }
-    }
+const db = window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
 
-    async function loadWallet(){
-      const {data,error} = await supabaseClient
-        .from("world_wallets")
-        .select("coins,gems")
-        .eq("user_id",state.user.id)
-        .maybeSingle();
+const state = {
+  user:null,
+  games:[],
+  rooms:[],
+  members:[]
+};
 
-      if(error) throw error;
+const $ = id => document.getElementById(id);
 
-      $("coinBalance").textContent =
-        data?.coins == null ? "—" : Number(data.coins).toLocaleString("en-US");
+function esc(value){
+  return String(value ?? "").replace(/[&<>"']/g,c=>({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+  })[c]);
+}
 
-      $("gemBalance").textContent =
-        data?.gems == null ? "—" : Number(data.gems).toLocaleString("en-US");
-    }
+function isURL(value){
+  return /^https?:\/\//i.test(String(value || ""));
+}
 
-    async function loadGames(){
-      const {data,error} = await supabaseClient
-        .from("world_games_catalog")
-        .select("id,title_ar,title_en,slug,cover_path,is_active")
-        .eq("is_active",true)
-        .order("title_ar",{ascending:true})
-        .limit(8);
+function publicImage(bucket,path){
+  if(!path) return "";
+  if(isURL(path)) return path;
+  const {data} = db.storage.from(bucket).getPublicUrl(path);
+  return data?.publicUrl || "";
+}
 
-      if(error) throw error;
-      state.games = data || [];
+function avatarFallback(){
+  return `<svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 21c.5-4 3.2-6 7.5-6s7 2 7.5 6"/></svg>`;
+}
+
+async function loadSession(){
+  const {data,error} = await db.auth.getSession();
+  if(error) throw error;
+  state.user = data.session?.user || null;
+
+  if(!state.user){
+    location.href = "index.html";
+    return false;
+  }
+  return true;
+}
+
+async function loadProfile(){
+  const {data,error} = await db
+    .from("profiles")
+    .select("id,full_name,avatar_path,member_code")
+    .eq("id",state.user.id)
+    .maybeSingle();
+
+  if(error) throw error;
+
+  const avatar = publicImage("avatars",data?.avatar_path);
+  if(avatar){
+    $("myProfileLink").innerHTML =
+      `<img src="${esc(avatar)}" alt="حسابي">`;
+  }
+}
+
+async function loadWallet(){
+  const {data,error} = await db
+    .from("world_wallets")
+    .select("coins,gems")
+    .eq("user_id",state.user.id)
+    .maybeSingle();
+
+  if(error) throw error;
+
+  $("coinBalance").textContent =
+    data?.coins == null ? "—" : Number(data.coins).toLocaleString("en-US");
+
+  $("gemBalance").textContent =
+    data?.gems == null ? "—" : Number(data.gems).toLocaleString("en-US");
+}
+
+async function loadGames(){
+  const {data,error} = await db
+    .from("world_games_catalog")
+    .select("id,title_ar,title_en,slug,cover_path,is_active")
+    .eq("is_active",true)
+    .order("title_ar",{ascending:true})
+    .limit(8);
+
+  if(error) throw error;
+  state.games = data || [];
+  renderGames(state.games);
+}
+
+async function loadRooms(){
+  const {data,error} = await db
+    .from("world_game_rooms")
+    .select("id,game_id,host_user_id,room_code,status,visibility,max_players,created_at")
+    .eq("visibility","public")
+    .in("status",["waiting","playing"])
+    .order("created_at",{ascending:false})
+    .limit(8);
+
+  if(error) throw error;
+
+  const rooms = data || [];
+  const gameIds = [...new Set(rooms.map(x=>x.game_id).filter(Boolean))];
+  const hostIds = [...new Set(rooms.map(x=>x.host_user_id).filter(Boolean))];
+
+  let games = [];
+  let hosts = [];
+
+  if(gameIds.length){
+    const result = await db
+      .from("world_games_catalog")
+      .select("id,title_ar,title_en,cover_path")
+      .in("id",gameIds);
+    if(!result.error) games = result.data || [];
+  }
+
+  if(hostIds.length){
+    const result = await db
+      .from("profiles")
+      .select("id,full_name,avatar_path")
+      .in("id",hostIds);
+    if(!result.error) hosts = result.data || [];
+  }
+
+  state.rooms = rooms.map(room=>({
+    ...room,
+    game:games.find(g=>g.id===room.game_id) || null,
+    host:hosts.find(h=>h.id===room.host_user_id) || null
+  }));
+
+  renderRooms(state.rooms);
+}
+
+/* الأعضاء لا يظهرون كقسم في الصفحة الرئيسية.
+   يتم تحميل بيانات دليل الأعضاء فقط لدعم البحث عند كتابة اسم عضو. */
+async function loadMembersForSearch(){
+  const {data,error} = await db
+    .from("member_directory")
+    .select("id,username,member_code,full_name")
+    .neq("id",state.user.id)
+    .order("created_at",{ascending:false})
+    .limit(100);
+
+  if(error) throw error;
+  state.members = data || [];
+}
+
+function renderGames(games){
+  const grid = $("gamesGrid");
+
+  if(!games.length){
+    grid.innerHTML = `
+      <div class="empty-state">
+        <svg viewBox="0 0 24 24"><path d="M7 8h10a4 4 0 0 1 4 4v4a3 3 0 0 1-5 2l-2-2h-4l-2 2a3 3 0 0 1-5-2v-4a4 4 0 0 1 4-4Z"/></svg>
+        <h4>لا توجد ألعاب مفعّلة حاليًا</h4>
+        <p>ستظهر الألعاب هنا عند تفعيلها في قاعدة البيانات.</p>
+      </div>`;
+    return;
+  }
+
+  grid.innerHTML = games.map(game=>{
+    const title = game.title_ar || game.title_en || "لعبة";
+    const cover = isURL(game.cover_path) ? game.cover_path : "";
+    const key = encodeURIComponent(game.slug || game.id);
+
+    return `
+      <article class="game-card">
+        <div class="game-image">
+          ${cover ? `<img src="${esc(cover)}" alt="${esc(title)}" loading="lazy">` : ""}
+        </div>
+        <div class="game-info">
+          <h4>${esc(title)}</h4>
+          <p>${esc(game.title_en || "من ألعاب هنون")}</p>
+          <div class="card-footer">
+            <span class="card-type">لعبة متاحة</span>
+            <a class="card-link" href="game.html?game=${key}">التفاصيل</a>
+          </div>
+        </div>
+      </article>`;
+  }).join("");
+}
+
+function renderRooms(rooms){
+  const grid = $("roomsGrid");
+
+  if(!rooms.length){
+    grid.innerHTML = `
+      <div class="empty-state">
+        <svg viewBox="0 0 24 24"><path d="M3 20V9l9-6 9 6v11h-6v-7H9v7H3Z"/></svg>
+        <h4>لا توجد غرف عامة متاحة الآن</h4>
+        <p>ستظهر الغرف هنا عند وجود غرف عامة مفتوحة.</p>
+      </div>`;
+    return;
+  }
+
+  grid.innerHTML = rooms.map(room=>{
+    const title = room.game?.title_ar || room.game?.title_en || "غرفة ألعاب";
+    const cover = isURL(room.game?.cover_path) ? room.game.cover_path : "";
+    const host = room.host?.full_name || "عضو";
+    const status = room.status === "playing" ? "قيد اللعب" : "بانتظار اللاعبين";
+
+    return `
+      <article class="room-card">
+        <div class="room-cover">
+          ${cover ? `<img src="${esc(cover)}" alt="${esc(title)}" loading="lazy">` : ""}
+          <span class="room-state">${status}</span>
+        </div>
+        <div class="room-info">
+          <h4>${esc(title)}</h4>
+          <div class="room-details">
+            <span>المضيف: ${esc(host)}</span>
+            <span class="room-code">${esc(room.room_code || "")}</span>
+          </div>
+          <div class="card-footer">
+            <span class="card-type">الحد الأقصى: ${Number(room.max_players) || "—"}</span>
+            <a class="card-link" href="room.html?room=${encodeURIComponent(room.id)}">التفاصيل</a>
+          </div>
+        </div>
+      </article>`;
+  }).join("");
+}
+
+function renderSearch(query){
+  const box = $("searchResults");
+  const term = query.trim().toLowerCase();
+
+  if(!term){
+    box.classList.remove("show");
+    box.innerHTML = "";
+    return;
+  }
+
+  const foundGames = state.games.filter(g=>
+    `${g.title_ar || ""} ${g.title_en || ""}`.toLowerCase().includes(term)
+  );
+
+  const foundRooms = state.rooms.filter(r=>
+    `${r.game?.title_ar || ""} ${r.room_code || ""} ${r.host?.full_name || ""}`.toLowerCase().includes(term)
+  );
+
+  const foundMembers = state.members.filter(m=>
+    `${m.full_name || ""} ${m.username || ""} ${m.member_code || ""}`.toLowerCase().includes(term)
+  );
+
+  const items = [
+    ...foundGames.map(g=>({
+      name:g.title_ar || g.title_en,
+      type:"لعبة",
+      href:`game.html?game=${encodeURIComponent(g.slug || g.id)}`
+    })),
+    ...foundRooms.map(r=>({
+      name:r.game?.title_ar || "غرفة ألعاب",
+      type:"غرفة",
+      href:`room.html?room=${encodeURIComponent(r.id)}`
+    })),
+    ...foundMembers.map(m=>({
+      name:m.full_name || m.username || m.member_code,
+      type:"عضو",
+      href:`member.html?id=${encodeURIComponent(m.id)}`
+    }))
+  ];
+
+  box.classList.add("show");
+
+  box.innerHTML = items.length ? items.map(item=>`
+    <div class="search-result">
+      <div>
+        <strong>${esc(item.name)}</strong>
+        <small> · ${item.type}</small>
+      </div>
+      <a href="${esc(item.href)}">فتح</a>
+    </div>
+  `).join("") : `
+    <div class="search-result">
+      <span>لا توجد نتائج مطابقة في البيانات المحمّلة</span>
+    </div>`;
+}
+
+function setupFilters(){
+  document.querySelectorAll("[data-game-filter]").forEach(button=>{
+    button.addEventListener("click",()=>{
+      document.querySelectorAll("[data-game-filter]").forEach(x=>x.classList.remove("active"));
+      button.classList.add("active");
       renderGames(state.games);
-    }
-
-    async function loadRooms(){
-      const {data,error} = await supabaseClient
-        .from("world_game_rooms")
-        .select("id,game_id,host_user_id,room_code,status,visibility,max_players,created_at")
-        .eq("visibility","public")
-        .in("status",["waiting","playing"])
-        .order("created_at",{ascending:false})
-        .limit(8);
-
-      if(error) throw error;
-
-      const rooms = data || [];
-      const gameIds = [...new Set(rooms.map(room => room.game_id).filter(Boolean))];
-      const hostIds = [...new Set(rooms.map(room => room.host_user_id).filter(Boolean))];
-
-      let games = [];
-      let hosts = [];
-
-      if(gameIds.length){
-        const result = await supabaseClient
-          .from("world_games_catalog")
-          .select("id,title_ar,title_en,cover_path")
-          .in("id",gameIds);
-        if(!result.error) games = result.data || [];
-      }
-
-      if(hostIds.length){
-        const result = await supabaseClient
-          .from("profiles")
-          .select("id,full_name,avatar_path")
-          .in("id",hostIds);
-        if(!result.error) hosts = result.data || [];
-      }
-
-      state.rooms = rooms.map(room => ({
-        ...room,
-        game:games.find(game => game.id === room.game_id) || null,
-        host:hosts.find(host => host.id === room.host_user_id) || null
-      }));
-
-      renderRooms(state.rooms);
-    }
-
-    async function loadMembers(){
-      const {data,error} = await supabaseClient
-        .from("member_directory")
-        .select("id,username,member_code,full_name,avatar_path,bio,created_at")
-        .neq("id",state.user.id)
-        .order("created_at",{ascending:false})
-        .limit(8);
-
-      if(error) throw error;
-      state.members = data || [];
-      renderMembers(state.members);
-    }
-
-    function renderGames(games){
-      const grid = $("gamesGrid");
-
-      if(!games.length){
-        grid.innerHTML = `
-          <div class="empty-state">
-            <svg viewBox="0 0 24 24"><path d="M7 8h10a4 4 0 0 1 4 4v4a3 3 0 0 1-5 2l-2-2h-4l-2 2a3 3 0 0 1-5-2v-4a4 4 0 0 1 4-4Z"/></svg>
-            <h4>لا توجد ألعاب متاحة حاليًا</h4>
-            <p>ستظهر الألعاب هنا عند تفعيلها في قاعدة البيانات.</p>
-          </div>`;
-        return;
-      }
-
-      grid.innerHTML = games.map(game => {
-        const title = game.title_ar || game.title_en || "لعبة";
-        const cover = isFullURL(game.cover_path) ? game.cover_path : "";
-        const slug = encodeURIComponent(game.slug || game.id);
-
-        return `
-          <article class="game-card">
-            <div class="game-cover">
-              ${cover ? `<img src="${escapeHTML(cover)}" alt="${escapeHTML(title)}" loading="lazy">` : ""}
-              <div class="cover-shade"></div>
-            </div>
-            <div class="game-info">
-              <h4>${escapeHTML(title)}</h4>
-              <p>${escapeHTML(game.title_en || "من ألعاب هنون")}</p>
-              <div class="card-bottom">
-                <span style="font-size:10px;color:#aaa5bf">لعبة متاحة</span>
-                <a class="mini-link" href="game.html?game=${slug}">التفاصيل</a>
-              </div>
-            </div>
-          </article>`;
-      }).join("");
-    }
-
-    function renderRooms(rooms){
-      const grid = $("roomsGrid");
-
-      if(!rooms.length){
-        grid.innerHTML = `
-          <div class="empty-state">
-            <svg viewBox="0 0 24 24"><path d="M3 20V9l9-6 9 6v11h-6v-7H9v7H3Z"/></svg>
-            <h4>لا توجد غرف عامة متاحة الآن</h4>
-            <p>ستظهر الغرف هنا عند وجود غرف عامة مفتوحة.</p>
-          </div>`;
-        return;
-      }
-
-      grid.innerHTML = rooms.map(room => {
-        const gameName = room.game?.title_ar || room.game?.title_en || "غرفة ألعاب";
-        const hostName = room.host?.full_name || "عضو";
-        const cover = isFullURL(room.game?.cover_path) ? room.game.cover_path : "";
-        const status = room.status === "playing" ? "قيد اللعب" : "بانتظار اللاعبين";
-
-        return `
-          <article class="room-card">
-            <div class="room-cover">
-              ${cover ? `<img src="${escapeHTML(cover)}" alt="${escapeHTML(gameName)}" loading="lazy">` : ""}
-              <span class="room-status">${status}</span>
-            </div>
-            <div class="room-info">
-              <h4>${escapeHTML(gameName)}</h4>
-              <div class="room-meta">
-                <span>المضيف: ${escapeHTML(hostName)}</span>
-                <span class="room-code">${escapeHTML(room.room_code || "")}</span>
-              </div>
-              <div class="card-bottom">
-                <span style="font-size:10px;color:#aaa5bf">الحد الأقصى: ${Number(room.max_players) || "—"}</span>
-                <a class="mini-link" href="room.html?room=${encodeURIComponent(room.id)}">التفاصيل</a>
-              </div>
-            </div>
-          </article>`;
-      }).join("");
-    }
-
-    function renderMembers(members){
-      const grid = $("membersGrid");
-
-      if(!members.length){
-        grid.innerHTML = `
-          <div class="empty-state">
-            <svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-4 2-6 6-6s6 2 6 6"/></svg>
-            <h4>لا يوجد أعضاء للعرض حاليًا</h4>
-            <p>سيظهر هنا الأعضاء الذين أكملوا ملفاتهم الشخصية.</p>
-          </div>`;
-        return;
-      }
-
-      grid.innerHTML = members.map(member => {
-        const avatar = storageImage("avatars",member.avatar_path);
-        return `
-          <article class="member-card">
-            <div class="member-avatar">${imageOrFallback(avatar,member.full_name)}</div>
-            <h4>${escapeHTML(member.full_name || member.username || "عضو")}</h4>
-            <p>${member.member_code ? escapeHTML(member.member_code) : "عضو في هنون"}</p>
-            <a href="member.html?id=${encodeURIComponent(member.id)}">عرض الملف</a>
-          </article>`;
-      }).join("");
-    }
-
-    function renderSearch(query){
-      const results = $("searchResults");
-      const term = query.trim().toLowerCase();
-
-      if(!term){
-        results.classList.remove("show");
-        results.innerHTML = "";
-        return;
-      }
-
-      const games = state.games.filter(item =>
-        `${item.title_ar || ""} ${item.title_en || ""}`.toLowerCase().includes(term)
-      );
-      const rooms = state.rooms.filter(item =>
-        `${item.game?.title_ar || ""} ${item.room_code || ""} ${item.host?.full_name || ""}`.toLowerCase().includes(term)
-      );
-      const members = state.members.filter(item =>
-        `${item.full_name || ""} ${item.username || ""} ${item.member_code || ""}`.toLowerCase().includes(term)
-      );
-
-      const html = [
-        ...games.map(game => `
-          <article class="game-card">
-            <div class="game-info">
-              <h4>${escapeHTML(game.title_ar || game.title_en)}</h4>
-              <div class="card-bottom"><span>لعبة</span><a class="mini-link" href="game.html?game=${encodeURIComponent(game.slug || game.id)}">فتح</a></div>
-            </div>
-          </article>`),
-        ...rooms.map(room => `
-          <article class="room-card">
-            <div class="room-info">
-              <h4>${escapeHTML(room.game?.title_ar || "غرفة ألعاب")}</h4>
-              <div class="card-bottom"><span>غرفة</span><a class="mini-link" href="room.html?room=${encodeURIComponent(room.id)}">التفاصيل</a></div>
-            </div>
-          </article>`),
-        ...members.map(member => `
-          <article class="member-card">
-            <div class="member-avatar">${imageOrFallback(storageImage("avatars",member.avatar_path),member.full_name)}</div>
-            <h4>${escapeHTML(member.full_name || member.username)}</h4>
-            <p>${escapeHTML(member.member_code || "")}</p>
-            <a href="member.html?id=${encodeURIComponent(member.id)}">عرض الملف</a>
-          </article>`)
-      ];
-
-      results.classList.add("show");
-      results.innerHTML = html.length ? html.join("") : `
-        <div class="empty-state">
-          <h4>لا توجد نتائج في البيانات المحمّلة</h4>
-          <p>جرّب كلمة بحث أخرى.</p>
-        </div>`;
-    }
-
-    function setupGameFilters(){
-      document.querySelectorAll("[data-game-filter]").forEach(button => {
-        button.addEventListener("click",() => {
-          document.querySelectorAll("[data-game-filter]").forEach(item => item.classList.remove("active"));
-          button.classList.add("active");
-          renderGames(state.games);
-        });
-      });
-    }
-
-    async function runTask(task,name){
-      try{
-        await task();
-      }catch(error){
-        console.error(`HANOON ${name}:`,error);
-      }
-    }
-
-    async function loadAllData(){
-      const valid = await loadSession();
-      if(!valid) return;
-
-      await Promise.allSettled([
-        runTask(loadMyProfile,"profile"),
-        runTask(loadWallet,"wallet"),
-        runTask(loadGames,"games"),
-        runTask(loadRooms,"rooms"),
-        runTask(loadMembers,"members")
-      ]);
-    }
-
-    $("globalSearch").addEventListener("input",event => {
-      renderSearch(event.target.value);
     });
+  });
+}
 
-    setupGameFilters();
+async function safeTask(task,label){
+  try{
+    await task();
+  }catch(error){
+    console.error(`HANOON ${label}:`,error);
+  }
+}
 
-    supabaseClient.auth.onAuthStateChange((event,session) => {
-      if(event === "SIGNED_OUT" || !session){
-        location.href = "index.html";
-      }
-    });
+async function loadAll(){
+  const valid = await loadSession();
+  if(!valid) return;
 
-    document.addEventListener("visibilitychange",() => {
-      if(!document.hidden && state.user){
-        loadAllData();
-      }
-    });
+  await Promise.allSettled([
+    safeTask(loadProfile,"profile"),
+    safeTask(loadWallet,"wallet"),
+    safeTask(loadGames,"games"),
+    safeTask(loadRooms,"rooms"),
+    safeTask(loadMembersForSearch,"member search")
+  ]);
+}
 
-    loadAllData();
-  </script>
+$("globalSearch").addEventListener("input",event=>{
+  renderSearch(event.target.value);
+});
+
+document.addEventListener("click",event=>{
+  if(!event.target.closest(".search-area")){
+    $("searchResults").classList.remove("show");
+  }
+});
+
+setupFilters();
+
+db.auth.onAuthStateChange((event,session)=>{
+  if(event === "SIGNED_OUT" || !session){
+    location.href = "index.html";
+  }
+});
+
+document.addEventListener("visibilitychange",()=>{
+  if(!document.hidden && state.user){
+    loadAll();
+  }
+});
+
+loadAll();
+</script>
 </body>
 </html>
