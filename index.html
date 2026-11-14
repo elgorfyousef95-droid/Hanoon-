@@ -3,31 +3,52 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#100923">
+
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1,
+    user-scalable=no, viewport-fit=cover">
+
+  <meta name="theme-color" content="#10091e">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
   <title>HANOON WORLD</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
+    :root {
+      --gold: #e9c77d;
+      --gold-light: #fff0c4;
+      --purple: #a879ff;
+      --dark: #10091e;
     }
 
-    html, body {
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html,
+    body {
       width: 100%;
       height: 100%;
-      overflow: hidden;
+      overflow: hidden !important;
+      overscroll-behavior: none;
+      background: var(--dark);
+      font-family: "Cairo", sans-serif;
+      touch-action: pan-x pan-y;
     }
 
     body {
-      font-family: "Cairo", sans-serif;
-      background: #100923;
+      position: fixed;
+      inset: 0;
       color: white;
+      user-select: none;
+      -webkit-user-select: none;
     }
 
     .splash {
@@ -35,99 +56,194 @@
       inset: 0;
       width: 100%;
       height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
+      height: 100dvh;
       overflow: hidden;
-
-      background:
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: var(--dark);
+      background-image:
         linear-gradient(
           180deg,
-          rgba(10, 5, 25, .25),
-          rgba(10, 5, 25, .62) 65%,
-          #100923
+          rgba(12, 5, 26, .30) 0%,
+          rgba(12, 5, 26, .38) 35%,
+          rgba(12, 5, 26, .78) 72%,
+          #10091e 100%
         ),
         url("https://images8.alphacoders.com/138/1382788.png");
 
-      background-position: center;
       background-size: cover;
+      background-position: center center;
       background-repeat: no-repeat;
+      transform: none;
+      animation: none;
+    }
+
+    .overlay {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(
+          ellipse at center,
+          transparent 10%,
+          rgba(9, 4, 20, .25) 100%
+        );
     }
 
     .content {
       position: relative;
       z-index: 2;
       width: 100%;
-      padding: 25px;
+      min-height: 100%;
+      padding: 30px 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    /* مساحة الشعار الملكي بدون حرف مؤقت */
+
+    .emblem {
+      width: 142px;
+      height: 142px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 28px;
+      border-radius: 38px;
+      border: 1px solid rgba(235, 205, 145, .6);
+
+      background:
+        linear-gradient(
+          145deg,
+          rgba(143, 96, 207, .78),
+          rgba(45, 22, 79, .92)
+        );
+
+      box-shadow:
+        0 0 20px rgba(173, 119, 255, .25),
+        0 0 60px rgba(173, 119, 255, .22),
+        inset 0 0 25px rgba(255, 226, 166, .13);
+    }
+
+    .emblem::before {
+      content: "";
+      position: absolute;
+      inset: 8px;
+      border: 1px solid rgba(255, 225, 166, .42);
+      border-radius: 30px;
+    }
+
+    .emblem svg {
+      width: 90px;
+      height: 90px;
+      filter: drop-shadow(0 5px 12px rgba(0,0,0,.3));
+    }
+
+    .brand {
+      font-size: clamp(35px, 9vw, 62px);
+      line-height: 1.25;
+      font-weight: 900;
+      letter-spacing: 3px;
+      color: var(--gold-light);
+
+      text-shadow:
+        0 3px 15px rgba(0,0,0,.75),
+        0 0 30px rgba(228, 187, 112, .3);
+    }
+
+    .brand span {
+      display: block;
+      font-size: .45em;
+      letter-spacing: 9px;
+      color: #e5c98f;
+      margin-top: 8px;
+    }
+
+    .ornament {
+      width: 180px;
+      height: 1px;
+      margin: 26px 0 17px;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        var(--gold),
+        transparent
+      );
+      position: relative;
+    }
+
+    .ornament::after {
+      content: "✦";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: var(--gold-light);
+      background: #211331;
+      padding: 0 12px;
+      font-size: 15px;
+    }
+
+    .tagline {
+      font-size: 15px;
+      color: #eee2ff;
+      font-weight: 600;
+      letter-spacing: .5px;
+    }
+
+    .description {
+      margin-top: 7px;
+      color: rgba(231, 217, 255, .72);
+      font-size: 12px;
+    }
+
+    .loader-area {
+      position: absolute;
+      bottom: max(48px, env(safe-area-inset-bottom));
+      left: 0;
+      width: 100%;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      animation: appear 1.2s ease both;
+      gap: 13px;
     }
 
-    .logo {
-      width: 112px;
-      height: 112px;
-      border-radius: 32px;
-      display: grid;
-      place-items: center;
-      font-size: 58px;
-      font-weight: 900;
-      color: #fff;
-      background: linear-gradient(145deg, #a875ff, #5423a5);
-      border: 1px solid rgba(255,255,255,.45);
-      box-shadow:
-        0 0 35px rgba(158, 91, 255, .65),
-        inset 0 0 20px rgba(255,255,255,.2);
-      margin-bottom: 25px;
+    .loader {
+      width: 43px;
+      height: 43px;
+      border-radius: 50%;
+      border: 2px solid rgba(255, 255, 255, .15);
+      border-top-color: var(--gold-light);
+      border-right-color: var(--purple);
+      animation: spin 1s linear infinite;
     }
 
-    h1 {
-      font-size: clamp(34px, 8vw, 58px);
-      font-weight: 900;
-      letter-spacing: 3px;
-      text-shadow: 0 4px 25px #000;
-    }
-
-    .subtitle {
-      margin-top: 9px;
-      color: #e1d4ff;
-      font-size: 15px;
+    .loading-text {
+      color: rgba(238, 224, 255, .8);
+      font-size: 11px;
       font-weight: 600;
       letter-spacing: 1px;
     }
 
-    .loader {
-      width: 48px;
-      height: 48px;
-      margin-top: 55px;
-      border-radius: 50%;
-      border: 3px solid rgba(255,255,255,.2);
-      border-top-color: #d6b7ff;
-      animation: spin .9s linear infinite;
-    }
-
-    .loading-text {
-      margin-top: 15px;
-      color: #d9c8ff;
-      font-size: 12px;
+    .version {
+      position: absolute;
+      bottom: max(15px, env(safe-area-inset-bottom));
+      left: 0;
+      width: 100%;
+      text-align: center;
+      color: rgba(255,255,255,.35);
+      font-size: 9px;
       letter-spacing: 2px;
     }
 
     @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-
-    @keyframes appear {
-      from {
-        opacity: 0;
-        transform: translateY(18px);
-      }
       to {
-        opacity: 1;
-        transform: translateY(0);
+        transform: rotate(360deg);
       }
     }
 
@@ -136,44 +252,168 @@
         background-position: 55% center;
       }
 
-      .logo {
-        width: 96px;
-        height: 96px;
-        font-size: 48px;
+      .emblem {
+        width: 120px;
+        height: 120px;
+        border-radius: 32px;
+        margin-bottom: 23px;
       }
 
-      .loader {
-        margin-top: 45px;
+      .emblem svg {
+        width: 76px;
+        height: 76px;
+      }
+
+      .brand {
+        letter-spacing: 2px;
+      }
+
+      .ornament {
+        margin-top: 21px;
       }
     }
 
-    @media (prefers-reduced-motion: reduce) {
-      .content { animation: none; }
-      .loader { animation-duration: 2s; }
+    @media (max-height: 650px) {
+      .emblem {
+        width: 95px;
+        height: 95px;
+        margin-bottom: 13px;
+      }
+
+      .emblem svg {
+        width: 65px;
+        height: 65px;
+      }
+
+      .ornament {
+        margin: 15px 0;
+      }
+
+      .loader-area {
+        bottom: 35px;
+      }
     }
   </style>
 </head>
 
 <body>
+
   <main class="splash">
+    <div class="overlay"></div>
+
     <section class="content">
-      <div class="logo">H</div>
 
-      <h1>HANOON</h1>
-      <div class="subtitle">WORLD · عالم يجمعنا</div>
+      <div class="emblem" aria-label="HANOON WORLD emblem">
 
-      <div class="loader"></div>
-      <p class="loading-text">جاري الدخول إلى عالم هنون</p>
+        <!-- رمز قلعة وتاج، بدون حرف H -->
+        <svg viewBox="0 0 120 120"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg">
+
+          <path d="M60 8L72 24L91 19L89 39L108 49L96 66L101 85L81 91L60 111L39 91L19 85L24 66L12 49L31 39L29 19L48 24L60 8Z"
+            stroke="#F2D89E"
+            stroke-width="2.5"
+            stroke-linejoin="round"/>
+
+          <path d="M39 47V35L49 43L60 27L71 43L81 35V47"
+            stroke="#FFE9B9"
+            stroke-width="3"
+            stroke-linecap="round"
+            stroke-linejoin="round"/>
+
+          <path d="M31 91V61H44V50H55V61H65V50H76V61H89V91"
+            fill="#E9C77D"
+            fill-opacity=".18"
+            stroke="#FFE9B9"
+            stroke-width="3"
+            stroke-linejoin="round"/>
+
+          <path d="M51 91V76C51 71 55 67 60 67C65 67 69 71 69 76V91"
+            stroke="#FFE9B9"
+            stroke-width="3"/>
+
+          <path d="M23 98H97"
+            stroke="#E9C77D"
+            stroke-width="3"
+            stroke-linecap="round"/>
+
+          <circle cx="60" cy="17" r="3" fill="#FFF0C4"/>
+          <circle cx="34" cy="35" r="2" fill="#FFF0C4"/>
+          <circle cx="86" cy="35" r="2" fill="#FFF0C4"/>
+
+        </svg>
+      </div>
+
+      <h1 class="brand">
+        HANOON
+        <span>WORLD</span>
+      </h1>
+
+      <div class="ornament"></div>
+
+      <p class="tagline">
+        عالم يجمعنا
+      </p>
+
+      <p class="description">
+        أصدقاء · ألعاب · غرف · مغامرات
+      </p>
+
     </section>
+
+    <div class="loader-area">
+      <div class="loader"></div>
+      <p class="loading-text">جاري تجهيز عالمك...</p>
+    </div>
+
+    <div class="version">
+      HANOON WORLD
+    </div>
+
   </main>
 
   <script>
-    // الانتقال مرة واحدة بعد خمس ثوانٍ كاملة
-    window.addEventListener("load", () => {
-      setTimeout(() => {
+    (() => {
+      let moved = false;
+
+      // تثبيت الشاشة ومنع التكبير بالإيماءات
+      document.addEventListener("gesturestart", event => {
+        event.preventDefault();
+      }, { passive: false });
+
+      document.addEventListener("gesturechange", event => {
+        event.preventDefault();
+      }, { passive: false });
+
+      document.addEventListener("gestureend", event => {
+        event.preventDefault();
+      }, { passive: false });
+
+      document.addEventListener("touchmove", event => {
+        event.preventDefault();
+      }, { passive: false });
+
+      // الانتقال بعد خمس ثوانٍ من بدء الشاشة
+      const startTime = Date.now();
+
+      function enterWorld() {
+        if (moved) return;
+
+        const elapsed = Date.now() - startTime;
+        const remaining = Math.max(0, 5000 - elapsed);
+
+        if (remaining > 0) {
+          setTimeout(enterWorld, remaining);
+          return;
+        }
+
+        moved = true;
         window.location.replace("./login.html");
-      }, 5000);
-    });
+      }
+
+      setTimeout(enterWorld, 5000);
+    })();
   </script>
+
 </body>
 </html>
