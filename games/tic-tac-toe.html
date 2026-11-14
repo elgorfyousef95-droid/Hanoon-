@@ -1,9 +1,10 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#090b18">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#080b18">
 <title>إكس أو | HANOON WORLD</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -11,151 +12,231 @@
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
 <style>
-:root {
-  --bg:#090b18;
-  --panel:rgba(20,24,47,.88);
+:root{
+  --bg:#080b18;
+  --panel:#11172b;
+  --panel2:#171f38;
   --line:rgba(255,255,255,.09);
-  --text:#f7f7ff;
-  --muted:#9ba3c2;
-  --purple:#9876ff;
+  --text:#f5f6ff;
+  --muted:#8e9ab8;
+  --purple:#9575ff;
+  --purple2:#6749df;
   --cyan:#42d9e8;
-  --pink:#ff6ca8;
+  --pink:#ff75b5;
   --green:#4de0ad;
+  --gold:#ffd27a;
+  --danger:#ff7188;
+  --radius:22px;
 }
 
-*{box-sizing:border-box}
+*{
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
+}
 
-html{scroll-behavior:smooth}
+html,body{
+  width:100%;
+  height:100%;
+  margin:0;
+  overflow:hidden;
+  overscroll-behavior:none;
+  touch-action:pan-x pan-y;
+}
 
 body{
-  margin:0;
-  min-height:100vh;
   color:var(--text);
+  background:var(--bg);
   font-family:'Cairo',sans-serif;
-  background:#090b18;
-  overflow-x:hidden;
+  user-select:none;
+  -webkit-user-select:none;
 }
 
-body::before{
-  content:"";
-  position:fixed;
-  inset:0;
-  z-index:-3;
+button,input,select{
+  font:inherit;
+}
+
+button{
+  color:inherit;
+  border:0;
+  cursor:pointer;
+  touch-action:manipulation;
+}
+
+button:focus-visible{
+  outline:2px solid var(--cyan);
+  outline-offset:3px;
+}
+
+.app{
+  position:relative;
+  width:100%;
+  height:100dvh;
+  min-height:0;
+  overflow:hidden;
+  isolation:isolate;
   background:
-    linear-gradient(180deg,rgba(7,9,23,.65),rgba(7,9,23,.94)),
-    url("https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=2000&q=85")
-    center/cover no-repeat;
+    radial-gradient(ellipse at 15% 15%,rgba(111,76,255,.18),transparent 38%),
+    radial-gradient(ellipse at 90% 85%,rgba(35,189,220,.12),transparent 35%),
+    linear-gradient(145deg,#080b18,#0d1225 55%,#080d1c);
 }
 
-body::after{
+.app::before{
   content:"";
-  position:fixed;
+  position:absolute;
   inset:0;
   z-index:-2;
   pointer-events:none;
-  background:
-    radial-gradient(circle at 12% 18%,rgba(126,91,255,.22),transparent 30%),
-    radial-gradient(circle at 88% 70%,rgba(48,211,229,.15),transparent 28%);
+  opacity:.19;
+  background-image:
+    linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
+  background-size:38px 38px;
 }
 
-button,select{font:inherit}
-
-button{
-  cursor:pointer;
-  border:0;
-  color:inherit;
+.ambient{
+  position:absolute;
+  width:260px;
+  height:260px;
+  border-radius:50%;
+  filter:blur(80px);
+  opacity:.15;
+  pointer-events:none;
+  z-index:-1;
 }
 
-.page{
-  width:min(1100px,100%);
-  margin:auto;
-  padding:20px 18px 45px;
+.ambient.one{
+  top:-130px;
+  right:-80px;
+  background:#7957ff;
+}
+
+.ambient.two{
+  bottom:-150px;
+  left:-90px;
+  background:#25c8dc;
+}
+
+.screen{
+  position:absolute;
+  inset:0;
+  display:none;
+  flex-direction:column;
+  min-height:0;
+  overflow:hidden;
+  padding:
+    max(15px,env(safe-area-inset-top))
+    17px
+    max(15px,env(safe-area-inset-bottom));
+  animation:screenIn .24s ease both;
+}
+
+.screen.active{
+  display:flex;
+}
+
+@keyframes screenIn{
+  from{opacity:0;transform:translateY(8px)}
+  to{opacity:1;transform:translateY(0)}
 }
 
 .topbar{
+  flex:0 0 auto;
   display:flex;
   align-items:center;
   justify-content:space-between;
   gap:12px;
-  margin-bottom:28px;
+  min-height:48px;
 }
 
 .brand{
   display:flex;
   align-items:center;
-  gap:11px;
-  font-size:17px;
+  gap:10px;
+  font-size:13px;
   font-weight:900;
-  letter-spacing:.4px;
+  letter-spacing:.5px;
 }
 
-.brand-mark{
-  width:43px;
-  height:43px;
+.brand-icon{
+  width:39px;
+  height:39px;
   display:grid;
   place-items:center;
-  border-radius:14px;
-  background:linear-gradient(135deg,#a78bff,#6345dc);
-  box-shadow:0 8px 30px #7959ff55;
+  border:1px solid rgba(255,255,255,.15);
+  border-radius:13px;
+  background:linear-gradient(145deg,#a58aff,#6041d8);
+  box-shadow:0 7px 22px #7957ff45;
 }
 
-.brand-mark svg{width:25px;height:25px}
+.brand-icon svg{
+  width:24px;
+  height:24px;
+}
 
-.back-btn{
-  display:flex;
-  align-items:center;
-  gap:8px;
-  padding:10px 15px;
+.icon-btn{
+  width:42px;
+  height:42px;
+  display:grid;
+  place-items:center;
   border:1px solid var(--line);
   border-radius:13px;
-  background:rgba(255,255,255,.06);
-  color:#dfe2ff;
-  text-decoration:none;
-  font-size:13px;
-  font-weight:800;
-  transition:.2s;
+  background:rgba(255,255,255,.055);
+  color:#dce2ff;
 }
 
-.back-btn:hover{
-  background:rgba(255,255,255,.12);
-  transform:translateY(-2px);
+.icon-btn svg{
+  width:19px;
+  height:19px;
 }
 
-.back-btn svg{width:17px;height:17px}
+.icon-btn:active{
+  transform:scale(.95);
+}
 
-.hero{
-  position:relative;
-  min-height:220px;
-  overflow:hidden;
+.back-button{
   display:flex;
   align-items:center;
-  border:1px solid rgba(255,255,255,.12);
-  border-radius:25px;
-  padding:30px;
-  margin-bottom:22px;
-  background:
-    linear-gradient(90deg,rgba(9,11,25,.97),rgba(13,16,40,.82),rgba(13,16,40,.28)),
-    url("https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1400&q=85")
-    center/cover;
-  box-shadow:0 20px 60px #0005;
+  gap:7px;
+  padding:9px 13px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:rgba(255,255,255,.055);
+  color:#dce2ff;
+  font-size:12px;
+  font-weight:800;
 }
 
-.hero-content{position:relative;z-index:2}
+.back-button svg{
+  width:17px;
+  height:17px;
+}
+
+.screen-content{
+  flex:1;
+  min-height:0;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  width:100%;
+  max-width:620px;
+  margin:0 auto;
+}
 
 .eyebrow{
   display:inline-flex;
   align-items:center;
-  gap:7px;
-  padding:6px 11px;
-  border:1px solid #a58aff55;
+  gap:8px;
+  width:max-content;
+  padding:7px 12px;
+  border:1px solid #a58aff44;
   border-radius:30px;
-  color:#c6b7ff;
-  background:#8864ff1b;
+  background:#8b6bff16;
+  color:#c9baff;
   font-size:11px;
   font-weight:800;
 }
 
-.eyebrow span{
+.eyebrow-dot{
   width:7px;
   height:7px;
   border-radius:50%;
@@ -163,323 +244,717 @@ button{
   box-shadow:0 0 12px var(--green);
 }
 
-.hero h1{
-  margin:13px 0 4px;
-  font-size:clamp(29px,5vw,45px);
+.hero-title{
+  margin:14px 0 4px;
+  font-size:clamp(31px,7vw,48px);
+  line-height:1.3;
   font-weight:900;
-  line-height:1.35;
 }
 
-.hero h1 strong{color:#a98cff}
+.hero-title span{
+  color:#a78aff;
+}
 
-.hero p{
-  max-width:490px;
-  margin:5px 0 0;
-  color:#c1c5df;
+.hero-description{
+  max-width:420px;
+  margin:5px 0 21px;
+  color:#aeb8d3;
   font-size:13px;
   line-height:2;
 }
 
-.game-layout{
+.main-menu{
   display:grid;
-  grid-template-columns:minmax(0,1.45fr) minmax(260px,.75fr);
-  gap:18px;
-  align-items:start;
+  grid-template-columns:1fr 1fr;
+  gap:11px;
 }
 
-.panel{
+.menu-card{
+  position:relative;
+  min-height:120px;
+  overflow:hidden;
+  padding:17px;
+  text-align:right;
   border:1px solid var(--line);
-  border-radius:22px;
-  background:var(--panel);
-  backdrop-filter:blur(18px);
-  box-shadow:0 15px 45px #0003;
+  border-radius:19px;
+  background:linear-gradient(145deg,rgba(31,41,72,.96),rgba(17,24,45,.96));
+  transition:transform .18s,border-color .18s;
 }
 
-.board-panel{padding:22px}
-
-.section-heading{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:10px;
-  margin-bottom:17px;
+.menu-card:active{
+  transform:scale(.975);
 }
 
-.section-heading h2{
-  margin:0;
-  font-size:17px;
+.menu-card::after{
+  content:"";
+  position:absolute;
+  width:105px;
+  height:105px;
+  left:-32px;
+  bottom:-48px;
+  border-radius:50%;
+  background:var(--card-glow,rgba(144,111,255,.22));
+  filter:blur(9px);
+}
+
+.menu-card.purple{--card-glow:#8d6aff55}
+.menu-card.cyan{--card-glow:#35d9e955}
+.menu-card.gold{--card-glow:#ffd27a44}
+.menu-card.pink{--card-glow:#ff75b555}
+
+.menu-card-icon{
+  width:39px;
+  height:39px;
+  display:grid;
+  place-items:center;
+  margin-bottom:9px;
+  border:1px solid rgba(255,255,255,.13);
+  border-radius:12px;
+  background:rgba(255,255,255,.07);
+}
+
+.menu-card-icon svg{
+  width:21px;
+  height:21px;
+}
+
+.menu-card strong{
+  position:relative;
+  z-index:1;
+  display:block;
+  font-size:14px;
   font-weight:900;
 }
 
-.turn-badge{
-  display:flex;
-  align-items:center;
-  gap:8px;
-  padding:8px 12px;
-  border-radius:12px;
-  background:#ffffff0c;
+.menu-card small{
+  position:relative;
+  z-index:1;
+  display:block;
+  margin-top:3px;
+  color:#9eabc9;
+  font-size:10px;
+}
+
+.menu-footer{
+  margin-top:15px;
+  padding:13px 15px;
   border:1px solid var(--line);
-  color:#dfe2ff;
+  border-radius:15px;
+  background:rgba(255,255,255,.035);
+  color:#9ba8c7;
+  font-size:11px;
+  line-height:1.9;
+}
+
+/* إعداد المباراة */
+
+.screen-heading{
+  margin:20px 0 17px;
+}
+
+.screen-heading h1{
+  margin:0;
+  font-size:25px;
+  font-weight:900;
+}
+
+.screen-heading p{
+  margin:5px 0 0;
+  color:var(--muted);
+  font-size:12px;
+}
+
+.setup-card{
+  padding:18px;
+  border:1px solid var(--line);
+  border-radius:21px;
+  background:linear-gradient(145deg,rgba(25,34,61,.96),rgba(15,21,41,.96));
+  box-shadow:0 20px 55px #0003;
+}
+
+.field-title{
+  display:block;
+  margin:0 0 10px;
+  color:#aab5d0;
   font-size:12px;
   font-weight:800;
 }
 
-.turn-symbol{
+.choice-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:9px;
+  margin-bottom:20px;
+}
+
+.choice{
+  min-height:73px;
+  padding:12px;
+  text-align:right;
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:rgba(255,255,255,.035);
+}
+
+.choice.active{
+  border-color:#a48aff;
+  background:linear-gradient(145deg,#8b6bff30,#6d55d91b);
+  box-shadow:inset 0 0 20px #8b6bff12;
+}
+
+.choice strong{
+  display:block;
+  font-size:13px;
+  font-weight:900;
+}
+
+.choice small{
+  display:block;
+  margin-top:3px;
+  color:#96a2c0;
+  font-size:10px;
+}
+
+.select-control{
+  width:100%;
+  height:48px;
+  padding:0 13px;
+  border:1px solid var(--line);
+  border-radius:13px;
+  outline:none;
+  background:#111a31;
+  color:white;
+  font-size:13px;
+}
+
+.select-control option{
+  background:#111a31;
+}
+
+.setup-note{
+  margin:13px 0 0;
+  color:#8795b6;
+  font-size:11px;
+  line-height:1.9;
+}
+
+.primary-button{
+  min-height:50px;
+  padding:12px 18px;
+  border-radius:14px;
+  background:linear-gradient(115deg,#a083ff,#6948e2);
+  box-shadow:0 9px 26px #7957ff3c;
+  color:white;
+  font-size:14px;
+  font-weight:900;
+  transition:filter .18s,transform .18s;
+}
+
+.primary-button:active{
+  transform:scale(.98);
+}
+
+.secondary-button{
+  min-height:46px;
+  padding:10px 15px;
+  border:1px solid var(--line);
+  border-radius:13px;
+  background:rgba(255,255,255,.055);
+  color:#d5dcf5;
+  font-size:12px;
+  font-weight:800;
+}
+
+.danger-button{
+  color:#ff9aaa;
+  border-color:#ff718833;
+  background:#ff71880d;
+}
+
+.full-button{
+  width:100%;
+  margin-top:16px;
+}
+
+/* شاشة المباراة */
+
+#matchScreen{
+  padding-left:12px;
+  padding-right:12px;
+}
+
+.match-top{
+  max-width:560px;
+  width:100%;
+  margin:0 auto;
+}
+
+.match-title{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:9px;
+  margin:9px 0 13px;
+  font-size:14px;
+  font-weight:900;
+  color:#dfe4ff;
+}
+
+.match-title span{
+  color:#a58aff;
+}
+
+.player-strip{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:9px;
+  width:100%;
+}
+
+.player-card{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  min-width:0;
+  padding:11px;
+  border:1px solid var(--line);
+  border-radius:15px;
+  background:rgba(255,255,255,.045);
+  transition:border-color .2s,background .2s;
+}
+
+.player-card.active-turn{
+  border-color:#a58aff9c;
+  background:#8b6bff19;
+  box-shadow:0 0 20px #8b6bff12;
+}
+
+.player-avatar{
+  width:38px;
+  height:38px;
+  flex:0 0 38px;
+  display:grid;
+  place-items:center;
+  border-radius:12px;
+  background:#42d9e81a;
+  color:var(--cyan);
+  font-size:20px;
+  font-weight:900;
+}
+
+.player-card:nth-child(2) .player-avatar{
+  background:#ff75b51a;
+  color:var(--pink);
+}
+
+.player-info{
+  min-width:0;
+}
+
+.player-info strong{
+  display:block;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  font-size:11px;
+  font-weight:900;
+}
+
+.player-info small{
+  display:block;
+  margin-top:2px;
+  color:#94a0bf;
+  font-size:9px;
+}
+
+.turn-status{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:9px;
+  min-height:43px;
+  margin:12px auto;
+  padding:8px 12px;
+  border:1px solid var(--line);
+  border-radius:13px;
+  background:rgba(255,255,255,.04);
+  color:#cbd5f2;
+  font-size:12px;
+  font-weight:800;
+}
+
+.turn-status .turn-mark{
   font-size:19px;
   font-weight:900;
   color:var(--cyan);
 }
 
-.board{
-  width:min(100%,470px);
-  aspect-ratio:1;
+.board-wrap{
+  width:min(100%,min(72vw,390px));
+  max-width:390px;
   margin:0 auto;
+  flex:0 1 auto;
+  aspect-ratio:1;
+  padding:10px;
+  border:1px solid #a48aff3a;
+  border-radius:25px;
+  background:
+    linear-gradient(145deg,#252d50,#151d39);
+  box-shadow:
+    inset 0 0 30px #0005,
+    0 18px 45px #0005,
+    0 0 35px #7655ff12;
+}
+
+.board{
+  width:100%;
+  height:100%;
   display:grid;
   grid-template-columns:repeat(3,minmax(0,1fr));
-  gap:10px;
-  padding:12px;
-  border-radius:22px;
-  background:linear-gradient(145deg,#22294c,#131831);
-  border:1px solid #a18aff2d;
-  box-shadow:inset 0 0 35px #0005,0 15px 35px #0004;
+  grid-template-rows:repeat(3,minmax(0,1fr));
+  gap:8px;
 }
 
 .cell{
-  position:relative;
   display:grid;
   place-items:center;
   min-width:0;
+  min-height:0;
+  border:1px solid rgba(255,255,255,.08);
   border-radius:16px;
-  background:linear-gradient(145deg,#202747,#171d38);
-  border:1px solid #ffffff12;
-  font-size:clamp(42px,9vw,76px);
+  background:linear-gradient(145deg,#202a4a,#151e39);
+  color:white;
+  font-size:clamp(43px,12vw,76px);
+  line-height:1;
   font-weight:900;
-  transition:background .2s,transform .2s,border-color .2s;
-  user-select:none;
+  transition:background .15s,border-color .15s,transform .15s;
 }
 
-.cell:not(:disabled):hover{
-  background:#30375d;
-  border-color:#a58aff88;
-  transform:scale(.97);
+.cell:active:not(:disabled){
+  transform:scale(.95);
 }
 
-.cell:disabled{cursor:default}
+.cell:disabled{
+  cursor:default;
+}
 
-.cell.x{color:var(--cyan);text-shadow:0 0 25px #42d9e877}
-.cell.o{color:var(--pink);text-shadow:0 0 25px #ff6ca877}
+.cell.x{
+  color:var(--cyan);
+  text-shadow:0 0 25px #42d9e877;
+}
 
-.cell.win{
-  background:linear-gradient(145deg,#344e63,#263d57);
+.cell.o{
+  color:var(--pink);
+  text-shadow:0 0 25px #ff75b577;
+}
+
+.cell.winner{
   border-color:var(--green);
-  box-shadow:0 0 24px #4de0ad30;
-  animation:winPulse .8s ease-in-out infinite alternate;
+  background:linear-gradient(145deg,#28544e,#1a3b40);
+  box-shadow:0 0 20px #4de0ad35;
 }
 
-@keyframes winPulse{
-  from{transform:scale(1)}
-  to{transform:scale(.97)}
+.match-message{
+  width:min(100%,440px);
+  min-height:42px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin:12px auto 0;
+  padding:8px 12px;
+  border-radius:12px;
+  background:rgba(255,255,255,.035);
+  color:#aebbd8;
+  text-align:center;
+  font-size:11px;
+  font-weight:800;
 }
 
-.game-message{
-  min-height:52px;
-  margin:17px 0 0;
-  padding:12px;
-  border-radius:13px;
+.match-actions{
   display:flex;
   justify-content:center;
-  align-items:center;
-  text-align:center;
-  color:#dce1ff;
-  background:#ffffff08;
-  border:1px solid #ffffff0a;
-  font-size:13px;
-  font-weight:800;
+  gap:9px;
+  width:min(100%,440px);
+  margin:11px auto 0;
 }
 
-.game-message.success{color:var(--green)}
-.game-message.warning{color:#ffd37d}
-
-.action-row{
-  display:flex;
-  gap:10px;
-  margin-top:15px;
-}
-
-.primary-btn,.secondary-btn{
-  min-height:47px;
-  padding:10px 16px;
-  border-radius:13px;
-  font-size:13px;
-  font-weight:900;
-  transition:.2s;
-}
-
-.primary-btn{
+.match-actions button{
   flex:1;
-  background:linear-gradient(120deg,#9c7aff,#684be1);
-  box-shadow:0 8px 22px #7957ff40;
+  min-height:43px;
 }
 
-.primary-btn:hover{filter:brightness(1.12);transform:translateY(-2px)}
-
-.secondary-btn{
-  background:#ffffff0c;
-  border:1px solid var(--line);
-  color:#d9dcf3;
-}
-
-.secondary-btn:hover{background:#ffffff17}
-
-.side-column{
+.match-bottom{
   display:flex;
-  flex-direction:column;
-  gap:16px;
-}
-
-.settings-panel,.stats-panel{padding:19px}
-
-.settings-panel h3,.stats-panel h3{
-  margin:0 0 15px;
-  font-size:15px;
-  font-weight:900;
-}
-
-.field-label{
-  display:block;
-  margin:13px 0 7px;
-  color:var(--muted);
-  font-size:12px;
-  font-weight:800;
-}
-
-.mode-options{
-  display:grid;
-  grid-template-columns:1fr 1fr;
+  align-items:center;
+  justify-content:center;
   gap:8px;
+  margin-top:auto;
+  padding-top:10px;
 }
 
-.mode-btn{
-  padding:12px 7px;
-  border-radius:12px;
-  background:#ffffff08;
+.match-bottom button{
+  min-height:38px;
+  padding:8px 12px;
   border:1px solid var(--line);
-  color:#c9cde4;
-  font-size:12px;
-  font-weight:800;
-  transition:.2s;
-}
-
-.mode-btn.active{
-  color:white;
-  border-color:#a58affaa;
-  background:#8b6bff25;
-  box-shadow:inset 0 0 15px #8b6bff15;
-}
-
-.select-wrap{position:relative}
-
-select{
-  width:100%;
-  padding:12px 13px;
-  color:#f4f3ff;
-  border:1px solid var(--line);
-  border-radius:12px;
-  background:#171c35;
-  outline:none;
-}
-
-select option{background:#171c35;color:white}
-
-.select-wrap.hidden{display:none}
-
-.note{
-  margin:13px 0 0;
-  color:#8e96b6;
-  font-size:11px;
-  line-height:1.9;
-}
-
-.score-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:8px;
-}
-
-.score-card{
-  padding:13px 5px;
-  border:1px solid var(--line);
-  border-radius:13px;
-  text-align:center;
-  background:#ffffff07;
-}
-
-.score-card strong{
-  display:block;
-  font-size:24px;
-  font-weight:900;
-  line-height:1.4;
-}
-
-.score-card span{
-  color:var(--muted);
+  border-radius:11px;
+  background:rgba(255,255,255,.035);
+  color:#9eabc9;
   font-size:10px;
   font-weight:800;
 }
 
-.score-card.wins strong{color:var(--green)}
-.score-card.losses strong{color:var(--pink)}
-.score-card.draws strong{color:#b8a5ff}
+/* النتيجة */
 
-.score-reset{
-  width:100%;
-  margin-top:12px;
-  padding:10px;
-  border-radius:11px;
-  border:1px solid var(--line);
-  background:#ffffff08;
-  color:#aeb5d1;
-  font-size:11px;
-  font-weight:800;
-}
-
-.rules{
-  margin-top:18px;
-  padding:17px 19px;
-}
-
-.rules h3{margin:0 0 10px;font-size:14px}
-
-.rules p{
-  margin:0;
-  color:#aeb5d1;
-  font-size:12px;
-  line-height:2.1;
-}
-
-.footer{
-  padding:25px 10px 0;
+.result-content{
   text-align:center;
-  color:#78809f;
-  font-size:11px;
 }
 
-.toast{
-  position:fixed;
-  bottom:20px;
-  left:50%;
-  transform:translate(-50%,20px);
-  opacity:0;
-  pointer-events:none;
-  padding:12px 18px;
+.result-symbol{
+  width:92px;
+  height:92px;
+  display:grid;
+  place-items:center;
+  margin:0 auto 19px;
+  border:1px solid #a48aff66;
+  border-radius:29px;
+  background:linear-gradient(145deg,#8b6bff36,#42d9e814);
+  box-shadow:0 0 50px #7957ff24;
+}
+
+.result-symbol svg{
+  width:46px;
+  height:46px;
+}
+
+.result-content h1{
+  margin:0;
+  font-size:30px;
+  font-weight:900;
+}
+
+.result-content p{
+  margin:7px 0 22px;
+  color:#9eabc9;
+  font-size:12px;
+}
+
+.result-score{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:9px;
+  margin-bottom:19px;
+}
+
+.result-score div{
+  padding:13px 5px;
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:rgba(255,255,255,.04);
+}
+
+.result-score strong{
+  display:block;
+  font-size:24px;
+  font-weight:900;
+}
+
+.result-score span{
+  color:#98a5c4;
+  font-size:10px;
+}
+
+.result-buttons{
+  display:grid;
+  gap:9px;
+}
+
+/* الإحصائيات */
+
+.data-panel{
+  padding:17px;
+  border:1px solid var(--line);
+  border-radius:18px;
+  background:rgba(255,255,255,.035);
+}
+
+.stats-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:9px;
+}
+
+.stat-box{
+  padding:15px 5px;
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:rgba(255,255,255,.035);
+  text-align:center;
+}
+
+.stat-box strong{
+  display:block;
+  font-size:25px;
+  font-weight:900;
+}
+
+.stat-box span{
+  display:block;
+  margin-top:3px;
+  color:#9ba8c7;
+  font-size:10px;
+}
+
+.stat-box.win strong{color:var(--green)}
+.stat-box.loss strong{color:var(--pink)}
+.stat-box.draw strong{color:#bca8ff}
+
+.section-label{
+  margin:19px 0 10px;
+  color:#cbd4ef;
+  font-size:13px;
+  font-weight:900;
+}
+
+.history-list{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  max-height:230px;
+  overflow-y:auto;
+  overscroll-behavior:contain;
+}
+
+.history-item{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  padding:11px 12px;
   border:1px solid var(--line);
   border-radius:12px;
-  background:#1c2340;
-  color:white;
+  background:rgba(255,255,255,.03);
+}
+
+.history-item strong{
+  display:block;
+  font-size:11px;
+}
+
+.history-item small{
+  display:block;
+  margin-top:3px;
+  color:#8997b6;
+  font-size:9px;
+}
+
+.history-result{
+  font-size:11px;
+  font-weight:900;
+}
+
+.history-result.win{color:var(--green)}
+.history-result.loss{color:var(--pink)}
+.history-result.draw{color:var(--gold)}
+
+.empty-history{
+  padding:22px 10px;
+  border:1px dashed #ffffff20;
+  border-radius:13px;
+  color:#8794b2;
+  text-align:center;
+  font-size:11px;
+}
+
+/* الإعدادات */
+
+.settings-list{
+  display:flex;
+  flex-direction:column;
+  gap:9px;
+}
+
+.setting-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  min-height:58px;
+  padding:10px 13px;
+  border:1px solid var(--line);
+  border-radius:13px;
+  background:rgba(255,255,255,.035);
+}
+
+.setting-row strong{
+  display:block;
   font-size:12px;
+}
+
+.setting-row small{
+  display:block;
+  margin-top:3px;
+  color:#8997b6;
+  font-size:10px;
+}
+
+.toggle{
+  position:relative;
+  width:44px;
+  height:25px;
+  flex:0 0 44px;
+  border-radius:30px;
+  background:#39425e;
+  transition:background .2s;
+}
+
+.toggle::after{
+  content:"";
+  position:absolute;
+  top:3px;
+  right:3px;
+  width:19px;
+  height:19px;
+  border-radius:50%;
+  background:white;
+  transition:transform .2s;
+}
+
+.toggle.on{
+  background:#8061ef;
+}
+
+.toggle.on::after{
+  transform:translateX(-19px);
+}
+
+.setting-description{
+  margin-top:14px;
+  color:#8997b6;
+  font-size:10px;
+  line-height:1.9;
+}
+
+/* إشعار */
+
+.toast{
+  position:absolute;
+  z-index:20;
+  bottom:max(22px,env(safe-area-inset-bottom));
+  left:50%;
+  width:max-content;
+  max-width:calc(100% - 35px);
+  padding:11px 17px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:#202a48;
+  color:white;
+  font-size:11px;
   font-weight:800;
-  transition:.25s;
-  z-index:10;
+  text-align:center;
+  opacity:0;
+  pointer-events:none;
+  transform:translate(-50%,15px);
+  transition:.22s;
 }
 
 .toast.show{
@@ -487,554 +962,1230 @@ select option{background:#171c35;color:white}
   transform:translate(-50%,0);
 }
 
-@media(max-width:760px){
-  .game-layout{grid-template-columns:1fr}
-  .hero{min-height:190px;padding:23px}
-  .board-panel{padding:15px}
-  .board{gap:7px;padding:9px}
-  .cell{border-radius:12px}
-  .side-column{display:grid;grid-template-columns:1fr}
+.hidden{
+  display:none!important;
 }
 
-@media(max-width:380px){
-  .page{padding:13px 11px 30px}
-  .hero{padding:19px}
-  .hero h1{font-size:29px}
-  .board-panel{padding:11px}
-  .board{gap:5px;padding:7px}
-  .cell{font-size:43px}
-  .action-row{flex-direction:column}
+@media(max-height:690px){
+  .screen{
+    padding-top:max(9px,env(safe-area-inset-top));
+    padding-bottom:max(9px,env(safe-area-inset-bottom));
+  }
+
+  .hero-title{font-size:30px;margin-top:8px}
+  .hero-description{margin-bottom:12px;font-size:11px}
+  .menu-card{min-height:100px;padding:12px}
+  .menu-card-icon{width:33px;height:33px;margin-bottom:5px}
+  .menu-footer{margin-top:10px;padding:9px}
+  .screen-heading{margin:10px 0}
+  .setup-card{padding:14px}
+  .choice{min-height:62px}
+  .board-wrap{width:min(100%,min(62vh,350px))}
+  .player-card{padding:8px}
+  .player-avatar{width:32px;height:32px;flex-basis:32px}
+  .turn-status{margin:8px auto;min-height:35px}
+  .match-message{margin-top:8px;min-height:35px}
+  .match-actions{margin-top:7px}
+  .match-bottom{padding-top:6px}
+}
+
+@media(max-width:360px){
+  .screen{padding-left:11px;padding-right:11px}
+  .main-menu{gap:8px}
+  .menu-card{min-height:108px;padding:12px}
+  .board-wrap{width:min(100%,min(70vw,350px))}
+  .cell{border-radius:12px}
+  .player-info strong{font-size:10px}
+}
+
+@media(min-width:700px){
+  .screen{padding-left:30px;padding-right:30px}
+  .board-wrap{width:min(100%,390px)}
 }
 </style>
 </head>
 
 <body>
-<div class="page">
+<div class="app">
+  <div class="ambient one"></div>
+  <div class="ambient two"></div>
 
-  <header class="topbar">
-    <div class="brand">
-      <div class="brand-mark">
-        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round">
-          <path d="M7 7l10 10M17 7L7 17"/>
-          <circle cx="12" cy="12" r="10" opacity=".35"/>
-        </svg>
+  <!-- الشاشة الرئيسية -->
+  <section class="screen active" id="homeScreen">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round">
+            <path d="M7 7l10 10M17 7L7 17"/>
+            <circle cx="12" cy="12" r="10" opacity=".35"/>
+          </svg>
+        </div>
+        <span>HANOON WORLD</span>
       </div>
-      <span>HANOON WORLD</span>
+      <button class="icon-btn" data-screen="settingsScreen" aria-label="الإعدادات">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <circle cx="12" cy="12" r="3"/>
+          <path d="M19.4 15a1.7 1.7 0 0 0 .34 1.88l.06.06-1.7 2.94-.09-.02a1.7 1.7 0 0 0-1.75.48l-.06.07h-3.4l-.02-.09a1.7 1.7 0 0 0-1.2-1.28 1.7 1.7 0 0 0-1.86.4l-.06.06-2.94-1.7.02-.09a1.7 1.7 0 0 0-.48-1.75l-.07-.06v-3.4l.09-.02a1.7 1.7 0 0 0 1.28-1.2 1.7 1.7 0 0 0-.4-1.86l-.06-.06 1.7-2.94.09.02a1.7 1.7 0 0 0 1.75-.48l.06-.07h3.4l.02.09a1.7 1.7 0 0 0 1.2 1.28 1.7 1.7 0 0 0 1.86-.4l.06-.06 2.94 1.7-.02.09a1.7 1.7 0 0 0 .48 1.75l.07.06v3.4z"/>
+        </svg>
+      </button>
+    </header>
+
+    <main class="screen-content">
+      <div class="eyebrow"><span class="eyebrow-dot"></span> HANOON GAME ARENA</div>
+      <h1 class="hero-title">إكس <span>أو</span></h1>
+      <p class="hero-description">
+        مواجهة ذكاء وتركيز. خطط لحركاتك، اقرأ خطوات خصمك، واصنع طريقك نحو الفوز.
+      </p>
+
+      <div class="main-menu">
+        <button class="menu-card purple" data-screen="setupScreen">
+          <span class="menu-card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#bba8ff" stroke-width="1.9" stroke-linecap="round">
+              <path d="M7 7l10 10M17 7L7 17"/>
+            </svg>
+          </span>
+          <strong>ابدأ مباراة</strong>
+          <small>اختر خصمك وابدأ التحدي</small>
+        </button>
+
+        <button class="menu-card cyan" data-screen="statsScreen">
+          <span class="menu-card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#65e5ee" stroke-width="1.8" stroke-linecap="round">
+              <path d="M4 19V5M4 19h17M8 15l4-4 3 2 5-7"/>
+            </svg>
+          </span>
+          <strong>الإحصائيات</strong>
+          <small>نتائجك وسجل مبارياتك</small>
+        </button>
+
+        <button class="menu-card gold" data-screen="settingsScreen">
+          <span class="menu-card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#ffd27a" stroke-width="1.8">
+              <circle cx="12" cy="12" r="3"/>
+              <path d="M19.4 15a1.7 1.7 0 0 0 .34 1.88l.06.06-1.7 2.94-.09-.02a1.7 1.7 0 0 0-1.75.48l-.06.07h-3.4l-.02-.09a1.7 1.7 0 0 0-1.2-1.28 1.7 1.7 0 0 0-1.86.4l-.06.06-2.94-1.7.02-.09a1.7 1.7 0 0 0-.48-1.75l-.07-.06v-3.4l.09-.02a1.7 1.7 0 0 0 1.28-1.2 1.7 1.7 0 0 0-.4-1.86l-.06-.06 1.7-2.94.09.02a1.7 1.7 0 0 0 1.75-.48l.06-.07h3.4l.02.09a1.7 1.7 0 0 0 1.2 1.28 1.7 1.7 0 0 0 1.86-.4l.06-.06 2.94 1.7-.02.09a1.7 1.7 0 0 0 .48 1.75l.07.06v3.4z"/>
+            </svg>
+          </span>
+          <strong>إعدادات اللعبة</strong>
+          <small>تحكم في تجربة اللعب</small>
+        </button>
+
+        <button class="menu-card pink" data-screen="rulesScreen">
+          <span class="menu-card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#ff91c3" stroke-width="1.8" stroke-linecap="round">
+              <circle cx="12" cy="12" r="9"/>
+              <path d="M9.5 9a2.5 2.5 0 1 1 4.1 1.9c-1 .8-1.6 1.2-1.6 2.6M12 17h.01"/>
+            </svg>
+          </span>
+          <strong>قواعد اللعبة</strong>
+          <small>تعرف على طريقة الفوز</small>
+        </button>
+      </div>
+
+      <div class="menu-footer">
+        اختر وضع اللعب الذي يناسبك. يمكنك اللعب ضد الكمبيوتر أو مواجهة لاعب آخر على نفس الجهاز.
+      </div>
+    </main>
+  </section>
+
+  <!-- إعداد المباراة -->
+  <section class="screen" id="setupScreen">
+    <header class="topbar">
+      <button class="back-button" data-screen="homeScreen">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        الرئيسية
+      </button>
+      <div class="brand">إعداد المباراة</div>
+    </header>
+
+    <main class="screen-content">
+      <div class="screen-heading">
+        <div class="eyebrow"><span class="eyebrow-dot"></span> MATCH SETUP</div>
+        <h1>جهّز المواجهة</h1>
+        <p>اختر طريقة اللعب ومستوى التحدي قبل البداية.</p>
+      </div>
+
+      <div class="setup-card">
+        <span class="field-title">طريقة اللعب</span>
+        <div class="choice-grid">
+          <button class="choice active" data-mode="ai">
+            <strong>ضد الكمبيوتر</strong>
+            <small>تحدَّ الذكاء الاصطناعي</small>
+          </button>
+          <button class="choice" data-mode="local">
+            <strong>لاعبان محليًا</strong>
+            <small>مواجهة على نفس الجهاز</small>
+          </button>
+        </div>
+
+        <div id="difficultyArea">
+          <label class="field-title" for="difficulty">مستوى الخصم</label>
+          <select class="select-control" id="difficulty">
+            <option value="easy">سهل — بداية مريحة</option>
+            <option value="medium" selected>متوسط — تحدٍّ متوازن</option>
+            <option value="hard">صعب — خصم ذكي</option>
+            <option value="expert">محترف — أفضل الحركات</option>
+          </select>
+          <p class="setup-note">
+            مستويات الصعوبة تختلف في طريقة اختيار الحركة. المستويان الصعب والمحترف يستخدمان خوارزمية بحث كاملة.
+          </p>
+        </div>
+
+        <button class="primary-button full-button" id="startMatch">ابدأ المباراة</button>
+      </div>
+    </main>
+  </section>
+
+  <!-- شاشة المباراة -->
+  <section class="screen" id="matchScreen">
+    <div class="match-top">
+      <header class="topbar">
+        <button class="icon-btn" id="exitMatch" aria-label="إنهاء المباراة">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M15 18l-6-6 6-6"/>
+          </svg>
+        </button>
+        <div class="brand">HANOON <span style="color:#a78aff">ARENA</span></div>
+        <button class="icon-btn" id="restartMatch" aria-label="إعادة المباراة">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+            <path d="M20 7v5h-5M4 17v-5h5"/>
+            <path d="M5.6 9A7 7 0 0 1 18 6l2 2M4 16l2 2a7 7 0 0 0 12.4-3"/>
+          </svg>
+        </button>
+      </header>
+
+      <div class="match-title">المباراة <span>الحالية</span></div>
+
+      <div class="player-strip">
+        <div class="player-card active-turn" id="playerX">
+          <div class="player-avatar">X</div>
+          <div class="player-info">
+            <strong id="playerXName">أنت</strong>
+            <small>العلامة X</small>
+          </div>
+        </div>
+
+        <div class="player-card" id="playerO">
+          <div class="player-avatar">O</div>
+          <div class="player-info">
+            <strong id="playerOName">الكمبيوتر</strong>
+            <small>العلامة O</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="turn-status" id="turnStatus">
+        <span>دورك الآن</span>
+        <span class="turn-mark" id="turnMark">X</span>
+      </div>
     </div>
 
-    <a class="back-btn" href="../games.html">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M19 12H5M12 19l-7-7 7-7"/>
-      </svg>
-      العودة للألعاب
-    </a>
-  </header>
+    <div class="board-wrap">
+      <div class="board" id="board">
+        <button class="cell" data-index="0" aria-label="الخانة 1"></button>
+        <button class="cell" data-index="1" aria-label="الخانة 2"></button>
+        <button class="cell" data-index="2" aria-label="الخانة 3"></button>
+        <button class="cell" data-index="3" aria-label="الخانة 4"></button>
+        <button class="cell" data-index="4" aria-label="الخانة 5"></button>
+        <button class="cell" data-index="5" aria-label="الخانة 6"></button>
+        <button class="cell" data-index="6" aria-label="الخانة 7"></button>
+        <button class="cell" data-index="7" aria-label="الخانة 8"></button>
+        <button class="cell" data-index="8" aria-label="الخانة 9"></button>
+      </div>
+    </div>
 
-  <section class="hero">
-    <div class="hero-content">
-      <div class="eyebrow"><span></span> لعبة متاحة</div>
-      <h1>إكس <strong>أو</strong></h1>
-      <p>اختبر ذكاءك، خطط لكل حركة، وحقق الفوز بثلاث علامات متتالية. هل تستطيع هزيمة الخصم؟</p>
+    <div class="match-message" id="matchMessage" aria-live="polite">
+      اختر أول حركة لبدء المواجهة.
+    </div>
+
+    <div class="match-actions">
+      <button class="primary-button" id="matchNewGame">مباراة جديدة</button>
+      <button class="secondary-button" id="matchHome">القائمة الرئيسية</button>
+    </div>
+
+    <div class="match-bottom">
+      <button id="soundQuick">الصوت: تشغيل</button>
+      <button id="rulesQuick" data-screen="rulesScreen">قواعد اللعب</button>
     </div>
   </section>
 
-  <main class="game-layout">
+  <!-- شاشة النتيجة -->
+  <section class="screen" id="resultScreen">
+    <header class="topbar">
+      <button class="back-button" data-screen="homeScreen">
+        العودة للرئيسية
+      </button>
+      <div class="brand">نتيجة المباراة</div>
+    </header>
 
-    <section class="panel board-panel">
-      <div class="section-heading">
-        <h2>ساحة المواجهة</h2>
-        <div class="turn-badge">
-          الدور:
-          <span class="turn-symbol" id="turnSymbol">X</span>
+    <main class="screen-content result-content">
+      <div class="result-symbol" id="resultIcon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#b8a5ff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M7 12l3 3 7-7"/>
+          <circle cx="12" cy="12" r="10"/>
+        </svg>
+      </div>
+
+      <h1 id="resultTitle">انتهت المباراة</h1>
+      <p id="resultDescription">إليك نتيجة المواجهة.</p>
+
+      <div class="result-score">
+        <div>
+          <strong id="resultWins">0</strong>
+          <span>انتصارات</span>
+        </div>
+        <div>
+          <strong id="resultLosses">0</strong>
+          <span>خسائر</span>
+        </div>
+        <div>
+          <strong id="resultDraws">0</strong>
+          <span>تعادلات</span>
         </div>
       </div>
 
-      <div class="board" id="board" aria-label="لوحة لعبة إكس أو">
-        <button class="cell" data-index="0" aria-label="الخانة الأولى"></button>
-        <button class="cell" data-index="1" aria-label="الخانة الثانية"></button>
-        <button class="cell" data-index="2" aria-label="الخانة الثالثة"></button>
-        <button class="cell" data-index="3" aria-label="الخانة الرابعة"></button>
-        <button class="cell" data-index="4" aria-label="الخانة الخامسة"></button>
-        <button class="cell" data-index="5" aria-label="الخانة السادسة"></button>
-        <button class="cell" data-index="6" aria-label="الخانة السابعة"></button>
-        <button class="cell" data-index="7" aria-label="الخانة الثامنة"></button>
-        <button class="cell" data-index="8" aria-label="الخانة التاسعة"></button>
+      <div class="result-buttons">
+        <button class="primary-button" id="playAgain">العب مرة أخرى</button>
+        <button class="secondary-button" id="resultStats">عرض الإحصائيات</button>
+        <button class="secondary-button" id="resultHome">العودة للقائمة</button>
+      </div>
+    </main>
+  </section>
+
+  <!-- الإحصائيات -->
+  <section class="screen" id="statsScreen">
+    <header class="topbar">
+      <button class="back-button" data-screen="homeScreen">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        الرئيسية
+      </button>
+      <div class="brand">إحصائياتي</div>
+    </header>
+
+    <main class="screen-content" style="justify-content:flex-start;padding-top:17px">
+      <div class="screen-heading">
+        <div class="eyebrow">PLAYER RECORD</div>
+        <h1>أداؤك في اللعبة</h1>
+        <p>الأرقام هنا مبنية على مبارياتك المحفوظة على هذا الجهاز.</p>
       </div>
 
-      <div class="game-message" id="message" aria-live="polite">
-        اختر وضع اللعب وابدأ المباراة.
-      </div>
-
-      <div class="action-row">
-        <button class="primary-btn" id="newGame">مباراة جديدة</button>
-        <button class="secondary-btn" id="resetBoard">إعادة اللوحة</button>
-      </div>
-    </section>
-
-    <aside class="side-column">
-
-      <section class="panel settings-panel">
-        <h3>إعدادات المباراة</h3>
-
-        <span class="field-label">طريقة اللعب</span>
-        <div class="mode-options">
-          <button class="mode-btn active" data-mode="ai">ضد الكمبيوتر</button>
-          <button class="mode-btn" data-mode="local">لاعبان محليًا</button>
-        </div>
-
-        <div class="select-wrap" id="difficultyWrap">
-          <label class="field-label" for="difficulty">مستوى الذكاء الاصطناعي</label>
-          <select id="difficulty">
-            <option value="easy">سهل</option>
-            <option value="medium">متوسط</option>
-            <option value="hard">صعب</option>
-            <option value="expert">محترف</option>
-          </select>
-        </div>
-
-        <p class="note" id="modeNote">
-          أنت تلعب بعلامة X والكمبيوتر يلعب بعلامة O. اختر مستوى التحدي المناسب.
-        </p>
-      </section>
-
-      <section class="panel stats-panel">
-        <h3>نتائجك على هذا الجهاز</h3>
-
-        <div class="score-grid">
-          <div class="score-card wins">
-            <strong id="wins">0</strong>
+      <div class="data-panel">
+        <div class="stats-grid">
+          <div class="stat-box win">
+            <strong id="statWins">0</strong>
             <span>انتصارات</span>
           </div>
-          <div class="score-card losses">
-            <strong id="losses">0</strong>
+          <div class="stat-box loss">
+            <strong id="statLosses">0</strong>
             <span>خسائر</span>
           </div>
-          <div class="score-card draws">
-            <strong id="draws">0</strong>
+          <div class="stat-box draw">
+            <strong id="statDraws">0</strong>
             <span>تعادلات</span>
           </div>
         </div>
 
-        <button class="score-reset" id="clearStats">تصفير النتائج المحلية</button>
-      </section>
+        <div class="section-label">إجمالي المباريات</div>
+        <div class="stat-box">
+          <strong id="statTotal">0</strong>
+          <span>مباراة مسجلة</span>
+        </div>
 
-    </aside>
-  </main>
+        <div class="section-label">سجل آخر المباريات</div>
+        <div class="history-list" id="historyList">
+          <div class="empty-history">لا توجد مباريات مسجلة حتى الآن.</div>
+        </div>
 
-  <section class="panel rules">
-    <h3>قواعد اللعبة</h3>
-    <p>
-      يتناوب اللاعبان على وضع علامتي X و O داخل الخانات التسع.
-      الفائز هو أول من ينجح في تكوين ثلاثة رموز متطابقة أفقيًا أو رأسيًا أو قطريًا.
-      إذا امتلأت اللوحة دون تكوين خط فائز تنتهي المباراة بالتعادل.
-    </p>
+        <button class="secondary-button danger-button full-button" id="clearHistory">
+          مسح السجل والإحصائيات
+        </button>
+      </div>
+    </main>
   </section>
 
-  <footer class="footer">
-    HANOON WORLD · Tic Tac Toe
-  </footer>
-</div>
+  <!-- الإعدادات -->
+  <section class="screen" id="settingsScreen">
+    <header class="topbar">
+      <button class="back-button" data-screen="homeScreen">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        الرئيسية
+      </button>
+      <div class="brand">إعدادات اللعبة</div>
+    </header>
 
-<div class="toast" id="toast"></div>
+    <main class="screen-content">
+      <div class="screen-heading">
+        <div class="eyebrow">GAME PREFERENCES</div>
+        <h1>تخصيص التجربة</h1>
+        <p>تحكم في المؤثرات وطريقة عرض اللعبة.</p>
+      </div>
+
+      <div class="setup-card">
+        <div class="settings-list">
+          <div class="setting-row">
+            <div>
+              <strong>المؤثرات الصوتية</strong>
+              <small>صوت عند الحركة ونهاية المباراة</small>
+            </div>
+            <button class="toggle on" id="soundToggle" role="switch" aria-checked="true" aria-label="المؤثرات الصوتية"></button>
+          </div>
+
+          <div class="setting-row">
+            <div>
+              <strong>الاهتزاز</strong>
+              <small>اهتزاز خفيف عند الحركة إذا كان الجهاز يدعم ذلك</small>
+            </div>
+            <button class="toggle on" id="vibrationToggle" role="switch" aria-checked="true" aria-label="الاهتزاز"></button>
+          </div>
+
+          <div class="setting-row">
+            <div>
+              <strong>تأكيد بدء مباراة جديدة</strong>
+              <small>طلب تأكيد قبل إعادة المباراة أثناء اللعب</small>
+            </div>
+            <button class="toggle on" id="confirmToggle" role="switch" aria-checked="true" aria-label="تأكيد إعادة المباراة"></button>
+          </div>
+        </div>
+
+        <p class="setting-description">
+          يتم حفظ تفضيلاتك على هذا الجهاز. لا يتم إرسال سجل المباريات أو الإعدادات إلى حسابك أو قاعدة البيانات في هذه النسخة.
+        </p>
+
+        <button class="secondary-button full-button" id="resetSettings">استعادة الإعدادات الافتراضية</button>
+      </div>
+    </main>
+  </section>
+
+  <!-- القواعد -->
+  <section class="screen" id="rulesScreen">
+    <header class="topbar">
+      <button class="back-button" data-screen="homeScreen">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        الرئيسية
+      </button>
+      <div class="brand">قواعد إكس أو</div>
+    </header>
+
+    <main class="screen-content">
+      <div class="screen-heading">
+        <div class="eyebrow">HOW TO PLAY</div>
+        <h1>كيف تحقق الفوز؟</h1>
+        <p>قواعد بسيطة، لكن الفوز يحتاج إلى تركيز وتخطيط.</p>
+      </div>
+
+      <div class="setup-card">
+        <div class="section-label">1 — بداية المباراة</div>
+        <p class="setup-note">تتكون اللوحة من تسع خانات. يبدأ اللاعب X أولًا، ثم يأتي دور اللاعب O.</p>
+
+        <div class="section-label">2 — طريقة اللعب</div>
+        <p class="setup-note">يختار كل لاعب خانة فارغة واحدة في دوره. لا يمكن تغيير العلامة بعد وضعها.</p>
+
+        <div class="section-label">3 — الفوز</div>
+        <p class="setup-note">الفائز هو أول لاعب يكوّن ثلاثة رموز متطابقة في خط أفقي أو رأسي أو قطري.</p>
+
+        <div class="section-label">4 — التعادل</div>
+        <p class="setup-note">إذا امتلأت الخانات التسع ولم ينجح أي لاعب في تكوين خط متصل، تنتهي المباراة بالتعادل.</p>
+
+        <div class="section-label">5 — مستويات الكمبيوتر</div>
+        <p class="setup-note">السهل يختار حركات عشوائية، والمتوسط يحاول الفوز أو منع فوزك، والصعب والمحترف يبحثان عن أفضل حركة ممكنة.</p>
+
+        <button class="primary-button full-button" data-screen="setupScreen">ابدأ اللعب</button>
+      </div>
+    </main>
+  </section>
+
+  <div class="toast" id="toast"></div>
+</div>
 
 <script>
 (() => {
-  "use strict";
+"use strict";
 
-  const cells = [...document.querySelectorAll(".cell")];
-  const message = document.getElementById("message");
-  const turnSymbol = document.getElementById("turnSymbol");
-  const difficulty = document.getElementById("difficulty");
-  const difficultyWrap = document.getElementById("difficultyWrap");
-  const modeNote = document.getElementById("modeNote");
-  const toast = document.getElementById("toast");
+/* =========================================
+   عناصر التطبيق والحالة العامة
+========================================= */
 
-  const scoreElements = {
-    wins: document.getElementById("wins"),
-    losses: document.getElementById("losses"),
-    draws: document.getElementById("draws")
-  };
+const $ = selector => document.querySelector(selector);
+const $$ = selector => [...document.querySelectorAll(selector)];
 
-  const WIN_LINES = [
-    [0,1,2], [3,4,5], [6,7,8],
-    [0,3,6], [1,4,7], [2,5,8],
-    [0,4,8], [2,4,6]
-  ];
+const screens = $$(".screen");
+const cells = $$(".cell");
+const messageElement = $("#matchMessage");
+const turnMark = $("#turnMark");
+const turnStatus = $("#turnStatus");
 
-  let board = Array(9).fill("");
-  let currentPlayer = "X";
-  let mode = "ai";
-  let gameOver = false;
-  let thinking = false;
-  let winningLine = [];
+const STORAGE_KEYS = {
+  scores:"hanoon_xo_v2_scores",
+  history:"hanoon_xo_v2_history",
+  settings:"hanoon_xo_v2_settings"
+};
 
-  let scores = loadScores();
+const WIN_LINES = [
+  [0,1,2],
+  [3,4,5],
+  [6,7,8],
+  [0,3,6],
+  [1,4,7],
+  [2,5,8],
+  [0,4,8],
+  [2,4,6]
+];
 
-  function loadScores(){
-    try{
-      const saved = JSON.parse(localStorage.getItem("hanoon_xo_scores"));
+let board = Array(9).fill("");
+let currentPlayer = "X";
+let gameMode = "ai";
+let difficulty = "medium";
+let gameOver = false;
+let thinking = false;
+let winningLine = [];
+let lastResult = null;
+let computerTimer = null;
+let toastTimer = null;
+let audioContext = null;
+
+let scores = loadJSON(STORAGE_KEYS.scores,{
+  wins:0,
+  losses:0,
+  draws:0,
+  total:0
+});
+
+let history = loadJSON(STORAGE_KEYS.history,[]);
+
+let settings = loadJSON(STORAGE_KEYS.settings,{
+  sound:true,
+  vibration:true,
+  confirmRestart:true
+});
+
+/* =========================================
+   التخزين المحلي
+========================================= */
+
+function loadJSON(key,fallback){
+  try{
+    const value = JSON.parse(localStorage.getItem(key));
+    return value && typeof value === "object" ? value : fallback;
+  }catch{
+    return fallback;
+  }
+}
+
+function saveData(){
+  try{
+    localStorage.setItem(STORAGE_KEYS.scores,JSON.stringify(scores));
+    localStorage.setItem(STORAGE_KEYS.history,JSON.stringify(history.slice(0,50)));
+    localStorage.setItem(STORAGE_KEYS.settings,JSON.stringify(settings));
+  }catch(error){
+    console.warn("Local storage unavailable",error);
+  }
+}
+
+/* =========================================
+   التنقل بين الشاشات
+========================================= */
+
+function showScreen(id){
+  const target = document.getElementById(id);
+  if(!target) return;
+
+  screens.forEach(screen=>{
+    screen.classList.toggle("active",screen === target);
+  });
+
+  if(id === "statsScreen"){
+    renderStats();
+  }
+
+  if(id === "settingsScreen"){
+    renderSettings();
+  }
+
+  if(id === "matchScreen"){
+    renderBoard();
+  }
+}
+
+$$("[data-screen]").forEach(button=>{
+  button.addEventListener("click",()=>{
+    showScreen(button.dataset.screen);
+  });
+});
+
+/* =========================================
+   الإشعارات
+========================================= */
+
+function toast(text){
+  const element = $("#toast");
+  element.textContent = text;
+  element.classList.add("show");
+
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=>{
+    element.classList.remove("show");
+  },2100);
+}
+
+/* =========================================
+   الصوت والاهتزاز
+========================================= */
+
+function playTone(type="move"){
+  if(!settings.sound) return;
+
+  try{
+    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+    if(!AudioContextClass) return;
+
+    audioContext ||= new AudioContextClass();
+
+    if(audioContext.state === "suspended"){
+      audioContext.resume();
+    }
+
+    const oscillator = audioContext.createOscillator();
+    const gain = audioContext.createGain();
+
+    oscillator.connect(gain);
+    gain.connect(audioContext.destination);
+
+    const now = audioContext.currentTime;
+
+    const frequencies = {
+      move:520,
+      win:740,
+      lose:210,
+      draw:390
+    };
+
+    oscillator.frequency.setValueAtTime(frequencies[type] || 520,now);
+    oscillator.type = "sine";
+
+    gain.gain.setValueAtTime(.0001,now);
+    gain.gain.exponentialRampToValueAtTime(.10,now+.025);
+    gain.gain.exponentialRampToValueAtTime(.0001,now+.22);
+
+    oscillator.start(now);
+    oscillator.stop(now+.24);
+  }catch(error){
+    console.warn("Audio unavailable",error);
+  }
+}
+
+function vibrate(pattern=18){
+  if(!settings.vibration) return;
+  if(!navigator.vibrate) return;
+
+  try{
+    navigator.vibrate(pattern);
+  }catch{}
+}
+
+/* =========================================
+   إعداد المباراة
+========================================= */
+
+$$("[data-mode]").forEach(button=>{
+  button.addEventListener("click",()=>{
+    gameMode = button.dataset.mode;
+
+    $$("[data-mode]").forEach(item=>{
+      item.classList.toggle("active",item === button);
+    });
+
+    $("#difficultyArea").classList.toggle("hidden",gameMode !== "ai");
+  });
+});
+
+$("#difficulty").addEventListener("change",event=>{
+  difficulty = event.target.value;
+});
+
+$("#startMatch").addEventListener("click",()=>{
+  difficulty = $("#difficulty").value;
+  startNewMatch();
+});
+
+function startNewMatch(){
+  clearTimeout(computerTimer);
+
+  board = Array(9).fill("");
+  currentPlayer = "X";
+  gameOver = false;
+  thinking = false;
+  winningLine = [];
+  lastResult = null;
+
+  $("#playerXName").textContent = gameMode === "ai" ? "أنت" : "اللاعب الأول";
+  $("#playerOName").textContent = gameMode === "ai" ? "الكمبيوتر" : "اللاعب الثاني";
+
+  showScreen("matchScreen");
+  setMatchMessage(gameMode === "ai" ? "دورك الآن. اختر خانة البداية." : "اللاعب الأول يبدأ.");
+  renderBoard();
+}
+
+/* =========================================
+   عرض اللوحة والدور
+========================================= */
+
+function renderBoard(){
+  cells.forEach((cell,index)=>{
+    const value = board[index];
+
+    cell.textContent = value;
+    cell.className = "cell";
+
+    if(value){
+      cell.classList.add(value.toLowerCase());
+    }
+
+    if(winningLine.includes(index)){
+      cell.classList.add("winner");
+    }
+
+    const computerTurn = gameMode === "ai" && currentPlayer === "O";
+
+    cell.disabled = Boolean(value) || gameOver || thinking || computerTurn;
+  });
+
+  turnMark.textContent = currentPlayer;
+  turnMark.style.color = currentPlayer === "X" ? "var(--cyan)" : "var(--pink)";
+
+  $("#playerX").classList.toggle("active-turn",currentPlayer === "X" && !gameOver);
+  $("#playerO").classList.toggle("active-turn",currentPlayer === "O" && !gameOver);
+
+  if(gameMode === "ai"){
+    turnStatus.firstElementChild.textContent =
+      currentPlayer === "X" ? "دورك الآن" : "دور الكمبيوتر";
+  }else{
+    turnStatus.firstElementChild.textContent =
+      currentPlayer === "X" ? "دور اللاعب الأول" : "دور اللاعب الثاني";
+  }
+}
+
+function setMatchMessage(text){
+  messageElement.textContent = text;
+}
+
+/* =========================================
+   منطق الفوز والتعادل
+========================================= */
+
+function getResult(state){
+  for(const line of WIN_LINES){
+    const [a,b,c] = line;
+
+    if(
+      state[a] &&
+      state[a] === state[b] &&
+      state[a] === state[c]
+    ){
       return {
-        wins: Number(saved?.wins) || 0,
-        losses: Number(saved?.losses) || 0,
-        draws: Number(saved?.draws) || 0
+        winner:state[a],
+        line
       };
-    }catch{
-      return {wins:0,losses:0,draws:0};
     }
   }
 
-  function saveScores(){
-    try{
-      localStorage.setItem("hanoon_xo_scores",JSON.stringify(scores));
-    }catch{}
-    renderScores();
+  if(state.every(Boolean)){
+    return {
+      winner:"draw",
+      line:[]
+    };
   }
 
-  function renderScores(){
-    Object.keys(scoreElements).forEach(key=>{
-      scoreElements[key].textContent = scores[key];
-    });
+  return null;
+}
+
+function availableMoves(state){
+  const moves = [];
+
+  for(let i=0;i<state.length;i++){
+    if(!state[i]) moves.push(i);
   }
 
-  function setMessage(text,type=""){
-    message.textContent = text;
-    message.className = "game-message" + (type ? " " + type : "");
+  return moves;
+}
+
+function makeMove(index){
+  if(gameOver || thinking || board[index]) return;
+  if(gameMode === "ai" && currentPlayer !== "X") return;
+
+  board[index] = currentPlayer;
+
+  playTone("move");
+  vibrate();
+
+  const result = getResult(board);
+
+  if(result){
+    finishMatch(result);
+    return;
   }
 
-  function showToast(text){
-    toast.textContent = text;
-    toast.classList.add("show");
-    clearTimeout(showToast.timer);
-    showToast.timer = setTimeout(()=>{
-      toast.classList.remove("show");
-    },2200);
+  switchTurn();
+}
+
+cells.forEach(cell=>{
+  cell.addEventListener("click",()=>{
+    makeMove(Number(cell.dataset.index));
+  });
+});
+
+function switchTurn(){
+  currentPlayer = currentPlayer === "X" ? "O" : "X";
+
+  renderBoard();
+
+  if(gameMode === "ai" && currentPlayer === "O"){
+    computerTurn();
+  }else{
+    setMatchMessage(
+      gameMode === "ai"
+        ? "حان دورك. اختر حركتك التالية."
+        : currentPlayer === "X"
+          ? "دور اللاعب الأول."
+          : "دور اللاعب الثاني."
+    );
+  }
+}
+
+/* =========================================
+   الذكاء الاصطناعي
+========================================= */
+
+function findWinningMove(state,player){
+  for(const index of availableMoves(state)){
+    state[index] = player;
+    const won = getResult(state)?.winner === player;
+    state[index] = "";
+
+    if(won) return index;
   }
 
-  function renderBoard(){
-    cells.forEach((cell,index)=>{
-      const value = board[index];
+  return null;
+}
 
-      cell.textContent = value;
-      cell.className = "cell";
+function randomChoice(items){
+  if(!items.length) return null;
+  return items[Math.floor(Math.random()*items.length)];
+}
 
-      if(value){
-        cell.classList.add(value.toLowerCase());
-      }
+function easyMove(){
+  return randomChoice(availableMoves(board));
+}
 
-      if(winningLine.includes(index)){
-        cell.classList.add("win");
-      }
+function mediumMove(){
+  const win = findWinningMove(board,"O");
+  if(win !== null) return win;
 
-      cell.disabled = Boolean(value) || gameOver || thinking;
-    });
+  const block = findWinningMove(board,"X");
+  if(block !== null) return block;
 
-    turnSymbol.textContent = currentPlayer;
-    turnSymbol.style.color = currentPlayer === "X"
-      ? "var(--cyan)"
-      : "var(--pink)";
+  if(!board[4]) return 4;
+
+  const corners = [0,2,6,8].filter(index=>!board[index]);
+  if(corners.length) return randomChoice(corners);
+
+  return randomChoice(availableMoves(board));
+}
+
+function minimax(state,maximizing,depth){
+  const result = getResult(state);
+
+  if(result){
+    if(result.winner === "O") return 10-depth;
+    if(result.winner === "X") return depth-10;
+    return 0;
   }
 
-  function getResult(state){
-    for(const line of WIN_LINES){
-      const [a,b,c] = line;
+  const moves = availableMoves(state);
 
-      if(state[a] && state[a] === state[b] && state[a] === state[c]){
-        return {winner:state[a],line};
-      }
-    }
-
-    if(state.every(Boolean)){
-      return {winner:"draw",line:[]};
-    }
-
-    return null;
-  }
-
-  function finishGame(result){
-    gameOver = true;
-    thinking = false;
-    winningLine = result.line || [];
-
-    if(result.winner === "draw"){
-      setMessage("انتهت المباراة بالتعادل.", "warning");
-
-      if(mode === "ai"){
-        scores.draws++;
-      }
-    }else if(mode === "local"){
-      setMessage(
-        result.winner === "X"
-          ? "اللاعب الأول فاز بالمباراة!"
-          : "اللاعب الثاني فاز بالمباراة!",
-        "success"
-      );
-    }else if(result.winner === "X"){
-      setMessage("مبروك! لقد انتصرت على الكمبيوتر.", "success");
-      scores.wins++;
-    }else{
-      setMessage("الكمبيوتر فاز هذه المرة. حاول مجددًا!", "warning");
-      scores.losses++;
-    }
-
-    if(mode === "ai"){
-      saveScores();
-    }
-
-    renderBoard();
-  }
-
-  function switchTurn(){
-    currentPlayer = currentPlayer === "X" ? "O" : "X";
-    renderBoard();
-
-    if(mode === "ai" && currentPlayer === "O" && !gameOver){
-      computerTurn();
-    }else if(mode === "local" && !gameOver){
-      setMessage(
-        currentPlayer === "X"
-          ? "دور اللاعب الأول — X"
-          : "دور اللاعب الثاني — O"
-      );
-    }else if(mode === "ai" && !gameOver){
-      setMessage("دورك الآن — اختر خانة.");
-    }
-  }
-
-  function playCell(index){
-    if(gameOver || thinking || board[index]) return;
-    if(mode === "ai" && currentPlayer !== "X") return;
-
-    board[index] = currentPlayer;
-
-    const result = getResult(board);
-
-    if(result){
-      finishGame(result);
-      return;
-    }
-
-    switchTurn();
-  }
-
-  function availableMoves(state){
-    return state
-      .map((value,index)=>value ? -1 : index)
-      .filter(index=>index !== -1);
-  }
-
-  function winningMove(state,player){
-    for(const index of availableMoves(state)){
-      state[index] = player;
-      const won = getResult(state)?.winner === player;
-      state[index] = "";
-      if(won) return index;
-    }
-    return null;
-  }
-
-  function randomMove(state){
-    const moves = availableMoves(state);
-    return moves[Math.floor(Math.random()*moves.length)];
-  }
-
-  function mediumMove(){
-    const win = winningMove(board,"O");
-    if(win !== null) return win;
-
-    const block = winningMove(board,"X");
-    if(block !== null) return block;
-
-    if(!board[4]) return 4;
-
-    const corners = [0,2,6,8].filter(i=>!board[i]);
-    if(corners.length){
-      return corners[Math.floor(Math.random()*corners.length)];
-    }
-
-    return randomMove(board);
-  }
-
-  function minimax(state,isMaximizing,depth){
-    const result = getResult(state);
-
-    if(result){
-      if(result.winner === "O") return 10-depth;
-      if(result.winner === "X") return depth-10;
-      return 0;
-    }
-
-    const moves = availableMoves(state);
-
-    if(isMaximizing){
-      let best = -Infinity;
-
-      for(const index of moves){
-        state[index] = "O";
-        best = Math.max(best,minimax(state,false,depth+1));
-        state[index] = "";
-      }
-
-      return best;
-    }
-
-    let best = Infinity;
+  if(maximizing){
+    let best = -Infinity;
 
     for(const index of moves){
-      state[index] = "X";
-      best = Math.min(best,minimax(state,true,depth+1));
+      state[index] = "O";
+      best = Math.max(best,minimax(state,false,depth+1));
       state[index] = "";
     }
 
     return best;
   }
 
-  function expertMove(){
-    let bestScore = -Infinity;
-    let bestMoves = [];
+  let best = Infinity;
 
-    for(const index of availableMoves(board)){
-      board[index] = "O";
-      const score = minimax(board,false,0);
-      board[index] = "";
-
-      if(score > bestScore){
-        bestScore = score;
-        bestMoves = [index];
-      }else if(score === bestScore){
-        bestMoves.push(index);
-      }
-    }
-
-    return bestMoves[Math.floor(Math.random()*bestMoves.length)];
+  for(const index of moves){
+    state[index] = "X";
+    best = Math.min(best,minimax(state,true,depth+1));
+    state[index] = "";
   }
 
-  function hardMove(){
-    return expertMove();
-  }
+  return best;
+}
 
-  function getComputerMove(){
-    switch(difficulty.value){
-      case "easy":
-        return randomMove(board);
+function expertMove(){
+  let bestScore = -Infinity;
+  let bestMoves = [];
 
-      case "medium":
-        return mediumMove();
+  for(const index of availableMoves(board)){
+    board[index] = "O";
 
-      case "hard":
-        return hardMove();
+    const score = minimax(board,false,0);
 
-      case "expert":
-        return expertMove();
+    board[index] = "";
 
-      default:
-        return randomMove(board);
+    if(score > bestScore){
+      bestScore = score;
+      bestMoves = [index];
+    }else if(score === bestScore){
+      bestMoves.push(index);
     }
   }
 
-  function computerTurn(){
-    thinking = true;
-    setMessage("الكمبيوتر يفكر في حركته...");
-    renderBoard();
+  return randomChoice(bestMoves);
+}
 
-    setTimeout(()=>{
-      if(gameOver || mode !== "ai") return;
+function getComputerMove(){
+  switch(difficulty){
+    case "easy":
+      return easyMove();
 
-      const index = getComputerMove();
+    case "medium":
+      return mediumMove();
 
-      thinking = false;
+    case "hard":
+    case "expert":
+      return expertMove();
 
-      if(index === undefined || index === null){
-        const result = getResult(board);
-        if(result) finishGame(result);
-        return;
-      }
-
-      board[index] = "O";
-
-      const result = getResult(board);
-
-      if(result){
-        finishGame(result);
-        return;
-      }
-
-      switchTurn();
-    },450);
+    default:
+      return mediumMove();
   }
+}
 
-  function resetGame(){
-    board = Array(9).fill("");
-    currentPlayer = "X";
-    gameOver = false;
+function computerTurn(){
+  thinking = true;
+  setMatchMessage("الكمبيوتر يحلل اللوحة...");
+  renderBoard();
+
+  computerTimer = setTimeout(()=>{
+    if(gameOver || gameMode !== "ai") return;
+
+    const index = getComputerMove();
+
     thinking = false;
-    winningLine = [];
 
-    renderBoard();
+    if(index === null || index === undefined){
+      const result = getResult(board);
+      if(result) finishMatch(result);
+      return;
+    }
 
-    setMessage(
-      mode === "ai"
-        ? "بدأت مباراة جديدة. دورك الأول!"
-        : "بدأت مباراة جديدة. اللاعب الأول يبدأ."
+    board[index] = "O";
+
+    playTone("move");
+    vibrate(12);
+
+    const result = getResult(board);
+
+    if(result){
+      finishMatch(result);
+      return;
+    }
+
+    switchTurn();
+  },difficulty === "easy" ? 300 : 480);
+}
+
+/* =========================================
+   إنهاء المباراة وحفظ النتيجة
+========================================= */
+
+function finishMatch(result){
+  clearTimeout(computerTimer);
+
+  gameOver = true;
+  thinking = false;
+  winningLine = result.line || [];
+  lastResult = result.winner;
+
+  if(result.winner === "draw"){
+    setMatchMessage("تعادل! لم يتمكن أي لاعب من تكوين خط فائز.");
+    playTone("draw");
+    vibrate([25,45,25]);
+  }else if(gameMode === "local"){
+    setMatchMessage(
+      result.winner === "X"
+        ? "اللاعب الأول حقق الفوز!"
+        : "اللاعب الثاني حقق الفوز!"
     );
+
+    playTone("win");
+    vibrate([30,50,30]);
+  }else if(result.winner === "X"){
+    setMatchMessage("فوز رائع! لقد تغلبت على الكمبيوتر.");
+    playTone("win");
+    vibrate([35,50,35]);
+  }else{
+    setMatchMessage("الكمبيوتر فاز هذه المرة. حاول من جديد.");
+    playTone("lose");
+    vibrate([70,50,70]);
   }
 
-  function changeMode(nextMode){
-    mode = nextMode;
+  renderBoard();
 
-    document.querySelectorAll(".mode-btn").forEach(button=>{
-      button.classList.toggle(
-        "active",
-        button.dataset.mode === mode
-      );
+  if(gameMode === "ai"){
+    if(result.winner === "X") scores.wins++;
+    else if(result.winner === "O") scores.losses++;
+    else scores.draws++;
+
+    scores.total++;
+
+    history.unshift({
+      result:result.winner === "X" ? "win" : result.winner === "O" ? "loss" : "draw",
+      mode:"computer",
+      difficulty,
+      date:new Date().toISOString()
     });
 
-    difficultyWrap.classList.toggle("hidden",mode !== "ai");
+    history = history.slice(0,50);
+    saveData();
+  }else{
+    scores.total++;
 
-    modeNote.textContent = mode === "ai"
-      ? "أنت تلعب بعلامة X والكمبيوتر يلعب بعلامة O. اختر مستوى التحدي المناسب."
-      : "اللعب بالتناوب على نفس الجهاز. اللاعب الأول X واللاعب الثاني O.";
+    history.unshift({
+      result:result.winner === "draw" ? "draw" : "local",
+      winner:result.winner,
+      mode:"local",
+      date:new Date().toISOString()
+    });
 
-    resetGame();
+    history = history.slice(0,50);
+    saveData();
   }
 
-  cells.forEach(cell=>{
-    cell.addEventListener("click",()=>{
-      playCell(Number(cell.dataset.index));
-    });
+  setTimeout(()=>{
+    showResult(result);
+  },850);
+}
+
+function showResult(result){
+  const title = $("#resultTitle");
+  const description = $("#resultDescription");
+  const icon = $("#resultIcon");
+
+  if(result.winner === "draw"){
+    title.textContent = "تعادل!";
+    description.textContent = "مباراة متوازنة. جرّب مواجهة جديدة.";
+  }else if(gameMode === "local"){
+    title.textContent = result.winner === "X" ? "فوز اللاعب الأول" : "فوز اللاعب الثاني";
+    description.textContent = "انتهت المواجهة بفوز أحد اللاعبين.";
+  }else if(result.winner === "X"){
+    title.textContent = "أحسنت! فزت";
+    description.textContent = "لقد نجحت في التغلب على الكمبيوتر.";
+  }else{
+    title.textContent = "انتهت المباراة";
+    description.textContent = "هذه الجولة للكمبيوتر. يمكنك المحاولة مرة أخرى.";
+  }
+
+  icon.innerHTML = result.winner === "draw"
+    ? '<svg viewBox="0 0 24 24" fill="none" stroke="#ffd27a" stroke-width="1.8" stroke-linecap="round"><path d="M7 12h10"/><circle cx="12" cy="12" r="10"/></svg>'
+    : result.winner === "X" && gameMode === "ai"
+      ? '<svg viewBox="0 0 24 24" fill="none" stroke="#4de0ad" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 12l3 3 7-7"/><circle cx="12" cy="12" r="10"/></svg>'
+      : '<svg viewBox="0 0 24 24" fill="none" stroke="#b8a5ff" stroke-width="1.8" stroke-linecap="round"><path d="M7 7l10 10M17 7L7 17"/><circle cx="12" cy="12" r="10"/></svg>';
+
+  $("#resultWins").textContent = scores.wins;
+  $("#resultLosses").textContent = scores.losses;
+  $("#resultDraws").textContent = scores.draws;
+
+  showScreen("resultScreen");
+}
+
+/* =========================================
+   إعادة المباراة والخروج
+========================================= */
+
+function requestRestart(){
+  if(settings.confirmRestart && board.some(Boolean) && !gameOver){
+    const accepted = confirm("هل تريد إنهاء المباراة الحالية وبدء مباراة جديدة؟");
+    if(!accepted) return;
+  }
+
+  startNewMatch();
+}
+
+$("#restartMatch").addEventListener("click",requestRestart);
+$("#matchNewGame").addEventListener("click",requestRestart);
+$("#playAgain").addEventListener("click",startNewMatch);
+
+$("#exitMatch").addEventListener("click",()=>{
+  if(!gameOver && board.some(Boolean)){
+    const accepted = confirm("هل تريد الخروج من المباراة الحالية؟ لن يتم تسجيل نتيجة غير مكتملة.");
+    if(!accepted) return;
+  }
+
+  clearTimeout(computerTimer);
+  showScreen("homeScreen");
+});
+
+$("#matchHome").addEventListener("click",()=>{
+  if(!gameOver && board.some(Boolean)){
+    const accepted = confirm("هل تريد العودة للقائمة وإنهاء المباراة الحالية؟");
+    if(!accepted) return;
+  }
+
+  clearTimeout(computerTimer);
+  showScreen("homeScreen");
+});
+
+$("#resultHome").addEventListener("click",()=>showScreen("homeScreen"));
+$("#resultStats").addEventListener("click",()=>showScreen("statsScreen"));
+
+/* =========================================
+   الإحصائيات وسجل المباريات
+========================================= */
+
+function renderStats(){
+  $("#statWins").textContent = scores.wins;
+  $("#statLosses").textContent = scores.losses;
+  $("#statDraws").textContent = scores.draws;
+  $("#statTotal").textContent = scores.total;
+
+  const list = $("#historyList");
+
+  if(!history.length){
+    list.innerHTML = '<div class="empty-history">لا توجد مباريات مسجلة حتى الآن.</div>';
+    return;
+  }
+
+  list.innerHTML = history.slice(0,30).map(item=>{
+    let label = "مباراة";
+    let className = "draw";
+
+    if(item.result === "win"){
+      label = "فوز";
+      className = "win";
+    }else if(item.result === "loss"){
+      label = "خسارة";
+      className = "loss";
+    }else if(item.result === "local"){
+      label = item.winner === "X" ? "فوز اللاعب الأول" : "فوز اللاعب الثاني";
+      className = "win";
+    }else{
+      label = "تعادل";
+      className = "draw";
+    }
+
+    const modeLabel = item.mode === "local"
+      ? "لاعبان محليًا"
+      : "ضد الكمبيوتر — " + difficultyLabel(item.difficulty);
+
+    const date = new Date(item.date);
+    const dateLabel = Number.isNaN(date.getTime())
+      ? ""
+      : date.toLocaleDateString("ar-EG",{day:"numeric",month:"short",year:"numeric"});
+
+    return `
+      <div class="history-item">
+        <div>
+          <strong>${label}</strong>
+          <small>${modeLabel} · ${dateLabel}</small>
+        </div>
+        <span class="history-result ${className}">${label}</span>
+      </div>
+    `;
+  }).join("");
+}
+
+function difficultyLabel(value){
+  return ({
+    easy:"سهل",
+    medium:"متوسط",
+    hard:"صعب",
+    expert:"محترف"
+  })[value] || "متوسط";
+}
+
+$("#clearHistory").addEventListener("click",()=>{
+  const accepted = confirm("هل تريد مسح سجل المباريات والإحصائيات نهائيًا من هذا الجهاز؟");
+  if(!accepted) return;
+
+  scores = {
+    wins:0,
+    losses:0,
+    draws:0,
+    total:0
+  };
+
+  history = [];
+  saveData();
+  renderStats();
+  toast("تم مسح السجل والإحصائيات.");
+});
+
+/* =========================================
+   الإعدادات
+========================================= */
+
+function renderToggle(button,value){
+  button.classList.toggle("on",Boolean(value));
+  button.setAttribute("aria-checked",String(Boolean(value)));
+}
+
+function renderSettings(){
+  renderToggle($("#soundToggle"),settings.sound);
+  renderToggle($("#vibrationToggle"),settings.vibration);
+  renderToggle($("#confirmToggle"),settings.confirmRestart);
+
+  $("#soundQuick").textContent = settings.sound ? "الصوت: تشغيل" : "الصوت: إيقاف";
+}
+
+function bindToggle(id,key){
+  $(id).addEventListener("click",()=>{
+    settings[key] = !settings[key];
+    saveData();
+    renderSettings();
+    renderToggle($(id),settings[key]);
   });
+}
 
-  document.querySelectorAll(".mode-btn").forEach(button=>{
-    button.addEventListener("click",()=>{
-      if(mode === button.dataset.mode) return;
-      changeMode(button.dataset.mode);
-    });
-  });
+bindToggle("#soundToggle","sound");
+bindToggle("#vibrationToggle","vibration");
+bindToggle("#confirmToggle","confirmRestart");
 
-  document.getElementById("newGame").addEventListener("click",()=>{
-    resetGame();
-  });
+$("#soundQuick").addEventListener("click",()=>{
+  settings.sound = !settings.sound;
+  saveData();
+  renderSettings();
+  toast(settings.sound ? "تم تشغيل الصوت." : "تم إيقاف الصوت.");
+});
 
-  document.getElementById("resetBoard").addEventListener("click",()=>{
-    resetGame();
-    showToast("تمت إعادة اللوحة.");
-  });
+$("#resetSettings").addEventListener("click",()=>{
+  settings = {
+    sound:true,
+    vibration:true,
+    confirmRestart:true
+  };
 
-  difficulty.addEventListener("change",()=>{
-    resetGame();
-    showToast("تم تغيير مستوى الصعوبة.");
-  });
+  saveData();
+  renderSettings();
+  toast("تمت استعادة الإعدادات.");
+});
 
-  document.getElementById("clearStats").addEventListener("click",()=>{
-    const confirmed = confirm("هل تريد تصفير نتائج إكس أو المحفوظة على هذا الجهاز؟");
-    if(!confirmed) return;
+/* =========================================
+   تهيئة التطبيق
+========================================= */
 
-    scores = {wins:0,losses:0,draws:0};
-    saveScores();
-    showToast("تم تصفير النتائج المحلية.");
-  });
-
-  renderScores();
-  resetGame();
+renderSettings();
+renderStats();
 
 })();
 </script>
