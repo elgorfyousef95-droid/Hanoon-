@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -153,6 +154,31 @@ svg{
 
 .header-btn:active{
   transform:scale(.95);
+}
+
+.notification-link{
+  position:relative;
+}
+
+.notification-badge{
+  position:absolute;
+  top:-5px;
+  right:-5px;
+  min-width:19px;
+  height:19px;
+  padding:0 5px;
+  border-radius:20px;
+  background:#ff526d;
+  color:#fff;
+  font:800 10px Cairo,sans-serif;
+  align-items:center;
+  justify-content:center;
+  border:2px solid #141426;
+  box-shadow:0 3px 10px #0008;
+}
+
+.notification-badge[hidden]{
+  display:none!important;
 }
 
 .my-avatar{
@@ -864,6 +890,13 @@ svg{
         </svg>
       </a>
 
+      <a class="header-btn notification-link" href="notifications.html" aria-label="الإشعارات">
+        <svg viewBox="0 0 24 24">
+          <path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9ZM10 21h4"/>
+        </svg>
+        <span class="notification-badge" data-notification-count hidden></span>
+      </a>
+
       <a class="my-avatar" href="profile.html" id="myAvatar" aria-label="حسابي">
         <svg viewBox="0 0 24 24">
           <circle cx="12" cy="8" r="3.5"/>
@@ -980,7 +1013,7 @@ svg{
     <svg viewBox="0 0 24 24">
       <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
       <circle cx="9" cy="7" r="4"/>
-      <path d="M20 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+      <path d="M20 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 0 0 7.75"/>
     </svg>
     الأعضاء
   </a>
@@ -1351,6 +1384,32 @@ db.auth.onAuthStateChange((event,session)=>{
 
 /* بدء الصفحة */
 loadMembers();
+</script>
+
+<!-- ربط صفحة الأعضاء بنظام الإشعارات المركزي -->
+<script type="module">
+import {
+  initializeNotificationCore,
+  updateNotificationBadge
+} from "./notification-core.js";
+
+const badge = document.querySelector("[data-notification-count]");
+
+async function refreshNotificationBadge(){
+  const count = await updateNotificationBadge();
+
+  if(badge){
+    badge.textContent = count > 99 ? "99+" : String(count);
+    badge.hidden = count === 0;
+  }
+}
+
+try{
+  await initializeNotificationCore(refreshNotificationBadge);
+  await refreshNotificationBadge();
+}catch(error){
+  console.error("HANOON members notifications:",error);
+}
 </script>
 
 </body>
