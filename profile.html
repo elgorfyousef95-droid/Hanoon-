@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -176,6 +177,33 @@ a{color:inherit;text-decoration:none}
 }
 
 .top-btn:hover{background:#ffffff13}
+
+/* Notification badge */
+.notification-link{
+  position:relative;
+}
+
+.notification-badge{
+  position:absolute;
+  top:-5px;
+  right:-5px;
+  min-width:19px;
+  height:19px;
+  padding:0 5px;
+  border-radius:20px;
+  background:#ff526d;
+  color:#fff;
+  font:800 10px Cairo,sans-serif;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border:2px solid #0c1827;
+  box-shadow:0 3px 10px #0008;
+}
+
+.notification-badge[hidden]{
+  display:none!important;
+}
 
 .page{
   width:min(1160px,94%);
@@ -1097,10 +1125,7 @@ a{color:inherit;text-decoration:none}
 
   .avatar{border-radius:31px}
 
-  .identity{
-    min-width:0;
-    padding:0;
-  }
+  .identity{min-width:0;padding:0}
 
   .name{font-size:23px}
   .username{font-size:12px}
@@ -1187,6 +1212,13 @@ a{color:inherit;text-decoration:none}
       <svg viewBox="0 0 24 24">
         <path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/>
       </svg>
+    </a>
+
+    <a class="top-btn notification-link" href="notifications.html" aria-label="الإشعارات">
+      <svg viewBox="0 0 24 24">
+        <path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9ZM10 21h4"/>
+      </svg>
+      <span class="notification-badge" data-notification-count hidden></span>
     </a>
 
     <button class="top-btn" id="shareButton" aria-label="مشاركة">
@@ -1317,7 +1349,6 @@ a{color:inherit;text-decoration:none}
             <path d="m8.5 12 2.3 2.3 4.8-5"/>
           </svg>
         </div>
-
         <div>
           <div class="membership-label">رقم العضوية الخاص بك</div>
           <div class="membership-code" id="memberCode">—</div>
@@ -1579,6 +1610,10 @@ a{color:inherit;text-decoration:none}
 
 <script type="module">
 import { supabase } from "./supabase.js";
+import {
+  initializeNotificationCore,
+  updateNotificationBadge
+} from "./notification-core.js";
 
 const $ = id => document.getElementById(id);
 
@@ -1957,7 +1992,15 @@ loadProfile().catch(error=>{
     "تعذر تجهيز صفحة حسابك. حاول إعادة تحميل الصفحة."
   );
 });
+
+/* تشغيل نظام الإشعارات المركزي */
+try{
+  await initializeNotificationCore(updateNotificationBadge);
+  await updateNotificationBadge();
+}catch(error){
+  console.error("HANOON profile notifications:",error);
+}
 </script>
 
 </body>
-  </html>
+</html>
