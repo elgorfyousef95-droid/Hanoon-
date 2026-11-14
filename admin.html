@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -122,6 +121,20 @@ svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke
 .detail-item small{display:block;color:#b7abc9;font-size:9px}
 .detail-item strong{display:block;margin-top:5px;font-size:10px;overflow-wrap:anywhere;white-space:pre-wrap}
 .detail-video{width:100%;max-height:220px;margin-top:12px;border-radius:13px;background:#000}
+
+.message-compose{position:fixed;inset:0;z-index:320;display:flex;align-items:center;justify-content:center;padding:16px;background:#05040bdc;backdrop-filter:blur(12px)}
+.message-compose[hidden]{display:none}
+.message-compose-card{width:min(460px,100%);padding:20px;border:1px solid #b18aff66;border-radius:20px;background:#171126;box-shadow:0 25px 80px #000b}
+.message-compose-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}
+.message-compose-head h3{margin:0;font-size:15px}
+.message-compose-target{margin:0 0 12px;color:#c8bdd8;font-size:11px;line-height:1.8}
+.message-compose textarea{width:100%;min-height:140px;resize:vertical;padding:12px;border:1px solid #ffffff25;border-radius:12px;outline:none;background:#090711;color:var(--text);font:inherit;font-size:12px;line-height:1.9}
+.message-compose textarea:focus{border-color:#b18affaa}
+.message-compose-actions{display:flex;gap:9px;margin-top:13px}
+.message-compose-actions button{flex:1}
+.member-actions{display:flex;gap:7px;flex-shrink:0}
+.member-message{min-height:36px;padding:0 11px;border:1px solid #53d6a255;border-radius:10px;background:#53d6a218;color:#a9f2d2;font-size:10px;font-weight:900;flex-shrink:0}
+@media(max-width:520px){.member-actions{width:100%;margin-right:59px}.member-actions button{flex:1}}
 .toast{position:fixed;z-index:250;bottom:18px;left:50%;transform:translate(-50%,20px);opacity:0;pointer-events:none;padding:11px 17px;border:1px solid var(--line);border-radius:12px;background:#1b1730;color:white;font-size:11px;font-weight:800;transition:.25s;max-width:90%;text-align:center}
 .toast.show{opacity:1;transform:translate(-50%,0)}
 .toast.error{border-color:#ff718855;color:#ffb0bd}
@@ -238,6 +251,21 @@ svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke
   </div>
 </div>
 
+<div class="message-compose" id="adminMessageDialog" hidden>
+  <div class="message-compose-card">
+    <div class="message-compose-head">
+      <h3>مراسلة عضو من حساب الإدارة</h3>
+      <button class="detail-close" id="closeAdminMessage" type="button" aria-label="إغلاق">×</button>
+    </div>
+    <p class="message-compose-target" id="adminMessageTarget">سيتم إرسال الرسالة باسم حساب الإدارة الموثّق.</p>
+    <textarea id="adminMessageBody" maxlength="5000" placeholder="اكتب رسالتك للعضو..." rows="5"></textarea>
+    <div class="message-compose-actions">
+      <button class="secondary-btn" id="cancelAdminMessage" type="button">إلغاء</button>
+      <button class="primary-btn" id="sendAdminMessage" type="button">إرسال الرسالة</button>
+    </div>
+  </div>
+</div>
+
 <div class="toast" id="toast" role="status"></div>
 
 <div class="dialog-backdrop" id="confirmDialog" hidden>
@@ -272,6 +300,7 @@ let membersLoaded = false;
 let historyStack = [];
 let currentView = "dashboard";
 let pendingDialogAction = null;
+let messageTarget = null;
 
 function toast(message,error=false){
   const el=$("toast");
@@ -557,6 +586,77 @@ $("memberDetail").addEventListener("click",event=>{
   if(event.target===$("memberDetail"))$("memberDetail").hidden=true;
 });
 
+
+/* مراسلة الأعضاء من هوية المدير الموثّق */
+function openAdminMessage(member){
+  if(!member || !member.member_code){
+    toast("لا يوجد كود عضوية صالح لهذا العضو.",true);
+    return;
+  }
+  messageTarget=member;
+  $("adminMessageTarget").textContent =
+    "إلى: "+(member.full_name||member.nickname||member.username||"عضو هَنون")+
+    " · "+member.member_code+
+    " — ستظهر الرسالة باسم حسابك الموثّق.";
+  $("adminMessageBody").value="";
+  $("adminMessageDialog").hidden=false;
+  setTimeout(()=>$("adminMessageBody").focus(),30);
+}
+
+function closeAdminMessage(){
+  $("adminMessageDialog").hidden=true;
+  messageTarget=null;
+}
+
+$("closeAdminMessage").addEventListener("click",closeAdminMessage);
+$("cancelAdminMessage").addEventListener("click",closeAdminMessage);
+$("adminMessageDialog").addEventListener("click",event=>{
+  if(event.target===$("adminMessageDialog"))closeAdminMessage();
+});
+
+$("sendAdminMessage").addEventListener("click",async()=>{
+  if(!messageTarget)return;
+
+  const body=$("adminMessageBody").value.trim();
+
+  if(!body){
+    toast("اكتب نص الرسالة أولًا.",true);
+    $("adminMessageBody").focus();
+    return;
+  }
+
+  if(!sessionToken){
+    toast("جلسة الإدارة انتهت. سجّل الدخول مرة أخرى.",true);
+    return;
+  }
+
+  const button=$("sendAdminMessage");
+  button.disabled=true;
+  button.textContent="جارٍ إرسال الرسالة...";
+
+  try{
+    const {data,error}=await supabase.rpc("admin_send_direct_message",{
+      p_session_token:sessionToken,
+      p_member_code:messageTarget.member_code,
+      p_body:body
+    });
+
+    if(error)throw new Error(error.message||"تعذر إرسال الرسالة.");
+    if(!data || !data.ok)throw new Error((data && data.error)||"لم يتم تأكيد إرسال الرسالة.");
+
+    closeAdminMessage();
+    toast("تم إرسال الرسالة وإنشاء المحادثة مع العضو.");
+
+  }catch(error){
+    console.error("Admin direct message:",error);
+    toast(error.message||"حدث خطأ أثناء إرسال الرسالة.",true);
+
+  }finally{
+    button.disabled=false;
+    button.textContent="إرسال الرسالة";
+  }
+});
+
 function renderMembers(members){
   const container=$("memberResults");
   container.replaceChildren();
@@ -592,12 +692,14 @@ function renderMembers(members){
     status.className="member-tag";
     status.textContent=member.profile_completed?"الملف مكتمل":"الملف غير مكتمل";
     meta.appendChild(status);
+
     if(member.role==="admin"){
       const tag=document.createElement("span");
       tag.className="member-tag";
       tag.textContent="مدير";
       meta.appendChild(tag);
     }
+
     info.append(name,details,meta);
 
     const open=document.createElement("button");
@@ -606,7 +708,17 @@ function renderMembers(members){
     open.textContent="عرض التفاصيل";
     open.addEventListener("click",()=>showMemberDetails(member));
 
-    row.append(avatar,info,open);
+    const message=document.createElement("button");
+    message.type="button";
+    message.className="member-message";
+    message.textContent="مراسلة";
+    message.addEventListener("click",()=>openAdminMessage(member));
+
+    const actions=document.createElement("div");
+    actions.className="member-actions";
+    actions.append(open,message);
+
+    row.append(avatar,info,actions);
     container.appendChild(row);
   });
 }
@@ -638,6 +750,7 @@ async function searchMembers(reset=true){
     renderMembers(Array.isArray(data.members)?data.members:[]);
     $("memberCount").textContent=memberTotal.toLocaleString("ar-EG")+" عضو";
     updateMemberPagination();
+
   }catch(error){
     $("memberResults").innerHTML="";
     const empty=document.createElement("div");
@@ -646,6 +759,7 @@ async function searchMembers(reset=true){
     $("memberResults").appendChild(empty);
     $("memberCount").textContent="تعذر تحميل القائمة";
     toast(error.message||"تعذر تحميل الأعضاء.",true);
+
   }finally{
     button.disabled=false;
     button.textContent="بحث";
@@ -656,15 +770,18 @@ $("memberSearchForm").addEventListener("submit",event=>{
   event.preventDefault();
   searchMembers(true);
 });
+
 $("memberRefreshButton").addEventListener("click",()=>{
   membersLoaded=false;
   searchMembers(true);
 });
+
 $("memberPrev").addEventListener("click",()=>{
   if(memberOffset<=0)return;
   memberOffset=Math.max(0,memberOffset-PAGE_SIZE);
   searchMembers(false);
 });
+
 $("memberNext").addEventListener("click",()=>{
   if(memberOffset+PAGE_SIZE>=memberTotal)return;
   memberOffset+=PAGE_SIZE;
@@ -678,6 +795,7 @@ function updatePreview(){
   const routes={"":"صفحة الإشعارات","home.html":"الرئيسية","members.html":"الأعضاء","games.html":"الألعاب","notifications.html":"الإشعارات","profile.html":"الملف الشخصي"};
   $("previewDestination").textContent=routes[$("targetRoute").value]||"صفحة الإشعارات";
 }
+
 ["notificationTitle","notificationBody","targetRoute"].forEach(id=>{
   $(id).addEventListener("input",updatePreview);
   $(id).addEventListener("change",updatePreview);
@@ -686,31 +804,62 @@ function updatePreview(){
 /* إرسال الإشعارات داخل الموقع */
 $("notificationForm").addEventListener("submit",async event=>{
   event.preventDefault();
+
   const audience=$("audience").value;
   const memberCode=$("memberCode").value.trim();
   const title=$("notificationTitle").value.trim();
   const body=$("notificationBody").value.trim();
   const targetRoute=$("targetRoute").value;
 
-  if(!title||!body){toast("اكتب عنوان الإشعار ونصه أولًا.",true);return;}
-  if(audience==="member"&&!memberCode){toast("اكتب كود العضو المستهدف.",true);$("memberCode").focus();return;}
+  if(!title||!body){
+    toast("اكتب عنوان الإشعار ونصه أولًا.",true);
+    return;
+  }
 
-  const names={all:"جميع الأعضاء",completed:"الأعضاء أصحاب الملفات المكتملة",member:"العضو المحدد"};
-  const yes=await askConfirmation("تأكيد إرسال الإشعار","هل تريد إرسال الإشعار إلى "+names[audience]+"؟","إرسال الآن");
+  if(audience==="member"&&!memberCode){
+    toast("اكتب كود العضو المستهدف.",true);
+    $("memberCode").focus();
+    return;
+  }
+
+  const names={
+    all:"جميع الأعضاء",
+    completed:"الأعضاء أصحاب الملفات المكتملة",
+    member:"العضو المحدد"
+  };
+
+  const yes=await askConfirmation(
+    "تأكيد إرسال الإشعار",
+    "هل تريد إرسال الإشعار إلى "+names[audience]+"؟",
+    "إرسال الآن"
+  );
+
   if(!yes)return;
 
   const button=$("sendButton");
   button.disabled=true;
   button.textContent="جارٍ إرسال الإشعار...";
+
   try{
-    const data=await adminRequest({action:"send",audience,memberCode,title,body,targetRoute});
+    const data=await adminRequest({
+      action:"send",
+      audience,
+      memberCode,
+      title,
+      body,
+      targetRoute
+    });
+
     if(!data?.ok)throw new Error(data?.error||"تعذر إرسال الإشعار.");
+
     toast("تم حفظ الإشعار وإرساله إلى "+Number(data.sent||0).toLocaleString("en-US")+" عضو.");
     $("notificationForm").reset();
     $("memberCodeField").hidden=true;
     updatePreview();
+
   }catch(error){
     toast(error.message||"حدث خطأ أثناء إرسال الإشعار.",true);
+
   }finally{
     button.disabled=false;
     button.textContent="إرسال الإشعار";
@@ -719,16 +868,19 @@ $("notificationForm").addEventListener("submit",async event=>{
 
 /* استعادة الجلسة المحفوظة دون إعادة كلمة السر */
 const savedToken=localStorage.getItem(SESSION_KEY)||"";
+
 if(savedToken){
   try{
     await validateSession(savedToken);
     showDashboard();
     updatePreview();
+
   }catch(error){
     localStorage.removeItem(SESSION_KEY);
     sessionToken="";
     showAccess("انتهت جلسة الإدارة","اكتب كلمة السر لإنشاء جلسة جديدة.");
   }
+
 }else{
   showAccess("الدخول إلى لوحة الإدارة","اكتب كلمة سر الإدارة للمتابعة.");
 }
