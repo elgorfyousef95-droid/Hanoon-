@@ -1,0 +1,1173 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#090b16">
+  <title>الملف الشخصي | HANOON WORLD</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    :root {
+      --bg: #090b16;
+      --panel: #121626;
+      --panel2: #191f33;
+      --panel3: #202842;
+      --text: #f6f5ff;
+      --muted: #969db5;
+      --purple: #9878ff;
+      --purple2: #7658e9;
+      --cyan: #55d7e8;
+      --gold: #f1c779;
+      --line: rgba(255,255,255,.085);
+      --danger: #ff718a;
+      --radius: 23px;
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      margin: 0;
+      min-height: 100%;
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Cairo", sans-serif;
+      overscroll-behavior: none;
+    }
+
+    body {
+      min-height: 100vh;
+      padding-bottom: 35px;
+      background:
+        radial-gradient(ellipse at 85% 0%, rgba(117,85,225,.19), transparent 35%),
+        radial-gradient(ellipse at 5% 40%, rgba(46,173,195,.10), transparent 32%),
+        linear-gradient(155deg, #0b0e1b 0%, #090b16 55%, #101326 100%);
+    }
+
+    button, a {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    .page {
+      width: min(100%, 850px);
+      margin: auto;
+      padding: 0 17px 35px;
+    }
+
+    .topbar {
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+      z-index: 5;
+    }
+
+    .topbar-side {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+    }
+
+    .icon-btn {
+      width: 43px;
+      height: 43px;
+      border: 1px solid var(--line);
+      border-radius: 15px;
+      background: rgba(255,255,255,.055);
+      color: white;
+      display: grid;
+      place-items: center;
+      transition: .2s;
+    }
+
+    .icon-btn:active {
+      transform: scale(.94);
+      background: rgba(152,120,255,.2);
+    }
+
+    .icon-btn svg {
+      width: 20px;
+      height: 20px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 900;
+      letter-spacing: .4px;
+      font-size: 16px;
+    }
+
+    .brand-mark {
+      width: 34px;
+      height: 34px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(145deg, #b29aff, #7051df);
+      box-shadow: 0 5px 20px rgba(132,99,239,.3);
+    }
+
+    .brand-mark svg {
+      width: 20px;
+      height: 20px;
+      stroke: white;
+      fill: none;
+      stroke-width: 2;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      background: #151a2c;
+      box-shadow: 0 20px 60px rgba(0,0,0,.25);
+    }
+
+    .cover {
+      height: 260px;
+      position: relative;
+      overflow: hidden;
+      background:
+        linear-gradient(125deg, rgba(93,67,179,.55), rgba(25,102,133,.35)),
+        url("https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=1400&q=85") center/cover;
+    }
+
+    .cover::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(7,9,20,.04), rgba(9,11,22,.16) 45%, #151a2c 100%);
+    }
+
+    .cover-image {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: none;
+    }
+
+    .cover-image.visible {
+      display: block;
+    }
+
+    .cover-shade {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background: linear-gradient(180deg, transparent 35%, rgba(10,12,24,.75));
+      pointer-events: none;
+    }
+
+    .cover-label {
+      position: absolute;
+      z-index: 2;
+      top: 17px;
+      right: 17px;
+      padding: 7px 12px;
+      border-radius: 30px;
+      background: rgba(8,10,22,.48);
+      border: 1px solid rgba(255,255,255,.18);
+      backdrop-filter: blur(12px);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .profile-main {
+      position: relative;
+      padding: 0 24px 24px;
+      margin-top: -67px;
+      z-index: 3;
+    }
+
+    .profile-head {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .avatar-wrap {
+      width: 126px;
+      height: 126px;
+      border-radius: 36px;
+      padding: 5px;
+      background: linear-gradient(145deg, #d0baff, #7958ed 52%, #43d3d5);
+      box-shadow: 0 10px 30px rgba(0,0,0,.4);
+      flex-shrink: 0;
+    }
+
+    .avatar {
+      width: 100%;
+      height: 100%;
+      border-radius: 32px;
+      object-fit: cover;
+      background: #252b42;
+      border: 3px solid #151a2c;
+    }
+
+    .member-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 11px;
+      border-radius: 30px;
+      color: #e5d9ff;
+      background: rgba(145,111,255,.13);
+      border: 1px solid rgba(165,137,255,.25);
+      font-size: 11px;
+      font-weight: 800;
+      margin-bottom: 9px;
+    }
+
+    .member-badge svg {
+      width: 14px;
+      height: 14px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+    }
+
+    .profile-actions {
+      display: flex;
+      gap: 9px;
+      padding-bottom: 5px;
+    }
+
+    .action-btn {
+      height: 43px;
+      border-radius: 14px;
+      padding: 0 17px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.055);
+      color: white;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-weight: 800;
+      font-size: 12px;
+      transition: .2s;
+    }
+
+    .action-btn svg {
+      width: 17px;
+      height: 17px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .action-btn.primary {
+      background: linear-gradient(120deg, #9878ff, #7355df);
+      border-color: transparent;
+      box-shadow: 0 7px 20px rgba(126,91,231,.22);
+    }
+
+    .action-btn:active {
+      transform: scale(.96);
+    }
+
+    .identity {
+      margin-top: 18px;
+    }
+
+    .full-name {
+      font-size: 26px;
+      line-height: 1.5;
+      font-weight: 900;
+      margin: 0;
+      overflow-wrap: anywhere;
+    }
+
+    .username {
+      color: #a9a2ca;
+      direction: ltr;
+      text-align: right;
+      font-size: 13px;
+      font-weight: 700;
+      margin-top: 1px;
+    }
+
+    .bio {
+      color: #c5c8d8;
+      line-height: 2;
+      font-size: 13px;
+      margin: 14px 0 0;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+    }
+
+    .member-code {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      margin-top: 15px;
+      padding: 9px 12px;
+      border: 1px solid rgba(241,199,121,.2);
+      background: rgba(241,199,121,.075);
+      border-radius: 13px;
+      color: var(--gold);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .member-code span {
+      direction: ltr;
+      letter-spacing: 1px;
+    }
+
+    .member-code button {
+      border: 0;
+      background: transparent;
+      color: var(--gold);
+      display: grid;
+      place-items: center;
+      padding: 0;
+    }
+
+    .member-code svg {
+      width: 16px;
+      height: 16px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.8;
+    }
+
+    .section {
+      margin-top: 19px;
+      padding: 22px;
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      background: linear-gradient(145deg, rgba(25,31,51,.96), rgba(17,22,38,.96));
+      box-shadow: 0 12px 35px rgba(0,0,0,.13);
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 16px;
+      font-weight: 900;
+      margin: 0 0 17px;
+    }
+
+    .section-icon {
+      width: 35px;
+      height: 35px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      color: #c9b8ff;
+      background: rgba(152,120,255,.13);
+    }
+
+    .section-icon svg {
+      width: 18px;
+      height: 18px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap: 11px;
+    }
+
+    .info-item {
+      min-height: 78px;
+      border-radius: 16px;
+      padding: 13px;
+      background: rgba(255,255,255,.035);
+      border: 1px solid rgba(255,255,255,.055);
+    }
+
+    .info-label {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 700;
+      margin-bottom: 5px;
+    }
+
+    .info-value {
+      font-size: 13px;
+      font-weight: 800;
+      overflow-wrap: anywhere;
+    }
+
+    .tag-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+    }
+
+    .tag {
+      padding: 8px 13px;
+      border-radius: 30px;
+      background: rgba(152,120,255,.10);
+      border: 1px solid rgba(152,120,255,.18);
+      color: #d6caff;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .tag.cyan {
+      background: rgba(85,215,232,.08);
+      border-color: rgba(85,215,232,.18);
+      color: #a7edf4;
+    }
+
+    .empty-inline {
+      color: var(--muted);
+      font-size: 12px;
+      padding: 14px;
+      border-radius: 14px;
+      background: rgba(255,255,255,.025);
+      border: 1px dashed rgba(255,255,255,.1);
+      text-align: center;
+    }
+
+    .joined-card {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      padding: 14px;
+      border-radius: 16px;
+      background: rgba(255,255,255,.035);
+      border: 1px solid rgba(255,255,255,.055);
+    }
+
+    .joined-icon {
+      width: 43px;
+      height: 43px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      color: #f1d28f;
+      background: rgba(241,199,121,.11);
+    }
+
+    .joined-icon svg {
+      width: 21px;
+      height: 21px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.8;
+    }
+
+    .joined-label {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .joined-date {
+      font-size: 13px;
+      font-weight: 800;
+      margin-top: 3px;
+    }
+
+    .loading, .error-state {
+      min-height: 65vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 30px 20px;
+    }
+
+    .loader {
+      width: 48px;
+      height: 48px;
+      border: 3px solid rgba(255,255,255,.1);
+      border-top-color: var(--purple);
+      border-radius: 50%;
+      animation: spin .8s linear infinite;
+      margin-bottom: 18px;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .loading p, .error-state p {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .error-symbol {
+      width: 65px;
+      height: 65px;
+      border-radius: 22px;
+      background: rgba(255,113,138,.1);
+      color: var(--danger);
+      display: grid;
+      place-items: center;
+      margin-bottom: 15px;
+    }
+
+    .error-symbol svg {
+      width: 29px;
+      height: 29px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.8;
+    }
+
+    .error-state h2 {
+      font-size: 20px;
+      margin: 0;
+    }
+
+    .error-state button {
+      margin-top: 14px;
+    }
+
+    .footer-note {
+      text-align: center;
+      color: #777f98;
+      font-size: 10px;
+      padding: 25px 0 10px;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 25px;
+      left: 50%;
+      transform: translate(-50%, 20px);
+      opacity: 0;
+      pointer-events: none;
+      z-index: 20;
+      background: #252b42;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      padding: 11px 17px;
+      color: white;
+      font-size: 12px;
+      font-weight: 700;
+      box-shadow: 0 10px 30px rgba(0,0,0,.35);
+      transition: .25s;
+      white-space: nowrap;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
+
+    @media (max-width: 520px) {
+      .page {
+        padding-inline: 11px;
+      }
+
+      .topbar {
+        height: 64px;
+      }
+
+      .cover {
+        height: 205px;
+      }
+
+      .profile-main {
+        padding-inline: 16px;
+        margin-top: -55px;
+      }
+
+      .avatar-wrap {
+        width: 108px;
+        height: 108px;
+        border-radius: 31px;
+      }
+
+      .avatar {
+        border-radius: 27px;
+      }
+
+      .full-name {
+        font-size: 23px;
+      }
+
+      .profile-actions {
+        width: 100%;
+        padding-top: 13px;
+      }
+
+      .profile-actions .action-btn {
+        flex: 1;
+      }
+
+      .section {
+        padding: 17px;
+        border-radius: 20px;
+      }
+
+      .info-grid {
+        gap: 8px;
+      }
+
+      .info-item {
+        padding: 11px;
+      }
+    }
+
+    @media (max-width: 350px) {
+      .info-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .brand {
+        font-size: 13px;
+      }
+
+      .cover {
+        height: 175px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="page">
+
+    <header class="topbar">
+      <div class="topbar-side">
+        <button class="icon-btn" id="backButton" aria-label="رجوع">
+          <svg viewBox="0 0 24 24">
+            <path d="m15 18-6-6 6-6"/>
+            <path d="M9 12h11"/>
+          </svg>
+        </button>
+
+        <div class="brand">
+          <div class="brand-mark">
+            <svg viewBox="0 0 24 24">
+              <path d="M5 18V6l7 8 7-8v12"/>
+              <path d="M3 21h18"/>
+            </svg>
+          </div>
+          <span>HANOON WORLD</span>
+        </div>
+      </div>
+
+      <div class="topbar-side">
+        <button class="icon-btn" id="shareButton" aria-label="مشاركة الملف الشخصي">
+          <svg viewBox="0 0 24 24">
+            <circle cx="18" cy="5" r="3"/>
+            <circle cx="6" cy="12" r="3"/>
+            <circle cx="18" cy="19" r="3"/>
+            <path d="m8.7 10.7 6.6-4.4M8.7 13.3l6.6 4.4"/>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <div id="loadingState" class="loading">
+      <div class="loader"></div>
+      <strong>جاري تحميل الملف الشخصي</strong>
+      <p>لحظات ونفتح لك صفحة العضو</p>
+    </div>
+
+    <div id="errorState" class="error-state" hidden>
+      <div class="error-symbol">
+        <svg viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="9"/>
+          <path d="M12 8v5M12 16h.01"/>
+        </svg>
+      </div>
+      <h2 id="errorTitle">تعذر فتح الملف الشخصي</h2>
+      <p id="errorMessage">لم نتمكن من العثور على بيانات هذا العضو.</p>
+      <button class="action-btn primary" id="retryButton">إعادة المحاولة</button>
+      <button class="action-btn" id="membersButton">العودة إلى الأعضاء</button>
+    </div>
+
+    <div id="profileContent" hidden>
+
+      <section class="hero">
+
+        <div class="cover">
+          <img class="cover-image" id="coverImage" alt="غلاف الملف الشخصي">
+          <div class="cover-shade"></div>
+          <div class="cover-label">HANOON WORLD MEMBER</div>
+        </div>
+
+        <div class="profile-main">
+
+          <div class="profile-head">
+            <div class="avatar-wrap">
+              <img class="avatar" id="avatarImage" alt="الصورة الشخصية">
+            </div>
+
+            <div class="profile-actions">
+              <button class="action-btn" id="copyCodeButton">
+                <svg viewBox="0 0 24 24">
+                  <rect x="8" y="8" width="12" height="12" rx="2"/>
+                  <path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/>
+                </svg>
+                نسخ الكود
+              </button>
+              <button class="action-btn primary" id="shareProfileButton">
+                <svg viewBox="0 0 24 24">
+                  <circle cx="18" cy="5" r="3"/>
+                  <circle cx="6" cy="12" r="3"/>
+                  <circle cx="18" cy="19" r="3"/>
+                  <path d="m8.7 10.7 6.6-4.4M8.7 13.3l6.6 4.4"/>
+                </svg>
+                مشاركة
+              </button>
+            </div>
+          </div>
+
+          <div class="identity">
+            <div class="member-badge">
+              <svg viewBox="0 0 24 24">
+                <path d="m12 3 2.7 2 3.4.2.8 3.3 2 2.5-1.5 3.1.2 3.4-3.2 1.1-2.4 2.1-3.1-1.5-3.4.2-1.1-3.2-2.1-2.4 1.5-3.1-.2-3.4 3.2-1.1z"/>
+                <path d="m8.5 12 2.3 2.3 4.8-5"/>
+              </svg>
+              عضو في هنوون
+            </div>
+
+            <h1 class="full-name" id="fullName">—</h1>
+            <div class="username" id="username">—</div>
+            <p class="bio" id="bio" hidden></p>
+
+            <div class="member-code">
+              <span>MEMBER ID</span>
+              <span id="memberCode">—</span>
+              <button id="copyCodeSmall" aria-label="نسخ رقم العضوية">
+                <svg viewBox="0 0 24 24">
+                  <rect x="8" y="8" width="12" height="12" rx="2"/>
+                  <path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <section class="section">
+        <h2 class="section-title">
+          <span class="section-icon">
+            <svg viewBox="0 0 24 24">
+              <circle cx="12" cy="8" r="4"/>
+              <path d="M4 21a8 8 0 0 1 16 0"/>
+            </svg>
+          </span>
+          معلومات العضو
+        </h2>
+
+        <div class="info-grid">
+          <div class="info-item">
+            <div class="info-label">اسم المستخدم</div>
+            <div class="info-value" id="infoUsername">—</div>
+          </div>
+
+          <div class="info-item">
+            <div class="info-label">رقم العضوية</div>
+            <div class="info-value" id="infoCode">—</div>
+          </div>
+
+          <div class="info-item">
+            <div class="info-label">تاريخ الانضمام</div>
+            <div class="info-value" id="infoJoined">—</div>
+          </div>
+
+          <div class="info-item">
+            <div class="info-label">حالة الملف</div>
+            <div class="info-value">ملف عضو مكتمل</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2 class="section-title">
+          <span class="section-icon">
+            <svg viewBox="0 0 24 24">
+              <path d="M12 3v18M3 12h18"/>
+              <circle cx="12" cy="12" r="9"/>
+            </svg>
+          </span>
+          الاهتمامات والهوايات
+        </h2>
+
+        <div class="tag-list" id="hobbiesList"></div>
+      </section>
+
+      <section class="section">
+        <h2 class="section-title">
+          <span class="section-icon">
+            <svg viewBox="0 0 24 24">
+              <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v17H6.5A2.5 2.5 0 0 1 4 17.5z"/>
+              <path d="M4 5.5v12M8 7h8M8 11h7"/>
+            </svg>
+          </span>
+          اهتمامات القراءة
+        </h2>
+
+        <div class="tag-list" id="readingList"></div>
+      </section>
+
+      <section class="section">
+        <h2 class="section-title">
+          <span class="section-icon">
+            <svg viewBox="0 0 24 24">
+              <rect x="3" y="4" width="18" height="17" rx="3"/>
+              <path d="M16 2v4M8 2v4M3 10h18"/>
+            </svg>
+          </span>
+          الانضمام إلى هنوون
+        </h2>
+
+        <div class="joined-card">
+          <div class="joined-icon">
+            <svg viewBox="0 0 24 24">
+              <path d="M12 3v18M3 12h18"/>
+              <circle cx="12" cy="12" r="9"/>
+            </svg>
+          </div>
+          <div>
+            <div class="joined-label">عضو منذ</div>
+            <div class="joined-date" id="joinedDate">—</div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+    <div class="footer-note">HANOON WORLD · عالم يجمعنا</div>
+
+  </main>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    const SUPABASE_URL = "https://gjtgvczvclfwvlvcquxh.supabase.co";
+    const SUPABASE_KEY = "sb_publishable_4DVTUZ-xTlqU2GpFvpb7lw_g-Kxomd4";
+
+    const db = window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_KEY
+    );
+
+    const state = {
+      member: null,
+      session: null,
+      profileUrl: window.location.href
+    };
+
+    const $ = id => document.getElementById(id);
+
+    function showToast(message) {
+      const toast = $("toast");
+      toast.textContent = message;
+      toast.classList.add("show");
+
+      clearTimeout(showToast.timer);
+      showToast.timer = setTimeout(() => {
+        toast.classList.remove("show");
+      }, 2400);
+    }
+
+    function showError(title, message) {
+      $("loadingState").hidden = true;
+      $("profileContent").hidden = true;
+      $("errorState").hidden = false;
+
+      $("errorTitle").textContent = title;
+      $("errorMessage").textContent = message;
+    }
+
+    function formatDate(value) {
+      if (!value) return "غير متاح";
+
+      const date = new Date(value);
+      if (Number.isNaN(date.getTime())) return "غير متاح";
+
+      return new Intl.DateTimeFormat("ar-EG", {
+        year: "numeric",
+        month: "long",
+        day: "numeric"
+      }).format(date);
+    }
+
+    function getStorageUrl(path) {
+      if (!path) return null;
+
+      if (/^https?:\/\//i.test(path)) {
+        return path;
+      }
+
+      const cleanPath = path.replace(/^\/+/, "");
+      const bucketPath = cleanPath.startsWith("avatars/")
+        ? cleanPath.substring("avatars/".length)
+        : cleanPath;
+
+      return db.storage
+        .from("avatars")
+        .getPublicUrl(bucketPath).data.publicUrl;
+    }
+
+    function setImage(element, path, fallback) {
+      const url = getStorageUrl(path);
+
+      if (!url) {
+        element.src = fallback;
+        return;
+      }
+
+      element.onerror = () => {
+        element.onerror = null;
+        element.src = fallback;
+      };
+
+      element.src = url;
+    }
+
+    function renderTags(container, values, type) {
+      container.replaceChildren();
+
+      const items = Array.isArray(values)
+        ? values.filter(item => typeof item === "string" && item.trim())
+        : [];
+
+      if (!items.length) {
+        const empty = document.createElement("div");
+        empty.className = "empty-inline";
+        empty.textContent = "لم يضف العضو بيانات في هذا القسم بعد.";
+        container.appendChild(empty);
+        return;
+      }
+
+      items.forEach(value => {
+        const tag = document.createElement("span");
+        tag.className = type === "cyan" ? "tag cyan" : "tag";
+        tag.textContent = value;
+        container.appendChild(tag);
+      });
+    }
+
+    function renderProfile(member) {
+      state.member = member;
+
+      $("fullName").textContent = member.full_name || "عضو هنوون";
+      $("username").textContent = member.username
+        ? "@" + member.username
+        : "اسم المستخدم غير متاح";
+
+      $("memberCode").textContent = member.member_code || "—";
+      $("infoUsername").textContent = member.username
+        ? "@" + member.username
+        : "غير متاح";
+
+      $("infoCode").textContent = member.member_code || "غير متاح";
+
+      const joined = formatDate(member.created_at);
+      $("infoJoined").textContent = joined;
+      $("joinedDate").textContent = joined;
+
+      const bio = (member.bio || "").trim();
+
+      if (bio) {
+        $("bio").textContent = bio;
+        $("bio").hidden = false;
+      } else {
+        $("bio").hidden = true;
+      }
+
+      setImage(
+        $("avatarImage"),
+        member.avatar_path,
+        "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80"
+      );
+
+      const cover = $("coverImage");
+
+      if (member.cover_path) {
+        const coverUrl = getStorageUrl(member.cover_path);
+
+        if (coverUrl) {
+          cover.onerror = () => {
+            cover.onerror = null;
+            cover.classList.remove("visible");
+          };
+
+          cover.onload = () => cover.classList.add("visible");
+          cover.src = coverUrl;
+        }
+      }
+
+      renderTags($("hobbiesList"), member.hobbies, "normal");
+      renderTags($("readingList"), member.reading_interests, "cyan");
+
+      $("loadingState").hidden = true;
+      $("errorState").hidden = true;
+      $("profileContent").hidden = false;
+
+      document.title =
+        (member.full_name || "الملف الشخصي") + " | HANOON WORLD";
+    }
+
+    async function loadProfile() {
+      $("loadingState").hidden = false;
+      $("errorState").hidden = true;
+      $("profileContent").hidden = true;
+
+      const memberId = new URLSearchParams(
+        window.location.search
+      ).get("id");
+
+      if (!memberId) {
+        showError(
+          "رابط الملف غير مكتمل",
+          "لم يتم تحديد العضو المطلوب عرضه."
+        );
+        return;
+      }
+
+      const { data, error } = await db
+        .from("member_directory")
+        .select("id,username,member_code,full_name,avatar_path,bio,hobbies,reading_interests,created_at")
+        .eq("id", memberId)
+        .maybeSingle();
+
+      if (error) {
+        console.error("Member profile error:", error);
+
+        showError(
+          "تعذر تحميل بيانات العضو",
+          "حدث خطأ أثناء الاتصال بقاعدة البيانات. حاول مرة أخرى."
+        );
+        return;
+      }
+
+      if (!data) {
+        showError(
+          "العضو غير موجود",
+          "قد يكون الملف الشخصي غير متاح أو لم يعد هذا العضو ضمن دليل الأعضاء."
+        );
+        return;
+      }
+
+      renderProfile(data);
+    }
+
+    async function copyMemberCode() {
+      const code = state.member?.member_code;
+
+      if (!code) {
+        showToast("رقم العضوية غير متاح");
+        return;
+      }
+
+      try {
+        await navigator.clipboard.writeText(code);
+        showToast("تم نسخ رقم العضوية");
+      } catch (error) {
+        const input = document.createElement("textarea");
+        input.value = code;
+        document.body.appendChild(input);
+        input.select();
+
+        const copied = document.execCommand("copy");
+        input.remove();
+
+        showToast(copied ? "تم نسخ رقم العضوية" : "تعذر النسخ");
+      }
+    }
+
+    async function shareProfile() {
+      const title = state.member?.full_name || "ملف عضو هنوون";
+
+      try {
+        if (navigator.share) {
+          await navigator.share({
+            title: title + " | HANOON WORLD",
+            text: "شاهد الملف الشخصي على HANOON WORLD",
+            url: window.location.href
+          });
+        } else {
+          await navigator.clipboard.writeText(window.location.href);
+          showToast("تم نسخ رابط الملف الشخصي");
+        }
+      } catch (error) {
+        if (error.name !== "AbortError") {
+          showToast("تعذرت مشاركة الرابط");
+        }
+      }
+    }
+
+    $("backButton").addEventListener("click", () => {
+      if (window.history.length > 1) {
+        window.history.back();
+      } else {
+        window.location.href = "members.html";
+      }
+    });
+
+    $("membersButton").addEventListener("click", () => {
+      window.location.href = "members.html";
+    });
+
+    $("retryButton").addEventListener("click", loadProfile);
+
+    $("copyCodeButton").addEventListener("click", copyMemberCode);
+    $("copyCodeSmall").addEventListener("click", copyMemberCode);
+
+    $("shareButton").addEventListener("click", shareProfile);
+    $("shareProfileButton").addEventListener("click", shareProfile);
+
+    async function initialize() {
+      const { data, error } = await db.auth.getSession();
+
+      if (error || !data.session) {
+        window.location.href = "index.html";
+        return;
+      }
+
+      state.session = data.session;
+      await loadProfile();
+    }
+
+    db.auth.onAuthStateChange((event, session) => {
+      if (event === "SIGNED_OUT" || !session) {
+        window.location.href = "index.html";
+      }
+    });
+
+    initialize();
+  </script>
+
+</body>
+</html>
