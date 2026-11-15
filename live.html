@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="theme-color" content="#10101a">
+<title>HANOON WORLD — البث العشوائي</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg:#0d0d16;
+  --panel:#171725;
+  --panel2:#202033;
+  --gold:#e7c58b;
+  --purple:#9a80ff;
+  --green:#48d6a2;
+  --red:#ff637b;
+  --text:#f7f4ff;
+  --muted:#9693a8;
+}
+*{box-sizing:border-box}
+html,body{
+  width:100%;height:100%;margin:0;
+  overflow:hidden;
+  font-family:'Cairo',sans-serif;
+  background:var(--bg);color:var(--text);
+}
+button{font-family:inherit;cursor:pointer}
+button:disabled{opacity:.45;cursor:not-allowed}
+.app{
+  height:100dvh;height:100vh;
+  display:flex;flex-direction:column;
+  overflow:hidden;
+  background:
+    radial-gradient(ellipse at 50% -20%,rgba(135,105,255,.16),transparent 55%),
+    var(--bg);
+}
+.header{
+  height:65px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 15px;
+  border-bottom:1px solid rgba(255,255,255,.07);
+  background:rgba(18,18,29,.92);
+}
+.brand{display:flex;align-items:center;gap:10px}
+.brand-icon{
+  width:39px;height:39px;border-radius:13px;
+  display:grid;place-items:center;
+  background:linear-gradient(145deg,#f1d7a5,#9d713c);
+  color:#21170b;font-size:22px;font-weight:900;
+}
+.brand-name{font-size:14px;font-weight:900;letter-spacing:.5px}
+.brand-sub{font-size:9px;color:var(--muted)}
+.header-actions{display:flex;align-items:center;gap:8px}
+.coin-box{
+  display:flex;align-items:center;gap:6px;
+  padding:7px 10px;border-radius:11px;
+  background:rgba(231,197,139,.1);
+  border:1px solid rgba(231,197,139,.2);
+  color:var(--gold);font-size:12px;font-weight:900;
+}
+.back-btn{
+  width:37px;height:37px;border:1px solid #343348;
+  border-radius:11px;background:#202033;color:white;
+  display:grid;place-items:center;text-decoration:none;
+}
+.back-btn svg{width:18px;height:18px}
+.main{
+  flex:1;min-height:0;
+  display:flex;flex-direction:column;
+  padding:12px;gap:10px;
+}
+.info{
+  flex-shrink:0;text-align:center;
+  padding:5px 0 2px;
+}
+.info h1{font-size:19px;margin:0;font-weight:900}
+.info p{font-size:11px;color:var(--muted);margin:2px 0}
+.price{
+  display:inline-flex;align-items:center;gap:6px;
+  margin-top:6px;padding:5px 12px;
+  border-radius:20px;background:rgba(231,197,139,.09);
+  color:var(--gold);font-size:10px;font-weight:800;
+}
+.stage{
+  flex:1;min-height:150px;position:relative;
+  overflow:hidden;border-radius:22px;
+  background:#080810;
+  border:1px solid rgba(255,255,255,.09);
+  box-shadow:0 12px 35px rgba(0,0,0,.25);
+}
+.remote-video{
+  position:absolute;inset:0;width:100%;height:100%;
+  object-fit:cover;background:#10101a;
+}
+.local-card{
+  position:absolute;top:12px;left:12px;
+  width:clamp(95px,28%,135px);
+  aspect-ratio:3/4;
+  overflow:hidden;border-radius:15px;
+  border:2px solid rgba(255,255,255,.35);
+  background:#222235;z-index:3;
+  box-shadow:0 5px 18px #0008;
+}
+.local-video{width:100%;height:100%;object-fit:cover}
+.video-label{
+  position:absolute;bottom:6px;right:7px;
+  font-size:9px;font-weight:800;
+  padding:3px 7px;border-radius:7px;
+  background:#0009;color:white;
+}
+.remote-placeholder{
+  position:absolute;inset:0;
+  display:flex;align-items:center;justify-content:center;
+  flex-direction:column;gap:10px;
+  background:
+    radial-gradient(circle at 50% 35%,rgba(130,100,255,.18),transparent 45%),
+    #10101b;
+}
+.avatar-placeholder{
+  width:78px;height:78px;border-radius:50%;
+  display:grid;place-items:center;
+  background:linear-gradient(145deg,#a18aff,#51418c);
+  color:white;font-size:30px;font-weight:900;
+  border:3px solid rgba(255,255,255,.14);
+}
+.remote-placeholder strong{font-size:13px}
+.remote-placeholder small{font-size:10px;color:var(--muted)}
+.status-pill{
+  position:absolute;top:12px;right:12px;z-index:4;
+  padding:6px 11px;border-radius:20px;
+  background:#0009;border:1px solid #ffffff20;
+  font-size:10px;font-weight:800;
+  display:flex;align-items:center;gap:6px;
+}
+.status-dot{width:7px;height:7px;border-radius:50%;background:var(--green)}
+.status-dot.waiting{background:var(--gold);animation:pulse 1s infinite}
+.status-dot.offline{background:#777}
+@keyframes pulse{50%{opacity:.25}}
+.call-timer{
+  position:absolute;bottom:12px;left:12px;z-index:4;
+  padding:6px 10px;border-radius:9px;
+  background:#0009;font-size:11px;font-weight:800;
+  font-variant-numeric:tabular-nums;
+}
+.overlay-message{
+  position:absolute;inset:0;z-index:5;
+  display:none;align-items:center;justify-content:center;
+  text-align:center;padding:25px;
+  background:rgba(8,8,16,.78);
+  backdrop-filter:blur(8px);
+}
+.overlay-message.show{display:flex}
+.overlay-inner{max-width:290px}
+.overlay-inner h3{font-size:17px;margin:0 0 7px}
+.overlay-inner p{font-size:11px;color:#b4b1c5;line-height:1.9;margin:0}
+.spinner{
+  width:35px;height:35px;border-radius:50%;
+  border:3px solid #ffffff20;border-top-color:var(--gold);
+  animation:spin .8s linear infinite;margin:0 auto 15px;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+.peer-line{
+  display:flex;align-items:center;justify-content:center;
+  gap:7px;font-size:11px;color:#d9d4e9;
+}
+.peer-line .verified{color:#68baff;font-weight:900}
+.controls{
+  flex-shrink:0;display:flex;justify-content:center;
+  align-items:center;gap:10px;padding:5px 0;
+}
+.control{
+  width:49px;height:49px;border-radius:16px;
+  border:1px solid rgba(255,255,255,.1);
+  background:#222235;color:white;
+  display:grid;place-items:center;
+}
+.control svg{width:21px;height:21px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.control.active{background:#37304f;border-color:#8e78db;color:#c7b8ff}
+.control.danger{background:rgba(255,99,123,.14);color:#ff8395;border-color:#ff637b44}
+.control.end{
+  width:59px;height:52px;border-radius:17px;
+  background:linear-gradient(145deg,#ff7187,#d93658);
+  border:0;color:white;
+}
+.control.end svg{transform:rotate(135deg)}
+.primary-btn{
+  width:100%;height:51px;flex-shrink:0;
+  border:0;border-radius:15px;
+  background:linear-gradient(110deg,#b18aff,#7659d7);
+  color:white;font-size:13px;font-weight:900;
+  box-shadow:0 7px 22px #8b6ce633;
+}
+.primary-btn:disabled{box-shadow:none}
+.secondary-row{
+  display:flex;gap:8px;flex-shrink:0;
+}
+.secondary-btn{
+  flex:1;height:43px;border-radius:13px;
+  background:#202033;border:1px solid #343348;
+  color:#ddd9ed;font-size:11px;font-weight:800;
+}
+.secondary-btn.danger{color:#ff899b;border-color:#6c3442}
+.footer-note{
+  flex-shrink:0;text-align:center;
+  font-size:9px;color:#777487;padding-bottom:3px;
+}
+.hidden{display:none!important}
+.toast{
+  position:fixed;z-index:20;bottom:20px;left:15px;right:15px;
+  max-width:440px;margin:auto;padding:12px 15px;
+  border-radius:13px;background:#29283b;
+  border:1px solid #ffffff18;color:white;
+  font-size:11px;text-align:center;
+  box-shadow:0 10px 30px #0008;
+  display:none;
+}
+.toast.show{display:block}
+@media(min-width:700px){
+  .main{width:min(650px,100%);margin:auto}
+  .stage{min-height:300px}
+}
+@media(max-height:650px){
+  .header{height:55px}
+  .main{padding:8px;gap:7px}
+  .info h1{font-size:16px}
+  .info p{display:none}
+  .price{margin-top:3px}
+  .control{width:43px;height:43px}
+  .control.end{height:46px}
+  .primary-btn{height:45px}
+}
+</style>
+</head>
+
+<body>
+<div class="app">
+
+  <header class="header">
+    <div class="brand">
+      <div class="brand-icon">H</div>
+      <div>
+        <div class="brand-name">HANOON WORLD</div>
+        <div class="brand-sub">البث العشوائي بالفيديو</div>
+      </div>
+    </div>
+
+    <div class="header-actions">
+      <div class="coin-box">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="9"/><path d="M12 7v10m-3-7h5a2 2 0 0 1 0 4H9"/>
+        </svg>
+        <span id="coinBalance">—</span>
+      </div>
+      <a class="back-btn" href="home.html" aria-label="الرئيسية">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M15 18l-6-6 6-6"/>
+        </svg>
+      </a>
+    </div>
+  </header>
+
+  <main class="main">
+    <section class="info">
+      <h1>قابل أشخاصًا من كل مكان</h1>
+      <p>ابدأ البحث وتحدث وجهًا لوجه مع أشخاص جدد</p>
+      <div class="price">50 عملة لكل شخص / الدقيقة</div>
+    </section>
+
+    <section class="stage">
+      <video id="remoteVideo" class="remote-video" autoplay playsinline></video>
+
+      <div class="remote-placeholder" id="remotePlaceholder">
+        <div class="avatar-placeholder" id="peerAvatar">H</div>
+        <strong id="peerTitle">جاهز للتعارف؟</strong>
+        <small id="peerSubtitle">اضغط ابدأ البحث للعثور على شخص</small>
+      </div>
+
+      <div class="local-card">
+        <video id="localVideo" class="local-video" autoplay muted playsinline></video>
+        <div class="video-label">أنت</div>
+      </div>
+
+      <div class="status-pill">
+        <span class="status-dot offline" id="statusDot"></span>
+        <span id="statusText">غير متصل</span>
+      </div>
+
+      <div class="call-timer hidden" id="callTimer">00:00</div>
+
+      <div class="overlay-message" id="overlay">
+        <div class="overlay-inner">
+          <div class="spinner" id="overlaySpinner"></div>
+          <h3 id="overlayTitle">جارٍ البحث عن شخص...</h3>
+          <p id="overlayText">نبحث عن شخص متاح للتحدث معك الآن.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="peer-line" id="peerLine">
+      <span id="peerName">لم يتم الاتصال بأحد بعد</span>
+      <span class="verified hidden" id="peerVerified">✓ موثق</span>
+    </div>
+
+    <div class="controls">
+      <button class="control" id="micButton" title="كتم الميكروفون" disabled>
+        <svg viewBox="0 0 24 24"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10v2a7 7 0 0 0 14 0v-2M12 19v3m-4 0h8"/></svg>
+      </button>
+
+      <button class="control end" id="endButton" title="إنهاء المكالمة" disabled>
+        <svg viewBox="0 0 24 24"><path d="M4 14c4-4 12-4 16 0l-2 5-4-2v-3a10 10 0 0 0-4 0v3l-4 2-2-5Z"/></svg>
+      </button>
+
+      <button class="control" id="cameraButton" title="إيقاف الكاميرا" disabled>
+        <svg viewBox="0 0 24 24"><rect x="3" y="6" width="13" height="12" rx="2"/><path d="m16 10 5-3v10l-5-3"/></svg>
+      </button>
+    </div>
+
+    <button class="primary-btn" id="startButton">ابدأ البحث</button>
+
+    <div class="secondary-row">
+      <button class="secondary-btn" id="skipButton" disabled>تخطي الشخص</button>
+      <button class="secondary-btn danger" id="reportButton" disabled>إبلاغ</button>
+      <button class="secondary-btn danger" id="blockButton" disabled>حظر</button>
+    </div>
+
+    <div class="footer-note">
+      احترم الآخرين. يمنع الإساءة أو مشاركة المحتوى غير اللائق.
+    </div>
+  </main>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script type="module">
+import { supabase } from "./supabase.js";
+
+const $ = id => document.getElementById(id);
+
+const state = {
+  user:null,
+  stream:null,
+  peerConnection:null,
+  channel:null,
+  callId:null,
+  peerId:null,
+  isSearching:false,
+  isInCall:false,
+  micEnabled:true,
+  cameraEnabled:true,
+  queueTimer:null,
+  queueHeartbeat:null,
+  callMonitor:null,
+  elapsedTimer:null,
+  seenSignals:new Set(),
+  pendingIce:[],
+  lastBilledMinute:1,
+  startedAt:null,
+  busy:false
+};
+
+const rtcConfig = {
+  iceServers:[
+    {urls:"stun:stun.l.google.com:19302"},
+    {urls:"stun:stun1.l.google.com:19302"}
+  ]
+};
+
+function toast(message){
+  const box=$("toast");
+  box.textContent=message;
+  box.classList.add("show");
+  clearTimeout(toast.timer);
+  toast.timer=setTimeout(()=>box.classList.remove("show"),3500);
+}
+
+function setStatus(text,type="offline"){
+  $("statusText").textContent=text;
+  $("statusDot").className="status-dot "+type;
+}
+
+function showOverlay(title,text,loading=true){
+  $("overlayTitle").textContent=title;
+  $("overlayText").textContent=text;
+  $("overlaySpinner").classList.toggle("hidden",!loading);
+  $("overlay").classList.add("show");
+}
+
+function hideOverlay(){
+  $("overlay").classList.remove("show");
+}
+
+function setControls(){
+  $("micButton").disabled=!state.stream;
+  $("cameraButton").disabled=!state.stream;
+  $("endButton").disabled=!state.isInCall;
+  $("skipButton").disabled=!state.isInCall;
+  $("reportButton").disabled=!state.isInCall;
+  $("blockButton").disabled=!state.isInCall;
+
+  $("micButton").classList.toggle("active",!state.micEnabled);
+  $("cameraButton").classList.toggle("active",!state.cameraEnabled);
+}
+
+async function loadWallet(){
+  if(!state.user)return;
+  const {data,error}=await supabase
+    .from("world_wallets")
+    .select("coins")
+    .eq("user_id",state.user.id)
+    .maybeSingle();
+
+  if(error){
+    console.error(error);
+    return;
+  }
+
+  $("coinBalance").textContent=
+    Number(data?.coins||0).toLocaleString("en-US");
+}
+
+async function getCamera(){
+  if(state.stream)return state.stream;
+
+  if(!navigator.mediaDevices?.getUserMedia){
+    throw new Error("المتصفح لا يدعم تشغيل الكاميرا. افتح الموقع عبر HTTPS.");
+  }
+
+  state.stream=await navigator.mediaDevices.getUserMedia({
+    video:{facingMode:"user",width:{ideal:1280},height:{ideal:720}},
+    audio:{echoCancellation:true,noiseSuppression:true}
+  });
+
+  $("localVideo").srcObject=state.stream;
+  setControls();
+  return state.stream;
+}
+
+function stopLocalMedia(){
+  if(state.stream){
+    state.stream.getTracks().forEach(track=>track.stop());
+    state.stream=null;
+  }
+  $("localVideo").srcObject=null;
+  state.micEnabled=true;
+  state.cameraEnabled=true;
+  setControls();
+}
+
+function resetPeerDisplay(){
+  $("remoteVideo").srcObject=null;
+  $("remotePlaceholder").style.display="flex";
+  $("peerAvatar").textContent="H";
+  $("peerTitle").textContent="جاهز للتعارف؟";
+  $("peerSubtitle").textContent="اضغط ابدأ البحث للعثور على شخص";
+  $("peerName").textContent="لم يتم الاتصال بأحد بعد";
+  $("peerVerified").classList.add("hidden");
+  $("callTimer").classList.add("hidden");
+}
+
+async function updatePeerDisplay(peerId){
+  const {data,error}=await supabase
+    .from("profiles")
+    .select("id,full_name,username,is_verified")
+    .eq("id",peerId)
+    .maybeSingle();
+
+  if(error)throw error;
+
+  const name=data?.full_name||data?.username||"عضو هنون";
+  $("peerName").textContent=name;
+  $("peerTitle").textContent=name;
+  $("peerSubtitle").textContent="متصل معك الآن";
+  $("peerAvatar").textContent=name.trim().charAt(0).toUpperCase()||"H";
+  $("peerVerified").classList.toggle("hidden",!data?.is_verified);
+}
+
+async function sendSignal(eventType,payload={}){
+  if(!state.callId)return;
+
+  const {error}=await supabase
+    .from("random_video_signals")
+    .insert({
+      call_id:state.callId,
+      sender_id:state.user.id,
+      event_type:eventType,
+      payload
+    });
+
+  if(error){
+    console.error("Signal error:",error);
+    toast("تعذر إرسال إشارة الاتصال.");
+  }
+}
+
+async function flushIce(){
+  if(!state.peerConnection?.remoteDescription)return;
+
+  while(state.pendingIce.length){
+    const candidate=state.pendingIce.shift();
+    try{
+      await state.peerConnection.addIceCandidate(candidate);
+    }catch(error){
+      console.warn("ICE candidate:",error);
+    }
+  }
+}
+
+async function processSignal(signal){
+  if(!signal || signal.sender_id===state.user.id)return;
+  if(state.seenSignals.has(signal.id))return;
+  state.seenSignals.add(signal.id);
+
+  const pc=state.peerConnection;
+  if(!pc)return;
+
+  try{
+    if(signal.event_type==="offer"){
+      await pc.setRemoteDescription(
+        new RTCSessionDescription(signal.payload)
+      );
+      await flushIce();
+
+      const answer=await pc.createAnswer();
+      await pc.setLocalDescription(answer);
+      await sendSignal("answer",pc.localDescription.toJSON());
+    }
+
+    if(signal.event_type==="answer"){
+      if(!pc.currentRemoteDescription){
+        await pc.setRemoteDescription(
+          new RTCSessionDescription(signal.payload)
+        );
+        await flushIce();
+      }
+    }
+
+    if(signal.event_type==="ice"){
+      const candidate=new RTCIceCandidate(signal.payload);
+      if(pc.remoteDescription){
+        await pc.addIceCandidate(candidate);
+      }else{
+        state.pendingIce.push(candidate);
+      }
+    }
+
+    if(signal.event_type==="hangup"){
+      await finishCall("انتهت المكالمة من الطرف الآخر.");
+    }
+  }catch(error){
+    console.error("Signal processing:",error);
+  }
+}
+
+async function createPeerConnection(isCaller){
+  const pc=new RTCPeerConnection(rtcConfig);
+  state.peerConnection=pc;
+
+  state.stream.getTracks().forEach(track=>{
+    pc.addTrack(track,state.stream);
+  });
+
+  pc.ontrack=event=>{
+    $("remoteVideo").srcObject=event.streams[0];
+    $("remotePlaceholder").style.display="none";
+  };
+
+  pc.onicecandidate=event=>{
+    if(event.candidate){
+      sendSignal("ice",event.candidate.toJSON());
+    }
+  };
+
+  pc.onconnectionstatechange=()=>{
+    if(pc.connectionState==="connected"){
+      setStatus("متصل الآن","online");
+      hideOverlay();
+    }
+
+    if(pc.connectionState==="failed"){
+      toast("تعذر إنشاء اتصال الفيديو. جرّب التخطي.");
+    }
+
+    if(pc.connectionState==="disconnected"){
+      setStatus("الاتصال غير مستقر","waiting");
+    }
+  };
+
+  state.channel=supabase
+    .channel("random-video-"+state.callId)
+    .on(
+      "postgres_changes",
+      {
+        event:"INSERT",
+        schema:"public",
+        table:"random_video_signals",
+        filter:"call_id=eq."+state.callId
+      },
+      payload=>processSignal(payload.new)
+    );
+
+  await new Promise((resolve,reject)=>{
+    const timeout=setTimeout(()=>{
+      reject(new Error("انتهت مهلة الاتصال اللحظي."));
+    },12000);
+
+    state.channel.subscribe(status=>{
+      if(status==="SUBSCRIBED"){
+        clearTimeout(timeout);
+        resolve();
+      }
+
+      if(status==="CHANNEL_ERROR"||status==="TIMED_OUT"){
+        clearTimeout(timeout);
+        reject(new Error("تعذر الاتصال بخدمة الإشارات."));
+      }
+    });
+  });
+
+  const {data:oldSignals,error}=await supabase
+    .from("random_video_signals")
+    .select("id,sender_id,event_type,payload")
+    .eq("call_id",state.callId)
+    .order("id",{ascending:true});
+
+  if(error)throw error;
+
+  for(const signal of oldSignals||[]){
+    await processSignal(signal);
+  }
+
+  if(isCaller){
+    await new Promise(resolve=>setTimeout(resolve,700));
+    const offer=await pc.createOffer();
+    await pc.setLocalDescription(offer);
+    await sendSignal("offer",pc.localDescription.toJSON());
+  }
+}
+
+async function connectCall(callId){
+  clearInterval(state.queueTimer);
+  clearInterval(state.queueHeartbeat);
+  state.isSearching=false;
+
+  state.callId=callId;
+  showOverlay("تم العثور على شخص","جارٍ تجهيز اتصال الفيديو...",true);
+  setStatus("جارٍ الاتصال","waiting");
+
+  const {data:call,error}=await supabase
+    .from("random_video_calls")
+    .select("id,user_a,user_b,status,started_at,billed_minutes")
+    .eq("id",callId)
+    .maybeSingle();
+
+  if(error)throw error;
+  if(!call||call.status!=="active"){
+    throw new Error("انتهت فرصة الاتصال. ابدأ البحث مرة أخرى.");
+  }
+
+  state.peerId=call.user_a===state.user.id?call.user_b:call.user_a;
+  state.startedAt=call.started_at;
+  state.lastBilledMinute=call.billed_minutes||1;
+  state.isInCall=true;
+
+  await updatePeerDisplay(state.peerId);
+  setControls();
+
+  const isCaller=call.user_a===state.user.id;
+  await createPeerConnection(isCaller);
+
+  $("callTimer").classList.remove("hidden");
+  $("remotePlaceholder").style.display="flex";
+
+  startCallMonitor();
+  hideOverlay();
+  setStatus("جارٍ توصيل الفيديو","waiting");
+}
+
+async function joinQueue(){
+  const {data,error}=await supabase.rpc("random_video_join_queue");
+
+  if(error)throw error;
+
+  if(data?.status==="insufficient_coins"){
+    await loadWallet();
+    throw new Error("رصيد أحد الطرفين لا يكفي لبدء المكالمة. يحتاج كل طرف إلى 50 عملة.");
+  }
+
+  if(data?.status==="matched"&&data.call_id){
+    await connectCall(data.call_id);
+    return;
+  }
+
+  state.isSearching=true;
+  showOverlay("جارٍ البحث عن شخص","سيتم توصيلك تلقائيًا عند العثور على شخص متاح.",true);
+  setStatus("جاري البحث","waiting");
+
+  clearInterval(state.queueTimer);
+  clearInterval(state.queueHeartbeat);
+
+  state.queueTimer=setInterval(pollQueue,1800);
+  state.queueHeartbeat=setInterval(async()=>{
+    await supabase.rpc("random_video_refresh_queue");
+  },20000);
+}
+
+async function pollQueue(){
+  if(!state.isSearching)return;
+
+  const {data,error}=await supabase
+    .from("random_video_queue")
+    .select("status,call_id")
+    .eq("user_id",state.user.id)
+    .maybeSingle();
+
+  if(error){
+    console.error(error);
+    return;
+  }
+
+  if(data?.status==="matched"&&data.call_id){
+    try{
+      await connectCall(data.call_id);
+    }catch(error){
+      console.error(error);
+      toast(error.message||"تعذر الاتصال بالشخص.");
+      await finishCall("تعذر إكمال الاتصال.");
+    }
+  }else if(!data){
+    clearInterval(state.queueTimer);
+    try{
+      await joinQueue();
+    }catch(error){
+      toast(error.message);
+      await resetToIdle();
+    }
+  }
+}
+
+function startCallMonitor(){
+  clearInterval(state.callMonitor);
+  clearInterval(state.elapsedTimer);
+
+  state.elapsedTimer=setInterval(()=>{
+    if(!state.startedAt)return;
+    const seconds=Math.max(0,Math.floor((Date.now()-Date.parse(state.startedAt))/1000));
+    const minutes=String(Math.floor(seconds/60)).padStart(2,"0");
+    const remainder=String(seconds%60).padStart(2,"0");
+    $("callTimer").textContent=minutes+":"+remainder;
+  },1000);
+
+  state.callMonitor=setInterval(checkCallAndBilling,3000);
+}
+
+async function checkCallAndBilling(){
+  if(!state.callId||!state.isInCall)return;
+
+  const currentCallId=state.callId;
+
+  const {data:call,error}=await supabase
+    .from("random_video_calls")
+    .select("status,started_at,billed_minutes")
+    .eq("id",currentCallId)
+    .maybeSingle();
+
+  if(error||!call)return;
+
+  if(call.status!=="active"){
+    await finishCall("انتهت المكالمة.");
+    return;
+  }
+
+  const elapsed=Math.floor((Date.now()-Date.parse(call.started_at))/60000)+1;
+
+  if(elapsed>(call.billed_minutes||1)){
+    const {data,error:billError}=await supabase.rpc(
+      "random_video_bill_minute",
+      {p_call_id:currentCallId}
+    );
+
+    if(billError){
+      console.error(billError);
+      return;
+    }
+
+    if(data?.ok===false&&data?.reason==="insufficient_coins"){
+      await loadWallet();
+      await finishCall("انتهت المكالمة بسبب عدم كفاية رصيد أحد الطرفين.");
+      toast("الرصيد لا يكفي لاستمرار المكالمة.");
+      return;
+    }
+
+    await loadWallet();
+  }
+}
+
+async function cleanupConnection(){
+  clearInterval(state.callMonitor);
+  clearInterval(state.elapsedTimer);
+
+  if(state.channel){
+    await supabase.removeChannel(state.channel);
+    state.channel=null;
+  }
+
+  if(state.peerConnection){
+    state.peerConnection.ontrack=null;
+    state.peerConnection.onicecandidate=null;
+    state.peerConnection.close();
+    state.peerConnection=null;
+  }
+
+  $("remoteVideo").srcObject=null;
+  $("callTimer").classList.add("hidden");
+
+  state.callId=null;
+  state.peerId=null;
+  state.startedAt=null;
+  state.isInCall=false;
+  state.lastBilledMinute=1;
+  state.seenSignals.clear();
+  state.pendingIce=[];
+
+  setControls();
+}
+
+async function finishCall(message){
+  await cleanupConnection();
+  resetPeerDisplay();
+  hideOverlay();
+  setStatus("غير متصل","offline");
+  if(message)toast(message);
+  await loadWallet();
+}
+
+async function endCurrentCall(){
+  if(!state.callId)return;
+
+  const id=state.callId;
+  await sendSignal("hangup",{});
+  await supabase.rpc("random_video_end_call",{p_call_id:id});
+  await cleanupConnection();
+  resetPeerDisplay();
+  hideOverlay();
+  setStatus("انتهت المكالمة","offline");
+  await loadWallet();
+}
+
+async function resetToIdle(){
+  clearInterval(state.queueTimer);
+  clearInterval(state.queueHeartbeat);
+  state.isSearching=false;
+  await supabase.rpc("random_video_cancel_queue");
+  hideOverlay();
+  setStatus("غير متصل","offline");
+  $("startButton").disabled=false;
+  $("startButton").textContent="ابدأ البحث";
+  setControls();
+}
+
+async function startSearch(){
+  if(state.busy)return;
+  state.busy=true;
+  $("startButton").disabled=true;
+  $("startButton").textContent="جارٍ البحث...";
+
+  try{
+    if(!state.user){
+      window.location.href="login.html";
+      return;
+    }
+
+    await getCamera();
+    await loadWallet();
+
+    const {data:wallet,error}=await supabase
+      .from("world_wallets")
+      .select("coins")
+      .eq("user_id",state.user.id)
+      .maybeSingle();
+
+    if(error)throw error;
+
+    if(Number(wallet?.coins||0)<50){
+      throw new Error("تحتاج إلى 50 عملة على الأقل لبدء المكالمة.");
+    }
+
+    await joinQueue();
+  }catch(error){
+    console.error(error);
+    toast(error.message||"تعذر بدء البحث.");
+    await resetToIdle();
+  }finally{
+    state.busy=false;
+    if(!state.isSearching&&!state.isInCall){
+      $("startButton").disabled=false;
+      $("startButton").textContent="ابدأ البحث";
+    }
+  }
+}
+
+async function skipPerson(){
+  if(!state.isInCall)return;
+  await endCurrentCall();
+  $("startButton").disabled=false;
+  $("startButton").textContent="البحث عن شخص آخر";
+  await startSearch();
+}
+
+async function stopSearch(){
+  if(state.isInCall){
+    await endCurrentCall();
+  }
+
+  await resetToIdle();
+  stopLocalMedia();
+
+  $("startButton").disabled=false;
+  $("startButton").textContent="ابدأ البحث";
+}
+
+async function reportPerson(){
+  if(!state.callId||!state.peerId)return;
+
+  const reason=prompt(
+    "اكتب رقم سبب البلاغ:\n1 - سلوك غير لائق\n2 - تحرش أو إساءة\n3 - محتوى جنسي\n4 - إزعاج أو رسائل مزعجة\n5 - سبب آخر",
+    "1"
+  );
+
+  if(reason===null)return;
+
+  const reasons={
+    "1":"inappropriate_behavior",
+    "2":"harassment",
+    "3":"sexual_content",
+    "4":"spam",
+    "5":"other"
+  };
+
+  if(!reasons[reason]){
+    toast("اختيار غير صحيح.");
+    return;
+  }
+
+  const {error}=await supabase.rpc("random_video_report_user",{
+    p_call_id:state.callId,
+    p_reported_user_id:state.peerId,
+    p_reason:reasons[reason]
+  });
+
+  if(error){
+    toast("تعذر إرسال البلاغ.");
+    console.error(error);
+    return;
+  }
+
+  toast("تم إرسال البلاغ.");
+}
+
+async function blockPerson(){
+  if(!state.callId||!state.peerId)return;
+  if(!confirm("هل تريد حظر هذا الشخص؟ لن يتم توصيلك به مرة أخرى."))return;
+
+  const {error}=await supabase.rpc("random_video_block_user",{
+    p_call_id:state.callId,
+    p_blocked_user_id:state.peerId
+  });
+
+  if(error){
+    toast("تعذر حظر هذا الشخص.");
+    console.error(error);
+    return;
+  }
+
+  await cleanupConnection();
+  resetPeerDisplay();
+  hideOverlay();
+  setStatus("تم الحظر","offline");
+  toast("تم حظر الشخص ولن يظهر لك في المطابقة القادمة.");
+  await loadWallet();
+  $("startButton").disabled=false;
+  $("startButton").textContent="ابدأ البحث";
+}
+
+$("startButton").addEventListener("click",startSearch);
+$("skipButton").addEventListener("click",skipPerson);
+$("endButton").addEventListener("click",stopSearch);
+$("reportButton").addEventListener("click",reportPerson);
+$("blockButton").addEventListener("click",blockPerson);
+
+$("micButton").addEventListener("click",()=>{
+  if(!state.stream)return;
+  state.micEnabled=!state.micEnabled;
+  state.stream.getAudioTracks().forEach(track=>{
+    track.enabled=state.micEnabled;
+  });
+  setControls();
+  toast(state.micEnabled?"تم تشغيل الميكروفون":"تم كتم الميكروفون");
+});
+
+$("cameraButton").addEventListener("click",()=>{
+  if(!state.stream)return;
+  state.cameraEnabled=!state.cameraEnabled;
+  state.stream.getVideoTracks().forEach(track=>{
+    track.enabled=state.cameraEnabled;
+  });
+  setControls();
+  toast(state.cameraEnabled?"تم تشغيل الكاميرا":"تم إيقاف الكاميرا");
+});
+
+window.addEventListener("pagehide",()=>{
+  if(state.callId){
+    supabase.rpc("random_video_end_call",{p_call_id:state.callId});
+  }
+  supabase.rpc("random_video_cancel_queue");
+});
+
+async function initialize(){
+  const {data,error}=await supabase.auth.getUser();
+
+  if(error||!data?.user){
+    window.location.replace("login.html");
+    return;
+  }
+
+  state.user=data.user;
+  await loadWallet();
+  setStatus("غير متصل","offline");
+  setControls();
+}
+
+initialize().catch(error=>{
+  console.error(error);
+  toast("تعذر تحميل صفحة البث. تحقق من اتصال الإنترنت.");
+});
+</script>
+</body>
+</html>
