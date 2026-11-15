@@ -1,0 +1,1053 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="theme-color" content="#090a12">
+<title>HANOON WORLD | LIVE ROOM</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --purple:#a58aff;
+  --gold:#edce96;
+  --red:#ff526e;
+  --green:#4cddb0;
+  --text:#fff;
+  --muted:#c3bfd1;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{
+  width:100%;height:100%;margin:0;overflow:hidden;
+  overscroll-behavior:none;
+  touch-action:pan-x pan-y;
+  background:#080910;color:var(--text);
+  font-family:'Cairo',sans-serif;
+}
+body{position:fixed;inset:0}
+button,input{font:inherit}
+button{cursor:pointer}
+button:disabled{opacity:.45;cursor:not-allowed}
+.app{
+  position:relative;width:100%;height:100%;
+  height:100dvh;overflow:hidden;
+  background:#080910;
+  isolation:isolate;
+}
+.stage{
+  position:absolute;inset:0;overflow:hidden;
+  background:
+    radial-gradient(circle at 50% 38%,#54417d 0%,#1b1b31 30%,#090a12 75%);
+}
+#liveVideo{
+  position:absolute;inset:0;width:100%;height:100%;
+  object-fit:cover;background:transparent;
+}
+.stage-shade{
+  position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(180deg,#0009 0%,transparent 23%,transparent 48%,#0005 68%,#000c 100%);
+}
+.placeholder{
+  position:absolute;inset:0;display:flex;
+  flex-direction:column;align-items:center;justify-content:center;
+  gap:10px;text-align:center;padding:30px;
+}
+.placeholder-avatar{
+  width:100px;height:100px;border-radius:50%;
+  display:grid;place-items:center;
+  font-size:38px;font-weight:900;
+  color:white;background:linear-gradient(145deg,#c4aaff,#7459c5,#39305c);
+  border:2px solid #ffffff70;
+  box-shadow:0 12px 50px #0008;
+}
+.placeholder strong{font-size:17px}
+.placeholder small{font-size:10px;color:#c2bfd4}
+.top{
+  position:absolute;z-index:5;top:0;left:0;right:0;
+  padding:calc(env(safe-area-inset-top) + 10px) 13px 8px;
+  display:flex;align-items:center;justify-content:space-between;gap:8px;
+}
+.host-info{
+  min-width:0;display:flex;align-items:center;gap:9px;
+  padding:7px 11px;border-radius:30px;
+  background:#090a12a8;border:1px solid #ffffff25;
+  backdrop-filter:blur(15px);
+}
+.host-avatar{
+  width:35px;height:35px;border-radius:50%;
+  display:grid;place-items:center;flex-shrink:0;
+  background:linear-gradient(145deg,#c4aaff,#7358bf);
+  font-size:13px;font-weight:900;
+}
+.host-text{min-width:0}
+.host-name{
+  font-size:10px;font-weight:900;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  max-width:150px;
+}
+.host-title{
+  font-size:8px;color:#d2cde0;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  max-width:160px;
+}
+.top-actions{display:flex;align-items:center;gap:7px}
+.live-pill,.viewer-pill{
+  height:34px;padding:0 10px;border-radius:20px;
+  display:flex;align-items:center;gap:6px;
+  background:#090a12bb;border:1px solid #ffffff28;
+  font-size:9px;font-weight:900;backdrop-filter:blur(12px);
+}
+.live-pill{background:#e93e5bdb;border-color:#ff8191}
+.live-dot{
+  width:7px;height:7px;border-radius:50%;
+  background:white;box-shadow:0 0 9px white;
+  animation:pulse 1s infinite;
+}
+.viewer-pill svg{width:14px;height:14px;stroke:white;fill:none;stroke-width:1.8}
+.close-btn{
+  width:35px;height:35px;border-radius:50%;
+  display:grid;place-items:center;
+  background:#090a12b8;border:1px solid #ffffff30;
+  color:white;font-size:20px;
+}
+.close-btn svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2}
+.stream-caption{
+  position:absolute;z-index:4;top:85px;right:16px;left:16px;
+  pointer-events:none;
+}
+.stream-caption strong{
+  display:block;font-size:13px;font-weight:900;
+  text-shadow:0 2px 10px #000;
+}
+.stream-caption p{
+  font-size:9px;color:#eee;margin:3px 0;
+  text-shadow:0 2px 8px #000;
+}
+.comments{
+  position:absolute;z-index:4;right:12px;bottom:145px;
+  width:min(76%,340px);max-height:31%;
+  overflow-y:auto;display:flex;flex-direction:column;
+  gap:7px;scrollbar-width:none;
+  mask-image:linear-gradient(transparent 0%,black 10%);
+  padding-top:13px;
+  pointer-events:auto;
+}
+.comments::-webkit-scrollbar{display:none}
+.comment{
+  width:fit-content;max-width:100%;
+  display:flex;align-items:flex-start;gap:6px;
+  padding:6px 10px;border-radius:14px;
+  background:#08091088;border:1px solid #ffffff13;
+  backdrop-filter:blur(9px);
+  font-size:9px;line-height:1.8;
+  animation:commentIn .2s ease;
+}
+.comment-name{font-weight:900;color:#d6c4ff;white-space:nowrap}
+.comment-message{color:#fff;overflow-wrap:anywhere}
+.comment.system{color:#f4d49e;background:#332718a8}
+.comment.gift{color:#ffe0a6;background:#4b2c35c9;border-color:#e6a55b55}
+.bottom-panel{
+  position:absolute;z-index:6;bottom:0;left:0;right:0;
+  padding:10px 12px calc(env(safe-area-inset-bottom) + 12px);
+  background:linear-gradient(transparent,#080910d9 22%,#080910f5);
+}
+.chat-row{display:flex;align-items:center;gap:8px}
+.chat-input-wrap{
+  flex:1;min-width:0;height:42px;
+  display:flex;align-items:center;
+  padding:0 13px;border-radius:24px;
+  background:#ffffff18;border:1px solid #ffffff35;
+  backdrop-filter:blur(14px);
+}
+.chat-input{
+  width:100%;min-width:0;border:0;outline:0;
+  background:transparent;color:white;font-size:10px;
+}
+.chat-input::placeholder{color:#ddd9e7}
+.round-action{
+  width:42px;height:42px;flex-shrink:0;
+  border-radius:50%;display:grid;place-items:center;
+  border:1px solid #ffffff30;background:#ffffff19;
+  color:white;backdrop-filter:blur(12px);
+}
+.round-action svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.round-action.gift{background:linear-gradient(145deg,#dcae67,#8c5c36);border-color:#f7d59a;color:#21160b}
+.round-action.heart{color:#ff8ca0}
+.host-controls{
+  display:none;align-items:center;justify-content:center;
+  gap:9px;margin-top:10px;
+}
+.host-controls.show{display:flex}
+.host-control{
+  height:37px;padding:0 12px;border-radius:12px;
+  border:1px solid #ffffff28;background:#ffffff16;
+  color:white;font-size:9px;font-weight:800;
+}
+.host-control.danger{background:#9d2542b8;border-color:#ff718a}
+.host-control svg{width:15px;height:15px;vertical-align:middle;margin-left:4px}
+.gift-panel{
+  position:absolute;z-index:15;bottom:calc(env(safe-area-inset-bottom) + 72px);
+  left:10px;right:10px;max-height:55%;
+  display:none;flex-direction:column;overflow:hidden;
+  border:1px solid #ffffff25;border-radius:22px;
+  background:linear-gradient(145deg,#252238f5,#111522f5);
+  box-shadow:0 15px 55px #000a;backdrop-filter:blur(18px);
+}
+.gift-panel.show{display:flex}
+.panel-head{
+  flex-shrink:0;padding:12px 15px;
+  display:flex;align-items:center;justify-content:space-between;
+  border-bottom:1px solid #ffffff15;
+}
+.panel-head strong{font-size:12px}
+.panel-close{
+  border:0;background:transparent;color:white;font-size:20px;
+}
+.gift-grid{
+  padding:12px;overflow-y:auto;
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:8px;
+}
+.gift-item{
+  min-width:0;min-height:90px;padding:9px 5px;
+  border-radius:14px;border:1px solid #ffffff18;
+  background:#ffffff09;color:white;
+  display:flex;align-items:center;justify-content:center;
+  flex-direction:column;gap:4px;
+}
+.gift-item:active{border-color:#eac88b;background:#eac88b20}
+.gift-symbol{font-size:25px}
+.gift-name{font-size:9px;font-weight:900}
+.gift-price{font-size:8px;color:#edce96}
+.gift-empty{padding:20px;text-align:center;font-size:10px;color:#aaa}
+.gift-send-note{
+  flex-shrink:0;padding:9px 12px;
+  font-size:8px;color:#c8bfd9;
+  border-top:1px solid #ffffff15;
+}
+.toast{
+  position:absolute;z-index:30;top:90px;left:15px;right:15px;
+  max-width:430px;margin:auto;padding:11px 14px;
+  border-radius:13px;background:#202438ed;
+  border:1px solid #ffffff25;color:white;
+  text-align:center;font-size:10px;display:none;
+}
+.toast.show{display:block}
+.heart-float{
+  position:absolute;z-index:8;bottom:180px;left:22%;
+  font-size:26px;pointer-events:none;
+  animation:floatHeart 1.8s ease-out forwards;
+}
+.loading-cover{
+  position:absolute;z-index:20;inset:0;
+  display:flex;align-items:center;justify-content:center;
+  flex-direction:column;gap:10px;
+  background:#090a12ed;text-align:center;padding:25px;
+}
+.loading-cover.hidden{display:none}
+.spinner{
+  width:35px;height:35px;border-radius:50%;
+  border:3px solid #ffffff25;border-top-color:#b79aff;
+  animation:spin .8s linear infinite;
+}
+.loading-cover strong{font-size:13px}
+.loading-cover small{font-size:9px;color:#aaa}
+@keyframes pulse{50%{opacity:.3}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes commentIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes floatHeart{
+  0%{opacity:0;transform:translateY(0) scale(.6)}
+  15%{opacity:1}
+  100%{opacity:0;transform:translateY(-180px) translateX(30px) scale(1.7)}
+}
+@media(min-width:600px){
+  .app{max-width:480px;margin:0 auto;border-left:1px solid #ffffff12;border-right:1px solid #ffffff12}
+  body{background:#03040a}
+}
+</style>
+</head>
+
+<body>
+<div class="app">
+
+  <section class="stage">
+    <video id="liveVideo" autoplay playsinline></video>
+    <div class="placeholder" id="placeholder">
+      <div class="placeholder-avatar" id="placeholderAvatar">H</div>
+      <strong id="placeholderTitle">جارٍ تجهيز البث</strong>
+      <small id="placeholderText">انتظر لحظات...</small>
+    </div>
+    <div class="stage-shade"></div>
+
+    <header class="top">
+      <div class="host-info">
+        <div class="host-avatar" id="hostAvatar">H</div>
+        <div class="host-text">
+          <div class="host-name" id="hostName">HANOON WORLD</div>
+          <div class="host-title" id="hostUsername">بث مباشر</div>
+        </div>
+      </div>
+
+      <div class="top-actions">
+        <div class="live-pill"><span class="live-dot"></span> LIVE</div>
+        <div class="viewer-pill">
+          <svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm13 10v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <span id="viewerCount">1</span>
+        </div>
+        <button class="close-btn" id="closeButton" aria-label="إغلاق">
+          <svg viewBox="0 0 24 24"><path d="m18 6-12 12M6 6l12 12"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <div class="stream-caption">
+      <strong id="streamTitle">بث مباشر</strong>
+      <p id="streamDescription"></p>
+    </div>
+
+    <div class="comments" id="comments"></div>
+
+    <div class="loading-cover" id="loadingCover">
+      <div class="spinner"></div>
+      <strong id="loadingTitle">جارٍ الدخول إلى البث...</strong>
+      <small id="loadingText">نجهز اتصال الفيديو المباشر</small>
+    </div>
+  </section>
+
+  <section class="bottom-panel">
+    <div class="chat-row">
+      <label class="chat-input-wrap">
+        <input class="chat-input" id="chatInput" maxlength="500" placeholder="اكتب تعليقًا..." autocomplete="off">
+      </label>
+
+      <button class="round-action" id="sendChat" title="إرسال التعليق">
+        <svg viewBox="0 0 24 24"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
+      </button>
+
+      <button class="round-action heart" id="heartButton" title="إعجاب">
+        <svg viewBox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z"/></svg>
+      </button>
+
+      <button class="round-action gift" id="giftButton" title="الهدايا">
+        <svg viewBox="0 0 24 24"><path d="M20 12v10H4V12M2 7h20v5H2zM12 7v15M12 7H7.5a2.5 2.5 0 1 1 2.5-2.5V7Zm0 0h4.5A2.5 2.5 0 1 0 14 4.5V7Z"/></svg>
+      </button>
+    </div>
+
+    <div class="host-controls" id="hostControls">
+      <button class="host-control" id="micButton">كتم الصوت</button>
+      <button class="host-control" id="cameraButton">إيقاف الكاميرا</button>
+      <button class="host-control danger" id="endLiveButton">إنهاء البث</button>
+    </div>
+  </section>
+
+  <section class="gift-panel" id="giftPanel">
+    <div class="panel-head">
+      <strong>هدايا هنون</strong>
+      <button class="panel-close" id="closeGifts">×</button>
+    </div>
+    <div class="gift-grid" id="giftGrid">
+      <div class="gift-empty">جارٍ تحميل الهدايا...</div>
+    </div>
+    <div class="gift-send-note">يتم خصم قيمة الهدية من جواهرك، وتضاف أرباحها إلى محفظة صاحب البث.</div>
+  </section>
+
+  <div class="toast" id="toast"></div>
+
+</div>
+
+<script type="module">
+import { supabase } from "./supabase.js";
+
+const $=id=>document.getElementById(id);
+const params=new URLSearchParams(location.search);
+const streamId=params.get("stream");
+
+const state={
+  user:null,
+  stream:null,
+  host:null,
+  isHost:false,
+  localStream:null,
+  channel:null,
+  chatChannel:null,
+  hostPeers:new Map(),
+  viewerPC:null,
+  seenSignals:new Set(),
+  pendingIce:[],
+  gifts:[],
+  profiles:{},
+  viewerCount:1,
+  sending:false,
+  ending:false,
+  micOn:true,
+  cameraOn:true
+};
+
+const MAX_DIRECT_VIEWERS=4;
+
+function toast(message){
+  const box=$("toast");
+  box.textContent=message;
+  box.style.display="block";
+  clearTimeout(toast.timer);
+  toast.timer=setTimeout(()=>box.style.display="none",3300);
+}
+
+function escapeHTML(value){
+  return String(value??"").replace(/[&<>"']/g,char=>({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+  })[char]);
+}
+
+function initials(name){
+  return String(name||"H").trim().charAt(0).toUpperCase()||"H";
+}
+
+function showLoading(title,text){
+  $("loadingTitle").textContent=title;
+  $("loadingText").textContent=text;
+  $("loadingCover").classList.remove("hidden");
+}
+function hideLoading(){
+  $("loadingCover").classList.add("hidden");
+}
+
+function addComment(name,message,type=""){
+  const item=document.createElement("div");
+  item.className="comment "+type;
+  if(type==="system"||type==="gift"){
+    item.textContent=message;
+  }else{
+    const n=document.createElement("span");
+    n.className="comment-name";
+    n.textContent=name+":";
+    const m=document.createElement("span");
+    m.className="comment-message";
+    m.textContent=message;
+    item.append(n,m);
+  }
+  $("comments").appendChild(item);
+  while($("comments").children.length>45){
+    $("comments").firstElementChild.remove();
+  }
+  $("comments").scrollTop=$("comments").scrollHeight;
+}
+
+function updateViewerCount(){
+  const count=state.isHost
+    ?1+state.hostPeers.size
+    :Math.max(1,state.viewerCount);
+  $("viewerCount").textContent=count.toLocaleString("en-US");
+}
+
+function floatHeart(){
+  const heart=document.createElement("div");
+  heart.className="heart-float";
+  heart.textContent="♥";
+  heart.style.left=(12+Math.random()*55)+"%";
+  $("stage")?.appendChild(heart);
+  document.querySelector(".stage").appendChild(heart);
+  setTimeout(()=>heart.remove(),1900);
+}
+
+async function loadProfile(userId){
+  if(!userId)return null;
+  if(state.profiles[userId])return state.profiles[userId];
+
+  const {data,error}=await supabase.from("profiles")
+    .select("id,full_name,username,is_verified,avatar_path")
+    .eq("id",userId).maybeSingle();
+
+  if(error)throw error;
+  state.profiles[userId]=data||{};
+  return data;
+}
+
+async function loadStream(){
+  const {data,error}=await supabase.from("world_live_streams")
+    .select("id,host_id,title,description,status,started_at")
+    .eq("id",streamId).maybeSingle();
+
+  if(error)throw error;
+  if(!data)throw new Error("هذا البث غير موجود.");
+  if(data.status!=="live")throw new Error("هذا البث انتهى بالفعل.");
+
+  state.stream=data;
+  state.isHost=data.host_id===state.user.id;
+
+  state.host=await loadProfile(data.host_id);
+
+  const name=state.host?.full_name||state.host?.username||"عضو هنون";
+  $("hostName").textContent=name;
+  $("hostUsername").textContent=state.host?.username?"@"+state.host.username:"بث مباشر";
+  $("hostAvatar").textContent=initials(name);
+  $("placeholderAvatar").textContent=initials(name);
+  $("streamTitle").textContent=data.title||"بث مباشر";
+  $("streamDescription").textContent=data.description||"";
+
+  if(state.isHost){
+    $("hostControls").classList.add("show");
+    $("placeholderTitle").textContent="أنت صاحب البث";
+    $("placeholderText").textContent="الكاميرا ستظهر للمشاهدين عند الاتصال.";
+  }else{
+    $("placeholderTitle").textContent=name;
+    $("placeholderText").textContent="جارٍ الاتصال بالبث المباشر...";
+  }
+}
+
+async function startHostCamera(){
+  if(!navigator.mediaDevices?.getUserMedia){
+    throw new Error("المتصفح لا يدعم الكاميرا. افتح الموقع عبر HTTPS.");
+  }
+
+  state.localStream=await navigator.mediaDevices.getUserMedia({
+    video:{
+      facingMode:"user",
+      width:{ideal:1280},
+      height:{ideal:720},
+      frameRate:{ideal:24,max:30}
+    },
+    audio:{
+      echoCancellation:true,
+      noiseSuppression:true,
+      autoGainControl:true
+    }
+  });
+
+  $("liveVideo").srcObject=state.localStream;
+  $("liveVideo").muted=true;
+  $("placeholder").style.display="none";
+  addComment("هنون","بدأ البث المباشر","system");
+}
+
+async function sendSignal(recipientId,type,payload={}){
+  const {error}=await supabase.from("world_live_signals").insert({
+    stream_id:state.stream.id,
+    sender_id:state.user.id,
+    recipient_id:recipientId,
+    signal_type:type,
+    payload
+  });
+  if(error)throw error;
+}
+
+async function flushIce(pc,queue){
+  if(!pc.remoteDescription)return;
+  while(queue.length){
+    const candidate=queue.shift();
+    try{await pc.addIceCandidate(new RTCIceCandidate(candidate))}
+    catch(error){console.warn("ICE:",error)}
+  }
+}
+
+async function hostCreatePeer(viewerId){
+  if(!state.isHost||viewerId===state.user.id)return;
+  if(state.hostPeers.has(viewerId))return;
+
+  if(state.hostPeers.size>=MAX_DIRECT_VIEWERS){
+    addComment("النظام","وصل البث إلى الحد التجريبي للاتصالات المباشرة.","system");
+    return;
+  }
+
+  const pc=new RTCPeerConnection({
+    iceServers:[
+      {urls:"stun:stun.l.google.com:19302"},
+      {urls:"stun:stun1.l.google.com:19302"}
+    ]
+  });
+
+  const peer={pc,pendingIce:[]};
+  state.hostPeers.set(viewerId,peer);
+  updateViewerCount();
+
+  state.localStream.getTracks().forEach(track=>{
+    pc.addTrack(track,state.localStream);
+  });
+
+  pc.onicecandidate=event=>{
+    if(event.candidate){
+      sendSignal(viewerId,"ice",event.candidate.toJSON())
+        .catch(error=>console.error(error));
+    }
+  };
+
+  pc.onconnectionstatechange=()=>{
+    if(["failed","closed","disconnected"].includes(pc.connectionState)){
+      hostClosePeer(viewerId);
+    }
+  };
+
+  try{
+    const offer=await pc.createOffer();
+    await pc.setLocalDescription(offer);
+    await sendSignal(viewerId,"offer",pc.localDescription.toJSON());
+  }catch(error){
+    console.error("Host offer:",error);
+    hostClosePeer(viewerId);
+  }
+}
+
+function hostClosePeer(viewerId){
+  const peer=state.hostPeers.get(viewerId);
+  if(!peer)return;
+  peer.pc.close();
+  state.hostPeers.delete(viewerId);
+  updateViewerCount();
+}
+
+async function viewerHandleSignal(signal){
+  if(signal.sender_id!==state.stream.host_id)return;
+
+  if(signal.signal_type==="offer"){
+    if(state.viewerPC)return;
+
+    const pc=new RTCPeerConnection({
+      iceServers:[
+        {urls:"stun:stun.l.google.com:19302"},
+        {urls:"stun:stun1.l.google.com:19302"}
+      ]
+    });
+    state.viewerPC=pc;
+
+    pc.ontrack=event=>{
+      $("liveVideo").srcObject=event.streams[0];
+      $("liveVideo").muted=false;
+      $("placeholder").style.display="none";
+      hideLoading();
+    };
+
+    pc.onicecandidate=event=>{
+      if(event.candidate){
+        sendSignal(state.stream.host_id,"ice",event.candidate.toJSON())
+          .catch(error=>console.error(error));
+      }
+    };
+
+    pc.onconnectionstatechange=()=>{
+      if(pc.connectionState==="failed"){
+        toast("تعذر الاتصال بالفيديو. حاول إعادة الدخول.");
+      }
+    };
+
+    await pc.setRemoteDescription(new RTCSessionDescription(signal.payload));
+    await flushIce(pc,state.pendingIce);
+
+    const answer=await pc.createAnswer();
+    await pc.setLocalDescription(answer);
+    await sendSignal(state.stream.host_id,"answer",pc.localDescription.toJSON());
+    return;
+  }
+
+  if(signal.signal_type==="ice"){
+    if(state.viewerPC?.remoteDescription){
+      try{await state.viewerPC.addIceCandidate(new RTCIceCandidate(signal.payload))}
+      catch(error){console.warn(error)}
+    }else{
+      state.pendingIce.push(signal.payload);
+    }
+  }
+
+  if(signal.signal_type==="bye"){
+    toast("انتهى البث المباشر.");
+    leaveRoom();
+  }
+}
+
+async function hostHandleSignal(signal){
+  if(signal.recipient_id!==state.user.id)return;
+  if(signal.sender_id===state.user.id)return;
+
+  const peer=state.hostPeers.get(signal.sender_id);
+  if(!peer)return;
+
+  if(signal.signal_type==="answer"&&!peer.pc.currentRemoteDescription){
+    await peer.pc.setRemoteDescription(new RTCSessionDescription(signal.payload));
+    await flushIce(peer.pc,peer.pendingIce);
+  }
+
+  if(signal.signal_type==="ice"){
+    if(peer.pc.remoteDescription){
+      try{await peer.pc.addIceCandidate(new RTCIceCandidate(signal.payload))}
+      catch(error){console.warn(error)}
+    }else{
+      peer.pendingIce.push(signal.payload);
+    }
+  }
+
+  if(signal.signal_type==="bye"){
+    hostClosePeer(signal.sender_id);
+  }
+}
+
+async function handleSignal(signal){
+  if(!signal||state.seenSignals.has(signal.id))return;
+  state.seenSignals.add(signal.id);
+
+  try{
+    if(state.isHost)await hostHandleSignal(signal);
+    else await viewerHandleSignal(signal);
+  }catch(error){
+    console.error("LIVE signal:",error);
+  }
+}
+
+async function subscribeRoom(){
+  state.channel=supabase.channel("hanoon-live-"+state.stream.id,{
+    config:{presence:{key:state.user.id}}
+  });
+
+  state.channel
+    .on("presence",{event:"sync"},async()=>{
+      const presence=state.channel.presenceState();
+      const ids=Object.values(presence).flat()
+        .map(item=>item.user_id)
+        .filter(id=>id&&id!==state.user.id);
+
+      if(state.isHost){
+        for(const id of ids){
+          if(!state.hostPeers.has(id)){
+            await hostCreatePeer(id);
+          }
+        }
+
+        for(const id of [...state.hostPeers.keys()]){
+          if(!ids.includes(id))hostClosePeer(id);
+        }
+        updateViewerCount();
+      }else{
+        state.viewerCount=1+ids.length;
+        updateViewerCount();
+      }
+    })
+    .on("postgres_changes",{
+      event:"INSERT",
+      schema:"public",
+      table:"world_live_signals",
+      filter:"stream_id=eq."+state.stream.id
+    },payload=>{
+      handleSignal(payload.new);
+    })
+    .on("broadcast",{event:"gift"},payload=>{
+      const gift=payload.payload||{};
+      addComment("هدية",`${gift.sender||"عضو"} أرسل ${gift.gift||"هدية"} إلى صاحب البث`,"gift");
+    })
+    .on("broadcast",{event:"heart"},()=>{
+      floatHeart();
+    });
+
+  await new Promise((resolve,reject)=>{
+    const timeout=setTimeout(()=>reject(new Error("تعذر الاتصال بغرفة البث.")),15000);
+    state.channel.subscribe(async status=>{
+      if(status==="SUBSCRIBED"){
+        clearTimeout(timeout);
+        try{
+          await state.channel.track({
+            user_id:state.user.id,
+            role:state.isHost?"host":"viewer",
+            joined_at:new Date().toISOString()
+          });
+          resolve();
+        }catch(error){reject(error)}
+      }
+
+      if(status==="CHANNEL_ERROR"||status==="TIMED_OUT"){
+        clearTimeout(timeout);
+        reject(new Error("انقطع الاتصال بخدمة البث."));
+      }
+    });
+  });
+}
+
+async function loadChat(){
+  const {data,error}=await supabase.from("world_live_chat")
+    .select("id,user_id,message,created_at")
+    .eq("stream_id",state.stream.id)
+    .order("created_at",{ascending:false})
+    .limit(35);
+
+  if(error)throw error;
+
+  const rows=(data||[]).reverse();
+  for(const row of rows){
+    const profile=await loadProfile(row.user_id);
+    const name=profile?.full_name||profile?.username||"عضو";
+    addComment(name,row.message);
+  }
+}
+
+function subscribeChat(){
+  state.chatChannel=supabase.channel("hanoon-live-chat-"+state.stream.id)
+    .on("postgres_changes",{
+      event:"INSERT",
+      schema:"public",
+      table:"world_live_chat",
+      filter:"stream_id=eq."+state.stream.id
+    },async payload=>{
+      const row=payload.new;
+      const profile=await loadProfile(row.user_id);
+      const name=profile?.full_name||profile?.username||"عضو";
+      addComment(name,row.message);
+    })
+    .subscribe();
+}
+
+async function sendChat(){
+  const message=$("chatInput").value.trim();
+  if(!message)return;
+  if(message.length>500){toast("التعليق أطول من المسموح.");return}
+
+  $("sendChat").disabled=true;
+  try{
+    const {error}=await supabase.from("world_live_chat").insert({
+      stream_id:state.stream.id,
+      user_id:state.user.id,
+      message
+    });
+    if(error)throw error;
+    $("chatInput").value="";
+  }catch(error){
+    console.error(error);
+    toast("تعذر إرسال التعليق.");
+  }finally{
+    $("sendChat").disabled=false;
+  }
+}
+
+async function loadGifts(){
+  const {data,error}=await supabase.from("world_gifts")
+    .select("id,slug,name_ar,price_gems,image_path,is_active,sort_order")
+    .eq("is_active",true)
+    .order("sort_order",{ascending:true})
+    .limit(60);
+
+  if(error)throw error;
+  state.gifts=data||[];
+
+  if(!state.gifts.length){
+    $("giftGrid").innerHTML='<div class="gift-empty">لا توجد هدايا متاحة حاليًا.</div>';
+    return;
+  }
+
+  $("giftGrid").innerHTML=state.gifts.map((gift,index)=>`
+    <button class="gift-item" data-gift="${index}">
+      <span class="gift-symbol">${gift.slug==="rose"?"🌹":gift.slug==="heart"?"♥":gift.slug==="coffee"?"☕":gift.slug==="teddy"?"🧸":gift.slug==="crown"?"♛":gift.slug==="diamond"?"◆":"✦"}</span>
+      <span class="gift-name">${escapeHTML(gift.name_ar)}</span>
+      <span class="gift-price">${Number(gift.price_gems).toLocaleString("en-US")} جوهرة</span>
+    </button>
+  `).join("");
+
+  $("giftGrid").querySelectorAll("[data-gift]").forEach(button=>{
+    button.addEventListener("click",()=>{
+      sendGift(state.gifts[Number(button.dataset.gift)]);
+    });
+  });
+}
+
+async function sendGift(gift){
+  if(!gift||state.sending)return;
+  if(state.isHost){
+    toast("لا يمكنك إرسال هدية إلى بثك الخاص.");
+    return;
+  }
+
+  if(!confirm(`إرسال ${gift.name_ar} مقابل ${Number(gift.price_gems).toLocaleString("en-US")} جوهرة؟`)){
+    return;
+  }
+
+  state.sending=true;
+  try{
+    const {data,error}=await supabase.rpc("hanoon_send_gift",{
+      p_recipient_id:state.stream.host_id,
+      p_gift_id:gift.id,
+      p_quantity:1,
+      p_message:"هدية من بث HANOON LIVE"
+    });
+
+    if(error)throw error;
+    if(data?.success===false)throw new Error(data.message||"تعذر إرسال الهدية.");
+
+    await state.channel.send({
+      type:"broadcast",
+      event:"gift",
+      payload:{
+        sender:state.user.user_metadata?.full_name||state.user.email?.split("@")[0]||"عضو",
+        gift:gift.name_ar
+      }
+    });
+
+    addComment("هدية",`أرسلت ${gift.name_ar} إلى صاحب البث`,"gift");
+    $("giftPanel").classList.remove("show");
+    toast("تم إرسال الهدية بنجاح.");
+  }catch(error){
+    console.error("Gift:",error);
+    toast(error.message||"تعذر إرسال الهدية. تحقق من رصيد الجواهر.");
+  }finally{
+    state.sending=false;
+  }
+}
+
+async function sendHeart(){
+  floatHeart();
+  try{
+    if(state.channel){
+      await state.channel.send({
+        type:"broadcast",
+        event:"heart",
+        payload:{}
+      });
+    }
+  }catch(error){console.warn(error)}
+}
+
+async function toggleMic(){
+  if(!state.localStream)return;
+  state.micOn=!state.micOn;
+  state.localStream.getAudioTracks().forEach(track=>track.enabled=state.micOn);
+  $("micButton").textContent=state.micOn?"كتم الصوت":"تشغيل الصوت";
+}
+
+async function toggleCamera(){
+  if(!state.localStream)return;
+  state.cameraOn=!state.cameraOn;
+  state.localStream.getVideoTracks().forEach(track=>track.enabled=state.cameraOn);
+  $("cameraButton").textContent=state.cameraOn?"إيقاف الكاميرا":"تشغيل الكاميرا";
+}
+
+async function endLive(){
+  if(!state.isHost||state.ending)return;
+  if(!confirm("هل تريد إنهاء البث المباشر للجميع؟"))return;
+
+  state.ending=true;
+  $("endLiveButton").disabled=true;
+
+  try{
+    for(const viewerId of state.hostPeers.keys()){
+      await sendSignal(viewerId,"bye",{});
+    }
+
+    const {error}=await supabase.from("world_live_streams")
+      .update({status:"ended",ended_at:new Date().toISOString()})
+      .eq("id",state.stream.id)
+      .eq("host_id",state.user.id);
+
+    if(error)throw error;
+
+    addComment("النظام","انتهى البث المباشر.","system");
+    toast("تم إنهاء البث.");
+    setTimeout(()=>location.replace("broadcasts.html"),900);
+  }catch(error){
+    console.error(error);
+    toast("تعذر إنهاء البث.");
+    state.ending=false;
+    $("endLiveButton").disabled=false;
+  }
+}
+
+async function leaveRoom(){
+  if(state.channel){
+    await supabase.removeChannel(state.channel);
+    state.channel=null;
+  }
+  if(state.chatChannel){
+    await supabase.removeChannel(state.chatChannel);
+    state.chatChannel=null;
+  }
+
+  if(state.viewerPC){
+    state.viewerPC.close();
+    state.viewerPC=null;
+  }
+
+  for(const id of [...state.hostPeers.keys()]){
+    hostClosePeer(id);
+  }
+
+  if(state.localStream){
+    state.localStream.getTracks().forEach(track=>track.stop());
+    state.localStream=null;
+  }
+
+  if(state.isHost&&!state.ending&&state.stream?.status==="live"){
+    await supabase.from("world_live_streams")
+      .update({status:"ended",ended_at:new Date().toISOString()})
+      .eq("id",state.stream.id)
+      .eq("host_id",state.user.id);
+  }
+
+  location.replace("broadcasts.html");
+}
+
+async function initialize(){
+  if(!streamId){
+    location.replace("broadcasts.html");
+    return;
+  }
+
+  const {data,error}=await supabase.auth.getUser();
+  if(error||!data?.user){
+    location.replace("login.html");
+    return;
+  }
+  state.user=data.user;
+
+  await loadStream();
+
+  if(state.isHost){
+    await startHostCamera();
+  }else{
+    $("placeholder").style.display="flex";
+    $("liveVideo").muted=false;
+  }
+
+  await subscribeRoom();
+  await loadChat();
+  subscribeChat();
+  await loadGifts();
+
+  if(state.isHost){
+    hideLoading();
+    addComment("النظام","أنت الآن مباشر. انتظر دخول المشاهدين.","system");
+  }else{
+    showLoading("جارٍ الاتصال بالبث","انتظر حتى يبدأ الفيديو في الظهور...");
+  }
+}
+
+$("sendChat").addEventListener("click",sendChat);
+$("chatInput").addEventListener("keydown",event=>{
+  if(event.key==="Enter")sendChat();
+});
+$("heartButton").addEventListener("click",sendHeart);
+$("giftButton").addEventListener("click",()=>{
+  $("giftPanel").classList.toggle("show");
+});
+$("closeGifts").addEventListener("click",()=>{
+  $("giftPanel").classList.remove("show");
+});
+$("closeButton").addEventListener("click",()=>{
+  if(state.isHost){
+    endLive();
+  }else{
+    leaveRoom();
+  }
+});
+$("micButton").addEventListener("click",toggleMic);
+$("cameraButton").addEventListener("click",toggleCamera);
+$("endLiveButton").addEventListener("click",endLive);
+
+window.addEventListener("pagehide",()=>{
+  if(state.localStream){
+    state.localStream.getTracks().forEach(track=>track.stop());
+  }
+  if(state.viewerPC)state.viewerPC.close();
+  for(const peer of state.hostPeers.values())peer.pc.close();
+});
+
+initialize().catch(error=>{
+  console.error("LIVE ROOM:",error);
+  showLoading("تعذر فتح البث",error.message||"حدث خطأ غير متوقع.");
+  $("loadingCover").querySelector(".spinner").style.display="none";
+  toast(error.message||"تعذر فتح غرفة البث.");
+});
+</script>
+</body>
+</html>
