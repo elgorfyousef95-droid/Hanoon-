@@ -1,161 +1,66 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <meta name="theme-color" content="#090711">
 <title>مركز تحكم هَنون | HANOON WORLD</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#090711;--panel:rgba(17,14,29,.88);--line:#ffffff20;--text:#f8f5ff;--muted:#b9afca;--purple:#b18aff;--green:#53d6a2;--red:#ff7188}
+:root{--bg:#090711;--panel:#171326ed;--line:#ffffff20;--text:#f8f5ff;--muted:#b9afca;--purple:#b18aff;--green:#53d6a2;--red:#ff7188;--blue:#1689e8}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{width:100%;height:100%;margin:0;overflow:hidden;background:var(--bg);color:var(--text);font-family:Cairo,sans-serif}
-body{position:fixed;inset:0}
-button,input,textarea,select{font:inherit}
-button{cursor:pointer}
-[hidden]{display:none!important}
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:Cairo,sans-serif}
+button,input,textarea,select{font:inherit}button{cursor:pointer}[hidden]{display:none!important}
 svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-.app{position:fixed;inset:0;isolation:isolate;background:#090711;overflow:hidden}
-.app:before{content:"";position:absolute;inset:0;z-index:-2;background:url("https://images.hdqwalls.com/download/joker-ghost-in-dark-rt-2048x2048.jpg") center 35%/cover no-repeat}
-.app:after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,#07050ee8,#090712c9 50%,#080610e8),linear-gradient(0deg,#05040be8,#08060f66);pointer-events:none}
-.topbar{height:68px;position:absolute;inset:0 0 auto;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:0 20px;background:#080610c9;border-bottom:1px solid var(--line);backdrop-filter:blur(22px)}
-.brand{display:flex;align-items:center;gap:11px}
-.brand-mark{width:42px;height:42px;display:grid;place-items:center;border-radius:14px;background:linear-gradient(145deg,#d0b7ff,#7650c9);color:#171128}
-.brand-mark svg{width:25px;height:25px;stroke:#171128}
-.brand-name{font-size:13px;font-weight:900;letter-spacing:1px}
-.brand-sub{font-size:9px;color:#b5a7d4;letter-spacing:2px}
-.top-actions{display:flex;align-items:center;gap:9px}
-.admin-label{padding:7px 12px;border:1px solid #b18aff55;border-radius:30px;background:#a58aff20;color:#e0d0ff;font-size:10px;font-weight:900}
-.icon-btn{width:40px;height:40px;display:grid;place-items:center;border:1px solid var(--line);border-radius:13px;background:#ffffff0c;color:white}
-.layout{position:absolute;inset:68px 0 0}
-.sidebar{position:absolute;top:0;right:0;bottom:0;width:250px;padding:20px 14px;overflow-y:auto;background:#0a0815e8;border-left:1px solid var(--line);backdrop-filter:blur(24px);z-index:60}
-.side-caption{padding:8px 12px 11px;color:#a99abd;font-size:9px;font-weight:900;letter-spacing:1px}
-.nav-btn{width:100%;min-height:47px;display:flex;align-items:center;gap:11px;padding:0 12px;margin:4px 0;border:1px solid transparent;border-radius:13px;background:transparent;color:#d0c8df;text-align:right;font-size:12px;font-weight:800}
-.nav-btn.active,.nav-btn:hover{border-color:#b18aff55;background:linear-gradient(100deg,#a77aff28,#ffffff08);color:#f1e7ff}
-.nav-icon{width:30px;height:30px;display:grid;place-items:center;border-radius:10px;background:#b18aff18;color:#cbb2ff;flex-shrink:0}
-.nav-icon svg{width:17px;height:17px}
-.side-separator{height:1px;background:var(--line);margin:15px 7px}
-.sidebar-bottom{margin:23px 5px 0;padding:14px;border:1px solid var(--line);border-radius:15px;background:#ffffff08}
-.sidebar-bottom strong{font-size:11px}
-.sidebar-bottom p{margin:7px 0 0;color:var(--muted);font-size:10px;line-height:1.9}
-.secure-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--green);margin-left:7px}
-.main{position:absolute;top:0;right:250px;left:0;bottom:0;min-width:0;overflow-y:auto;overflow-x:hidden;padding:25px clamp(13px,3vw,36px) 40px;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#8061aa transparent}
-.view{display:none}
-.view.active{display:block}
-.page-head{display:flex;align-items:flex-start;justify-content:space-between;gap:15px;margin-bottom:22px}
-.eyebrow{color:#c3a4ff;font-size:10px;font-weight:900;letter-spacing:1.4px}
-.page-head h1{font-size:clamp(22px,3vw,29px);margin:5px 0 3px;font-weight:900}
-.page-head p{margin:0;color:#c0b6d1;font-size:11px;line-height:1.8}
-.live-status{display:flex;align-items:center;gap:8px;padding:8px 12px;border:1px solid #53d6a255;border-radius:30px;background:#53d6a218;color:#a9f2d2;font-size:10px;font-weight:800;white-space:nowrap}
-.live-status i{width:7px;height:7px;border-radius:50%;background:var(--green)}
-.welcome,.panel,.form-panel,.stat-card{border:1px solid var(--line);background:var(--panel);backdrop-filter:blur(18px);box-shadow:0 12px 35px #0002}
-.welcome{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:24px;border-color:#b18aff55;border-radius:22px;margin-bottom:17px}
-.welcome h2{margin:0;font-size:19px}
-.welcome p{margin:7px 0 0;color:#d0c5df;font-size:11px;line-height:2}
-.welcome-icon{width:58px;height:58px;display:grid;place-items:center;border:1px solid #d4c2ff65;border-radius:18px;background:#a58aff25;color:#e1d1ff;flex-shrink:0}
-.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:16px}
-.stat-card{min-height:100px;padding:14px;border-radius:16px}
-.stat-name{font-size:10px;color:#c2b7d3;font-weight:800;margin-top:10px}
-.stat-value{font-size:15px;font-weight:900;margin-top:3px}
-.stat-icon{width:32px;height:32px;display:grid;place-items:center;border-radius:11px;background:#a58aff24;color:#d1baff}
-.content-grid{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(220px,.8fr);gap:13px}
-.panel,.form-panel{padding:18px;border-radius:18px}
-.panel-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px}
-.panel-head h3{font-size:13px;margin:0;font-weight:900}
-.panel-head span{font-size:9px;color:#b6abc9}
-.quick-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
-.quick-action{min-height:72px;display:flex;align-items:center;gap:10px;padding:11px;border:1px solid var(--line);border-radius:14px;background:#ffffff09;text-align:right;color:var(--text)}
-.quick-action strong{display:block;font-size:11px}
-.quick-action small{display:block;margin-top:4px;color:var(--muted);font-size:9px}
-.q-icon{width:34px;height:34px;display:grid;place-items:center;border-radius:11px;background:#a58aff20;color:#d2baff}
-.activity-empty{padding:20px 8px;text-align:center;color:#bdb2cf;font-size:11px;line-height:2}
-.section-title{margin:0 0 5px;font-size:19px;font-weight:900}
-.section-description{margin:0 0 17px;color:#c0b6d1;font-size:11px;line-height:2}
-.form-layout{display:grid;grid-template-columns:minmax(0,1fr) 280px;gap:14px;align-items:start}
-.field{margin-bottom:14px}
-.field label{display:block;margin-bottom:7px;color:#e1d8ee;font-size:11px;font-weight:800}
-.field input,.field textarea,.field select,.member-tools input{width:100%;min-height:44px;padding:10px 13px;border:1px solid #ffffff20;border-radius:12px;outline:none;background:#080710d9;color:var(--text);font-size:12px}
-.field textarea{min-height:110px;resize:vertical;line-height:1.9}
-.field input:focus,.field textarea:focus,.field select:focus,.member-tools input:focus{border-color:#b18affaa}
-.field-hint{margin-top:5px;color:#aaa0bd;font-size:9px}
-.primary-btn{min-height:45px;display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:0 18px;border:0;border-radius:12px;background:linear-gradient(110deg,#c5a6ff,#8055d9);color:#171128;font-size:12px;font-weight:900}
-.primary-btn:disabled{opacity:.55;cursor:not-allowed}
-.secondary-btn{min-height:40px;padding:0 13px;border:1px solid var(--line);border-radius:11px;background:#ffffff0c;color:#eee8f8;font-size:10px;font-weight:800}
-.notice{padding:11px 13px;border:1px solid #e8c98d45;border-radius:12px;background:#e8c98d12;color:#f0dcae;font-size:10px;line-height:2;margin-bottom:14px}
-.preview-card{padding:17px;border:1px solid #b18aff44;border-radius:17px;background:#1a132aeb;backdrop-filter:blur(18px)}
-.preview-top{margin-bottom:14px}
-.preview-top strong{font-size:11px}
-.preview-top small{display:block;color:var(--muted);font-size:9px;margin-top:3px}
-.preview-label{font-size:9px;color:#c2a6f3;font-weight:900;margin-bottom:7px}
-.preview-title{font-size:14px;font-weight:900;overflow-wrap:anywhere}
-.preview-body{margin-top:8px;color:#d0c9dc;font-size:11px;line-height:2;white-space:pre-wrap}
-.preview-destination{margin-top:13px;padding-top:11px;border-top:1px solid var(--line);font-size:9px;color:#bdb2cf}
-.member-tools{display:flex;gap:9px;align-items:center;margin-bottom:14px}
-.member-tools input{flex:1;min-width:0}
-.member-results{display:grid;gap:9px}
-.member-row{display:flex;align-items:center;gap:12px;padding:12px;border:1px solid var(--line);border-radius:14px;background:#ffffff09;min-width:0}
-.member-avatar{width:48px;height:48px;flex-shrink:0;display:grid;place-items:center;overflow:hidden;border-radius:14px;background:#a58aff2a;color:#e0cfff;font-weight:900}
-.member-avatar img{width:100%;height:100%;object-fit:cover}
-.member-info{flex:1;min-width:0}
-.member-info strong{display:block;font-size:12px;overflow-wrap:anywhere}
-.member-info small{display:block;margin-top:4px;color:#b8aec9;font-size:10px;overflow-wrap:anywhere}
-.member-meta{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}
-.member-tag{padding:3px 7px;border:1px solid var(--line);border-radius:20px;color:#d0c6df;font-size:9px}
-.member-open{min-height:36px;padding:0 11px;border:1px solid #b18aff55;border-radius:10px;background:#a58aff20;color:#e0d0ff;font-size:10px;font-weight:900;flex-shrink:0}
-.member-empty{padding:23px 12px;text-align:center;color:#bdb2cf;font-size:11px;line-height:2;border:1px dashed var(--line);border-radius:14px}
-.member-pagination{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:14px;color:#bdb2cf;font-size:10px}
-.member-detail{position:fixed;inset:0;z-index:150;display:flex;align-items:center;justify-content:center;padding:15px;background:#05040bd9;backdrop-filter:blur(12px)}
-.member-detail-card{width:min(650px,100%);max-height:90%;overflow-y:auto;padding:19px;border:1px solid #b18aff55;border-radius:20px;background:#110d1df7;box-shadow:0 25px 80px #0009}
-.detail-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
-.detail-head h3{margin:0;font-size:15px}
-.detail-close{width:36px;height:36px;border:1px solid var(--line);border-radius:11px;background:#ffffff0b;color:white}
-.detail-cover{width:100%;height:135px;object-fit:cover;border-radius:14px;background:#241b37;margin-bottom:12px}
-.detail-profile-head{display:flex;align-items:center;gap:13px;margin-top:-35px;padding:0 13px 12px}
-.detail-avatar{width:75px;height:75px;display:grid;place-items:center;overflow:hidden;border:4px solid #110d1d;border-radius:22px;background:#a58aff2c;color:#e3d2ff;font-size:25px;font-weight:900;flex-shrink:0}
-.detail-avatar img{width:100%;height:100%;object-fit:cover}
-.detail-name{font-size:15px;font-weight:900}
-.detail-username{color:#b9aecb;font-size:10px;margin-top:3px}
-.detail-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:12px}
-.detail-item{padding:11px;border:1px solid var(--line);border-radius:11px;background:#ffffff08;min-width:0}
-.detail-item small{display:block;color:#b7abc9;font-size:9px}
-.detail-item strong{display:block;margin-top:5px;font-size:10px;overflow-wrap:anywhere;white-space:pre-wrap}
-.detail-video{width:100%;max-height:220px;margin-top:12px;border-radius:13px;background:#000}
-
-.message-compose{position:fixed;inset:0;z-index:320;display:flex;align-items:center;justify-content:center;padding:16px;background:#05040bdc;backdrop-filter:blur(12px)}
-.message-compose[hidden]{display:none}
-.message-compose-card{width:min(460px,100%);padding:20px;border:1px solid #b18aff66;border-radius:20px;background:#171126;box-shadow:0 25px 80px #000b}
-.message-compose-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}
-.message-compose-head h3{margin:0;font-size:15px}
-.message-compose-target{margin:0 0 12px;color:#c8bdd8;font-size:11px;line-height:1.8}
-.message-compose textarea{width:100%;min-height:140px;resize:vertical;padding:12px;border:1px solid #ffffff25;border-radius:12px;outline:none;background:#090711;color:var(--text);font:inherit;font-size:12px;line-height:1.9}
-.message-compose textarea:focus{border-color:#b18affaa}
-.message-compose-actions{display:flex;gap:9px;margin-top:13px}
-.message-compose-actions button{flex:1}
-.member-actions{display:flex;gap:7px;flex-shrink:0}
-.member-message{min-height:36px;padding:0 11px;border:1px solid #53d6a255;border-radius:10px;background:#53d6a218;color:#a9f2d2;font-size:10px;font-weight:900;flex-shrink:0}
-@media(max-width:520px){.member-actions{width:100%;margin-right:59px}.member-actions button{flex:1}}
-.toast{position:fixed;z-index:250;bottom:18px;left:50%;transform:translate(-50%,20px);opacity:0;pointer-events:none;padding:11px 17px;border:1px solid var(--line);border-radius:12px;background:#1b1730;color:white;font-size:11px;font-weight:800;transition:.25s;max-width:90%;text-align:center}
-.toast.show{opacity:1;transform:translate(-50%,0)}
-.toast.error{border-color:#ff718855;color:#ffb0bd}
-.access-screen{position:fixed;inset:0;z-index:200;display:flex;align-items:center;justify-content:center;padding:18px;background:linear-gradient(#090711a8,#090711e8),url("https://images.hdqwalls.com/download/joker-ghost-in-dark-rt-2048x2048.jpg") center/cover no-repeat}
-.access-card{width:min(420px,100%);padding:29px 23px;text-align:center;border:1px solid #ffffff28;border-radius:22px;background:#0e0b18e8;backdrop-filter:blur(22px);box-shadow:0 25px 90px #000b}
-.access-mark{width:62px;height:62px;display:grid;place-items:center;margin:0 auto 15px;border-radius:19px;background:#a58aff28;color:#d9c5ff}
-.access-card h2{margin:0;font-size:18px}
-.access-card p{margin:8px 0 18px;color:#c0b6d1;font-size:11px;line-height:2}
-.access-input{width:100%;height:48px;margin:0 0 12px;padding:0 14px;border:1px solid #ffffff25;border-radius:12px;outline:none;background:#090711;color:var(--text);font:inherit;font-size:13px;text-align:center;letter-spacing:2px}
-.access-card .primary-btn{width:100%}
-.dialog-backdrop{position:fixed;inset:0;z-index:300;display:flex;align-items:center;justify-content:center;padding:18px;background:#05040bdc;backdrop-filter:blur(10px)}
-.dialog-card{width:min(390px,100%);padding:22px;border:1px solid #b18aff66;border-radius:20px;background:#171126;box-shadow:0 25px 80px #000b}
-.dialog-card h3{margin:0 0 8px;font-size:16px}
-.dialog-card p{margin:0;color:#c5bad5;font-size:11px;line-height:2}
-.dialog-actions{display:flex;gap:9px;margin-top:19px}
-.dialog-actions button{flex:1}
-.footer-note{text-align:center;color:#a89bbd;font-size:9px;margin-top:25px}
-.mobile-menu{display:none}
-@media(max-width:1050px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.form-layout{grid-template-columns:minmax(0,1fr) 250px}}
-@media(max-width:800px){.sidebar{width:250px;transform:translateX(105%);transition:transform .22s;box-shadow:-20px 0 60px #0009}.sidebar.open{transform:translateX(0)}.main{right:0;padding:20px 14px 32px}.mobile-menu{display:grid}.content-grid,.form-layout{grid-template-columns:1fr}.topbar{padding:0 12px}}
-@media(max-width:520px){.topbar{height:62px}.layout{top:62px}.brand-name{font-size:11px}.admin-label{font-size:9px;padding:6px 8px}.main{padding:16px 11px 28px}.welcome{padding:17px}.welcome h2{font-size:15px}.stats{gap:7px}.stat-card{min-height:92px;padding:10px}.stat-value{font-size:13px}.panel,.form-panel{padding:13px}.quick-grid{grid-template-columns:1fr}.member-tools{flex-direction:column;align-items:stretch}.member-tools button{width:100%}.member-row{align-items:flex-start;flex-wrap:wrap}.member-open{margin-right:59px}.detail-grid{grid-template-columns:1fr 1fr}.detail-cover{height:105px}}
+.app{position:fixed;inset:0;background:radial-gradient(ellipse at 15% 10%,#39235a55,transparent 40%),radial-gradient(ellipse at 90% 90%,#193c4650,transparent 45%),#090711;overflow:hidden}
+.topbar{height:66px;position:absolute;inset:0 0 auto;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:0 18px;background:#080610e8;border-bottom:1px solid var(--line);backdrop-filter:blur(20px)}
+.brand{display:flex;align-items:center;gap:10px}.brand-mark{width:40px;height:40px;display:grid;place-items:center;border-radius:13px;background:linear-gradient(145deg,#d0b7ff,#7650c9);color:#171128}.brand-mark svg{stroke:#171128}.brand-name{font-size:13px;font-weight:900;letter-spacing:1px}.brand-sub{font-size:9px;color:#b5a7d4;letter-spacing:2px}
+.top-actions{display:flex;align-items:center;gap:8px}.admin-label{padding:7px 12px;border:1px solid #b18aff55;border-radius:30px;background:#a58aff20;color:#e0d0ff;font-size:10px;font-weight:900}
+.icon-btn{width:40px;height:40px;display:grid;place-items:center;border:1px solid var(--line);border-radius:12px;background:#ffffff0c;color:white}
+.layout{position:absolute;inset:66px 0 0}.sidebar{position:absolute;top:0;right:0;bottom:0;width:248px;padding:15px 13px;overflow-y:auto;background:#0a0815f2;border-left:1px solid var(--line);z-index:60;backdrop-filter:blur(22px)}
+.side-caption{padding:9px 12px;color:#a99abd;font-size:9px;font-weight:900;letter-spacing:1px}
+.nav-btn{width:100%;min-height:46px;display:flex;align-items:center;gap:11px;padding:0 12px;margin:4px 0;border:1px solid transparent;border-radius:12px;background:transparent;color:#d0c8df;text-align:right;font-size:12px;font-weight:800;text-decoration:none}
+.nav-btn.active,.nav-btn:hover{border-color:#b18aff55;background:#a77aff22;color:#f1e7ff}
+.nav-icon{width:29px;height:29px;display:grid;place-items:center;border-radius:9px;background:#b18aff18;color:#cbb2ff;flex-shrink:0}.nav-icon svg{width:17px;height:17px}
+.side-separator{height:1px;background:var(--line);margin:13px 7px}.sidebar-bottom{margin:20px 5px 0;padding:13px;border:1px solid var(--line);border-radius:14px;background:#ffffff08}.sidebar-bottom strong{font-size:11px}.sidebar-bottom p{margin:6px 0 0;color:var(--muted);font-size:10px;line-height:1.9}
+.main{position:absolute;top:0;right:248px;left:0;bottom:0;overflow-y:auto;overflow-x:hidden;padding:23px clamp(12px,3vw,34px) 35px;overscroll-behavior:contain}
+.view{display:none}.view.active{display:block}
+.page-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:19px}.eyebrow{color:#c3a4ff;font-size:10px;font-weight:900;letter-spacing:1px}.page-head h1{font-size:clamp(21px,3vw,28px);margin:5px 0 3px;font-weight:900}.page-head p{margin:0;color:#c0b6d1;font-size:11px;line-height:1.8}
+.live-status{display:flex;align-items:center;gap:7px;padding:7px 11px;border:1px solid #53d6a255;border-radius:30px;background:#53d6a218;color:#a9f2d2;font-size:10px;font-weight:800;white-space:nowrap}.live-status i{width:7px;height:7px;border-radius:50%;background:var(--green)}
+.panel,.stat-card,.welcome,.form-panel{border:1px solid var(--line);background:var(--panel);backdrop-filter:blur(18px);box-shadow:0 12px 35px #0002}
+.panel,.form-panel{padding:17px;border-radius:17px}.panel-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:13px}.panel-head h3{font-size:13px;margin:0;font-weight:900}.panel-head span{font-size:9px;color:#b6abc9}
+.admin-profile{display:grid;grid-template-columns:120px 1fr;gap:17px;padding:17px;border:1px solid #1689e877;border-radius:19px;background:linear-gradient(115deg,#142d4cbb,#211638e8);margin-bottom:17px;overflow:hidden}
+.admin-cover{grid-column:1/-1;height:90px;margin:-17px -17px -54px;opacity:.55;background:linear-gradient(120deg,#3976b7,#64439a);background-size:cover;background-position:center}
+.admin-avatar{width:100px;height:100px;border:4px solid #171326;border-radius:25px;object-fit:cover;background:#28203b;z-index:1}
+.admin-ident{align-self:center;min-width:0;z-index:1}.admin-ident h2{font-size:18px;margin:0 0 5px}.admin-ident p{margin:3px 0;color:#d0c6df;font-size:10px;overflow-wrap:anywhere}
+.verified-mark{display:inline-flex;vertical-align:middle;align-items:center;justify-content:center;width:18px;height:18px;margin-right:5px;border-radius:50%;background:var(--blue);color:#fff}
+.verified-mark svg{width:12px;height:12px;stroke:#fff;stroke-width:2.8}
+.admin-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}.admin-tag{padding:4px 8px;border:1px solid #ffffff27;border-radius:20px;background:#ffffff12;color:#eee7ff;font-size:9px}
+.admin-data{grid-column:1/-1;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.admin-data div{padding:9px;border:1px solid #ffffff20;border-radius:10px;background:#08061055;min-width:0}.admin-data small{display:block;color:#bdb2cf;font-size:9px}.admin-data strong{display:block;margin-top:4px;font-size:10px;overflow-wrap:anywhere}
+.welcome{display:flex;align-items:center;justify-content:space-between;gap:15px;padding:20px;border-color:#b18aff55;border-radius:18px;margin-bottom:15px}.welcome h2{margin:0;font-size:17px}.welcome p{margin:7px 0 0;color:#d0c5df;font-size:11px;line-height:2}.welcome-icon{width:52px;height:52px;display:grid;place-items:center;border:1px solid #d4c2ff65;border-radius:16px;background:#a58aff25;color:#e1d1ff;flex-shrink:0}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin-bottom:15px}.stat-card{min-height:90px;padding:12px;border-radius:14px}.stat-name{font-size:10px;color:#c2b7d3;font-weight:800;margin-top:8px}.stat-value{font-size:13px;font-weight:900;margin-top:3px}.stat-icon{width:30px;height:30px;display:grid;place-items:center;border-radius:10px;background:#a58aff24;color:#d1baff}
+.content-grid{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(210px,.8fr);gap:12px}.quick-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.quick-action{min-height:67px;display:flex;align-items:center;gap:9px;padding:10px;border:1px solid var(--line);border-radius:12px;background:#ffffff09;text-align:right;color:var(--text)}.quick-action strong{display:block;font-size:11px}.quick-action small{display:block;margin-top:3px;color:var(--muted);font-size:9px}.q-icon{width:32px;height:32px;display:grid;place-items:center;border-radius:10px;background:#a58aff20;color:#d2baff}
+.activity-empty,.member-empty{padding:20px 8px;text-align:center;color:#bdb2cf;font-size:11px;line-height:2}.section-title{margin:0 0 5px;font-size:19px;font-weight:900}.section-description{margin:0 0 15px;color:#c0b6d1;font-size:11px;line-height:2}
+.form-layout{display:grid;grid-template-columns:minmax(0,1fr) 270px;gap:13px;align-items:start}.field{margin-bottom:13px}.field label{display:block;margin-bottom:6px;color:#e1d8ee;font-size:11px;font-weight:800}.field input,.field textarea,.field select,.member-tools input{width:100%;min-height:43px;padding:10px 12px;border:1px solid #ffffff20;border-radius:11px;outline:none;background:#080710d9;color:var(--text);font-size:12px}.field textarea{min-height:110px;resize:vertical;line-height:1.9}.field input:focus,.field textarea:focus,.field select:focus,.member-tools input:focus{border-color:#b18affaa}.field-hint{margin-top:5px;color:#aaa0bd;font-size:9px}
+.primary-btn{min-height:43px;display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:0 16px;border:0;border-radius:11px;background:linear-gradient(110deg,#c5a6ff,#8055d9);color:#171128;font-size:11px;font-weight:900}.primary-btn:disabled{opacity:.55;cursor:not-allowed}.secondary-btn{min-height:38px;padding:0 12px;border:1px solid var(--line);border-radius:10px;background:#ffffff0c;color:#eee8f8;font-size:10px;font-weight:800}
+.notice{padding:10px 12px;border:1px solid #e8c98d45;border-radius:11px;background:#e8c98d12;color:#f0dcae;font-size:10px;line-height:2;margin-bottom:13px}
+.preview-card{padding:16px;border:1px solid #b18aff44;border-radius:15px;background:#1a132aeb}.preview-top{margin-bottom:13px}.preview-top strong{font-size:11px}.preview-top small{display:block;color:var(--muted);font-size:9px;margin-top:3px}.preview-label{font-size:9px;color:#c2a6f3;font-weight:900;margin-bottom:7px}.preview-title{font-size:14px;font-weight:900;overflow-wrap:anywhere}.preview-body{margin-top:8px;color:#d0c9dc;font-size:11px;line-height:2;white-space:pre-wrap}.preview-destination{margin-top:12px;padding-top:10px;border-top:1px solid var(--line);font-size:9px;color:#bdb2cf}
+.member-tools{display:flex;gap:8px;align-items:center;margin-bottom:13px}.member-tools input{flex:1;min-width:0}.member-results{display:grid;gap:8px}.member-row{display:flex;align-items:center;gap:10px;padding:11px;border:1px solid var(--line);border-radius:13px;background:#ffffff09;min-width:0}.member-avatar{width:46px;height:46px;flex-shrink:0;display:grid;place-items:center;overflow:hidden;border-radius:13px;background:#a58aff2a;color:#e0cfff;font-weight:900}.member-avatar img{width:100%;height:100%;object-fit:cover}.member-info{flex:1;min-width:0}.member-info strong{display:block;font-size:12px;overflow-wrap:anywhere}.member-info small{display:block;margin-top:3px;color:#b8aec9;font-size:10px;overflow-wrap:anywhere}.member-meta{display:flex;flex-wrap:wrap;gap:5px;margin-top:5px}.member-tag{padding:3px 7px;border:1px solid var(--line);border-radius:20px;color:#d0c6df;font-size:9px}
+.member-actions{display:flex;gap:6px;flex-shrink:0}.member-actions button{min-height:35px;padding:0 9px;border-radius:9px;font-size:9px;font-weight:900}.member-open{border:1px solid #b18aff55;background:#a58aff20;color:#e0d0ff}.member-message{border:1px solid #53d6a255;background:#53d6a218;color:#a9f2d2}.member-verify{border:1px solid #55d6a277;background:#53d6a218;color:#a9f2d2}.member-verify.remove{border-color:#ff718866;background:#ff71881a;color:#ffb0bd}.member-verify:disabled{opacity:.5}
+.member-pagination{display:flex;align-items:center;justify-content:space-between;gap:9px;margin-top:13px;color:#bdb2cf;font-size:10px}
+.member-detail,.message-compose,.access-screen,.dialog-backdrop{position:fixed;inset:0;z-index:150;display:flex;align-items:center;justify-content:center;padding:15px;background:#05040bdc;backdrop-filter:blur(12px)}
+.member-detail-card,.message-compose-card,.dialog-card,.access-card{width:min(620px,100%);max-height:90%;overflow:auto;padding:18px;border:1px solid #b18aff55;border-radius:19px;background:#110d1df7;box-shadow:0 25px 80px #0009}
+.detail-head,.message-compose-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:13px}.detail-head h3,.message-compose-head h3{margin:0;font-size:14px}.detail-close{width:35px;height:35px;border:1px solid var(--line);border-radius:10px;background:#ffffff0b;color:white}
+.detail-cover{width:100%;height:125px;object-fit:cover;border-radius:13px;background:#241b37;margin-bottom:10px}.detail-profile-head{display:flex;align-items:center;gap:12px;margin-top:-30px;padding:0 12px 10px}.detail-avatar{width:70px;height:70px;display:grid;place-items:center;overflow:hidden;border:4px solid #110d1d;border-radius:20px;background:#a58aff2c;color:#e3d2ff;font-size:23px;font-weight:900;flex-shrink:0}.detail-avatar img{width:100%;height:100%;object-fit:cover}.detail-name{font-size:14px;font-weight:900}.detail-username{color:#b9aecb;font-size:10px;margin-top:3px}.detail-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin-top:10px}.detail-item{padding:10px;border:1px solid var(--line);border-radius:10px;background:#ffffff08;min-width:0}.detail-item small{display:block;color:#b7abc9;font-size:9px}.detail-item strong{display:block;margin-top:4px;font-size:10px;overflow-wrap:anywhere;white-space:pre-wrap}.detail-video{width:100%;max-height:210px;margin-top:10px;border-radius:12px;background:#000}
+.message-compose-card{width:min(450px,100%)}.message-compose-target{margin:0 0 10px;color:#c8bdd8;font-size:11px;line-height:1.8}.message-compose textarea{width:100%;min-height:130px;resize:vertical;padding:11px;border:1px solid #ffffff25;border-radius:11px;outline:none;background:#090711;color:var(--text);font:inherit;font-size:12px;line-height:1.9}.message-compose-actions,.dialog-actions{display:flex;gap:8px;margin-top:12px}.message-compose-actions button,.dialog-actions button{flex:1}
+.toast{position:fixed;z-index:250;bottom:17px;left:50%;transform:translate(-50%,20px);opacity:0;pointer-events:none;padding:10px 16px;border:1px solid var(--line);border-radius:11px;background:#1b1730;color:white;font-size:11px;font-weight:800;transition:.25s;max-width:90%;text-align:center}.toast.show{opacity:1;transform:translate(-50%,0)}.toast.error{border-color:#ff718855;color:#ffb0bd}
+.access-screen{z-index:200;background:#090711ee}.access-card{width:min(400px,100%);text-align:center;padding:25px}.access-mark{width:58px;height:58px;display:grid;place-items:center;margin:0 auto 13px;border-radius:18px;background:#a58aff28;color:#d9c5ff}.access-card h2{margin:0;font-size:18px}.access-card p{margin:8px 0 16px;color:#c0b6d1;font-size:11px;line-height:2}.access-input{width:100%;height:46px;margin:0 0 11px;padding:0 13px;border:1px solid #ffffff25;border-radius:11px;outline:none;background:#090711;color:var(--text);font:inherit;text-align:center;letter-spacing:2px}.access-card .primary-btn{width:100%}
+.dialog-backdrop{z-index:300}.dialog-card{width:min(380px,100%)}.dialog-card h3{margin:0 0 7px;font-size:15px}.dialog-card p{margin:0;color:#c5bad5;font-size:11px;line-height:2}
+.footer-note{text-align:center;color:#a89bbd;font-size:9px;margin-top:23px}.mobile-menu{display:none}
+@media(max-width:1050px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.form-layout{grid-template-columns:1fr}}
+@media(max-width:800px){.sidebar{width:248px;transform:translateX(105%);transition:transform .22s;box-shadow:-20px 0 60px #0009}.sidebar.open{transform:translateX(0)}.main{right:0;padding:17px 13px 28px}.mobile-menu{display:grid}.content-grid{grid-template-columns:1fr}.topbar{padding:0 11px}}
+@media(max-width:520px){.topbar{height:60px}.layout{top:60px}.brand-name{font-size:11px}.admin-label{font-size:9px;padding:6px 8px}.main{padding:14px 10px 25px}.admin-profile{grid-template-columns:83px 1fr;gap:10px;padding:12px}.admin-cover{margin:-12px -12px -48px}.admin-avatar{width:76px;height:76px;border-radius:20px}.admin-ident h2{font-size:14px}.admin-data{grid-template-columns:1fr 1fr}.welcome{padding:15px}.welcome h2{font-size:14px}.stats{gap:7px}.stat-card{min-height:83px;padding:9px}.stat-value{font-size:12px}.panel,.form-panel{padding:12px}.quick-grid{grid-template-columns:1fr}.member-tools{flex-direction:column;align-items:stretch}.member-tools button{width:100%}.member-row{align-items:flex-start;flex-wrap:wrap}.member-actions{width:calc(100% - 55px);margin-right:55px}.member-actions button{flex:1;padding:0 5px}.detail-grid{grid-template-columns:1fr 1fr}.detail-cover{height:100px}}
 </style>
 </head>
 <body>
@@ -183,36 +88,53 @@ svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke
   <a class="nav-btn" href="home.html">موقع هَنون</a>
   <a class="nav-btn" href="members.html">دليل الأعضاء</a>
   <a class="nav-btn" href="games.html">الألعاب</a>
-  <div class="sidebar-bottom"><strong><i class="secure-dot"></i>حماية لوحة الإدارة</strong><p>جلسة إدارية آمنة تنتهي بعد 30 يومًا أو عند تسجيل الخروج.</p></div>
+  <div class="sidebar-bottom"><strong>● حماية لوحة الإدارة</strong><p>جلسة إدارية آمنة تنتهي بعد 30 يومًا أو عند تسجيل الخروج.</p></div>
 </aside>
 
 <main class="main" id="mainContent">
 <section class="view active" id="view-dashboard">
-  <div class="page-head"><div><div class="eyebrow">HANOON / ADMINISTRATION</div><h1>مركز التحكم</h1><p>إدارة موقع هَنون من مكان واحد.</p></div><div class="live-status"><i></i> مركز الإدارة</div></div>
-  <div class="welcome"><div><h2>أهلًا بك في مركز تحكم هَنون</h2><p>لوحة الإدارة الخاصة بموقع هَنون.<br>اختر القسم الذي تريد إدارته من القائمة الجانبية.</p></div><div class="welcome-icon"><svg viewBox="0 0 24 24"><path d="M12 3 4 6v5c0 5 3.4 8.4 8 10 4.6-1.6 8-5 8-10V6l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg></div></div>
+  <div class="page-head"><div><div class="eyebrow">HANOON / ADMINISTRATION</div><h1>مركز التحكم</h1><p>حساب الإدارة وجميع أدوات التحكم في مكان واحد.</p></div><div class="live-status"><i></i> مركز الإدارة</div></div>
+
+  <section class="admin-profile" aria-label="حساب المدير الموثق">
+    <div class="admin-cover" id="adminCover"></div>
+    <img class="admin-avatar" id="adminAvatar" alt="صورة حساب المدير">
+    <div class="admin-ident">
+      <h2>Yousef elgorf <span class="verified-mark" title="حساب موثّق"><svg viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></svg></span></h2>
+      <p>@elgorf</p>
+      <div class="admin-tags"><span class="admin-tag">مدير الموقع</span><span class="admin-tag">حساب موثّق</span><span class="admin-tag">نشط</span></div>
+    </div>
+    <div class="admin-data">
+      <div><small>كود العضوية</small><strong>HN-81F47A85A3</strong></div>
+      <div><small>معرّف الحساب (ID)</small><strong>a4450f5b-05ee-4476-82e0-9e064d6df331</strong></div>
+      <div><small>اسم المستخدم</small><strong>elgorf</strong></div>
+      <div><small>حالة التوثيق</small><strong>موثّق رسميًا</strong></div>
+    </div>
+  </section>
+
+  <div class="welcome"><div><h2>أهلًا بك في مركز تحكم هَنون</h2><p>من هنا تقدر تدير الأعضاء، وتوثّق الحسابات، وتراسل الأعضاء، وترسل الإشعارات.</p></div><div class="welcome-icon"><svg viewBox="0 0 24 24"><path d="M12 3 4 6v5c0 5 3.4 8.4 8 10 4.6-1.6 8-5 8-10V6l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg></div></div>
   <div class="stats">
     <div class="stat-card"><div class="stat-icon">01</div><div class="stat-name">إدارة الأعضاء</div><div class="stat-value">مركز الأعضاء</div></div>
-    <div class="stat-card"><div class="stat-icon">02</div><div class="stat-name">التواصل مع الأعضاء</div><div class="stat-value">الإشعارات</div></div>
-    <div class="stat-card"><div class="stat-icon">03</div><div class="stat-name">المكافآت والهدايا</div><div class="stat-value">قيد التجهيز</div></div>
-    <div class="stat-card"><div class="stat-icon">04</div><div class="stat-name">الأرصدة</div><div class="stat-value">قيد التجهيز</div></div>
+    <div class="stat-card"><div class="stat-icon">02</div><div class="stat-name">التواصل مع الأعضاء</div><div class="stat-value">المراسلات والإشعارات</div></div>
+    <div class="stat-card"><div class="stat-icon">03</div><div class="stat-name">التوثيق</div><div class="stat-value">تحكم مباشر</div></div>
+    <div class="stat-card"><div class="stat-icon">04</div><div class="stat-name">حساب المدير</div><div class="stat-value">موثّق ومحمي</div></div>
   </div>
   <div class="content-grid">
     <div class="panel"><div class="panel-head"><h3>اختصارات الإدارة</h3><span>وصول سريع</span></div><div class="quick-grid">
       <button class="quick-action" data-open-view="notifications"><span class="q-icon">N</span><span><strong>إرسال إشعار</strong><small>إلى عضو أو مجموعة أو الجميع</small></span></button>
-      <button class="quick-action" data-open-view="members"><span class="q-icon">M</span><span><strong>إدارة الأعضاء</strong><small>عرض القائمة والبحث عن عضو</small></span></button>
+      <button class="quick-action" data-open-view="members"><span class="q-icon">M</span><span><strong>إدارة الأعضاء</strong><small>بيانات وصور وتوثيق ومراسلة</small></span></button>
     </div></div>
-    <div class="panel"><div class="panel-head"><h3>حالة مركز التحكم</h3><span>الأمان</span></div><div class="activity-empty">تم إنشاء جلسة الإدارة على الخادم. يمكنك التنقل بين الأقسام والعودة إلى نفس موضعك.</div></div>
+    <div class="panel"><div class="panel-head"><h3>حالة مركز التحكم</h3><span>الأمان</span></div><div class="activity-empty">تم تحميل لوحة الإدارة. كل عملية حساسة تتحقق من جلسة الإدارة على الخادم.</div></div>
   </div>
 </section>
 
 <section class="view" id="view-members">
-  <div class="page-head"><div><div class="eyebrow">MEMBER MANAGEMENT</div><h1>إدارة الأعضاء</h1><p>القائمة تُحمّل تلقائيًا، ويمكنك البحث بالاسم أو الكود أو المعرّف.</p></div><div class="live-status"><i></i> بيانات الأعضاء</div></div>
+  <div class="page-head"><div><div class="eyebrow">MEMBER MANAGEMENT</div><h1>إدارة الأعضاء</h1><p>ابحث بالاسم أو اسم المستخدم أو كود العضوية أو المعرّف.</p></div><div class="live-status"><i></i> بيانات الأعضاء</div></div>
   <div class="panel">
     <div class="panel-head"><h3>دليل أعضاء هَنون</h3><span id="memberCount">جارٍ التحضير</span></div>
     <form class="member-tools" id="memberSearchForm">
-      <input id="memberSearchInput" type="search" maxlength="80" placeholder="بحث بالاسم أو اسم المستخدم أو كود العضوية أو ID" autocomplete="off">
+      <input id="memberSearchInput" type="search" maxlength="80" placeholder="ابحث عن عضو..." autocomplete="off">
       <button class="primary-btn" id="memberSearchButton" type="submit">بحث</button>
-      <button class="secondary-btn" id="memberRefreshButton" type="button">تحديث القائمة</button>
+      <button class="secondary-btn" id="memberRefreshButton" type="button">تحديث</button>
     </form>
     <div class="member-results" id="memberResults"><div class="member-empty">جارٍ تحميل قائمة الأعضاء...</div></div>
     <div class="member-pagination" id="memberPagination" hidden><button class="secondary-btn" id="memberPrev" type="button">السابق</button><span id="memberPageLabel"></span><button class="secondary-btn" id="memberNext" type="button">التالي</button></div>
@@ -220,20 +142,20 @@ svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke
 </section>
 
 <section class="view" id="view-notifications">
-  <div class="page-head"><div><div class="eyebrow">COMMUNICATION CENTER</div><h1>إرسال الإشعارات</h1><p>أرسل تنبيهًا محفوظًا داخل حسابات أعضاء هَنون.</p></div><div class="live-status"><i></i> جاهز للإرسال</div></div>
+  <div class="page-head"><div><div class="eyebrow">COMMUNICATION CENTER</div><h1>إرسال الإشعارات</h1><p>أرسل إشعارًا محفوظًا داخل حسابات أعضاء هَنون.</p></div><div class="live-status"><i></i> جاهز للإرسال</div></div>
   <h2 class="section-title">إنشاء إشعار جديد</h2>
   <p class="section-description">حدد المستلمين، واكتب محتوى الإشعار، واختر وجهة الضغط عليه.</p>
-  <div class="notice">هذه النسخة تحفظ الإشعار داخل الموقع. إشعارات الهاتف الخارجية Push سيتم ربطها في مرحلة مستقلة.</div>
+  <div class="notice">الإشعار يُحفظ داخل الموقع. إشعارات الهاتف الخارجية Push تحتاج ربط خدمة مستقلة.</div>
   <div class="form-layout">
     <form class="form-panel" id="notificationForm">
       <div class="field"><label for="audience">إرسال الإشعار إلى</label><select id="audience" required><option value="all">جميع الأعضاء</option><option value="completed">الأعضاء أصحاب الملفات المكتملة</option><option value="member">عضو محدد</option></select></div>
       <div class="field" id="memberCodeField" hidden><label for="memberCode">كود العضو</label><input id="memberCode" type="text" autocomplete="off" placeholder="اكتب كود العضو"></div>
       <div class="field"><label for="notificationTitle">عنوان الإشعار</label><input id="notificationTitle" type="text" maxlength="180" required placeholder="اكتب عنوانًا واضحًا"></div>
       <div class="field"><label for="notificationBody">نص الإشعار</label><textarea id="notificationBody" maxlength="2000" required placeholder="اكتب تفاصيل الإشعار هنا..."></textarea><div class="field-hint">الحد الأقصى 2000 حرف.</div></div>
-      <div class="field"><label for="targetRoute">عند الضغط على الإشعار ينتقل العضو إلى</label><select id="targetRoute"><option value="">صفحة الإشعارات</option><option value="home.html">الرئيسية</option><option value="members.html">الأعضاء</option><option value="games.html">الألعاب</option><option value="notifications.html">الإشعارات</option><option value="profile.html">الملف الشخصي</option></select></div>
+      <div class="field"><label for="targetRoute">وجهة الضغط على الإشعار</label><select id="targetRoute"><option value="">صفحة الإشعارات</option><option value="home.html">الرئيسية</option><option value="members.html">الأعضاء</option><option value="games.html">الألعاب</option><option value="notifications.html">الإشعارات</option><option value="profile.html">الملف الشخصي</option></select></div>
       <button class="primary-btn" id="sendButton" type="submit">إرسال الإشعار</button>
     </form>
-    <aside class="preview-card"><div class="preview-top"><strong>معاينة الإشعار</strong><small>هكذا سيظهر داخل الموقع</small></div><div class="preview-label">HANOON WORLD</div><div class="preview-title" id="previewTitle">عنوان الإشعار سيظهر هنا</div><div class="preview-body" id="previewBody">اكتب نص الإشعار لتظهر المعاينة هنا مباشرة.</div><div class="preview-destination">وجهة الضغط: <strong id="previewDestination">صفحة الإشعارات</strong></div></aside>
+    <aside class="preview-card"><div class="preview-top"><strong>معاينة الإشعار</strong><small>هكذا سيظهر داخل الموقع</small></div><div class="preview-label">HANOON WORLD · حساب الإدارة</div><div class="preview-title" id="previewTitle">عنوان الإشعار سيظهر هنا</div><div class="preview-body" id="previewBody">اكتب نص الإشعار لتظهر المعاينة هنا مباشرة.</div><div class="preview-destination">وجهة الضغط: <strong id="previewDestination">صفحة الإشعارات</strong></div></aside>
   </div>
 </section>
 <div class="footer-note">HANOON WORLD · PRIVATE ADMINISTRATION CENTER</div>
@@ -243,7 +165,7 @@ svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke
 
 <div class="member-detail" id="memberDetail" hidden>
   <div class="member-detail-card">
-    <div class="detail-head"><h3>الملف الكامل للعضو</h3><button class="detail-close" id="closeMemberDetail" type="button" aria-label="إغلاق">×</button></div>
+    <div class="detail-head"><h3>الملف الكامل للعضو</h3><button class="detail-close" id="closeMemberDetail" type="button">×</button></div>
     <img class="detail-cover" id="detailCover" alt="غلاف العضو" hidden>
     <div class="detail-profile-head"><div class="detail-avatar" id="detailAvatar">؟</div><div><div class="detail-name" id="detailName">عضو هَنون</div><div class="detail-username" id="detailUsername"></div></div></div>
     <video class="detail-video" id="detailVideo" controls playsinline hidden></video>
@@ -253,637 +175,307 @@ svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke
 
 <div class="message-compose" id="adminMessageDialog" hidden>
   <div class="message-compose-card">
-    <div class="message-compose-head">
-      <h3>مراسلة عضو من حساب الإدارة</h3>
-      <button class="detail-close" id="closeAdminMessage" type="button" aria-label="إغلاق">×</button>
-    </div>
-    <p class="message-compose-target" id="adminMessageTarget">سيتم إرسال الرسالة باسم حساب الإدارة الموثّق.</p>
+    <div class="message-compose-head"><h3>مراسلة عضو من حساب الإدارة</h3><button class="detail-close" id="closeAdminMessage" type="button">×</button></div>
+    <p class="message-compose-target" id="adminMessageTarget">ستظهر الرسالة باسم حسابك الموثّق.</p>
     <textarea id="adminMessageBody" maxlength="5000" placeholder="اكتب رسالتك للعضو..." rows="5"></textarea>
-    <div class="message-compose-actions">
-      <button class="secondary-btn" id="cancelAdminMessage" type="button">إلغاء</button>
-      <button class="primary-btn" id="sendAdminMessage" type="button">إرسال الرسالة</button>
-    </div>
+    <div class="message-compose-actions"><button class="secondary-btn" id="cancelAdminMessage" type="button">إلغاء</button><button class="primary-btn" id="sendAdminMessage" type="button">إرسال الرسالة</button></div>
   </div>
 </div>
 
 <div class="toast" id="toast" role="status"></div>
-
 <div class="dialog-backdrop" id="confirmDialog" hidden>
-  <div class="dialog-card">
-    <h3 id="dialogTitle">تأكيد العملية</h3>
-    <p id="dialogMessage">هل تريد المتابعة؟</p>
-    <div class="dialog-actions"><button class="secondary-btn" id="dialogCancel" type="button">إلغاء</button><button class="primary-btn" id="dialogConfirm" type="button">تأكيد</button></div>
-  </div>
+  <div class="dialog-card"><h3 id="dialogTitle">تأكيد العملية</h3><p id="dialogMessage">هل تريد المتابعة؟</p><div class="dialog-actions"><button class="secondary-btn" id="dialogCancel" type="button">إلغاء</button><button class="primary-btn" id="dialogConfirm" type="button">تأكيد</button></div></div>
 </div>
-
 <div class="access-screen" id="accessScreen">
   <form class="access-card" id="accessForm">
     <div class="access-mark"><svg viewBox="0 0 24 24"><path d="M12 3 4 6v5c0 5 3.4 8.4 8 10 4.6-1.6 8-5 8-10V6l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg></div>
-    <h2 id="accessTitle">الدخول إلى لوحة الإدارة</h2>
-    <p id="accessMessage">اكتب كلمة سر الإدارة للمتابعة.</p>
+    <h2 id="accessTitle">الدخول إلى لوحة الإدارة</h2><p id="accessMessage">اكتب كلمة سر الإدارة للمتابعة.</p>
     <input class="access-input" id="adminPassword" type="password" autocomplete="current-password" placeholder="كلمة سر الإدارة" required>
     <button class="primary-btn" id="accessAction" type="submit">دخول إلى لوحة التحكم</button>
   </form>
 </div>
 
 <script type="module">
-import { supabase } from "./supabase.js";
+import {supabase} from "./supabase.js";
 
-const $ = id => document.getElementById(id);
-const SESSION_KEY = "hanoon_admin_session";
-const PAGE_SIZE = 20;
-let toastTimer;
-let sessionToken = "";
-let memberOffset = 0;
-let memberTotal = 0;
-let membersLoaded = false;
-let historyStack = [];
-let currentView = "dashboard";
-let pendingDialogAction = null;
-let messageTarget = null;
+const $=id=>document.getElementById(id);
+const SESSION_KEY="hanoon_admin_session";
+const ADMIN_ID="a4450f5b-05ee-4476-82e0-9e064d6df331";
+const ADMIN_CODE="HN-81F47A85A3";
+const ADMIN_AVATAR="a4450f5b-05ee-4476-82e0-9e064d6df331/avatar-1794696870435.jpg";
+const ADMIN_COVER="a4450f5b-05ee-4476-82e0-9e064d6df331/cover-1794696871360.jpg";
+const PAGE_SIZE=20;
+let sessionToken="";
+let memberOffset=0,memberTotal=0,membersLoaded=false;
+let messageTarget=null,pendingDialogAction=null,toastTimer;
+let historyStack=[],currentView="dashboard";
 
 function toast(message,error=false){
-  const el=$("toast");
-  el.textContent=message;
-  el.classList.toggle("error",error);
-  el.classList.add("show");
-  clearTimeout(toastTimer);
-  toastTimer=setTimeout(()=>el.classList.remove("show"),3500);
+  const el=$("toast");el.textContent=message;el.classList.toggle("error",error);el.classList.add("show");
+  clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove("show"),3500);
 }
+function showAccess(title,message){$("accessTitle").textContent=title;$("accessMessage").textContent=message;$("accessScreen").hidden=false;}
+function showDashboard(){$("accessScreen").hidden=true;}
 
-function showAccess(title,message){
-  $("accessTitle").textContent=title;
-  $("accessMessage").textContent=message;
-  $("accessScreen").hidden=false;
+function publicAsset(path){
+  if(!path)return "";
+  const {data}=supabase.storage.from("avatars").getPublicUrl(path);
+  return data?.publicUrl||"";
 }
-
-function showDashboard(){
-  $("accessScreen").hidden=true;
+function loadAdminIdentity(){
+  const avatar=publicAsset(ADMIN_AVATAR),cover=publicAsset(ADMIN_COVER);
+  if(avatar){$("adminAvatar").src=avatar;$("adminAvatar").onerror=()=>{$("adminAvatar").removeAttribute("src");};}
+  if(cover)$("adminCover").style.backgroundImage=`url("${cover}")`;
 }
 
 async function adminRequest(body,token=sessionToken){
-  const headers={};
-  if(token)headers["x-admin-session"]=token;
-
+  const headers={};if(token)headers["x-admin-session"]=token;
   const {data,error}=await supabase.functions.invoke("admin-send-notification",{body,headers});
   if(error){
     let message="";
-    try{
-      if(error.context&&typeof error.context.json==="function"){
-        const details=await error.context.json();
-        message=details?.error||"";
-      }
-    }catch{}
+    try{if(error.context&&typeof error.context.json==="function"){const details=await error.context.json();message=details?.error||"";}}catch{}
     throw new Error(message||error.message||"تعذر الاتصال بخدمة الإدارة.");
   }
   if(data?.error)throw new Error(data.error);
   return data;
 }
-
-/* تم إصلاح إرسال كلمة السر: لا يوجد طلب تحقق فارغ قبل الطلب الحقيقي */
 async function createAdminSession(password){
-  const {data:loginData,error}=await supabase.functions.invoke("admin-send-notification",{
-    body:{action:"check"},
-    headers:{"x-admin-code":password}
-  });
-
-  if(error)throw new Error(loginData?.error||error.message||"تعذر تسجيل الدخول.");
-  if(!loginData?.ok||!loginData?.sessionToken){
-    throw new Error(loginData?.error||"لم يتم إنشاء جلسة الإدارة.");
-  }
-
-  sessionToken=loginData.sessionToken;
-  localStorage.setItem(SESSION_KEY,sessionToken);
-  return loginData;
+  const {data,error}=await supabase.functions.invoke("admin-send-notification",{body:{action:"check"},headers:{"x-admin-code":password}});
+  if(error)throw new Error(data?.error||error.message||"تعذر تسجيل الدخول.");
+  if(!data?.ok||!data?.sessionToken)throw new Error(data?.error||"لم يتم إنشاء جلسة الإدارة.");
+  sessionToken=data.sessionToken;localStorage.setItem(SESSION_KEY,sessionToken);return data;
 }
-
 async function validateSession(token){
   const data=await adminRequest({action:"session_check"},token);
   if(!data?.ok||!data?.isAdmin)throw new Error("جلسة الإدارة غير صالحة.");
-  sessionToken=token;
-  return true;
+  sessionToken=token;return true;
 }
-
 async function logoutAdmin(){
-  const token=sessionToken;
-  try{
-    if(token)await adminRequest({action:"logout"},token);
-  }catch(error){
-    console.warn("Admin logout:",error);
-  }
-  sessionToken="";
-  localStorage.removeItem(SESSION_KEY);
-  location.reload();
+  try{if(sessionToken)await adminRequest({action:"logout"});}catch(error){console.warn(error);}
+  sessionToken="";localStorage.removeItem(SESSION_KEY);location.reload();
 }
 
 $("accessForm").addEventListener("submit",async event=>{
-  event.preventDefault();
-  const button=$("accessAction");
-  const password=$("adminPassword").value.trim();
-  if(!password)return;
-  button.disabled=true;
-  button.textContent="جارٍ التحقق...";
-  try{
-    await createAdminSession(password);
-    $("adminPassword").value="";
-    showDashboard();
-    toast("تم فتح جلسة الإدارة بنجاح.");
-    updatePreview();
-  }catch(error){
-    sessionToken="";
-    localStorage.removeItem(SESSION_KEY);
-    showAccess("تعذر الدخول",error.message||"كلمة السر غير صحيحة.");
-    $("adminPassword").value="";
-    $("adminPassword").focus();
-  }finally{
-    button.disabled=false;
-    button.textContent="دخول إلى لوحة التحكم";
-  }
+  event.preventDefault();const button=$("accessAction"),password=$("adminPassword").value.trim();if(!password)return;
+  button.disabled=true;button.textContent="جارٍ التحقق...";
+  try{await createAdminSession(password);$("adminPassword").value="";showDashboard();loadAdminIdentity();toast("تم فتح جلسة الإدارة بنجاح.");updatePreview();}
+  catch(error){sessionToken="";localStorage.removeItem(SESSION_KEY);showAccess("تعذر الدخول",error.message||"كلمة السر غير صحيحة.");$("adminPassword").value="";$("adminPassword").focus();}
+  finally{button.disabled=false;button.textContent="دخول إلى لوحة التحكم";}
 });
 
 function askConfirmation(title,message,confirmText="تأكيد"){
   return new Promise(resolve=>{
-    $("dialogTitle").textContent=title;
-    $("dialogMessage").textContent=message;
-    $("dialogConfirm").textContent=confirmText;
-    pendingDialogAction=resolve;
-    $("confirmDialog").hidden=false;
+    $("dialogTitle").textContent=title;$("dialogMessage").textContent=message;$("dialogConfirm").textContent=confirmText;
+    pendingDialogAction=resolve;$("confirmDialog").hidden=false;
   });
 }
-
 function closeDialog(result){
   $("confirmDialog").hidden=true;
-  if(pendingDialogAction){
-    pendingDialogAction(result);
-    pendingDialogAction=null;
-  }
+  if(pendingDialogAction){pendingDialogAction(result);pendingDialogAction=null;}
 }
-
 $("dialogCancel").addEventListener("click",()=>closeDialog(false));
 $("dialogConfirm").addEventListener("click",()=>closeDialog(true));
-$("confirmDialog").addEventListener("click",event=>{
-  if(event.target===$("confirmDialog"))closeDialog(false);
-});
+$("confirmDialog").addEventListener("click",e=>{if(e.target===$("confirmDialog"))closeDialog(false);});
+$("logoutButton").addEventListener("click",async()=>{if(await askConfirmation("تسجيل الخروج","هل تريد إنهاء جلسة الإدارة؟","تسجيل الخروج"))await logoutAdmin();});
 
-$("logoutButton").addEventListener("click",async()=>{
-  const yes=await askConfirmation("تسجيل الخروج","هل تريد إنهاء جلسة الإدارة على هذا الجهاز؟","تسجيل الخروج");
-  if(yes)await logoutAdmin();
-});
-
-/* التنقل الداخلي مع حفظ موضع التمرير */
-function saveCurrentPosition(){
-  const main=$("mainContent");
-  return {view:currentView,scrollTop:main.scrollTop,memberOffset,detailOpen:!$("memberDetail").hidden};
-}
-
+function savePosition(){return {view:currentView,scrollTop:$("mainContent").scrollTop,memberOffset,detailOpen:!$("memberDetail").hidden};}
 function renderView(name){
   currentView=name;
-  document.querySelectorAll(".view").forEach(view=>view.classList.toggle("active",view.id==="view-"+name));
-  document.querySelectorAll(".nav-btn[data-view]").forEach(button=>button.classList.toggle("active",button.dataset.view===name));
-  $("sidebar").classList.remove("open");
-  $("mainContent").scrollTop=0;
-
+  document.querySelectorAll(".view").forEach(v=>v.classList.toggle("active",v.id==="view-"+name));
+  document.querySelectorAll(".nav-btn[data-view]").forEach(b=>b.classList.toggle("active",b.dataset.view===name));
+  $("sidebar").classList.remove("open");$("mainContent").scrollTop=0;
   if(name==="members"&&!membersLoaded)searchMembers(true);
 }
-
 function openView(name){
-  if(!["dashboard","members","notifications"].includes(name))return;
-  if(name===currentView)return;
-  historyStack.push(saveCurrentPosition());
-  renderView(name);
+  if(!["dashboard","members","notifications"].includes(name)||name===currentView)return;
+  historyStack.push(savePosition());renderView(name);
 }
-
 function goBackInsidePanel(){
-  const previous=historyStack.pop();
-  if(!previous)return;
-  renderView(previous.view);
-  memberOffset=previous.memberOffset||0;
-  requestAnimationFrame(()=>{
-    $("mainContent").scrollTop=previous.scrollTop||0;
-    if(previous.detailOpen)$("memberDetail").hidden=false;
-  });
+  const prev=historyStack.pop();if(!prev)return;
+  renderView(prev.view);memberOffset=prev.memberOffset||0;
+  requestAnimationFrame(()=>{$("mainContent").scrollTop=prev.scrollTop||0;if(prev.detailOpen)$("memberDetail").hidden=false;});
 }
-
-document.querySelectorAll("[data-view]").forEach(button=>button.addEventListener("click",()=>openView(button.dataset.view)));
-document.querySelectorAll("[data-open-view]").forEach(button=>button.addEventListener("click",()=>openView(button.dataset.openView)));
+document.querySelectorAll("[data-view]").forEach(b=>b.addEventListener("click",()=>openView(b.dataset.view)));
+document.querySelectorAll("[data-open-view]").forEach(b=>b.addEventListener("click",()=>openView(b.dataset.openView)));
 $("menuButton").addEventListener("click",()=>$("sidebar").classList.toggle("open"));
-
-window.addEventListener("keydown",event=>{
-  if(event.key==="Escape"){
-    if(!$("memberDetail").hidden){$("memberDetail").hidden=true;return;}
-    if(!$("confirmDialog").hidden){closeDialog(false);return;}
-    if(historyStack.length){goBackInsidePanel();return;}
-    $("sidebar").classList.remove("open");
-  }
+window.addEventListener("keydown",e=>{
+  if(e.key!=="Escape")return;
+  if(!$("memberDetail").hidden){$("memberDetail").hidden=true;return;}
+  if(!$("adminMessageDialog").hidden){closeAdminMessage();return;}
+  if(!$("confirmDialog").hidden){closeDialog(false);return;}
+  if(historyStack.length){goBackInsidePanel();return;}
+  $("sidebar").classList.remove("open");
 });
-
-window.addEventListener("popstate",()=>{
-  if(historyStack.length)goBackInsidePanel();
-});
+window.addEventListener("popstate",()=>{if(historyStack.length)goBackInsidePanel();});
 history.pushState({adminPanel:true},"","#admin");
 
-$("audience").addEventListener("change",()=>{
-  $("memberCodeField").hidden=$("audience").value!=="member";
-});
-
-/* عرض صور الأعضاء وتفاصيل الملف */
-function memberInitial(member){
-  const name=String(member.full_name||member.nickname||member.username||"؟").trim();
-  return name.slice(0,1)||"؟";
+function memberInitial(member){return String(member.full_name||member.nickname||member.username||"؟").trim().slice(0,1)||"؟";}
+function makeImage(url,alt){
+  if(!url)return null;const img=document.createElement("img");img.src=url;img.alt=alt;img.loading="lazy";img.referrerPolicy="no-referrer";img.onerror=()=>img.remove();return img;
 }
-
-function makeImage(url,alt,className){
-  if(!url)return null;
-  const img=document.createElement("img");
-  img.src=url;
-  img.alt=alt;
-  img.className=className||"";
-  img.loading="lazy";
-  img.referrerPolicy="no-referrer";
-  img.onerror=()=>img.remove();
-  return img;
-}
-
 function displayValue(value){
   if(value===null||value===undefined||value==="")return "";
   if(Array.isArray(value))return value.join("، ");
   if(typeof value==="object")return JSON.stringify(value);
   return String(value);
 }
-
 function showMemberDetails(member){
   $("detailName").textContent=member.full_name||member.nickname||"عضو هَنون";
+  if(member.is_verified){const badge=document.createElement("span");badge.className="verified-mark";badge.innerHTML='<svg viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></svg>';$("detailName").append(badge);}
   $("detailUsername").textContent=member.username?"@"+member.username:"";
-
-  const avatar=$("detailAvatar");
-  avatar.replaceChildren();
-  const avatarImage=makeImage(member.avatar_url,"صورة العضو","");
-  if(avatarImage)avatar.appendChild(avatarImage);
-  else avatar.textContent=memberInitial(member);
-
+  const avatar=$("detailAvatar");avatar.replaceChildren();const avatarImage=makeImage(member.avatar_url,"صورة العضو");if(avatarImage)avatar.append(avatarImage);else avatar.textContent=memberInitial(member);
   const cover=$("detailCover");
-  if(member.cover_url){
-    cover.src=member.cover_url;
-    cover.hidden=false;
-    cover.onerror=()=>{cover.hidden=true;};
-  }else{
-    cover.removeAttribute("src");
-    cover.hidden=true;
-  }
-
+  if(member.cover_url){cover.src=member.cover_url;cover.hidden=false;cover.onerror=()=>cover.hidden=true;}else{cover.removeAttribute("src");cover.hidden=true;}
   const video=$("detailVideo");
-  if(member.profile_video_path){
-    video.src=member.profile_video_path;
-    video.hidden=false;
-  }else{
-    video.pause();
-    video.removeAttribute("src");
-    video.load();
-    video.hidden=true;
-  }
-
+  if(member.profile_video_path){video.src=member.profile_video_path;video.hidden=false;}else{video.pause();video.removeAttribute("src");video.load();video.hidden=true;}
   const fields=[
-    ["كود العضوية",member.member_code],
-    ["المعرّف",member.id],
-    ["اسم المستخدم",member.username],
-    ["الاسم الكامل",member.full_name],
-    ["الاسم المستعار",member.nickname],
-    ["العمر",member.age],
-    ["النبذة الشخصية",member.bio],
-    ["الهوايات",member.hobbies],
-    ["اهتمامات القراءة",member.reading_interests],
-    ["الاهتمامات",member.interests],
-    ["الملف الشخصي",member.profile_completed?"مكتمل":"غير مكتمل"],
-    ["خصوصية الحساب",member.is_private?"خاص":"عام"],
+    ["كود العضوية",member.member_code],["المعرّف",member.id],["اسم المستخدم",member.username],
+    ["الاسم الكامل",member.full_name],["الاسم المستعار",member.nickname],["العمر",member.age],
+    ["النبذة الشخصية",member.bio],["الهوايات",member.hobbies],["اهتمامات القراءة",member.reading_interests],
+    ["الاهتمامات",member.interests],["حالة التوثيق",member.is_verified?"موثّق":"غير موثّق"],
+    ["الملف الشخصي",member.profile_completed?"مكتمل":"غير مكتمل"],["خصوصية الحساب",member.is_private?"خاص":"عام"],
     ["الصلاحية",member.role==="admin"?"مدير":"عضو"],
     ["تاريخ الانضمام",member.created_at?new Date(member.created_at).toLocaleString("ar-EG"):""],
     ["آخر تحديث",member.updated_at?new Date(member.updated_at).toLocaleString("ar-EG"):""],
-    ["مسار الصورة",member.avatar_path],
-    ["مسار الغلاف",member.cover_path],
-    ["مسار الفيديو",member.profile_video_path]
+    ["مسار الصورة",member.avatar_path],["مسار الغلاف",member.cover_path],["مسار الفيديو",member.profile_video_path]
   ];
-
-  const grid=$("detailGrid");
-  grid.replaceChildren();
-  fields.forEach(([label,value])=>{
-    const clean=displayValue(value);
-    if(!clean)return;
-    const item=document.createElement("div");
-    item.className="detail-item";
-    const small=document.createElement("small");
-    small.textContent=label;
-    const strong=document.createElement("strong");
-    strong.textContent=clean;
-    item.append(small,strong);
-    grid.appendChild(item);
-  });
-
+  const grid=$("detailGrid");grid.replaceChildren();
+  fields.forEach(([label,value])=>{const clean=displayValue(value);if(!clean)return;const item=document.createElement("div");item.className="detail-item";const small=document.createElement("small");small.textContent=label;const strong=document.createElement("strong");strong.textContent=clean;item.append(small,strong);grid.append(item);});
   $("memberDetail").hidden=false;
 }
-
 $("closeMemberDetail").addEventListener("click",()=>$("memberDetail").hidden=true);
-$("memberDetail").addEventListener("click",event=>{
-  if(event.target===$("memberDetail"))$("memberDetail").hidden=true;
-});
+$("memberDetail").addEventListener("click",e=>{if(e.target===$("memberDetail"))$("memberDetail").hidden=true;});
 
-
-/* مراسلة الأعضاء من هوية المدير الموثّق */
 function openAdminMessage(member){
-  if(!member || !member.member_code){
-    toast("لا يوجد كود عضوية صالح لهذا العضو.",true);
-    return;
-  }
+  if(!member?.member_code){toast("لا يوجد كود عضوية صالح لهذا العضو.",true);return;}
   messageTarget=member;
-  $("adminMessageTarget").textContent =
-    "إلى: "+(member.full_name||member.nickname||member.username||"عضو هَنون")+
-    " · "+member.member_code+
-    " — ستظهر الرسالة باسم حسابك الموثّق.";
-  $("adminMessageBody").value="";
-  $("adminMessageDialog").hidden=false;
-  setTimeout(()=>$("adminMessageBody").focus(),30);
+  $("adminMessageTarget").textContent="إلى: "+(member.full_name||member.nickname||member.username||"عضو هَنون")+" · "+member.member_code+" — ستظهر الرسالة باسم حسابك الموثّق.";
+  $("adminMessageBody").value="";$("adminMessageDialog").hidden=false;setTimeout(()=>$("adminMessageBody").focus(),30);
 }
-
-function closeAdminMessage(){
-  $("adminMessageDialog").hidden=true;
-  messageTarget=null;
-}
-
+function closeAdminMessage(){$("adminMessageDialog").hidden=true;messageTarget=null;}
 $("closeAdminMessage").addEventListener("click",closeAdminMessage);
 $("cancelAdminMessage").addEventListener("click",closeAdminMessage);
-$("adminMessageDialog").addEventListener("click",event=>{
-  if(event.target===$("adminMessageDialog"))closeAdminMessage();
-});
-
+$("adminMessageDialog").addEventListener("click",e=>{if(e.target===$("adminMessageDialog"))closeAdminMessage();});
 $("sendAdminMessage").addEventListener("click",async()=>{
-  if(!messageTarget)return;
-
-  const body=$("adminMessageBody").value.trim();
-
-  if(!body){
-    toast("اكتب نص الرسالة أولًا.",true);
-    $("adminMessageBody").focus();
-    return;
-  }
-
-  if(!sessionToken){
-    toast("جلسة الإدارة انتهت. سجّل الدخول مرة أخرى.",true);
-    return;
-  }
-
-  const button=$("sendAdminMessage");
-  button.disabled=true;
-  button.textContent="جارٍ إرسال الرسالة...";
-
+  if(!messageTarget)return;const body=$("adminMessageBody").value.trim();
+  if(!body){toast("اكتب نص الرسالة أولًا.",true);$("adminMessageBody").focus();return;}
+  if(!sessionToken){toast("جلسة الإدارة انتهت. سجّل الدخول مرة أخرى.",true);return;}
+  const button=$("sendAdminMessage");button.disabled=true;button.textContent="جارٍ الإرسال...";
   try{
-    const {data,error}=await supabase.rpc("admin_send_direct_message",{
-      p_session_token:sessionToken,
-      p_member_code:messageTarget.member_code,
-      p_body:body
-    });
-
+    const {data,error}=await supabase.rpc("admin_send_direct_message",{p_session_token:sessionToken,p_member_code:messageTarget.member_code,p_body:body});
     if(error)throw new Error(error.message||"تعذر إرسال الرسالة.");
-    if(!data || !data.ok)throw new Error((data && data.error)||"لم يتم تأكيد إرسال الرسالة.");
-
-    closeAdminMessage();
-    toast("تم إرسال الرسالة وإنشاء المحادثة مع العضو.");
-
-  }catch(error){
-    console.error("Admin direct message:",error);
-    toast(error.message||"حدث خطأ أثناء إرسال الرسالة.",true);
-
-  }finally{
-    button.disabled=false;
-    button.textContent="إرسال الرسالة";
-  }
+    if(!data?.ok)throw new Error(data?.error||"لم يتم تأكيد إرسال الرسالة.");
+    closeAdminMessage();toast("تم إرسال الرسالة وإنشاء المحادثة مع العضو.");
+  }catch(error){console.error(error);toast(error.message||"حدث خطأ أثناء إرسال الرسالة.",true);}
+  finally{button.disabled=false;button.textContent="إرسال الرسالة";}
 });
+
+async function setMemberVerification(member,button){
+  if(!member?.member_code||!sessionToken)return;
+  if(member.id===ADMIN_ID){toast("حساب الإدارة الأساسي محمي من تغيير التوثيق هنا.",true);return;}
+  const nextValue=!member.is_verified;
+  const yes=await askConfirmation(nextValue?"توثيق الحساب":"إلغاء التوثيق",nextValue?"هل تريد منح هذا العضو علامة التوثيق الزرقاء؟":"هل تريد إلغاء علامة التوثيق عن هذا العضو؟",nextValue?"توثيق الحساب":"إلغاء التوثيق");
+  if(!yes)return;
+  button.disabled=true;
+  try{
+    const {data,error}=await supabase.rpc("admin_set_member_verified",{p_session_token:sessionToken,p_member_code:member.member_code,p_verified:nextValue});
+    if(error)throw new Error(error.message||"تعذر تحديث التوثيق.");
+    if(!data?.ok)throw new Error(data?.error||"لم يتم تحديث التوثيق.");
+    toast(nextValue?"تم توثيق الحساب.":"تم إلغاء توثيق الحساب.");
+    await searchMembers(false);
+  }catch(error){toast(error.message||"حدث خطأ أثناء تحديث التوثيق.",true);button.disabled=false;}
+}
 
 function renderMembers(members){
-  const container=$("memberResults");
-  container.replaceChildren();
-
-  if(!members.length){
-    const empty=document.createElement("div");
-    empty.className="member-empty";
-    empty.textContent="لا يوجد أعضاء لعرضهم.";
-    container.appendChild(empty);
-    return;
-  }
-
+  const container=$("memberResults");container.replaceChildren();
+  if(!members.length){const empty=document.createElement("div");empty.className="member-empty";empty.textContent="لا يوجد أعضاء لعرضهم.";container.append(empty);return;}
   members.forEach(member=>{
-    const row=document.createElement("article");
-    row.className="member-row";
-
-    const avatar=document.createElement("div");
-    avatar.className="member-avatar";
-    const image=makeImage(member.avatar_url,"صورة العضو","");
-    if(image)avatar.appendChild(image);
-    else avatar.textContent=memberInitial(member);
-
-    const info=document.createElement("div");
-    info.className="member-info";
-    const name=document.createElement("strong");
-    name.textContent=member.full_name||member.nickname||"عضو هَنون";
-    const details=document.createElement("small");
-    details.textContent=[member.username?"@"+member.username:"",member.member_code||""].filter(Boolean).join(" · ");
-
-    const meta=document.createElement("div");
-    meta.className="member-meta";
-    const status=document.createElement("span");
-    status.className="member-tag";
-    status.textContent=member.profile_completed?"الملف مكتمل":"الملف غير مكتمل";
-    meta.appendChild(status);
-
-    if(member.role==="admin"){
-      const tag=document.createElement("span");
-      tag.className="member-tag";
-      tag.textContent="مدير";
-      meta.appendChild(tag);
-    }
-
+    const row=document.createElement("article");row.className="member-row";
+    const avatar=document.createElement("div");avatar.className="member-avatar";
+    const image=makeImage(member.avatar_url,"صورة العضو");if(image)avatar.append(image);else avatar.textContent=memberInitial(member);
+    const info=document.createElement("div");info.className="member-info";
+    const name=document.createElement("strong");name.textContent=member.full_name||member.nickname||"عضو هَنون";
+    if(member.is_verified){const badge=document.createElement("span");badge.className="verified-mark";badge.title="حساب موثّق";badge.innerHTML='<svg viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></svg>';name.append(badge);}
+    const details=document.createElement("small");details.textContent=[member.username?"@"+member.username:"",member.member_code||""].filter(Boolean).join(" · ");
+    const meta=document.createElement("div");meta.className="member-meta";
+    const status=document.createElement("span");status.className="member-tag";status.textContent=member.profile_completed?"الملف مكتمل":"الملف غير مكتمل";meta.append(status);
+    if(member.role==="admin"){const tag=document.createElement("span");tag.className="member-tag";tag.textContent="مدير";meta.append(tag);}
+    if(member.is_verified){const tag=document.createElement("span");tag.className="member-tag";tag.textContent="موثّق";meta.append(tag);}
     info.append(name,details,meta);
-
-    const open=document.createElement("button");
-    open.type="button";
-    open.className="member-open";
-    open.textContent="عرض التفاصيل";
-    open.addEventListener("click",()=>showMemberDetails(member));
-
-    const message=document.createElement("button");
-    message.type="button";
-    message.className="member-message";
-    message.textContent="مراسلة";
-    message.addEventListener("click",()=>openAdminMessage(member));
-
-    const actions=document.createElement("div");
-    actions.className="member-actions";
-    actions.append(open,message);
-
-    row.append(avatar,info,actions);
-    container.appendChild(row);
+    const open=document.createElement("button");open.type="button";open.className="member-open";open.textContent="التفاصيل";open.addEventListener("click",()=>showMemberDetails(member));
+    const message=document.createElement("button");message.type="button";message.className="member-message";message.textContent="مراسلة";message.addEventListener("click",()=>openAdminMessage(member));
+    const verify=document.createElement("button");verify.type="button";verify.className="member-verify"+(member.is_verified?" remove":"");verify.textContent=member.is_verified?"إلغاء التوثيق":"توثيق";
+    verify.disabled=member.id===ADMIN_ID;verify.title=verify.disabled?"حساب الإدارة محمي":"تغيير حالة التوثيق";verify.addEventListener("click",()=>setMemberVerification(member,verify));
+    const actions=document.createElement("div");actions.className="member-actions";actions.append(open,message,verify);
+    row.append(avatar,info,actions);container.append(row);
   });
 }
-
 function updateMemberPagination(){
-  const page=Math.floor(memberOffset/PAGE_SIZE)+1;
-  const pages=Math.max(1,Math.ceil(memberTotal/PAGE_SIZE));
+  const page=Math.floor(memberOffset/PAGE_SIZE)+1,pages=Math.max(1,Math.ceil(memberTotal/PAGE_SIZE));
   $("memberPagination").hidden=memberTotal<=PAGE_SIZE;
   $("memberPageLabel").textContent="صفحة "+page+" من "+pages+" · "+memberTotal+" عضو";
-  $("memberPrev").disabled=memberOffset<=0;
-  $("memberNext").disabled=memberOffset+PAGE_SIZE>=memberTotal;
+  $("memberPrev").disabled=memberOffset<=0;$("memberNext").disabled=memberOffset+PAGE_SIZE>=memberTotal;
 }
-
 async function searchMembers(reset=true){
   if(reset)memberOffset=0;
-  const query=$("memberSearchInput").value.trim();
-  const button=$("memberSearchButton");
-  button.disabled=true;
-  button.textContent="جارٍ التحميل...";
-  $("memberCount").textContent="جارٍ تحميل القائمة";
-  $("memberResults").innerHTML='<div class="member-empty">جارٍ تحميل أعضاء هَنون...</div>';
-  $("memberPagination").hidden=true;
-
+  const query=$("memberSearchInput").value.trim(),button=$("memberSearchButton");
+  button.disabled=true;button.textContent="جارٍ التحميل...";$("memberCount").textContent="جارٍ تحميل القائمة";
+  $("memberResults").innerHTML='<div class="member-empty">جارٍ تحميل أعضاء هَنون...</div>';$("memberPagination").hidden=true;
   try{
     const data=await adminRequest({action:"search_members",query,limit:PAGE_SIZE,offset:memberOffset});
     if(!data?.ok)throw new Error(data?.error||"تعذر تحميل الأعضاء.");
-    membersLoaded=true;
-    memberTotal=Number(data.total||0);
-    renderMembers(Array.isArray(data.members)?data.members:[]);
-    $("memberCount").textContent=memberTotal.toLocaleString("ar-EG")+" عضو";
-    updateMemberPagination();
-
+    const members=Array.isArray(data.members)?data.members:[];
+    const codes=members.map(m=>m.member_code).filter(Boolean);
+    if(codes.length){
+      const {data:verification,error}=await supabase.rpc("admin_get_member_verification",{p_session_token:sessionToken,p_member_codes:codes});
+      if(error)throw new Error(error.message||"تعذر تحميل حالات التوثيق.");
+      if(!verification?.ok)throw new Error(verification?.error||"تعذر تحميل حالات التوثيق.");
+      const verified=new Map((Array.isArray(verification.members)?verification.members:[]).map(x=>[x.member_code,!!x.is_verified]));
+      members.forEach(m=>m.is_verified=verified.get(m.member_code)===true);
+    }
+    membersLoaded=true;memberTotal=Number(data.total||0);renderMembers(members);
+    $("memberCount").textContent=memberTotal.toLocaleString("ar-EG")+" عضو";updateMemberPagination();
   }catch(error){
-    $("memberResults").innerHTML="";
-    const empty=document.createElement("div");
-    empty.className="member-empty";
-    empty.textContent=error.message||"حدث خطأ أثناء تحميل الأعضاء.";
-    $("memberResults").appendChild(empty);
-    $("memberCount").textContent="تعذر تحميل القائمة";
-    toast(error.message||"تعذر تحميل الأعضاء.",true);
-
-  }finally{
-    button.disabled=false;
-    button.textContent="بحث";
-  }
+    $("memberResults").replaceChildren();const empty=document.createElement("div");empty.className="member-empty";empty.textContent=error.message||"حدث خطأ أثناء تحميل الأعضاء.";
+    $("memberResults").append(empty);$("memberCount").textContent="تعذر تحميل القائمة";toast(error.message||"تعذر تحميل الأعضاء.",true);
+  }finally{button.disabled=false;button.textContent="بحث";}
 }
+$("memberSearchForm").addEventListener("submit",e=>{e.preventDefault();searchMembers(true);});
+$("memberRefreshButton").addEventListener("click",()=>{membersLoaded=false;searchMembers(true);});
+$("memberPrev").addEventListener("click",()=>{if(memberOffset<=0)return;memberOffset=Math.max(0,memberOffset-PAGE_SIZE);searchMembers(false);});
+$("memberNext").addEventListener("click",()=>{if(memberOffset+PAGE_SIZE>=memberTotal)return;memberOffset+=PAGE_SIZE;searchMembers(false);});
 
-$("memberSearchForm").addEventListener("submit",event=>{
-  event.preventDefault();
-  searchMembers(true);
-});
-
-$("memberRefreshButton").addEventListener("click",()=>{
-  membersLoaded=false;
-  searchMembers(true);
-});
-
-$("memberPrev").addEventListener("click",()=>{
-  if(memberOffset<=0)return;
-  memberOffset=Math.max(0,memberOffset-PAGE_SIZE);
-  searchMembers(false);
-});
-
-$("memberNext").addEventListener("click",()=>{
-  if(memberOffset+PAGE_SIZE>=memberTotal)return;
-  memberOffset+=PAGE_SIZE;
-  searchMembers(false);
-});
-
-/* معاينة الإشعار */
+$("audience").addEventListener("change",()=>$("memberCodeField").hidden=$("audience").value!=="member");
 function updatePreview(){
   $("previewTitle").textContent=$("notificationTitle").value.trim()||"عنوان الإشعار سيظهر هنا";
   $("previewBody").textContent=$("notificationBody").value.trim()||"اكتب نص الإشعار لتظهر المعاينة هنا مباشرة.";
   const routes={"":"صفحة الإشعارات","home.html":"الرئيسية","members.html":"الأعضاء","games.html":"الألعاب","notifications.html":"الإشعارات","profile.html":"الملف الشخصي"};
   $("previewDestination").textContent=routes[$("targetRoute").value]||"صفحة الإشعارات";
 }
+["notificationTitle","notificationBody","targetRoute"].forEach(id=>{$(id).addEventListener("input",updatePreview);$(id).addEventListener("change",updatePreview);});
 
-["notificationTitle","notificationBody","targetRoute"].forEach(id=>{
-  $(id).addEventListener("input",updatePreview);
-  $(id).addEventListener("change",updatePreview);
-});
-
-/* إرسال الإشعارات داخل الموقع */
 $("notificationForm").addEventListener("submit",async event=>{
   event.preventDefault();
-
-  const audience=$("audience").value;
-  const memberCode=$("memberCode").value.trim();
-  const title=$("notificationTitle").value.trim();
-  const body=$("notificationBody").value.trim();
-  const targetRoute=$("targetRoute").value;
-
-  if(!title||!body){
-    toast("اكتب عنوان الإشعار ونصه أولًا.",true);
-    return;
-  }
-
-  if(audience==="member"&&!memberCode){
-    toast("اكتب كود العضو المستهدف.",true);
-    $("memberCode").focus();
-    return;
-  }
-
-  const names={
-    all:"جميع الأعضاء",
-    completed:"الأعضاء أصحاب الملفات المكتملة",
-    member:"العضو المحدد"
-  };
-
-  const yes=await askConfirmation(
-    "تأكيد إرسال الإشعار",
-    "هل تريد إرسال الإشعار إلى "+names[audience]+"؟",
-    "إرسال الآن"
-  );
-
-  if(!yes)return;
-
-  const button=$("sendButton");
-  button.disabled=true;
-  button.textContent="جارٍ إرسال الإشعار...";
-
+  const audience=$("audience").value,memberCode=$("memberCode").value.trim(),title=$("notificationTitle").value.trim(),body=$("notificationBody").value.trim(),targetRoute=$("targetRoute").value;
+  if(!title||!body){toast("اكتب عنوان الإشعار ونصه أولًا.",true);return;}
+  if(audience==="member"&&!memberCode){toast("اكتب كود العضو المستهدف.",true);$("memberCode").focus();return;}
+  const names={all:"جميع الأعضاء",completed:"الأعضاء أصحاب الملفات المكتملة",member:"العضو المحدد"};
+  if(!await askConfirmation("تأكيد إرسال الإشعار","هل تريد إرسال الإشعار إلى "+names[audience]+"؟","إرسال الآن"))return;
+  const button=$("sendButton");button.disabled=true;button.textContent="جارٍ إرسال الإشعار...";
   try{
-    const data=await adminRequest({
-      action:"send",
-      audience,
-      memberCode,
-      title,
-      body,
-      targetRoute
-    });
-
+    const data=await adminRequest({action:"send",audience,memberCode,title,body,targetRoute});
     if(!data?.ok)throw new Error(data?.error||"تعذر إرسال الإشعار.");
-
     toast("تم حفظ الإشعار وإرساله إلى "+Number(data.sent||0).toLocaleString("en-US")+" عضو.");
-    $("notificationForm").reset();
-    $("memberCodeField").hidden=true;
-    updatePreview();
-
-  }catch(error){
-    toast(error.message||"حدث خطأ أثناء إرسال الإشعار.",true);
-
-  }finally{
-    button.disabled=false;
-    button.textContent="إرسال الإشعار";
-  }
+    $("notificationForm").reset();$("memberCodeField").hidden=true;updatePreview();
+  }catch(error){toast(error.message||"حدث خطأ أثناء إرسال الإشعار.",true);}
+  finally{button.disabled=false;button.textContent="إرسال الإشعار";}
 });
 
-/* استعادة الجلسة المحفوظة دون إعادة كلمة السر */
 const savedToken=localStorage.getItem(SESSION_KEY)||"";
-
 if(savedToken){
-  try{
-    await validateSession(savedToken);
-    showDashboard();
-    updatePreview();
-
-  }catch(error){
-    localStorage.removeItem(SESSION_KEY);
-    sessionToken="";
-    showAccess("انتهت جلسة الإدارة","اكتب كلمة السر لإنشاء جلسة جديدة.");
-  }
-
-}else{
-  showAccess("الدخول إلى لوحة الإدارة","اكتب كلمة سر الإدارة للمتابعة.");
-}
+  try{await validateSession(savedToken);showDashboard();loadAdminIdentity();updatePreview();}
+  catch(error){localStorage.removeItem(SESSION_KEY);sessionToken="";showAccess("انتهت جلسة الإدارة","اكتب كلمة السر لإنشاء جلسة جديدة.");}
+}else{showAccess("الدخول إلى لوحة الإدارة","اكتب كلمة سر الإدارة للمتابعة.");}
 </script>
 </body>
 </html>
