@@ -1,0 +1,201 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#08030f">
+<title>HANOON WORLD | ADMIN</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+
+body{
+ min-height:100vh;
+ overflow:hidden;
+ background:#08030f;
+ color:white;
+ font-family:'Cairo',sans-serif;
+}
+
+.background{
+ position:fixed;
+ inset:0;
+ background-image:
+ linear-gradient(90deg,rgba(5,2,12,.25),rgba(5,2,12,.5)),
+ url("./admin-bg.png");
+ background-size:cover;
+ background-position:center;
+ background-repeat:no-repeat;
+ transform:scale(1.04);
+ animation:backgroundReveal 2s ease forwards;
+}
+
+.background:after{
+ content:"";
+ position:absolute;
+ inset:0;
+ background:linear-gradient(
+  0deg,
+  rgba(5,2,12,.85),
+  transparent 35%,
+  rgba(5,2,12,.12) 70%,
+  rgba(5,2,12,.35)
+ );
+}
+
+.content{
+ position:relative;
+ z-index:2;
+ min-height:100vh;
+ display:flex;
+ flex-direction:column;
+ align-items:center;
+ justify-content:center;
+ text-align:center;
+ padding:25px;
+ background:radial-gradient(
+  ellipse at center,
+  rgba(12,4,24,.08),
+  rgba(5,2,12,.25)
+ );
+ animation:enter 1.4s ease both;
+}
+
+.brand{
+ font-size:clamp(25px,6vw,48px);
+ font-weight:900;
+ letter-spacing:3px;
+ color:#f8dfaa;
+ text-shadow:0 3px 25px #8e48e8;
+}
+
+.subtitle{
+ font-size:clamp(10px,2.5vw,15px);
+ letter-spacing:3px;
+ color:#e9d4ff;
+ margin-top:5px;
+}
+
+.divider{
+ width:min(280px,65vw);
+ height:2px;
+ margin:22px auto;
+ background:linear-gradient(
+  90deg,transparent,#e8bd68,#a45bff,#e8bd68,transparent
+ );
+ box-shadow:0 0 15px #a45bff;
+}
+
+.welcome{
+ font-size:clamp(16px,4vw,23px);
+ font-weight:800;
+ text-shadow:0 2px 15px #000;
+}
+
+.description{
+ color:#e1d4eb;
+ font-size:13px;
+ margin-top:8px;
+}
+
+.loader{
+ width:48px;
+ height:48px;
+ margin-top:30px;
+ border:3px solid rgba(255,255,255,.15);
+ border-top-color:#e8bd68;
+ border-right-color:#a45bff;
+ border-radius:50%;
+ box-shadow:0 0 20px #8e48e8;
+ animation:spin 1s linear infinite;
+}
+
+.progress{
+ width:min(230px,65vw);
+ height:5px;
+ margin-top:18px;
+ overflow:hidden;
+ border-radius:20px;
+ background:rgba(255,255,255,.15);
+ border:1px solid rgba(232,189,104,.4);
+}
+
+.progress span{
+ display:block;
+ height:100%;
+ width:0;
+ border-radius:20px;
+ background:linear-gradient(90deg,#8c36e9,#f5d184);
+ box-shadow:0 0 15px #b45aff;
+ animation:load 5s linear forwards;
+}
+
+.footer{
+ position:fixed;
+ z-index:3;
+ bottom:17px;
+ left:0;
+ width:100%;
+ text-align:center;
+ color:#f0d8a7;
+ font-size:10px;
+ letter-spacing:2px;
+ text-shadow:0 2px 8px #000;
+}
+
+@keyframes spin{
+ to{transform:rotate(360deg)}
+}
+@keyframes load{
+ to{width:100%}
+}
+@keyframes enter{
+ from{opacity:0;transform:translateY(15px)}
+ to{opacity:1;transform:translateY(0)}
+}
+@keyframes backgroundReveal{
+ from{transform:scale(1.12);filter:brightness(.5)}
+ to{transform:scale(1.04);filter:brightness(1)}
+}
+
+@media(max-width:600px){
+ .background{background-position: center center}
+ .content{padding:18px}
+ .footer{font-size:9px}
+}
+</style>
+</head>
+
+<body>
+
+<div class="background"></div>
+
+<main class="content">
+ <div class="brand">HANOON WORLD</div>
+ <div class="subtitle">ADMINISTRATION • CONTROL CENTER</div>
+
+ <div class="divider"></div>
+
+ <div class="welcome">مرحباً بك في مركز إدارة المنصة</div>
+ <div class="description">يتم تجهيز مساحة الإدارة الآمنة...</div>
+
+ <div class="loader"></div>
+ <div class="progress"><span></span></div>
+</main>
+
+<footer class="footer">
+ HANOON WORLD © ALL RIGHTS RESERVED
+</footer>
+
+<script>
+setTimeout(()=>{
+ window.location.replace("./admin-login.html");
+},5000);
+</script>
+
+</body>
+</html>
