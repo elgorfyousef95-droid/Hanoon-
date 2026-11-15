@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -61,6 +60,52 @@ svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke
 @media(max-width:1050px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.form-layout{grid-template-columns:1fr}}
 @media(max-width:800px){.sidebar{width:248px;transform:translateX(105%);transition:transform .22s;box-shadow:-20px 0 60px #0009}.sidebar.open{transform:translateX(0)}.main{right:0;padding:17px 13px 28px}.mobile-menu{display:grid}.content-grid{grid-template-columns:1fr}.topbar{padding:0 11px}}
 @media(max-width:520px){.topbar{height:60px}.layout{top:60px}.brand-name{font-size:11px}.admin-label{font-size:9px;padding:6px 8px}.main{padding:14px 10px 25px}.admin-profile{grid-template-columns:83px 1fr;gap:10px;padding:12px}.admin-cover{margin:-12px -12px -48px}.admin-avatar{width:76px;height:76px;border-radius:20px}.admin-ident h2{font-size:14px}.admin-data{grid-template-columns:1fr 1fr}.welcome{padding:15px}.welcome h2{font-size:14px}.stats{gap:7px}.stat-card{min-height:83px;padding:9px}.stat-value{font-size:12px}.panel,.form-panel{padding:12px}.quick-grid{grid-template-columns:1fr}.member-tools{flex-direction:column;align-items:stretch}.member-tools button{width:100%}.member-row{align-items:flex-start;flex-wrap:wrap}.member-actions{width:calc(100% - 55px);margin-right:55px}.member-actions button{flex:1;padding:0 5px}.detail-grid{grid-template-columns:1fr 1fr}.detail-cover{height:100px}}
+/* HANOON PREMIUM WALLET */
+.wallet-hero{padding:22px;border:1px solid #b18aff66;border-radius:22px;background:radial-gradient(circle at 8% 15%,#bd9aff33,transparent 38%),linear-gradient(125deg,#201538,#111c2b);margin-bottom:14px}
+.wallet-hero h2{margin:0;font-size:19px;font-weight:900}
+.wallet-hero p{margin:7px 0;color:#d1c6e5;font-size:11px;line-height:2}
+.wallet-status{display:inline-flex;padding:7px 11px;border:1px solid #53d6a255;border-radius:30px;background:#53d6a21c;color:#aaf2d4;font-size:10px;font-weight:900}
+.wallet-status.off{border-color:#ffbd6855;background:#ffbd6818;color:#ffdda9}
+.wallet-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:14px}
+.wallet-stat{min-height:110px;padding:14px;border:1px solid #ffffff20;border-radius:17px;background:linear-gradient(145deg,#211a36ed,#131321f2);box-shadow:0 12px 32px #0003}
+.wallet-stat.coins{background:radial-gradient(circle at 100% 0,#f7c95b2a,transparent 55%),linear-gradient(145deg,#342a19,#171522)}
+.wallet-stat.gems{background:radial-gradient(circle at 100% 0,#5acbff2a,transparent 55%),linear-gradient(145deg,#172d42,#171522)}
+.wallet-stat.monthly{background:radial-gradient(circle at 100% 0,#bd91ff30,transparent 55%),linear-gradient(145deg,#2b1d43,#171522)}
+.wallet-stat small{display:block;color:#c7bdd7;font-size:10px;font-weight:800}
+.wallet-stat strong{display:block;margin-top:10px;font-size:clamp(16px,2.4vw,23px);font-weight:900;overflow-wrap:anywhere}
+.wallet-stat em{display:block;margin-top:5px;color:#b8adc9;font-size:9px;font-style:normal}
+.wallet-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(280px,.95fr);gap:12px;align-items:start}
+.wallet-search-results,.wallet-history,.wallet-month-list{display:grid;gap:7px;margin-top:10px;max-height:400px;overflow:auto}
+.wallet-member{display:flex;align-items:center;gap:10px;padding:10px;border:1px solid #ffffff1c;border-radius:13px;background:#ffffff08}
+.wallet-member-avatar{width:46px;height:46px;display:grid;place-items:center;overflow:hidden;flex-shrink:0;border-radius:14px;background:linear-gradient(145deg,#a98bff55,#3e9caa44);font-size:17px;font-weight:900}
+.wallet-member-avatar img{width:100%;height:100%;object-fit:cover}
+.wallet-member-info{flex:1;min-width:0}
+.wallet-member-info strong{display:block;font-size:11px}
+.wallet-member-info small{display:block;margin-top:3px;color:#bdb2cf;font-size:9px}
+.wallet-member button{min-height:35px;padding:0 11px;border:1px solid #b18aff66;border-radius:9px;background:#a58aff20;color:#e4d6ff;font-size:10px;font-weight:900}
+.wallet-selected{margin-top:12px;padding:13px;border:1px solid #b18aff55;border-radius:15px;background:linear-gradient(135deg,#211832,#121c28)}
+.wallet-selected-head{display:flex;align-items:center;gap:10px}
+.wallet-selected-head strong{font-size:12px}
+.wallet-selected-head small{display:block;color:#bdb2cf;font-size:9px;margin-top:3px}
+.wallet-balance-pills{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:12px}
+.wallet-balance-pill{padding:10px;border:1px solid #ffffff20;border-radius:11px;background:#08071166}
+.wallet-balance-pill small{display:block;color:#c1b6d2;font-size:9px}
+.wallet-balance-pill strong{display:block;margin-top:5px;font-size:15px}
+.wallet-form{margin-top:12px;padding-top:12px;border-top:1px solid #ffffff20}
+.wallet-form .field{margin-bottom:10px}
+.wallet-form .primary-btn{width:100%}
+.wallet-transaction{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px;border:1px solid #ffffff18;border-radius:11px;background:#ffffff07}
+.wallet-transaction-info{min-width:0}
+.wallet-transaction-info strong{display:block;font-size:10px}
+.wallet-transaction-info small{display:block;margin-top:4px;color:#b7abc9;font-size:9px;line-height:1.6}
+.wallet-amount{font-size:12px;font-weight:900;white-space:nowrap;direction:ltr}
+.wallet-amount.plus{color:#70e0b2}
+.wallet-amount.minus{color:#ff91a3}
+.wallet-month-row{display:flex;justify-content:space-between;gap:8px;padding:10px;border:1px solid #ffffff18;border-radius:10px;background:#ffffff07;font-size:10px}
+.wallet-month-row strong{color:#aef0d2}
+.wallet-empty{padding:16px;text-align:center;color:#bdb2cf;font-size:10px;line-height:1.9}
+@media(max-width:900px){.wallet-grid{grid-template-columns:1fr}}
+@media(max-width:620px){.wallet-stats{grid-template-columns:1fr 1fr}.wallet-stat.monthly{grid-column:1/-1}.wallet-hero{padding:16px}.wallet-hero h2{font-size:16px}.wallet-member{align-items:flex-start;flex-wrap:wrap}.wallet-member button{margin-right:56px;flex:1}.wallet-stat{min-height:100px;padding:11px}}
 </style>
 </head>
 <body>
@@ -82,6 +127,7 @@ svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke
   <div class="side-caption">الإدارة الرئيسية</div>
   <button class="nav-btn active" data-view="dashboard"><span class="nav-icon"><svg viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-6v-7h-4v7H4a1 1 0 0 1-1-1Z"/></svg></span>الرئيسية</button>
   <button class="nav-btn" data-view="members"><span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM20 8v6M23 11h-6"/></svg></span>إدارة الأعضاء</button>
+  <button class="nav-btn" data-view="wallet"><span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M4 7.5A2.5 2.5 0 0 1 6.5 5H20v14H6.5A2.5 2.5 0 0 1 4 16.5z"/><path d="M4 8h14a2 2 0 0 1 2 2v5h-5a2.5 2.5 0 0 1 0-5h5M16 12.5h.01"/></svg></span>المحفظة والعملات</button>
   <button class="nav-btn" data-view="notifications"><span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9ZM10 21h4"/></svg></span>إرسال الإشعارات</button>
   <div class="side-separator"></div>
   <div class="side-caption">روابط الموقع</div>
@@ -122,6 +168,7 @@ svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke
     <div class="panel"><div class="panel-head"><h3>اختصارات الإدارة</h3><span>وصول سريع</span></div><div class="quick-grid">
       <button class="quick-action" data-open-view="notifications"><span class="q-icon">N</span><span><strong>إرسال إشعار</strong><small>إلى عضو أو مجموعة أو الجميع</small></span></button>
       <button class="quick-action" data-open-view="members"><span class="q-icon">M</span><span><strong>إدارة الأعضاء</strong><small>بيانات وصور وتوثيق ومراسلة</small></span></button>
+      <button class="quick-action" data-open-view="wallet"><span class="q-icon">W</span><span><strong>المحفظة والعملات</strong><small>رصيد المدير وتحويلات الأعضاء</small></span></button>
     </div></div>
     <div class="panel"><div class="panel-head"><h3>حالة مركز التحكم</h3><span>الأمان</span></div><div class="activity-empty">تم تحميل لوحة الإدارة. كل عملية حساسة تتحقق من جلسة الإدارة على الخادم.</div></div>
   </div>
@@ -158,7 +205,20 @@ svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke
     <aside class="preview-card"><div class="preview-top"><strong>معاينة الإشعار</strong><small>هكذا سيظهر داخل الموقع</small></div><div class="preview-label">HANOON WORLD · حساب الإدارة</div><div class="preview-title" id="previewTitle">عنوان الإشعار سيظهر هنا</div><div class="preview-body" id="previewBody">اكتب نص الإشعار لتظهر المعاينة هنا مباشرة.</div><div class="preview-destination">وجهة الضغط: <strong id="previewDestination">صفحة الإشعارات</strong></div></aside>
   </div>
 </section>
-<div class="footer-note">HANOON WORLD · PRIVATE ADMINISTRATION CENTER</div>
+
+<section class="view" id="view-wallet">
+<div class="page-head"><div><div class="eyebrow">HANOON / WORLD WALLET</div><h1>مركز العملات والجواهر</h1><p>إدارة محفظتك ومكافأتك الشهرية وإضافة الرصيد أو تحويله للأعضاء.</p></div><div class="live-status"><i></i> تحكم المدير</div></div>
+<div class="wallet-hero"><h2>خزنة هَنون العالمية</h2><p>كل أرصدة العملات والجواهر وحركات الإضافة والتحويل في مكان واحد. المكافأة الشهرية تُضاف لحساب المدير فقط.</p><div class="wallet-status" id="walletScheduleStatus">جارٍ التحقق من الجدولة...</div></div>
+<div class="wallet-stats"><div class="wallet-stat coins"><small>رصيد العملات في حسابك</small><strong id="walletAdminCoins">—</strong><em>عملات ذهبية</em></div><div class="wallet-stat gems"><small>رصيد الجواهر في حسابك</small><strong id="walletAdminGems">—</strong><em>جواهر زرقاء</em></div><div class="wallet-stat monthly"><small>مكافأتك الشهرية التلقائية</small><strong>100,000,000 + 100,000,000</strong><em>عملة + جوهرة · للمدير فقط</em></div></div>
+<div class="wallet-grid"><div class="panel"><div class="panel-head"><h3>البحث عن عضو وإدارة رصيده</h3><span>بالاسم أو username أو الكود</span></div>
+<form class="member-tools" id="walletSearchForm"><input id="walletSearchInput" type="search" maxlength="80" placeholder="ابحث عن اسم العضو أو كوده..." autocomplete="off"><button class="primary-btn" id="walletSearchButton" type="submit">بحث</button></form>
+<div class="wallet-search-results" id="walletSearchResults"><div class="wallet-empty">اكتب اسم العضو أو كود العضوية لبدء البحث.</div></div>
+<div class="wallet-selected" id="walletSelectedPanel" hidden><div class="wallet-selected-head"><div class="wallet-member-avatar" id="walletSelectedAvatar">؟</div><div><strong id="walletSelectedName">العضو المحدد</strong><small id="walletSelectedMeta"></small></div></div>
+<div class="wallet-balance-pills"><div class="wallet-balance-pill"><small>رصيد العملات</small><strong id="walletSelectedCoins">0</strong></div><div class="wallet-balance-pill"><small>رصيد الجواهر</small><strong id="walletSelectedGems">0</strong></div></div>
+<form class="wallet-form" id="walletActionForm"><div class="field"><label for="walletActionType">نوع العملية</label><select id="walletActionType"><option value="add">إضافة رصيد للعضو من الإدارة</option><option value="transfer">تحويل من محفظة المدير للعضو</option></select></div><div class="field"><label for="walletCurrency">نوع الرصيد</label><select id="walletCurrency"><option value="coins">عملات</option><option value="gems">جواهر</option></select></div><div class="field"><label for="walletAmount">الكمية</label><input id="walletAmount" type="number" min="1" max="1000000000" step="1" inputmode="numeric" placeholder="اكتب الكمية" required></div><div class="field"><label for="walletReason">سبب العملية / ملاحظة</label><input id="walletReason" type="text" maxlength="160" placeholder="مثال: هدية من الإدارة"></div><button class="primary-btn" id="walletActionButton" type="submit">تنفيذ العملية</button></form></div></div>
+<div class="panel"><div class="panel-head"><h3>سجل حركات العضو</h3><button class="secondary-btn" id="walletRefreshButton" type="button">تحديث</button></div><div class="wallet-history" id="walletHistory"><div class="wallet-empty">اختر عضوًا لعرض سجل العملات والجواهر.</div></div></div></div>
+<div class="panel" style="margin-top:12px"><div class="panel-head"><h3>سجل المكافآت الشهرية للمدير</h3><span>آخر 6 أشهر</span></div><div class="wallet-month-list" id="walletMonthlyHistory"><div class="wallet-empty">جارٍ تحميل السجل...</div></div></div>
+</section><div class="footer-note">HANOON WORLD · PRIVATE ADMINISTRATION CENTER</div>
 </main>
 </div>
 </div>
@@ -285,9 +345,10 @@ function renderView(name){
   document.querySelectorAll(".nav-btn[data-view]").forEach(b=>b.classList.toggle("active",b.dataset.view===name));
   $("sidebar").classList.remove("open");$("mainContent").scrollTop=0;
   if(name==="members"&&!membersLoaded)searchMembers(true);
+  if(name==="wallet")loadWalletOverview();
 }
 function openView(name){
-  if(!["dashboard","members","notifications"].includes(name)||name===currentView)return;
+  if(!["dashboard","members","notifications","wallet"].includes(name)||name===currentView)return;
   historyStack.push(savePosition());renderView(name);
 }
 function goBackInsidePanel(){
@@ -471,6 +532,303 @@ $("notificationForm").addEventListener("submit",async event=>{
   finally{button.disabled=false;button.textContent="إرسال الإشعار";}
 });
 
+/* WALLET CENTER */
+let walletSelectedMember=null;
+const walletNumber=value=>Number(value||0).toLocaleString("en-US");
+
+function walletAvatar(member){
+  const url=member.avatar_url||member.avatar||publicAsset(member.avatar_path);
+  const holder=document.createElement("div");
+  holder.className="wallet-member-avatar";
+  const img=makeImage(url,"صورة العضو");
+  if(img)holder.append(img);
+  else holder.textContent=memberInitial(member);
+  return holder;
+}
+
+async function loadWalletOverview(){
+  $("walletScheduleStatus").textContent="جارٍ تحميل حالة المكافأة الشهرية...";
+  try{
+    const {data,error}=await supabase.rpc("hanoon_admin_wallet_overview");
+    if(error)throw error;
+
+    $("walletAdminCoins").textContent=walletNumber(data?.coins);
+    $("walletAdminGems").textContent=walletNumber(data?.gems);
+
+    const active=data?.schedule_active===true;
+    $("walletScheduleStatus").classList.toggle("off",!active);
+    $("walletScheduleStatus").textContent=active
+      ?"● المكافأة التلقائية مفعّلة · أول كل شهر"
+      :"● الجدولة الشهرية غير مفعّلة";
+
+    const history=Array.isArray(data?.monthly_history)?data.monthly_history:[];
+    const list=$("walletMonthlyHistory");
+    list.replaceChildren();
+
+    if(!history.length){
+      list.innerHTML='<div class="wallet-empty">لم تُصرف مكافأة شهرية حتى الآن. أول صرف سيكون في موعد الجدولة القادم.</div>';
+    }else{
+      history.forEach(item=>{
+        const row=document.createElement("div");
+        row.className="wallet-month-row";
+
+        const date=document.createElement("span");
+        date.textContent=new Date(item.month_start+"T00:00:00Z")
+          .toLocaleDateString("ar-EG",{year:"numeric",month:"long",timeZone:"UTC"});
+
+        const amount=document.createElement("strong");
+        amount.textContent="+"+walletNumber(item.coins_added)+" عملة · +"+
+          walletNumber(item.gems_added)+" جوهرة";
+
+        row.append(date,amount);
+        list.append(row);
+      });
+    }
+  }catch(error){
+    console.error(error);
+    $("walletScheduleStatus").classList.add("off");
+    $("walletScheduleStatus").textContent=error.message||"تعذر تحميل بيانات المحفظة";
+    toast(error.message||"تعذر تحميل بيانات المحفظة.",true);
+  }
+}
+
+function renderWalletMembers(members){
+  const list=$("walletSearchResults");
+  list.replaceChildren();
+
+  if(!members.length){
+    list.innerHTML='<div class="wallet-empty">لا توجد نتائج مطابقة للبحث.</div>';
+    return;
+  }
+
+  members.forEach(member=>{
+    const row=document.createElement("div");
+    row.className="wallet-member";
+    const avatar=walletAvatar(member);
+
+    const info=document.createElement("div");
+    info.className="wallet-member-info";
+
+    const name=document.createElement("strong");
+    name.textContent=member.full_name||member.nickname||"عضو هَنون";
+
+    const meta=document.createElement("small");
+    meta.textContent=(member.username?"@"+member.username+" · ":"")+
+      (member.member_code||"");
+
+    info.append(name,meta);
+
+    const choose=document.createElement("button");
+    choose.type="button";
+    choose.textContent="فتح المحفظة";
+    choose.addEventListener("click",()=>openWalletMember(member));
+
+    row.append(avatar,info,choose);
+    list.append(row);
+  });
+}
+
+$("walletSearchForm").addEventListener("submit",async event=>{
+  event.preventDefault();
+
+  const query=$("walletSearchInput").value.trim();
+  if(!query){
+    toast("اكتب اسم العضو أو كوده أولًا.",true);
+    return;
+  }
+
+  const button=$("walletSearchButton");
+  button.disabled=true;
+  button.textContent="جارٍ البحث...";
+  $("walletSearchResults").innerHTML=
+    '<div class="wallet-empty">جارٍ البحث عن العضو...</div>';
+
+  try{
+    const data=await adminRequest({
+      action:"search_members",
+      query,
+      limit:20,
+      offset:0
+    });
+
+    if(!data?.ok)throw new Error(data?.error||"تعذر البحث عن العضو.");
+    renderWalletMembers(Array.isArray(data.members)?data.members:[]);
+  }catch(error){
+    $("walletSearchResults").textContent=error.message||"تعذر البحث.";
+    toast(error.message||"تعذر البحث.",true);
+  }finally{
+    button.disabled=false;
+    button.textContent="بحث";
+  }
+});
+
+async function openWalletMember(member){
+  walletSelectedMember=member;
+  $("walletSelectedPanel").hidden=false;
+
+  $("walletSelectedName").textContent=
+    member.full_name||member.nickname||"عضو هَنون";
+
+  $("walletSelectedMeta").textContent=
+    (member.username?"@"+member.username+" · ":"")+
+    (member.member_code||"");
+
+  const avatar=$("walletSelectedAvatar");
+  avatar.replaceChildren();
+
+  const img=makeImage(
+    member.avatar_url||member.avatar||publicAsset(member.avatar_path),
+    "صورة العضو"
+  );
+
+  if(img)avatar.append(img);
+  else avatar.textContent=memberInitial(member);
+
+  await loadWalletMemberDetails();
+}
+
+async function loadWalletMemberDetails(){
+  if(!walletSelectedMember)return;
+
+  $("walletHistory").innerHTML=
+    '<div class="wallet-empty">جارٍ تحميل سجل الحركات...</div>';
+
+  $("walletRefreshButton").disabled=true;
+
+  try{
+    const {data,error}=await supabase.rpc(
+      "hanoon_admin_wallet_details",
+      {p_user_id:walletSelectedMember.id}
+    );
+
+    if(error)throw error;
+
+    $("walletSelectedCoins").textContent=walletNumber(data.coins);
+    $("walletSelectedGems").textContent=walletNumber(data.gems);
+
+    renderWalletHistory(data.transactions||[]);
+  }catch(error){
+    $("walletHistory").textContent=error.message||"تعذر تحميل سجل العضو.";
+    toast(error.message||"تعذر تحميل سجل العضو.",true);
+  }finally{
+    $("walletRefreshButton").disabled=false;
+  }
+}
+
+function renderWalletHistory(items){
+  const list=$("walletHistory");
+  list.replaceChildren();
+
+  if(!items.length){
+    list.innerHTML='<div class="wallet-empty">لا توجد حركات مسجلة لهذا العضو.</div>';
+    return;
+  }
+
+  items.forEach(item=>{
+    const row=document.createElement("div");
+    row.className="wallet-transaction";
+
+    const info=document.createElement("div");
+    info.className="wallet-transaction-info";
+
+    const title=document.createElement("strong");
+    title.textContent=item.reason||"حركة رصيد";
+
+    const detail=document.createElement("small");
+    const currency=item.currency==="gems"?"جواهر":"عملات";
+    const counter=item.counterparty_name
+      ?" · الطرف الآخر: "+item.counterparty_name:"";
+
+    detail.textContent=currency+counter+" · "+
+      new Date(item.created_at).toLocaleString("ar-EG");
+
+    info.append(title,detail);
+
+    const amount=document.createElement("div");
+    amount.className="wallet-amount "+
+      (Number(item.amount)>=0?"plus":"minus");
+
+    amount.textContent=(Number(item.amount)>0?"+":"")+
+      walletNumber(item.amount);
+
+    row.append(info,amount);
+    list.append(row);
+  });
+}
+
+$("walletRefreshButton").addEventListener(
+  "click",loadWalletMemberDetails
+);
+
+$("walletActionForm").addEventListener("submit",async event=>{
+  event.preventDefault();
+  if(!walletSelectedMember)return;
+
+  const operation=$("walletActionType").value;
+  const currency=$("walletCurrency").value;
+  const amount=Number($("walletAmount").value);
+  const reason=$("walletReason").value.trim()||"عملية من إدارة هَنون";
+
+  if(!Number.isSafeInteger(amount)||amount<1||amount>1000000000){
+    toast("أدخل كمية صحيحة من 1 إلى مليار.",true);
+    return;
+  }
+
+  const currencyName=currency==="gems"?"جوهرة":"عملة";
+  const operationName=operation==="transfer"?"تحويل":"إضافة";
+
+  const confirmed=await askConfirmation(
+    "تأكيد "+operationName+" الرصيد",
+    "هل تريد "+operationName+" "+walletNumber(amount)+" "+
+      currencyName+" إلى "+
+      (walletSelectedMember.full_name||walletSelectedMember.username)+"؟",
+    "تأكيد العملية"
+  );
+
+  if(!confirmed)return;
+
+  const button=$("walletActionButton");
+  button.disabled=true;
+  button.textContent="جارٍ تنفيذ العملية...";
+
+  try{
+    const rpc=operation==="transfer"
+      ?"hanoon_admin_wallet_transfer"
+      :"hanoon_admin_adjust_wallet";
+
+    const args={
+      p_user_id:walletSelectedMember.id,
+      p_currency:currency,
+      p_amount:amount,
+      p_reason:reason
+    };
+
+    const {data,error}=await supabase.rpc(rpc,args);
+
+    if(error)throw error;
+    if(!data?.success)throw new Error("لم يتم تأكيد العملية من قاعدة البيانات.");
+
+    $("walletAmount").value="";
+    $("walletReason").value="";
+
+    toast(operation==="transfer"
+      ?"تم التحويل بنجاح وتسجيل الحركة للطرفين."
+      :"تمت إضافة الرصيد بنجاح."
+    );
+
+    await Promise.all([
+      loadWalletMemberDetails(),
+      loadWalletOverview()
+    ]);
+  }catch(error){
+    console.error(error);
+    toast(error.message||"تعذر تنفيذ العملية.",true);
+  }finally{
+    button.disabled=false;
+    button.textContent="تنفيذ العملية";
+  }
+});
+
 const savedToken=localStorage.getItem(SESSION_KEY)||"";
 if(savedToken){
   try{await validateSession(savedToken);showDashboard();loadAdminIdentity();updatePreview();}
@@ -478,4 +836,4 @@ if(savedToken){
 }else{showAccess("الدخول إلى لوحة الإدارة","اكتب كلمة سر الإدارة للمتابعة.");}
 </script>
 </body>
-</html>
+  </html>
