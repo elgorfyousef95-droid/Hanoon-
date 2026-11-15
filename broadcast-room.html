@@ -4,355 +4,351 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-<meta name="theme-color" content="#090a12">
-<title>HANOON WORLD | LIVE ROOM</title>
+<meta name="theme-color" content="#090912">
+<title>HANOON WORLD — LIVE</title>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 :root{
-  --purple:#a58aff;
-  --gold:#edce96;
-  --red:#ff526e;
-  --green:#4cddb0;
-  --text:#fff;
-  --muted:#c3bfd1;
+  --purple:#a58aff;--gold:#f2cf91;--red:#ff5574;
+  --green:#52dfb1;--panel:#171624;--line:#ffffff20;
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{
   width:100%;height:100%;margin:0;overflow:hidden;
-  overscroll-behavior:none;
-  touch-action:pan-x pan-y;
-  background:#080910;color:var(--text);
-  font-family:'Cairo',sans-serif;
+  background:#080810;color:#fff;font-family:Cairo,sans-serif;
+  overscroll-behavior:none;touch-action:pan-x pan-y;
 }
 body{position:fixed;inset:0}
-button,input{font:inherit}
-button{cursor:pointer}
+button,input,select{font:inherit}
+button{cursor:pointer;color:inherit}
 button:disabled{opacity:.45;cursor:not-allowed}
-.app{
-  position:relative;width:100%;height:100%;
-  height:100dvh;overflow:hidden;
-  background:#080910;
-  isolation:isolate;
+.app{position:fixed;inset:0;height:100dvh;overflow:hidden;background:#080810}
+.stage{position:absolute;inset:0;overflow:hidden;background:radial-gradient(circle at 50% 35%,#4a3a70,#161527 48%,#080810 100%)}
+.stage-shade{position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(#000a,transparent 24%,transparent 55%,#000b)}
+.topbar{
+ position:absolute;z-index:8;top:0;left:0;right:0;
+ padding:calc(env(safe-area-inset-top) + 9px) 12px 8px;
+ display:flex;align-items:center;justify-content:space-between;gap:8px;
 }
-.stage{
-  position:absolute;inset:0;overflow:hidden;
-  background:
-    radial-gradient(circle at 50% 38%,#54417d 0%,#1b1b31 30%,#090a12 75%);
+.identity{
+ display:flex;align-items:center;gap:8px;min-width:0;
+ padding:6px 11px 6px 13px;border-radius:30px;
+ background:#090912bb;border:1px solid var(--line);
+ backdrop-filter:blur(15px);cursor:pointer;
 }
-#liveVideo{
-  position:absolute;inset:0;width:100%;height:100%;
-  object-fit:cover;background:transparent;
+.avatar{
+ width:37px;height:37px;border-radius:50%;flex-shrink:0;
+ object-fit:cover;background:linear-gradient(140deg,#b99aff,#634b9f);
+ border:1.5px solid #ffffff65;
 }
-.stage-shade{
-  position:absolute;inset:0;pointer-events:none;
-  background:linear-gradient(180deg,#0009 0%,transparent 23%,transparent 48%,#0005 68%,#000c 100%);
+.identity-text{min-width:0}
+.identity-name{font-size:10px;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:145px}
+.identity-user{font-size:8px;color:#d0c9e2}
+.verified{
+ display:inline-flex;vertical-align:middle;margin-right:3px;
+ width:13px;height:13px;border-radius:50%;background:#2999ff;
+ align-items:center;justify-content:center;
 }
-.placeholder{
-  position:absolute;inset:0;display:flex;
-  flex-direction:column;align-items:center;justify-content:center;
-  gap:10px;text-align:center;padding:30px;
+.verified svg{width:9px;height:9px;stroke:white;fill:none;stroke-width:2.7}
+.top-actions{display:flex;align-items:center;gap:6px}
+.pill{
+ display:flex;align-items:center;gap:5px;padding:7px 10px;
+ border:1px solid var(--line);border-radius:25px;
+ background:#090912bd;backdrop-filter:blur(12px);
+ font-size:9px;font-weight:900;
 }
-.placeholder-avatar{
-  width:100px;height:100px;border-radius:50%;
-  display:grid;place-items:center;
-  font-size:38px;font-weight:900;
-  color:white;background:linear-gradient(145deg,#c4aaff,#7459c5,#39305c);
-  border:2px solid #ffffff70;
-  box-shadow:0 12px 50px #0008;
+.live-pill{background:#e83c5c;border-color:#ff7890}
+.live-dot{width:7px;height:7px;border-radius:50%;background:white;animation:pulse 1s infinite}
+.close{
+ width:35px;height:35px;border-radius:50%;border:1px solid var(--line);
+ background:#090912bb;display:grid;place-items:center;font-size:20px;
 }
-.placeholder strong{font-size:17px}
-.placeholder small{font-size:10px;color:#c2bfd4}
-.top{
-  position:absolute;z-index:5;top:0;left:0;right:0;
-  padding:calc(env(safe-area-inset-top) + 10px) 13px 8px;
-  display:flex;align-items:center;justify-content:space-between;gap:8px;
+.close svg,.action svg{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.caption{position:absolute;z-index:5;top:85px;right:15px;left:15px;pointer-events:none;text-shadow:0 2px 9px #000}
+.caption strong{font-size:13px;font-weight:900}
+.caption p{font-size:9px;color:#eee;margin:2px 0}
+.video-grid{
+ position:absolute;z-index:1;inset:0;padding:125px 9px 160px;
+ display:grid;grid-template-columns:1fr;grid-template-rows:1fr;
+ gap:5px;transition:.2s;
 }
-.host-info{
-  min-width:0;display:flex;align-items:center;gap:9px;
-  padding:7px 11px;border-radius:30px;
-  background:#090a12a8;border:1px solid #ffffff25;
-  backdrop-filter:blur(15px);
+.video-grid.grid{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr));padding-top:125px}
+.video-grid.fixed{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr));padding-top:125px}
+.video-grid.panel{grid-template-columns:minmax(0,1fr) 100px;grid-template-rows:1fr;padding-top:125px}
+.video-tile{
+ min-width:0;min-height:0;position:relative;overflow:hidden;
+ border:1px solid #ffffff32;border-radius:17px;
+ background:linear-gradient(145deg,#3c3159,#12121d);
+ box-shadow:0 5px 20px #0005;
 }
-.host-avatar{
-  width:35px;height:35px;border-radius:50%;
-  display:grid;place-items:center;flex-shrink:0;
-  background:linear-gradient(145deg,#c4aaff,#7358bf);
-  font-size:13px;font-weight:900;
+.video-tile video{width:100%;height:100%;object-fit:cover;background:#171323}
+.video-tile.self video{transform:scaleX(-1)}
+.video-tile .tile-name{
+ position:absolute;bottom:7px;right:8px;left:8px;
+ padding:4px 7px;border-radius:10px;background:#05050bbd;
+ font-size:9px;font-weight:900;display:flex;align-items:center;gap:5px;
 }
-.host-text{min-width:0}
-.host-name{
-  font-size:10px;font-weight:900;
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-  max-width:150px;
+.video-tile .tile-avatar{
+ position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
 }
-.host-title{
-  font-size:8px;color:#d2cde0;
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-  max-width:160px;
+.video-tile .tile-avatar img{width:65px;height:65px;border-radius:50%;object-fit:cover;border:2px solid #ffffff60}
+.video-tile .tile-avatar span{
+ width:65px;height:65px;border-radius:50%;display:grid;place-items:center;
+ background:linear-gradient(140deg,#b99aff,#634b9f);font-size:25px;font-weight:900;
 }
-.top-actions{display:flex;align-items:center;gap:7px}
-.live-pill,.viewer-pill{
-  height:34px;padding:0 10px;border-radius:20px;
-  display:flex;align-items:center;gap:6px;
-  background:#090a12bb;border:1px solid #ffffff28;
-  font-size:9px;font-weight:900;backdrop-filter:blur(12px);
-}
-.live-pill{background:#e93e5bdb;border-color:#ff8191}
-.live-dot{
-  width:7px;height:7px;border-radius:50%;
-  background:white;box-shadow:0 0 9px white;
-  animation:pulse 1s infinite;
-}
-.viewer-pill svg{width:14px;height:14px;stroke:white;fill:none;stroke-width:1.8}
-.close-btn{
-  width:35px;height:35px;border-radius:50%;
-  display:grid;place-items:center;
-  background:#090a12b8;border:1px solid #ffffff30;
-  color:white;font-size:20px;
-}
-.close-btn svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2}
-.stream-caption{
-  position:absolute;z-index:4;top:85px;right:16px;left:16px;
-  pointer-events:none;
-}
-.stream-caption strong{
-  display:block;font-size:13px;font-weight:900;
-  text-shadow:0 2px 10px #000;
-}
-.stream-caption p{
-  font-size:9px;color:#eee;margin:3px 0;
-  text-shadow:0 2px 8px #000;
-}
+.video-grid.panel .video-tile:not(:first-child){min-height:90px}
+.video-grid.panel .video-tile:first-child{grid-row:1;grid-column:1}
+.video-grid.panel .video-tile:not(:first-child){grid-column:2}
 .comments{
-  position:absolute;z-index:4;right:12px;bottom:145px;
-  width:min(76%,340px);max-height:31%;
-  overflow-y:auto;display:flex;flex-direction:column;
-  gap:7px;scrollbar-width:none;
-  mask-image:linear-gradient(transparent 0%,black 10%);
-  padding-top:13px;
-  pointer-events:auto;
+ position:absolute;z-index:6;right:12px;bottom:145px;
+ width:min(78%,350px);max-height:28%;
+ overflow:auto;display:flex;flex-direction:column;gap:6px;
+ scrollbar-width:none;mask-image:linear-gradient(transparent,black 12%);
+ padding-top:12px;
 }
 .comments::-webkit-scrollbar{display:none}
 .comment{
-  width:fit-content;max-width:100%;
-  display:flex;align-items:flex-start;gap:6px;
-  padding:6px 10px;border-radius:14px;
-  background:#08091088;border:1px solid #ffffff13;
-  backdrop-filter:blur(9px);
-  font-size:9px;line-height:1.8;
-  animation:commentIn .2s ease;
+ width:fit-content;max-width:100%;padding:6px 10px;border-radius:14px;
+ background:#090912a8;border:1px solid #ffffff13;backdrop-filter:blur(9px);
+ font-size:9px;line-height:1.8;overflow-wrap:anywhere;
+ animation:commentIn .2s ease;
 }
-.comment-name{font-weight:900;color:#d6c4ff;white-space:nowrap}
-.comment-message{color:#fff;overflow-wrap:anywhere}
-.comment.system{color:#f4d49e;background:#332718a8}
-.comment.gift{color:#ffe0a6;background:#4b2c35c9;border-color:#e6a55b55}
-.bottom-panel{
-  position:absolute;z-index:6;bottom:0;left:0;right:0;
-  padding:10px 12px calc(env(safe-area-inset-bottom) + 12px);
-  background:linear-gradient(transparent,#080910d9 22%,#080910f5);
+.comment b{color:#d7c2ff;margin-left:4px}
+.comment.system{color:#f4d49e;background:#382b1dbb}
+.comment.gift{color:#ffe0a6;background:#4b2b39dc}
+.bottom{
+ position:absolute;z-index:10;bottom:0;left:0;right:0;
+ padding:9px 11px calc(env(safe-area-inset-bottom) + 10px);
+ background:linear-gradient(transparent,#080810e8 28%,#080810);
 }
-.chat-row{display:flex;align-items:center;gap:8px}
-.chat-input-wrap{
-  flex:1;min-width:0;height:42px;
-  display:flex;align-items:center;
-  padding:0 13px;border-radius:24px;
-  background:#ffffff18;border:1px solid #ffffff35;
-  backdrop-filter:blur(14px);
+.actions{display:flex;align-items:center;gap:7px}
+.chat-wrap{
+ flex:1;min-width:0;height:42px;border-radius:24px;
+ border:1px solid #ffffff35;background:#ffffff18;
+ display:flex;align-items:center;padding:0 13px;
 }
-.chat-input{
-  width:100%;min-width:0;border:0;outline:0;
-  background:transparent;color:white;font-size:10px;
+.chat-input{width:100%;border:0;outline:0;background:transparent;color:white;font-size:10px}
+.chat-input::placeholder{color:#d2cddd}
+.action{
+ width:42px;height:42px;flex-shrink:0;border-radius:50%;
+ border:1px solid #ffffff35;background:#ffffff18;
+ display:grid;place-items:center;backdrop-filter:blur(10px);
 }
-.chat-input::placeholder{color:#ddd9e7}
-.round-action{
-  width:42px;height:42px;flex-shrink:0;
-  border-radius:50%;display:grid;place-items:center;
-  border:1px solid #ffffff30;background:#ffffff19;
-  color:white;backdrop-filter:blur(12px);
-}
-.round-action svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-.round-action.gift{background:linear-gradient(145deg,#dcae67,#8c5c36);border-color:#f7d59a;color:#21160b}
-.round-action.heart{color:#ff8ca0}
-.host-controls{
-  display:none;align-items:center;justify-content:center;
-  gap:9px;margin-top:10px;
-}
+.action.gift{background:linear-gradient(145deg,#e7c17e,#94633b);color:#24180b;border-color:#f3d69d}
+.action.heart{color:#ff91a6}
+.action.guest{color:#c8b4ff}
+.host-controls{display:none;gap:7px;justify-content:center;margin-top:9px;flex-wrap:wrap}
 .host-controls.show{display:flex}
-.host-control{
-  height:37px;padding:0 12px;border-radius:12px;
-  border:1px solid #ffffff28;background:#ffffff16;
-  color:white;font-size:9px;font-weight:800;
+.control{
+ border:1px solid #ffffff2b;background:#ffffff18;
+ border-radius:12px;padding:7px 11px;font-size:9px;font-weight:800;
 }
-.host-control.danger{background:#9d2542b8;border-color:#ff718a}
-.host-control svg{width:15px;height:15px;vertical-align:middle;margin-left:4px}
-.gift-panel{
-  position:absolute;z-index:15;bottom:calc(env(safe-area-inset-bottom) + 72px);
-  left:10px;right:10px;max-height:55%;
-  display:none;flex-direction:column;overflow:hidden;
-  border:1px solid #ffffff25;border-radius:22px;
-  background:linear-gradient(145deg,#252238f5,#111522f5);
-  box-shadow:0 15px 55px #000a;backdrop-filter:blur(18px);
+.control.danger{background:#a52d49;border-color:#ff718b}
+.control.active{background:#7258b5;border-color:#c4afff}
+.panel{
+ position:absolute;z-index:20;left:9px;right:9px;bottom:calc(env(safe-area-inset-bottom) + 72px);
+ max-height:65%;display:none;flex-direction:column;overflow:hidden;
+ background:linear-gradient(145deg,#252238f7,#10111cf7);
+ border:1px solid #ffffff28;border-radius:21px;
+ box-shadow:0 15px 50px #000b;backdrop-filter:blur(18px);
 }
-.gift-panel.show{display:flex}
-.panel-head{
-  flex-shrink:0;padding:12px 15px;
-  display:flex;align-items:center;justify-content:space-between;
-  border-bottom:1px solid #ffffff15;
-}
+.panel.show{display:flex}
+.panel-head{padding:11px 14px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #ffffff18}
 .panel-head strong{font-size:12px}
-.panel-close{
-  border:0;background:transparent;color:white;font-size:20px;
-}
-.gift-grid{
-  padding:12px;overflow-y:auto;
-  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
-  gap:8px;
-}
+.panel-close{border:0;background:transparent;font-size:22px}
+.panel-body{padding:12px;overflow:auto}
+.gift-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
 .gift-item{
-  min-width:0;min-height:90px;padding:9px 5px;
-  border-radius:14px;border:1px solid #ffffff18;
-  background:#ffffff09;color:white;
-  display:flex;align-items:center;justify-content:center;
-  flex-direction:column;gap:4px;
+ min-width:0;min-height:94px;border:1px solid #ffffff20;
+ border-radius:14px;background:#ffffff0c;color:white;
+ display:flex;align-items:center;justify-content:center;flex-direction:column;gap:5px;
 }
-.gift-item:active{border-color:#eac88b;background:#eac88b20}
-.gift-symbol{font-size:25px}
+.gift-item:active{border-color:var(--gold);background:#eac88b22}
+.gift-art{width:40px;height:40px;display:grid;place-items:center}
+.gift-art svg{width:37px;height:37px;stroke:#f4d49a;fill:#f4d49a22;stroke-width:1.5}
 .gift-name{font-size:9px;font-weight:900}
-.gift-price{font-size:8px;color:#edce96}
-.gift-empty{padding:20px;text-align:center;font-size:10px;color:#aaa}
-.gift-send-note{
-  flex-shrink:0;padding:9px 12px;
-  font-size:8px;color:#c8bfd9;
-  border-top:1px solid #ffffff15;
+.gift-price{font-size:8px;color:var(--gold)}
+.field{width:100%;height:39px;border:1px solid #ffffff25;background:#ffffff10;color:white;border-radius:11px;padding:0 10px;font-size:10px;margin:4px 0}
+.field option{background:#171624;color:white}
+.panel-note{font-size:8px;color:#c7bfd7;padding:9px 2px}
+.row{display:flex;align-items:center;gap:7px}
+.row>*{flex:1;min-width:0}
+.primary{
+ border:0;border-radius:11px;padding:9px 12px;
+ background:linear-gradient(120deg,#a58aff,#7658c8);
+ color:white;font-size:10px;font-weight:900;
 }
+.secondary{border:1px solid #ffffff2c;border-radius:11px;padding:8px 10px;background:#ffffff12;font-size:9px}
+.danger-btn{background:#a42d4b;border-color:#ff708c}
+.guest-entry{
+ display:flex;align-items:center;gap:8px;padding:9px 4px;
+ border-bottom:1px solid #ffffff13;font-size:9px;
+}
+.guest-entry img{width:34px;height:34px;border-radius:50%;object-fit:cover}
+.guest-entry .guest-meta{flex:1;min-width:0}
+.guest-entry b{display:block;font-size:10px}
+.guest-entry small{color:#c9bfd8}
+.guest-entry button{border:0;border-radius:9px;padding:6px 8px;font-size:8px;background:#7658c8}
+.gift-effect{
+ position:absolute;z-index:18;inset:0;display:none;
+ align-items:center;justify-content:center;flex-direction:column;
+ pointer-events:none;text-align:center;
+ background:radial-gradient(circle,#eacb8b22,transparent 55%);
+}
+.gift-effect.show{display:flex;animation:effectFade 3.2s ease forwards}
+.gift-effect .effect-art{width:min(45vw,190px);height:min(45vw,190px);display:grid;place-items:center;filter:drop-shadow(0 0 28px #f6cb7d)}
+.gift-effect img{max-width:100%;max-height:100%;object-fit:contain}
+.gift-effect svg{width:100%;height:100%;stroke:#ffe4a9;fill:#f4ce8b30;stroke-width:1.5}
+.gift-effect strong{font-size:16px;text-shadow:0 3px 14px #000}
+.gift-effect small{font-size:10px;color:#ffe2ae}
 .toast{
-  position:absolute;z-index:30;top:90px;left:15px;right:15px;
-  max-width:430px;margin:auto;padding:11px 14px;
-  border-radius:13px;background:#202438ed;
-  border:1px solid #ffffff25;color:white;
-  text-align:center;font-size:10px;display:none;
+ position:absolute;z-index:50;top:90px;left:12px;right:12px;
+ margin:auto;max-width:400px;padding:10px 13px;
+ border:1px solid #ffffff30;border-radius:13px;
+ background:#242237ed;text-align:center;font-size:10px;display:none;
 }
 .toast.show{display:block}
-.heart-float{
-  position:absolute;z-index:8;bottom:180px;left:22%;
-  font-size:26px;pointer-events:none;
-  animation:floatHeart 1.8s ease-out forwards;
+.loading{
+ position:absolute;z-index:40;inset:0;display:flex;align-items:center;
+ justify-content:center;flex-direction:column;gap:10px;
+ background:#090912ed;text-align:center;padding:25px;
 }
-.loading-cover{
-  position:absolute;z-index:20;inset:0;
-  display:flex;align-items:center;justify-content:center;
-  flex-direction:column;gap:10px;
-  background:#090a12ed;text-align:center;padding:25px;
-}
-.loading-cover.hidden{display:none}
-.spinner{
-  width:35px;height:35px;border-radius:50%;
-  border:3px solid #ffffff25;border-top-color:#b79aff;
-  animation:spin .8s linear infinite;
-}
-.loading-cover strong{font-size:13px}
-.loading-cover small{font-size:9px;color:#aaa}
+.loading.hide{display:none}
+.spinner{width:35px;height:35px;border:3px solid #ffffff25;border-top-color:#b79aff;border-radius:50%;animation:spin .8s linear infinite}
+.loading strong{font-size:13px}.loading small{font-size:9px;color:#aaa}
 @keyframes pulse{50%{opacity:.3}}
 @keyframes spin{to{transform:rotate(360deg)}}
-@keyframes commentIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-@keyframes floatHeart{
-  0%{opacity:0;transform:translateY(0) scale(.6)}
-  15%{opacity:1}
-  100%{opacity:0;transform:translateY(-180px) translateX(30px) scale(1.7)}
-}
-@media(min-width:600px){
-  .app{max-width:480px;margin:0 auto;border-left:1px solid #ffffff12;border-right:1px solid #ffffff12}
-  body{background:#03040a}
+@keyframes commentIn{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}
+@keyframes effectFade{0%{opacity:0;transform:scale(.6)}12%{opacity:1;transform:scale(1.04)}75%{opacity:1}100%{opacity:0;transform:scale(1.1)}}
+@keyframes heartRise{0%{opacity:0;transform:translateY(0) scale(.6)}20%{opacity:1}100%{opacity:0;transform:translateY(-190px) scale(1.8)}}
+.heart-float{position:absolute;z-index:12;bottom:170px;font-size:28px;color:#ff7191;animation:heartRise 1.8s forwards;pointer-events:none}
+@media(min-width:650px){
+ .app{max-width:500px;margin:auto;left:0;right:0;border-left:1px solid #ffffff16;border-right:1px solid #ffffff16}
+ body{background:#030309}
 }
 </style>
 </head>
-
 <body>
 <div class="app">
+ <section class="stage">
+  <div class="video-grid" id="videoGrid"></div>
+  <div class="stage-shade"></div>
 
-  <section class="stage">
-    <video id="liveVideo" autoplay playsinline></video>
-    <div class="placeholder" id="placeholder">
-      <div class="placeholder-avatar" id="placeholderAvatar">H</div>
-      <strong id="placeholderTitle">جارٍ تجهيز البث</strong>
-      <small id="placeholderText">انتظر لحظات...</small>
+  <header class="topbar">
+   <div class="identity" id="hostIdentity">
+    <img class="avatar" id="hostAvatar" alt="">
+    <div class="identity-text">
+     <div class="identity-name" id="hostName">HANOON WORLD</div>
+     <div class="identity-user" id="hostUsername">بث مباشر</div>
     </div>
-    <div class="stage-shade"></div>
-
-    <header class="top">
-      <div class="host-info">
-        <div class="host-avatar" id="hostAvatar">H</div>
-        <div class="host-text">
-          <div class="host-name" id="hostName">HANOON WORLD</div>
-          <div class="host-title" id="hostUsername">بث مباشر</div>
-        </div>
-      </div>
-
-      <div class="top-actions">
-        <div class="live-pill"><span class="live-dot"></span> LIVE</div>
-        <div class="viewer-pill">
-          <svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm13 10v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-          <span id="viewerCount">1</span>
-        </div>
-        <button class="close-btn" id="closeButton" aria-label="إغلاق">
-          <svg viewBox="0 0 24 24"><path d="m18 6-12 12M6 6l12 12"/></svg>
-        </button>
-      </div>
-    </header>
-
-    <div class="stream-caption">
-      <strong id="streamTitle">بث مباشر</strong>
-      <p id="streamDescription"></p>
+   </div>
+   <div class="top-actions">
+    <div class="pill live-pill"><span class="live-dot"></span> LIVE</div>
+    <div class="pill">
+     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm13 10v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+     <span id="viewerCount">1</span>
     </div>
+    <button class="close" id="closeButton" aria-label="إغلاق">×</button>
+   </div>
+  </header>
 
-    <div class="comments" id="comments"></div>
+  <div class="caption"><strong id="streamTitle">بث مباشر</strong><p id="streamDescription"></p></div>
+  <div class="comments" id="comments"></div>
+  <div class="gift-effect" id="giftEffect"><div class="effect-art" id="effectArt"></div><strong id="effectTitle"></strong><small id="effectSubtitle"></small></div>
+ </section>
 
-    <div class="loading-cover" id="loadingCover">
-      <div class="spinner"></div>
-      <strong id="loadingTitle">جارٍ الدخول إلى البث...</strong>
-      <small id="loadingText">نجهز اتصال الفيديو المباشر</small>
-    </div>
-  </section>
+ <section class="bottom">
+  <div class="actions">
+   <label class="chat-wrap"><input class="chat-input" id="chatInput" maxlength="500" placeholder="اكتب تعليقًا..." autocomplete="off"></label>
+   <button class="action" id="sendChat" title="إرسال">
+    <svg viewBox="0 0 24 24"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
+   </button>
+   <button class="action heart" id="heartButton" title="إعجاب">
+    <svg viewBox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z"/></svg>
+   </button>
+   <button class="action guest" id="guestButton" title="الضيوف">
+    <svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm12-5v6m-3-3h6"/></svg>
+   </button>
+   <button class="action gift" id="giftButton" title="الهدايا">
+    <svg viewBox="0 0 24 24"><path d="M20 12v10H4V12M2 7h20v5H2zM12 7v15M12 7H7.5a2.5 2.5 0 1 1 2.5-2.5V7Zm0 0h4.5A2.5 2.5 0 1 0 14 4.5V7Z"/></svg>
+   </button>
+  </div>
+  <div class="host-controls" id="hostControls">
+   <button class="control" id="micButton">كتم الصوت</button>
+   <button class="control" id="cameraButton">إيقاف الكاميرا</button>
+   <button class="control" id="layoutButton">إعدادات العرض</button>
+   <button class="control danger" id="endLiveButton">إنهاء البث</button>
+  </div>
+  <div class="host-controls" id="guestControls">
+   <button class="control" id="guestMicButton">كتم صوتي</button>
+   <button class="control" id="guestCameraButton">إيقاف كاميرتي</button>
+   <button class="control danger" id="leaveGuestButton">مغادرة مقعد الضيف</button>
+  </div>
+ </section>
 
-  <section class="bottom-panel">
-    <div class="chat-row">
-      <label class="chat-input-wrap">
-        <input class="chat-input" id="chatInput" maxlength="500" placeholder="اكتب تعليقًا..." autocomplete="off">
-      </label>
+ <section class="panel" id="giftPanel">
+  <div class="panel-head"><strong>هدايا HANOON</strong><button class="panel-close" data-close="giftPanel">×</button></div>
+  <div class="panel-body">
+   <label style="font-size:9px;color:#cfc5df">إرسال الهدية إلى</label>
+   <select class="field" id="giftRecipient"></select>
+   <div class="gift-grid" id="giftGrid"><div class="panel-note">جارٍ تحميل الهدايا...</div></div>
+   <div class="panel-note">تُخصم الجواهر من محفظتك وتُضاف قيمة الهدية إلى محفظة المستلم. تأكد من اختيار المستلم قبل الإرسال.</div>
+  </div>
+ </section>
 
-      <button class="round-action" id="sendChat" title="إرسال التعليق">
-        <svg viewBox="0 0 24 24"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
-      </button>
+ <section class="panel" id="guestPanel">
+  <div class="panel-head"><strong id="guestPanelTitle">الضيوف والمقاعد</strong><button class="panel-close" data-close="guestPanel">×</button></div>
+  <div class="panel-body">
+   <div id="guestRequestArea"></div>
+   <div id="hostGuestSettings" style="display:none">
+    <label style="font-size:9px">عدد مقاعد الضيوف (غير صاحب البث)</label>
+    <select class="field" id="guestLimit">
+     <option value="0">إغلاق مقاعد الضيوف</option>
+     <option value="1">ضيف واحد — بث ثنائي</option>
+     <option value="2">ضيفان — بث ثلاثي</option>
+     <option value="3">ثلاثة ضيوف — بث رباعي</option>
+    </select>
+    <label style="font-size:9px">طريقة ترتيب الشاشة</label>
+    <select class="field" id="guestLayout">
+     <option value="grid">Grid — شبكة</option>
+     <option value="panel">Panel — صاحب البث أساسي</option>
+     <option value="fixed">Fixed — تقسيم ثابت</option>
+    </select>
+    <label style="font-size:9px">من يستطيع طلب الانضمام؟</label>
+    <select class="field" id="guestAccess">
+     <option value="everyone">كل المشاهدين</option>
+     <option value="invite_only">بالدعوة فقط</option>
+    </select>
+    <button class="primary" id="saveGuestSettings" style="width:100%">حفظ إعدادات الضيوف</button>
+    <div class="panel-note">يمكنك قبول الطلبات أو رفضها أو إخراج الضيف أثناء البث.</div>
+    <div style="margin-top:12px;font-size:10px;font-weight:900">دعوة عضو بالاسم</div>
+    <div class="row"><input class="field" id="inviteUsername" placeholder="اسم المستخدم"><button class="secondary" id="inviteButton">إرسال دعوة</button></div>
+   </div>
+   <div id="guestRoster"></div>
+  </div>
+ </section>
 
-      <button class="round-action heart" id="heartButton" title="إعجاب">
-        <svg viewBox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z"/></svg>
-      </button>
+ <section class="panel" id="layoutPanel">
+  <div class="panel-head"><strong>إعدادات البث</strong><button class="panel-close" data-close="layoutPanel">×</button></div>
+  <div class="panel-body">
+   <label style="font-size:9px">عدد الضيوف</label>
+   <select class="field" id="guestLimit2">
+    <option value="0">بدون ضيوف</option><option value="1">ثنائي</option><option value="2">ثلاثي</option><option value="3">رباعي</option>
+   </select>
+   <label style="font-size:9px">الشكل</label>
+   <select class="field" id="guestLayout2">
+    <option value="grid">Grid</option><option value="panel">Panel</option><option value="fixed">Fixed</option>
+   </select>
+   <label style="font-size:9px">السماح بطلبات الضيوف</label>
+   <select class="field" id="guestAccess2"><option value="everyone">مفتوح</option><option value="invite_only">دعوات فقط</option></select>
+   <button class="primary" id="saveGuestSettings2" style="width:100%">حفظ</button>
+  </div>
+ </section>
 
-      <button class="round-action gift" id="giftButton" title="الهدايا">
-        <svg viewBox="0 0 24 24"><path d="M20 12v10H4V12M2 7h20v5H2zM12 7v15M12 7H7.5a2.5 2.5 0 1 1 2.5-2.5V7Zm0 0h4.5A2.5 2.5 0 1 0 14 4.5V7Z"/></svg>
-      </button>
-    </div>
-
-    <div class="host-controls" id="hostControls">
-      <button class="host-control" id="micButton">كتم الصوت</button>
-      <button class="host-control" id="cameraButton">إيقاف الكاميرا</button>
-      <button class="host-control danger" id="endLiveButton">إنهاء البث</button>
-    </div>
-  </section>
-
-  <section class="gift-panel" id="giftPanel">
-    <div class="panel-head">
-      <strong>هدايا هنون</strong>
-      <button class="panel-close" id="closeGifts">×</button>
-    </div>
-    <div class="gift-grid" id="giftGrid">
-      <div class="gift-empty">جارٍ تحميل الهدايا...</div>
-    </div>
-    <div class="gift-send-note">يتم خصم قيمة الهدية من جواهرك، وتضاف أرباحها إلى محفظة صاحب البث.</div>
-  </section>
-
-  <div class="toast" id="toast"></div>
-
+ <div class="toast" id="toast"></div>
+ <div class="loading" id="loading">
+  <div class="spinner"></div><strong id="loadingTitle">جارٍ فتح البث المباشر...</strong><small id="loadingText">نجهز اتصال الفيديو</small>
+ </div>
 </div>
 
 <script type="module">
@@ -361,692 +357,728 @@ import { supabase } from "./supabase.js";
 const $=id=>document.getElementById(id);
 const params=new URLSearchParams(location.search);
 const streamId=params.get("stream");
+const ICE={iceServers:[
+ {urls:"stun:stun.l.google.com:19302"},
+ {urls:"stun:stun1.l.google.com:19302"}
+]};
 
 const state={
-  user:null,
-  stream:null,
-  host:null,
-  isHost:false,
-  localStream:null,
-  channel:null,
-  chatChannel:null,
-  hostPeers:new Map(),
-  viewerPC:null,
-  seenSignals:new Set(),
-  pendingIce:[],
-  gifts:[],
-  profiles:{},
-  viewerCount:1,
-  sending:false,
-  ending:false,
-  micOn:true,
-  cameraOn:true
+ user:null,stream:null,host:null,isHost:false,isGuest:false,
+ myGuest:null,localStream:null,channel:null,chatChannel:null,
+ hostPeers:new Map(),viewerPC:null,pendingIce:[],
+ guests:[],guestStreams:new Map(),streamOwners:new Map(),
+ remoteStreams:new Map(),profiles:{},gifts:[],
+ viewerCount:1,sending:false,ending:false,
+ micOn:true,cameraOn:true,seenSignals:new Set(),
+ giftTimer:null,heartbeat:null,chatBusy:false
 };
 
-const MAX_DIRECT_VIEWERS=4;
+const MAX_VIEWERS=4;
 
 function toast(message){
-  const box=$("toast");
-  box.textContent=message;
-  box.style.display="block";
-  clearTimeout(toast.timer);
-  toast.timer=setTimeout(()=>box.style.display="none",3300);
+ const el=$("toast");el.textContent=message;el.classList.add("show");
+ clearTimeout(toast.timer);toast.timer=setTimeout(()=>el.classList.remove("show"),3200);
 }
-
-function escapeHTML(value){
-  return String(value??"").replace(/[&<>"']/g,char=>({
-    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
-  })[char]);
+function escapeHTML(v){
+ return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 }
-
-function initials(name){
-  return String(name||"H").trim().charAt(0).toUpperCase()||"H";
+function initials(v){return String(v||"H").trim().charAt(0).toUpperCase()||"H"}
+function avatarURL(path){
+ if(!path)return "";
+ if(/^https?:\/\//i.test(path))return path;
+ return supabase.storage.from("avatars").getPublicUrl(path).data.publicUrl;
 }
-
-function showLoading(title,text){
-  $("loadingTitle").textContent=title;
-  $("loadingText").textContent=text;
-  $("loadingCover").classList.remove("hidden");
+function profileLink(id){location.href="member.html?id="+encodeURIComponent(id)}
+function verifiedHTML(ok){
+ return ok?'<span class="verified"><svg viewBox="0 0 12 12"><path d="m2 6 2.5 2.5L10 3"/></svg></span>':"";
 }
-function hideLoading(){
-  $("loadingCover").classList.add("hidden");
+function showLoading(title,sub){
+ $("loadingTitle").textContent=title;$("loadingText").textContent=sub;
+ $("loading").classList.remove("hide");
 }
-
+function hideLoading(){$("loading").classList.add("hide")}
 function addComment(name,message,type=""){
-  const item=document.createElement("div");
-  item.className="comment "+type;
-  if(type==="system"||type==="gift"){
-    item.textContent=message;
-  }else{
-    const n=document.createElement("span");
-    n.className="comment-name";
-    n.textContent=name+":";
-    const m=document.createElement("span");
-    m.className="comment-message";
-    m.textContent=message;
-    item.append(n,m);
-  }
-  $("comments").appendChild(item);
-  while($("comments").children.length>45){
-    $("comments").firstElementChild.remove();
-  }
-  $("comments").scrollTop=$("comments").scrollHeight;
+ const el=document.createElement("div");el.className="comment "+type;
+ if(type==="system"||type==="gift")el.textContent=message;
+ else{
+  const b=document.createElement("b");b.textContent=name+":";
+  const span=document.createElement("span");span.textContent=message;
+  el.append(b,span);
+ }
+ $("comments").appendChild(el);
+ while($("comments").children.length>45)$("comments").firstElementChild.remove();
+ $("comments").scrollTop=$("comments").scrollHeight;
 }
-
-function updateViewerCount(){
-  const count=state.isHost
-    ?1+state.hostPeers.size
-    :Math.max(1,state.viewerCount);
-  $("viewerCount").textContent=count.toLocaleString("en-US");
+async function loadProfile(id){
+ if(!id)return {};
+ if(state.profiles[id])return state.profiles[id];
+ const {data,error}=await supabase.from("profiles")
+  .select("id,full_name,username,is_verified,avatar_path")
+  .eq("id",id).maybeSingle();
+ if(error)throw error;
+ state.profiles[id]=data||{};
+ return state.profiles[id];
 }
-
-function floatHeart(){
-  const heart=document.createElement("div");
-  heart.className="heart-float";
-  heart.textContent="♥";
-  heart.style.left=(12+Math.random()*55)+"%";
-  $("stage")?.appendChild(heart);
-  document.querySelector(".stage").appendChild(heart);
-  setTimeout(()=>heart.remove(),1900);
+function identityMarkup(profile){
+ const name=profile?.full_name||profile?.username||"عضو هنون";
+ const url=avatarURL(profile?.avatar_path);
+ return {name,url,initial:initials(name)};
 }
-
-async function loadProfile(userId){
-  if(!userId)return null;
-  if(state.profiles[userId])return state.profiles[userId];
-
-  const {data,error}=await supabase.from("profiles")
-    .select("id,full_name,username,is_verified,avatar_path")
-    .eq("id",userId).maybeSingle();
-
-  if(error)throw error;
-  state.profiles[userId]=data||{};
-  return data;
+function renderHost(){
+ const p=identityMarkup(state.host);
+ $("hostName").innerHTML=escapeHTML(p.name)+verifiedHTML(state.host?.is_verified);
+ $("hostUsername").textContent=state.host?.username?"@"+state.host.username:"صاحب البث";
+ $("hostAvatar").src=p.url;
+ $("hostAvatar").alt=p.name;
+ $("hostIdentity").onclick=()=>profileLink(state.host.id);
+ $("streamTitle").textContent=state.stream.title||"بث مباشر";
+ $("streamDescription").textContent=state.stream.description||"";
 }
-
+function addVideoTile(userId,stream,profile,isSelf=false){
+ const id="tile-"+userId;
+ let tile=document.getElementById(id);
+ if(!tile){
+  tile=document.createElement("div");tile.className="video-tile"+(isSelf?" self":"");tile.id=id;
+  const video=document.createElement("video");video.autoplay=true;video.playsInline=true;video.muted=isSelf;
+  const avatar=document.createElement("div");avatar.className="tile-avatar";
+  const info=document.createElement("div");info.className="tile-name";
+  tile.append(video,avatar,info);$("videoGrid").appendChild(tile);
+  tile.onclick=()=>profileLink(userId);
+ }
+ const video=tile.querySelector("video");
+ if(video.srcObject!==stream)video.srcObject=stream;
+ const p=identityMarkup(profile);
+ tile.querySelector(".tile-avatar").innerHTML=p.url
+  ?`<img src="${escapeHTML(p.url)}" alt="">`
+  :`<span>${escapeHTML(p.initial)}</span>`;
+ tile.querySelector(".tile-name").innerHTML=escapeHTML(p.name)+verifiedHTML(profile?.is_verified);
+}
+function removeVideoTile(userId){
+ const tile=$("tile-"+userId);if(tile)tile.remove();
+}
+function renderAllTiles(){
+ $("videoGrid").innerHTML="";
+ if(state.localStream&&state.isHost)addVideoTile(state.user.id,state.localStream,state.profiles[state.user.id]||state.host,true);
+ if(state.localStream&&state.isGuest)addVideoTile(state.user.id,state.localStream,state.profiles[state.user.id]||{},true);
+ for(const [uid,stream] of state.remoteStreams){
+  const profile=state.profiles[uid]||{};
+  addVideoTile(uid,stream,profile,false);
+ }
+ applyLayout();
+}
+function applyLayout(){
+ const grid=$("videoGrid");
+ grid.classList.remove("grid","panel","fixed");
+ grid.classList.add(state.stream?.guest_layout||"grid");
+}
+function updateCount(){
+ $("viewerCount").textContent=Math.max(1,Number(state.viewerCount)||1).toLocaleString("en-US");
+}
 async function loadStream(){
-  const {data,error}=await supabase.from("world_live_streams")
-    .select("id,host_id,title,description,status,started_at")
-    .eq("id",streamId).maybeSingle();
-
-  if(error)throw error;
-  if(!data)throw new Error("هذا البث غير موجود.");
-  if(data.status!=="live")throw new Error("هذا البث انتهى بالفعل.");
-
-  state.stream=data;
-  state.isHost=data.host_id===state.user.id;
-
-  state.host=await loadProfile(data.host_id);
-
-  const name=state.host?.full_name||state.host?.username||"عضو هنون";
-  $("hostName").textContent=name;
-  $("hostUsername").textContent=state.host?.username?"@"+state.host.username:"بث مباشر";
-  $("hostAvatar").textContent=initials(name);
-  $("placeholderAvatar").textContent=initials(name);
-  $("streamTitle").textContent=data.title||"بث مباشر";
-  $("streamDescription").textContent=data.description||"";
-
-  if(state.isHost){
-    $("hostControls").classList.add("show");
-    $("placeholderTitle").textContent="أنت صاحب البث";
-    $("placeholderText").textContent="الكاميرا ستظهر للمشاهدين عند الاتصال.";
-  }else{
-    $("placeholderTitle").textContent=name;
-    $("placeholderText").textContent="جارٍ الاتصال بالبث المباشر...";
-  }
+ const {data,error}=await supabase.from("world_live_streams")
+  .select("id,host_id,title,description,status,started_at,guest_layout,guest_limit,guest_access")
+  .eq("id",streamId).maybeSingle();
+ if(error)throw error;
+ if(!data||data.status!=="live")throw new Error("هذا البث غير موجود أو انتهى.");
+ state.stream=data;state.isHost=data.host_id===state.user.id;
+ state.host=await loadProfile(data.host_id);
+ renderHost();
+ $("guestLimit").value=String(data.guest_limit??3);
+ $("guestLayout").value=data.guest_layout||"grid";
+ $("guestAccess").value=data.guest_access||"everyone";
+ $("guestLimit2").value=String(data.guest_limit??3);
+ $("guestLayout2").value=data.guest_layout||"grid";
+ $("guestAccess2").value=data.guest_access||"everyone";
+ applyLayout();
+ if(state.isHost)$("hostControls").classList.add("show");
 }
-
-async function startHostCamera(){
-  if(!navigator.mediaDevices?.getUserMedia){
-    throw new Error("المتصفح لا يدعم الكاميرا. افتح الموقع عبر HTTPS.");
-  }
-
-  state.localStream=await navigator.mediaDevices.getUserMedia({
-    video:{
-      facingMode:"user",
-      width:{ideal:1280},
-      height:{ideal:720},
-      frameRate:{ideal:24,max:30}
-    },
-    audio:{
-      echoCancellation:true,
-      noiseSuppression:true,
-      autoGainControl:true
-    }
-  });
-
-  $("liveVideo").srcObject=state.localStream;
-  $("liveVideo").muted=true;
-  $("placeholder").style.display="none";
-  addComment("هنون","بدأ البث المباشر","system");
+async function loadMyGuestStatus(){
+ if(state.isHost)return;
+ const {data,error}=await supabase.from("world_live_guests")
+  .select("id,status,media_mode,slot")
+  .eq("stream_id",streamId).eq("user_id",state.user.id)
+  .in("status",["requested","invited","accepted"])
+  .order("requested_at",{ascending:false}).limit(1).maybeSingle();
+ if(error)throw error;
+ state.myGuest=data||null;
+ state.isGuest=data?.status==="accepted";
+ if(state.isGuest)$("guestControls").classList.add("show");
 }
-
-async function sendSignal(recipientId,type,payload={}){
-  const {error}=await supabase.from("world_live_signals").insert({
-    stream_id:state.stream.id,
-    sender_id:state.user.id,
-    recipient_id:recipientId,
-    signal_type:type,
-    payload
-  });
-  if(error)throw error;
+async function startCamera(){
+ if(!navigator.mediaDevices?.getUserMedia)throw new Error("الكاميرا غير مدعومة. افتح الموقع عبر HTTPS.");
+ state.localStream=await navigator.mediaDevices.getUserMedia({
+  video:{facingMode:"user",width:{ideal:1280},height:{ideal:720},frameRate:{ideal:24,max:30}},
+  audio:{echoCancellation:true,noiseSuppression:true,autoGainControl:true}
+ });
+ state.streamOwners.set(state.localStream.id,state.user.id);
+ if(state.channel){
+  await state.channel.send({type:"broadcast",event:"stream-map",payload:{stream_id:state.localStream.id,user_id:state.user.id}});
+ }
+ renderAllTiles();
 }
-
+async function sendSignal(to,type,payload={}){
+ const {error}=await supabase.from("world_live_signals").insert({
+  stream_id:streamId,sender_id:state.user.id,recipient_id:to,signal_type:type,payload
+ });
+ if(error)throw error;
+}
 async function flushIce(pc,queue){
-  if(!pc.remoteDescription)return;
-  while(queue.length){
-    const candidate=queue.shift();
-    try{await pc.addIceCandidate(new RTCIceCandidate(candidate))}
-    catch(error){console.warn("ICE:",error)}
-  }
+ if(!pc.remoteDescription)return;
+ while(queue.length){
+  const c=queue.shift();
+  try{await pc.addIceCandidate(new RTCIceCandidate(c))}catch(e){console.warn("ICE",e)}
+ }
 }
-
-async function hostCreatePeer(viewerId){
-  if(!state.isHost||viewerId===state.user.id)return;
-  if(state.hostPeers.has(viewerId))return;
-
-  if(state.hostPeers.size>=MAX_DIRECT_VIEWERS){
-    addComment("النظام","وصل البث إلى الحد التجريبي للاتصالات المباشرة.","system");
-    return;
-  }
-
-  const pc=new RTCPeerConnection({
-    iceServers:[
-      {urls:"stun:stun.l.google.com:19302"},
-      {urls:"stun:stun1.l.google.com:19302"}
-    ]
-  });
-
-  const peer={pc,pendingIce:[]};
-  state.hostPeers.set(viewerId,peer);
-  updateViewerCount();
-
-  state.localStream.getTracks().forEach(track=>{
-    pc.addTrack(track,state.localStream);
-  });
-
-  pc.onicecandidate=event=>{
-    if(event.candidate){
-      sendSignal(viewerId,"ice",event.candidate.toJSON())
-        .catch(error=>console.error(error));
-    }
-  };
-
-  pc.onconnectionstatechange=()=>{
-    if(["failed","closed","disconnected"].includes(pc.connectionState)){
-      hostClosePeer(viewerId);
-    }
-  };
-
-  try{
-    const offer=await pc.createOffer();
-    await pc.setLocalDescription(offer);
-    await sendSignal(viewerId,"offer",pc.localDescription.toJSON());
-  }catch(error){
-    console.error("Host offer:",error);
-    hostClosePeer(viewerId);
-  }
+async function hostMakeOffer(peer){
+ if(peer.makingOffer||peer.pc.signalingState!=="stable")return;
+ try{
+  peer.makingOffer=true;
+  const offer=await peer.pc.createOffer();
+  await peer.pc.setLocalDescription(offer);
+  await sendSignal(peer.userId,"offer",peer.pc.localDescription.toJSON());
+ }catch(e){console.error("offer",e)}
+ finally{peer.makingOffer=false}
 }
-
-function hostClosePeer(viewerId){
-  const peer=state.hostPeers.get(viewerId);
-  if(!peer)return;
-  peer.pc.close();
-  state.hostPeers.delete(viewerId);
-  updateViewerCount();
+function addTracksToPeer(peer,stream,ownerId){
+ if(!stream||peer.forwarded.has(stream.id))return;
+ peer.forwarded.add(stream.id);
+ stream.getTracks().forEach(track=>{
+  try{peer.pc.addTrack(track,stream)}catch(e){console.warn(e)}
+ });
 }
+async function hostCreatePeer(userId,role="viewer"){
+ if(!state.isHost||userId===state.user.id||state.hostPeers.has(userId))return;
+ const guest=state.guests.find(g=>g.user_id===userId&&g.status==="accepted");
+ if(role==="guest"&&!guest)return;
+ const viewers=[...state.hostPeers.values()].filter(p=>p.role==="viewer").length;
+ if(role==="viewer"&&viewers>=MAX_VIEWERS)return;
 
-async function viewerHandleSignal(signal){
-  if(signal.sender_id!==state.stream.host_id)return;
+ const pc=new RTCPeerConnection(ICE);
+ const peer={userId,role,pc,pendingIce:[],forwarded:new Set(),makingOffer:false};
+ state.hostPeers.set(userId,peer);
 
-  if(signal.signal_type==="offer"){
-    if(state.viewerPC)return;
-
-    const pc=new RTCPeerConnection({
-      iceServers:[
-        {urls:"stun:stun.l.google.com:19302"},
-        {urls:"stun:stun1.l.google.com:19302"}
-      ]
-    });
-    state.viewerPC=pc;
-
-    pc.ontrack=event=>{
-      $("liveVideo").srcObject=event.streams[0];
-      $("liveVideo").muted=false;
-      $("placeholder").style.display="none";
-      hideLoading();
-    };
-
-    pc.onicecandidate=event=>{
-      if(event.candidate){
-        sendSignal(state.stream.host_id,"ice",event.candidate.toJSON())
-          .catch(error=>console.error(error));
-      }
-    };
-
-    pc.onconnectionstatechange=()=>{
-      if(pc.connectionState==="failed"){
-        toast("تعذر الاتصال بالفيديو. حاول إعادة الدخول.");
-      }
-    };
-
-    await pc.setRemoteDescription(new RTCSessionDescription(signal.payload));
-    await flushIce(pc,state.pendingIce);
-
-    const answer=await pc.createAnswer();
-    await pc.setLocalDescription(answer);
-    await sendSignal(state.stream.host_id,"answer",pc.localDescription.toJSON());
-    return;
-  }
-
-  if(signal.signal_type==="ice"){
-    if(state.viewerPC?.remoteDescription){
-      try{await state.viewerPC.addIceCandidate(new RTCIceCandidate(signal.payload))}
-      catch(error){console.warn(error)}
-    }else{
-      state.pendingIce.push(signal.payload);
-    }
-  }
-
-  if(signal.signal_type==="bye"){
-    toast("انتهى البث المباشر.");
-    leaveRoom();
-  }
-}
-
-async function hostHandleSignal(signal){
-  if(signal.recipient_id!==state.user.id)return;
-  if(signal.sender_id===state.user.id)return;
-
-  const peer=state.hostPeers.get(signal.sender_id);
-  if(!peer)return;
-
-  if(signal.signal_type==="answer"&&!peer.pc.currentRemoteDescription){
-    await peer.pc.setRemoteDescription(new RTCSessionDescription(signal.payload));
-    await flushIce(peer.pc,peer.pendingIce);
-  }
-
-  if(signal.signal_type==="ice"){
-    if(peer.pc.remoteDescription){
-      try{await peer.pc.addIceCandidate(new RTCIceCandidate(signal.payload))}
-      catch(error){console.warn(error)}
-    }else{
-      peer.pendingIce.push(signal.payload);
-    }
-  }
-
-  if(signal.signal_type==="bye"){
-    hostClosePeer(signal.sender_id);
-  }
-}
-
-async function handleSignal(signal){
-  if(!signal||state.seenSignals.has(signal.id))return;
-  state.seenSignals.add(signal.id);
-
-  try{
-    if(state.isHost)await hostHandleSignal(signal);
-    else await viewerHandleSignal(signal);
-  }catch(error){
-    console.error("LIVE signal:",error);
-  }
-}
-
-async function subscribeRoom(){
-  state.channel=supabase.channel("hanoon-live-"+state.stream.id,{
-    config:{presence:{key:state.user.id}}
-  });
-
-  state.channel
-    .on("presence",{event:"sync"},async()=>{
-      const presence=state.channel.presenceState();
-      const ids=Object.values(presence).flat()
-        .map(item=>item.user_id)
-        .filter(id=>id&&id!==state.user.id);
-
-      if(state.isHost){
-        for(const id of ids){
-          if(!state.hostPeers.has(id)){
-            await hostCreatePeer(id);
-          }
-        }
-
-        for(const id of [...state.hostPeers.keys()]){
-          if(!ids.includes(id))hostClosePeer(id);
-        }
-        updateViewerCount();
-      }else{
-        state.viewerCount=1+ids.length;
-        updateViewerCount();
-      }
-    })
-    .on("postgres_changes",{
-      event:"INSERT",
-      schema:"public",
-      table:"world_live_signals",
-      filter:"stream_id=eq."+state.stream.id
-    },payload=>{
-      handleSignal(payload.new);
-    })
-    .on("broadcast",{event:"gift"},payload=>{
-      const gift=payload.payload||{};
-      addComment("هدية",`${gift.sender||"عضو"} أرسل ${gift.gift||"هدية"} إلى صاحب البث`,"gift");
-    })
-    .on("broadcast",{event:"heart"},()=>{
-      floatHeart();
-    });
-
-  await new Promise((resolve,reject)=>{
-    const timeout=setTimeout(()=>reject(new Error("تعذر الاتصال بغرفة البث.")),15000);
-    state.channel.subscribe(async status=>{
-      if(status==="SUBSCRIBED"){
-        clearTimeout(timeout);
-        try{
-          await state.channel.track({
-            user_id:state.user.id,
-            role:state.isHost?"host":"viewer",
-            joined_at:new Date().toISOString()
-          });
-          resolve();
-        }catch(error){reject(error)}
-      }
-
-      if(status==="CHANNEL_ERROR"||status==="TIMED_OUT"){
-        clearTimeout(timeout);
-        reject(new Error("انقطع الاتصال بخدمة البث."));
-      }
-    });
-  });
-}
-
-async function loadChat(){
-  const {data,error}=await supabase.from("world_live_chat")
-    .select("id,user_id,message,created_at")
-    .eq("stream_id",state.stream.id)
-    .order("created_at",{ascending:false})
-    .limit(35);
-
-  if(error)throw error;
-
-  const rows=(data||[]).reverse();
-  for(const row of rows){
-    const profile=await loadProfile(row.user_id);
-    const name=profile?.full_name||profile?.username||"عضو";
-    addComment(name,row.message);
-  }
-}
-
-function subscribeChat(){
-  state.chatChannel=supabase.channel("hanoon-live-chat-"+state.stream.id)
-    .on("postgres_changes",{
-      event:"INSERT",
-      schema:"public",
-      table:"world_live_chat",
-      filter:"stream_id=eq."+state.stream.id
-    },async payload=>{
-      const row=payload.new;
-      const profile=await loadProfile(row.user_id);
-      const name=profile?.full_name||profile?.username||"عضو";
-      addComment(name,row.message);
-    })
-    .subscribe();
-}
-
-async function sendChat(){
-  const message=$("chatInput").value.trim();
-  if(!message)return;
-  if(message.length>500){toast("التعليق أطول من المسموح.");return}
-
-  $("sendChat").disabled=true;
-  try{
-    const {error}=await supabase.from("world_live_chat").insert({
-      stream_id:state.stream.id,
-      user_id:state.user.id,
-      message
-    });
-    if(error)throw error;
-    $("chatInput").value="";
-  }catch(error){
-    console.error(error);
-    toast("تعذر إرسال التعليق.");
-  }finally{
-    $("sendChat").disabled=false;
-  }
-}
-
-async function loadGifts(){
-  const {data,error}=await supabase.from("world_gifts")
-    .select("id,slug,name_ar,price_gems,image_path,is_active,sort_order")
-    .eq("is_active",true)
-    .order("sort_order",{ascending:true})
-    .limit(60);
-
-  if(error)throw error;
-  state.gifts=data||[];
-
-  if(!state.gifts.length){
-    $("giftGrid").innerHTML='<div class="gift-empty">لا توجد هدايا متاحة حاليًا.</div>';
-    return;
-  }
-
-  $("giftGrid").innerHTML=state.gifts.map((gift,index)=>`
-    <button class="gift-item" data-gift="${index}">
-      <span class="gift-symbol">${gift.slug==="rose"?"🌹":gift.slug==="heart"?"♥":gift.slug==="coffee"?"☕":gift.slug==="teddy"?"🧸":gift.slug==="crown"?"♛":gift.slug==="diamond"?"◆":"✦"}</span>
-      <span class="gift-name">${escapeHTML(gift.name_ar)}</span>
-      <span class="gift-price">${Number(gift.price_gems).toLocaleString("en-US")} جوهرة</span>
-    </button>
-  `).join("");
-
-  $("giftGrid").querySelectorAll("[data-gift]").forEach(button=>{
-    button.addEventListener("click",()=>{
-      sendGift(state.gifts[Number(button.dataset.gift)]);
-    });
-  });
-}
-
-async function sendGift(gift){
-  if(!gift||state.sending)return;
-  if(state.isHost){
-    toast("لا يمكنك إرسال هدية إلى بثك الخاص.");
-    return;
-  }
-
-  if(!confirm(`إرسال ${gift.name_ar} مقابل ${Number(gift.price_gems).toLocaleString("en-US")} جوهرة؟`)){
-    return;
-  }
-
-  state.sending=true;
-  try{
-    const {data,error}=await supabase.rpc("hanoon_send_gift",{
-      p_recipient_id:state.stream.host_id,
-      p_gift_id:gift.id,
-      p_quantity:1,
-      p_message:"هدية من بث HANOON LIVE"
-    });
-
-    if(error)throw error;
-    if(data?.success===false)throw new Error(data.message||"تعذر إرسال الهدية.");
-
-    await state.channel.send({
-      type:"broadcast",
-      event:"gift",
-      payload:{
-        sender:state.user.user_metadata?.full_name||state.user.email?.split("@")[0]||"عضو",
-        gift:gift.name_ar
-      }
-    });
-
-    addComment("هدية",`أرسلت ${gift.name_ar} إلى صاحب البث`,"gift");
-    $("giftPanel").classList.remove("show");
-    toast("تم إرسال الهدية بنجاح.");
-  }catch(error){
-    console.error("Gift:",error);
-    toast(error.message||"تعذر إرسال الهدية. تحقق من رصيد الجواهر.");
-  }finally{
-    state.sending=false;
-  }
-}
-
-async function sendHeart(){
-  floatHeart();
-  try{
-    if(state.channel){
-      await state.channel.send({
-        type:"broadcast",
-        event:"heart",
-        payload:{}
-      });
-    }
-  }catch(error){console.warn(error)}
-}
-
-async function toggleMic(){
-  if(!state.localStream)return;
-  state.micOn=!state.micOn;
-  state.localStream.getAudioTracks().forEach(track=>track.enabled=state.micOn);
-  $("micButton").textContent=state.micOn?"كتم الصوت":"تشغيل الصوت";
-}
-
-async function toggleCamera(){
-  if(!state.localStream)return;
-  state.cameraOn=!state.cameraOn;
-  state.localStream.getVideoTracks().forEach(track=>track.enabled=state.cameraOn);
-  $("cameraButton").textContent=state.cameraOn?"إيقاف الكاميرا":"تشغيل الكاميرا";
-}
-
-async function endLive(){
-  if(!state.isHost||state.ending)return;
-  if(!confirm("هل تريد إنهاء البث المباشر للجميع؟"))return;
-
-  state.ending=true;
-  $("endLiveButton").disabled=true;
-
-  try{
-    for(const viewerId of state.hostPeers.keys()){
-      await sendSignal(viewerId,"bye",{});
-    }
-
-    const {error}=await supabase.from("world_live_streams")
-      .update({status:"ended",ended_at:new Date().toISOString()})
-      .eq("id",state.stream.id)
-      .eq("host_id",state.user.id);
-
-    if(error)throw error;
-
-    addComment("النظام","انتهى البث المباشر.","system");
-    toast("تم إنهاء البث.");
-    setTimeout(()=>location.replace("broadcasts.html"),900);
-  }catch(error){
-    console.error(error);
-    toast("تعذر إنهاء البث.");
-    state.ending=false;
-    $("endLiveButton").disabled=false;
-  }
-}
-
-async function leaveRoom(){
+ addTracksToPeer(peer,state.localStream,state.user.id);
+ for(const [guestId,stream] of state.guestStreams){
+  if(guestId!==userId)addTracksToPeer(peer,stream,guestId);
+ }
+ pc.onicecandidate=e=>{
+  if(e.candidate)sendSignal(userId,"ice",e.candidate.toJSON()).catch(console.error);
+ };
+ pc.onnegotiationneeded=()=>hostMakeOffer(peer);
+ pc.ontrack=async event=>{
+  if(role!=="guest")return;
+  const stream=event.streams[0]||new MediaStream([event.track]);
+  state.guestStreams.set(userId,stream);
+  state.remoteStreams.set(userId,stream);
+  const profile=await loadProfile(userId);
+  state.streamOwners.set(stream.id,userId);
+  addVideoTile(userId,stream,profile,false);
   if(state.channel){
-    await supabase.removeChannel(state.channel);
-    state.channel=null;
+   await state.channel.send({type:"broadcast",event:"stream-map",payload:{stream_id:stream.id,user_id:userId}});
   }
-  if(state.chatChannel){
-    await supabase.removeChannel(state.chatChannel);
-    state.chatChannel=null;
+  for(const [otherId,otherPeer] of state.hostPeers){
+   if(otherId!==userId)addTracksToPeer(otherPeer,stream,userId);
   }
-
-  if(state.viewerPC){
-    state.viewerPC.close();
-    state.viewerPC=null;
-  }
-
-  for(const id of [...state.hostPeers.keys()]){
-    hostClosePeer(id);
-  }
-
-  if(state.localStream){
-    state.localStream.getTracks().forEach(track=>track.stop());
-    state.localStream=null;
-  }
-
-  if(state.isHost&&!state.ending&&state.stream?.status==="live"){
-    await supabase.from("world_live_streams")
-      .update({status:"ended",ended_at:new Date().toISOString()})
-      .eq("id",state.stream.id)
-      .eq("host_id",state.user.id);
-  }
-
-  location.replace("broadcasts.html");
+ };
+ pc.onconnectionstatechange=()=>{
+  if(["failed","closed"].includes(pc.connectionState))hostClosePeer(userId);
+ };
+ await hostMakeOffer(peer);
 }
-
-async function initialize(){
-  if(!streamId){
-    location.replace("broadcasts.html");
-    return;
-  }
-
-  const {data,error}=await supabase.auth.getUser();
-  if(error||!data?.user){
-    location.replace("login.html");
-    return;
-  }
-  state.user=data.user;
-
-  await loadStream();
-
-  if(state.isHost){
-    await startHostCamera();
-  }else{
-    $("placeholder").style.display="flex";
-    $("liveVideo").muted=false;
-  }
-
-  await subscribeRoom();
-  await loadChat();
-  subscribeChat();
-  await loadGifts();
-
-  if(state.isHost){
+function hostClosePeer(userId){
+ const peer=state.hostPeers.get(userId);if(!peer)return;
+ try{peer.pc.close()}catch(e){}
+ state.hostPeers.delete(userId);
+ if(peer.role==="guest"){
+  state.guestStreams.delete(userId);state.remoteStreams.delete(userId);removeVideoTile(userId);
+ }
+}
+async function hostHandleSignal(s){
+ const peer=state.hostPeers.get(s.sender_id);
+ if(!peer||s.recipient_id!==state.user.id)return;
+ if(s.signal_type==="answer"){
+  await peer.pc.setRemoteDescription(new RTCSessionDescription(s.payload));
+  await flushIce(peer.pc,peer.pendingIce);
+ }else if(s.signal_type==="ice"){
+  if(peer.pc.remoteDescription){
+   try{await peer.pc.addIceCandidate(new RTCIceCandidate(s.payload))}catch(e){}
+  }else peer.pendingIce.push(s.payload);
+ }else if(s.signal_type==="bye"){
+  hostClosePeer(s.sender_id);await refreshGuests();
+ }
+}
+async function clientHandleSignal(s){
+ if(s.sender_id!==state.stream.host_id||s.recipient_id!==state.user.id)return;
+ if(s.signal_type==="bye"){
+  toast("انتهى اتصالك بالبث أو تمت إزالة مقعدك.");
+  if(state.isGuest)await leaveGuest(false);
+  else leaveRoom(false);
+  return;
+ }
+ if(s.signal_type==="offer"){
+  if(!state.viewerPC){
+   state.viewerPC=new RTCPeerConnection(ICE);
+   state.viewerPC.ontrack=async e=>{
+    const stream=e.streams[0]||new MediaStream([e.track]);
+    state.remoteStreams.set(stream.id,stream);
+    const owner=state.streamOwners.get(stream.id);
+    if(owner){
+     const p=await loadProfile(owner);state.remoteStreams.delete(stream.id);state.remoteStreams.set(owner,stream);
+     addVideoTile(owner,stream,p,false);
+    }else{
+     state.remoteStreams.set(stream.id,stream);
+     addVideoTile(stream.id,stream,{full_name:"عضو مباشر"},false);
+    }
     hideLoading();
-    addComment("النظام","أنت الآن مباشر. انتظر دخول المشاهدين.","system");
-  }else{
-    showLoading("جارٍ الاتصال بالبث","انتظر حتى يبدأ الفيديو في الظهور...");
+   };
+   state.viewerPC.onicecandidate=e=>{
+    if(e.candidate)sendSignal(state.stream.host_id,"ice",e.candidate.toJSON()).catch(console.error);
+   };
+   if(state.isGuest&&state.localStream){
+    state.localStream.getTracks().forEach(t=>state.viewerPC.addTrack(t,state.localStream));
+   }
   }
+  await state.viewerPC.setRemoteDescription(new RTCSessionDescription(s.payload));
+  await flushIce(state.viewerPC,state.pendingIce);
+  const answer=await state.viewerPC.createAnswer();
+  await state.viewerPC.setLocalDescription(answer);
+  await sendSignal(state.stream.host_id,"answer",state.viewerPC.localDescription.toJSON());
+ }else if(s.signal_type==="ice"){
+  if(state.viewerPC?.remoteDescription){
+   try{await state.viewerPC.addIceCandidate(new RTCIceCandidate(s.payload))}catch(e){}
+  }else state.pendingIce.push(s.payload);
+ }
+}
+async function handleSignal(s){
+ if(!s||state.seenSignals.has(s.id))return;
+ state.seenSignals.add(s.id);
+ try{
+  if(state.isHost)await hostHandleSignal(s);
+  else await clientHandleSignal(s);
+ }catch(e){console.error("LIVE signal",e)}
+}
+async function refreshGuests(){
+ const {data,error}=await supabase.from("world_live_guests")
+  .select("id,user_id,status,media_mode,slot,requested_at")
+  .eq("stream_id",streamId)
+  .in("status",["requested","invited","accepted"])
+  .order("requested_at",{ascending:true});
+ if(error)throw error;
+ state.guests=data||[];
+ for(const g of state.guests)await loadProfile(g.user_id);
+ renderGuestRoster();
+ if(state.isHost&&state.channel){
+  const presence=state.channel.presenceState();
+  const present=Object.values(presence).flat();
+  for(const g of state.guests.filter(x=>x.status==="accepted")){
+   if(present.some(x=>x.user_id===g.user_id))hostCreatePeer(g.user_id,"guest").catch(console.error);
+  }
+ }
+ renderGiftRecipients();
+}
+function renderGuestRoster(){
+ const host=state.isHost;
+ $("hostGuestSettings").style.display=host?"block":"none";
+ $("guestRequestArea").innerHTML="";
+ $("guestRoster").innerHTML="";
+ if(host){
+  const pending=state.guests.filter(g=>["requested","invited"].includes(g.status));
+  for(const g of pending){
+   const p=state.profiles[g.user_id]||{};
+   const name=p.full_name||p.username||"عضو";
+   const row=document.createElement("div");row.className="guest-entry";
+   const img=document.createElement("img");img.src=avatarURL(p.avatar_path)||"";
+   const meta=document.createElement("div");meta.className="guest-meta";
+   meta.innerHTML=`<b>${escapeHTML(name)} ${verifiedHTML(p.is_verified)}</b><small>${g.status==="requested"?"طلب انضمام": "دعوة مرسلة"} — ${g.media_mode==="audio"?"صوت":"صوت وصورة"}</small>`;
+   const slot=document.createElement("select");slot.className="field";slot.style.width="55px";
+   for(let i=1;i<=Math.max(1,state.stream.guest_limit);i++){const op=document.createElement("option");op.value=i;op.textContent=i;slot.appendChild(op)}
+   const accept=document.createElement("button");accept.textContent="قبول";accept.onclick=()=>decideGuest(g.id,"accept",Number(slot.value));
+   const decline=document.createElement("button");decline.textContent="رفض";decline.className="danger-btn";decline.onclick=()=>decideGuest(g.id,"decline");
+   row.append(img,meta,slot,accept,decline);$("guestRoster").appendChild(row);
+  }
+  for(const g of state.guests.filter(x=>x.status==="accepted")){
+   const p=state.profiles[g.user_id]||{};
+   const row=document.createElement("div");row.className="guest-entry";
+   const img=document.createElement("img");img.src=avatarURL(p.avatar_path)||"";
+   const meta=document.createElement("div");meta.className="guest-meta";
+   meta.innerHTML=`<b>${escapeHTML(p.full_name||p.username||"ضيف")}</b><small>ضيف مباشر — المقعد ${g.slot||"—"}</small>`;
+   const remove=document.createElement("button");remove.className="danger-btn";remove.textContent="إخراج";
+   remove.onclick=()=>decideGuest(g.id,"remove");
+   row.append(img,meta,remove);$("guestRoster").appendChild(row);
+  }
+  if(!pending.length&&!state.guests.some(g=>g.status==="accepted"))$("guestRoster").innerHTML='<div class="panel-note">لا يوجد ضيوف حاليًا. يمكنك دعوة عضو أو انتظار الطلبات.</div>';
+ }else{
+  const my=state.myGuest;
+  const message=my?.status==="accepted"?"أنت الآن ضيف في هذا البث."
+   :my?.status==="requested"?"تم إرسال طلبك. انتظر موافقة صاحب البث."
+   :my?.status==="invited"?"صاحب البث دعاك للانضمام.";
+  if(my){
+   $("guestRequestArea").innerHTML=`<div class="panel-note">${message}</div>`;
+   if(my.status==="invited"){
+    const b=document.createElement("button");b.className="primary";b.textContent="قبول الدعوة";
+    b.onclick=()=>acceptMyInvite();$("guestRequestArea").appendChild(b);
+   }
+  }else{
+   const b=document.createElement("button");b.className="primary";b.style.width="100%";b.textContent="طلب الانضمام إلى البث";
+   b.onclick=()=>requestGuest("video");$("guestRequestArea").appendChild(b);
+   const audio=document.createElement("button");audio.className="secondary";audio.style.width="100%";audio.style.marginTop="7px";audio.textContent="طلب الانضمام بالصوت فقط";
+   audio.onclick=()=>requestGuest("audio");$("guestRequestArea").appendChild(audio);
+  }
+  const accepted=state.guests.filter(g=>g.status==="accepted");
+  for(const g of accepted){
+   const p=state.profiles[g.user_id]||{};
+   const row=document.createElement("div");row.className="guest-entry";
+   const img=document.createElement("img");img.src=avatarURL(p.avatar_path)||"";
+   const meta=document.createElement("div");meta.className="guest-meta";
+   meta.innerHTML=`<b>${escapeHTML(p.full_name||p.username||"ضيف")}</b><small>ضيف مباشر</small>`;
+   row.append(img,meta);$("guestRoster").appendChild(row);
+  }
+ }
+}
+async function requestGuest(mode){
+ try{
+  const {data,error}=await supabase.rpc("hanoon_live_guest_request",{p_stream_id:streamId,p_media_mode:mode});
+  if(error)throw error;
+  await loadMyGuestStatus();await refreshGuests();
+  toast(data?.status==="accepted"?"تم قبولك بالفعل":"تم إرسال طلب الانضمام.");
+ }catch(e){toast(e.message||"تعذر إرسال الطلب")}
+}
+async function acceptMyInvite(){
+ if(!state.myGuest)return;
+ try{
+  const {data,error}=await supabase.rpc("hanoon_live_guest_decide",{p_guest_id:state.myGuest.id,p_action:"accept",p_slot:1});
+  if(error)throw error;
+  await loadMyGuestStatus();await becomeGuest();
+ }catch(e){toast(e.message||"تعذر قبول الدعوة")}
+}
+async function decideGuest(id,action,slot){
+ try{
+  const {error}=await supabase.rpc("hanoon_live_guest_decide",{p_guest_id:id,p_action:action,p_slot:slot??null});
+  if(error)throw error;
+  const g=state.guests.find(x=>x.id===id);
+  if(action==="remove"&&g){
+   await sendSignal(g.user_id,"bye",{}).catch(()=>{});
+   hostClosePeer(g.user_id);
+  }
+  await refreshGuests();toast(action==="accept"?"تم قبول الضيف":action==="remove"?"تم إخراج الضيف":"تم رفض الطلب");
+ }catch(e){toast(e.message||"تعذر تنفيذ الطلب")}
+}
+async function inviteMember(){
+ const username=$("inviteUsername").value.trim().replace(/^@/,"");
+ if(!username)return toast("اكتب اسم المستخدم أولاً");
+ try{
+  const {data,error}=await supabase.from("profiles").select("id,username").ilike("username",username).limit(1).maybeSingle();
+  if(error)throw error;if(!data)throw new Error("لم يتم العثور على العضو.");
+  const {error:inviteError}=await supabase.rpc("hanoon_live_guest_invite",{
+   p_stream_id:streamId,p_user_id:data.id,p_media_mode:"video"
+  });
+  if(inviteError)throw inviteError;
+  $("inviteUsername").value="";await refreshGuests();toast("تم إرسال الدعوة.");
+ }catch(e){toast(e.message||"تعذر إرسال الدعوة")}
+}
+async function saveGuestSettings(){
+ const layout=$("guestLayout").value;
+ const limit=Number($("guestLimit").value);
+ const access=$("guestAccess").value;
+ try{
+  const {error}=await supabase.rpc("hanoon_live_update_guest_settings",{
+   p_stream_id:streamId,p_layout:layout,p_guest_limit:limit,p_guest_access:access
+  });
+  if(error)throw error;
+  state.stream.guest_layout=layout;state.stream.guest_limit=limit;state.stream.guest_access=access;
+  $("guestLimit2").value=String(limit);$("guestLayout2").value=layout;$("guestAccess2").value=access;
+  applyLayout();toast("تم حفظ إعدادات البث.");
+ }catch(e){toast(e.message||"تعذر حفظ الإعدادات")}
+}
+async function becomeGuest(){
+ if(!state.myGuest||state.myGuest.status!=="accepted")return;
+ state.isGuest=true;
+ $("guestControls").classList.add("show");
+ await startCamera();
+ if(state.channel)await state.channel.track({user_id:state.user.id,role:"guest",joined_at:new Date().toISOString()});
+ await refreshGuests();
+ $("guestPanel").classList.remove("show");
+ toast("أنت الآن ضيف في البث.");
+}
+async function leaveGuest(notify=true){
+ if(notify)await sendSignal(state.stream.host_id,"bye",{}).catch(()=>{});
+ await supabase.rpc("hanoon_live_guest_leave",{p_stream_id:streamId}).catch(()=>{});
+ if(state.viewerPC){state.viewerPC.close();state.viewerPC=null}
+ if(state.localStream){state.localStream.getTracks().forEach(t=>t.stop());state.localStream=null}
+ state.isGuest=false;state.myGuest=null;
+ $("guestControls").classList.remove("show");removeVideoTile(state.user.id);
+ location.replace("broadcasts.html");
+}
+async function loadChat(){
+ const {data,error}=await supabase.rpc("hanoon_live_recent_chat",{p_stream_id:streamId,p_before:null,p_limit:35});
+ if(error)throw error;
+ for(const row of data||[]){
+  const p=await loadProfile(row.user_id);
+  addComment(p.full_name||p.username||"عضو",row.message);
+ }
+}
+function subscribeChat(){
+ state.chatChannel=supabase.channel("hanoon-live-chat-"+streamId)
+ .on("postgres_changes",{event:"INSERT",schema:"public",table:"world_live_chat",filter:"stream_id=eq."+streamId},async payload=>{
+  const row=payload.new;const p=await loadProfile(row.user_id);
+  addComment(p.full_name||p.username||"عضو",row.message);
+ }).subscribe();
+}
+async function sendChat(){
+ if(state.chatBusy)return;
+ const message=$("chatInput").value.trim();if(!message)return;
+ state.chatBusy=true;$("sendChat").disabled=true;
+ try{
+  const {error}=await supabase.from("world_live_chat").insert({stream_id:streamId,user_id:state.user.id,message});
+  if(error)throw error;$("chatInput").value="";
+ }catch(e){toast(e.message||"تعذر إرسال التعليق")}
+ finally{state.chatBusy=false;$("sendChat").disabled=false}
+}
+function giftSVG(slug){
+ const shapes={
+  rose:'<path d="M20 8c-4-7-12-6-14-1-2 5 4 8 7 5 3-3 1-7-2-7M12 12c-2 5-3 8-3 10m3-7 7 2m-7-2-5 3"/>',
+  heart:'<path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.9-8.6a5.5 5.5 0 0 0-.1-7.8Z"/>',
+  coffee:'<path d="M4 8h14v9a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4V8Zm14 2h2a2 2 0 0 1 0 4h-2M8 3v3m5-3v3"/>',
+  teddy:'<circle cx="12" cy="13" r="7"/><circle cx="5" cy="6" r="3"/><circle cx="19" cy="6" r="3"/><circle cx="9" cy="12" r="1"/><circle cx="15" cy="12" r="1"/><path d="M10 16q2 2 4 0"/>',
+  crown:'<path d="m3 8 5 4 4-8 4 8 5-4-2 12H5L3 8Z"/>',
+  diamond:'<path d="M3 8 7 3h10l4 5-9 13L3 8Z M3 8h18M7 3l5 18 5-18"/>',
+  rocket:'<path d="M14 4c3-2 6-2 7-2 0 1 0 4-2 7l-6 7-5-5 6-7ZM8 11l-4 1-2 5 5-2m6 0-1 5-5 2 2-5m1-8 4 4"/>',
+  giftbox:'<path d="M3 10h18v11H3zM2 6h20v4H2zM12 6v15m0-15H8a2 2 0 1 1 2-2c0 1 2 2 2 2Zm0 0h4a2 2 0 1 0-2-2c0 1-2 2-2 2Z"/>'
+ };
+ return `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">${shapes[slug]||'<path d="m12 2 3 7 7 3-7 3-3 7-3-7-7-3 7-3 3-7Z"/>'}</svg>`;
+}
+function storageURL(path){
+ if(!path)return "";
+ if(/^https?:\/\//i.test(path))return path;
+ return supabase.storage.from("world-store-assets").getPublicUrl(path).data.publicUrl;
+}
+async function loadGifts(){
+ const {data,error}=await supabase.from("world_gifts")
+  .select("id,slug,name_ar,price_gems,image_path,animation_path,is_active,sort_order")
+  .eq("is_active",true).order("sort_order").limit(80);
+ if(error)throw error;
+ state.gifts=data||[];
+ $("giftGrid").innerHTML="";
+ if(!state.gifts.length){$("giftGrid").innerHTML='<div class="panel-note">لا توجد هدايا متاحة.</div>';return}
+ for(const gift of state.gifts){
+  const b=document.createElement("button");b.className="gift-item";
+  const art=document.createElement("span");art.className="gift-art";
+  const image=storageURL(gift.image_path);
+  art.innerHTML=image?`<img src="${escapeHTML(image)}" style="width:40px;height:40px;object-fit:contain" alt="">`:giftSVG(gift.slug);
+  const name=document.createElement("span");name.className="gift-name";name.textContent=gift.name_ar;
+  const price=document.createElement("span");price.className="gift-price";price.textContent=Number(gift.price_gems).toLocaleString("en-US")+" جوهرة";
+  b.append(art,name,price);b.onclick=()=>sendGift(gift);$("giftGrid").appendChild(b);
+ }
+ renderGiftRecipients();
+}
+function renderGiftRecipients(){
+ const select=$("giftRecipient");if(!select)return;
+ const old=select.value;
+ select.innerHTML="";
+ const hostOption=document.createElement("option");hostOption.value=state.stream.host_id;
+ hostOption.textContent="صاحب البث — "+(state.host?.full_name||state.host?.username||"المضيف");
+ select.appendChild(hostOption);
+ for(const g of state.guests.filter(x=>x.status==="accepted")){
+  const p=state.profiles[g.user_id]||{};
+  const o=document.createElement("option");o.value=g.user_id;o.textContent="الضيف — "+(p.full_name||p.username||"عضو");
+  select.appendChild(o);
+ }
+ if([...select.options].some(o=>o.value===old))select.value=old;
+}
+async function sendGift(gift){
+ if(!gift||state.sending)return;
+ const recipient=$("giftRecipient").value||state.stream.host_id;
+ if(recipient===state.user.id)return toast("لا يمكنك إرسال هدية إلى نفسك.");
+ if(!confirm(`إرسال ${gift.name_ar} مقابل ${Number(gift.price_gems).toLocaleString("en-US")} جوهرة؟`))return;
+ state.sending=true;
+ try{
+  const {data,error}=await supabase.rpc("hanoon_live_send_gift_once",{
+   p_stream_id:streamId,p_recipient_id:recipient,p_gift_id:gift.id,
+   p_quantity:1,p_message:"هدية من بث HANOON LIVE",p_request_id:crypto.randomUUID()
+  });
+  if(error)throw error;
+  if(data?.success===false)throw new Error(data.message||"تعذر إرسال الهدية");
+  $("giftPanel").classList.remove("show");
+  toast("تم إرسال الهدية وخصم الجواهر بنجاح.");
+ }catch(e){toast(e.message||"تعذر إرسال الهدية. تحقق من رصيدك")}
+ finally{state.sending=false}
+}
+async function showGiftEffect(event){
+ const gift=state.gifts.find(g=>g.id===event.gift_id)||
+  (await supabase.from("world_gifts").select("id,slug,name_ar,image_path,animation_path").eq("id",event.gift_id).maybeSingle()).data;
+ if(!gift)return;
+ const sender=await loadProfile(event.sender_id);
+ const recipient=await loadProfile(event.recipient_id);
+ const art=$("effectArt");art.innerHTML="";
+ const path=gift.animation_path||gift.image_path;
+ if(path){
+  const img=document.createElement("img");img.src=storageURL(path);img.alt=gift.name_ar;art.appendChild(img);
+ }else art.innerHTML=giftSVG(gift.slug);
+ $("effectTitle").textContent=gift.name_ar+" × "+event.quantity;
+ $("effectSubtitle").textContent=(sender.full_name||sender.username||"عضو")+" أرسلها إلى "+(recipient.full_name||recipient.username||"عضو");
+ const box=$("giftEffect");box.classList.remove("show");void box.offsetWidth;box.classList.add("show");
+ addComment("هدية",`${sender.full_name||sender.username||"عضو"} أرسل ${gift.name_ar}`,"gift");
+ clearTimeout(state.giftTimer);state.giftTimer=setTimeout(()=>box.classList.remove("show"),3300);
+}
+function subscribeRoom(){
+ state.channel=supabase.channel("hanoon-live-"+streamId,{config:{presence:{key:state.user.id}}});
+ state.channel
+ .on("presence",{event:"sync"},async()=>{
+  if(!state.isHost)return;
+  const items=Object.values(state.channel.presenceState()).flat();
+  for(const item of items){
+   if(item.user_id===state.user.id)continue;
+   const isGuest=state.guests.some(g=>g.user_id===item.user_id&&g.status==="accepted");
+   hostCreatePeer(item.user_id,isGuest?"guest":"viewer").catch(console.error);
+  }
+  for(const [id,peer] of state.hostPeers){
+   if(!items.some(x=>x.user_id===id))hostClosePeer(id);
+  }
+ })
+ .on("postgres_changes",{event:"INSERT",schema:"public",table:"world_live_signals",filter:"stream_id=eq."+streamId},p=>handleSignal(p.new))
+ .on("postgres_changes",{event:"*",schema:"public",table:"world_live_guests",filter:"stream_id=eq."+streamId},async()=>{
+  await refreshGuests();
+  if(!state.isHost){
+   await loadMyGuestStatus();
+   if(state.myGuest?.status==="accepted"&&!state.isGuest)await becomeGuest();
+   if(state.myGuest?.status==="removed"||state.myGuest?.status==="left")leaveGuest(false);
+  }
+ })
+ .on("postgres_changes",{event:"INSERT",schema:"public",table:"world_live_gift_events",filter:"stream_id=eq."+streamId},p=>showGiftEffect(p.new))
+ .on("broadcast",{event:"stream-map"},async p=>{
+  const data=p.payload||{};if(!data.stream_id||!data.user_id)return;
+  state.streamOwners.set(data.stream_id,data.user_id);
+  const stream=state.remoteStreams.get(data.stream_id);
+  if(stream){
+   state.remoteStreams.delete(data.stream_id);
+   state.remoteStreams.set(data.user_id,stream);
+   const profile=await loadProfile(data.user_id);addVideoTile(data.user_id,stream,profile,false);
+  }
+ })
+ .on("broadcast",{event:"heart"},()=>floatHeart());
+ state.channel.subscribe(async status=>{
+  if(status==="SUBSCRIBED"){
+   await state.channel.track({user_id:state.user.id,role:state.isHost?"host":state.isGuest?"guest":"viewer",joined_at:new Date().toISOString()});
+   if(state.localStream)await state.channel.send({type:"broadcast",event:"stream-map",payload:{stream_id:state.localStream.id,user_id:state.user.id}});
+   if(state.isHost){
+    if(state.localStream)addVideoTile(state.user.id,state.localStream,state.host,true);
+    await refreshGuests();
+   }
+  }
+ });
+}
+function floatHeart(){
+ const h=document.createElement("div");h.className="heart-float";h.textContent="♥";
+ h.style.left=(15+Math.random()*55)+"%";$("videoGrid").appendChild(h);
+ setTimeout(()=>h.remove(),1900);
+}
+async function sendHeart(){
+ floatHeart();
+ if(state.channel)await state.channel.send({type:"broadcast",event:"heart",payload:{}}).catch(()=>{});
+}
+async function pingViewer(){
+ if(state.isHost||state.isGuest)return;
+ const {data,error}=await supabase.rpc("hanoon_live_viewer_ping",{p_stream_id:streamId});
+ if(!error){state.viewerCount=Number(data)||1;updateCount()}
+}
+async function toggleTrack(kind,isGuest=false){
+ const stream=state.localStream;if(!stream)return;
+ const tracks=kind==="audio"?stream.getAudioTracks():stream.getVideoTracks();
+ if(!tracks.length)return;
+ const enabled=!tracks[0].enabled;tracks.forEach(t=>t.enabled=enabled);
+ if(kind==="audio"){
+  if(isGuest){state.micOn=enabled;$("guestMicButton").textContent=enabled?"كتم صوتي":"تشغيل صوتي"}
+  else{state.micOn=enabled;$("micButton").textContent=enabled?"كتم الصوت":"تشغيل الصوت"}
+ }else{
+  if(isGuest){state.cameraOn=enabled;$("guestCameraButton").textContent=enabled?"إيقاف كاميرتي":"تشغيل كاميرتي"}
+  else{state.cameraOn=enabled;$("cameraButton").textContent=enabled?"إيقاف الكاميرا":"تشغيل الكاميرا"}
+ }
+}
+async function endLive(){
+ if(!state.isHost||state.ending)return;
+ if(!confirm("هل تريد إنهاء البث للجميع؟"))return;
+ state.ending=true;
+ try{
+  for(const id of state.hostPeers.keys())await sendSignal(id,"bye",{}).catch(()=>{});
+  const {error}=await supabase.from("world_live_streams").update({status:"ended",ended_at:new Date().toISOString()})
+   .eq("id",streamId).eq("host_id",state.user.id);
+  if(error)throw error;
+  toast("تم إنهاء البث.");
+  setTimeout(()=>location.replace("broadcasts.html"),700);
+ }catch(e){state.ending=false;toast(e.message||"تعذر إنهاء البث")}
+}
+async function leaveRoom(redirect=true){
+ if(state.isGuest){await leaveGuest(false);return}
+ if(!state.isHost)await supabase.rpc("hanoon_live_viewer_leave",{p_stream_id:streamId}).catch(()=>{});
+ if(state.channel)await supabase.removeChannel(state.channel);
+ if(state.chatChannel)await supabase.removeChannel(state.chatChannel);
+ if(state.viewerPC)state.viewerPC.close();
+ for(const id of [...state.hostPeers.keys()])hostClosePeer(id);
+ if(state.localStream)state.localStream.getTracks().forEach(t=>t.stop());
+ if(state.isHost&&!state.ending){
+  await supabase.from("world_live_streams").update({status:"ended",ended_at:new Date().toISOString()}).eq("id",streamId).eq("host_id",state.user.id);
+ }
+ if(redirect)location.replace("broadcasts.html");
+}
+async function initialize(){
+ if(!streamId){location.replace("broadcasts.html");return}
+ const {data,error}=await supabase.auth.getUser();
+ if(error||!data?.user){location.replace("login.html");return}
+ state.user=data.user;
+ const myProfile=await loadProfile(state.user.id);
+ await loadStream();
+ await loadMyGuestStatus();
+ if(state.isHost||state.isGuest)await startCamera();
+ await refreshGuests();
+ subscribeRoom();
+ await loadChat();subscribeChat();await loadGifts();
+ if(!state.isHost&&!state.isGuest){
+  await pingViewer();
+  state.heartbeat=setInterval(pingViewer,20000);
+  showLoading("جارٍ الاتصال بالبث","انتظر حتى يظهر الفيديو المباشر...");
+ }else hideLoading();
+ if(state.isHost)addComment("HANOON","أنت الآن مباشر. يمكنك دعوة الضيوف وإدارة البث.","system");
+ if(state.isGuest)addComment("HANOON","انضممت إلى البث كضيف.","system");
 }
 
-$("sendChat").addEventListener("click",sendChat);
-$("chatInput").addEventListener("keydown",event=>{
-  if(event.key==="Enter")sendChat();
-});
-$("heartButton").addEventListener("click",sendHeart);
-$("giftButton").addEventListener("click",()=>{
-  $("giftPanel").classList.toggle("show");
-});
-$("closeGifts").addEventListener("click",()=>{
-  $("giftPanel").classList.remove("show");
-});
-$("closeButton").addEventListener("click",()=>{
-  if(state.isHost){
-    endLive();
-  }else{
-    leaveRoom();
-  }
-});
-$("micButton").addEventListener("click",toggleMic);
-$("cameraButton").addEventListener("click",toggleCamera);
-$("endLiveButton").addEventListener("click",endLive);
+$("sendChat").onclick=sendChat;
+$("chatInput").addEventListener("keydown",e=>{if(e.key==="Enter")sendChat()});
+$("heartButton").onclick=sendHeart;
+$("giftButton").onclick=()=>$("giftPanel").classList.add("show");
+$("guestButton").onclick=()=>{
+ if(state.isHost)$("hostGuestSettings").style.display="block";
+ $("guestPanel").classList.add("show");
+};
+$("closeButton").onclick=()=>state.isHost?endLive():leaveRoom();
+$("micButton").onclick=()=>toggleTrack("audio");
+$("cameraButton").onclick=()=>toggleTrack("video");
+$("guestMicButton").onclick=()=>toggleTrack("audio",true);
+$("guestCameraButton").onclick=()=>toggleTrack("video",true);
+$("leaveGuestButton").onclick=()=>leaveGuest(true);
+$("endLiveButton").onclick=endLive;
+$("layoutButton").onclick=()=>$("layoutPanel").classList.add("show");
+$("saveGuestSettings").onclick=saveGuestSettings;
+$("saveGuestSettings2").onclick=async()=>{
+ $("guestLayout").value=$("guestLayout2").value;
+ $("guestLimit").value=$("guestLimit2").value;
+ $("guestAccess").value=$("guestAccess2").value;
+ await saveGuestSettings();$("layoutPanel").classList.remove("show");
+};
+$("inviteButton").onclick=inviteMember;
+document.querySelectorAll("[data-close]").forEach(b=>b.onclick=()=>$(b.dataset.close).classList.remove("show"));
 
 window.addEventListener("pagehide",()=>{
-  if(state.localStream){
-    state.localStream.getTracks().forEach(track=>track.stop());
-  }
-  if(state.viewerPC)state.viewerPC.close();
-  for(const peer of state.hostPeers.values())peer.pc.close();
+ clearInterval(state.heartbeat);
+ if(state.localStream)state.localStream.getTracks().forEach(t=>t.stop());
+ if(state.viewerPC)state.viewerPC.close();
+ for(const p of state.hostPeers.values())p.pc.close();
 });
 
-initialize().catch(error=>{
-  console.error("LIVE ROOM:",error);
-  showLoading("تعذر فتح البث",error.message||"حدث خطأ غير متوقع.");
-  $("loadingCover").querySelector(".spinner").style.display="none";
-  toast(error.message||"تعذر فتح غرفة البث.");
+initialize().catch(e=>{
+ console.error("HANOON LIVE",e);
+ showLoading("تعذر فتح البث",e.message||"حدث خطأ غير متوقع.");
+ $("loading").querySelector(".spinner").style.display="none";
+ toast(e.message||"تعذر فتح البث");
 });
 </script>
 </body>
