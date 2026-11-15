@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -108,6 +107,7 @@ svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke
 @media(max-width:900px){.wallet-grid{grid-template-columns:1fr}}
 @media(max-width:620px){.wallet-stats{grid-template-columns:1fr 1fr}.wallet-stat.monthly{grid-column:1/-1}.wallet-hero{padding:16px}.wallet-hero h2{font-size:16px}.wallet-member{align-items:flex-start;flex-wrap:wrap}.wallet-member button{margin-right:56px;flex:1}.wallet-stat{min-height:100px;padding:11px}}
 </style>
+<link rel="stylesheet" href="./admin.css">
 </head>
 <body>
 <div class="app">
@@ -130,6 +130,11 @@ svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke
   <button class="nav-btn" data-view="members"><span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM20 8v6M23 11h-6"/></svg></span>إدارة الأعضاء</button>
   <button class="nav-btn" data-view="wallet"><span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M4 7.5A2.5 2.5 0 0 1 6.5 5H20v14H6.5A2.5 2.5 0 0 1 4 16.5z"/><path d="M4 8h14a2 2 0 0 1 2 2v5h-5a2.5 2.5 0 0 1 0-5h5M16 12.5h.01"/></svg></span>المحفظة والعملات</button>
   <button class="nav-btn" data-view="notifications"><span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9ZM10 21h4"/></svg></span>إرسال الإشعارات</button>
+  <div class="side-separator"></div>
+  <div class="side-caption">إدارة وتطوير الموقع</div>
+  <button class="nav-btn" data-view="site-editor"><span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M12 3v18M3 12h18M5 5l14 14M19 5 5 19"/></svg></span>محرر تصميم الموقع</button>
+  <button class="nav-btn" data-view="content-manager"><span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M4 5h16M4 10h16M4 15h10M4 20h7"/></svg></span>إدارة المحتوى والهدايا</button>
+  <button class="nav-btn" data-view="update-center"><span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M12 3v12m-5-5 5 5 5-5M4 19v2h16v-2"/></svg></span>مركز التحديثات والإصدارات</button>
   <div class="side-separator"></div>
   <div class="side-caption">روابط الموقع</div>
   <a class="nav-btn" href="home.html">موقع هَنون</a>
@@ -336,8 +341,23 @@ svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke
     </div>
   </div>
 </section>
-<script type="module">
+
+<section class="view" id="view-site-editor">
+  <div class="page-head"><div><div class="eyebrow">HANOON / DESIGN STUDIO</div><h1>استوديو تصميم الموقع</h1><p>تحكم في ألوان الموقع وخلفياته وصوره ونصوصه وترتيب أقسامه.</p></div><div class="live-status"><i></i> محرر التصميم</div></div>
+  <div id="adminSiteRoot"></div>
+</section>
+
+<section class="view" id="view-content-manager">
+  <div class="page-head"><div><div class="eyebrow">HANOON / CONTENT CONTROL</div><h1>إدارة المحتوى</h1><p>إدارة المحتوى التحريري والإعلانات والعروض الترويجية.</p></div><div class="live-status"><i></i> إدارة المحتوى</div></div>
+  <div id="adminContentRoot"></div>
+</section>
+
+<section class="view" id="view-update-center">
+  <div class="page-head"><div><div class="eyebrow">HANOON / UPDATE CENTER</div><h1>مركز التحديثات والإصدارات</h1><p>إنشاء الإصدارات وإضافة الملفات وإدارة النشر والسحب.</p></div><div class="live-status"><i></i> مركز التحديثات</div></div>
+  <div id="adminUpdatesRoot"></div>
+</section><script type="module">
 import {supabase} from "./supabase.js";
+import {createAdminExtensions} from "./admin-core.js";
 
 const $=id=>document.getElementById(id);
 const SESSION_KEY="hanoon_admin_session";
@@ -348,6 +368,15 @@ const ADMIN_COVER="a4450f5b-05ee-4476-82e0-9e064d6df331/cover-1794696871360.jpg"
 const PAGE_SIZE=20;
 
 let sessionToken="";
+let adminExtensions=null;
+
+function ensureAdminExtensions(){
+  if(!sessionToken)throw new Error("جلسة الإدارة غير متاحة.");
+  if(!adminExtensions){
+    adminExtensions=createAdminExtensions({supabase,sessionToken,toast});
+  }
+  return adminExtensions;
+}
 let memberOffset=0,memberTotal=0,membersLoaded=false;
 let messageTarget=null,pendingDialogAction=null,toastTimer;
 let historyStack=[],currentView="dashboard";
@@ -562,6 +591,13 @@ function renderView(name){
   $("sidebar").classList.remove("open");
   $("mainContent").scrollTop=0;
 
+  const extensionViews={"site-editor":"site","content-manager":"content","update-center":"updates"};
+  if(extensionViews[name]){
+    ensureAdminExtensions().open(extensionViews[name]);
+  }else if(adminExtensions){
+    adminExtensions.close();
+  }
+
   if(name==="members"&&!membersLoaded){
     searchMembers(true);
   }
@@ -573,7 +609,7 @@ function renderView(name){
 }
 
 function openView(name){
-  if(!["dashboard","members","notifications","wallet"].includes(name))return;
+  if(!["dashboard","members","notifications","wallet","site-editor","content-manager","update-center"].includes(name))return;
   if(name===currentView)return;
 
   historyStack.push(savePosition());
@@ -1588,9 +1624,7 @@ $("walletActionForm").addEventListener("submit",async event=>{
     button.disabled=false;
     button.textContent="تنفيذ العملية";
   }
-});
-
-/* بدء تشغيل لوحة الإدارة */
+});/* بدء تشغيل لوحة الإدارة */
 
 const savedToken=localStorage.getItem(SESSION_KEY)||"";
 
