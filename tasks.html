@@ -4,814 +4,383 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-<meta name="theme-color" content="#090b18">
-<title>المهام اليومية | HANOON WORLD</title>
-
+<meta name="theme-color" content="#080916">
+<title>عالم المهام | HANOON WORLD</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
 <style>
 :root{
-  --bg:#090b18;
-  --panel:rgba(20,23,43,.94);
-  --panel2:rgba(29,31,57,.88);
-  --purple:#9b7cff;
-  --purple2:#7454e8;
-  --cyan:#65d9d1;
-  --gold:#f1c875;
-  --green:#52d6a4;
-  --red:#ff7187;
-  --text:#f8f6ff;
-  --muted:#a9a6c2;
-  --line:rgba(255,255,255,.09);
+  --bg:#080916;
+  --panel:#15162b;
+  --purple:#a58aff;
+  --cyan:#68e2dc;
+  --gold:#f5cf7b;
+  --green:#62dfad;
+  --red:#ff8298;
+  --text:#faf8ff;
+  --muted:#aaa8c4;
+  --line:rgba(255,255,255,.1);
 }
-
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-  -webkit-tap-highlight-color:transparent;
-}
-
-html,body{
-  width:100%;
-  height:100%;
-  min-width:320px;
-  overflow:hidden;
-  overscroll-behavior:none;
-  background:var(--bg);
-  color:var(--text);
-  font-family:Cairo,sans-serif;
-}
-
-body{
-  position:fixed;
-  inset:0;
-  touch-action:pan-y;
-}
-
-button,a{
-  font:inherit;
-  color:inherit;
-}
-
-button{
-  border:0;
-  cursor:pointer;
-}
-
-a{
-  text-decoration:none;
-}
-
-.page{
-  position:relative;
-  width:100%;
-  max-width:1050px;
-  height:100%;
-  margin:auto;
-  overflow:hidden;
-  display:flex;
-  flex-direction:column;
-  isolation:isolate;
-}
-
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{width:100%;height:100%;min-width:320px;overflow:hidden;background:var(--bg);color:var(--text);font-family:Cairo,sans-serif}
+body{position:fixed;inset:0}
+button,a{font:inherit;color:inherit}
+button{border:0;cursor:pointer}
+a{text-decoration:none}
+.page{position:relative;width:100%;max-width:1100px;height:100%;margin:auto;display:flex;flex-direction:column;overflow:hidden;isolation:isolate}
 .background{
-  position:fixed;
-  z-index:-3;
-  inset:0;
-  background:
-    radial-gradient(ellipse at 10% 12%,rgba(125,91,255,.23),transparent 35%),
-    radial-gradient(ellipse at 92% 75%,rgba(37,185,190,.14),transparent 34%),
-    linear-gradient(145deg,#090b18,#111329 55%,#090d19);
+ position:fixed;inset:0;z-index:-5;
+ background:
+ radial-gradient(ellipse at 12% 10%,rgba(125,83,255,.24),transparent 34%),
+ radial-gradient(ellipse at 90% 48%,rgba(20,181,193,.15),transparent 35%),
+ radial-gradient(ellipse at 50% 100%,rgba(132,76,201,.13),transparent 40%),
+ linear-gradient(145deg,#080916,#11132b 48%,#090b19);
 }
-
-.background::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  opacity:.18;
-  background-image:
-    radial-gradient(rgba(255,255,255,.35) .7px,transparent .7px);
-  background-size:25px 25px;
-  pointer-events:none;
+.background:before{
+ content:"";position:absolute;inset:0;opacity:.16;
+ background-image:radial-gradient(rgba(255,255,255,.5) .7px,transparent .8px);
+ background-size:27px 27px;pointer-events:none;
 }
-
 .topbar{
-  flex:none;
-  min-height:75px;
-  padding:12px 18px;
-  padding-top:max(12px,env(safe-area-inset-top));
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:12px;
-  border-bottom:1px solid var(--line);
-  background:rgba(10,12,27,.72);
-  backdrop-filter:blur(20px);
-  -webkit-backdrop-filter:blur(20px);
+ flex:none;min-height:70px;padding:10px 17px;
+ padding-top:max(10px,env(safe-area-inset-top));
+ display:flex;align-items:center;justify-content:space-between;gap:12px;
+ background:rgba(9,10,26,.83);border-bottom:1px solid var(--line);
+ backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);
 }
-
-.brand{
-  display:flex;
-  align-items:center;
-  gap:11px;
-  min-width:0;
-}
-
+.brand{display:flex;align-items:center;gap:11px;min-width:0}
 .brand-icon{
-  width:44px;
-  height:44px;
-  flex:none;
-  display:grid;
-  place-items:center;
-  border-radius:15px;
-  color:white;
-  background:linear-gradient(145deg,#b49cff,#7250df);
-  box-shadow:0 7px 25px rgba(130,95,239,.35);
-  border:1px solid rgba(255,255,255,.2);
+ width:43px;height:43px;flex:none;display:grid;place-items:center;
+ border-radius:15px;background:linear-gradient(145deg,#c1aaff,#714bdb);
+ border:1px solid rgba(255,255,255,.24);
+ box-shadow:0 8px 26px rgba(139,99,244,.4);
 }
-
-.brand-icon svg{
-  width:25px;
-  height:25px;
-}
-
-.brand-name{
-  font-size:15px;
-  font-weight:900;
-  line-height:1.4;
-}
-
-.brand-caption{
-  color:var(--muted);
-  font-size:9px;
-  letter-spacing:1.5px;
-}
-
-.header-actions{
-  display:flex;
-  align-items:center;
-  gap:8px;
-}
-
+.brand-icon svg{width:25px;height:25px}
+.brand-name{font-size:14px;font-weight:900;line-height:1.4}
+.brand-caption{font-size:9px;color:#aaa5c9;letter-spacing:1.7px}
+.header-actions{display:flex;gap:8px}
 .icon-button{
-  width:42px;
-  height:42px;
-  display:grid;
-  place-items:center;
-  border-radius:13px;
-  border:1px solid var(--line);
-  background:rgba(255,255,255,.055);
+ width:41px;height:41px;display:grid;place-items:center;border-radius:13px;
+ border:1px solid var(--line);background:rgba(255,255,255,.06)
 }
-
-.icon-button svg{
-  width:20px;
-  height:20px;
-  stroke:currentColor;
-  fill:none;
-  stroke-width:1.8;
-}
-
+.icon-button svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.8}
 .scroll-area{
-  flex:1;
-  min-height:0;
-  overflow-y:auto;
-  overflow-x:hidden;
-  padding:18px 16px 30px;
-  touch-action:pan-y;
-  overscroll-behavior:contain;
-  scrollbar-width:thin;
-  scrollbar-color:rgba(155,124,255,.35) transparent;
+ flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;
+ padding:17px 15px 30px;overscroll-behavior:contain;touch-action:pan-y;
+ scrollbar-width:thin;scrollbar-color:rgba(165,138,255,.4) transparent;
 }
 
+/* البانر الرئيسي */
 .hero{
-  position:relative;
-  overflow:hidden;
-  padding:23px 21px;
-  border-radius:25px;
-  border:1px solid rgba(177,157,255,.22);
-  background:
-    radial-gradient(circle at 10% 10%,rgba(172,147,255,.25),transparent 40%),
-    linear-gradient(120deg,rgba(43,35,83,.96),rgba(20,38,61,.94));
-  box-shadow:0 18px 45px rgba(0,0,0,.25);
+ position:relative;isolation:isolate;overflow:hidden;min-height:245px;
+ padding:24px 21px;border-radius:27px;
+ border:1px solid rgba(196,174,255,.3);
+ background:
+ radial-gradient(ellipse at 83% 22%,rgba(121,214,255,.3),transparent 27%),
+ radial-gradient(ellipse at 8% 95%,rgba(202,124,255,.32),transparent 38%),
+ linear-gradient(115deg,#20194a 0%,#272052 43%,#12384b 100%);
+ box-shadow:0 20px 55px rgba(0,0,0,.32),inset 0 1px rgba(255,255,255,.13);
 }
-
-.hero::after{
-  content:"";
-  position:absolute;
-  width:170px;
-  height:170px;
-  left:-60px;
-  top:-80px;
-  border:1px solid rgba(255,255,255,.09);
-  border-radius:50%;
-  box-shadow:0 0 0 20px rgba(255,255,255,.025),
-             0 0 0 42px rgba(255,255,255,.018);
-  pointer-events:none;
+.hero:before{
+ content:"";position:absolute;z-index:-1;width:260px;height:260px;
+ left:-80px;top:-105px;border:1px solid rgba(255,255,255,.16);
+ border-radius:50%;box-shadow:0 0 0 22px rgba(255,255,255,.035),0 0 0 48px rgba(255,255,255,.025),0 0 0 78px rgba(255,255,255,.018);
 }
-
-.hero-content{
-  position:relative;
-  z-index:1;
+.hero:after{
+ content:"";position:absolute;z-index:-1;width:190px;height:190px;
+ right:-65px;bottom:-112px;border-radius:50%;
+ background:radial-gradient(circle,rgba(255,255,255,.15),rgba(255,255,255,0) 68%);
 }
-
-.eyebrow{
-  color:var(--cyan);
-  font-size:10px;
-  font-weight:900;
-  letter-spacing:2px;
+.hero-content{position:relative;z-index:2;max-width:650px}
+.hero-kicker{
+ display:inline-flex;align-items:center;gap:7px;padding:6px 11px;
+ border-radius:30px;background:rgba(255,255,255,.1);
+ border:1px solid rgba(255,255,255,.17);color:#d9faff;
+ font-size:9px;font-weight:900;letter-spacing:1px;
 }
-
-.hero h1{
-  margin-top:7px;
-  font-size:clamp(23px,5vw,32px);
-  line-height:1.5;
-  font-weight:900;
+.hero-kicker svg{width:14px;height:14px;stroke:var(--gold);fill:none;stroke-width:1.8}
+.hero h1{font-size:clamp(26px,6vw,38px);font-weight:900;line-height:1.45;margin-top:11px}
+.hero p{max-width:510px;margin-top:5px;color:#e0dcf3;font-size:11px;line-height:2.1}
+.hero-art{
+ position:absolute;left:18px;bottom:13px;width:118px;height:118px;
+ display:grid;place-items:center;opacity:.95;pointer-events:none;
 }
-
-.hero p{
-  margin-top:5px;
-  max-width:550px;
-  color:#d1cce7;
-  font-size:12px;
-  line-height:2;
+.hero-art .orbit{
+ position:absolute;width:104px;height:104px;border:1px solid rgba(255,255,255,.22);
+ border-radius:50%;box-shadow:0 0 0 12px rgba(255,255,255,.035);
 }
-
-.hero-meta{
-  display:flex;
-  flex-wrap:wrap;
-  gap:8px;
-  margin-top:16px;
+.hero-art .gem{
+ width:66px;height:66px;display:grid;place-items:center;
+ border-radius:23px;transform:rotate(-12deg);
+ background:linear-gradient(145deg,rgba(255,255,255,.32),rgba(255,255,255,.07));
+ border:1px solid rgba(255,255,255,.38);
+ box-shadow:0 10px 35px rgba(0,0,0,.2),inset 0 1px rgba(255,255,255,.4);
 }
-
+.hero-art svg{width:39px;height:39px;stroke:#ffe7a8;fill:none;stroke-width:1.4}
+.hero-meta{display:flex;flex-wrap:wrap;gap:7px;margin-top:15px}
 .meta-pill{
-  display:flex;
-  align-items:center;
-  gap:6px;
-  padding:7px 11px;
-  border-radius:30px;
-  color:#eee9ff;
-  font-size:10px;
-  font-weight:800;
-  border:1px solid rgba(255,255,255,.13);
-  background:rgba(255,255,255,.07);
+ display:flex;align-items:center;gap:6px;padding:6px 10px;
+ border-radius:25px;background:rgba(5,8,25,.25);
+ border:1px solid rgba(255,255,255,.15);font-size:9px;font-weight:800;color:#f0edff
 }
+.meta-pill svg{width:14px;height:14px;stroke:var(--cyan);fill:none;stroke-width:1.8}
 
-.meta-pill svg{
-  width:14px;
-  height:14px;
-  stroke:var(--cyan);
-  fill:none;
-  stroke-width:1.8;
-}
-
-.summary-grid{
-  display:grid;
-  grid-template-columns:repeat(3,minmax(0,1fr));
-  gap:10px;
-  margin-top:15px;
-}
-
+/* ملخص التقدم */
+.summary-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin-top:13px}
 .summary-card{
-  min-width:0;
-  padding:14px 10px;
-  border:1px solid var(--line);
-  border-radius:18px;
-  background:rgba(20,23,43,.84);
-  box-shadow:0 9px 25px rgba(0,0,0,.13);
+ position:relative;overflow:hidden;min-width:0;padding:13px 11px;
+ border:1px solid var(--line);border-radius:18px;
+ background:linear-gradient(145deg,rgba(30,29,58,.94),rgba(15,19,39,.94));
+ box-shadow:0 9px 24px rgba(0,0,0,.16);
 }
+.summary-card:after{content:"";position:absolute;width:75px;height:75px;left:-32px;top:-35px;border-radius:50%;background:rgba(165,138,255,.1)}
+.summary-icon{width:30px;height:30px;display:grid;place-items:center;border-radius:10px;background:rgba(165,138,255,.15);color:var(--purple);margin-bottom:7px}
+.summary-icon svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:1.9}
+.summary-value{font-size:20px;font-weight:900;line-height:1.4}
+.summary-label{font-size:9px;color:var(--muted);font-weight:700}
 
-.summary-icon{
-  width:31px;
-  height:31px;
-  display:grid;
-  place-items:center;
-  border-radius:10px;
-  margin-bottom:8px;
-  background:rgba(155,124,255,.14);
-  color:var(--purple);
-}
+/* عناوين الأقسام */
+.section-heading{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:24px 2px 11px}
+.section-heading h2{font-size:16px;font-weight:900}
+.section-heading span{font-size:9px;color:var(--muted)}
+.section-mark{display:flex;align-items:center;gap:8px}
+.section-mark:before{content:"";width:4px;height:19px;border-radius:5px;background:linear-gradient(var(--purple),var(--cyan))}
 
-.summary-icon svg{
-  width:17px;
-  height:17px;
-  stroke:currentColor;
-  fill:none;
-  stroke-width:1.9;
-}
-
-.summary-value{
-  font-size:20px;
-  font-weight:900;
-  line-height:1.4;
-  overflow-wrap:anywhere;
-}
-
-.summary-label{
-  color:var(--muted);
-  font-size:9px;
-  font-weight:700;
-}
-
-.section-heading{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:10px;
-  margin:25px 2px 12px;
-}
-
-.section-heading h2{
-  font-size:17px;
-  font-weight:900;
-}
-
-.section-heading span{
-  color:var(--muted);
-  font-size:10px;
-}
-
-.task-list{
-  display:grid;
-  gap:11px;
-}
-
+/* بطاقات المهام */
+.task-list{display:grid;gap:13px}
 .task-card{
-  position:relative;
-  overflow:hidden;
-  padding:15px;
-  border:1px solid var(--line);
-  border-radius:20px;
-  background:linear-gradient(145deg,rgba(27,30,55,.96),rgba(16,20,39,.96));
-  box-shadow:0 10px 25px rgba(0,0,0,.15);
+ --task-a:#8869e9;--task-b:#25335f;--task-glow:rgba(139,105,233,.3);
+ position:relative;isolation:isolate;overflow:hidden;min-width:0;
+ border:1px solid rgba(255,255,255,.12);border-radius:21px;
+ background:linear-gradient(125deg,rgba(35,34,70,.98),rgba(14,20,40,.98));
+ box-shadow:0 12px 28px rgba(0,0,0,.22);
 }
-
-.task-card::before{
-  content:"";
-  position:absolute;
-  right:0;
-  top:15px;
-  bottom:15px;
-  width:3px;
-  border-radius:5px 0 0 5px;
-  background:var(--purple);
-  opacity:.8;
+.task-card:before{
+ content:"";position:absolute;z-index:-1;inset:0;
+ background:
+ radial-gradient(ellipse at 5% 5%,var(--task-glow),transparent 48%),
+ linear-gradient(115deg,var(--task-b),transparent 75%);
+ opacity:.9;pointer-events:none;
 }
-
-.task-card.completed{
-  border-color:rgba(82,214,164,.3);
+.task-card:after{
+ content:"";position:absolute;z-index:-1;width:150px;height:150px;
+ left:-55px;top:-65px;border:1px solid rgba(255,255,255,.1);
+ border-radius:50%;box-shadow:0 0 0 17px rgba(255,255,255,.025),0 0 0 37px rgba(255,255,255,.018);
+ pointer-events:none;
 }
-
-.task-card.completed::before{
-  background:var(--green);
-}
-
-.task-top{
-  display:flex;
-  align-items:flex-start;
-  gap:12px;
-}
-
+.task-card.cat-messages{--task-a:#69c9ed;--task-b:#153e59;--task-glow:rgba(57,188,231,.27)}
+.task-card.cat-posts{--task-a:#c58aff;--task-b:#43275e;--task-glow:rgba(177,102,255,.27)}
+.task-card.cat-comments{--task-a:#70d9bd;--task-b:#174b4b;--task-glow:rgba(67,213,175,.25)}
+.task-card.cat-gifts{--task-a:#ffc875;--task-b:#604025;--task-glow:rgba(255,174,75,.3)}
+.task-card.cat-store{--task-a:#f4a4d0;--task-b:#572b50;--task-glow:rgba(242,118,190,.25)}
+.task-card.cat-video{--task-a:#85a9ff;--task-b:#273c72;--task-glow:rgba(102,143,255,.3)}
+.task-card.cat-reactions{--task-a:#ff91a6;--task-b:#612c4a;--task-glow:rgba(255,103,151,.28)}
+.task-card.cat-rooms{--task-a:#e1bd75;--task-b:#4d4427;--task-glow:rgba(229,187,91,.26)}
+.task-card.completed{border-color:rgba(98,223,173,.38)}
+.task-card.claimed{border-color:rgba(98,223,173,.25);opacity:.88}
+.task-inner{padding:15px}
+.task-top{display:flex;align-items:flex-start;gap:11px}
 .task-icon{
-  width:45px;
-  height:45px;
-  flex:none;
-  display:grid;
-  place-items:center;
-  border-radius:15px;
-  color:var(--purple);
-  background:rgba(155,124,255,.13);
-  border:1px solid rgba(155,124,255,.15);
+ width:47px;height:47px;flex:none;display:grid;place-items:center;
+ border-radius:16px;color:var(--task-a);
+ background:linear-gradient(145deg,rgba(255,255,255,.16),rgba(255,255,255,.045));
+ border:1px solid rgba(255,255,255,.17);
+ box-shadow:0 7px 18px rgba(0,0,0,.15),inset 0 1px rgba(255,255,255,.12);
 }
-
-.task-icon svg{
-  width:22px;
-  height:22px;
-  stroke:currentColor;
-  fill:none;
-  stroke-width:1.8;
-  stroke-linecap:round;
-  stroke-linejoin:round;
-}
-
-.task-info{
-  flex:1;
-  min-width:0;
-}
-
-.task-title{
-  font-size:13px;
-  font-weight:900;
-}
-
-.task-description{
-  margin-top:3px;
-  color:var(--muted);
-  font-size:10px;
-  line-height:1.9;
-}
-
+.task-icon svg{width:23px;height:23px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.task-info{flex:1;min-width:0}
+.task-title{font-size:13px;font-weight:900;line-height:1.7}
+.task-description{font-size:10px;line-height:1.9;color:#c6c4dc;margin-top:3px}
 .task-reward{
-  flex:none;
-  text-align:left;
-  color:var(--gold);
-  font-size:12px;
-  font-weight:900;
-  white-space:nowrap;
+ flex:none;min-width:65px;text-align:center;padding:7px 8px;
+ border-radius:12px;background:rgba(5,8,22,.28);
+ border:1px solid rgba(255,255,255,.12);color:#ffdf9c;
+ font-size:12px;font-weight:900;white-space:nowrap;
 }
-
-.task-reward small{
-  display:block;
-  color:var(--muted);
-  font-size:8px;
-  font-weight:700;
-}
-
-.task-meta{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:8px;
-  margin-top:14px;
-}
-
-.difficulty{
-  display:inline-flex;
-  align-items:center;
-  padding:4px 9px;
-  border-radius:20px;
-  font-size:9px;
-  font-weight:900;
-  background:rgba(255,255,255,.07);
-  color:#d6d0ed;
-}
-
-.difficulty.easy{color:#71dfb0;background:rgba(82,214,164,.1)}
-.difficulty.medium{color:#f1c875;background:rgba(241,200,117,.1)}
-.difficulty.hard{color:#ff9b83;background:rgba(255,128,102,.1)}
-.difficulty.legendary{color:#d6a4ff;background:rgba(185,117,255,.13)}
-
-.progress-text{
-  color:var(--muted);
-  font-size:10px;
-  font-weight:800;
-  direction:ltr;
-}
-
-.progress-track{
-  height:7px;
-  margin-top:9px;
-  overflow:hidden;
-  border-radius:20px;
-  background:rgba(255,255,255,.075);
-}
-
-.progress-fill{
-  width:0;
-  height:100%;
-  border-radius:20px;
-  background:linear-gradient(90deg,#8064ee,#65d9d1);
-  transition:width .35s ease;
-}
-
-.task-bottom{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:10px;
-  margin-top:12px;
-}
-
-.task-category{
-  color:#aaa4c7;
-  font-size:9px;
-  font-weight:800;
-}
-
+.task-reward small{display:block;font-size:8px;color:#e3d3b4}
+.task-divider{height:1px;margin:13px 0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.15),transparent)}
+.task-meta{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.difficulty{display:inline-flex;padding:4px 9px;border-radius:20px;background:rgba(255,255,255,.09);color:#e3ddf7;font-size:9px;font-weight:900}
+.difficulty.easy{color:#85e8ba;background:rgba(82,214,164,.12)}
+.difficulty.medium{color:#f6d58a;background:rgba(241,200,117,.12)}
+.difficulty.hard{color:#ffad96;background:rgba(255,128,102,.12)}
+.difficulty.legendary{color:#e0b4ff;background:rgba(185,117,255,.15)}
+.progress-text{direction:ltr;color:#dedbef;font-size:10px;font-weight:900}
+.progress-track{height:8px;margin-top:9px;overflow:hidden;border-radius:20px;background:rgba(0,0,0,.27);border:1px solid rgba(255,255,255,.06)}
+.progress-fill{height:100%;width:0;border-radius:20px;background:linear-gradient(90deg,var(--task-a),#fff0bd);box-shadow:0 0 12px var(--task-glow);transition:width .4s ease}
+.task-bottom{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:12px}
+.task-category{font-size:9px;color:#c4c0dc;font-weight:800}
 .claim-button{
-  min-width:105px;
-  min-height:36px;
-  padding:7px 13px;
-  border-radius:11px;
-  color:white;
-  font-size:10px;
-  font-weight:900;
-  background:linear-gradient(120deg,#8063ef,#a47be9);
-  box-shadow:0 6px 17px rgba(128,99,239,.22);
+ min-width:112px;min-height:37px;padding:7px 12px;border-radius:11px;
+ background:linear-gradient(120deg,var(--task-a),#b9a4ff);
+ color:#171326;font-size:10px;font-weight:900;
+ box-shadow:0 6px 16px var(--task-glow);
 }
+.claim-button:disabled{cursor:not-allowed;opacity:.55;box-shadow:none}
+.claim-button.claimed{color:#8be9bf;background:rgba(82,214,164,.12);border:1px solid rgba(82,214,164,.25);box-shadow:none}
 
-.claim-button:disabled{
-  cursor:not-allowed;
-  opacity:.5;
-  box-shadow:none;
-}
-
-.claim-button.claimed{
-  color:#72e0b2;
-  background:rgba(82,214,164,.11);
-  border:1px solid rgba(82,214,164,.22);
-  box-shadow:none;
-}
-
+/* حالة التحميل والأخطاء */
 .state-box{
-  padding:25px 15px;
-  text-align:center;
-  border:1px dashed rgba(255,255,255,.14);
-  border-radius:18px;
-  color:var(--muted);
-  font-size:12px;
-  line-height:2;
-  background:rgba(20,23,43,.55);
+ padding:25px 15px;text-align:center;border:1px dashed rgba(255,255,255,.16);
+ border-radius:19px;background:rgba(19,21,43,.72);color:var(--muted);
+ font-size:11px;line-height:2.1
 }
-
-.state-box svg{
-  display:block;
-  width:30px;
-  height:30px;
-  margin:0 auto 9px;
-  stroke:var(--purple);
-  fill:none;
-  stroke-width:1.7;
-}
-
+.state-box svg{display:block;width:31px;height:31px;margin:0 auto 9px;stroke:var(--purple);fill:none;stroke-width:1.7}
+.loading{padding:32px 15px;text-align:center;color:var(--muted);font-size:11px}
+.spinner{width:29px;height:29px;margin:0 auto 10px;border:3px solid rgba(255,255,255,.12);border-top-color:var(--cyan);border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.claim-button.retry{margin-top:10px;background:linear-gradient(120deg,#8e73ed,#68cbd1);color:#101323}
 .message{
-  display:none;
-  position:fixed;
-  z-index:20;
-  top:max(85px,env(safe-area-inset-top));
-  left:15px;
-  right:15px;
-  max-width:450px;
-  margin:auto;
-  padding:12px 15px;
-  border-radius:13px;
-  font-size:11px;
-  font-weight:800;
-  text-align:center;
-  background:#24243d;
-  border:1px solid var(--line);
-  box-shadow:0 12px 30px rgba(0,0,0,.3);
+ display:none;position:fixed;z-index:30;top:max(82px,env(safe-area-inset-top));
+ left:14px;right:14px;max-width:450px;margin:auto;padding:12px 15px;
+ border-radius:13px;font-size:11px;font-weight:800;text-align:center;
+ background:#24243d;border:1px solid var(--line);box-shadow:0 12px 30px rgba(0,0,0,.35)
 }
-
 .message.show{display:block}
 .message.success{border-color:rgba(82,214,164,.35);color:#8de7c1}
 .message.error{border-color:rgba(255,113,135,.35);color:#ff9cab}
 
+/* تذييل توضيحي */
+.info-panel{
+ position:relative;overflow:hidden;margin-top:20px;padding:17px;
+ border-radius:19px;border:1px solid rgba(165,138,255,.2);
+ background:linear-gradient(120deg,rgba(44,35,81,.72),rgba(19,38,53,.72));
+}
+.info-panel h3{font-size:12px;font-weight:900;color:#e6ddff}
+.info-panel p{margin-top:5px;color:#c0bdd5;font-size:10px;line-height:2}
+.info-panel .info-icon{float:left;width:33px;height:33px;display:grid;place-items:center;border-radius:11px;background:rgba(255,255,255,.09)}
+.info-panel svg{width:18px;height:18px;stroke:var(--gold);fill:none;stroke-width:1.8}
+
 .bottom-nav{
-  flex:none;
-  min-height:65px;
-  padding:8px 12px;
-  padding-bottom:max(8px,env(safe-area-inset-bottom));
-  display:flex;
-  align-items:center;
-  justify-content:space-around;
-  gap:5px;
-  border-top:1px solid var(--line);
-  background:rgba(10,12,27,.94);
-  backdrop-filter:blur(20px);
-  -webkit-backdrop-filter:blur(20px);
+ flex:none;min-height:64px;padding:8px 10px;padding-bottom:max(8px,env(safe-area-inset-bottom));
+ display:flex;align-items:center;justify-content:space-around;gap:5px;
+ border-top:1px solid var(--line);background:rgba(9,10,25,.96);
+ backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)
 }
-
-.nav-item{
-  min-width:0;
-  flex:1;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  gap:3px;
-  color:#8987a5;
-  font-size:9px;
-  font-weight:800;
+.nav-item{min-width:0;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:#8987a5;font-size:9px;font-weight:800}
+.nav-item svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.8}
+.nav-item.active{color:#bcaaff}
+@media(min-width:720px){
+ .scroll-area{padding:24px 25px 35px}
+ .hero{padding:30px;min-height:260px}
+ .task-list{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+ .task-card{min-width:0}
+ .hero-art{left:55px;bottom:30px;transform:scale(1.25)}
 }
-
-.nav-item svg{
-  width:20px;
-  height:20px;
-  stroke:currentColor;
-  fill:none;
-  stroke-width:1.8;
-}
-
-.nav-item.active{color:#b5a3ff}
-
-.loading{
-  padding:35px 15px;
-  text-align:center;
-  color:var(--muted);
-  font-size:12px;
-}
-
-.spinner{
-  width:29px;
-  height:29px;
-  margin:0 auto 10px;
-  border:3px solid rgba(255,255,255,.12);
-  border-top-color:var(--cyan);
-  border-radius:50%;
-  animation:spin .8s linear infinite;
-}
-
-@keyframes spin{
-  to{transform:rotate(360deg)}
-}
-
-@media(min-width:700px){
-  .scroll-area{padding:25px 25px 35px}
-  .hero{padding:30px}
-  .task-list{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .task-card{min-width:0}
-}
-
 @media(max-width:390px){
-  .topbar{padding-right:12px;padding-left:12px}
-  .scroll-area{padding-right:11px;padding-left:11px}
-  .hero{padding:19px 15px}
-  .summary-card{padding:11px 8px}
-  .summary-value{font-size:18px}
-  .task-card{padding:13px}
-  .task-reward{font-size:10px}
+ .topbar{padding-right:11px;padding-left:11px}
+ .scroll-area{padding-right:10px;padding-left:10px}
+ .hero{padding:20px 15px;min-height:235px}
+ .hero-art{left:-7px;bottom:3px;transform:scale(.82);opacity:.7}
+ .summary-card{padding:11px 8px}
+ .summary-value{font-size:18px}
+ .task-inner{padding:13px}
+ .task-reward{min-width:58px;font-size:10px}
+ .task-title{font-size:12px}
 }
 </style>
 </head>
 
 <body>
 <div class="background"></div>
-
 <div class="page">
 
-  <header class="topbar">
-    <div class="brand">
-      <div class="brand-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-          <path d="M12 2.8 14.5 9.5 21.2 12 14.5 14.5 12 21.2 9.5 14.5 2.8 12 9.5 9.5 12 2.8Z"/>
-          <path d="m18.5 2 .7 2.1 2.1.7-2.1.7-.7 2.1-.7-2.1-2.1-.7 2.1-.7.7-2.1Z"/>
-        </svg>
-      </div>
-      <div>
-        <div class="brand-name">HANOON WORLD</div>
-        <div class="brand-caption">DAILY MISSIONS</div>
-      </div>
+<header class="topbar">
+ <div class="brand">
+  <div class="brand-icon">
+   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+    <path d="M12 2.8 14.5 9.5 21.2 12 14.5 14.5 12 21.2 9.5 14.5 2.8 12 9.5 9.5 12 2.8Z"/>
+    <path d="m18.5 2 .7 2.1 2.1.7-2.1.7-.7 2.1-.7-2.1-2.1-.7 2.1-.7.7-2.1Z"/>
+   </svg>
+  </div>
+  <div>
+   <div class="brand-name">HANOON WORLD</div>
+   <div class="brand-caption">MISSIONS & ACHIEVEMENTS</div>
+  </div>
+ </div>
+ <div class="header-actions">
+  <a class="icon-button" href="wallet.html" aria-label="المحفظة">
+   <svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="15" rx="3"/><path d="M3 9V6a3 3 0 0 1 3-3h12"/><path d="M16 14h5"/><circle cx="16" cy="14" r=".8"/></svg>
+  </a>
+  <a class="icon-button" href="home.html" aria-label="الرئيسية">
+   <svg viewBox="0 0 24 24"><path d="m3 10 9-7 9 7"/><path d="M5 9v11h14V9"/><path d="M9 20v-6h6v6"/></svg>
+  </a>
+ </div>
+</header>
+
+<main class="scroll-area">
+ <section class="hero">
+  <div class="hero-content">
+   <div class="hero-kicker">
+    <svg viewBox="0 0 24 24"><path d="m12 2 2.5 7.5L22 12l-7.5 2.5L12 22l-2.5-7.5L2 12l7.5-2.5L12 2Z"/></svg>
+    تحديات وإنجازات هانون
+   </div>
+   <h1>عالم المهام</h1>
+   <p>كل يوم فرصة جديدة للإنجاز. أكمل التحديات، اجمع مكافآتك، واصنع سجل إنجازاتك داخل HANOON WORLD.</p>
+   <div class="hero-meta">
+    <div class="meta-pill">
+     <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg>
+     <span id="todayLabel">جاري تحميل التاريخ...</span>
     </div>
-
-    <div class="header-actions">
-      <a class="icon-button" href="wallet.html" aria-label="المحفظة">
-        <svg viewBox="0 0 24 24">
-          <rect x="3" y="6" width="18" height="15" rx="3"/>
-          <path d="M3 9V6a3 3 0 0 1 3-3h12"/>
-          <path d="M16 14h5"/>
-          <circle cx="16" cy="14" r=".8"/>
-        </svg>
-      </a>
-      <a class="icon-button" href="home.html" aria-label="الرئيسية">
-        <svg viewBox="0 0 24 24">
-          <path d="m3 10 9-7 9 7"/>
-          <path d="M5 9v11h14V9"/>
-          <path d="M9 20v-6h6v6"/>
-        </svg>
-      </a>
+    <div class="meta-pill">
+     <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+     <span id="cycleLabel">دورة المهام</span>
     </div>
-  </header>
+   </div>
+  </div>
+  <div class="hero-art" aria-hidden="true">
+   <div class="orbit"></div>
+   <div class="gem">
+    <svg viewBox="0 0 24 24"><path d="m12 2 8 7-8 13L4 9l8-7Z"/><path d="M4 9h16M9 9l3 13 3-13M8 2l1 7M16 2l-1 7"/></svg>
+   </div>
+  </div>
+ </section>
 
-  <main class="scroll-area">
+ <section class="summary-grid">
+  <div class="summary-card">
+   <div class="summary-icon"><svg viewBox="0 0 24 24"><path d="m12 3 2.7 5.5 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1-4.4-4.3 6.1-.9L12 3Z"/></svg></div>
+   <div class="summary-value" id="completedCount">0</div>
+   <div class="summary-label">تم استلامها</div>
+  </div>
+  <div class="summary-card">
+   <div class="summary-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
+   <div class="summary-value" id="remainingCount">0</div>
+   <div class="summary-label">قيد الإنجاز</div>
+  </div>
+  <div class="summary-card">
+   <div class="summary-icon"><svg viewBox="0 0 24 24"><path d="M12 2v20M17 6H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+   <div class="summary-value" id="availableRewards">0</div>
+   <div class="summary-label">عملات جاهزة</div>
+  </div>
+ </section>
 
-    <section class="hero">
-      <div class="hero-content">
-        <div class="eyebrow">تحديات HANOON WORLD</div>
-        <h1>مهامك اليومية</h1>
-        <p>
-          أنجز التحديات اليومية، اجمع العملات، وواصل تقدمك داخل عالم هانون.
-          كل مهمة لها مكافأتها، وكل إنجاز يُحسب من نشاطك الحقيقي.
-        </p>
+ <div class="section-heading">
+  <div class="section-mark"><h2>تحديات اليوم</h2></div>
+  <span id="taskCount">جاري التحميل</span>
+ </div>
 
-        <div class="hero-meta">
-          <div class="meta-pill">
-            <svg viewBox="0 0 24 24">
-              <rect x="3" y="5" width="18" height="16" rx="2"/>
-              <path d="M16 3v4M8 3v4M3 10h18"/>
-            </svg>
-            <span id="todayLabel">جاري تحميل التاريخ...</span>
-          </div>
+ <section id="taskList" class="task-list">
+  <div class="loading"><div class="spinner"></div>جاري تجهيز مهامك...</div>
+ </section>
 
-          <div class="meta-pill">
-            <svg viewBox="0 0 24 24">
-              <path d="M12 3v18M3 12h18"/>
-              <circle cx="12" cy="12" r="9"/>
-            </svg>
-            <span id="cycleLabel">دورة الشهر</span>
-          </div>
-        </div>
-      </div>
-    </section>
+ <section class="info-panel">
+  <div class="info-icon">
+   <svg viewBox="0 0 24 24"><path d="M12 3v18M3 12h18"/><circle cx="12" cy="12" r="9"/></svg>
+  </div>
+  <h3>كيف تحصل على مكافآتك؟</h3>
+  <p>يتم احتساب التقدم من نشاطك الفعلي داخل الموقع. عندما تحقق شروط المهمة سيتفعّل زر استلام المكافأة، ويمكن استلام مكافأة كل مهمة مرة واحدة فقط.</p>
+ </section>
+</main>
 
-    <section class="summary-grid">
-      <div class="summary-card">
-        <div class="summary-icon">
-          <svg viewBox="0 0 24 24">
-            <path d="m12 3 2.7 5.5 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1-4.4-4.3 6.1-.9L12 3Z"/>
-          </svg>
-        </div>
-        <div class="summary-value" id="completedCount">0</div>
-        <div class="summary-label">مهام مكتملة</div>
-      </div>
-
-      <div class="summary-card">
-        <div class="summary-icon">
-          <svg viewBox="0 0 24 24">
-            <circle cx="12" cy="12" r="9"/>
-            <path d="M12 7v5l3 2"/>
-          </svg>
-        </div>
-        <div class="summary-value" id="remainingCount">0</div>
-        <div class="summary-label">مهام متبقية</div>
-      </div>
-
-      <div class="summary-card">
-        <div class="summary-icon">
-          <svg viewBox="0 0 24 24">
-            <path d="M12 2v20M17 6H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
-          </svg>
-        </div>
-        <div class="summary-value" id="availableRewards">0</div>
-        <div class="summary-label">عملات متاحة</div>
-      </div>
-    </section>
-
-    <div class="section-heading">
-      <h2>قائمة تحديات اليوم</h2>
-      <span id="taskCount">0 مهام</span>
-    </div>
-
-    <section id="taskList" class="task-list">
-      <div class="loading">
-        <div class="spinner"></div>
-        جاري تحميل مهام اليوم...
-      </div>
-    </section>
-
-    <div class="section-heading">
-      <h2>نظام المكافآت</h2>
-    </div>
-
-    <section class="state-box">
-      <svg viewBox="0 0 24 24">
-        <path d="M12 3v18M3 12h18"/>
-        <circle cx="12" cy="12" r="9"/>
-      </svg>
-      يتم احتساب تقدمك من نشاطك الفعلي داخل الموقع.
-      عند اكتمال المهمة سيظهر زر استلام المكافأة.
-      كل مكافأة يمكن استلامها مرة واحدة فقط.
-    </section>
-
-  </main>
-
-  <nav class="bottom-nav">
-    <a class="nav-item" href="home.html">
-      <svg viewBox="0 0 24 24">
-        <path d="m3 10 9-7 9 7"/>
-        <path d="M5 9v11h14V9"/>
-        <path d="M9 20v-6h6v6"/>
-      </svg>
-      الرئيسية
-    </a>
-
-    <a class="nav-item" href="store.html">
-      <svg viewBox="0 0 24 24">
-        <path d="M3 8h18l-2 12H5L3 8Z"/>
-        <path d="M8 8a4 4 0 0 1 8 0"/>
-      </svg>
-      المتجر
-    </a>
-
-    <a class="nav-item active" href="tasks.html">
-      <svg viewBox="0 0 24 24">
-        <path d="m9 12 2 2 4-4"/>
-        <rect x="4" y="3" width="16" height="18" rx="2"/>
-        <path d="M8 3V2h8v1"/>
-      </svg>
-      المهام
-    </a>
-
-    <a class="nav-item" href="wallet.html">
-      <svg viewBox="0 0 24 24">
-        <rect x="3" y="6" width="18" height="15" rx="3"/>
-        <path d="M3 9V6a3 3 0 0 1 3-3h12"/>
-        <path d="M16 14h5"/>
-      </svg>
-      المحفظة
-    </a>
-
-    <a class="nav-item" href="profile.html">
-      <svg viewBox="0 0 24 24">
-        <circle cx="12" cy="8" r="4"/>
-        <path d="M4 21a8 8 0 0 1 16 0"/>
-      </svg>
-      حسابي
-    </a>
-  </nav>
-
+<nav class="bottom-nav">
+ <a class="nav-item" href="home.html"><svg viewBox="0 0 24 24"><path d="m3 10 9-7 9 7"/><path d="M5 9v11h14V9"/><path d="M9 20v-6h6v6"/></svg>الرئيسية</a>
+ <a class="nav-item" href="store.html"><svg viewBox="0 0 24 24"><path d="M3 8h18l-2 12H5L3 8Z"/><path d="M8 8a4 4 0 0 1 8 0"/></svg>المتجر</a>
+ <a class="nav-item active" href="tasks.html"><svg viewBox="0 0 24 24"><path d="m9 12 2 2 4-4"/><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 3V2h8v1"/></svg>المهام</a>
+ <a class="nav-item" href="wallet.html"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="15" rx="3"/><path d="M3 9V6a3 3 0 0 1 3-3h12"/><path d="M16 14h5"/></svg>المحفظة</a>
+ <a class="nav-item" href="profile.html"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>حسابي</a>
+</nav>
 </div>
 
 <div id="message" class="message"></div>
@@ -821,266 +390,204 @@ import { supabase } from "./supabase.js";
 
 const taskList = document.getElementById("taskList");
 const messageBox = document.getElementById("message");
-
-let currentTasks = [];
 let messageTimer = null;
 
 const icons = {
-  messages: `<svg viewBox="0 0 24 24"><path d="M21 11.5a8.4 8.4 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8A8.5 8.5 0 0 1 8.7 3.9a8.4 8.4 0 0 1 3.8-.9h.5a8.5 8.5 0 0 1 8 8v.5Z"/></svg>`,
-  posts: `<svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L8 18l-4 1 1-4Z"/><path d="m15 5 4 4"/></svg>`,
-  comments: `<svg viewBox="0 0 24 24"><path d="M21 11.5a8.4 8.4 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8A8.5 8.5 0 0 1 8.7 3.9"/></svg>`,
-  gifts_sent: `<svg viewBox="0 0 24 24"><path d="M20 12v10H4V12M2 7h20v5H2z"/><path d="M12 22V7M12 7H7.5a2.5 2.5 0 1 1 2.5-2.5V7Zm0 0h4.5A2.5 2.5 0 1 0 14 4.5V7Z"/></svg>`,
-  store_purchases: `<svg viewBox="0 0 24 24"><path d="M3 8h18l-2 12H5L3 8Z"/><path d="M8 8a4 4 0 0 1 8 0"/></svg>`,
-  video_minutes: `<svg viewBox="0 0 24 24"><rect x="3" y="6" width="13" height="12" rx="2"/><path d="m16 10 5-3v10l-5-3"/></svg>`,
-  reactions: `<svg viewBox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z"/></svg>`,
-  rooms_joined: `<svg viewBox="0 0 24 24"><path d="M3 10h18M5 10V6l7-3 7 3v4M5 10v10h14V10M9 20v-6h6v6"/></svg>`
+ messages:`<svg viewBox="0 0 24 24"><path d="M21 11.5a8.4 8.4 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8A8.5 8.5 0 0 1 8.7 3.9"/></svg>`,
+ posts:`<svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L8 18l-4 1 1-4Z"/><path d="m15 5 4 4"/></svg>`,
+ comments:`<svg viewBox="0 0 24 24"><path d="M21 11.5a8.4 8.4 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8A8.5 8.5 0 0 1 8.7 3.9"/></svg>`,
+ gifts_sent:`<svg viewBox="0 0 24 24"><path d="M20 12v10H4V12M2 7h20v5H2z"/><path d="M12 22V7M12 7H7.5a2.5 2.5 0 1 1 2.5-2.5V7Zm0 0h4.5A2.5 2.5 0 1 0 14 4.5V7Z"/></svg>`,
+ store_purchases:`<svg viewBox="0 0 24 24"><path d="M3 8h18l-2 12H5L3 8Z"/><path d="M8 8a4 4 0 0 1 8 0"/></svg>`,
+ video_minutes:`<svg viewBox="0 0 24 24"><rect x="3" y="6" width="13" height="12" rx="2"/><path d="m16 10 5-3v10l-5-3"/></svg>`,
+ reactions:`<svg viewBox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z"/></svg>`,
+ rooms_joined:`<svg viewBox="0 0 24 24"><path d="M3 10h18M5 10V6l7-3 7 3v4M5 10v10h14V10M9 20v-6h6v6"/></svg>`
 };
 
-const difficultyLabels = {
-  easy: "سهلة",
-  medium: "متوسطة",
-  hard: "صعبة",
-  legendary: "أسطورية"
+const labels = {easy:"سهلة",medium:"متوسطة",hard:"صعبة",legendary:"أسطورية"};
+const categoryNames = {
+ messages:"المحادثات",posts:"المنشورات",comments:"التعليقات",
+ gifts_sent:"الهدايا",store_purchases:"المتجر",video_minutes:"الفيديو",
+ reactions:"التفاعلات",rooms_joined:"الغرف والألعاب"
 };
 
-function showMessage(text, type = "success") {
-  messageBox.textContent = text;
-  messageBox.className = "message show " + type;
-
-  clearTimeout(messageTimer);
-  messageTimer = setTimeout(() => {
-    messageBox.className = "message";
-  }, 3500);
+function showMessage(text,type="success"){
+ messageBox.textContent=text;
+ messageBox.className="message show "+type;
+ clearTimeout(messageTimer);
+ messageTimer=setTimeout(()=>messageBox.className="message",3500);
 }
 
-function escapeHTML(value) {
-  return String(value ?? "").replace(/[&<>"']/g, char => ({
-    "&": "&amp;",
-    "<": "&lt;",
-    ">": "&gt;",
-    '"': "&quot;",
-    "'": "&#039;"
-  })[char]);
+function escapeHTML(value){
+ return String(value??"").replace(/[&<>"']/g,c=>({
+  "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+ })[c]);
 }
 
-function formatDate(value) {
-  if (!value) return "";
-  const date = new Date(value + "T12:00:00");
-  return new Intl.DateTimeFormat("ar-EG", {
-    weekday: "long",
-    day: "numeric",
-    month: "long",
-    year: "numeric"
-  }).format(date);
+function formatDate(value){
+ if(!value)return "";
+ const date=new Date(value+"T12:00:00");
+ return new Intl.DateTimeFormat("ar-EG",{
+  weekday:"long",day:"numeric",month:"long",year:"numeric"
+ }).format(date);
 }
 
-function formatMonth(start, end) {
-  if (!start || !end) return "دورة الشهر";
-  const a = new Date(start + "T12:00:00");
-  const b = new Date(end + "T12:00:00");
-
-  const first = new Intl.DateTimeFormat("ar-EG", {
-    day: "numeric",
-    month: "long"
-  }).format(a);
-
-  const last = new Intl.DateTimeFormat("ar-EG", {
-    day: "numeric",
-    month: "long"
-  }).format(b);
-
-  return first + " — " + last;
+function formatMonth(start,end){
+ if(!start||!end)return "دورة المهام";
+ const a=new Date(start+"T12:00:00");
+ const b=new Date(end+"T12:00:00");
+ const f=new Intl.DateTimeFormat("ar-EG",{day:"numeric",month:"long"});
+ return f.format(a)+" — "+f.format(b);
 }
 
-function renderTasks(tasks) {
-  currentTasks = Array.isArray(tasks) ? tasks : [];
+function metricForTask(task){
+ const key=String(task.metric_key||"");
+ if(categoryNames[key])return key;
+ const taskKey=String(task.task_key||"");
+ if(taskKey.includes("messages"))return "messages";
+ if(taskKey.includes("post"))return "posts";
+ if(taskKey.includes("comments"))return "comments";
+ if(taskKey.includes("gift"))return "gifts_sent";
+ if(taskKey.includes("store"))return "store_purchases";
+ if(taskKey.includes("video"))return "video_minutes";
+ if(taskKey.includes("reaction"))return "reactions";
+ if(taskKey.includes("room"))return "rooms_joined";
+ return "messages";
+}
 
-  let completed = 0;
-  let remaining = 0;
-  let available = 0;
+function renderTasks(tasks){
+ const list=Array.isArray(tasks)?tasks:[];
+ let claimedCount=0,remainingCount=0,available=0;
 
-  currentTasks.forEach(task => {
-    if (task.claimed) {
-      completed++;
-    } else {
-      remaining++;
-      if (task.completed) available += Number(task.reward_coins || 0);
-    }
-  });
-
-  document.getElementById("completedCount").textContent = completed;
-  document.getElementById("remainingCount").textContent = remaining;
-  document.getElementById("availableRewards").textContent =
-    available.toLocaleString("en-US");
-
-  document.getElementById("taskCount").textContent =
-    currentTasks.length + " مهام";
-
-  if (!currentTasks.length) {
-    taskList.innerHTML = `
-      <div class="state-box">
-        لا توجد مهام متاحة حاليًا.
-      </div>`;
-    return;
+ list.forEach(task=>{
+  if(task.claimed)claimedCount++;
+  else{
+   remainingCount++;
+   if(task.completed)available+=Number(task.reward_coins||0);
   }
+ });
 
-  taskList.innerHTML = currentTasks.map(task => {
-    const target = Number(task.target_count || 0);
-    const progress = Math.min(target, Number(task.progress || 0));
-    const percent = target > 0 ? Math.min(100, progress / target * 100) : 0;
+ document.getElementById("completedCount").textContent=claimedCount;
+ document.getElementById("remainingCount").textContent=remainingCount;
+ document.getElementById("availableRewards").textContent=available.toLocaleString("en-US");
+ document.getElementById("taskCount").textContent=list.length+" مهام";
 
-    const completedTask = Boolean(task.completed);
-    const claimed = Boolean(task.claimed);
+ if(!list.length){
+  taskList.innerHTML=`<div class="state-box">لا توجد مهام متاحة حاليًا.</div>`;
+  return;
+ }
 
-    const buttonText = claimed
-      ? "تم الاستلام"
-      : completedTask
-        ? "استلام المكافأة"
-        : "لم تكتمل بعد";
+ taskList.innerHTML=list.map(task=>{
+  const metric=metricForTask(task);
+  const target=Number(task.target_count||0);
+  const progress=Math.min(target,Number(task.progress||0));
+  const percent=target>0?Math.min(100,progress/target*100):0;
+  const completed=Boolean(task.completed);
+  const claimed=Boolean(task.claimed);
+  const title=escapeHTML(task.title_ar||"مهمة جديدة");
+  const description=escapeHTML(task.description_ar||"أنجز المطلوب للحصول على المكافأة.");
+  const reward=Number(task.reward_coins||0).toLocaleString("en-US");
+  const category=categoryNames[metric]||"تحدي يومي";
+  const buttonText=claimed?"تم الاستلام":completed?"استلام المكافأة":"لم تكتمل بعد";
+  const disabled=claimed||!completed;
+  const taskClass="cat-"+metric;
 
-    const disabled = claimed || !completedTask;
-
-    return `
-      <article class="task-card ${completedTask ? "completed" : ""}">
-        <div class="task-top">
-          <div class="task-icon">
-            ${icons[task.task_key?.includes("messages") ? "messages" :
-              task.task_key?.includes("post") ? "posts" :
-              task.task_key?.includes("comments") ? "comments" :
-              task.task_key?.includes("gift") ? "gifts_sent" :
-              task.task_key?.includes("store") ? "store_purchases" :
-              task.task_key?.includes("video") ? "video_minutes" :
-              task.task_key?.includes("reactions") ? "reactions" :
-              task.task_key?.includes("rooms") ? "rooms_joined" : "messages"]}
-          </div>
-
-          <div class="task-info">
-            <div class="task-title">${escapeHTML(task.title_ar)}</div>
-            <div class="task-description">${escapeHTML(task.description_ar)}</div>
-          </div>
-
-          <div class="task-reward">
-            +${Number(task.reward_coins).toLocaleString("en-US")}
-            <small>عملة</small>
-          </div>
-        </div>
-
-        <div class="task-meta">
-          <span class="difficulty ${escapeHTML(task.difficulty)}">
-            ${difficultyLabels[task.difficulty] || "مهمة"}
-          </span>
-          <span class="progress-text">${progress} / ${target}</span>
-        </div>
-
-        <div class="progress-track">
-          <div class="progress-fill" style="width:${percent}%"></div>
-        </div>
-
-        <div class="task-bottom">
-          <span class="task-category">${escapeHTML(task.category)}</span>
-          <button
-            class="claim-button ${claimed ? "claimed" : ""}"
-            data-claim="${escapeHTML(task.assignment_id)}"
-            ${disabled ? "disabled" : ""}
-          >${buttonText}</button>
-        </div>
-      </article>
-    `;
-  }).join("");
+  return `
+   <article class="task-card ${taskClass} ${completed?"completed":""} ${claimed?"claimed":""}">
+    <div class="task-inner">
+     <div class="task-top">
+      <div class="task-icon">${icons[metric]||icons.messages}</div>
+      <div class="task-info">
+       <div class="task-title">${title}</div>
+       <div class="task-description">${description}</div>
+      </div>
+      <div class="task-reward">+${reward}<small>عملة</small></div>
+     </div>
+     <div class="task-divider"></div>
+     <div class="task-meta">
+      <span class="difficulty ${escapeHTML(task.difficulty||"")}">${labels[task.difficulty]||"مهمة"}</span>
+      <span class="progress-text">${progress} / ${target}</span>
+     </div>
+     <div class="progress-track"><div class="progress-fill" style="width:${percent}%"></div></div>
+     <div class="task-bottom">
+      <span class="task-category">${category}</span>
+      <button class="claim-button ${claimed?"claimed":""}" data-claim="${escapeHTML(task.assignment_id)}" ${disabled?"disabled":""}>${buttonText}</button>
+     </div>
+    </div>
+   </article>`;
+ }).join("");
 }
 
-async function loadTasks() {
-  taskList.innerHTML = `
-    <div class="loading">
-      <div class="spinner"></div>
-      جاري تحميل مهام اليوم...
-    </div>`;
+async function loadTasks(){
+ taskList.innerHTML=`<div class="loading"><div class="spinner"></div>جاري تحميل مهام اليوم...</div>`;
+ const {data,error}=await supabase.rpc("hanoon_daily_tasks_get");
 
-  const { data, error } = await supabase.rpc(
-    "hanoon_daily_tasks_get"
-  );
+ if(error){
+  console.error("Daily tasks error:",error);
+  taskList.innerHTML=`
+   <div class="state-box">
+    تعذر تحميل المهام حاليًا.
+    <br>${escapeHTML(error.message)}
+    <br><button class="claim-button retry" id="retryTasks">إعادة المحاولة</button>
+   </div>`;
+  return;
+ }
 
-  if (error) {
-    console.error("Daily tasks error:", error);
-    taskList.innerHTML = `
-      <div class="state-box">
-        تعذر تحميل المهام حاليًا.
-        <br>
-        ${escapeHTML(error.message)}
-        <br><br>
-        <button class="claim-button" id="retryTasks">إعادة المحاولة</button>
-      </div>`;
-    return;
-  }
+ if(!data){
+  taskList.innerHTML=`<div class="state-box">لم تصل بيانات المهام. حاول مرة أخرى.</div>`;
+  return;
+ }
 
-  document.getElementById("todayLabel").textContent =
-    formatDate(data.task_date);
-
-  document.getElementById("cycleLabel").textContent =
-    formatMonth(data.month_start, data.month_end);
-
-  renderTasks(data.tasks);
+ document.getElementById("todayLabel").textContent=formatDate(data.task_date);
+ document.getElementById("cycleLabel").textContent=formatMonth(data.month_start,data.month_end);
+ renderTasks(data.tasks);
 }
 
-async function claimTask(assignmentId, button) {
-  if (!assignmentId || button.disabled) return;
+async function claimTask(assignmentId,button){
+ if(!assignmentId||button.disabled)return;
+ const oldText=button.textContent;
+ button.disabled=true;
+ button.textContent="جارٍ الاستلام...";
 
-  const originalText = button.textContent;
-  button.disabled = true;
-  button.textContent = "جارٍ الاستلام...";
+ const {data,error}=await supabase.rpc("hanoon_daily_task_claim",{
+  p_assignment_id:assignmentId
+ });
 
-  const { data, error } = await supabase.rpc(
-    "hanoon_daily_task_claim",
-    { p_assignment_id: assignmentId }
-  );
+ if(error){
+  console.error("Task claim error:",error);
+  button.disabled=false;
+  button.textContent=oldText;
+  showMessage(error.message||"تعذر استلام المكافأة.","error");
+  return;
+ }
 
-  if (error) {
-    console.error("Task claim error:", error);
-    button.disabled = false;
-    button.textContent = originalText;
-    showMessage(error.message || "تعذر استلام المكافأة.", "error");
-    return;
-  }
+ if(!data?.success){
+  button.disabled=false;
+  button.textContent=oldText;
+  showMessage("لم يتم استلام المكافأة.","error");
+  return;
+ }
 
-  if (!data?.success) {
-    button.disabled = false;
-    button.textContent = originalText;
-    showMessage("لم يتم استلام المكافأة.", "error");
-    return;
-  }
-
-  showMessage(
-    "تم استلام " +
-    Number(data.reward_coins).toLocaleString("en-US") +
-    " عملة بنجاح!"
-  );
-
-  await loadTasks();
+ showMessage("تم استلام "+Number(data.reward_coins||0).toLocaleString("en-US")+" عملة بنجاح!");
+ await loadTasks();
 }
 
-taskList.addEventListener("click", async event => {
-  const claimButton = event.target.closest("[data-claim]");
-  if (claimButton) {
-    await claimTask(claimButton.dataset.claim, claimButton);
-    return;
-  }
-
-  if (event.target.id === "retryTasks") {
-    await loadTasks();
-  }
+taskList.addEventListener("click",async event=>{
+ const button=event.target.closest("[data-claim]");
+ if(button){
+  await claimTask(button.dataset.claim,button);
+  return;
+ }
+ if(event.target.id==="retryTasks")await loadTasks();
 });
 
-async function initialize() {
-  const { data, error } = await supabase.auth.getSession();
-
-  if (error || !data.session) {
-    window.location.replace("index.html");
-    return;
-  }
-
-  await loadTasks();
+async function initialize(){
+ const {data,error}=await supabase.auth.getSession();
+ if(error||!data?.session){
+  window.location.replace("index.html");
+  return;
+ }
+ await loadTasks();
 }
-
 initialize();
 </script>
 </body>
