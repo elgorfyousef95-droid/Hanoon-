@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -9,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
 <style>
 :root{
   --bg:#090b17;
@@ -19,7 +19,6 @@
   --purple2:#7052e8;
   --cyan:#4bd7cc;
   --gold:#f0c978;
-  --pink:#e58bc9;
   --text:#f5f4ff;
   --muted:#929bb5;
   --line:rgba(255,255,255,.085);
@@ -42,37 +41,29 @@ button,input{font:inherit}
 button{color:inherit;cursor:pointer}
 button:disabled{opacity:.5;cursor:not-allowed}
 svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+
 .app-shell{
-  height:100dvh;
-  width:100%;
+  height:100dvh;width:100%;
   display:grid;
   grid-template-columns:var(--side-width) minmax(0,1fr);
   grid-template-rows:var(--top-height) minmax(0,1fr);
   overflow:hidden;
 }
 .topbar{
-  grid-column:1/-1;
-  grid-row:1;
-  z-index:30;
-  display:flex;
-  align-items:center;
-  gap:22px;
-  padding:0 25px;
-  background:rgba(12,15,30,.94);
+  grid-column:1/-1;grid-row:1;z-index:30;
+  display:flex;align-items:center;gap:18px;
+  padding:0 22px;
+  background:rgba(12,15,30,.96);
   border-bottom:1px solid var(--line);
   backdrop-filter:blur(22px);
 }
 .brand{
-  width:var(--side-width);
-  flex:none;
-  display:flex;
-  align-items:center;
-  gap:12px;
+  width:var(--side-width);flex:none;
+  display:flex;align-items:center;gap:12px;
 }
 .brand-mark{
   width:43px;height:43px;border-radius:14px;
-  display:grid;place-items:center;
-  color:white;
+  display:grid;place-items:center;color:white;
   background:linear-gradient(145deg,#b6a0ff,#6749d6);
   border:1px solid rgba(255,255,255,.28);
   box-shadow:0 8px 28px rgba(125,92,228,.32);
@@ -80,16 +71,13 @@ svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.8;stroke
 .brand-mark svg{width:27px;height:27px}
 .brand-name{font-size:16px;font-weight:900;letter-spacing:.5px}
 .brand-sub{font-size:8px;letter-spacing:2.2px;color:#a9a3c8;margin-top:-4px}
-.search-wrap{position:relative;flex:1;max-width:680px}
+
+.search-wrap{position:relative;flex:1;min-width:90px;max-width:680px}
 .search-box{
-  height:45px;
-  display:flex;
-  align-items:center;
-  gap:11px;
+  height:45px;display:flex;align-items:center;gap:11px;
   padding:0 15px;
   border:1px solid rgba(167,145,255,.18);
-  border-radius:14px;
-  background:rgba(255,255,255,.045);
+  border-radius:14px;background:rgba(255,255,255,.045);
   transition:.2s;
 }
 .search-box:focus-within{
@@ -99,23 +87,16 @@ svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.8;stroke
 }
 .search-box svg{color:#b7a4ff;flex:none}
 .search-box input{
-  width:100%;min-width:0;
-  border:0;outline:0;background:transparent;
-  color:white;font-size:12px;
+  width:100%;min-width:0;border:0;outline:0;
+  background:transparent;color:white;font-size:12px;
 }
 .search-box input::placeholder{color:#828ba5}
 .search-hint{font-size:9px;color:#8189a2;white-space:nowrap}
 .search-results{
-  display:none;
-  position:absolute;top:54px;right:0;left:0;
-  z-index:80;
-  max-height:min(65vh,520px);
-  overflow:auto;
-  padding:9px;
+  display:none;position:absolute;top:54px;right:0;left:0;z-index:80;
+  max-height:min(65vh,520px);overflow:auto;padding:9px;
   border:1px solid rgba(255,255,255,.12);
-  border-radius:16px;
-  background:#141a2d;
-  box-shadow:var(--shadow);
+  border-radius:16px;background:#141a2d;box-shadow:var(--shadow);
 }
 .search-results.show{display:block}
 .search-result{
@@ -127,55 +108,60 @@ svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.8;stroke
 .search-result:hover{background:rgba(255,255,255,.06)}
 .result-icon{
   width:35px;height:35px;flex:none;
-  display:grid;place-items:center;
-  border-radius:11px;
+  display:grid;place-items:center;border-radius:11px;
   color:#c9baff;background:rgba(145,117,255,.13);
 }
 .result-icon svg{width:18px;height:18px}
 .result-copy{min-width:0;flex:1}
-.result-copy strong{display:block;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.result-copy strong{
+  display:block;font-size:11px;white-space:nowrap;
+  overflow:hidden;text-overflow:ellipsis;
+}
 .result-copy small{display:block;color:var(--muted);font-size:9px;margin-top:2px}
 .result-open{font-size:10px;color:#c7b6ff;font-weight:900}
-.header-tools{display:flex;align-items:center;gap:9px;margin-right:auto}
+
+.header-tools{
+  display:flex;align-items:center;gap:8px;
+  margin-right:auto;flex:none;
+}
 .header-icon{
-  width:40px;height:40px;
+  width:40px;height:40px;flex:none;
   display:grid;place-items:center;
-  border:1px solid var(--line);
-  border-radius:13px;
-  background:rgba(255,255,255,.045);
-  color:#c7c4dc;
+  border:1px solid var(--line);border-radius:13px;
+  background:rgba(255,255,255,.045);color:#c7c4dc;
+  position:relative;
 }
 .header-icon:hover{background:rgba(145,117,255,.15);color:white}
+.notification-badge{
+  position:absolute;top:5px;right:5px;
+  width:8px;height:8px;border-radius:50%;
+  background:#ff6d8c;border:1px solid #141a2d;
+}
 .header-avatar{
-  width:41px;height:41px;overflow:hidden;
+  width:41px;height:41px;flex:none;overflow:hidden;
   display:grid;place-items:center;
   border:2px solid rgba(155,128,255,.8);
   border-radius:50%;background:#222b45;
 }
 .header-avatar img{width:100%;height:100%;object-fit:cover}
 .header-avatar svg{color:#c6b7ff}
+
 .sidebar{
-  grid-column:1;grid-row:2;
-  min-height:0;overflow-y:auto;
+  grid-column:1;grid-row:2;min-height:0;overflow-y:auto;
   padding:19px 14px 25px;
-  background:rgba(13,17,33,.82);
+  background:rgba(13,17,33,.9);
   border-left:1px solid var(--line);
-  scrollbar-width:thin;
-  scrollbar-color:#343b59 transparent;
+  scrollbar-width:thin;scrollbar-color:#343b59 transparent;
 }
 .side-label{
-  padding:8px 12px 9px;
-  color:#737e9d;font-size:9px;font-weight:900;
-  letter-spacing:1px;
+  padding:8px 12px 9px;color:#737e9d;
+  font-size:9px;font-weight:900;letter-spacing:1px;
 }
 .side-link{
-  min-height:45px;
-  display:flex;align-items:center;gap:12px;
+  min-height:45px;display:flex;align-items:center;gap:12px;
   padding:0 13px;margin:3px 0;
-  border:1px solid transparent;
-  border-radius:12px;
-  color:#aab2c9;font-size:11px;font-weight:800;
-  transition:.2s;
+  border:1px solid transparent;border-radius:12px;
+  color:#aab2c9;font-size:11px;font-weight:800;transition:.2s;
 }
 .side-link svg{width:19px;height:19px;flex:none}
 .side-link:hover{background:rgba(255,255,255,.045);color:white}
@@ -188,19 +174,18 @@ svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.8;stroke
 .side-divider{height:1px;background:var(--line);margin:14px 5px}
 .side-account{
   margin-top:20px;padding:13px;
-  border:1px solid var(--line);
-  border-radius:15px;background:rgba(255,255,255,.035);
+  border:1px solid var(--line);border-radius:15px;
+  background:rgba(255,255,255,.035);
 }
 .side-account small{display:block;color:var(--muted);font-size:9px}
 .side-account strong{display:block;margin-top:4px;font-size:11px;overflow-wrap:anywhere}
 .side-account a{display:block;margin-top:10px;color:#c8b9ff;font-size:10px;font-weight:900}
+
 .main-area{
-  grid-column:2;grid-row:2;
-  min-width:0;min-height:0;
+  grid-column:2;grid-row:2;min-width:0;min-height:0;
   overflow-y:auto;overscroll-behavior:contain;
   padding:25px 28px 55px;
-  scrollbar-width:thin;
-  scrollbar-color:#343b59 transparent;
+  scrollbar-width:thin;scrollbar-color:#343b59 transparent;
 }
 .welcome-row{
   display:flex;align-items:center;justify-content:space-between;
@@ -215,6 +200,8 @@ svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.8;stroke
   border-radius:12px;background:rgba(255,255,255,.035);
   color:#aab2c9;font-size:10px;white-space:nowrap;
 }
+
+/* الصورة الرئيسية */
 .hero{
   position:relative;isolation:isolate;overflow:hidden;
   min-height:285px;border-radius:24px;
@@ -251,34 +238,54 @@ svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.8;stroke
 .btn{
   min-height:41px;padding:0 17px;
   display:inline-flex;align-items:center;justify-content:center;gap:8px;
-  border-radius:11px;font-size:10px;font-weight:900;
-  transition:.2s;
+  border-radius:11px;font-size:10px;font-weight:900;transition:.2s;
 }
 .btn:hover{transform:translateY(-2px)}
 .btn svg{width:16px;height:16px}
-.btn-primary{color:white;background:linear-gradient(110deg,#a58aff,#704de0);box-shadow:0 7px 22px rgba(112,77,224,.28)}
-.btn-secondary{color:#e2ddf4;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16)}
+.btn-primary{
+  color:white;background:linear-gradient(110deg,#a58aff,#704de0);
+  box-shadow:0 7px 22px rgba(112,77,224,.28);
+}
+.btn-secondary{
+  color:#e2ddf4;background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.16);
+}
+
+/* ملخص النقاط والعملات والجواهر */
 .balance-grid{
   display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
-  gap:13px;margin-top:17px;
+  gap:10px;margin-top:14px;
 }
 .balance-card{
-  min-width:0;display:flex;align-items:center;gap:12px;
-  padding:15px;border:1px solid var(--line);
-  border-radius:16px;background:linear-gradient(145deg,rgba(27,34,57,.94),rgba(17,22,39,.94));
+  min-width:0;display:flex;align-items:center;gap:9px;
+  padding:11px 12px;border:1px solid var(--line);
+  border-radius:14px;
+  background:linear-gradient(145deg,rgba(27,34,57,.96),rgba(17,22,39,.96));
 }
 .balance-icon{
-  width:42px;height:42px;flex:none;
-  display:grid;place-items:center;border-radius:13px;
+  width:34px;height:34px;flex:none;
+  display:grid;place-items:center;border-radius:10px;
   background:rgba(255,255,255,.06);
 }
-.balance-icon svg{width:21px;height:21px}
+.balance-icon svg{width:18px;height:18px}
 .balance-icon.coins{color:var(--gold);background:rgba(240,201,120,.1)}
 .balance-icon.gems{color:#79dff4;background:rgba(90,206,235,.1)}
 .balance-icon.points{color:#bcaaff;background:rgba(151,119,255,.12)}
+.balance-info{min-width:0}
 .balance-info small{display:block;color:var(--muted);font-size:9px}
-.balance-info strong{display:block;font-size:17px;font-weight:900;margin-top:1px;overflow-wrap:anywhere}
-.section{margin-top:31px}
+.balance-info strong{
+  display:block;font-size:15px;font-weight:900;margin-top:1px;
+  overflow-wrap:anywhere;
+}
+
+/* كل قسم له خلفيته المستقلة */
+.section{
+  margin-top:24px;padding:17px;
+  border:1px solid rgba(255,255,255,.075);
+  border-radius:19px;
+  background:linear-gradient(145deg,rgba(20,27,47,.96),rgba(13,18,33,.96));
+  box-shadow:0 12px 35px rgba(0,0,0,.16);
+}
 .section-head{
   display:flex;align-items:center;justify-content:space-between;
   gap:12px;margin-bottom:14px;
@@ -295,14 +302,14 @@ svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.8;stroke
 .section-title p{font-size:9px;color:var(--muted);margin-top:1px}
 .view-all{color:#b9a7ff;font-size:10px;font-weight:900;white-space:nowrap}
 .view-all:hover{color:white}
+
 .explore-grid{
-  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
-  gap:11px;
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;
 }
 .explore-card{
-  min-height:112px;position:relative;overflow:hidden;
+  min-height:105px;position:relative;overflow:hidden;
   display:flex;flex-direction:column;justify-content:space-between;
-  padding:14px;border-radius:16px;
+  padding:12px;border-radius:14px;
   border:1px solid var(--line);
   background:linear-gradient(145deg,#1a2038,#111629);
   transition:.2s;
@@ -314,25 +321,34 @@ svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.8;stroke
   background:rgba(145,117,255,.12);filter:blur(2px);
 }
 .explore-icon{
-  width:34px;height:34px;display:grid;place-items:center;
-  border-radius:11px;color:#c8b8ff;background:rgba(145,117,255,.14);
+  width:32px;height:32px;display:grid;place-items:center;
+  border-radius:10px;color:#c8b8ff;background:rgba(145,117,255,.14);
 }
 .explore-icon svg{width:18px;height:18px}
 .explore-card strong{font-size:11px;font-weight:900}
 .explore-card small{font-size:9px;color:var(--muted);margin-top:2px}
-.cards-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}
+
+.cards-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
 .game-card,.room-card,.member-card{
   min-width:0;overflow:hidden;
-  border:1px solid var(--line);border-radius:16px;
+  border:1px solid var(--line);border-radius:15px;
   background:linear-gradient(145deg,#1a2036,#111629);
   transition:.2s;
 }
-.game-card:hover,.room-card:hover,.member-card:hover{transform:translateY(-3px);border-color:rgba(166,142,255,.35)}
+.game-card:hover,.room-card:hover,.member-card:hover{
+  transform:translateY(-3px);border-color:rgba(166,142,255,.35);
+}
 .card-image{height:132px;position:relative;background:#242b45;overflow:hidden}
 .card-image img{width:100%;height:100%;object-fit:cover}
-.card-image:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(7,10,22,.55),transparent 70%)}
+.card-image:after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(0deg,rgba(7,10,22,.55),transparent 70%);
+}
 .card-body{padding:12px}
-.card-body h4{font-size:11px;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card-body h4{
+  font-size:11px;font-weight:900;white-space:nowrap;
+  overflow:hidden;text-overflow:ellipsis;
+}
 .card-body p{font-size:9px;color:var(--muted);margin-top:4px;line-height:1.8}
 .card-meta{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:11px}
 .meta-text{font-size:9px;color:#a9b2c8}
@@ -357,10 +373,14 @@ svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.8;stroke
 .member-avatar img{width:100%;height:100%;object-fit:cover}
 .member-avatar svg{width:19px;height:19px;color:#c6b7ff}
 .member-copy{flex:1;min-width:0}
-.member-copy strong{display:block;font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.member-copy strong{
+  display:block;font-size:10px;white-space:nowrap;
+  overflow:hidden;text-overflow:ellipsis;
+}
 .member-copy small{display:block;font-size:9px;color:var(--muted);margin-top:2px}
 .verified{color:#7edcff;font-size:10px;margin-right:3px}
 .member-open{font-size:9px;color:#c4b4ff;font-weight:900}
+
 .empty-state{
   grid-column:1/-1;text-align:center;padding:25px 15px;
   border:1px dashed rgba(255,255,255,.14);
@@ -377,7 +397,7 @@ svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.8;stroke
 }
 @keyframes spin{to{transform:rotate(360deg)}}
 .footer{
-  padding:35px 0 15px;text-align:center;
+  padding:30px 0 15px;text-align:center;
   color:#69738d;font-size:9px;letter-spacing:1px;
 }
 .mobile-nav{display:none}
@@ -389,6 +409,7 @@ svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.8;stroke
   font-size:10px;transition:.2s;
 }
 .toast.show{opacity:1;transform:translate(-50%,0)}
+
 @media(max-width:1150px){
   :root{--side-width:215px}
   .main-area{padding:22px}
@@ -396,7 +417,7 @@ svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.8;stroke
 }
 @media(max-width:850px){
   :root{--side-width:190px}
-  .topbar{gap:12px;padding:0 15px}
+  .topbar{gap:11px;padding:0 14px}
   .brand{width:190px}
   .brand-name{font-size:13px}
   .header-tools{gap:6px}
@@ -405,89 +426,104 @@ svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.8;stroke
 @media(max-width:650px){
   :root{--top-height:64px}
   .app-shell{grid-template-columns:1fr;grid-template-rows:var(--top-height) minmax(0,1fr)}
-  .topbar{grid-column:1;grid-row:1;padding:0 11px;gap:9px}
+  .topbar{grid-column:1;grid-row:1;padding:0 9px;gap:7px}
   .brand{width:auto;gap:7px}
-  .brand-mark{width:36px;height:36px;border-radius:11px}
-  .brand-mark svg{width:22px;height:22px}
-  .brand-name{font-size:11px}
-  .brand-sub{font-size:6px;letter-spacing:1.3px}
+  .brand-mark{width:35px;height:35px;border-radius:10px}
+  .brand-mark svg{width:21px;height:21px}
+  .brand-name{font-size:10px}
+  .brand-sub{font-size:6px;letter-spacing:1px}
   .search-wrap{max-width:none}
-  .search-box{height:38px;padding:0 9px;gap:7px;border-radius:11px}
-  .search-box input{font-size:10px}
-  .search-box svg{width:17px;height:17px}
+  .search-box{height:37px;padding:0 8px;gap:6px;border-radius:10px}
+  .search-box input{font-size:9px}
+  .search-box svg{width:16px;height:16px}
   .search-hint{display:none}
-  .search-results{top:46px;max-height:55vh}
-  .header-tools{gap:5px}
-  .header-icon{width:34px;height:34px;border-radius:10px}
-  .header-icon svg{width:17px;height:17px}
-  .header-avatar{width:35px;height:35px}
+  .search-results{top:44px;max-height:55vh}
+  .header-tools{gap:4px}
+  .header-icon{width:32px;height:32px;border-radius:9px}
+  .header-icon svg{width:16px;height:16px}
+  .header-avatar{width:33px;height:33px}
   .sidebar{display:none}
-  .main-area{grid-column:1;grid-row:2;padding:17px 12px 100px}
-  .welcome-row{margin-bottom:13px}
+  .main-area{grid-column:1;grid-row:2;padding:15px 10px 100px}
+  .welcome-row{margin-bottom:12px}
   .welcome-copy small{font-size:8px}
-  .welcome-copy h1{font-size:20px}
+  .welcome-copy h1{font-size:19px}
   .welcome-copy p{font-size:9px}
-  .welcome-date{font-size:8px;padding:7px 9px}
-  .hero,.hero-content{min-height:245px}
-  .hero{border-radius:19px}
-  .hero:before{background:linear-gradient(90deg,rgba(8,10,24,.96),rgba(8,10,24,.72)),url("https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=900&q=85") center/cover}
-  .hero-content{padding:22px 19px}
-  .hero h2{font-size:29px}
+  .welcome-date{font-size:8px;padding:7px 8px}
+  .hero,.hero-content{min-height:235px}
+  .hero{border-radius:17px}
+  .hero:before{
+    background:
+      linear-gradient(90deg,rgba(8,10,24,.96),rgba(8,10,24,.72)),
+      url("https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=900&q=85") center/cover;
+  }
+  .hero-content{padding:20px 17px}
+  .hero h2{font-size:27px}
   .hero p{font-size:9px;line-height:1.9}
   .hero-label{font-size:8px}
-  .btn{min-height:37px;padding:0 12px;font-size:9px}
-  .balance-grid{gap:7px;margin-top:11px}
-  .balance-card{gap:7px;padding:9px 7px;border-radius:12px}
-  .balance-icon{width:30px;height:30px;border-radius:9px}
-  .balance-icon svg{width:16px;height:16px}
-  .balance-info small{font-size:8px}
-  .balance-info strong{font-size:12px}
-  .section{margin-top:24px}
+  .btn{min-height:36px;padding:0 11px;font-size:9px}
+  .balance-grid{gap:6px;margin-top:10px}
+  .balance-card{gap:5px;padding:8px 6px;border-radius:11px}
+  .balance-icon{width:27px;height:27px;border-radius:8px}
+  .balance-icon svg{width:15px;height:15px}
+  .balance-info small{font-size:7px}
+  .balance-info strong{font-size:11px}
+  .section{margin-top:17px;padding:12px;border-radius:15px}
   .section-head{margin-bottom:10px}
-  .section-title-icon{width:32px;height:32px;border-radius:10px}
-  .section-title h3{font-size:12px}
-  .section-title p{font-size:8px}
-  .view-all{font-size:9px}
-  .explore-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
-  .explore-card{min-height:91px;padding:10px;border-radius:13px}
-  .explore-icon{width:29px;height:29px;border-radius:9px}
-  .explore-card strong{font-size:10px}
-  .explore-card small{font-size:8px}
-  .cards-grid{gap:8px}
-  .card-image{height:100px}
-  .card-body{padding:9px}
-  .card-body h4{font-size:10px}
+  .section-title{gap:7px}
+  .section-title-icon{width:30px;height:30px;border-radius:9px}
+  .section-title-icon svg{width:16px;height:16px}
+  .section-title h3{font-size:11px}
+  .section-title p{font-size:7px}
+  .view-all{font-size:8px}
+  .explore-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+  .explore-card{min-height:88px;padding:9px;border-radius:11px}
+  .explore-icon{width:27px;height:27px;border-radius:8px}
+  .explore-card strong{font-size:9px}
+  .explore-card small{font-size:7px}
+  .cards-grid{gap:7px}
+  .card-image{height:95px}
+  .card-body{padding:8px}
+  .card-body h4{font-size:9px}
   .card-body p{font-size:8px}
-  .card-link{font-size:8px;padding:5px 7px}
-  .member-row{padding:9px}
-  .member-avatar{width:33px;height:33px}
+  .card-link{font-size:8px;padding:5px 6px}
+  .member-row{padding:8px}
+  .member-avatar{width:31px;height:31px}
   .member-copy strong{font-size:9px}
   .member-copy small{font-size:8px}
   .mobile-nav{
-    position:fixed;z-index:60;bottom:max(8px,env(safe-area-inset-bottom));
-    right:8px;left:8px;
-    min-height:61px;padding:5px;
+    position:fixed;z-index:60;
+    bottom:max(8px,env(safe-area-inset-bottom));
+    right:8px;left:8px;min-height:60px;padding:5px;
     display:flex;align-items:center;justify-content:space-around;gap:2px;
     border:1px solid rgba(255,255,255,.12);
-    border-radius:18px;background:rgba(16,21,39,.96);
+    border-radius:17px;background:rgba(16,21,39,.97);
     backdrop-filter:blur(20px);box-shadow:0 12px 35px rgba(0,0,0,.42);
   }
   .mobile-link{
-    flex:1;min-width:0;min-height:49px;
-    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
-    border-radius:11px;color:#8f99b2;font-size:8px;font-weight:800;
+    flex:1;min-width:0;min-height:48px;
+    display:flex;flex-direction:column;align-items:center;
+    justify-content:center;gap:3px;border-radius:10px;
+    color:#8f99b2;font-size:8px;font-weight:800;
   }
   .mobile-link svg{width:18px;height:18px}
   .mobile-link.active{color:#d0c2ff;background:rgba(145,117,255,.14)}
   .footer{padding-bottom:20px}
   .toast{bottom:82px}
 }
-@media(max-width:380px){
+@media(max-width:390px){
   .brand-sub{display:none}
-  .brand-name{font-size:10px}
-  .header-tools .header-icon:first-child{display:none}
+  .brand-name{font-size:9px}
+  .topbar{gap:5px;padding:0 7px}
+  .header-tools{gap:3px}
+  .header-icon{width:29px;height:29px}
+  .header-avatar{width:30px;height:30px}
+  .search-box{padding:0 6px}
+  .search-box input{font-size:8px}
   .welcome-date{display:none}
-  .balance-card{flex-direction:column;align-items:flex-start}
+  /* تبقى بطاقات النقاط والعملات والجواهر أفقية ولا تختفي الإعدادات */
+  .balance-card{flex-direction:row;align-items:center}
+  .balance-info strong{font-size:10px}
+  .balance-info small{font-size:7px}
 }
 </style>
 </head>
@@ -521,7 +557,7 @@ svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.8;stroke
 
   <div class="header-tools">
     <a class="header-icon" href="settings.html" aria-label="الإعدادات" title="الإعدادات">
-      <svg viewBox="0 0 24 24"><path d="M12 8.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7Z"/><path d="m19.4 15 .1.1a1.7 1.7 0 0 1-2.4 2.4l-.1-.1a1.7 1.7 0 0 0-2.9 1.2v.2a1.7 1.7 0 0 1-3.4 0v-.2a1.7 1.7 0 0 0-2.9-1.2l-.1.1a1.7 1.7 0 0 1-2.4-2.4l.1-.1a1.7 1.7 0 0 0-1.2-2.9H4a1.7 1.7 0 0 1 0-3.4h.2a1.7 1.7 0 0 0 1.2-2.9l-.1-.1a1.7 1.7 0 0 1 2.4-2.4l.1.1a1.7 1.7 0 0 0 2.9-1.2V2a1.7 1.7 0 0 1 3.4 0v.2a1.7 1.7 0 0 0 2.9 1.2l.1-.1a1.7 1.7 0 0 1 2.4 2.4l-.1.1a1.7 1.7 0 0 0 1.2 2.9h.2a1.7 1.7 0 0 1 0 3.4h-.2a1.7 1.7 0 0 0-1.2 2.9Z"/></svg>
+      <svg viewBox="0 0 24 24"><path d="M12 8.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7Z"/><path d="m19.4 15 .1.1a1.7 1.7 0 0 1-2.4 2.4l-.1-.1a1.7 1.7 0 0 0-2.9 1.2v.2a1.7 1.7 0 0 1-3.4 0v-.2a1.7 1.7 0 0 0-2.9-1.2l-.1.1a1.7 1.7 0 0 1-2.4-2.4l.1-.1a1.7 1.7 0 0 0-1.2-2.9H4a1.7 1.7 0 0 1 0-3.4h.2a1.7 1.7 0 0 0 1.2-2.9l-.1-.1a1.7 1.7 0 0 1 2.4-2.4l.1.1a1.7 1.7 0 0 0 2.9-1.2V2a1.7 1.7 0 0 1 3.4 0v.2a1.7 1.7 0 0 0 2.9 1.2l-.1-.1a1.7 1.7 0 0 1 2.4 2.4l.1.1a1.7 1.7 0 0 0 1.2 2.9h.2a1.7 1.7 0 0 1 0 3.4h-.2a1.7 1.7 0 0 0-1.2 2.9Z"/></svg>
     </a>
     <a class="header-icon" href="notifications.html" aria-label="الإشعارات" title="الإشعارات">
       <svg viewBox="0 0 24 24"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9ZM10 21h4"/></svg>
@@ -662,9 +698,8 @@ svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.8;stroke
 </div>
 
 <script type="module">
-import { supabase } from "./supabase.js";
+import { supabase } from "./supabase.js";const $=id=>document.getElementById(id);
 
-const $=id=>document.getElementById(id);
 const state={
   user:null,profile:null,wallet:null,
   games:[],rooms:[],members:[],
@@ -691,14 +726,17 @@ function esc(value){
     "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
   }[c]));
 }
+
 function normalize(value){
   return String(value??"").toLowerCase()
     .replace(/[أإآ]/g,"ا").replace(/ى/g,"ي")
     .replace(/[ًٌٍَُِّْـ]/g,"").trim();
 }
+
 function formatNumber(value){
   return new Intl.NumberFormat("ar-EG").format(Number(value)||0);
 }
+
 function toast(message){
   const el=$("toast");
   el.textContent=message;
@@ -706,21 +744,25 @@ function toast(message){
   clearTimeout(toast.timer);
   toast.timer=setTimeout(()=>el.classList.remove("show"),2500);
 }
+
 function imageURL(bucket,path){
   if(!path)return "";
   if(/^https?:\/\//i.test(String(path)))return path;
   const {data}=supabase.storage.from(bucket).getPublicUrl(path);
   return data?.publicUrl||"";
 }
+
 function avatarMarkup(path){
   const url=imageURL("avatars",path);
   return url
     ? `<img src="${esc(url)}" alt="" loading="lazy">`
     : `<svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 21c.5-4 3.2-6 7.5-6s7 2 7.5 6"/></svg>`;
 }
+
 function emptyState(title,description){
   return `<div class="empty-state"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v4m0 4h.01"/></svg><strong>${esc(title)}</strong><p>${esc(description||"")}</p></div>`;
 }
+
 async function safeQuery(query,label){
   try{
     const {data,error}=await query;
@@ -735,15 +777,19 @@ async function safeQuery(query,label){
 async function checkSession(){
   const {data,error}=await supabase.auth.getSession();
   if(error)throw error;
+
   if(!data?.session?.user){
     location.replace("login.html");
     return false;
   }
+
   const {data:userData,error:userError}=await supabase.auth.getUser();
+
   if(userError||!userData?.user){
     location.replace("login.html");
     return false;
   }
+
   state.user=userData.user;
   return true;
 }
@@ -751,22 +797,33 @@ async function checkSession(){
 async function loadAccount(){
   const {data,error}=await supabase.from("profiles")
     .select("id,full_name,nickname,username,member_code,avatar_path,profile_completed,is_verified")
-    .eq("id",state.user.id).maybeSingle();
+    .eq("id",state.user.id)
+    .maybeSingle();
+
   if(error)throw error;
+
   if(!data||data.profile_completed!==true){
     location.replace("profile-setup.html");
     return;
   }
+
   state.profile=data;
+
   const name=data.nickname||data.full_name||data.username||"عضو هنون";
+
   $("welcomeName").textContent=name;
   $("sideUserName").textContent=name;
+
   if(data.member_code){
-    const card=$("sideUserName");
-    card.title="رقم العضوية: "+data.member_code;
+    $("sideUserName").title="رقم العضوية: "+data.member_code;
   }
+
   const avatar=imageURL("avatars",data.avatar_path);
-  if(avatar)$("myProfileLink").innerHTML=`<img src="${esc(avatar)}" alt="حسابي">`;
+
+  if(avatar){
+    $("myProfileLink").innerHTML=`<img src="${esc(avatar)}" alt="حسابي">`;
+  }
+
   $("welcomeDate").textContent=new Intl.DateTimeFormat("ar-EG",{
     weekday:"long",day:"numeric",month:"long"
   }).format(new Date());
@@ -774,22 +831,34 @@ async function loadAccount(){
 
 async function loadWallet(){
   const {data,error}=await supabase.from("world_wallets")
-    .select("coins,gems").eq("user_id",state.user.id).maybeSingle();
+    .select("coins,gems")
+    .eq("user_id",state.user.id)
+    .maybeSingle();
+
   if(error)throw error;
+
   state.wallet=data||null;
+
   $("coinBalance").textContent=data?formatNumber(data.coins):"0";
   $("gemBalance").textContent=data?formatNumber(data.gems):"0";
 }
 
+/* تم تصحيح اسم العمود إلى points_delta */
 async function loadPoints(){
   const {data,error}=await supabase.from("points_ledger")
-    .select("points").eq("user_id",state.user.id);
+    .select("points_delta")
+    .eq("user_id",state.user.id);
+
   if(error){
     console.warn("HANOON points:",error);
     $("pointsBalance").textContent="—";
     return;
   }
-  const total=(data||[]).reduce((sum,row)=>sum+(Number(row.points)||0),0);
+
+  const total=(data||[]).reduce(
+    (sum,row)=>sum+(Number(row.points_delta)||0),0
+  );
+
   $("pointsBalance").textContent=formatNumber(total);
 }
 
@@ -797,9 +866,12 @@ async function loadGames(){
   state.games=await safeQuery(
     supabase.from("world_games_catalog")
       .select("id,slug,title_ar,title_en,description_ar,category,cover_path,is_active,sort_order")
-      .eq("is_active",true).order("sort_order",{ascending:true}).limit(60),
+      .eq("is_active",true)
+      .order("sort_order",{ascending:true})
+      .limit(60),
     "games"
   );
+
   renderGames();
 }
 
@@ -807,30 +879,42 @@ async function loadRooms(){
   const rooms=await safeQuery(
     supabase.from("world_game_rooms")
       .select("id,game_id,host_user_id,room_code,status,visibility,max_players,created_at")
-      .eq("visibility","public").in("status",["waiting","playing"])
-      .order("created_at",{ascending:false}).limit(30),
+      .eq("visibility","public")
+      .in("status",["waiting","playing"])
+      .order("created_at",{ascending:false})
+      .limit(30),
     "rooms"
   );
+
   const gameIds=[...new Set(rooms.map(x=>x.game_id).filter(Boolean))];
   const hostIds=[...new Set(rooms.map(x=>x.host_user_id).filter(Boolean))];
+
   let games=[],hosts=[];
+
   if(gameIds.length){
     games=await safeQuery(
-      supabase.from("world_games_catalog").select("id,title_ar,title_en,cover_path").in("id",gameIds),
+      supabase.from("world_games_catalog")
+        .select("id,title_ar,title_en,cover_path")
+        .in("id",gameIds),
       "room games"
     );
   }
+
   if(hostIds.length){
     hosts=await safeQuery(
-      supabase.from("profiles").select("id,full_name,username").in("id",hostIds),
+      supabase.from("profiles")
+        .select("id,full_name,username")
+        .in("id",hostIds),
       "room hosts"
     );
   }
+
   state.rooms=rooms.map(room=>({
     ...room,
     game:games.find(g=>g.id===room.game_id)||null,
     host:hosts.find(h=>h.id===room.host_user_id)||null
   }));
+
   renderRooms();
 }
 
@@ -838,30 +922,49 @@ async function loadMembers(){
   state.members=await safeQuery(
     supabase.from("member_directory")
       .select("id,username,member_code,full_name,avatar_path,is_verified,created_at")
-      .neq("id",state.user.id).order("created_at",{ascending:false}).limit(12),
+      .neq("id",state.user.id)
+      .order("created_at",{ascending:false})
+      .limit(12),
     "members"
   );
+
   renderMembers();
 }
 
 async function loadSearchCatalog(){
   const [store,gifts,tasks,contests,posts]=await Promise.all([
-    safeQuery(supabase.from("world_store_items")
-      .select("id,slug,title_ar,title_en,description_ar,category,is_active")
-      .eq("is_active",true).limit(100),"store search"),
-    safeQuery(supabase.from("world_gifts")
-      .select("id,slug,name_ar,description_ar,is_active")
-      .eq("is_active",true).limit(100),"gift search"),
-    safeQuery(supabase.from("hanoon_task_catalog")
-      .select("id,task_key,title_ar,description_ar,category,is_active")
-      .eq("is_active",true).limit(100),"task search"),
-    safeQuery(supabase.from("contests")
-      .select("id,title,description,contest_type,status,starts_at,ends_at")
-      .limit(100),"contest search"),
-    safeQuery(supabase.from("posts")
-      .select("id,user_id,content,created_at")
-      .order("created_at",{ascending:false}).limit(100),"post search")
+    safeQuery(
+      supabase.from("world_store_items")
+        .select("id,slug,title_ar,title_en,description_ar,category,is_active")
+        .eq("is_active",true).limit(100),
+      "store search"
+    ),
+    safeQuery(
+      supabase.from("world_gifts")
+        .select("id,slug,name_ar,description_ar,is_active")
+        .eq("is_active",true).limit(100),
+      "gift search"
+    ),
+    safeQuery(
+      supabase.from("hanoon_task_catalog")
+        .select("id,task_key,title_ar,description_ar,category,is_active")
+        .eq("is_active",true).limit(100),
+      "task search"
+    ),
+    safeQuery(
+      supabase.from("contests")
+        .select("id,title,description,contest_type,status,starts_at,ends_at")
+        .limit(100),
+      "contest search"
+    ),
+    safeQuery(
+      supabase.from("posts")
+        .select("id,user_id,content,created_at")
+        .order("created_at",{ascending:false}).limit(100),
+      "post search"
+    )
   ]);
+
   state.store=store;
   state.gifts=gifts;
   state.tasks=tasks;
@@ -871,20 +974,31 @@ async function loadSearchCatalog(){
 
 function renderGames(){
   const root=$("gamesGrid");
+
   if(!state.games.length){
-    root.innerHTML=emptyState("لا توجد ألعاب مسجلة حاليًا","ستظهر الألعاب هنا عند تفعيلها في دليل الألعاب.");
+    root.innerHTML=emptyState(
+      "لا توجد ألعاب مسجلة حاليًا",
+      "ستظهر الألعاب هنا عند تفعيلها في دليل الألعاب."
+    );
     return;
   }
+
   root.innerHTML=state.games.slice(0,6).map(game=>{
     const title=game.title_ar||game.title_en||"لعبة";
     const cover=imageURL("game-covers",game.cover_path)||game.cover_path||"";
     const href="game.html?game="+encodeURIComponent(game.slug||game.id);
+
     return `<article class="game-card">
-      <div class="card-image">${cover?`<img src="${esc(cover)}" alt="${esc(title)}" loading="lazy">`:""}</div>
+      <div class="card-image">
+        ${cover?`<img src="${esc(cover)}" alt="${esc(title)}" loading="lazy">`:""}
+      </div>
       <div class="card-body">
         <h4>${esc(title)}</h4>
         <p>${esc(game.description_ar||game.category||"من ألعاب مجتمع هنون")}</p>
-        <div class="card-meta"><span class="meta-text">${esc(game.category||"لعبة")}</span><a class="card-link" href="${esc(href)}">فتح اللعبة</a></div>
+        <div class="card-meta">
+          <span class="meta-text">${esc(game.category||"لعبة")}</span>
+          <a class="card-link" href="${esc(href)}">فتح اللعبة</a>
+        </div>
       </div>
     </article>`;
   }).join("");
@@ -892,21 +1006,33 @@ function renderGames(){
 
 function renderRooms(){
   const root=$("roomsGrid");
+
   if(!state.rooms.length){
-    root.innerHTML=emptyState("لا توجد غرف عامة مفتوحة الآن","عندما ينشئ الأعضاء غرفًا عامة ستظهر هنا.");
+    root.innerHTML=emptyState(
+      "لا توجد غرف عامة مفتوحة الآن",
+      "عندما ينشئ الأعضاء غرفًا عامة ستظهر هنا."
+    );
     return;
   }
+
   root.innerHTML=state.rooms.slice(0,6).map(room=>{
     const title=room.game?.title_ar||room.game?.title_en||"غرفة ألعاب";
     const cover=room.game?.cover_path||"";
     const host=room.host?.full_name||room.host?.username||"عضو";
     const status=room.status==="playing"?"قيد اللعب":"بانتظار اللاعبين";
+
     return `<article class="room-card">
-      <div class="card-image">${cover?`<img src="${esc(cover)}" alt="${esc(title)}" loading="lazy">`:""}<span class="room-status">${status}</span></div>
+      <div class="card-image">
+        ${cover?`<img src="${esc(cover)}" alt="${esc(title)}" loading="lazy">`:""}
+        <span class="room-status">${status}</span>
+      </div>
       <div class="card-body">
         <h4>${esc(title)}</h4>
         <p>المضيف: ${esc(host)} · رمز الغرفة: ${esc(room.room_code||"—")}</p>
-        <div class="card-meta"><span class="meta-text">الحد الأقصى: ${formatNumber(room.max_players)}</span><a class="card-link" href="rooms.html">عرض الغرف</a></div>
+        <div class="card-meta">
+          <span class="meta-text">الحد الأقصى: ${formatNumber(room.max_players)}</span>
+          <a class="card-link" href="rooms.html">عرض الغرف</a>
+        </div>
       </div>
     </article>`;
   }).join("");
@@ -914,12 +1040,18 @@ function renderRooms(){
 
 function renderMembers(){
   const root=$("membersGrid");
+
   if(!state.members.length){
-    root.innerHTML=emptyState("لا توجد حسابات أخرى للعرض","سيظهر الأعضاء هنا عند توفر حسابات في دليل المجتمع.");
+    root.innerHTML=emptyState(
+      "لا توجد حسابات أخرى للعرض",
+      "سيظهر الأعضاء هنا عند توفر حسابات في دليل المجتمع."
+    );
     return;
   }
+
   root.innerHTML=state.members.slice(0,6).map(member=>{
     const name=member.full_name||member.username||"عضو هنون";
+
     return `<article class="member-card">
       <div class="member-row">
         <span class="member-avatar">${avatarMarkup(member.avatar_path)}</span>
@@ -936,40 +1068,117 @@ function renderMembers(){
 function searchMatches(query){
   const term=normalize(query);
   if(!term)return [];
+
   const results=[];
+
   const add=(name,type,href,extra="")=>{
     const text=normalize(name+" "+extra);
     if(text.includes(term))results.push({name,type,href});
   };
+
   pageIndex.forEach(page=>add(page.name,page.type,page.href,page.words));
-  state.games.forEach(game=>add(game.title_ar||game.title_en,"لعبة","game.html?game="+encodeURIComponent(game.slug||game.id),game.title_en+" "+game.description_ar+" "+game.category));
-  state.rooms.forEach(room=>add(room.game?.title_ar||"غرفة","غرفة","rooms.html",room.room_code+" "+(room.host?.full_name||"")));
-  state.members.forEach(member=>add(member.full_name||member.username||member.member_code,"عضو","member.html?id="+encodeURIComponent(member.id),member.username+" "+member.member_code));
-  state.store.forEach(item=>add(item.title_ar||item.title_en,"عنصر متجر","settings.html#store",item.title_en+" "+item.description_ar+" "+item.category));
-  state.gifts.forEach(gift=>add(gift.name_ar,"هدية","settings.html#gifts",gift.description_ar));
-  state.tasks.forEach(task=>add(task.title_ar,"مهمة","tasks.html",task.description_ar+" "+task.task_key+" "+task.category));
-  state.contests.forEach(contest=>add(contest.title,"تحدٍ","tasks.html",contest.description+" "+contest.contest_type));
-  state.posts.forEach(post=>add(post.content?.slice(0,90)||"منشور","منشور","members.html",post.content));
+
+  state.games.forEach(game=>
+    add(
+      game.title_ar||game.title_en,
+      "لعبة",
+      "game.html?game="+encodeURIComponent(game.slug||game.id),
+      game.title_en+" "+game.description_ar+" "+game.category
+    )
+  );
+
+  state.rooms.forEach(room=>
+    add(
+      room.game?.title_ar||"غرفة",
+      "غرفة",
+      "rooms.html",
+      room.room_code+" "+(room.host?.full_name||"")
+    )
+  );
+
+  state.members.forEach(member=>
+    add(
+      member.full_name||member.username||member.member_code,
+      "عضو",
+      "member.html?id="+encodeURIComponent(member.id),
+      member.username+" "+member.member_code
+    )
+  );
+
+  state.store.forEach(item=>
+    add(
+      item.title_ar||item.title_en,
+      "عنصر متجر",
+      "wallet.html",
+      item.title_en+" "+item.description_ar+" "+item.category
+    )
+  );
+
+  state.gifts.forEach(gift=>
+    add(gift.name_ar,"هدية","wallet.html",gift.description_ar)
+  );
+
+  state.tasks.forEach(task=>
+    add(
+      task.title_ar,
+      "مهمة",
+      "tasks.html",
+      task.description_ar+" "+task.task_key+" "+task.category
+    )
+  );
+
+  state.contests.forEach(contest=>
+    add(
+      contest.title,
+      "تحدٍ",
+      "tasks.html",
+      contest.description+" "+contest.contest_type
+    )
+  );
+
+  state.posts.forEach(post=>
+    add(post.content?.slice(0,90)||"منشور","منشور","members.html",post.content)
+  );
+
   return results.slice(0,25);
 }
 
 function renderSearch(query){
   const root=$("searchResults");
+
   if(!query.trim()){
     root.classList.remove("show");
     root.innerHTML="";
     return;
   }
+
   const results=searchMatches(query);
+
   const icons={
     "قسم":'<svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></svg>',
     "عضو":'<svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 21c.5-4 3.2-6 7.5-6s7 2 7.5 6"/></svg>',
     "لعبة":'<svg viewBox="0 0 24 24"><path d="M7 8h10a4 4 0 0 1 4 4v4a3 3 0 0 1-5 2l-2-2h-4l-2 2a3 3 0 0 1-5-2v-4a4 4 0 0 1 4-4Z"/></svg>',
     "غرفة":'<svg viewBox="0 0 24 24"><path d="M3 20V9l9-6 9 6v11h-6v-7H9v7H3Z"/></svg>'
   };
+
   root.innerHTML=results.length
-    ? results.map(item=>`<a class="search-result" href="${esc(item.href)}"><span class="result-icon">${icons[item.type]||icons["قسم"]}</span><span class="result-copy"><strong>${esc(item.name)}</strong><small>${esc(item.type)}</small></span><span class="result-open">فتح ←</span></a>`).join("")
-    : `<div class="search-result"><span class="result-copy"><strong>لا توجد نتائج مطابقة</strong><small>جرّب كلمة أخرى أو جزءًا من الاسم.</small></span></div>`;
+    ? results.map(item=>`
+      <a class="search-result" href="${esc(item.href)}">
+        <span class="result-icon">${icons[item.type]||icons["قسم"]}</span>
+        <span class="result-copy">
+          <strong>${esc(item.name)}</strong>
+          <small>${esc(item.type)}</small>
+        </span>
+        <span class="result-open">فتح ←</span>
+      </a>
+    `).join("")
+    : `<div class="search-result">
+        <span class="result-copy">
+          <strong>لا توجد نتائج مطابقة</strong>
+          <small>جرّب كلمة أخرى أو جزءًا من الاسم.</small>
+        </span>
+      </div>`;
+
   root.classList.add("show");
 }
 
@@ -986,7 +1195,7 @@ async function initialize(){
     return;
   }
 
-  const tasks=[
+  const jobs=[
     loadWallet(),
     loadPoints(),
     loadGames(),
@@ -994,18 +1203,25 @@ async function initialize(){
     loadMembers(),
     loadSearchCatalog()
   ];
-  await Promise.allSettled(tasks);
+
+  await Promise.allSettled(jobs);
 }
 
-$("globalSearch").addEventListener("input",event=>renderSearch(event.target.value));
+$("globalSearch").addEventListener("input",event=>{
+  renderSearch(event.target.value);
+});
+
 $("globalSearch").addEventListener("keydown",event=>{
   if(event.key==="Escape"){
     $("searchResults").classList.remove("show");
     event.target.blur();
   }
 });
+
 document.addEventListener("click",event=>{
-  if(!event.target.closest(".search-wrap"))$("searchResults").classList.remove("show");
+  if(!event.target.closest(".search-wrap")){
+    $("searchResults").classList.remove("show");
+  }
 });
 
 supabase.auth.onAuthStateChange((event,session)=>{
@@ -1022,10 +1238,18 @@ try{
 }
 
 try{
-  const {initializeNotificationCore,updateNotificationBadge}=await import("./notification-core.js");
-  async function refreshBadge(){await updateNotificationBadge();}
+  const {
+    initializeNotificationCore,
+    updateNotificationBadge
+  }=await import("./notification-core.js");
+
+  async function refreshBadge(){
+    await updateNotificationBadge();
+  }
+
   await initializeNotificationCore(refreshBadge);
   await refreshBadge();
+
 }catch(error){
   console.warn("HANOON notifications:",error);
 }
