@@ -3,7 +3,7 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <meta name="theme-color" content="#090510">
 <title>HANOON WORLD | الإدارة</title>
 
@@ -20,7 +20,16 @@
   --line:rgba(226,190,255,.2);
 }
 *{box-sizing:border-box}
-html,body{margin:0;min-height:100%;font-family:Cairo,sans-serif;background:#090510;color:var(--text)}
+html,body{
+  margin:0;
+  min-height:100%;
+  width:100%;
+  font-family:Cairo,sans-serif;
+  background:#090510;
+  color:var(--text);
+  touch-action:pan-x pan-y;
+  overscroll-behavior:none;
+}
 button,input{font:inherit}
 button{cursor:pointer}
 .hidden{display:none!important}
@@ -375,7 +384,13 @@ button{cursor:pointer}
 }
 .owner-avatar img{width:100%;height:100%;object-fit:cover}
 .owner-mini strong{display:block;font-size:13px}
-.owner-mini small{display:block;color:#c5b3d5;font-size:10px;margin-top:4px;overflow-wrap:anywhere}
+.owner-mini small{
+  display:block;
+  color:#c5b3d5;
+  font-size:10px;
+  margin-top:4px;
+  overflow-wrap:anywhere;
+}
 .owner-role{
   display:inline-block;
   margin-top:10px;
@@ -490,6 +505,7 @@ button{cursor:pointer}
 }
 .mobile-menu{display:none}
 #sectionView{min-height:200px}
+
 @keyframes spin{to{transform:rotate(360deg)}}
 @keyframes rise{
   from{opacity:0;transform:translateY(24px) scale(.97)}
@@ -545,7 +561,6 @@ button{cursor:pointer}
 
 <body>
 
-<!-- شاشة البداية -->
 <section id="startScreen">
   <div class="screen-bg" id="startBg"></div>
   <div class="start-orbit"></div>
@@ -558,7 +573,6 @@ button{cursor:pointer}
   </div>
 </section>
 
-<!-- شاشة الدخول -->
 <section id="loginScreen" class="hidden">
   <div class="screen-bg" id="loginBg"></div>
 
@@ -571,7 +585,6 @@ button{cursor:pointer}
     <div class="login-emblem">H</div>
     <h1>دخول مالك المنصة</h1>
     <p class="login-description">PRIVATE ADMIN CONTROL</p>
-
     <div class="gold-line"></div>
 
     <form id="loginForm">
@@ -603,7 +616,6 @@ button{cursor:pointer}
   <div class="copyright">HANOON WORLD © ALL RIGHTS RESERVED</div>
 </section>
 
-<!-- لوحة الإدارة داخل نفس الملف -->
 <section id="dashboardScreen" class="hidden">
   <div class="dashboard-bg"></div>
 
@@ -634,37 +646,100 @@ button{cursor:pointer}
       <div class="menu-caption">القائمة الرئيسية</div>
 
       <button class="menu-button active" data-section="overview" type="button">
-        <span class="menu-icon">⌂</span> الرئيسية
+        <span class="menu-icon">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/>
+          </svg>
+        </span>
+        الرئيسية
       </button>
 
       <div class="menu-caption">أقسام الإدارة</div>
 
       <button class="menu-button" data-section="members" type="button">
-        <span class="menu-icon">♙</span> إدارة الأعضاء
+        <span class="menu-icon">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <circle cx="9" cy="8" r="4"/>
+            <path d="M2 21v-2a7 7 0 0 1 14 0v2M16 4a4 4 0 0 1 0 8m2 3a6 6 0 0 1 4 6"/>
+          </svg>
+        </span>
+        إدارة الأعضاء
       </button>
+
       <button class="menu-button" data-section="messages" type="button">
-        <span class="menu-icon">✉</span> الرسائل والمحادثات
+        <span class="menu-icon">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M21 11.5a8.5 8.5 0 0 1-9 8.5 9 9 0 0 1-4-.9L3 21l1.9-4.5A8.5 8.5 0 1 1 21 11.5Z"/>
+          </svg>
+        </span>
+        الرسائل والمحادثات
       </button>
+
       <button class="menu-button" data-section="notifications" type="button">
-        <span class="menu-icon">♢</span> الإشعارات
+        <span class="menu-icon">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/>
+          </svg>
+        </span>
+        الإشعارات
       </button>
+
       <button class="menu-button" data-section="content" type="button">
-        <span class="menu-icon">▤</span> إدارة المحتوى
+        <span class="menu-icon">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M5 3h14v18H5zM8 7h8M8 11h8M8 15h5"/>
+          </svg>
+        </span>
+        إدارة المحتوى
       </button>
+
       <button class="menu-button" data-section="wallet" type="button">
-        <span class="menu-icon">◇</span> المحفظة والأرصدة
+        <span class="menu-icon">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <rect x="2" y="5" width="20" height="15" rx="3"/>
+            <path d="M2 9h20m-6 5h2"/>
+          </svg>
+        </span>
+        المحفظة والأرصدة
       </button>
+
       <button class="menu-button" data-section="gifts" type="button">
-        <span class="menu-icon">✧</span> الهدايا والمتجر
+        <span class="menu-icon">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M20 12v9H4v-9m-2-5h20v5H2zM12 7v14M12 7H7a3 3 0 1 1 3-3c0 2 2 3 2 3Zm0 0h5a3 3 0 1 0-3-3c0 2-2 3-2 3Z"/>
+          </svg>
+        </span>
+        الهدايا والمتجر
       </button>
+
       <button class="menu-button" data-section="site" type="button">
-        <span class="menu-icon">⌘</span> إعدادات المنصة
+        <span class="menu-icon">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="m19.4 15 .1.1 1.4 1.1-1.5 2.6-1.7-.6a8 8 0 0 1-1.5.9l-.3 1.8h-3l-.3-1.8a8 8 0 0 1-1.5-.9l-1.7.6-1.5-2.6 1.4-1.1a8 8 0 0 1 0-1.8l-1.4-1.1 1.5-2.6 1.7.6a8 8 0 0 1 1.5-.9l.3-1.8h3l.3 1.8a8 8 0 0 1 1.5.9l1.7-.6 1.5 2.6-1.4 1.1a8 8 0 0 1 0 1.8Z"/>
+          </svg>
+        </span>
+        إعدادات المنصة
       </button>
+
       <button class="menu-button" data-section="updates" type="button">
-        <span class="menu-icon">↻</span> مركز التحديثات
+        <span class="menu-icon">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M20 7v5h-5M4 17v-5h5"/>
+            <path d="M5.5 9A7 7 0 0 1 18 6l2 6M4 12l2 6a7 7 0 0 0 12.5-3"/>
+          </svg>
+        </span>
+        مركز التحديثات
       </button>
+
       <button class="menu-button" data-section="security" type="button">
-        <span class="menu-icon">⬡</span> الأمان وسجل النشاط
+        <span class="menu-icon">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11Z"/>
+            <path d="m9 12 2 2 4-4"/>
+          </svg>
+        </span>
+        الأمان وسجل النشاط
       </button>
     </aside>
 
@@ -675,7 +750,7 @@ button{cursor:pointer}
           <h1>مرحباً بك في مركز القيادة</h1>
           <p>
             لوحة الإدارة المركزية لمنصة HANOON WORLD.
-            من هنا سيتم تشغيل وإدارة جميع أقسام المنصة من مكان واحد.
+            من هنا يمكنك إدارة أقسام المنصة من مكان واحد.
           </p>
         </section>
 
@@ -688,9 +763,8 @@ button{cursor:pointer}
         </div>
 
         <div class="admin-note">
-          <strong>تم تجهيز الهيكل الأساسي للأدمن.</strong>
-          القائمة الجانبية ومكان عرض الأقسام موجودان داخل هذه الصفحة.
-          سنربط ملفات كل قسم في مكان العرض نفسه، بحيث تظل القائمة والهوية والخلفية ثابتة أثناء التنقل بين الأقسام.
+          <strong>مركز الإدارة جاهز.</strong>
+          اختر القسم الذي تريد إدارته من القائمة الجانبية.
         </div>
       </div>
     </main>
@@ -710,8 +784,23 @@ const loginForm = document.getElementById("loginForm");
 const loginButton = document.getElementById("loginButton");
 const passwordInput = document.getElementById("adminPassword");
 const loginMessage = document.getElementById("loginMessage");
+const sidebar = document.getElementById("sidebar");
+const sectionView = document.getElementById("sectionView");
 
 let sessionToken = null;
+
+const sectionNames = {
+  overview:"الرئيسية",
+  members:"إدارة الأعضاء",
+  messages:"الرسائل والمحادثات",
+  notifications:"الإشعارات",
+  content:"إدارة المحتوى",
+  wallet:"المحفظة والأرصدة",
+  gifts:"الهدايا والمتجر",
+  site:"إعدادات المنصة",
+  updates:"مركز التحديثات",
+  security:"الأمان وسجل النشاط"
+};
 
 function showScreen(screen){
   startScreen.classList.add("hidden");
@@ -736,7 +825,6 @@ async function adminRequest(body,token){
 
   if(error) throw new Error(error.message || "تعذر الاتصال بخدمة الإدارة.");
   if(data?.error) throw new Error(data.error);
-
   return data;
 }
 
@@ -763,17 +851,18 @@ async function loadOwnerProfile(){
   if(error) throw error;
 
   const name = profile.full_name || profile.username || "مالك المنصة";
-  document.getElementById("ownerName").textContent = name;
+  const nameElement = document.getElementById("ownerName");
+  nameElement.textContent = name;
 
-  const nameInHeader = document.getElementById("ownerName");
   if(profile.is_verified){
     const mark = document.createElement("span");
     mark.className = "verified-mark";
     mark.textContent = "✓";
-    nameInHeader.appendChild(mark);
+    nameElement.appendChild(mark);
   }
 
   const avatar = document.getElementById("ownerAvatar");
+
   if(profile.avatar_url){
     const image = document.createElement("img");
     image.src = profile.avatar_url;
@@ -782,9 +871,10 @@ async function loadOwnerProfile(){
     avatar.replaceChildren(image);
   }
 
-  // البريد يُقرأ من جلسة Supabase إن كانت موجودة، ولا نخترع بريداً من عندنا.
   const {data:userData} = await supabase.auth.getUser();
-  const email = userData?.user?.email || "بيانات البريد غير متاحة من جلسة الدخول الحالية";
+  const email = userData?.user?.email ||
+    "بيانات البريد غير متاحة من جلسة الدخول الحالية";
+
   document.getElementById("ownerEmail").textContent = email;
 }
 
@@ -807,7 +897,7 @@ function openLogin(){
   setTimeout(()=>passwordInput.focus(),150);
 }
 
-/* شاشة البداية ثم التحقق من الجلسة */
+/* بدء الموقع والتحقق من الجلسة */
 async function boot(){
   const savedToken = localStorage.getItem(SESSION_KEY);
 
@@ -839,6 +929,7 @@ loginForm.addEventListener("submit",async(event)=>{
   event.preventDefault();
 
   const password = passwordInput.value.trim();
+
   if(!password){
     showLoginMessage("اكتب كلمة المرور أولاً.","error");
     return;
@@ -868,7 +959,6 @@ loginForm.addEventListener("submit",async(event)=>{
     passwordInput.value = "";
 
     showLoginMessage("تم التحقق من بيانات الإدارة بنجاح.","success");
-
     await openDashboard(data.sessionToken);
 
   }catch(error){
@@ -879,7 +969,7 @@ loginForm.addEventListener("submit",async(event)=>{
   }
 });
 
-/* تسجيل الخروج من الواجهة وإزالة الجلسة المحفوظة محلياً */
+/* تسجيل الخروج من الواجهة */
 document.getElementById("logoutButton").addEventListener("click",()=>{
   localStorage.removeItem(SESSION_KEY);
   sessionToken = null;
@@ -888,28 +978,45 @@ document.getElementById("logoutButton").addEventListener("click",()=>{
   openLogin();
 });
 
-/* القائمة الجانبية على الموبايل */
-const sidebar = document.getElementById("sidebar");
+/* القائمة الجانبية على الهاتف */
 document.getElementById("mobileMenu").addEventListener("click",()=>{
   sidebar.classList.toggle("open");
 });
 
-/* التنقل الداخلي: لا يخرج المستخدم من صفحة الأدمن */
-const sectionNames = {
-  overview:"الرئيسية",
-  members:"إدارة الأعضاء",
-  messages:"الرسائل والمحادثات",
-  notifications:"الإشعارات",
-  content:"إدارة المحتوى",
-  wallet:"المحفظة والأرصدة",
-  gifts:"الهدايا والمتجر",
-  site:"إعدادات المنصة",
-  updates:"مركز التحديثات",
-  security:"الأمان وسجل النشاط"
-};
+/* فتح قسم الأعضاء داخل نفس لوحة الإدارة */
+async function openMembersSection(){
+  sectionView.innerHTML = `
+    <div class="admin-note">
+      <strong>إدارة الأعضاء</strong>
+      جارٍ فتح القسم...
+    </div>
+  `;
 
+  try{
+    const {renderMembersSection} =
+      await import("./admin-sections/members.js");
+
+    await renderMembersSection({
+      root:sectionView,
+      supabase,
+      sessionToken
+    });
+
+  }catch(error){
+    console.error("Members section:",error);
+
+    sectionView.innerHTML = `
+      <div class="admin-note">
+        <strong>تعذر فتح إدارة الأعضاء</strong>
+        <p>${String(error.message || error)}</p>
+      </div>
+    `;
+  }
+}
+
+/* التنقل الداخلي */
 document.querySelectorAll(".menu-button").forEach(button=>{
-  button.addEventListener("click",()=>{
+  button.addEventListener("click",async()=>{
     document.querySelectorAll(".menu-button").forEach(item=>{
       item.classList.remove("active");
     });
@@ -918,29 +1025,40 @@ document.querySelectorAll(".menu-button").forEach(button=>{
     sidebar.classList.remove("open");
 
     const section = button.dataset.section;
+
     if(section === "overview"){
-      location.reload();
+      sectionView.innerHTML = `
+        <section class="welcome-panel">
+          <div class="welcome-kicker">THE POWER OF MANAGEMENT</div>
+          <h1>مرحباً بك في مركز القيادة</h1>
+          <p>لوحة الإدارة المركزية لمنصة HANOON WORLD.</p>
+        </section>
+        <div class="content-heading">
+          <div>
+            <h2>لوحة التحكم الرئيسية</h2>
+            <p>إدارة المنصة من واجهة واحدة متكاملة</p>
+          </div>
+          <span class="live-status">● نظام الإدارة</span>
+        </div>
+        <div class="admin-note">
+          <strong>مركز الإدارة.</strong>
+          اختر القسم الذي تريد إدارته من القائمة الجانبية.
+        </div>
+      `;
       return;
     }
 
-    // نقطة عرض الأقسام التي سنربط بها ملفات الإدارة تباعاً.
-    // لا يتم فتح صفحة خارجية أو مغادرة واجهة الأدمن.
-    document.getElementById("sectionView").innerHTML = `
+    if(section === "members"){
+      await openMembersSection();
+      return;
+    }
+
+    sectionView.innerHTML = `
       <section class="welcome-panel">
         <div class="welcome-kicker">HANOON WORLD • ADMIN</div>
-        <h1>${sectionNames[section]}</h1>
-        <p>هذا القسم سيُحمّل داخل مركز الإدارة الرئيسي، مع بقاء القائمة والهوية والتصميم ثابتة.</p>
+        <h1>${sectionNames[section] || "قسم الإدارة"}</h1>
+        <p>هذا القسم لم يتم توصيل وظائفه الفعلية بعد.</p>
       </section>
-      <div class="content-heading">
-        <div>
-          <h2>${sectionNames[section]}</h2>
-          <p>مساحة القسم داخل لوحة الإدارة</p>
-        </div>
-      </div>
-      <div class="admin-note">
-        <strong>القسم محدد داخل الأدمن.</strong>
-        سيتم توصيل واجهته ووظائفه الفعلية بملف القسم الخاص به في الخطوة التالية.
-      </div>
     `;
   });
 });
