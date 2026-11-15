@@ -1,1340 +1,1818 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
-  <meta name="theme-color" content="#0a0b16">
-  <title>الملف الشخصي | HANOON WORLD</title>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-  <style>
-    :root{
-      --bg:#090b16;
-      --panel:#131629;
-      --panel2:#191e35;
-      --text:#f7f5ff;
-      --muted:#9299b2;
-      --purple:#a184ff;
-      --cyan:#58d8e5;
-      --gold:#f1cd86;
-      --line:rgba(255,255,255,.09);
-      --radius:24px;
-    }
-
-    *{
-      box-sizing:border-box;
-      -webkit-tap-highlight-color:transparent;
-    }
-
-    html,body{
-      margin:0;
-      min-height:100%;
-      background:var(--bg);
-      color:var(--text);
-      font-family:"Cairo",sans-serif;
-      overscroll-behavior:none;
-    }
-
-    body{
-      min-height:100vh;
-      padding-bottom:35px;
-      background:
-        radial-gradient(ellipse at 85% 0%,rgba(132,91,255,.23),transparent 35%),
-        radial-gradient(ellipse at 5% 42%,rgba(49,190,205,.12),transparent 34%),
-        linear-gradient(150deg,#101326,#090b16 60%,#11162a);
-    }
-
-    button,a{font:inherit}
-    button{cursor:pointer}
-    a{color:inherit;text-decoration:none}
-    [hidden]{display:none!important}
-
-    .page{
-      width:min(100%,900px);
-      margin:auto;
-      padding:0 16px 35px;
-    }
-
-    .topbar{
-      height:72px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-    }
-
-    .top-side{
-      display:flex;
-      align-items:center;
-      gap:11px;
-    }
-
-    .icon-btn{
-      width:44px;
-      height:44px;
-      display:grid;
-      place-items:center;
-      border:1px solid var(--line);
-      border-radius:15px;
-      background:rgba(255,255,255,.055);
-      color:white;
-      position:relative;
-    }
-
-    .icon-btn svg{
-      width:21px;
-      height:21px;
-      fill:none;
-      stroke:currentColor;
-      stroke-width:1.8;
-      stroke-linecap:round;
-      stroke-linejoin:round;
-    }
-
-    /* Notification badge */
-    .notification-badge{
-      position:absolute;
-      top:-5px;
-      left:-5px;
-      min-width:19px;
-      height:19px;
-      padding:0 5px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      border:2px solid #0a0b16;
-      border-radius:20px;
-      background:linear-gradient(135deg,#ff647e,#e83258);
-      color:#fff;
-      font-family:Arial,sans-serif;
-      font-size:10px;
-      font-weight:900;
-      line-height:1;
-      box-shadow:0 3px 12px #ff456655;
-    }
-
-    .notification-badge[hidden]{
-      display:none!important;
-    }
-
-    .brand{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      font-weight:900;
-      font-size:14px;
-      letter-spacing:.5px;
-    }
-
-    .brand-mark{
-      width:37px;
-      height:37px;
-      display:grid;
-      place-items:center;
-      border-radius:13px;
-      background:linear-gradient(145deg,#bba4ff,#7250e5);
-      box-shadow:0 7px 22px #8865f54d;
-    }
-
-    .brand-mark svg{
-      width:23px;
-      height:23px;
-      fill:none;
-      stroke:white;
-      stroke-width:2;
-      stroke-linecap:round;
-      stroke-linejoin:round;
-    }
-
-    .hero{
-      position:relative;
-      overflow:hidden;
-      border:1px solid var(--line);
-      border-radius:29px;
-      background:#151a2d;
-      box-shadow:0 24px 65px #0005;
-    }
-
-    .cover{
-      height:290px;
-      position:relative;
-      overflow:hidden;
-      background:
-        linear-gradient(120deg,rgba(73,51,142,.25),rgba(13,105,129,.15)),
-        url("https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=1500&q=90") center/cover;
-    }
-
-    .cover::after{
-      content:"";
-      position:absolute;
-      inset:0;
-      background:linear-gradient(180deg,rgba(8,10,22,.05),rgba(8,10,22,.15) 40%,#151a2d 100%);
-    }
-
-    .cover-image{
-      position:absolute;
-      inset:0;
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      z-index:1;
-    }
-
-    .cover-label{
-      position:absolute;
-      z-index:2;
-      top:17px;
-      right:18px;
-      padding:8px 13px;
-      border:1px solid #ffffff35;
-      border-radius:30px;
-      background:#090b1670;
-      backdrop-filter:blur(12px);
-      color:white;
-      font-size:10px;
-      font-weight:900;
-      letter-spacing:1px;
-    }
-
-    .profile-main{
-      position:relative;
-      z-index:3;
-      margin-top:-73px;
-      padding:0 25px 27px;
-    }
-
-    .profile-head{
-      display:flex;
-      align-items:flex-end;
-      justify-content:space-between;
-      gap:16px;
-      flex-wrap:wrap;
-    }
-
-    .avatar-frame{
-      width:137px;
-      height:137px;
-      padding:5px;
-      flex-shrink:0;
-      border-radius:39px;
-      background:linear-gradient(145deg,#e0caff,#8b66ff 50%,#54d9df);
-      box-shadow:0 12px 35px #0008;
-    }
-
-    .avatar{
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      border:4px solid #151a2d;
-      border-radius:35px;
-      background:#222943;
-    }
-
-    .actions{
-      display:flex;
-      gap:9px;
-      padding-bottom:5px;
-    }
-
-    .action-btn{
-      min-height:44px;
-      padding:0 16px;
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:8px;
-      border:1px solid var(--line);
-      border-radius:14px;
-      background:rgba(255,255,255,.06);
-      color:white;
-      font-size:12px;
-      font-weight:800;
-    }
-
-    .action-btn svg{
-      width:17px;
-      height:17px;
-      fill:none;
-      stroke:currentColor;
-      stroke-width:1.8;
-      stroke-linecap:round;
-      stroke-linejoin:round;
-    }
-
-    .action-btn.primary{
-      border-color:transparent;
-      background:linear-gradient(115deg,#a184ff,#704fe0);
-      box-shadow:0 8px 22px #805fe044;
-    }
-
-    .identity{margin-top:20px}
-
-    .member-badge{
-      display:inline-flex;
-      align-items:center;
-      gap:7px;
-      padding:6px 12px;
-      border:1px solid #a184ff45;
-      border-radius:30px;
-      background:#a184ff18;
-      color:#d8caff;
-      font-size:11px;
-      font-weight:900;
-    }
-
-    .member-badge svg{
-      width:15px;
-      height:15px;
-      fill:none;
-      stroke:currentColor;
-      stroke-width:2;
-    }
-
-    /* شارة التوثيق الزرقاء */
-    .verified-badge{
-      display:inline-flex;
-      width:23px;
-      height:23px;
-      margin-right:8px;
-      vertical-align:middle;
-      align-items:center;
-      justify-content:center;
-      border-radius:50%;
-      background:#2389f5;
-      color:#fff;
-      box-shadow:0 3px 12px #2389f555;
-    }
-
-    .verified-badge svg{
-      width:15px;
-      height:15px;
-      fill:none;
-      stroke:currentColor;
-      stroke-width:2.8;
-      stroke-linecap:round;
-      stroke-linejoin:round;
-    }
-
-    .verified-badge[hidden]{display:none!important}
-
-    .full-name{
-      margin:10px 0 0;
-      font-size:29px;
-      font-weight:900;
-      line-height:1.5;
-      overflow-wrap:anywhere;
-    }
-
-    .username{
-      margin-top:1px;
-      color:#b8acd9;
-      direction:ltr;
-      text-align:right;
-      font-size:14px;
-      font-weight:700;
-    }
-
-    .bio{
-      margin:15px 0 0;
-      color:#c8cadd;
-      font-size:13px;
-      line-height:2.1;
-      white-space:pre-wrap;
-      overflow-wrap:anywhere;
-    }
-
-    .code-card{
-      display:inline-flex;
-      align-items:center;
-      gap:11px;
-      margin-top:17px;
-      padding:11px 14px;
-      border:1px solid #f1cd8638;
-      border-radius:15px;
-      background:#f1cd8610;
-      color:var(--gold);
-      font-size:12px;
-      font-weight:900;
-    }
-
-    .code-card span{
-      direction:ltr;
-      letter-spacing:1px;
-    }
-
-    .code-card button{
-      display:grid;
-      place-items:center;
-      padding:0;
-      border:0;
-      background:none;
-      color:var(--gold);
-    }
-
-    .code-card svg{
-      width:17px;
-      height:17px;
-      fill:none;
-      stroke:currentColor;
-      stroke-width:1.8;
-    }
-
-    .section{
-      margin-top:19px;
-      padding:22px;
-      border:1px solid var(--line);
-      border-radius:var(--radius);
-      background:linear-gradient(145deg,rgba(26,31,53,.97),rgba(16,20,36,.97));
-      box-shadow:0 14px 35px #0003;
-    }
-
-    .section-title{
-      display:flex;
-      align-items:center;
-      gap:11px;
-      margin:0 0 18px;
-      font-size:16px;
-      font-weight:900;
-    }
-
-    .section-icon{
-      width:39px;
-      height:39px;
-      display:grid;
-      place-items:center;
-      flex-shrink:0;
-      border:1px solid #a184ff35;
-      border-radius:13px;
-      background:#a184ff18;
-      color:#d2c2ff;
-    }
-
-    .section-icon svg{
-      width:20px;
-      height:20px;
-      fill:none;
-      stroke:currentColor;
-      stroke-width:1.8;
-      stroke-linecap:round;
-      stroke-linejoin:round;
-    }
-
-    .info-grid{
-      display:grid;
-      grid-template-columns:repeat(2,minmax(0,1fr));
-      gap:11px;
-    }
-
-    .info-item{
-      min-height:79px;
-      padding:13px;
-      border:1px solid #ffffff0c;
-      border-radius:16px;
-      background:#ffffff08;
-    }
-
-    .info-label{
-      margin-bottom:6px;
-      color:var(--muted);
-      font-size:11px;
-      font-weight:700;
-    }
-
-    .info-value{
-      font-size:13px;
-      font-weight:900;
-      overflow-wrap:anywhere;
-    }
-
-    .tag-list{
-      display:flex;
-      flex-wrap:wrap;
-      gap:9px;
-    }
-
-    .tag{
-      padding:8px 14px;
-      border:1px solid #a184ff35;
-      border-radius:30px;
-      background:#a184ff13;
-      color:#d9ceff;
-      font-size:12px;
-      font-weight:800;
-    }
-
-    .tag.cyan{
-      border-color:#58d8e535;
-      background:#58d8e510;
-      color:#a9eff3;
-    }
-
-    .empty-inline{
-      width:100%;
-      padding:15px;
-      border:1px dashed #ffffff24;
-      border-radius:14px;
-      background:#ffffff05;
-      color:var(--muted);
-      text-align:center;
-      font-size:12px;
-    }
-
-    .joined-card{
-      display:flex;
-      align-items:center;
-      gap:13px;
-      padding:15px;
-      border:1px solid #ffffff10;
-      border-radius:16px;
-      background:#ffffff08;
-    }
-
-    .joined-icon{
-      width:46px;
-      height:46px;
-      display:grid;
-      place-items:center;
-      border-radius:15px;
-      background:#f1cd8618;
-      color:var(--gold);
-    }
-
-    .joined-icon svg{
-      width:22px;
-      height:22px;
-      fill:none;
-      stroke:currentColor;
-      stroke-width:1.8;
-    }
-
-    .joined-label{
-      color:var(--muted);
-      font-size:11px;
-      font-weight:700;
-    }
-
-    .joined-date{
-      margin-top:4px;
-      font-size:13px;
-      font-weight:900;
-    }
-
-    .loading,.error-state{
-      min-height:65vh;
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      justify-content:center;
-      padding:30px 20px;
-      text-align:center;
-    }
-
-    .loader{
-      width:48px;
-      height:48px;
-      margin-bottom:18px;
-      border:3px solid #ffffff1c;
-      border-top-color:var(--purple);
-      border-radius:50%;
-      animation:spin .8s linear infinite;
-    }
-
-    @keyframes spin{to{transform:rotate(360deg)}}
-
-    .loading p,.error-state p{
-      max-width:340px;
-      color:var(--muted);
-      font-size:13px;
-      line-height:2;
-    }
-
-    .error-symbol{
-      width:66px;
-      height:66px;
-      display:grid;
-      place-items:center;
-      margin-bottom:16px;
-      border-radius:22px;
-      background:#ff718a18;
-      color:#ff8298;
-    }
-
-    .error-symbol svg{
-      width:30px;
-      height:30px;
-      fill:none;
-      stroke:currentColor;
-      stroke-width:1.8;
-    }
-
-    .error-state h2{
-      margin:0;
-      font-size:20px;
-      font-weight:900;
-    }
-
-    .error-actions{
-      display:flex;
-      flex-wrap:wrap;
-      justify-content:center;
-      gap:9px;
-      margin-top:10px;
-    }
-
-    .toast{
-      position:fixed;
-      z-index:30;
-      bottom:25px;
-      left:50%;
-      transform:translate(-50%,20px);
-      opacity:0;
-      pointer-events:none;
-      padding:12px 18px;
-      border:1px solid var(--line);
-      border-radius:14px;
-      background:#252b42;
-      color:white;
-      font-size:12px;
-      font-weight:800;
-      box-shadow:0 12px 35px #0008;
-      transition:.25s;
-      white-space:nowrap;
-    }
-
-    .toast.show{
-      transform:translate(-50%,0);
-      opacity:1;
-    }
-
-    .footer-note{
-      padding:25px 0 10px;
-      color:#777f98;
-      text-align:center;
-      font-size:10px;
-    }
-
-    @media(max-width:560px){
-      .page{padding-inline:11px}
-      .topbar{height:65px}
-      .brand{font-size:12px}
-      .cover{height:215px}
-      .profile-main{
-        margin-top:-57px;
-        padding:0 16px 20px;
-      }
-      .avatar-frame{
-        width:112px;
-        height:112px;
-        border-radius:32px;
-      }
-      .avatar{border-radius:28px}
-      .full-name{font-size:24px}
-      .profile-head{gap:12px}
-      .actions{width:100%;padding-top:10px}
-      .actions .action-btn{flex:1}
-      .section{
-        padding:17px;
-        border-radius:20px;
-      }
-      .info-grid{gap:8px}
-      .info-item{padding:11px}
-    }
-
-    @media(max-width:350px){
-      .info-grid{grid-template-columns:1fr}
-      .cover{height:180px}
-      .full-name{font-size:21px}
-      .action-btn{padding-inline:10px;font-size:11px}
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="theme-color" content="#090b16">
+<title>الملف الشخصي | HANOON WORLD</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg:#090b16;
+  --panel:#14182b;
+  --panel2:#1b2038;
+  --text:#f8f6ff;
+  --muted:#929bb5;
+  --purple:#a184ff;
+  --cyan:#58d8e5;
+  --gold:#f1cd86;
+  --green:#49d9a0;
+  --red:#ff718b;
+  --line:rgba(255,255,255,.09);
+  --radius:24px;
+}
+
+*{
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
+}
+
+html,body{
+  margin:0;
+  min-height:100%;
+  background:var(--bg);
+  color:var(--text);
+  font-family:"Cairo",sans-serif;
+  overscroll-behavior:none;
+}
+
+body{
+  min-height:100vh;
+  padding-bottom:45px;
+  background:
+    radial-gradient(ellipse at 85% 0%,rgba(132,91,255,.22),transparent 36%),
+    radial-gradient(ellipse at 5% 38%,rgba(49,190,205,.11),transparent 34%),
+    radial-gradient(ellipse at 50% 100%,rgba(132,91,255,.08),transparent 45%),
+    linear-gradient(150deg,#101326,#090b16 60%,#11162a);
+}
+
+button,a{font:inherit}
+button{cursor:pointer}
+a{color:inherit;text-decoration:none}
+[hidden]{display:none!important}
+
+.page{
+  width:min(100%,980px);
+  margin:auto;
+  padding:0 16px 35px;
+}
+
+/* TOP BAR */
+
+.topbar{
+  height:72px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+}
+
+.top-side{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.icon-btn{
+  width:44px;
+  height:44px;
+  display:grid;
+  place-items:center;
+  border:1px solid var(--line);
+  border-radius:15px;
+  background:rgba(255,255,255,.055);
+  color:white;
+  position:relative;
+  transition:.2s;
+}
+
+.icon-btn:active{transform:scale(.94)}
+
+.icon-btn svg{
+  width:21px;
+  height:21px;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:1.8;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-weight:900;
+  font-size:14px;
+  letter-spacing:.5px;
+}
+
+.brand-mark{
+  width:37px;
+  height:37px;
+  display:grid;
+  place-items:center;
+  border-radius:13px;
+  background:linear-gradient(145deg,#bba4ff,#7250e5);
+  box-shadow:0 7px 22px #8865f54d;
+}
+
+.brand-mark svg{
+  width:23px;
+  height:23px;
+  fill:none;
+  stroke:white;
+  stroke-width:2;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+
+.notification-badge{
+  position:absolute;
+  top:-5px;
+  left:-5px;
+  min-width:19px;
+  height:19px;
+  padding:0 5px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border:2px solid #0a0b16;
+  border-radius:20px;
+  background:linear-gradient(135deg,#ff647e,#e83258);
+  color:#fff;
+  font-family:Arial,sans-serif;
+  font-size:10px;
+  font-weight:900;
+  box-shadow:0 3px 12px #ff456655;
+}
+
+/* HERO */
+
+.hero{
+  position:relative;
+  overflow:hidden;
+  border:1px solid var(--line);
+  border-radius:30px;
+  background:#151a2d;
+  box-shadow:0 24px 65px #0005;
+  animation:heroEnter .6s ease both;
+}
+
+@keyframes heroEnter{
+  from{opacity:0;transform:translateY(15px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+.cover{
+  height:300px;
+  position:relative;
+  overflow:hidden;
+  background:
+    radial-gradient(ellipse at 25% 20%,#7455c7 0,transparent 40%),
+    radial-gradient(ellipse at 80% 20%,#176a7b 0,transparent 42%),
+    linear-gradient(125deg,#252044,#111a32 65%,#172b43);
+}
+
+.cover::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  opacity:.4;
+  background-image:
+    linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);
+  background-size:35px 35px;
+  mask-image:linear-gradient(to bottom,black,transparent);
+}
+
+.cover::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(180deg,transparent 30%,#151a2d 100%);
+}
+
+.cover-image{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  z-index:1;
+}
+
+.cover-label{
+  position:absolute;
+  z-index:3;
+  top:17px;
+  right:18px;
+  padding:8px 13px;
+  border:1px solid #ffffff35;
+  border-radius:30px;
+  background:#090b1670;
+  backdrop-filter:blur(12px);
+  color:white;
+  font-size:10px;
+  font-weight:900;
+  letter-spacing:1px;
+}
+
+.profile-main{
+  position:relative;
+  z-index:3;
+  margin-top:-76px;
+  padding:0 27px 29px;
+}
+
+.profile-head{
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:16px;
+  flex-wrap:wrap;
+}
+
+/* AVATAR */
+
+.avatar-stage{
+  width:148px;
+  height:148px;
+  position:relative;
+  display:grid;
+  place-items:center;
+  flex-shrink:0;
+}
+
+.avatar-aura{
+  position:absolute;
+  inset:-8px;
+  border-radius:44px;
+  background:conic-gradient(
+    from 0deg,
+    #a184ff,
+    #58d8e5,
+    #f1cd86,
+    #a184ff
+  );
+  filter:blur(8px);
+  opacity:.52;
+  animation:auraRotate 8s linear infinite;
+}
+
+@keyframes auraRotate{
+  to{transform:rotate(360deg)}
+}
+
+.avatar-shell{
+  width:100%;
+  height:100%;
+  position:relative;
+  padding:5px;
+  border-radius:42px;
+  background:linear-gradient(145deg,#e0caff,#8b66ff 50%,#54d9df);
+  box-shadow:0 12px 35px #0009;
+}
+
+.avatar{
+  width:100%;
+  height:100%;
+  display:block;
+  object-fit:cover;
+  border:4px solid #151a2d;
+  border-radius:37px;
+  background:#222943;
+}
+
+.avatar-decoration{
+  position:absolute;
+  inset:-13px;
+  border:1px solid #c5aaff55;
+  border-radius:49px;
+  pointer-events:none;
+}
+
+.avatar-decoration::before,
+.avatar-decoration::after{
+  content:"";
+  position:absolute;
+  width:9px;
+  height:9px;
+  border-radius:50%;
+  background:#f1cd86;
+  box-shadow:0 0 14px #f1cd86;
+}
+
+.avatar-decoration::before{top:15px;right:12px}
+.avatar-decoration::after{bottom:15px;left:12px}
+
+/* ACTIONS */
+
+.actions{
+  display:flex;
+  gap:9px;
+  padding-bottom:5px;
+}
+
+.action-btn{
+  min-height:45px;
+  padding:0 16px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:rgba(255,255,255,.06);
+  color:white;
+  font-size:12px;
+  font-weight:800;
+  transition:.2s;
+}
+
+.action-btn:active{transform:scale(.96)}
+.action-btn:disabled{opacity:.55;cursor:not-allowed}
+
+.action-btn svg{
+  width:17px;
+  height:17px;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:1.8;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+
+.action-btn.primary{
+  border-color:transparent;
+  background:linear-gradient(115deg,#a184ff,#704fe0);
+  box-shadow:0 8px 22px #805fe044;
+}
+
+.action-btn.following{
+  border-color:#49d9a055;
+  background:#49d9a015;
+  color:#8ce9c1;
+}
+
+.action-btn.message{
+  border-color:#58d8e555;
+  background:#58d8e515;
+  color:#a9eff3;
+}
+
+/* IDENTITY */
+
+.identity{margin-top:21px}
+
+.badge-row{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  gap:8px;
+}
+
+.member-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  padding:6px 12px;
+  border:1px solid #a184ff45;
+  border-radius:30px;
+  background:#a184ff18;
+  color:#d8caff;
+  font-size:11px;
+  font-weight:900;
+}
+
+.member-badge svg{
+  width:15px;
+  height:15px;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:2;
+}
+
+.verified-badge{
+  display:inline-flex;
+  width:23px;
+  height:23px;
+  margin-right:8px;
+  vertical-align:middle;
+  align-items:center;
+  justify-content:center;
+  border-radius:50%;
+  background:#2389f5;
+  color:#fff;
+  box-shadow:0 3px 12px #2389f555;
+}
+
+.verified-badge svg{
+  width:15px;
+  height:15px;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:2.8;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+
+.full-name{
+  margin:10px 0 0;
+  font-size:29px;
+  font-weight:900;
+  line-height:1.5;
+  overflow-wrap:anywhere;
+}
+
+.username{
+  margin-top:1px;
+  color:#b8acd9;
+  direction:ltr;
+  text-align:right;
+  font-size:14px;
+  font-weight:700;
+}
+
+.bio{
+  margin:15px 0 0;
+  color:#c8cadd;
+  font-size:13px;
+  line-height:2.1;
+  white-space:pre-wrap;
+  overflow-wrap:anywhere;
+}
+
+.code-card{
+  display:inline-flex;
+  align-items:center;
+  gap:11px;
+  margin-top:17px;
+  padding:11px 14px;
+  border:1px solid #f1cd8638;
+  border-radius:15px;
+  background:#f1cd8610;
+  color:var(--gold);
+  font-size:12px;
+  font-weight:900;
+}
+
+.code-card .code-value{
+  direction:ltr;
+  letter-spacing:1px;
+}
+
+.code-card button{
+  display:grid;
+  place-items:center;
+  padding:0;
+  border:0;
+  background:none;
+  color:var(--gold);
+}
+
+.code-card svg{
+  width:17px;
+  height:17px;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:1.8;
+}
+
+/* STATS */
+
+.stats-grid{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:11px;
+  margin-top:19px;
+}
+
+.stat-card{
+  min-width:0;
+  padding:16px 10px;
+  border:1px solid #ffffff10;
+  border-radius:18px;
+  background:linear-gradient(145deg,#ffffff0c,#ffffff04);
+  text-align:center;
+  transition:.2s;
+}
+
+.stat-card:active{transform:scale(.97)}
+
+.stat-icon{
+  width:34px;
+  height:34px;
+  display:grid;
+  place-items:center;
+  margin:0 auto 8px;
+  border-radius:12px;
+  background:#a184ff18;
+  color:#c7b5ff;
+}
+
+.stat-icon svg{
+  width:18px;
+  height:18px;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:1.8;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+
+.stat-number{
+  font-size:19px;
+  font-weight:900;
+  line-height:1.4;
+  overflow-wrap:anywhere;
+}
+
+.stat-label{
+  margin-top:3px;
+  color:var(--muted);
+  font-size:10px;
+  font-weight:700;
+}
+
+/* CONTENT SECTIONS */
+
+.section{
+  margin-top:19px;
+  padding:22px;
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  background:linear-gradient(145deg,rgba(26,31,53,.97),rgba(16,20,36,.97));
+  box-shadow:0 14px 35px #0003;
+  animation:sectionEnter .45s ease both;
+}
+
+@keyframes sectionEnter{
+  from{opacity:0;transform:translateY(10px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+.section-title{
+  display:flex;
+  align-items:center;
+  gap:11px;
+  margin:0 0 18px;
+  font-size:16px;
+  font-weight:900;
+}
+
+.section-icon{
+  width:39px;
+  height:39px;
+  display:grid;
+  place-items:center;
+  flex-shrink:0;
+  border:1px solid #a184ff35;
+  border-radius:13px;
+  background:#a184ff18;
+  color:#d2c2ff;
+}
+
+.section-icon svg{
+  width:20px;
+  height:20px;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:1.8;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+
+.info-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:11px;
+}
+
+.info-item{
+  min-height:79px;
+  padding:13px;
+  border:1px solid #ffffff0c;
+  border-radius:16px;
+  background:#ffffff08;
+}
+
+.info-label{
+  margin-bottom:6px;
+  color:var(--muted);
+  font-size:11px;
+  font-weight:700;
+}
+
+.info-value{
+  font-size:13px;
+  font-weight:900;
+  overflow-wrap:anywhere;
+}
+
+.tag-list{
+  display:flex;
+  flex-wrap:wrap;
+  gap:9px;
+}
+
+.tag{
+  padding:8px 14px;
+  border:1px solid #a184ff35;
+  border-radius:30px;
+  background:#a184ff13;
+  color:#d9ceff;
+  font-size:12px;
+  font-weight:800;
+}
+
+.tag.cyan{
+  border-color:#58d8e535;
+  background:#58d8e510;
+  color:#a9eff3;
+}
+
+.tag.gold{
+  border-color:#f1cd8635;
+  background:#f1cd8610;
+  color:#f1cd86;
+}
+
+.empty-inline{
+  width:100%;
+  padding:15px;
+  border:1px dashed #ffffff24;
+  border-radius:14px;
+  background:#ffffff05;
+  color:var(--muted);
+  text-align:center;
+  font-size:12px;
+}
+
+.equipped-list{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:10px;
+}
+
+.equipped-item{
+  display:flex;
+  align-items:center;
+  gap:11px;
+  padding:13px;
+  border:1px solid #ffffff10;
+  border-radius:16px;
+  background:#ffffff07;
+}
+
+.equipped-icon{
+  width:40px;
+  height:40px;
+  display:grid;
+  place-items:center;
+  flex-shrink:0;
+  border-radius:13px;
+  background:#a184ff18;
+  color:#c9b7ff;
+}
+
+.equipped-icon svg{
+  width:20px;
+  height:20px;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:1.8;
+}
+
+.equipped-name{
+  font-size:12px;
+  font-weight:900;
+}
+
+.equipped-description{
+  margin-top:3px;
+  color:var(--muted);
+  font-size:10px;
+}
+
+/* MEMBERSHIP */
+
+.joined-card{
+  display:flex;
+  align-items:center;
+  gap:13px;
+  padding:15px;
+  border:1px solid #ffffff10;
+  border-radius:16px;
+  background:#ffffff08;
+}
+
+.joined-icon{
+  width:46px;
+  height:46px;
+  display:grid;
+  place-items:center;
+  border-radius:15px;
+  background:#f1cd8618;
+  color:var(--gold);
+}
+
+.joined-icon svg{
+  width:22px;
+  height:22px;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:1.8;
+}
+
+.joined-label{
+  color:var(--muted);
+  font-size:11px;
+  font-weight:700;
+}
+
+.joined-date{
+  margin-top:4px;
+  font-size:13px;
+  font-weight:900;
+}
+
+/* LOADING AND ERRORS */
+
+.loading,.error-state{
+  min-height:65vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  padding:30px 20px;
+  text-align:center;
+}
+
+.loader{
+  width:48px;
+  height:48px;
+  margin-bottom:18px;
+  border:3px solid #ffffff1c;
+  border-top-color:var(--purple);
+  border-radius:50%;
+  animation:spin .8s linear infinite;
+}
+
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.loading p,.error-state p{
+  max-width:340px;
+  color:var(--muted);
+  font-size:13px;
+  line-height:2;
+}
+
+.error-symbol{
+  width:66px;
+  height:66px;
+  display:grid;
+  place-items:center;
+  margin-bottom:16px;
+  border-radius:22px;
+  background:#ff718a18;
+  color:#ff8298;
+}
+
+.error-symbol svg{
+  width:30px;
+  height:30px;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:1.8;
+}
+
+.error-state h2{
+  margin:0;
+  font-size:20px;
+  font-weight:900;
+}
+
+.error-actions{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:9px;
+  margin-top:10px;
+}
+
+/* TOAST */
+
+.toast{
+  position:fixed;
+  z-index:50;
+  bottom:25px;
+  left:50%;
+  transform:translate(-50%,20px);
+  opacity:0;
+  pointer-events:none;
+  padding:12px 18px;
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:#252b42;
+  color:white;
+  font-size:12px;
+  font-weight:800;
+  box-shadow:0 12px 35px #0008;
+  transition:.25s;
+  white-space:nowrap;
+}
+
+.toast.show{
+  transform:translate(-50%,0);
+  opacity:1;
+}
+
+.footer-note{
+  padding:25px 0 10px;
+  color:#777f98;
+  text-align:center;
+  font-size:10px;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:650px){
+  .page{padding-inline:11px}
+  .topbar{height:65px}
+  .brand{font-size:12px}
+  .cover{height:220px}
+  .profile-main{
+    margin-top:-59px;
+    padding:0 16px 21px;
+  }
+  .avatar-stage{
+    width:116px;
+    height:116px;
+  }
+  .avatar-shell{border-radius:34px}
+  .avatar{border-radius:29px}
+  .avatar-decoration{border-radius:40px}
+  .full-name{font-size:24px}
+  .profile-head{gap:12px}
+  .actions{
+    width:100%;
+    padding-top:10px;
+  }
+  .actions .action-btn{flex:1}
+  .stats-grid{gap:7px}
+  .stat-card{padding:13px 5px}
+  .stat-number{font-size:16px}
+  .stat-label{font-size:9px}
+  .section{
+    padding:17px;
+    border-radius:20px;
+  }
+  .info-grid{gap:8px}
+  .info-item{padding:11px}
+}
+
+@media(max-width:380px){
+  .info-grid{grid-template-columns:1fr}
+  .equipped-list{grid-template-columns:1fr}
+  .cover{height:185px}
+  .full-name{font-size:21px}
+  .action-btn{padding-inline:10px;font-size:11px}
+  .stats-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+</style>
 </head>
 
 <body>
-  <main class="page">
+<main class="page">
 
-    <header class="topbar">
-      <div class="top-side">
-        <button class="icon-btn" id="backButton" aria-label="رجوع">
-          <svg viewBox="0 0 24 24">
-            <path d="m15 18-6-6 6-6"/>
-            <path d="M9 12h11"/>
-          </svg>
+<header class="topbar">
+  <div class="top-side">
+    <button class="icon-btn" id="backButton" aria-label="رجوع">
+      <svg viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/><path d="M9 12h11"/></svg>
+    </button>
+    <div class="brand">
+      <div class="brand-mark">
+        <svg viewBox="0 0 24 24"><path d="M4 19V5l8 10 8-10v14"/><path d="M3 22h18"/></svg>
+      </div>
+      <span>HANOON WORLD</span>
+    </div>
+  </div>
+
+  <div class="top-side">
+    <a class="icon-btn" href="notifications.html" aria-label="الإشعارات">
+      <svg viewBox="0 0 24 24"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9Z"/><path d="M10 21h4"/></svg>
+      <span class="notification-badge" data-notification-count hidden></span>
+    </a>
+
+    <button class="icon-btn" id="shareButton" aria-label="مشاركة الملف">
+      <svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.7 10.7 6.6-4.4M8.7 13.3l6.6 4.4"/></svg>
+    </button>
+  </div>
+</header>
+
+<div id="loadingState" class="loading">
+  <div class="loader"></div>
+  <strong>جاري تجهيز الملف الشخصي</strong>
+  <p>نحضر بيانات العضو ومقتنياته من HANOON WORLD.</p>
+</div>
+
+<div id="errorState" class="error-state" hidden>
+  <div class="error-symbol">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>
+  </div>
+  <h2 id="errorTitle">تعذر فتح الملف الشخصي</h2>
+  <p id="errorMessage">لم نتمكن من تحميل بيانات هذا العضو.</p>
+  <div class="error-actions">
+    <button class="action-btn primary" id="retryButton">إعادة المحاولة</button>
+    <button class="action-btn" id="membersButton">العودة إلى الأعضاء</button>
+  </div>
+</div>
+
+<div id="profileContent" hidden>
+
+<section class="hero">
+  <div class="cover">
+    <img class="cover-image" id="coverImage" alt="غلاف العضو" hidden>
+    <div class="cover-label">HANOON WORLD · MEMBER</div>
+  </div>
+
+  <div class="profile-main">
+    <div class="profile-head">
+      <div class="avatar-stage">
+        <div class="avatar-aura"></div>
+        <div class="avatar-shell">
+          <img class="avatar" id="avatarImage" alt="الصورة الشخصية">
+        </div>
+        <div class="avatar-decoration"></div>
+      </div>
+
+      <div class="actions">
+        <button class="action-btn primary" id="followButton" hidden>
+          <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+          <span id="followButtonText">متابعة</span>
         </button>
 
-        <div class="brand">
-          <div class="brand-mark">
-            <svg viewBox="0 0 24 24">
-              <path d="M4 19V5l8 10 8-10v14"/>
-              <path d="M3 22h18"/>
-            </svg>
-          </div>
-          <span>HANOON WORLD</span>
-        </div>
-      </div>
+        <button class="action-btn following" id="unfollowButton" hidden>
+          <svg viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></svg>
+          <span>تتابعه</span>
+        </button>
 
-      <div class="top-side">
-        <a class="icon-btn" href="notifications.html" aria-label="الإشعارات">
-          <svg viewBox="0 0 24 24">
-            <path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9Z"/>
-            <path d="M10 21h4"/>
-          </svg>
-          <span class="notification-badge" data-notification-count hidden></span>
-        </a>
-
-        <button class="icon-btn" id="shareButton" aria-label="مشاركة الملف">
-          <svg viewBox="0 0 24 24">
-            <circle cx="18" cy="5" r="3"/>
-            <circle cx="6" cy="12" r="3"/>
-            <circle cx="18" cy="19" r="3"/>
-            <path d="m8.7 10.7 6.6-4.4M8.7 13.3l6.6 4.4"/>
-          </svg>
+        <button class="action-btn message" id="messageButton">
+          <svg viewBox="0 0 24 24"><path d="M21 11.5a8.4 8.4 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.4 8.4 0 0 1 3.8-.9h.5a8.5 8.5 0 0 1 8 8v.5Z"/></svg>
+          مراسلة
         </button>
       </div>
-    </header>
-
-    <div id="loadingState" class="loading">
-      <div class="loader"></div>
-      <strong>جاري تحميل الملف الشخصي</strong>
-      <p>نجهز بيانات العضو من قاعدة بيانات هنون.</p>
     </div>
 
-    <div id="errorState" class="error-state" hidden>
-      <div class="error-symbol">
-        <svg viewBox="0 0 24 24">
-          <circle cx="12" cy="12" r="9"/>
-          <path d="M12 8v5M12 16h.01"/>
-        </svg>
+    <div class="identity">
+      <div class="badge-row">
+        <div class="member-badge">
+          <svg viewBox="0 0 24 24"><path d="m12 3 2.7 2 3.4.2.8 3.3 2 2.5-1.5 3.1.2 3.4-3.2 1.1-2.4 2.1-3.1-1.5-3.4.2-1.1-3.2-2.1-2.4 1.5-3.1-.2-3.4 3.2-1.1z"/><path d="m8.5 12 2.3 2.3 4.8-5"/></svg>
+          عضو في مجتمع هنون
+        </div>
+        <span class="member-badge" id="adminBadge" hidden>إدارة الموقع</span>
+        <span class="member-badge" id="founderBadge" hidden>مؤسس هنون</span>
       </div>
-      <h2 id="errorTitle">تعذر فتح الملف الشخصي</h2>
-      <p id="errorMessage">لم نتمكن من تحميل بيانات هذا العضو.</p>
 
-      <div class="error-actions">
-        <button class="action-btn primary" id="retryButton">إعادة المحاولة</button>
-        <button class="action-btn" id="membersButton">العودة إلى الأعضاء</button>
+      <h1 class="full-name" id="fullName">
+        —
+        <span class="verified-badge" id="verifiedBadge" hidden title="حساب موثق" aria-label="حساب موثق">
+          <svg viewBox="0 0 24 24"><path d="m5 12 4.2 4.2L19 6.8"/></svg>
+        </span>
+      </h1>
+
+      <div class="username" id="username">—</div>
+      <p class="bio" id="bio" hidden></p>
+
+      <div class="code-card">
+        <span>MEMBER ID</span>
+        <span class="code-value" id="memberCode">—</span>
+        <button id="copyCodeButton" aria-label="نسخ رقم العضوية">
+          <svg viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/></svg>
+        </button>
       </div>
     </div>
+  </div>
+</section>
 
-    <div id="profileContent" hidden>
+<section class="stats-grid">
+  <div class="stat-card">
+    <div class="stat-icon"><svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M20 8v6M23 11h-6"/></svg></div>
+    <div class="stat-number" id="followersCount">—</div>
+    <div class="stat-label">المتابعون</div>
+  </div>
 
-      <section class="hero">
-        <div class="cover">
-          <img class="cover-image" id="coverImage" alt="غلاف الملف الشخصي" hidden>
-          <div class="cover-label">HANOON WORLD MEMBER</div>
-        </div>
+  <div class="stat-card">
+    <div class="stat-icon"><svg viewBox="0 0 24 24"><circle cx="9" cy="7" r="4"/><path d="M2 21v-2a7 7 0 0 1 14 0v2M19 8v6M22 11h-6"/></svg></div>
+    <div class="stat-number" id="followingCount">—</div>
+    <div class="stat-label">يتابع</div>
+  </div>
 
-        <div class="profile-main">
-          <div class="profile-head">
-            <div class="avatar-frame">
-              <img class="avatar" id="avatarImage" alt="الصورة الشخصية">
-            </div>
+  <div class="stat-card">
+    <div class="stat-icon"><svg viewBox="0 0 24 24"><path d="m12 3 2.5 5.5L20 11l-5.5 2.5L12 19l-2.5-5.5L4 11l5.5-2.5z"/></svg></div>
+    <div class="stat-number" id="pointsCount">—</div>
+    <div class="stat-label">النقاط</div>
+  </div>
 
-            <div class="actions">
-              <button class="action-btn" id="copyCodeButton">
-                <svg viewBox="0 0 24 24">
-                  <rect x="8" y="8" width="12" height="12" rx="2"/>
-                  <path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/>
-                </svg>
-                نسخ الكود
-              </button>
+  <div class="stat-card">
+    <div class="stat-icon"><svg viewBox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z"/></svg></div>
+    <div class="stat-number" id="giftsCount">—</div>
+    <div class="stat-label">الهدايا المستلمة</div>
+  </div>
+</section>
 
-              <button class="action-btn primary" id="shareProfileButton">
-                <svg viewBox="0 0 24 24">
-                  <circle cx="18" cy="5" r="3"/>
-                  <circle cx="6" cy="12" r="3"/>
-                  <circle cx="18" cy="19" r="3"/>
-                  <path d="m8.7 10.7 6.6-4.4M8.7 13.3l6.6 4.4"/>
-                </svg>
-                مشاركة الملف
-              </button>
-            </div>
-          </div>
+<section class="section">
+  <h2 class="section-title">
+    <span class="section-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></span>
+    معلومات العضو
+  </h2>
 
-          <div class="identity">
-            <div class="member-badge">
-              <svg viewBox="0 0 24 24">
-                <path d="m12 3 2.7 2 3.4.2.8 3.3 2 2.5-1.5 3.1.2 3.4-3.2 1.1-2.4 2.1-3.1-1.5-3.4.2-1.1-3.2-2.1-2.4 1.5-3.1-.2-3.4 3.2-1.1z"/>
-                <path d="m8.5 12 2.3 2.3 4.8-5"/>
-              </svg>
-              عضو في مجتمع هنون
-            </div>
-
-            <h1 class="full-name" id="fullName">—<span class="verified-badge" id="verifiedBadge" hidden aria-label="حساب موثق" title="حساب موثق"><svg viewBox="0 0 24 24"><path d="m5 12 4.2 4.2L19 6.8"/></svg></span></h1>
-            <div class="username" id="username">—</div>
-            <p class="bio" id="bio" hidden></p>
-
-            <div class="code-card">
-              <span>MEMBER ID</span>
-              <span id="memberCode">—</span>
-              <button id="copyCodeSmall" aria-label="نسخ رقم العضوية">
-                <svg viewBox="0 0 24 24">
-                  <rect x="8" y="8" width="12" height="12" rx="2"/>
-                  <path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/>
-                </svg>
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="section">
-        <h2 class="section-title">
-          <span class="section-icon">
-            <svg viewBox="0 0 24 24">
-              <circle cx="12" cy="8" r="4"/>
-              <path d="M4 21a8 8 0 0 1 16 0"/>
-            </svg>
-          </span>
-          معلومات العضو
-        </h2>
-
-        <div class="info-grid">
-          <div class="info-item">
-            <div class="info-label">اسم المستخدم</div>
-            <div class="info-value" id="infoUsername">—</div>
-          </div>
-
-          <div class="info-item">
-            <div class="info-label">رقم العضوية</div>
-            <div class="info-value" id="infoCode">—</div>
-          </div>
-
-          <div class="info-item">
-            <div class="info-label">تاريخ الانضمام</div>
-            <div class="info-value" id="infoJoined">—</div>
-          </div>
-
-          <div class="info-item">
-            <div class="info-label">نوع الملف</div>
-            <div class="info-value">ملف عضو عام</div>
-          </div>
-        </div>
-      </section>
-
-      <section class="section">
-        <h2 class="section-title">
-          <span class="section-icon">
-            <svg viewBox="0 0 24 24">
-              <circle cx="12" cy="12" r="9"/>
-              <path d="M12 7v10M7 12h10"/>
-            </svg>
-          </span>
-          الهوايات والاهتمامات
-        </h2>
-        <div class="tag-list" id="hobbiesList"></div>
-      </section>
-
-      <section class="section">
-        <h2 class="section-title">
-          <span class="section-icon">
-            <svg viewBox="0 0 24 24">
-              <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v17H6.5A2.5 2.5 0 0 1 4 17.5z"/>
-              <path d="M4 5.5v12M8 7h8M8 11h7"/>
-            </svg>
-          </span>
-          اهتمامات القراءة
-        </h2>
-        <div class="tag-list" id="readingList"></div>
-      </section>
-
-      <section class="section">
-        <h2 class="section-title">
-          <span class="section-icon">
-            <svg viewBox="0 0 24 24">
-              <rect x="3" y="4" width="18" height="17" rx="3"/>
-              <path d="M7 2v4M17 2v4M3 9h18"/>
-            </svg>
-          </span>
-          عضوية هنون
-        </h2>
-
-        <div class="joined-card">
-          <div class="joined-icon">
-            <svg viewBox="0 0 24 24">
-              <path d="M12 3v18M3 12h18"/>
-              <circle cx="12" cy="12" r="9"/>
-            </svg>
-          </div>
-          <div>
-            <div class="joined-label">تاريخ الانضمام إلى المجتمع</div>
-            <div class="joined-date" id="joinedDate">—</div>
-          </div>
-        </div>
-      </section>
-
+  <div class="info-grid">
+    <div class="info-item">
+      <div class="info-label">اسم المستخدم</div>
+      <div class="info-value" id="infoUsername">—</div>
     </div>
+    <div class="info-item">
+      <div class="info-label">رقم العضوية</div>
+      <div class="info-value" id="infoCode">—</div>
+    </div>
+    <div class="info-item">
+      <div class="info-label">تاريخ الانضمام</div>
+      <div class="info-value" id="infoJoined">—</div>
+    </div>
+    <div class="info-item">
+      <div class="info-label">حالة التوثيق</div>
+      <div class="info-value" id="infoVerified">—</div>
+    </div>
+  </div>
+</section>
 
-    <div class="footer-note">HANOON WORLD · YOUR SOCIAL UNIVERSE</div>
-  </main>
+<section class="section">
+  <h2 class="section-title">
+    <span class="section-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v10M7 12h10"/></svg></span>
+    الهوايات والاهتمامات
+  </h2>
+  <div class="tag-list" id="hobbiesList"></div>
+</section>
 
-  <div class="toast" id="toast"></div>
+<section class="section">
+  <h2 class="section-title">
+    <span class="section-icon"><svg viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v17H6.5A2.5 2.5 0 0 1 4 17.5z"/><path d="M4 5.5v12M8 7h8M8 11h7"/></svg></span>
+    اهتمامات القراءة
+  </h2>
+  <div class="tag-list" id="readingList"></div>
+</section>
 
-  <script>
-    "use strict";
+<section class="section">
+  <h2 class="section-title">
+    <span class="section-icon"><svg viewBox="0 0 24 24"><path d="m12 3 2.5 5.5L20 11l-5.5 2.5L12 19l-2.5-5.5L4 11l5.5-2.5z"/></svg></span>
+    المقتنيات والإطارات المفعّلة
+  </h2>
+  <div class="equipped-list" id="equippedList">
+    <div class="empty-inline">جاري تحميل المقتنيات...</div>
+  </div>
+</section>
 
-    const SUPABASE_URL = "https://gjtgvczvclfwvlvcquxh.supabase.co";
-    const SUPABASE_KEY = "sb_publishable_4DVTUZ-xTlqU2GpFvpb7lw_g-Kxomd4";
+<section class="section">
+  <h2 class="section-title">
+    <span class="section-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="3"/><path d="M7 2v4M17 2v4M3 9h18"/></svg></span>
+    عضوية هنون
+  </h2>
 
-    const db = window.supabase.createClient(
-      SUPABASE_URL,
-      SUPABASE_KEY
+  <div class="joined-card">
+    <div class="joined-icon">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+    </div>
+    <div>
+      <div class="joined-label">تاريخ الانضمام إلى المجتمع</div>
+      <div class="joined-date" id="joinedDate">—</div>
+    </div>
+  </div>
+</section>
+
+</div>
+
+<div class="footer-note">HANOON WORLD · YOUR SOCIAL UNIVERSE</div>
+</main>
+
+<div class="toast" id="toast"></div>
+
+<script type="module">
+import { supabase } from "./supabase.js";
+
+const $ = id => document.getElementById(id);
+
+const state = {
+  user: null,
+  profile: null,
+  isFollowing: false,
+  requestPending: false,
+  busy: false
+};
+
+const ADMIN_ID = "a4450f5b-05ee-4476-82e0-9e064d6df331";
+
+const FALLBACK_AVATAR =
+  "data:image/svg+xml;charset=UTF-8," +
+  encodeURIComponent(
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><rect width="200" height="200" fill="#172b43"/><circle cx="100" cy="75" r="37" fill="#a99aff"/><path d="M30 200c5-48 30-72 70-72s65 24 70 72" fill="#a99aff"/></svg>'
+  );
+
+function toast(message) {
+  const el = $("toast");
+  if (!el) return;
+
+  el.textContent = message;
+  el.classList.add("show");
+
+  clearTimeout(toast.timer);
+  toast.timer = setTimeout(() => {
+    el.classList.remove("show");
+  }, 2600);
+}
+
+function setText(id, value) {
+  const el = $(id);
+  if (el) el.textContent = value ?? "—";
+}
+
+function number(value) {
+  return new Intl.NumberFormat("ar-EG").format(Number(value) || 0);
+}
+
+function storageUrl(path) {
+  if (!path) return null;
+  if (/^https?:\/\//i.test(path)) return path;
+
+  let clean = String(path).replace(/^\/+/, "");
+  if (clean.startsWith("avatars/")) {
+    clean = clean.slice("avatars/".length);
+  }
+
+  return supabase.storage.from("avatars").getPublicUrl(clean).data.publicUrl;
+}
+
+function setImage(element, path) {
+  if (!element) return;
+
+  element.onerror = () => {
+    element.onerror = null;
+    element.src = FALLBACK_AVATAR;
+  };
+
+  element.src = storageUrl(path) || FALLBACK_AVATAR;
+}
+
+function formatDate(value) {
+  if (!value) return "غير متاح";
+
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return "غير متاح";
+
+  return new Intl.DateTimeFormat("ar-EG", {
+    year: "numeric",
+    month: "long",
+    day: "numeric"
+  }).format(date);
+}
+
+function showError(title, message) {
+  if ($("loadingState")) $("loadingState").hidden = true;
+  if ($("profileContent")) $("profileContent").hidden = true;
+  if ($("errorState")) $("errorState").hidden = false;
+
+  setText("errorTitle", title);
+  setText("errorMessage", message);
+}
+
+function renderTags(id, values, kind = "") {
+  const box = $(id);
+  if (!box) return;
+
+  box.replaceChildren();
+
+  const list = Array.isArray(values)
+    ? values
+    : [];
+
+  if (!list.length) {
+    const empty = document.createElement("div");
+    empty.className = "empty-inline";
+    empty.textContent = "لم تتم إضافة بيانات في هذا القسم بعد.";
+    box.append(empty);
+    return;
+  }
+
+  list.forEach(value => {
+    const tag = document.createElement("span");
+    tag.className = "tag " + kind;
+    tag.textContent = String(value);
+    box.append(tag);
+  });
+}
+
+/* بيانات الملف الشخصي */
+function renderProfile(profile) {
+  state.profile = profile;
+
+  const name =
+    profile.full_name ||
+    profile.nickname ||
+    "عضو هنون";
+
+  const username = profile.username
+    ? "@" + profile.username
+    : "اسم المستخدم غير متاح";
+
+  const verified = profile.is_verified === true;
+  const isAdmin =
+    profile.role === "admin" ||
+    profile.id === ADMIN_ID;
+
+  setText("fullName", name);
+  setText("username", username);
+  setText("memberCode", profile.member_code || "—");
+  setText("bio", profile.bio || "");
+
+  const bio = $("bio");
+  if (bio) bio.hidden = !profile.bio;
+
+  const fullName = $("fullName");
+  const badge = $("verifiedBadge");
+
+  if (fullName && badge) {
+    fullName.append(badge);
+    badge.hidden = !verified;
+  }
+
+  if ($("adminBadge")) {
+    $("adminBadge").hidden = !isAdmin;
+  }
+
+  if ($("founderBadge")) {
+    $("founderBadge").hidden = !isAdmin;
+  }
+
+  document.title = name + " | HANOON WORLD";
+
+  setImage($("avatarImage"), profile.avatar_path);
+
+  const cover = $("coverImage");
+  if (cover) {
+    if (profile.cover_path) {
+      cover.src = storageUrl(profile.cover_path);
+      cover.hidden = false;
+      cover.onerror = () => {
+        cover.hidden = true;
+      };
+    } else {
+      cover.hidden = true;
+    }
+  }
+
+  setText("infoUsername", username);
+  setText("infoCode", profile.member_code || "—");
+  setText("infoJoined", formatDate(profile.created_at));
+  setText("joinedDate", formatDate(profile.created_at));
+  setText("infoVerified", verified ? "موثق" : "غير موثق");
+
+  renderTags("hobbiesList", profile.hobbies);
+  renderTags("readingList", profile.reading_interests);
+}
+
+/* عرض حالة المتابعة */
+function renderFollowButton() {
+  const follow = $("followButton");
+  const unfollow = $("unfollowButton");
+
+  if (!follow || !unfollow) return;
+
+  if (state.profile.id === state.user.id) {
+    follow.hidden = true;
+    unfollow.hidden = true;
+    return;
+  }
+
+  follow.hidden = false;
+  unfollow.hidden = true;
+
+  if (state.requestPending) {
+    $("followButtonText").textContent = "إلغاء الطلب";
+    follow.classList.remove("primary");
+    follow.classList.add("following");
+  } else if (state.isFollowing) {
+    follow.hidden = true;
+    unfollow.hidden = false;
+  } else {
+    $("followButtonText").textContent = "متابعة";
+    follow.classList.add("primary");
+    follow.classList.remove("following");
+  }
+}
+
+/* معرفة العلاقة الحقيقية بين الحسابين */
+async function loadFollowState() {
+  const targetId = state.profile.id;
+  const myId = state.user.id;
+
+  if (targetId === myId) {
+    state.isFollowing = false;
+    state.requestPending = false;
+    renderFollowButton();
+    return;
+  }
+
+  const [followResult, requestResult] = await Promise.all([
+    supabase.from("follows")
+      .select("follower_id")
+      .eq("follower_id", myId)
+      .eq("following_id", targetId)
+      .maybeSingle(),
+
+    supabase.from("follow_requests")
+      .select("id,status")
+      .eq("sender_id", myId)
+      .eq("receiver_id", targetId)
+      .eq("status", "pending")
+      .maybeSingle()
+  ]);
+
+  if (followResult.error) throw followResult.error;
+  if (requestResult.error) throw requestResult.error;
+
+  state.isFollowing = !!followResult.data;
+  state.requestPending = !!requestResult.data;
+
+  renderFollowButton();
+}
+
+/* إخفاء التفاصيل للحساب الخاص حتى قبول الطلب */
+function renderPrivacy() {
+  const isPrivate = state.profile.is_private === true;
+  const canSeeDetails =
+    !isPrivate ||
+    state.isFollowing ||
+    state.profile.id === state.user.id;
+
+  const sections = [
+    $("hobbiesList"),
+    $("readingList"),
+    $("equippedList")
+  ];
+
+  sections.forEach(element => {
+    const section = element?.closest(".section");
+    if (section) section.hidden = !canSeeDetails;
+  });
+
+  const oldNotice = $("privateProfileNotice");
+  if (oldNotice) oldNotice.remove();
+
+  if (isPrivate && !canSeeDetails) {
+    const notice = document.createElement("section");
+    notice.id = "privateProfileNotice";
+    notice.className = "section";
+
+    const heading = document.createElement("h2");
+    heading.className = "section-title";
+    heading.textContent = "هذا الحساب خاص";
+
+    const description = document.createElement("div");
+    description.className = "empty-inline";
+    description.textContent = state.requestPending
+      ? "تم إرسال طلب المتابعة. ستظهر التفاصيل بعد قبول الطلب."
+      : "أرسل طلب متابعة للوصول إلى تفاصيل هذا الملف الشخصي.";
+
+    notice.append(heading, description);
+
+    $("profileContent").insertBefore(
+      notice,
+      $("profileContent").querySelector(".section")
+    );
+  }
+}
+
+/* أعداد المتابعين والمتابَعين والهدايا */
+async function loadCounts() {
+  const userId = state.profile.id;
+
+  const results = await Promise.allSettled([
+    supabase.from("follows")
+      .select("follower_id", { count: "exact", head: true })
+      .eq("following_id", userId),
+
+    supabase.from("follows")
+      .select("following_id", { count: "exact", head: true })
+      .eq("follower_id", userId),
+
+    supabase.from("world_gift_sends")
+      .select("id", { count: "exact", head: true })
+      .eq("recipient_id", userId),
+
+    supabase.rpc("get_points_leaderboard", {
+      p_limit: 100
+    })
+  ]);
+
+  const followers = results[0];
+  const following = results[1];
+  const gifts = results[2];
+  const leaderboard = results[3];
+
+  if (followers.status === "fulfilled" && !followers.value.error) {
+    setText(
+      "followersCount",
+      userId === ADMIN_ID
+        ? "20M"
+        : number(followers.value.count)
+    );
+  } else {
+    setText("followersCount", "—");
+  }
+
+  if (following.status === "fulfilled" && !following.value.error) {
+    setText("followingCount", number(following.value.count));
+  } else {
+    setText("followingCount", "—");
+  }
+
+  if (gifts.status === "fulfilled" && !gifts.value.error) {
+    setText("giftsCount", number(gifts.value.count));
+  } else {
+    setText("giftsCount", "—");
+  }
+
+  if (leaderboard.status === "fulfilled" && !leaderboard.value.error) {
+    const rows = leaderboard.value.data || [];
+    const member = rows.find(
+      row => row.member_id === userId
     );
 
-    const $ = id => document.getElementById(id);
+    setText(
+      "pointsCount",
+      member ? number(member.total_points) : "—"
+    );
+  } else {
+    setText("pointsCount", "—");
+  }
+}
 
-    const state = {
-      session:null,
-      member:null,
-      loading:false
-    };
+/* المقتنيات التي فعّلها العضو */
+async function loadEquipped() {
+  const box = $("equippedList");
+  if (!box) return;
 
-    const FALLBACK_AVATAR =
-      "data:image/svg+xml;charset=UTF-8," +
-      encodeURIComponent(`
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
-          <rect width="200" height="200" fill="#202943"/>
-          <circle cx="100" cy="75" r="37" fill="#8992b3"/>
-          <path d="M30 200c5-48 30-72 70-72s65 24 70 72" fill="#8992b3"/>
-        </svg>
-      `);
+  box.innerHTML =
+    '<div class="empty-inline">جاري تحميل المقتنيات...</div>';
 
-    function showToast(message){
-      const toast = $("toast");
-      toast.textContent = message;
-      toast.classList.add("show");
+  const { data, error } = await supabase
+    .from("world_store_equipped")
+    .select("category,inventory_id,equipped_at")
+    .eq("user_id", state.profile.id);
 
-      clearTimeout(showToast.timer);
-      showToast.timer = setTimeout(()=>{
-        toast.classList.remove("show");
-      },2400);
+  if (error) {
+    console.error("Equipped items:", error);
+    box.innerHTML =
+      '<div class="empty-inline">تعذر تحميل المقتنيات حاليًا.</div>';
+    return;
+  }
+
+  if (!data?.length) {
+    box.innerHTML =
+      '<div class="empty-inline">لم يتم تفعيل مقتنيات حتى الآن.</div>';
+    return;
+  }
+
+  const labels = {
+    profile_background: "خلفية الملف الشخصي",
+    profile_frame: "إطار الصورة الشخصية",
+    chat_background: "خلفية المحادثة",
+    room_background: "خلفية الغرفة",
+    notification_sound: "صوت الإشعارات",
+    sticker: "ملصق",
+    room_effect: "تأثير الغرفة",
+    game_effect: "تأثير اللعبة"
+  };
+
+  box.replaceChildren();
+
+  data.forEach(item => {
+    const card = document.createElement("div");
+    card.className = "equipped-item";
+
+    const icon = document.createElement("div");
+    icon.className = "equipped-icon";
+    icon.innerHTML =
+      '<svg viewBox="0 0 24 24"><path d="m12 3 2.5 5.5L20 11l-5.5 2.5L12 19l-2.5-5.5L4 11l5.5-2.5z"/></svg>';
+
+    const content = document.createElement("div");
+
+    const name = document.createElement("div");
+    name.className = "equipped-name";
+    name.textContent = labels[item.category] || "مقتنى مفعّل";
+
+    const description = document.createElement("div");
+    description.className = "equipped-description";
+    description.textContent = "مفعّل في حساب العضو";
+
+    content.append(name, description);
+    card.append(icon, content);
+    box.append(card);
+  });
+}
+
+/* متابعة عضو أو إرسال طلب لحساب خاص */
+async function toggleFollow() {
+  if (state.busy || !state.profile) return;
+
+  if (state.profile.id === state.user.id) return;
+
+  state.busy = true;
+  const button = $("followButton");
+  if (button) button.disabled = true;
+
+  try {
+    const targetId = state.profile.id;
+    const myId = state.user.id;
+
+    if (state.requestPending) {
+      const { error } = await supabase
+        .from("follow_requests")
+        .delete()
+        .eq("sender_id", myId)
+        .eq("receiver_id", targetId)
+        .eq("status", "pending");
+
+      if (error) throw error;
+
+      state.requestPending = false;
+      toast("تم إلغاء طلب المتابعة");
+    } else if (state.isFollowing) {
+      const { error } = await supabase
+        .from("follows")
+        .delete()
+        .eq("follower_id", myId)
+        .eq("following_id", targetId);
+
+      if (error) throw error;
+
+      state.isFollowing = false;
+      toast("تم إلغاء المتابعة");
+    } else if (state.profile.is_private === true) {
+      const { error } = await supabase
+        .from("follow_requests")
+        .insert({
+          sender_id: myId,
+          receiver_id: targetId,
+          status: "pending"
+        });
+
+      if (error) throw error;
+
+      state.requestPending = true;
+      toast("تم إرسال طلب المتابعة");
+    } else {
+      const { error } = await supabase
+        .from("follows")
+        .insert({
+          follower_id: myId,
+          following_id: targetId
+        });
+
+      if (error) throw error;
+
+      state.isFollowing = true;
+      toast("أصبحت تتابع هذا العضو");
     }
 
-    function showError(title,message){
-      $("loadingState").hidden = true;
-      $("profileContent").hidden = true;
-      $("errorState").hidden = false;
-      $("errorTitle").textContent = title;
-      $("errorMessage").textContent = message;
-    }
+    renderFollowButton();
+    renderPrivacy();
+    await loadCounts();
 
-    function formatDate(value){
-      if(!value) return "غير متاح";
+  } catch (error) {
+    console.error("Follow action:", error);
+    toast(error.message || "تعذر تنفيذ طلب المتابعة");
+  } finally {
+    state.busy = false;
+    if (button) button.disabled = false;
+  }
+}
 
-      const date = new Date(value);
-      if(Number.isNaN(date.getTime())) return "غير متاح";
+/* بدء محادثة مباشرة */
+async function openDirectChat() {
+  if (!state.profile || state.busy) return;
 
-      return new Intl.DateTimeFormat("ar-EG",{
-        year:"numeric",
-        month:"long",
-        day:"numeric"
-      }).format(date);
-    }
+  if (state.profile.id === state.user.id) {
+    toast("هذا ملفك الشخصي");
+    return;
+  }
 
-    function getStorageUrl(path){
-      if(!path) return null;
+  const button = $("messageButton");
+  if (button) button.disabled = true;
 
-      if(/^https?:\/\//i.test(path)){
-        return path;
+  try {
+    const { data: conversationId, error } = await supabase.rpc(
+      "hanoon_open_direct_chat",
+      {
+        p_other_user_id: state.profile.id
       }
+    );
 
-      const cleanPath = String(path).replace(/^\/+/,"");
-      const bucketPath = cleanPath.startsWith("avatars/")
-        ? cleanPath.substring("avatars/".length)
-        : cleanPath;
+    if (error) throw error;
+    if (!conversationId) throw new Error("لم يتم إنشاء المحادثة.");
 
-      const result = db.storage
-        .from("avatars")
-        .getPublicUrl(bucketPath);
+    location.href =
+      "chat.html?conversation_id=" +
+      encodeURIComponent(conversationId);
 
-      return result.data?.publicUrl || null;
-    }
+  } catch (error) {
+    console.error("Open chat:", error);
+    toast(error.message || "تعذر فتح المحادثة");
+    if (button) button.disabled = false;
+  }
+}
 
-    function setImage(element,path,fallback){
-      const url = getStorageUrl(path);
+/* نسخ رقم العضوية */
+async function copyCode() {
+  const code = state.profile?.member_code;
 
-      element.onerror = ()=>{
-        element.onerror = null;
-        if(fallback) element.src = fallback;
-      };
+  if (!code) {
+    toast("رقم العضوية غير متاح");
+    return;
+  }
 
-      element.src = url || fallback;
-    }
+  try {
+    await navigator.clipboard.writeText(code);
+    toast("تم نسخ رقم العضوية");
+  } catch {
+    const input = document.createElement("textarea");
+    input.value = code;
+    document.body.append(input);
+    input.select();
 
-    function renderTags(container,values,type){
-      container.replaceChildren();
+    const copied = document.execCommand("copy");
+    input.remove();
 
-      const items = Array.isArray(values)
-        ? values.filter(item =>
-            typeof item === "string" && item.trim()
-          )
-        : [];
+    toast(copied ? "تم نسخ رقم العضوية" : "تعذر النسخ");
+  }
+}
 
-      if(!items.length){
-        const empty = document.createElement("div");
-        empty.className = "empty-inline";
-        empty.textContent = "لم يضف العضو بيانات في هذا القسم بعد.";
-        container.appendChild(empty);
-        return;
-      }
+/* مشاركة الملف الشخصي */
+async function shareProfile() {
+  const profile = state.profile;
+  if (!profile) return;
 
-      items.forEach(value=>{
-        const tag = document.createElement("span");
-        tag.className = type === "cyan" ? "tag cyan" : "tag";
-        tag.textContent = value;
-        container.appendChild(tag);
+  try {
+    if (navigator.share) {
+      await navigator.share({
+        title: (profile.full_name || "عضو هنون") + " | HANOON WORLD",
+        text: "شاهد الملف الشخصي على HANOON WORLD",
+        url: location.href
       });
+    } else {
+      await navigator.clipboard.writeText(location.href);
+      toast("تم نسخ رابط الملف الشخصي");
     }
-
-    function renderProfile(member){
-      state.member = member;
-
-      const fullName = $("fullName");
-      const verifiedBadge = $("verifiedBadge");
-
-      fullName.textContent =
-        member.full_name || member.username || "عضو هنون";
-
-      fullName.appendChild(verifiedBadge);
-
-      verifiedBadge.hidden = !(
-        member.id === "a4450f5b-05ee-4476-82e0-9e064d6df331" ||
-        member.is_verified === true
-      );
-
-      $("username").textContent = member.username
-        ? "@" + member.username
-        : "اسم المستخدم غير متاح";
-
-      $("memberCode").textContent = member.member_code || "—";
-
-      $("infoUsername").textContent = member.username
-        ? "@" + member.username
-        : "غير متاح";
-
-      $("infoCode").textContent =
-        member.member_code || "غير متاح";
-
-      const joined = formatDate(member.created_at);
-
-      $("infoJoined").textContent = joined;
-      $("joinedDate").textContent = joined;
-
-      const bio = String(member.bio || "").trim();
-
-      $("bio").textContent = bio;
-      $("bio").hidden = !bio;
-
-      setImage(
-        $("avatarImage"),
-        member.avatar_path,
-        FALLBACK_AVATAR
-      );
-
-      const cover = $("coverImage");
-
-      if(member.cover_path){
-        setImage(
-          cover,
-          member.cover_path,
-          ""
-        );
-
-        cover.hidden = false;
-      }else{
-        cover.hidden = true;
-        cover.removeAttribute("src");
-      }
-
-      renderTags($("hobbiesList"),member.hobbies,"normal");
-      renderTags($("readingList"),member.reading_interests,"cyan");
-
-      $("loadingState").hidden = true;
-      $("errorState").hidden = true;
-      $("profileContent").hidden = false;
-
-      document.title =
-        (member.full_name || "الملف الشخصي") + " | HANOON WORLD";
+  } catch (error) {
+    if (error.name !== "AbortError") {
+      toast("تعذرت المشاركة");
     }
+  }
+}
 
-    /*
-      البحث الأول: دليل الأعضاء العام.
-      البحث الاحتياطي: جدول profiles، مع التحقق من اكتمال الملف
-      وأن الحساب ليس خاصًا.
-    */
-    async function findMember(memberId){
-      let directoryError = null;
+/* تحميل الصفحة */
+async function loadMember() {
+  if ($("loadingState")) $("loadingState").hidden = false;
+  if ($("errorState")) $("errorState").hidden = true;
+  if ($("profileContent")) $("profileContent").hidden = true;
 
-      const directoryResult = await db
-        .from("member_directory")
-        .select("id,username,member_code,full_name,avatar_path,bio,hobbies,reading_interests,created_at,is_verified")
-        .eq("id",memberId)
-        .maybeSingle();
+  const params = new URLSearchParams(location.search);
+  const memberId = params.get("id");
 
-      if(directoryResult.error){
-        directoryError = directoryResult.error;
-        console.warn(
-          "Member directory lookup:",
-          directoryError
-        );
-      }
+  if (!memberId || !/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(memberId)) {
+    throw new Error("رابط الملف الشخصي غير صحيح.");
+  }
 
-      if(directoryResult.data){
-        return {
-          member:directoryResult.data,
-          source:"member_directory"
-        };
-      }
+  const { data: sessionData, error: sessionError } =
+    await supabase.auth.getSession();
 
-      const profileResult = await db
-        .from("profiles")
-        .select("id,username,member_code,full_name,avatar_path,cover_path,bio,hobbies,reading_interests,created_at,profile_completed,is_private,is_verified")
-        .eq("id",memberId)
-        .maybeSingle();
+  if (sessionError) throw sessionError;
 
-      if(profileResult.error){
-        console.error(
-          "Public profile fallback:",
-          profileResult.error
-        );
+  const user = sessionData?.session?.user;
 
-        return {
-          member:null,
-          error:profileResult.error,
-          directoryError
-        };
-      }
+  if (!user) {
+    location.replace("login.html");
+    return;
+  }
 
-      const profile = profileResult.data;
+  state.user = user;
 
-      if(!profile){
-        return {
-          member:null,
-          directoryError
-        };
-      }
+  const { data: profile, error: profileError } = await supabase
+    .from("profiles")
+    .select(`
+      id,
+      member_code,
+      full_name,
+      username,
+      avatar_path,
+      bio,
+      hobbies,
+      reading_interests,
+      interests,
+      profile_completed,
+      role,
+      created_at,
+      is_private,
+      cover_path,
+      nickname,
+      is_verified
+    `)
+    .eq("id", memberId)
+    .maybeSingle();
 
-      /*
-        لا نعرض ملفًا غير مكتمل أو حسابًا خاصًا
-        من خلال مسار البحث الاحتياطي.
-      */
-      if(
-        profile.profile_completed !== true ||
-        profile.is_private === true
-      ){
-        return {
-          member:null,
-          privateOrIncomplete:true
-        };
-      }
+  if (profileError) throw profileError;
 
-      return {
-        member:profile,
-        source:"profiles"
-      };
-    }
+  if (!profile) {
+    throw new Error("هذا العضو غير موجود أو لا يمكن عرض ملفه.");
+  }
 
-    async function loadProfile(){
-      if(state.loading) return;
+  renderProfile(profile);
 
-      state.loading = true;
+  await loadFollowState();
+  renderPrivacy();
 
-      $("loadingState").hidden = false;
-      $("errorState").hidden = true;
-      $("profileContent").hidden = true;
+  if ($("loadingState")) $("loadingState").hidden = true;
+  if ($("errorState")) $("errorState").hidden = true;
+  if ($("profileContent")) $("profileContent").hidden = false;
 
-      try{
-        const memberId = new URLSearchParams(
-          window.location.search
-        ).get("id");
+  await Promise.allSettled([
+    loadCounts(),
+    loadEquipped()
+  ]);
+}
 
-        if(!memberId){
-          showError(
-            "رابط الملف غير مكتمل",
-            "لم يتم تحديد العضو المطلوب عرضه."
-          );
-          return;
-        }
+/* الأزرار */
+$("followButton")?.addEventListener("click", toggleFollow);
+$("unfollowButton")?.addEventListener("click", toggleFollow);
+$("messageButton")?.addEventListener("click", openDirectChat);
+$("copyCodeButton")?.addEventListener("click", copyCode);
+$("shareButton")?.addEventListener("click", shareProfile);
 
-        const result = await findMember(memberId);
+$("backButton")?.addEventListener("click", () => {
+  if (history.length > 1) {
+    history.back();
+  } else {
+    location.href = "members.html";
+  }
+});
 
-        if(result.error){
-          showError(
-            "تعذر تحميل بيانات العضو",
-            "تعذر الوصول إلى بيانات الملف الشخصي. حاول مرة أخرى."
-          );
-          return;
-        }
+$("membersButton")?.addEventListener("click", () => {
+  location.href = "members.html";
+});
 
-        if(!result.member){
-          showError(
-            "الملف الشخصي غير متاح",
-            result.privateOrIncomplete
-              ? "هذا الملف غير متاح للعرض العام."
-              : "لم نعثر على ملف عام مكتمل بهذا الرابط."
-          );
-          return;
-        }
+$("retryButton")?.addEventListener("click", () => {
+  loadMember().catch(error => {
+    console.error(error);
+    showError("تعذر تحميل الملف", error.message || "حدث خطأ.");
+  });
+});
 
-        renderProfile(result.member);
+/* تهيئة الإشعارات إن كانت المكتبة متاحة */
+try {
+  const notificationModule = await import("./notification-core.js");
 
-      }catch(error){
-        console.error("HANOON member page:",error);
+  if (notificationModule.initializeNotificationCore) {
+    notificationModule.initializeNotificationCore(
+      () => notificationModule.updateNotificationBadge()
+    );
+  }
+} catch (error) {
+  console.warn("Notification module unavailable:", error);
+}
 
-        showError(
-          "حدث خطأ أثناء فتح الملف",
-          "تحقق من اتصال الإنترنت ثم حاول تحميل الصفحة مرة أخرى."
-        );
+/* تحديث الجلسة */
+supabase.auth.onAuthStateChange(event => {
+  if (event === "SIGNED_OUT") {
+    location.replace("login.html");
+  }
+});
 
-      }finally{
-        state.loading = false;
-      }
-    }
+/* تشغيل */
+loadMember().catch(error => {
+  console.error("Member profile error:", error);
 
-    async function copyMemberCode(){
-      const code = state.member?.member_code;
-
-      if(!code){
-        showToast("رقم العضوية غير متاح");
-        return;
-      }
-
-      try{
-        await navigator.clipboard.writeText(code);
-        showToast("تم نسخ رقم العضوية");
-      }catch(error){
-        const input = document.createElement("textarea");
-        input.value = code;
-        document.body.appendChild(input);
-        input.select();
-
-        const copied = document.execCommand("copy");
-        input.remove();
-
-        showToast(
-          copied ? "تم نسخ رقم العضوية" : "تعذر النسخ"
-        );
-      }
-    }
-
-    async function shareProfile(){
-      const title =
-        state.member?.full_name || "ملف عضو هنون";
-
-      try{
-        if(navigator.share){
-          await navigator.share({
-            title:title + " | HANOON WORLD",
-            text:"شاهد الملف الشخصي على HANOON WORLD",
-            url:window.location.href
-          });
-        }else{
-          await navigator.clipboard.writeText(
-            window.location.href
-          );
-          showToast("تم نسخ رابط الملف الشخصي");
-        }
-      }catch(error){
-        if(error.name !== "AbortError"){
-          showToast("تعذرت مشاركة الرابط");
-        }
-      }
-    }
-
-    $("backButton").addEventListener("click",()=>{
-      if(window.history.length > 1){
-        window.history.back();
-      }else{
-        window.location.href = "members.html";
-      }
-    });
-
-    $("membersButton").addEventListener("click",()=>{
-      window.location.href = "members.html";
-    });
-
-    $("retryButton").addEventListener("click",loadProfile);
-
-    $("copyCodeButton").addEventListener("click",copyMemberCode);
-    $("copyCodeSmall").addEventListener("click",copyMemberCode);
-
-    $("shareButton").addEventListener("click",shareProfile);
-    $("shareProfileButton").addEventListener("click",shareProfile);
-
-    async function initialize(){
-      try{
-        const {data,error} = await db.auth.getSession();
-
-        if(error || !data.session){
-          window.location.href = "index.html";
-          return;
-        }
-
-        state.session = data.session;
-        await loadProfile();
-
-      }catch(error){
-        console.error("HANOON session:",error);
-
-        showError(
-          "تعذر التحقق من تسجيل الدخول",
-          "أعد فتح الصفحة بعد تسجيل الدخول إلى حسابك."
-        );
-      }
-    }
-
-    db.auth.onAuthStateChange((event,session)=>{
-      if(event === "SIGNED_OUT" || !session){
-        window.location.href = "index.html";
-      }
-    });
-
-    initialize();
-  </script>
-
-  <!-- HANOON CENTRAL NOTIFICATION SYSTEM -->
-  <script type="module">
-    import {
-      initializeNotificationCore,
-      updateNotificationBadge
-    } from "./notification-core.js";
-
-    async function refreshMemberNotifications(){
-      try{
-        const count = await updateNotificationBadge();
-
-        const badge = document.querySelector(
-          "[data-notification-count]"
-        );
-
-        if(!badge) return;
-
-        badge.textContent = count > 99 ? "99+" : String(count);
-        badge.hidden = count === 0;
-
-      }catch(error){
-        console.error(
-          "HANOON member notification badge:",
-          error
-        );
-      }
-    }
-
-    try{
-      await initializeNotificationCore(
-        refreshMemberNotifications
-      );
-
-      await refreshMemberNotifications();
-
-    }catch(error){
-      console.error(
-        "HANOON member notifications:",
-        error
-      );
-    }
-  </script>
+  showError(
+    "تعذر فتح الملف الشخصي",
+    error?.message || "حدث خطأ أثناء تحميل بيانات العضو."
+  );
+});
+</script>
 </body>
 </html>
+
