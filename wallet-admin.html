@@ -46,7 +46,7 @@ button{border:0}
 .balance.gems{background:linear-gradient(145deg,#252045,#191a30);border-color:#a78bfa44}
 .balance small{display:block;color:#d8c79f;font-size:10px;font-weight:800}
 .balance.gems small{color:#c5b6ff}
-.balance strong{display:block;font-size:25px;margin-top:5px;font-weight:900}
+.balance strong{display:block;font-size:25px;margin-top:5px;font-weight:900;overflow-wrap:anywhere}
 .balance span{font-size:9px;color:var(--muted)}
 .field{margin:12px 0}
 .field label{display:block;margin-bottom:6px;font-size:11px;font-weight:800;color:#e8e3f5}
@@ -70,86 +70,86 @@ button{border:0}
 </head>
 <body>
 <div class="app">
-  <header class="header">
-    <div class="brand">
-      <div class="logo">H</div>
-      <div><strong>HANOON WORLD</strong><small>WALLET CONTROL CENTER</small></div>
-    </div>
-    <span class="admin-pill">إدارة المحفظة</span>
-  </header>
+<header class="header">
+<div class="brand">
+<div class="logo">H</div>
+<div><strong>HANOON WORLD</strong><small>WALLET CONTROL CENTER</small></div>
+</div>
+<span class="admin-pill">إدارة المحفظة</span>
+</header>
 
-  <section class="heading">
-    <h1>العملات والجواهر</h1>
-    <p>ابحث عن العضو، راجع رصيده، وأضف له العملات أو الجواهر من حساب الإدارة.</p>
-  </section>
+<section class="heading">
+<h1>العملات والجواهر</h1>
+<p>ابحث عن العضو، راجع رصيده، وأضف له حتى مليار عملة أو مليار جوهرة.</p>
+</section>
 
-  <div class="status" id="status"></div>
+<div class="status" id="status"></div>
 
-  <section class="panel">
-    <h2>البحث عن عضو</h2>
-    <form id="searchForm" class="search-row">
-      <input id="searchInput" maxlength="80" placeholder="اسم العضو أو اسم المستخدم أو كود العضوية">
-      <button class="primary" id="searchButton">بحث عن العضو</button>
-    </form>
-    <div class="member-list" id="memberList">
-      <div class="empty">اكتب بيانات العضو لبدء البحث.</div>
-    </div>
-  </section>
+<section class="panel">
+<h2>البحث عن عضو</h2>
+<form id="searchForm" class="search-row">
+<input id="searchInput" maxlength="80" placeholder="اسم العضو أو اسم المستخدم أو كود العضوية">
+<button class="primary" id="searchButton">بحث عن العضو</button>
+</form>
+<div class="member-list" id="memberList">
+<div class="empty">اكتب بيانات العضو لبدء البحث.</div>
+</div>
+</section>
 
-  <section class="panel hidden" id="walletPanel">
-    <div class="wallet-head">
-      <div class="wallet-user">
-        <strong id="selectedName">العضو</strong>
-        <small id="selectedCode"></small>
-      </div>
-      <button class="secondary" id="refreshWallet">تحديث الرصيد</button>
-    </div>
+<section class="panel hidden" id="walletPanel">
+<div class="wallet-head">
+<div class="wallet-user">
+<strong id="selectedName">العضو</strong>
+<small id="selectedCode"></small>
+</div>
+<button class="secondary" id="refreshWallet">تحديث الرصيد</button>
+</div>
 
-    <div class="balances">
-      <div class="balance">
-        <small>رصيد العملات</small>
-        <strong id="coinsBalance">0</strong>
-        <span>COINS</span>
-      </div>
-      <div class="balance gems">
-        <small>رصيد الجواهر</small>
-        <strong id="gemsBalance">0</strong>
-        <span>GEMS</span>
-      </div>
-    </div>
+<div class="balances">
+<div class="balance">
+<small>رصيد العملات</small>
+<strong id="coinsBalance">0</strong>
+<span>COINS</span>
+</div>
+<div class="balance gems">
+<small>رصيد الجواهر</small>
+<strong id="gemsBalance">0</strong>
+<span>GEMS</span>
+</div>
+</div>
 
-    <div class="notice">
-      إضافة العملات أو الجواهر تتم من صلاحية الإدارة فقط، وكل عملية تُسجل في سجل العضو.
-    </div>
+<div class="notice">
+الإضافة متاحة لحساب الإدارة فقط. الحد الأقصى للعملية الواحدة مليار وحدة، وكل عملية تُسجل في سجل العضو.
+</div>
 
-    <form id="addForm">
-      <div class="field">
-        <label for="currency">نوع الرصيد</label>
-        <select id="currency">
-          <option value="coins">عملات</option>
-          <option value="gems">جواهر</option>
-        </select>
-      </div>
-      <div class="field">
-        <label for="amount">الكمية المراد إضافتها</label>
-        <input id="amount" type="number" min="1" max="10000000" step="1" required placeholder="مثال: 500">
-      </div>
-      <div class="field">
-        <label for="reason">سبب الإضافة</label>
-        <input id="reason" maxlength="160" value="هدية من إدارة HANOON WORLD" placeholder="سبب الإضافة">
-      </div>
-      <button class="primary add-btn" id="addButton">إضافة الرصيد للعضو</button>
-    </form>
-  </section>
+<form id="addForm">
+<div class="field">
+<label for="currency">نوع الرصيد</label>
+<select id="currency">
+<option value="coins">عملات</option>
+<option value="gems">جواهر</option>
+</select>
+</div>
+<div class="field">
+<label for="amount">الكمية المراد إضافتها</label>
+<input id="amount" type="number" min="1" max="1000000000" step="1" required placeholder="حتى 1,000,000,000">
+</div>
+<div class="field">
+<label for="reason">سبب الإضافة</label>
+<input id="reason" maxlength="160" value="هدية من إدارة HANOON WORLD" placeholder="سبب الإضافة">
+</div>
+<button class="primary add-btn" id="addButton">إضافة الرصيد للعضو</button>
+</form>
+</section>
 
-  <section class="panel hidden" id="historyPanel">
-    <h2>سجل معاملات العضو</h2>
-    <div class="history" id="historyList"></div>
-  </section>
+<section class="panel hidden" id="historyPanel">
+<h2>سجل معاملات العضو</h2>
+<div class="history" id="historyList"></div>
+</section>
 
-  <div style="text-align:center;margin:22px 0">
-    <a href="admin.html" style="color:#c8b6ff;font-size:11px;text-decoration:none">العودة إلى لوحة الإدارة</a>
-  </div>
+<div style="text-align:center;margin:22px 0">
+<a href="admin.html" style="color:#c8b6ff;font-size:11px;text-decoration:none">العودة إلى لوحة الإدارة</a>
+</div>
 </div>
 
 <script type="module">
@@ -158,213 +158,215 @@ import {supabase} from "./supabase.js";
 const $=id=>document.getElementById(id);
 const ADMIN_ID="a4450f5b-05ee-4476-82e0-9e064d6df331";
 const SESSION_KEY="hanoon_admin_session";
+const MAX_AMOUNT=1000000000;
 const state={user:null,selected:null,sessionToken:""};
 
 function showStatus(message,type="success"){
-  const box=$("status");
-  box.textContent=message;
-  box.className="status show "+type;
-  clearTimeout(showStatus.timer);
-  showStatus.timer=setTimeout(()=>box.classList.remove("show"),4500);
+const box=$("status");
+box.textContent=message;
+box.className="status show "+type;
+clearTimeout(showStatus.timer);
+showStatus.timer=setTimeout(()=>box.classList.remove("show"),4500);
 }
 function formatNumber(value){
-  return Number(value||0).toLocaleString("en-US");
+return Number(value||0).toLocaleString("en-US");
 }
 function escapeText(value){
-  return String(value??"");
+return String(value??"");
 }
+
 async function checkAdmin(){
-  const {data,error}=await supabase.auth.getUser();
-  if(error||!data?.user){
-    location.replace("login.html");
-    throw new Error("يجب تسجيل الدخول بحساب الإدارة أولًا.");
-  }
-  state.user=data.user;
-  if(state.user.id!==ADMIN_ID){
-    document.body.innerHTML="<div style='padding:35px;text-align:center;color:white;font-family:Cairo'>غير مصرح بالدخول إلى هذه الصفحة.</div>";
-    throw new Error("هذا الحساب ليس حساب الإدارة الأساسي.");
-  }
-  state.sessionToken=localStorage.getItem(SESSION_KEY)||"";
-  if(!state.sessionToken){
-    location.replace("admin.html");
-    throw new Error("افتح لوحة الإدارة وسجل الدخول أولًا.");
-  }
-  const {data:sessionData,error:sessionError}=await supabase.functions.invoke(
-    "admin-send-notification",
-    {body:{action:"session_check"},headers:{"x-admin-session":state.sessionToken}}
-  );
-  if(sessionError||!sessionData?.ok||!sessionData?.isAdmin){
-    localStorage.removeItem(SESSION_KEY);
-    location.replace("admin.html");
-    throw new Error("جلسة الإدارة انتهت. سجل الدخول مرة أخرى.");
-  }
+const {data,error}=await supabase.auth.getUser();
+if(error||!data?.user){
+location.replace("login.html");
+throw new Error("يجب تسجيل الدخول بحساب الإدارة أولًا.");
+}
+state.user=data.user;
+if(state.user.id!==ADMIN_ID){
+document.body.innerHTML="<div style='padding:35px;text-align:center;color:white;font-family:Cairo'>غير مصرح بالدخول إلى هذه الصفحة.</div>";
+throw new Error("هذا الحساب ليس حساب الإدارة الأساسي.");
+}
+state.sessionToken=localStorage.getItem(SESSION_KEY)||"";
+if(!state.sessionToken){
+location.replace("admin.html");
+throw new Error("افتح لوحة الإدارة وسجل الدخول أولًا.");
+}
+const {data:sessionData,error:sessionError}=await supabase.functions.invoke(
+"admin-send-notification",
+{body:{action:"session_check"},headers:{"x-admin-session":state.sessionToken}}
+);
+if(sessionError||!sessionData?.ok||!sessionData?.isAdmin){
+localStorage.removeItem(SESSION_KEY);
+location.replace("admin.html");
+throw new Error("جلسة الإدارة انتهت. سجل الدخول مرة أخرى.");
+}
 }
 
 async function searchMembers(query){
-  const clean=query.trim().replace(/[%,()]/g," ").replace(/\s+/g," ");
-  if(!clean){showStatus("اكتب اسم العضو أو كود العضوية أولًا.","error");return}
-  $("searchButton").disabled=true;
-  $("searchButton").textContent="جارٍ البحث...";
-  $("memberList").innerHTML='<div class="empty">جارٍ البحث عن العضو...</div>';
-  $("walletPanel").classList.add("hidden");
-  $("historyPanel").classList.add("hidden");
-  try{
-    let request=supabase.from("profiles")
-      .select("id,full_name,username,member_code")
-      .limit(15);
-    if(/^[0-9a-f-]{36}$/i.test(clean)){
-      request=request.eq("id",clean);
-    }else{
-      request=request.or(
-        "member_code.ilike.%"+clean+"%,username.ilike.%"+clean+"%,full_name.ilike.%"+clean+"%"
-      );
-    }
-    const {data,error}=await request;
-    if(error)throw error;
-    renderMembers(data||[]);
-  }catch(error){
-    console.error(error);
-    $("memberList").innerHTML='<div class="empty">تعذر البحث: '+escapeText(error.message)+'</div>';
-  }finally{
-    $("searchButton").disabled=false;
-    $("searchButton").textContent="بحث عن العضو";
-  }
+const clean=query.trim().replace(/[%,()]/g," ").replace(/\s+/g," ");
+if(!clean){showStatus("اكتب اسم العضو أو كود العضوية أولًا.","error");return}
+$("searchButton").disabled=true;
+$("searchButton").textContent="جارٍ البحث...";
+$("memberList").innerHTML='<div class="empty">جارٍ البحث عن العضو...</div>';
+$("walletPanel").classList.add("hidden");
+$("historyPanel").classList.add("hidden");
+try{
+let request=supabase.from("profiles")
+.select("id,full_name,username,member_code")
+.limit(15);
+if(/^[0-9a-f-]{36}$/i.test(clean)){
+request=request.eq("id",clean);
+}else{
+request=request.or(
+"member_code.ilike.%"+clean+"%,username.ilike.%"+clean+"%,full_name.ilike.%"+clean+"%"
+);
+}
+const {data,error}=await request;
+if(error)throw error;
+renderMembers(data||[]);
+}catch(error){
+console.error(error);
+$("memberList").innerHTML='<div class="empty">تعذر البحث: '+escapeText(error.message)+'</div>';
+}finally{
+$("searchButton").disabled=false;
+$("searchButton").textContent="بحث عن العضو";
+}
 }
 
 function renderMembers(members){
-  const list=$("memberList");
-  list.replaceChildren();
-  if(!members.length){
-    list.innerHTML='<div class="empty">لم يتم العثور على عضو بهذه البيانات.</div>';
-    return;
-  }
-  members.forEach(member=>{
-    const row=document.createElement("div");
-    row.className="member";
-    const avatar=document.createElement("div");
-    avatar.className="avatar";
-    avatar.textContent=(member.full_name||member.username||"؟").trim().slice(0,1);
-    const info=document.createElement("div");
-    info.className="member-info";
-    const name=document.createElement("strong");
-    name.textContent=member.full_name||"عضو هَنون";
-    const details=document.createElement("small");
-    details.textContent=[
-      member.username?"@"+member.username:"",
-      member.member_code||""
-    ].filter(Boolean).join(" · ");
-    info.append(name,details);
-    const button=document.createElement("button");
-    button.type="button";
-    button.textContent="فتح المحفظة";
-    button.addEventListener("click",()=>selectMember(member));
-    row.append(avatar,info,button);
-    list.append(row);
-  });
+const list=$("memberList");
+list.replaceChildren();
+if(!members.length){
+list.innerHTML='<div class="empty">لم يتم العثور على عضو بهذه البيانات.</div>';
+return;
+}
+members.forEach(member=>{
+const row=document.createElement("div");
+row.className="member";
+const avatar=document.createElement("div");
+avatar.className="avatar";
+avatar.textContent=(member.full_name||member.username||"؟").trim().slice(0,1);
+const info=document.createElement("div");
+info.className="member-info";
+const name=document.createElement("strong");
+name.textContent=member.full_name||"عضو هَنون";
+const details=document.createElement("small");
+details.textContent=[
+member.username?"@"+member.username:"",
+member.member_code||""
+].filter(Boolean).join(" · ");
+info.append(name,details);
+const button=document.createElement("button");
+button.type="button";
+button.textContent="فتح المحفظة";
+button.addEventListener("click",()=>selectMember(member));
+row.append(avatar,info,button);
+list.append(row);
+});
 }
 
 async function selectMember(member){
-  state.selected=member;
-  $("walletPanel").classList.remove("hidden");
-  $("historyPanel").classList.remove("hidden");
-  $("selectedName").textContent=member.full_name||member.username||"عضو هَنون";
-  $("selectedCode").textContent=(member.username?"@"+member.username+" · ":"")+(member.member_code||member.id);
-  await loadWalletDetails();
+state.selected=member;
+$("walletPanel").classList.remove("hidden");
+$("historyPanel").classList.remove("hidden");
+$("selectedName").textContent=member.full_name||member.username||"عضو هَنون";
+$("selectedCode").textContent=(member.username?"@"+member.username+" · ":"")+(member.member_code||member.id);
+await loadWalletDetails();
 }
 
 async function loadWalletDetails(){
-  if(!state.selected)return;
-  $("refreshWallet").disabled=true;
-  $("historyList").innerHTML='<div class="empty">جارٍ تحميل سجل المحفظة...</div>';
-  try{
-    const {data,error}=await supabase.rpc("hanoon_admin_wallet_details",{
-      p_user_id:state.selected.id
-    });
-    if(error)throw error;
-    $("coinsBalance").textContent=formatNumber(data.coins);
-    $("gemsBalance").textContent=formatNumber(data.gems);
-    renderHistory(data.transactions||[]);
-  }catch(error){
-    console.error(error);
-    showStatus(error.message||"تعذر تحميل رصيد العضو.","error");
-  }finally{
-    $("refreshWallet").disabled=false;
-  }
+if(!state.selected)return;
+$("refreshWallet").disabled=true;
+$("historyList").innerHTML='<div class="empty">جارٍ تحميل سجل المحفظة...</div>';
+try{
+const {data,error}=await supabase.rpc("hanoon_admin_wallet_details",{
+p_user_id:state.selected.id
+});
+if(error)throw error;
+$("coinsBalance").textContent=formatNumber(data.coins);
+$("gemsBalance").textContent=formatNumber(data.gems);
+renderHistory(data.transactions||[]);
+}catch(error){
+console.error(error);
+showStatus(error.message||"تعذر تحميل رصيد العضو.","error");
+}finally{
+$("refreshWallet").disabled=false;
+}
 }
 
 function renderHistory(items){
-  const list=$("historyList");
-  list.replaceChildren();
-  if(!items.length){
-    list.innerHTML='<div class="empty">لا توجد معاملات مسجلة لهذا العضو حتى الآن.</div>';
-    return;
-  }
-  items.forEach(item=>{
-    const row=document.createElement("div");
-    row.className="transaction";
-    const info=document.createElement("div");
-    const title=document.createElement("strong");
-    title.textContent=item.reason||"حركة رصيد";
-    const date=document.createElement("small");
-    date.textContent=new Date(item.created_at).toLocaleString("ar-EG");
-    const currency=document.createElement("small");
-    currency.textContent=item.currency==="gems"?"جواهر":"عملات";
-    info.append(title,date,currency);
-    const amount=document.createElement("div");
-    amount.className="amount "+(Number(item.amount)>=0?"plus":"minus");
-    amount.textContent=(Number(item.amount)>0?"+":"")+formatNumber(item.amount);
-    row.append(info,amount);
-    list.append(row);
-  });
+const list=$("historyList");
+list.replaceChildren();
+if(!items.length){
+list.innerHTML='<div class="empty">لا توجد معاملات مسجلة لهذا العضو حتى الآن.</div>';
+return;
+}
+items.forEach(item=>{
+const row=document.createElement("div");
+row.className="transaction";
+const info=document.createElement("div");
+const title=document.createElement("strong");
+title.textContent=item.reason||"حركة رصيد";
+const date=document.createElement("small");
+date.textContent=new Date(item.created_at).toLocaleString("ar-EG");
+const currency=document.createElement("small");
+currency.textContent=item.currency==="gems"?"جواهر":"عملات";
+info.append(title,date,currency);
+const amount=document.createElement("div");
+amount.className="amount "+(Number(item.amount)>=0?"plus":"minus");
+amount.textContent=(Number(item.amount)>0?"+":"")+formatNumber(item.amount);
+row.append(info,amount);
+list.append(row);
+});
 }
 
 $("searchForm").addEventListener("submit",event=>{
-  event.preventDefault();
-  searchMembers($("searchInput").value);
+event.preventDefault();
+searchMembers($("searchInput").value);
 });
 $("refreshWallet").addEventListener("click",loadWalletDetails);
 
 $("addForm").addEventListener("submit",async event=>{
-  event.preventDefault();
-  if(!state.selected)return;
-  const currency=$("currency").value;
-  const amount=Number($("amount").value);
-  const reason=$("reason").value.trim()||"إضافة من الإدارة";
-  if(!Number.isSafeInteger(amount)||amount<1||amount>10000000){
-    showStatus("أدخل كمية صحيحة من 1 إلى 10 ملايين.","error");
-    return;
-  }
-  const currencyName=currency==="gems"?"جوهرة":"عملة";
-  if(!confirm("تأكيد إضافة "+formatNumber(amount)+" "+currencyName+" إلى حساب "+(state.selected.full_name||state.selected.username)+"؟"))return;
+event.preventDefault();
+if(!state.selected)return;
+const currency=$("currency").value;
+const amount=Number($("amount").value);
+const reason=$("reason").value.trim()||"إضافة من الإدارة";
+if(!Number.isSafeInteger(amount)||amount<1||amount>MAX_AMOUNT){
+showStatus("أدخل كمية صحيحة من 1 إلى مليار.","error");
+return;
+}
+const currencyName=currency==="gems"?"جوهرة":"عملة";
+if(!confirm("تأكيد إضافة "+formatNumber(amount)+" "+currencyName+" إلى حساب "+(state.selected.full_name||state.selected.username)+"؟"))return;
 
-  const button=$("addButton");
-  button.disabled=true;
-  button.textContent="جارٍ تنفيذ الإضافة...";
-  try{
-    const {data,error}=await supabase.rpc("hanoon_admin_adjust_wallet",{
-      p_user_id:state.selected.id,
-      p_currency:currency,
-      p_amount:amount,
-      p_reason:reason
-    });
-    if(error)throw error;
-    if(!data?.success)throw new Error("لم يتم تأكيد عملية الإضافة.");
-    $("amount").value="";
-    showStatus("تمت إضافة "+formatNumber(amount)+" بنجاح. الرصيد الجديد: "+formatNumber(data.balance));
-    await loadWalletDetails();
-  }catch(error){
-    console.error(error);
-    showStatus(error.message||"تعذر إضافة الرصيد.","error");
-  }finally{
-    button.disabled=false;
-    button.textContent="إضافة الرصيد للعضو";
-  }
+const button=$("addButton");
+button.disabled=true;
+button.textContent="جارٍ تنفيذ الإضافة...";
+try{
+const {data,error}=await supabase.rpc("hanoon_admin_adjust_wallet",{
+p_user_id:state.selected.id,
+p_currency:currency,
+p_amount:amount,
+p_reason:reason
+});
+if(error)throw error;
+if(!data?.success)throw new Error("لم يتم تأكيد عملية الإضافة.");
+$("amount").value="";
+showStatus("تمت إضافة "+formatNumber(amount)+" بنجاح. الرصيد الجديد: "+formatNumber(data.balance));
+await loadWalletDetails();
+}catch(error){
+console.error(error);
+showStatus(error.message||"تعذر إضافة الرصيد.","error");
+}finally{
+button.disabled=false;
+button.textContent="إضافة الرصيد للعضو";
+}
 });
 
 try{
-  await checkAdmin();
+await checkAdmin();
 }catch(error){
-  console.error(error);
+console.error(error);
 }
 </script>
 </body>
