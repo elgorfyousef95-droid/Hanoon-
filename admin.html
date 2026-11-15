@@ -3,10 +3,9 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <meta name="theme-color" content="#090510">
 <title>HANOON WORLD | الإدارة</title>
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
@@ -16,535 +15,258 @@
   --purple:#a34dff;
   --text:#fffaff;
   --muted:#c2b5d0;
-  --panel:rgba(15,9,25,.88);
   --line:rgba(226,190,255,.2);
 }
 *{box-sizing:border-box}
 html,body{
-  margin:0;
-  min-height:100%;
-  width:100%;
+  margin:0;min-height:100%;width:100%;
   font-family:Cairo,sans-serif;
-  background:#090510;
-  color:var(--text);
-  touch-action:pan-x pan-y;
-  overscroll-behavior:none;
+  background:#090510;color:var(--text);
+  touch-action:pan-x pan-y;overscroll-behavior:none;
 }
-button,input{font:inherit}
+button,input,textarea,select{font:inherit}
 button{cursor:pointer}
 .hidden{display:none!important}
-
-/* الخلفيات الخارجية */
-.screen-bg{
-  position:fixed;
-  inset:0;
-  z-index:-3;
-  background-position:center;
-  background-size:cover;
-  background-repeat:no-repeat;
-  transform:scale(1.025);
+.screen-bg,.dashboard-bg{
+  position:fixed;inset:0;z-index:-2;
+  background-position:center;background-size:cover;
 }
-.screen-bg:after{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:linear-gradient(115deg,rgba(5,2,12,.83),rgba(8,3,18,.38),rgba(5,2,12,.88));
+.screen-bg:after,.dashboard-bg:after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(110deg,rgba(5,2,12,.92),rgba(8,3,18,.72),rgba(5,2,12,.94));
+}
+#startScreen{
+  position:fixed;inset:0;z-index:30;
+  display:grid;place-items:center;
+  overflow:hidden;background:#090510;
 }
 #startBg{
   background-image:url("https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=2200&q=90");
 }
-#loginBg,#dashboardBg{
-  background-image:url("https://wallpapercrafter.com/th800/70940-joker-movie-joker-2019-movies-movies-hd-joaquin-phoenix-4k.jpg");
-}
-
-/* شاشة البداية */
-#startScreen{
-  position:fixed;
-  inset:0;
-  z-index:20;
-  display:grid;
-  place-items:center;
-  overflow:hidden;
-  background:#090510;
-}
 .start-content{
-  position:relative;
-  z-index:2;
-  width:min(90%,520px);
-  text-align:center;
-  animation:rise 1.2s ease both;
+  position:relative;z-index:2;width:min(90%,520px);
+  text-align:center;animation:rise 1s ease both;
 }
-.brand-mark{
-  width:112px;
-  height:112px;
-  display:grid;
-  place-items:center;
-  margin:0 auto 22px;
-  border:1px solid #f1d48e;
-  border-radius:32px;
-  color:#fff0c7;
-  font-size:55px;
-  font-weight:900;
+.brand-mark,.login-emblem{
+  display:grid;place-items:center;margin:0 auto 20px;
+  width:112px;height:112px;border:1px solid var(--gold);
+  border-radius:32px;color:#fff0c7;font-size:55px;font-weight:900;
   background:linear-gradient(145deg,#4d1a75,#130b25 65%,#9a672b);
-  box-shadow:0 0 35px #a34dff77,0 0 90px #d4a54a33,inset 0 0 25px #fff3;
-  animation:markPulse 3s infinite ease-in-out;
+  box-shadow:0 0 35px #a34dff77,0 0 90px #d4a54a33;
+  animation:pulse 3s infinite;
 }
 .start-title{
-  margin:0;
-  color:#f4d99b;
-  font-size:clamp(28px,7vw,43px);
-  font-weight:900;
-  letter-spacing:3px;
-  text-shadow:0 5px 30px #000;
+  margin:0;color:#f4d99b;font-size:clamp(28px,7vw,43px);
+  font-weight:900;letter-spacing:3px;
 }
-.start-subtitle{
-  margin:10px 0 30px;
-  color:#e1d4ed;
-  font-size:12px;
-  letter-spacing:4px;
-}
+.start-subtitle{color:#e1d4ed;font-size:12px;letter-spacing:4px;margin:10px 0 30px}
 .loader{
-  width:48px;
-  height:48px;
-  margin:auto;
-  border:3px solid #ffffff22;
-  border-top-color:var(--gold);
-  border-left-color:#a34dff;
-  border-radius:50%;
-  animation:spin 1s linear infinite;
+  width:48px;height:48px;margin:auto;border:3px solid #ffffff22;
+  border-top-color:var(--gold);border-left-color:#a34dff;
+  border-radius:50%;animation:spin 1s linear infinite;
 }
-.start-caption{
-  margin-top:17px;
-  color:#d8c8e7;
-  font-size:11px;
-  letter-spacing:1px;
-}
+.start-caption{margin-top:17px;color:#d8c8e7;font-size:11px}
 .start-orbit{
-  position:absolute;
-  width:260px;
-  height:260px;
-  border:1px solid #d7b7ff22;
-  border-radius:50%;
-  left:50%;
-  top:50%;
-  transform:translate(-50%,-50%);
-  animation:orbit 15s linear infinite;
+  position:absolute;width:260px;height:260px;left:50%;top:50%;
+  transform:translate(-50%,-50%);border:1px solid #d7b7ff22;
+  border-radius:50%;animation:orbit 15s linear infinite;
 }
 .start-orbit:before,.start-orbit:after{
-  content:"";
-  position:absolute;
-  width:8px;height:8px;
-  border-radius:50%;
-  background:var(--gold);
-  box-shadow:0 0 18px var(--gold);
+  content:"";position:absolute;width:8px;height:8px;border-radius:50%;
+  background:var(--gold);box-shadow:0 0 18px var(--gold);
 }
 .start-orbit:before{top:20px;left:50px}
 .start-orbit:after{bottom:25px;right:35px;background:#bd76ff}
 
-/* شاشة تسجيل الدخول */
+/* تسجيل الدخول */
 #loginScreen{
-  min-height:100vh;
-  display:grid;
-  place-items:center;
-  padding:80px 18px 55px;
-  position:relative;
+  min-height:100vh;display:grid;place-items:center;
+  padding:80px 18px 55px;position:relative;
+}
+#loginBg,#dashboardBg{
+  background-image:url("https://wallpapercrafter.com/th800/70940-joker-movie-joker-2019-movies-movies-hd-joaquin-phoenix-4k.jpg");
 }
 .top-brand{
-  position:absolute;
-  top:20px;
-  right:25px;
-  left:25px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  z-index:2;
+  position:absolute;top:20px;right:25px;left:25px;
+  display:flex;align-items:center;justify-content:space-between;z-index:2;
 }
-.brand-name{
-  color:var(--gold);
-  font-weight:900;
-  letter-spacing:2px;
-  font-size:15px;
-  text-shadow:0 0 18px #a34dff;
-}
+.brand-name{color:var(--gold);font-weight:900;letter-spacing:2px;font-size:15px}
 .secure-label{
-  color:#e6d8f4;
-  font-size:10px;
-  border:1px solid #e5c77c66;
-  border-radius:30px;
-  padding:7px 13px;
-  background:#10091c99;
+  color:#e6d8f4;font-size:10px;border:1px solid #e5c77c66;
+  border-radius:30px;padding:7px 13px;background:#10091c99;
 }
 .login-card{
-  width:min(100%,440px);
-  padding:34px 30px;
-  border:1px solid #c17aff77;
-  border-radius:27px;
-  background:linear-gradient(145deg,rgba(22,10,37,.94),rgba(8,5,17,.95));
-  box-shadow:0 25px 90px #000b,0 0 45px #923de633,inset 0 1px #fff2;
-  backdrop-filter:blur(20px);
-  animation:rise .8s ease both;
+  width:min(100%,440px);padding:34px 30px;
+  border:1px solid #c17aff77;border-radius:27px;
+  background:linear-gradient(145deg,rgba(22,10,37,.96),rgba(8,5,17,.97));
+  box-shadow:0 25px 90px #000b,0 0 45px #923de633;
+  backdrop-filter:blur(20px);animation:rise .8s ease both;
 }
 .login-emblem{
-  width:76px;height:76px;
-  margin:0 auto 16px;
-  display:grid;place-items:center;
-  border:2px solid var(--gold);
-  border-radius:24px;
-  color:#f4d99b;
-  font-size:38px;
-  font-weight:900;
-  background:linear-gradient(145deg,#59217e,#14091f);
-  box-shadow:0 0 30px #a34dff66;
+  width:76px;height:76px;border-radius:24px;font-size:38px;margin-bottom:16px;
 }
-.login-card h1{
-  margin:0;
-  text-align:center;
-  color:var(--gold);
-  font-size:25px;
-  font-weight:900;
-}
-.login-description{
-  text-align:center;
-  color:var(--muted);
-  font-size:11px;
-  letter-spacing:2px;
-  margin:7px 0 24px;
-}
-.gold-line{
-  height:1px;
-  margin:20px 0;
-  background:linear-gradient(90deg,transparent,#a34dff,#e9c77d,transparent);
-}
-.field-label{
-  display:block;
-  color:#eee1fa;
-  font-size:13px;
-  font-weight:700;
-  margin-bottom:9px;
-}
+.login-card h1{text-align:center;color:var(--gold);font-size:25px;margin:0;font-weight:900}
+.login-description{text-align:center;color:var(--muted);font-size:11px;letter-spacing:2px;margin:7px 0 24px}
+.gold-line{height:1px;margin:20px 0;background:linear-gradient(90deg,transparent,#a34dff,#e9c77d,transparent)}
+.field-label{display:block;color:#eee1fa;font-size:13px;font-weight:700;margin-bottom:9px}
 .password-wrap{position:relative}
 .password-wrap input{
-  width:100%;
-  height:55px;
-  padding:0 17px 0 52px;
-  color:white;
-  border:1px solid #8b50b877;
-  border-radius:13px;
-  outline:none;
-  background:#0b0614;
-  direction:rtl;
-}
-.password-wrap input:focus{
-  border-color:var(--gold);
-  box-shadow:0 0 0 3px #e9c77d20;
+  width:100%;height:55px;padding:0 17px 0 65px;color:white;
+  border:1px solid #8b50b877;border-radius:13px;outline:none;
+  background:#0b0614;direction:rtl;
 }
 .show-password{
-  position:absolute;
-  left:10px;
-  top:50%;
-  transform:translateY(-50%);
-  border:0;
-  background:transparent;
-  color:#e6c7ff;
-  font-size:12px;
-  padding:8px;
+  position:absolute;left:8px;top:50%;transform:translateY(-50%);
+  border:0;background:transparent;color:#e6c7ff;font-size:12px;padding:8px;
 }
 .primary-btn{
-  width:100%;
-  min-height:54px;
-  margin-top:20px;
-  border:1px solid #f7dda1;
-  border-radius:13px;
-  color:#fff;
-  font-weight:900;
+  width:100%;min-height:54px;margin-top:20px;border:1px solid #f7dda1;
+  border-radius:13px;color:#fff;font-weight:900;
   background:linear-gradient(100deg,#671bb2,#a13ee8 55%,#b98735);
   box-shadow:0 8px 28px #8b31d755;
-  transition:.2s;
 }
-.primary-btn:hover{filter:brightness(1.15);transform:translateY(-2px)}
-.primary-btn:disabled{opacity:.6;cursor:wait;transform:none}
+.primary-btn:disabled{opacity:.6;cursor:wait}
 .login-message{
-  display:none;
-  margin-top:14px;
-  padding:11px;
-  border-radius:10px;
-  font-size:12px;
-  text-align:center;
+  display:none;margin-top:14px;padding:11px;border-radius:10px;
+  font-size:12px;text-align:center;
 }
-.login-message.error{
-  display:block;
-  color:#ffc3cc;
-  background:#721c3444;
-  border:1px solid #ff718655;
-}
-.login-message.success{
-  display:block;
-  color:#a8f4c9;
-  background:#125b3b44;
-  border:1px solid #42d6a477;
-}
-.login-foot{
-  text-align:center;
-  margin-top:20px;
-  color:#b9a8cb;
-  font-size:10px;
-}
-.login-foot span{color:#75e8ad}
-.copyright{
-  position:absolute;
-  bottom:15px;
-  width:100%;
-  text-align:center;
-  color:#c6b5d6;
-  font-size:10px;
-  letter-spacing:2px;
-}
+.login-message.error{display:block;color:#ffc3cc;background:#721c3444;border:1px solid #ff718655}
+.login-message.success{display:block;color:#a8f4c9;background:#125b3b44;border:1px solid #42d6a477}
+.login-foot{text-align:center;margin-top:20px;color:#b9a8cb;font-size:10px}
+.copyright{position:absolute;bottom:15px;width:100%;text-align:center;color:#c6b5d6;font-size:10px}
 
 /* لوحة الإدارة */
-#dashboardScreen{
-  min-height:100vh;
-  position:relative;
-  isolation:isolate;
-}
-.dashboard-bg{
-  position:fixed;
-  inset:0;
-  z-index:-2;
-  background:url("https://wallpapercrafter.com/th800/70940-joker-movie-joker-2019-movies-movies-hd-joaquin-phoenix-4k.jpg") center/cover no-repeat;
-}
-.dashboard-bg:after{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:linear-gradient(110deg,rgba(5,3,12,.94),rgba(9,5,19,.83)),linear-gradient(0deg,#08050f,transparent);
-}
+#dashboardScreen{min-height:100vh;position:relative;isolation:isolate}
+.dashboard-bg{z-index:-2}
 .dashboard-top{
-  min-height:76px;
-  padding:12px 22px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:15px;
-  border-bottom:1px solid #ffffff20;
-  background:#090611bb;
-  backdrop-filter:blur(18px);
+  min-height:76px;padding:12px 22px;display:flex;align-items:center;
+  justify-content:space-between;gap:15px;border-bottom:1px solid #ffffff20;
+  background:#090611dd;backdrop-filter:blur(18px);
+  position:sticky;top:0;z-index:12;
 }
-.dashboard-brand{
-  color:var(--gold);
-  font-weight:900;
-  letter-spacing:2px;
-  font-size:16px;
-}
+.dashboard-brand{color:var(--gold);font-weight:900;letter-spacing:2px;font-size:16px}
 .top-actions{display:flex;align-items:center;gap:10px}
 .top-chip{
-  padding:7px 12px;
-  border:1px solid #e9c77d55;
-  border-radius:30px;
-  color:#f2dcae;
-  font-size:10px;
-  background:#1b1026bb;
+  padding:7px 12px;border:1px solid #e9c77d55;border-radius:30px;
+  color:#f2dcae;font-size:10px;background:#1b1026bb;
 }
 .logout-btn{
-  border:1px solid #ff879455;
-  background:#511b2d99;
-  color:#ffd4dc;
-  border-radius:10px;
-  padding:8px 13px;
-  font-size:11px;
+  border:1px solid #ff879455;background:#511b2d99;color:#ffd4dc;
+  border-radius:10px;padding:8px 13px;font-size:11px;
+}
+.menu-toggle{
+  display:grid;place-items:center;width:40px;height:40px;
+  border:1px solid #d9b77b66;border-radius:10px;
+  color:#f2dcae;background:#21152f;flex-shrink:0;
 }
 .dashboard-layout{
-  display:grid;
-  grid-template-columns:250px minmax(0,1fr);
-  min-height:calc(100vh - 76px);
+  display:grid;grid-template-columns:250px minmax(0,1fr);
+  min-height:calc(100vh - 76px);transition:grid-template-columns .25s;
 }
 .sidebar{
-  padding:22px 14px;
-  border-left:1px solid #ffffff18;
-  background:#0c0815d9;
-  backdrop-filter:blur(16px);
+  padding:22px 14px;border-left:1px solid #ffffff18;
+  background:#0c0815eF;backdrop-filter:blur(16px);
+  overflow-y:auto;transition:transform .25s,width .25s;
 }
 .owner-mini{
-  padding:15px 12px;
-  border:1px solid #d9b77b55;
-  border-radius:17px;
-  background:linear-gradient(140deg,#382047cc,#13101dcc);
-  margin-bottom:24px;
+  padding:15px 12px;border:1px solid #d9b77b55;border-radius:17px;
+  background:linear-gradient(140deg,#382047cc,#13101dcc);margin-bottom:24px;
 }
 .owner-avatar{
-  width:55px;height:55px;
-  display:grid;place-items:center;
-  border-radius:17px;
-  border:1px solid var(--gold);
+  width:55px;height:55px;display:grid;place-items:center;
+  border-radius:17px;border:1px solid var(--gold);
   background:linear-gradient(145deg,#63308a,#21142d);
-  color:#ffe3a4;
-  font-size:24px;
-  font-weight:900;
-  overflow:hidden;
-  margin-bottom:10px;
+  color:#ffe3a4;font-size:24px;font-weight:900;overflow:hidden;margin-bottom:10px;
 }
 .owner-avatar img{width:100%;height:100%;object-fit:cover}
 .owner-mini strong{display:block;font-size:13px}
-.owner-mini small{
-  display:block;
-  color:#c5b3d5;
-  font-size:10px;
-  margin-top:4px;
-  overflow-wrap:anywhere;
-}
+.owner-mini small{display:block;color:#c5b3d5;font-size:10px;margin-top:4px;overflow-wrap:anywhere}
 .owner-role{
-  display:inline-block;
-  margin-top:10px;
-  color:var(--gold);
-  font-size:9px;
-  border:1px solid #e9c77d66;
-  border-radius:20px;
-  padding:4px 9px;
+  display:inline-block;margin-top:10px;color:var(--gold);font-size:9px;
+  border:1px solid #e9c77d66;border-radius:20px;padding:4px 9px;
 }
-.menu-caption{
-  color:#8f7da3;
-  font-size:10px;
-  font-weight:800;
-  padding:0 10px;
-  margin:18px 0 8px;
-}
+.menu-caption{color:#8f7da3;font-size:10px;font-weight:800;padding:0 10px;margin:18px 0 8px}
 .menu-button{
-  width:100%;
-  display:flex;
-  align-items:center;
-  gap:12px;
-  text-align:right;
-  padding:12px 11px;
-  margin:5px 0;
-  border:1px solid transparent;
-  border-radius:12px;
-  color:#ded2eb;
-  background:transparent;
-  font-size:12px;
+  width:100%;display:flex;align-items:center;gap:12px;text-align:right;
+  padding:12px 11px;margin:5px 0;border:1px solid transparent;
+  border-radius:12px;color:#ded2eb;background:transparent;font-size:12px;
   transition:.2s;
 }
 .menu-button:hover,.menu-button.active{
-  color:#ffe5aa;
-  border-color:#d5ad6c55;
+  color:#ffe5aa;border-color:#d5ad6c55;
   background:linear-gradient(90deg,#49265e88,#21152e99);
 }
 .menu-icon{
-  width:28px;height:28px;
-  display:grid;place-items:center;
-  flex-shrink:0;
-  border-radius:9px;
-  border:1px solid #c79bff44;
-  color:#e4c5ff;
-  background:#261533;
+  width:28px;height:28px;display:grid;place-items:center;flex-shrink:0;
+  border-radius:9px;border:1px solid #c79bff44;color:#e4c5ff;background:#261533;
 }
 .main-content{padding:28px;min-width:0}
+#sectionView{min-height:250px}
 .welcome-panel{
-  position:relative;
-  overflow:hidden;
-  padding:32px;
-  min-height:230px;
-  border:1px solid #d8b87a66;
-  border-radius:24px;
-  background:
-    linear-gradient(100deg,rgba(9,5,17,.88),rgba(31,13,43,.64)),
-    url("https://wallpapercrafter.com/th800/70940-joker-movie-joker-2019-movies-movies-hd-joaquin-phoenix-4k.jpg") center/cover;
+  position:relative;overflow:hidden;padding:32px;min-height:230px;
+  border:1px solid #d8b87a66;border-radius:24px;
+  background:linear-gradient(100deg,rgba(9,5,17,.9),rgba(31,13,43,.68)),
+  url("https://wallpapercrafter.com/th800/70940-joker-movie-joker-2019-movies-movies-hd-joaquin-phoenix-4k.jpg") center/cover;
   box-shadow:0 18px 55px #0007;
 }
-.welcome-kicker{
-  color:#d8b8ff;
-  font-size:10px;
-  letter-spacing:3px;
-  font-weight:800;
-}
-.welcome-panel h1{
-  font-size:clamp(25px,4vw,39px);
-  margin:12px 0 7px;
-  color:#ffe1a0;
-  font-weight:900;
-}
-.welcome-panel p{
-  max-width:650px;
-  color:#e0d4e9;
-  font-size:12px;
-  line-height:2;
-  margin:0;
-}
-.content-heading{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:12px;
-  margin:28px 0 15px;
-}
+.welcome-kicker{color:#d8b8ff;font-size:10px;letter-spacing:3px;font-weight:800}
+.welcome-panel h1{font-size:clamp(25px,4vw,39px);margin:12px 0 7px;color:#ffe1a0;font-weight:900}
+.welcome-panel p{max-width:650px;color:#e0d4e9;font-size:12px;line-height:2;margin:0}
+.content-heading{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:28px 0 15px}
 .content-heading h2{font-size:18px;margin:0}
 .content-heading p{font-size:10px;color:#b6a5c7;margin:5px 0 0}
-.live-status{
-  color:#a6efc4;
-  font-size:10px;
-  white-space:nowrap;
+.live-status{color:#a6efc4;font-size:10px;white-space:nowrap}
+.quick-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:18px}
+.quick-card{
+  text-align:right;padding:19px;border:1px solid #c49bdf44;border-radius:17px;
+  color:white;background:linear-gradient(145deg,#21152fdd,#100c19ee);
+  min-height:110px;transition:.2s;
 }
+.quick-card:hover{transform:translateY(-3px);border-color:#e9c77d99}
+.quick-card strong{display:block;color:#f4d99b;font-size:14px;margin-bottom:5px}
+.quick-card span{color:#c2b5d0;font-size:11px;line-height:1.8}
 .admin-note{
-  padding:17px;
-  border:1px solid #bd8bdf44;
-  border-radius:16px;
-  background:#180f25dd;
-  color:#d7c9e4;
-  font-size:12px;
-  line-height:2;
+  padding:17px;border:1px solid #bd8bdf44;border-radius:16px;
+  background:#180f25dd;color:#d7c9e4;font-size:12px;line-height:2;
 }
 .admin-note strong{color:var(--gold)}
 .verified-mark{
-  display:inline-grid;
-  place-items:center;
-  width:19px;height:19px;
-  margin-right:6px;
-  border-radius:50%;
-  color:#fff;
-  background:#1689e8;
-  font-size:12px;
-  vertical-align:middle;
+  display:inline-grid;place-items:center;width:19px;height:19px;
+  margin-right:6px;border-radius:50%;color:#fff;background:#1689e8;
+  font-size:12px;vertical-align:middle;
 }
-.mobile-menu{display:none}
-#sectionView{min-height:200px}
+.module-root{min-width:0}
+.sidebar-backdrop{display:none}
+#dashboardScreen.sidebar-collapsed .dashboard-layout{grid-template-columns:0 minmax(0,1fr)}
+#dashboardScreen.sidebar-collapsed .sidebar{width:0;padding:0;overflow:hidden;border:0}
+#dashboardScreen.sidebar-collapsed .owner-mini,
+#dashboardScreen.sidebar-collapsed .menu-caption,
+#dashboardScreen.sidebar-collapsed .menu-button{visibility:hidden}
+#dashboardScreen.sidebar-collapsed .sidebar{visibility:hidden}
 
 @keyframes spin{to{transform:rotate(360deg)}}
-@keyframes rise{
-  from{opacity:0;transform:translateY(24px) scale(.97)}
-  to{opacity:1;transform:translateY(0) scale(1)}
-}
-@keyframes markPulse{
-  0%,100%{box-shadow:0 0 35px #a34dff77,0 0 90px #d4a54a33}
-  50%{box-shadow:0 0 55px #a34dffbb,0 0 110px #d4a54a66}
-}
+@keyframes rise{from{opacity:0;transform:translateY(24px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes pulse{0%,100%{box-shadow:0 0 35px #a34dff77,0 0 90px #d4a54a33}50%{box-shadow:0 0 55px #a34dffbb,0 0 110px #d4a54a66}}
 @keyframes orbit{to{transform:translate(-50%,-50%) rotate(360deg)}}
 
 @media(max-width:850px){
-  .dashboard-layout{grid-template-columns:1fr}
+  .dashboard-layout{grid-template-columns:1fr!important}
   .sidebar{
-    position:fixed;
-    z-index:10;
-    top:76px;
-    right:0;
-    bottom:0;
-    width:min(290px,85vw);
-    overflow-y:auto;
-    transform:translateX(110%);
-    transition:transform .25s;
-    box-shadow:-20px 0 50px #0008;
+    position:fixed;z-index:20;top:76px;right:0;bottom:0;
+    width:min(290px,85vw);transform:translateX(110%);
+    box-shadow:-20px 0 50px #0008;visibility:visible!important;
+    padding:22px 14px!important;
   }
   .sidebar.open{transform:translateX(0)}
-  .mobile-menu{
-    display:grid;
-    place-items:center;
-    width:38px;height:38px;
-    border:1px solid #d9b77b66;
-    border-radius:10px;
-    color:#f2dcae;
-    background:#21152f;
+  .sidebar-backdrop.show{
+    display:block;position:fixed;inset:76px 0 0;z-index:19;
+    background:#0009;
   }
-  .dashboard-brand{margin-left:auto}
+  #dashboardScreen.sidebar-collapsed .sidebar{width:min(290px,85vw)}
   .main-content{padding:17px}
+  .dashboard-brand{margin-left:auto}
 }
-@media(max-width:520px){
+@media(max-width:600px){
   .top-brand{top:14px;right:14px;left:14px}
   .brand-name{font-size:12px}
   .secure-label{font-size:9px}
@@ -554,8 +276,11 @@ button{cursor:pointer}
   .dashboard-brand{font-size:12px}
   .top-chip{display:none}
   .welcome-panel{padding:23px 19px;min-height:210px}
+  .quick-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+  .quick-card{padding:14px}
   .content-heading h2{font-size:16px}
 }
+@media(max-width:380px){.quick-grid{grid-template-columns:1fr}}
 </style>
 </head>
 
@@ -575,64 +300,45 @@ button{cursor:pointer}
 
 <section id="loginScreen" class="hidden">
   <div class="screen-bg" id="loginBg"></div>
-
   <header class="top-brand">
     <div class="brand-name">HANOON WORLD</div>
     <div class="secure-label">ADMINISTRATOR ACCESS</div>
   </header>
-
   <section class="login-card">
     <div class="login-emblem">H</div>
     <h1>دخول مالك المنصة</h1>
     <p class="login-description">PRIVATE ADMIN CONTROL</p>
     <div class="gold-line"></div>
-
     <form id="loginForm">
       <label class="field-label" for="adminPassword">كلمة مرور الإدارة</label>
-
       <div class="password-wrap">
-        <input
-          id="adminPassword"
-          type="password"
-          placeholder="اكتب كلمة مرور الإدارة"
-          autocomplete="current-password"
-          required
-        >
+        <input id="adminPassword" type="password" placeholder="اكتب كلمة مرور الإدارة" autocomplete="current-password" required>
         <button class="show-password" id="togglePassword" type="button">إظهار</button>
       </div>
-
-      <button class="primary-btn" id="loginButton" type="submit">
-        دخول لوحة الإدارة
-      </button>
-
+      <button class="primary-btn" id="loginButton" type="submit">دخول لوحة الإدارة</button>
       <div id="loginMessage" class="login-message"></div>
     </form>
-
-    <div class="login-foot">
-      <span>●</span> جلسة إدارة محمية • اتصال بقاعدة البيانات
-    </div>
+    <div class="login-foot">● جلسة إدارة محمية • اتصال بقاعدة البيانات</div>
   </section>
-
   <div class="copyright">HANOON WORLD © ALL RIGHTS RESERVED</div>
 </section>
 
 <section id="dashboardScreen" class="hidden">
   <div class="dashboard-bg"></div>
-
   <header class="dashboard-top">
-    <button class="mobile-menu" id="mobileMenu" type="button" aria-label="القائمة">
+    <button class="menu-toggle" id="menuToggle" type="button" aria-label="إظهار أو إخفاء القائمة">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <path d="M4 6h16M4 12h16M4 18h16"/>
       </svg>
     </button>
-
     <div class="dashboard-brand">HANOON WORLD</div>
-
     <div class="top-actions">
       <span class="top-chip">مركز قيادة المنصة</span>
       <button class="logout-btn" id="logoutButton" type="button">تسجيل الخروج</button>
     </div>
   </header>
+
+  <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
 
   <div class="dashboard-layout">
     <aside class="sidebar" id="sidebar">
@@ -647,126 +353,69 @@ button{cursor:pointer}
 
       <button class="menu-button active" data-section="overview" type="button">
         <span class="menu-icon">
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-            <path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/>
-          </svg>
-        </span>
-        الرئيسية
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/></svg>
+        </span> الرئيسية
       </button>
 
       <div class="menu-caption">أقسام الإدارة</div>
 
       <button class="menu-button" data-section="members" type="button">
         <span class="menu-icon">
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-            <circle cx="9" cy="8" r="4"/>
-            <path d="M2 21v-2a7 7 0 0 1 14 0v2M16 4a4 4 0 0 1 0 8m2 3a6 6 0 0 1 4 6"/>
-          </svg>
-        </span>
-        إدارة الأعضاء
-      </button>
-
-      <button class="menu-button" data-section="messages" type="button">
-        <span class="menu-icon">
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-            <path d="M21 11.5a8.5 8.5 0 0 1-9 8.5 9 9 0 0 1-4-.9L3 21l1.9-4.5A8.5 8.5 0 1 1 21 11.5Z"/>
-          </svg>
-        </span>
-        الرسائل والمحادثات
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="8" r="4"/><path d="M2 21v-2a7 7 0 0 1 14 0v2M16 4a4 4 0 0 1 0 8m2 3a6 6 0 0 1 4 6"/></svg>
+        </span> إدارة الأعضاء
       </button>
 
       <button class="menu-button" data-section="notifications" type="button">
         <span class="menu-icon">
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-            <path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/>
-          </svg>
-        </span>
-        الإشعارات
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/></svg>
+        </span> الإشعارات
       </button>
 
       <button class="menu-button" data-section="content" type="button">
         <span class="menu-icon">
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-            <path d="M5 3h14v18H5zM8 7h8M8 11h8M8 15h5"/>
-          </svg>
-        </span>
-        إدارة المحتوى
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 3h14v18H5zM8 7h8M8 11h8M8 15h5"/></svg>
+        </span> إدارة المحتوى
       </button>
 
       <button class="menu-button" data-section="wallet" type="button">
         <span class="menu-icon">
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-            <rect x="2" y="5" width="20" height="15" rx="3"/>
-            <path d="M2 9h20m-6 5h2"/>
-          </svg>
-        </span>
-        المحفظة والأرصدة
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="5" width="20" height="15" rx="3"/><path d="M2 9h20m-6 5h2"/></svg>
+        </span> المحفظة والأرصدة
       </button>
 
       <button class="menu-button" data-section="gifts" type="button">
         <span class="menu-icon">
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-            <path d="M20 12v9H4v-9m-2-5h20v5H2zM12 7v14M12 7H7a3 3 0 1 1 3-3c0 2 2 3 2 3Zm0 0h5a3 3 0 1 0-3-3c0 2-2 3-2 3Z"/>
-          </svg>
-        </span>
-        الهدايا والمتجر
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 12v9H4v-9m-2-5h20v5H2zM12 7v14M12 7H7a3 3 0 1 1 3-3c0 2 2 3 2 3Zm0 0h5a3 3 0 1 0-3-3c0 2-2 3-2 3Z"/></svg>
+        </span> الهدايا والمتجر
       </button>
 
       <button class="menu-button" data-section="site" type="button">
         <span class="menu-icon">
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-            <circle cx="12" cy="12" r="3"/>
-            <path d="m19.4 15 .1.1 1.4 1.1-1.5 2.6-1.7-.6a8 8 0 0 1-1.5.9l-.3 1.8h-3l-.3-1.8a8 8 0 0 1-1.5-.9l-1.7.6-1.5-2.6 1.4-1.1a8 8 0 0 1 0-1.8l-1.4-1.1 1.5-2.6 1.7.6a8 8 0 0 1 1.5-.9l.3-1.8h3l.3 1.8a8 8 0 0 1 1.5.9l1.7-.6 1.5 2.6-1.4 1.1a8 8 0 0 1 0 1.8Z"/>
-          </svg>
-        </span>
-        إعدادات المنصة
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19 12a7 7 0 0 0-.2-1.7l1.5-1.1-1.5-2.6-1.8.6a8 8 0 0 0-1.5-.9L15.2 4h-3l-.3 2.3a8 8 0 0 0-1.5.9l-1.8-.6-1.5 2.6 1.5 1.1a8 8 0 0 0 0 3.4l-1.5 1.1 1.5 2.6 1.8-.6a8 8 0 0 0 1.5.9l.3 2.3h3l.3-2.3a8 8 0 0 0 1.5-.9l1.8.6 1.5-2.6-1.5-1.1A7 7 0 0 0 19 12Z"/></svg>
+        </span> إعدادات المنصة
       </button>
 
       <button class="menu-button" data-section="updates" type="button">
         <span class="menu-icon">
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-            <path d="M20 7v5h-5M4 17v-5h5"/>
-            <path d="M5.5 9A7 7 0 0 1 18 6l2 6M4 12l2 6a7 7 0 0 0 12.5-3"/>
-          </svg>
-        </span>
-        مركز التحديثات
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 7v5h-5M4 17v-5h5"/><path d="M5.5 9A7 7 0 0 1 18 6l2 6M4 12l2 6a7 7 0 0 0 12.5-3"/></svg>
+        </span> مركز التحديثات
+      </button>
+
+      <button class="menu-button" data-section="messages" type="button">
+        <span class="menu-icon">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 11.5a8.5 8.5 0 0 1-9 8.5 9 9 0 0 1-4-.9L3 21l1.9-4.5A8.5 8.5 0 1 1 21 11.5Z"/></svg>
+        </span> الرسائل والمحادثات
       </button>
 
       <button class="menu-button" data-section="security" type="button">
         <span class="menu-icon">
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-            <path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11Z"/>
-            <path d="m9 12 2 2 4-4"/>
-          </svg>
-        </span>
-        الأمان وسجل النشاط
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11Z"/><path d="m9 12 2 2 4-4"/></svg>
+        </span> الأمان وسجل النشاط
       </button>
     </aside>
 
     <main class="main-content">
-      <div id="sectionView">
-        <section class="welcome-panel">
-          <div class="welcome-kicker">THE POWER OF MANAGEMENT</div>
-          <h1>مرحباً بك في مركز القيادة</h1>
-          <p>
-            لوحة الإدارة المركزية لمنصة HANOON WORLD.
-            من هنا يمكنك إدارة أقسام المنصة من مكان واحد.
-          </p>
-        </section>
-
-        <div class="content-heading">
-          <div>
-            <h2>لوحة التحكم الرئيسية</h2>
-            <p>إدارة المنصة من واجهة واحدة متكاملة</p>
-          </div>
-          <span class="live-status">● نظام الإدارة</span>
-        </div>
-
-        <div class="admin-note">
-          <strong>مركز الإدارة جاهز.</strong>
-          اختر القسم الذي تريد إدارته من القائمة الجانبية.
-        </div>
-      </div>
+      <div id="sectionView"></div>
     </main>
   </div>
 </section>
@@ -777,35 +426,40 @@ import { supabase } from "./supabase.js";
 const SESSION_KEY = "hanoon_admin_session";
 const ADMIN_ID = "a4450f5b-05ee-4476-82e0-9e064d6df331";
 
-const startScreen = document.getElementById("startScreen");
-const loginScreen = document.getElementById("loginScreen");
-const dashboardScreen = document.getElementById("dashboardScreen");
-const loginForm = document.getElementById("loginForm");
-const loginButton = document.getElementById("loginButton");
-const passwordInput = document.getElementById("adminPassword");
-const loginMessage = document.getElementById("loginMessage");
-const sidebar = document.getElementById("sidebar");
-const sectionView = document.getElementById("sectionView");
+const $ = id => document.getElementById(id);
+const startScreen = $("startScreen");
+const loginScreen = $("loginScreen");
+const dashboardScreen = $("dashboardScreen");
+const loginForm = $("loginForm");
+const loginButton = $("loginButton");
+const passwordInput = $("adminPassword");
+const loginMessage = $("loginMessage");
+const sidebar = $("sidebar");
+const sectionView = $("sectionView");
+const sidebarBackdrop = $("sidebarBackdrop");
 
 let sessionToken = null;
+let activeSection = "overview";
+let activeModule = null;
+let moduleGeneration = 0;
 
 const sectionNames = {
   overview:"الرئيسية",
   members:"إدارة الأعضاء",
-  messages:"الرسائل والمحادثات",
   notifications:"الإشعارات",
   content:"إدارة المحتوى",
   wallet:"المحفظة والأرصدة",
   gifts:"الهدايا والمتجر",
   site:"إعدادات المنصة",
   updates:"مركز التحديثات",
+  messages:"الرسائل والمحادثات",
   security:"الأمان وسجل النشاط"
 };
 
 function showScreen(screen){
-  startScreen.classList.add("hidden");
-  loginScreen.classList.add("hidden");
-  dashboardScreen.classList.add("hidden");
+  [startScreen,loginScreen,dashboardScreen].forEach(item =>
+    item.classList.add("hidden")
+  );
   screen.classList.remove("hidden");
 }
 
@@ -814,7 +468,23 @@ function showLoginMessage(message,type){
   loginMessage.className = "login-message " + type;
 }
 
-async function adminRequest(body,token){
+function toast(message,isError=false){
+  let node = document.getElementById("adminToast");
+  if(!node){
+    node = document.createElement("div");
+    node.id = "adminToast";
+    node.style.cssText =
+      "position:fixed;z-index:100;bottom:20px;left:20px;right:20px;max-width:520px;margin:auto;padding:14px 17px;border:1px solid #d8b87a66;border-radius:13px;background:#1b1228;color:#fff;font:700 12px Cairo;box-shadow:0 10px 40px #0009;text-align:center";
+    document.body.appendChild(node);
+  }
+  node.textContent = message;
+  node.style.borderColor = isError ? "#ff7186" : "#d8b87a";
+  node.style.display = "block";
+  clearTimeout(node._timer);
+  node._timer = setTimeout(()=>node.style.display="none",4000);
+}
+
+async function adminRequest(body,token=sessionToken){
   const headers = {};
   if(token) headers["x-admin-session"] = token;
 
@@ -829,15 +499,10 @@ async function adminRequest(body,token){
 }
 
 async function validateAdminSession(token){
-  const result = await adminRequest(
-    {action:"session_check"},
-    token
-  );
-
+  const result = await adminRequest({action:"session_check"},token);
   if(!result?.ok || !result?.isAdmin){
     throw new Error("جلسة الإدارة غير صالحة.");
   }
-
   return result;
 }
 
@@ -851,7 +516,7 @@ async function loadOwnerProfile(){
   if(error) throw error;
 
   const name = profile.full_name || profile.username || "مالك المنصة";
-  const nameElement = document.getElementById("ownerName");
+  const nameElement = $("ownerName");
   nameElement.textContent = name;
 
   if(profile.is_verified){
@@ -861,21 +526,18 @@ async function loadOwnerProfile(){
     nameElement.appendChild(mark);
   }
 
-  const avatar = document.getElementById("ownerAvatar");
-
+  const avatar = $("ownerAvatar");
   if(profile.avatar_url){
     const image = document.createElement("img");
     image.src = profile.avatar_url;
     image.alt = "صورة مالك المنصة";
-    image.onerror = () => { avatar.textContent = "H"; };
+    image.onerror = ()=>{avatar.textContent="H";};
     avatar.replaceChildren(image);
   }
 
   const {data:userData} = await supabase.auth.getUser();
-  const email = userData?.user?.email ||
-    "بيانات البريد غير متاحة من جلسة الدخول الحالية";
-
-  document.getElementById("ownerEmail").textContent = email;
+  $("ownerEmail").textContent =
+    userData?.user?.email || "حساب مالك المنصة";
 }
 
 async function openDashboard(token){
@@ -887,9 +549,10 @@ async function openDashboard(token){
     await loadOwnerProfile();
   }catch(error){
     console.error("Owner profile:",error);
-    document.getElementById("ownerEmail").textContent =
-      "تعذر تحميل بيانات الحساب من جدول profiles";
+    $("ownerEmail").textContent = "تعذر تحميل بيانات الحساب";
   }
+
+  await openSection("overview");
 }
 
 function openLogin(){
@@ -897,37 +560,182 @@ function openLogin(){
   setTimeout(()=>passwordInput.focus(),150);
 }
 
-/* بدء الموقع والتحقق من الجلسة */
-async function boot(){
-  const savedToken = localStorage.getItem(SESSION_KEY);
+function showHome(){
+  sectionView.innerHTML = `
+    <section class="welcome-panel">
+      <div class="welcome-kicker">THE POWER OF MANAGEMENT</div>
+      <h1>مرحباً بك في مركز القيادة</h1>
+      <p>
+        لوحة الإدارة المركزية لمنصة HANOON WORLD.
+        تحكم في أقسام المنصة من مكان واحد، وتابع إدارة الأعضاء والمحتوى والإشعارات.
+      </p>
+    </section>
 
-  setTimeout(async()=>{
-    if(savedToken){
-      try{
-        await openDashboard(savedToken);
-        return;
-      }catch(error){
-        console.warn("Admin session:",error);
-        localStorage.removeItem(SESSION_KEY);
-      }
+    <div class="content-heading">
+      <div>
+        <h2>لوحة التحكم الرئيسية</h2>
+        <p>اختر القسم الذي تريد إدارته</p>
+      </div>
+      <span class="live-status">● نظام الإدارة</span>
+    </div>
+
+    <div class="quick-grid">
+      <button class="quick-card" data-quick="members">
+        <strong>إدارة الأعضاء</strong>
+        <span>عرض الأعضاء والبحث في حساباتهم وإدارة التوثيق.</span>
+      </button>
+      <button class="quick-card" data-quick="notifications">
+        <strong>مركز الإشعارات</strong>
+        <span>إرسال إشعارات رسمية إلى أعضاء المنصة.</span>
+      </button>
+      <button class="quick-card" data-quick="content">
+        <strong>إدارة المحتوى</strong>
+        <span>التحكم في محتوى الموقع وإعلاناته.</span>
+      </button>
+      <button class="quick-card" data-quick="site">
+        <strong>إعدادات المنصة</strong>
+        <span>تعديل إعدادات ومظهر الصفحة الرئيسية.</span>
+      </button>
+      <button class="quick-card" data-quick="updates">
+        <strong>مركز التحديثات</strong>
+        <span>إنشاء إصدارات وإدارة ملفات التحديث.</span>
+      </button>
+      <button class="quick-card" data-quick="wallet">
+        <strong>المحفظة</strong>
+        <span>قسم المحفظة يحتاج إلى استكمال واجهة الإدارة.</span>
+      </button>
+    </div>
+  `;
+
+  sectionView.querySelectorAll("[data-quick]").forEach(button=>{
+    button.addEventListener("click",()=>{
+      openSection(button.dataset.quick);
+    });
+  });
+}
+
+function closeActiveModule(){
+  try{
+    activeModule?.destroy?.();
+  }catch(error){
+    console.warn("Module cleanup:",error);
+  }
+  activeModule = null;
+}
+
+function moduleShell(title){
+  sectionView.innerHTML = `
+    <section class="welcome-panel" style="min-height:145px;margin-bottom:18px">
+      <div class="welcome-kicker">HANOON WORLD • ADMINISTRATION</div>
+      <h1 style="font-size:27px">${title}</h1>
+      <p>إدارة القسم من لوحة التحكم المركزية.</p>
+    </section>
+    <div id="activeModuleRoot" class="module-root"></div>
+  `;
+  return $("activeModuleRoot");
+}
+
+async function openSection(section){
+  activeSection = section;
+  const generation = ++moduleGeneration;
+  closeActiveModule();
+
+  document.querySelectorAll(".menu-button").forEach(button=>{
+    button.classList.toggle("active",button.dataset.section===section);
+  });
+
+  sidebar.classList.remove("open");
+  sidebarBackdrop.classList.remove("show");
+
+  if(section==="overview"){
+    showHome();
+    return;
+  }
+
+  const root = moduleShell(sectionNames[section] || "قسم الإدارة");
+
+  try{
+    if(section==="members"){
+      const mod = await import("./admin-sections/members.js");
+      if(generation!==moduleGeneration) return;
+      await mod.renderMembersSection({
+        root,supabase,sessionToken
+      });
+      return;
     }
 
-    openLogin();
-  },5000);
+    if(section==="notifications"){
+      const mod = await import("./admin-sections/notifications.js");
+      if(generation!==moduleGeneration) return;
+      await mod.renderNotificationsSection({
+        root,supabase,sessionToken
+      });
+      return;
+    }
+
+    if(section==="content"){
+      const mod = await import("./admin-content.js");
+      if(generation!==moduleGeneration) return;
+      activeModule = mod.mountContentManager({
+        root,supabase,sessionToken,toast
+      });
+      return;
+    }
+
+    if(section==="site"){
+      const mod = await import("./admin-site.js");
+      if(generation!==moduleGeneration) return;
+      activeModule = mod.mountSiteEditor({
+        root,supabase,sessionToken,toast
+      });
+      return;
+    }
+
+    if(section==="updates"){
+      const mod = await import("./admin-updates.js");
+      if(generation!==moduleGeneration) return;
+      activeModule = mod.mountUpdateCenter({
+        root,supabase,sessionToken,toast
+      });
+      return;
+    }
+
+    const messages = {
+      wallet:"واجهة المحفظة لم يتم توصيلها هنا بعد. لم نضع عمليات مالية شكلية.",
+      gifts:"إدارة الهدايا والمتجر تحتاج إلى ربط عملياتها الفعلية قبل تفعيلها.",
+      messages:"إدارة الرسائل والمحادثات تحتاج إلى واجهة إدارية مستقلة.",
+      security:"سجل الأمان والنشاط يحتاج إلى واجهة وسجل بيانات مخصص."
+    };
+
+    root.innerHTML = `
+      <div class="admin-note">
+        <strong>${sectionNames[section] || "قسم الإدارة"}</strong>
+        <p>${messages[section] || "هذا القسم غير متاح حاليًا."}</p>
+      </div>
+    `;
+
+  }catch(error){
+    if(generation!==moduleGeneration) return;
+    console.error("Admin section:",error);
+    root.innerHTML = `
+      <div class="admin-note">
+        <strong>تعذر فتح القسم</strong>
+        <p>${String(error?.message || error)}</p>
+      </div>
+    `;
+  }
 }
 
 /* إظهار وإخفاء كلمة المرور */
-document.getElementById("togglePassword").addEventListener("click",()=>{
-  const hidden = passwordInput.type === "password";
+$("togglePassword").addEventListener("click",()=>{
+  const hidden = passwordInput.type==="password";
   passwordInput.type = hidden ? "text" : "password";
-  document.getElementById("togglePassword").textContent =
-    hidden ? "إخفاء" : "إظهار";
+  $("togglePassword").textContent = hidden ? "إخفاء" : "إظهار";
 });
 
 /* تسجيل الدخول */
-loginForm.addEventListener("submit",async(event)=>{
+loginForm.addEventListener("submit",async event=>{
   event.preventDefault();
-
   const password = passwordInput.value.trim();
 
   if(!password){
@@ -950,14 +758,12 @@ loginForm.addEventListener("submit",async(event)=>{
 
     if(error) throw new Error(error.message || "تعذر الاتصال بخدمة الإدارة.");
     if(data?.error) throw new Error(data.error);
-
     if(!data?.ok || !data?.sessionToken){
       throw new Error("كلمة المرور غير صحيحة أو لا تملك صلاحية الإدارة.");
     }
 
     localStorage.setItem(SESSION_KEY,data.sessionToken);
     passwordInput.value = "";
-
     showLoginMessage("تم التحقق من بيانات الإدارة بنجاح.","success");
     await openDashboard(data.sessionToken);
 
@@ -969,102 +775,71 @@ loginForm.addEventListener("submit",async(event)=>{
   }
 });
 
-/* تسجيل الخروج من الواجهة */
-document.getElementById("logoutButton").addEventListener("click",()=>{
-  localStorage.removeItem(SESSION_KEY);
-  sessionToken = null;
-  passwordInput.value = "";
-  loginMessage.className = "login-message";
-  openLogin();
-});
-
-/* القائمة الجانبية على الهاتف */
-document.getElementById("mobileMenu").addEventListener("click",()=>{
-  sidebar.classList.toggle("open");
-});
-
-/* فتح قسم الأعضاء داخل نفس لوحة الإدارة */
-async function openMembersSection(){
-  sectionView.innerHTML = `
-    <div class="admin-note">
-      <strong>إدارة الأعضاء</strong>
-      جارٍ فتح القسم...
-    </div>
-  `;
+/* تسجيل الخروج مع إلغاء الجلسة من الخادم */
+$("logoutButton").addEventListener("click",async()=>{
+  const token = sessionToken;
+  $("logoutButton").disabled = true;
 
   try{
-    const {renderMembersSection} =
-      await import("./admin-sections/members.js");
-
-    await renderMembersSection({
-      root:sectionView,
-      supabase,
-      sessionToken
-    });
-
+    if(token) await adminRequest({action:"logout"},token);
   }catch(error){
-    console.error("Members section:",error);
+    console.warn("Admin logout:",error);
+  }finally{
+    localStorage.removeItem(SESSION_KEY);
+    sessionToken = null;
+    moduleGeneration++;
+    closeActiveModule();
+    passwordInput.value = "";
+    loginMessage.className = "login-message";
+    $("logoutButton").disabled = false;
+    openLogin();
+  }
+});
 
-    sectionView.innerHTML = `
-      <div class="admin-note">
-        <strong>تعذر فتح إدارة الأعضاء</strong>
-        <p>${String(error.message || error)}</p>
-      </div>
-    `;
+/* فتح وإغلاق القائمة */
+function toggleSidebar(){
+  if(window.matchMedia("(max-width:850px)").matches){
+    sidebar.classList.toggle("open");
+    sidebarBackdrop.classList.toggle(
+      "show",
+      sidebar.classList.contains("open")
+    );
+  }else{
+    dashboardScreen.classList.toggle("sidebar-collapsed");
   }
 }
+$("menuToggle").addEventListener("click",toggleSidebar);
+sidebarBackdrop.addEventListener("click",()=>{
+  sidebar.classList.remove("open");
+  sidebarBackdrop.classList.remove("show");
+});
 
-/* التنقل الداخلي */
+/* التنقل بين الأقسام */
 document.querySelectorAll(".menu-button").forEach(button=>{
-  button.addEventListener("click",async()=>{
-    document.querySelectorAll(".menu-button").forEach(item=>{
-      item.classList.remove("active");
-    });
-
-    button.classList.add("active");
-    sidebar.classList.remove("open");
-
-    const section = button.dataset.section;
-
-    if(section === "overview"){
-      sectionView.innerHTML = `
-        <section class="welcome-panel">
-          <div class="welcome-kicker">THE POWER OF MANAGEMENT</div>
-          <h1>مرحباً بك في مركز القيادة</h1>
-          <p>لوحة الإدارة المركزية لمنصة HANOON WORLD.</p>
-        </section>
-        <div class="content-heading">
-          <div>
-            <h2>لوحة التحكم الرئيسية</h2>
-            <p>إدارة المنصة من واجهة واحدة متكاملة</p>
-          </div>
-          <span class="live-status">● نظام الإدارة</span>
-        </div>
-        <div class="admin-note">
-          <strong>مركز الإدارة.</strong>
-          اختر القسم الذي تريد إدارته من القائمة الجانبية.
-        </div>
-      `;
-      return;
-    }
-
-    if(section === "members"){
-      await openMembersSection();
-      return;
-    }
-
-    sectionView.innerHTML = `
-      <section class="welcome-panel">
-        <div class="welcome-kicker">HANOON WORLD • ADMIN</div>
-        <h1>${sectionNames[section] || "قسم الإدارة"}</h1>
-        <p>هذا القسم لم يتم توصيل وظائفه الفعلية بعد.</p>
-      </section>
-    `;
+  button.addEventListener("click",()=>{
+    openSection(button.dataset.section);
   });
 });
 
+/* التحقق من الجلسة عند فتح الصفحة */
+async function boot(){
+  const savedToken = localStorage.getItem(SESSION_KEY);
+
+  setTimeout(async()=>{
+    if(savedToken){
+      try{
+        await openDashboard(savedToken);
+        return;
+      }catch(error){
+        console.warn("Admin session:",error);
+        localStorage.removeItem(SESSION_KEY);
+      }
+    }
+    openLogin();
+  },5000);
+}
+
 boot();
 </script>
-
 </body>
 </html>
