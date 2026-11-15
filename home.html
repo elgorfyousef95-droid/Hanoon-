@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -246,18 +245,36 @@ body:after{content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;back
 .intro-mark{display:none}
 .nav-item{font-size:7px}
 }
+/* اختصارات الرأس والتصنيف */
+.quick-actions{display:flex;align-items:center;gap:6px}
+.quick-action{min-height:38px;padding:0 10px;display:flex;align-items:center;justify-content:center;gap:6px;border-radius:12px;background:rgba(255,255,255,.065);border:1px solid rgba(255,255,255,.11);font-size:10px;font-weight:900;white-space:nowrap;transition:.2s}
+.quick-action:hover{transform:translateY(-2px);background:rgba(151,121,255,.18)}
+.quick-action svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.8}
+.quick-action:nth-child(1){color:#d8caff}
+.quick-action:nth-child(2){color:#f0d28e}
+.quick-action:nth-child(3){color:#9ce4d7}
+.settings-menu{display:none;position:absolute;z-index:40;top:62px;left:0;width:min(250px,calc(100vw - 35px));padding:10px;border:1px solid rgba(255,255,255,.13);border-radius:16px;background:#19172b;box-shadow:var(--shadow)}
+.settings-menu.show{display:block}
+.settings-menu-title{padding:8px 10px 10px;color:#c9b7ff;font-size:11px;font-weight:900}
+.settings-menu a{display:block;padding:10px;border-radius:10px;color:#e9e4f7;font-size:11px;font-weight:700}
+.settings-menu a:hover{background:rgba(255,255,255,.07)}
+.search-area{position:relative}
+.leaderboard-category:before{background-image:url("https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=1000&q=90")}
+.leaderboard-category:after{background:linear-gradient(0deg,rgba(7,7,18,.97),rgba(7,7,18,.14) 78%),linear-gradient(135deg,rgba(117,82,218,.25),rgba(32,177,181,.12))}
+@media(max-width:1050px){.wallet-links{display:none}}
+@media(max-width:700px){
+.quick-actions{gap:4px}
+.quick-action{width:32px;min-width:32px;height:32px;min-height:32px;padding:0;font-size:0;gap:0}
+.quick-action svg{width:16px;height:16px}
+.settings-menu{top:55px}
+}
 </style>
 </head>
 <body>
 <div class="app">
 <header class="topbar">
 <a class="brand" href="home.html">
-<div class="brand-mark">
-<svg viewBox="0 0 40 40" fill="none">
-<path d="M9 29V11h5v7h12v-7h5v18h-5v-7H14v7H9Z" fill="white"/>
-<path d="M6 6h28v28H6z" stroke="white" stroke-opacity=".45" stroke-width="1.5"/>
-</svg>
-</div>
+<div class="brand-mark"><svg viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M20 4.5 31.5 11v18L20 35.5 8.5 29V11L20 4.5Z" stroke="white" stroke-width="1.5" stroke-opacity=".72"/><path d="M12 26V14h4l8 8V14h4v12h-4l-8-8v8h-4Z" fill="white"/><circle cx="31" cy="9" r="3" fill="#65d9d1" stroke="#fff" stroke-width="1"/></svg></div>
 <div><div class="brand-name">HANOON WORLD</div><div class="brand-sub">YOUR SOCIAL UNIVERSE</div></div>
 </a>
 
@@ -278,12 +295,11 @@ body:after{content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;back
 <a class="wallet-link" href="tasks.html"><svg viewBox="0 0 24 24"><path d="m9 12 2 2 4-4"/><rect x="4" y="3" width="16" height="18" rx="2"/></svg>المهام</a>
 </div>
 </div>
-
+<div class="quick-actions" aria-label="اختصارات سريعة"><a class="quick-action" href="store.html" aria-label="المتجر"><svg viewBox="0 0 24 24"><path d="M4 8h16l-1 12H5L4 8Z"/><path d="M9 9V6a3 3 0 0 1 6 0v3"/></svg><span>المتجر</span></a><a class="quick-action" href="wallet.html" aria-label="المحفظة"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M3 9h18M16 14h.01"/></svg><span>المحفظة</span></a><a class="quick-action" href="tasks.html" aria-label="المهام اليومية"><svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="m8 12 2.5 2.5L16 9"/></svg><span>المهام</span></a></div>
 <a class="header-icon notification-link" href="notifications.html" aria-label="الإشعارات">
 <svg viewBox="0 0 24 24"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9ZM10 21h4"/></svg>
 <span class="notification-badge" data-notification-count hidden></span>
 </a>
-
 <a class="my-avatar" href="profile.html" id="myProfileLink" aria-label="حسابي">
 <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 21c.5-4 3.2-6 7.5-6s7 2 7.5 6"/></svg>
 </a>
@@ -293,10 +309,11 @@ body:after{content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;back
 <div class="search-area">
 <label class="search-box">
 <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m16 16 5 5"/></svg>
-<input id="globalSearch" type="search" placeholder="ابحث عن لعبة أو غرفة أو مستخدم...">
+<input id="globalSearch" type="search" placeholder="ابحث في هنون: أعضاء، ألعاب، غرف، مهام، أقسام...">
 <span class="search-shortcut">بحث</span>
 </label>
-<a class="search-filter" href="games.html" aria-label="استكشاف"><svg viewBox="0 0 24 24"><path d="M4 7h16M7 12h10M10 17h4"/><circle cx="8" cy="7" r="1.5"/><circle cx="15" cy="12" r="1.5"/></svg></a>
+<button class="search-filter" id="settingsToggle" type="button" aria-label="الإعدادات السريعة" aria-expanded="false"><svg viewBox="0 0 24 24"><path d="M4 7h16M7 12h10M10 17h4"/><circle cx="8" cy="7" r="1.5"/><circle cx="15" cy="12" r="1.5"/></svg></button>
+<div class="settings-menu" id="settingsMenu"><div class="settings-menu-title">إعدادات سريعة</div><a href="profile.html">الملف الشخصي</a><a href="notifications.html">الإشعارات</a><a href="chat.html">المحادثات</a><a href="wallet.html">المحفظة</a><a href="tasks.html">المهام والإنجازات</a></div>
 <div class="search-results" id="searchResults"></div>
 </div>
 
@@ -330,13 +347,7 @@ body:after{content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;back
 <span class="card-arrow"><svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg></span>
 <div><strong>منطقة الألعاب</strong><small>اكتشف الألعاب المتاحة</small></div>
 </a>
-<a class="category-card users-category" href="members.html">
-<span class="card-arrow"><svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg></span>
-<span class="category-symbol" aria-hidden="true">
-<svg viewBox="0 0 24 24"><path d="M16 21v-1.5a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4V21"/><circle cx="9" cy="7" r="4"/><path d="M20 21v-1.5a4 4 0 0 0-3-3.87M16 3.2a4 4 0 0 1 0 7.6"/></svg>
-</span>
-<div><strong>مستخدمو التطبيق</strong><small>اكتشف الملفات الشخصية وتعرّف على مجتمع هنون</small></div>
-</a>
+<a class="category-card leaderboard-category" href="leaderboard.html"><span class="card-arrow"><svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg></span><span class="category-symbol"><svg viewBox="0 0 24 24"><path d="M4 19h16M6 16V9h3v7M11 16V4h3v12M16 16v-5h3v5"/></svg></span><div><strong>التصنيف العام</strong><small>ترتيب الأعضاء بالنقاط والمستويات والإنجازات</small></div></a>
 <a class="category-card" href="rooms.html">
 <span class="card-arrow"><svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg></span>
 <div><strong>عالم الغرف</strong><small>غرف المجتمع والألعاب</small></div>
@@ -411,10 +422,7 @@ body:after{content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;back
 <nav class="bottom-nav">
 <a class="nav-item active" href="home.html"><svg viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10h-6v-6H9v6H3V10Z"/></svg>الرئيسية</a>
 <a class="nav-item" href="games.html"><svg viewBox="0 0 24 24"><path d="M7 8h10a4 4 0 0 1 4 4v4a3 3 0 0 1-5 2l-2-2h-4l-2 2a3 3 0 0 1-5-2v-4a4 4 0 0 1 4-4Z"/><path d="M8 11v4M6 13h4M16 12h.01M18 14h.01"/></svg>الألعاب</a>
-<a class="nav-item" href="members.html" aria-label="مستخدمو التطبيق">
-<svg viewBox="0 0 24 24"><path d="M16 21v-1.5a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4V21"/><circle cx="9" cy="7" r="4"/><path d="M20 21v-1.5a4 4 0 0 0-3-3.87M16 3.2a4 4 0 0 0 0 7.6"/></svg>
-<span>المستخدمون</span>
-</a>
+<a class="nav-item" href="leaderboard.html" aria-label="التصنيف العام"><svg viewBox="0 0 24 24"><path d="M4 19h16M6 16V9h3v7M11 16V4h3v12M16 16v-5h3v5"/></svg><span>التصنيف</span></a>
 <a class="nav-item" href="rooms.html"><svg viewBox="0 0 24 24"><path d="M3 20V9l9-6 9 6v11h-6v-7H9v7H3Z"/></svg>الغرف</a>
 <a class="nav-item" href="broadcasts.html"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3" fill="currentColor" stroke="none"/></svg>LIVE</a>
 <a class="nav-item" href="chat.html"><svg viewBox="0 0 24 24"><path d="M4 5h16v12H9l-5 4V5Z"/><path d="M8 9h8M8 13h5"/></svg>المحادثات</a>
@@ -424,9 +432,22 @@ body:after{content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;back
 <div class="toast" id="toast"></div>
 
 <script>
-const SUPABASE_URL = "https://gjtgvczvclfwvlvcquxh.supabase.co";
-const SUPABASE_KEY = "sb_publishable_4DVTUZ-xTlqU2GpFvpb7lw_g-Kxomd4";
+const SUPABASE_URL = "https://gjtgvczvclfwvlvcquxh.supabase.co";const SUPABASE_KEY = "sb_publishable_4DVTUZ-xTlqU2GpFvpb7lw_g-Kxomd4";
 const db = window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+
+const sitePages=[
+{name:"المتجر",keywords:"متجر شراء عناصر منتجات",href:"store.html",type:"قسم"},
+{name:"المحفظة",keywords:"رصيد عملات جواهر معاملات",href:"wallet.html",type:"قسم"},
+{name:"المهام اليومية",keywords:"مهام يومية أسبوعية شهرية إنجازات نقاط",href:"tasks.html",type:"قسم"},
+{name:"التصنيف العام",keywords:"تصنيف ترتيب نقاط ليفل مستوى خبرة إنجازات",href:"leaderboard.html",type:"قسم"},
+{name:"الغرف",keywords:"غرف عامة مجتمع",href:"rooms.html",type:"قسم"},
+{name:"البث المباشر",keywords:"بث لايف مباشر مشاهدة",href:"broadcasts.html",type:"قسم"},
+{name:"المقابلة العشوائية",keywords:"مكالمة فيديو عشوائية",href:"live.html",type:"قسم"},
+{name:"المحادثات",keywords:"رسائل شات دردشة",href:"chat.html",type:"قسم"},
+{name:"الإشعارات",keywords:"تنبيهات إشعارات",href:"notifications.html",type:"قسم"},
+{name:"حسابي والملف الشخصي",keywords:"حساب ملف شخصي بروفايل",href:"profile.html",type:"قسم"},
+{name:"الألعاب",keywords:"ألعاب لعب",href:"games.html",type:"قسم"}
+];
 
 const state={user:null,games:[],rooms:[],members:[]};
 const $=id=>document.getElementById(id);
@@ -464,13 +485,13 @@ $("coinBalance").textContent=data?.coins==null?"—":Number(data.coins).toLocale
 $("gemBalance").textContent=data?.gems==null?"—":Number(data.gems).toLocaleString("en-US");
 }
 async function loadGames(){
-const {data,error}=await db.rpc("get_trending_games",{p_limit:5});
+const {data,error}=await db.rpc("get_trending_games",{p_limit:100});
 if(error)throw error;
 state.games=data||[];
-renderGames(state.games);
+renderGames(state.games.slice(0,5));
 }
 async function loadRooms(){
-const {data,error}=await db.from("world_game_rooms").select("id,game_id,host_user_id,room_code,status,visibility,max_players,created_at").eq("visibility","public").in("status",["waiting","playing"]).order("created_at",{ascending:false}).limit(8);
+const {data,error}=await db.from("world_game_rooms").select("id,game_id,host_user_id,room_code,status,visibility,max_players,created_at").eq("visibility","public").in("status",["waiting","playing"]).order("created_at",{ascending:false}) .limit(500);
 if(error)throw error;
 const rooms=data||[];
 const gameIds=[...new Set(rooms.map(x=>x.game_id).filter(Boolean))];
@@ -487,8 +508,7 @@ if(!result.error)hosts=result.data||[];
 state.rooms=rooms.map(room=>({...room,game:games.find(g=>g.id===room.game_id)||null,host:hosts.find(h=>h.id===room.host_user_id)||null}));
 renderRooms(state.rooms);
 }
-/* المستخدمون لا يظهرون كقائمة في الصفحة الرئيسية.
-   يتم تحميل دليل المستخدمين فقط لدعم البحث. */
+/* تحميل دليل الأعضاء لاستخدامه في البحث فقط */
 async function loadMembersForSearch(){
 const {data,error}=await db.from("member_directory").select("id,username,member_code,full_name").neq("id",state.user.id).order("created_at",{ascending:false}).limit(100);
 if(error)throw error;
@@ -529,10 +549,12 @@ if(!term){box.classList.remove("show");box.innerHTML="";return}
 const foundGames=state.games.filter(g=>`${g.title_ar||""} ${g.title_en||""}`.toLowerCase().includes(term));
 const foundRooms=state.rooms.filter(r=>`${r.game?.title_ar||""} ${r.room_code||""} ${r.host?.full_name||""}`.toLowerCase().includes(term));
 const foundMembers=state.members.filter(m=>`${m.full_name||""} ${m.username||""} ${m.member_code||""}`.toLowerCase().includes(term));
+const foundPages=sitePages.filter(p=>`${p.name} ${p.keywords}`.toLowerCase().includes(term));
 const items=[
-...foundGames.map(g=>({name:g.title_ar||g.title_en,type:"لعبة",href:`game.html?game=${encodeURIComponent(g.slug||g.id)}`})),
+...foundPages.map(p=>({name:p.name,type:p.type,href:p.href})),
+...foundGames.map(g=>({name:g.title_ar||g.title_en,type:"لعبة",href:`game.html?game=${encodeURIComponent(g.slug||g.game_id)}`})),
 ...foundRooms.map(r=>({name:r.game?.title_ar||"غرفة",type:"غرفة",href:`room.html?room=${encodeURIComponent(r.id)}`})),
-...foundMembers.map(m=>({name:m.full_name||m.username||m.member_code,type:"مستخدم",href:`member.html?id=${encodeURIComponent(m.id)}`})),
+...foundMembers.map(m=>({name:m.full_name||m.username||m.member_code,type:"عضو",href:`member.html?id=${encodeURIComponent(m.id)}`})),
 ];
 box.classList.add("show");
 box.innerHTML=items.length?items.map(item=>`<div class="search-result"><div><strong>${esc(item.name)}</strong><small> · ${item.type}</small></div><a href="${esc(item.href)}">فتح</a></div>`).join(""):`<div class="search-result"><span>لا توجد نتائج مطابقة في البيانات المحمّلة</span></div>`;
@@ -553,8 +575,17 @@ safeTask(loadMembersForSearch,"member search")
 ]);
 }
 $("globalSearch").addEventListener("input",event=>renderSearch(event.target.value));
+$("settingsToggle").addEventListener("click",()=>{
+const menu=$("settingsMenu");
+const open=menu.classList.toggle("show");
+$("settingsToggle").setAttribute("aria-expanded",String(open));
+});
 document.addEventListener("click",event=>{
 if(!event.target.closest(".search-area"))$("searchResults").classList.remove("show");
+if(!event.target.closest(".search-area")){
+$("settingsMenu").classList.remove("show");
+$("settingsToggle").setAttribute("aria-expanded","false");
+}
 });
 db.auth.onAuthStateChange((event,session)=>{
 if(event==="SIGNED_OUT"||!session)location.href="index.html";
