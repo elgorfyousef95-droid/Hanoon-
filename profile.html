@@ -85,10 +85,18 @@ button,a{font:inherit}button{cursor:pointer}a{color:inherit;text-decoration:none
 .verified-badge{display:inline-flex;vertical-align:middle;width:23px;height:23px;margin-inline-start:8px}
 .verified-badge svg{width:100%;height:100%}
 .username{direction:ltr;text-align:right;color:#c9c1f2;font-size:13px;font-weight:800}
-.identity-tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px}
+.identity-tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px;align-items:center}
 .pill{display:inline-flex;align-items:center;gap:6px;padding:6px 11px;border:1px solid var(--line);border-radius:30px;background:#ffffff09;color:#dce3f2;font-size:10px;font-weight:800}
 .pill.admin{border-color:#e9c98266;background:#e9c98216;color:#f1d99f}
 .pill.vip{border-color:#aa96ff66;background:#aa96ff18;color:#d5c9ff}
+.founder-mark{
+  display:inline-flex;align-items:center;gap:7px;padding:7px 12px;
+  border:1px solid #f3d58c99;border-radius:30px;
+  background:linear-gradient(110deg,#3c2b18dd,#251c39ed);
+  color:#ffe7ad;font-size:10px;font-weight:900;
+  box-shadow:0 0 24px #e9c9822c,inset 0 0 15px #fff1;
+}
+.founder-mark svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .hero-actions{display:flex;gap:8px;flex-wrap:wrap;margin-right:auto;padding-bottom:5px}
 .btn{
   min-height:43px;padding:0 15px;border:1px solid var(--line);border-radius:14px;
@@ -102,9 +110,7 @@ button,a{font:inherit}button{cursor:pointer}a{color:inherit;text-decoration:none
 .hero-foot{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-top:20px;padding-top:17px;border-top:1px solid var(--line)}
 .member-code{color:var(--gold);font-size:12px;font-weight:900;direction:ltr}
 .joined{color:var(--muted);font-size:10px}
-.stats{
-  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:11px;margin-top:17px
-}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:11px;margin-top:17px}
 .stat{
   min-height:100px;padding:15px;border:1px solid var(--line);border-radius:19px;
   background:linear-gradient(145deg,#17243bd9,#0e192bd9);text-align:center
@@ -170,6 +176,61 @@ button,a{font:inherit}button{cursor:pointer}a{color:inherit;text-decoration:none
   background:#142239;color:white;font-size:11px;font-weight:800;transition:.2s;white-space:nowrap
 }
 .toast.show{opacity:1;transform:translate(-50%,0)}
+
+/* Founder profile effects */
+body.admin-profile{
+  --gold:#ffe3a0;--purple:#c1a8ff;--cyan:#8df4f4;
+  background:
+    radial-gradient(ellipse at 50% 0%,#d4a64b35,transparent 36%),
+    radial-gradient(ellipse at 8% 42%,#8b65ff30,transparent 32%),
+    radial-gradient(ellipse at 92% 60%,#40dce526,transparent 34%),
+    linear-gradient(145deg,#070914,#111027 48%,#080d1b);
+}
+body.admin-profile .hero{
+  border:1px solid #f4d58b99;
+  box-shadow:0 0 0 1px #d8b35a22,0 25px 90px #000b,0 0 65px #b78c3c24;
+}
+body.admin-profile .cover{
+  background:
+    radial-gradient(ellipse at 50% 25%,#f3d18a38,transparent 34%),
+    linear-gradient(120deg,#1d1740aa,#17172c66,#30231388),
+    url("https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1800&q=85") center/cover;
+}
+body.admin-profile .cover:before{
+  content:"";position:absolute;z-index:2;inset:-30%;
+  background:linear-gradient(110deg,transparent 35%,#fff2 48%,transparent 60%);
+  transform:translateX(-55%);animation:founderShine 8s ease-in-out infinite;
+  pointer-events:none;
+}
+@keyframes founderShine{0%,35%{transform:translateX(-55%)}70%,100%{transform:translateX(55%)}}
+body.admin-profile .cover-label{
+  border-color:#f5d68caa;color:#ffe7ad;
+  background:linear-gradient(120deg,#171326dd,#4b3822cc);
+  box-shadow:0 0 28px #e8c16c35;letter-spacing:1.4px;
+}
+body.admin-profile .avatar-shell{
+  background:conic-gradient(from 0deg,#fff0b8,#b88938,#d9c5ff,#6de4e8,#fff0b8);
+  box-shadow:0 0 0 3px #f2d58b33,0 0 28px #e4bb5a88,0 18px 48px #000b;
+  animation:founderAura 5s ease-in-out infinite;
+}
+@keyframes founderAura{
+  0%,100%{filter:brightness(1);box-shadow:0 0 0 3px #f2d58b33,0 0 25px #e4bb5a66,0 18px 48px #000b}
+  50%{filter:brightness(1.12);box-shadow:0 0 0 5px #f2d58b45,0 0 42px #e4bb5aaa,0 18px 48px #000b}
+}
+body.admin-profile .avatar{border-color:#151328}
+body.admin-profile .name{
+  background:linear-gradient(100deg,#fff4ce,#f1d18a 42%,#d8caff 75%,#fff);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  text-shadow:0 0 28px #e8c16c24
+}
+body.admin-profile .eyebrow{color:#ffe3a0}
+body.admin-profile .pill.admin,body.admin-profile .pill.vip{box-shadow:0 0 20px #d7ad5c24}
+body.admin-profile .stat:first-child{border-color:#f0d28a88;background:linear-gradient(145deg,#59432388,#17172c)}
+body.admin-profile .stat:first-child strong{color:#ffe3a0;text-shadow:0 0 20px #e9c98277}
+body.admin-profile .membership-card{border-color:#f3d58caa;box-shadow:inset 0 0 40px #d5ac5a18,0 0 35px #d5ac5a16}
+@media(prefers-reduced-motion:reduce){
+  body.admin-profile .avatar-shell,body.admin-profile .cover:before{animation:none}
+}
 @media(max-width:850px){
   .content-layout{grid-template-columns:1fr}
   .side-card{position:static;display:flex;gap:5px;overflow:auto;white-space:nowrap}
@@ -231,7 +292,7 @@ button,a{font:inherit}button{cursor:pointer}a{color:inherit;text-decoration:none
     <section class="hero">
       <div class="cover">
         <img class="cover-image" id="coverImage" alt="غلاف الحساب" hidden>
-        <div class="cover-label">HANOON WORLD · PERSONAL SPACE</div>
+        <div class="cover-label">HANOON WORLD · FOUNDER SPACE</div>
       </div>
       <div class="profile-body">
         <div class="identity-row">
@@ -247,6 +308,10 @@ button,a{font:inherit}button{cursor:pointer}a{color:inherit;text-decoration:none
               <span class="pill" id="accountType">عضو هنون</span>
               <span class="pill admin" id="adminBadge" hidden>إدارة HANOON</span>
               <span class="pill vip" id="vipBadge" hidden>VIP ADMIN</span>
+              <span class="founder-mark" id="founderBadge" hidden>
+                <svg viewBox="0 0 24 24"><path d="m12 2 2.7 5.5 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/><path d="m9 12 2 2 4-4"/></svg>
+                مؤسس HANOON WORLD
+              </span>
               <span class="pill" id="privacyBadge">حساب عام</span>
             </div>
           </div>
@@ -303,13 +368,13 @@ button,a{font:inherit}button{cursor:pointer}a{color:inherit;text-decoration:none
           بطاقة العضوية
         </button>
         <div class="side-divider"></div>
-        <a class="side-link" href="store.html">
+        <a class="side-link" href="wallet.html">
           <svg viewBox="0 0 24 24"><path d="M3 4h2l2 12h11l3-9H6M9 20h.01M17 20h.01"/></svg>
-          متجر هنون
+          المحفظة
         </a>
-        <a class="side-link" href="gifts.html">
+        <a class="side-link" href="tasks.html">
           <svg viewBox="0 0 24 24"><path d="M20 12v9H4v-9M2 7h20v5H2zM12 7v14M12 7H7a3 3 0 1 1 3-3zM12 7h5a3 3 0 1 0-3-3z"/></svg>
-          الهدايا
+          المهام والمكافآت
         </a>
         <a class="side-link" href="members.html">
           <svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM20 8v6M23 11h-6"/></svg>
@@ -351,7 +416,7 @@ button,a{font:inherit}button{cursor:pointer}a{color:inherit;text-decoration:none
             <div><h2>مقتنيات المتجر المفعّلة</h2><p>العناصر التي تستخدمها حاليًا في حسابك</p></div>
           </div>
           <div class="equipped-list" id="equippedList"><div class="empty">جاري تحميل المقتنيات...</div></div>
-          <a class="btn gold" href="store.html" style="margin-top:15px">زيارة المتجر</a>
+          <a class="btn gold" href="wallet.html" style="margin-top:15px">فتح المحفظة</a>
         </section>
 
         <section class="panel" id="membershipPanel" hidden>
@@ -436,7 +501,7 @@ async function loadCounts(userId){
   const wallet=results[3].status==="fulfilled"&&!results[3].value.error?results[3].value.data:null;
   const gifts=results[4].status==="fulfilled"&&!results[4].value.error?results[4].value.count||0:0;
 
-  setText("followersCount",number(followers));
+  setText("followersCount",userId===ADMIN_ID?"20M":number(followers));
   setText("followingCount",number(following));
   setText("pointsCount",number(points));
   setText("giftsCount",number(gifts));
@@ -507,6 +572,9 @@ function renderProfile(profile){
   const verified=profile.is_verified===true;
   const isAdmin=profile.role==="admin"||profile.id===ADMIN_ID;
 
+  document.body.classList.toggle("admin-profile",isAdmin);
+  $("founderBadge").hidden=!isAdmin;
+
   setText("fullName",name);
   $("fullName").append($("verifiedBadge"));
   $("verifiedBadge").hidden=!verified;
@@ -550,16 +618,25 @@ function renderProfile(profile){
 
 async function loadProfile(){
   $("loadingState").hidden=false;$("errorState").hidden=true;$("profileContent").hidden=true;
-  const {data:authData,error:authError}=await supabase.auth.getUser();
-  if(authError||!authData?.user){location.replace("login.html");return}
-  state.user=authData.user;
+
+  // قراءة الجلسة المحفوظة بدل طلب Auth /user الذي سجل أخطاء 500 وtimeout.
+  const {data:sessionData,error:sessionError}=await supabase.auth.getSession();
+  if(sessionError)throw sessionError;
+
+  const currentUser=sessionData?.session?.user;
+  if(!currentUser){location.replace("login.html");return}
+  state.user=currentUser;
 
   const {data:profile,error}=await supabase.from("profiles").select(`
     id,is_verified,role,member_code,full_name,nickname,username,avatar_path,cover_path,
     bio,hobbies,interests,reading_interests,profile_completed,is_private,created_at
   `).eq("id",state.user.id).maybeSingle();
 
-  if(error){console.error(error);showError("تعذر تحميل بيانات الحساب","حدث خطأ أثناء الاتصال بقاعدة البيانات.");return}
+  if(error){
+    console.error("Profile database query:",error);
+    showError("تعذر تحميل بيانات الحساب","حدث خطأ أثناء الاتصال بقاعدة البيانات: "+(error.message||"خطأ غير معروف"));
+    return;
+  }
   if(!profile){showError("لم يتم العثور على ملفك الشخصي","لم نعثر على سجل ملفك الشخصي.");return}
 
   renderProfile(profile);
@@ -594,7 +671,10 @@ async function shareProfile(){
 $("copyCodeButton").addEventListener("click",copyCode);
 $("copyCardCode").addEventListener("click",copyCode);
 $("shareButton").addEventListener("click",shareProfile);
-$("retryButton").addEventListener("click",()=>loadProfile().catch(e=>showError("حدث خطأ","تعذر تحميل الحساب.")));
+$("retryButton").addEventListener("click",()=>loadProfile().catch(error=>{
+  console.error("Profile retry:",error);
+  showError("تعذر تحميل الحساب",error?.message||"تعذر تحميل الحساب. حاول مرة أخرى.");
+}));
 
 $("logoutButton").addEventListener("click",async()=>{
   $("logoutButton").disabled=true;
@@ -608,13 +688,16 @@ supabase.auth.onAuthStateChange((event,session)=>{
 
 loadProfile().catch(error=>{
   console.error("HANOON profile:",error);
-  showError("حدث خطأ غير متوقع","تعذر تجهيز صفحة حسابك. حاول إعادة تحميل الصفحة.");
+  showError("تعذر تجهيز صفحة حسابك",error?.message||"حدث خطأ غير متوقع. راجع الاتصال وحاول مرة أخرى.");
 });
 
 try{
-  await initializeNotificationCore(updateNotificationBadge);
-  await updateNotificationBadge();
-}catch(error){console.error("Profile notifications:",error)}
+  const refreshProfileBadge=()=>updateNotificationBadge();
+  await initializeNotificationCore(refreshProfileBadge);
+  await refreshProfileBadge();
+}catch(error){
+  console.warn("Profile notifications unavailable:",error);
+}
 </script>
 </body>
 </html>
