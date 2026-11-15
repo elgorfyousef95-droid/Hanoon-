@@ -1,0 +1,482 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<meta name="theme-color" content="#090914">
+<title>المحفظة | HANOON WORLD</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+:root{
+--bg:#090914;--panel:#17162b;--panel2:#211d3a;
+--purple:#a58aff;--purple2:#7654e5;
+--gold:#f4ce79;--cyan:#75ddf4;
+--green:#55d9a5;--red:#ff7189;
+--text:#faf8ff;--muted:#aaa4c0;
+--line:rgba(255,255,255,.10);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+min-height:100vh;color:var(--text);font-family:Cairo,sans-serif;
+background:
+radial-gradient(ellipse at 12% 5%,rgba(130,91,245,.23),transparent 34%),
+radial-gradient(ellipse at 95% 28%,rgba(38,179,190,.12),transparent 32%),
+linear-gradient(145deg,#090914,#111025 55%,#090914);
+padding-bottom:35px;overflow-x:hidden
+}
+button,input{font:inherit}
+button{cursor:pointer;color:inherit;border:0}
+a{color:inherit;text-decoration:none}
+.container{width:min(100% - 30px,1100px);margin:auto}
+.topbar{height:76px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.back{
+width:43px;height:43px;border-radius:14px;display:grid;place-items:center;
+background:rgba(255,255,255,.07);border:1px solid var(--line)
+}
+.back svg{width:21px;height:21px;stroke:white;fill:none;stroke-width:2}
+.brand{display:flex;align-items:center;gap:10px;margin-right:auto}
+.brand-icon{
+width:43px;height:43px;border-radius:14px;display:grid;place-items:center;
+background:linear-gradient(145deg,#bda8ff,#6945d5);
+box-shadow:0 8px 25px #7654e555
+}
+.brand-icon svg{width:25px;height:25px;stroke:white;fill:none;stroke-width:1.8}
+.brand strong{font-size:14px;font-weight:900;display:block}
+.brand small{font-size:9px;color:#bcb1df;letter-spacing:1.5px}
+.page-title{padding:24px 0 20px}
+.page-title .eyebrow{color:var(--purple);font-size:11px;font-weight:900;letter-spacing:2px}
+.page-title h1{font-size:clamp(27px,5vw,39px);font-weight:900;margin-top:4px}
+.page-title p{font-size:12px;color:var(--muted);margin-top:4px}
+.balance-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.balance-card{
+position:relative;min-height:230px;padding:23px;border-radius:25px;overflow:hidden;
+border:1px solid rgba(255,255,255,.15);
+box-shadow:0 18px 45px #0005;isolation:isolate
+}
+.balance-card:before{
+content:"";position:absolute;inset:0;z-index:-2;
+background:linear-gradient(135deg,rgba(255,255,255,.12),transparent 55%)
+}
+.balance-card:after{
+content:"";position:absolute;width:220px;height:220px;border-radius:50%;
+left:-65px;bottom:-125px;z-index:-1;background:rgba(255,255,255,.10);
+filter:blur(2px)
+}
+.coins-card{background:linear-gradient(135deg,#59401c,#a77b32 55%,#59401c)}
+.gems-card{background:linear-gradient(135deg,#263b70,#356e9f 55%,#29234f)}
+.card-top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.currency-icon{
+width:54px;height:54px;border-radius:18px;display:grid;place-items:center;
+background:rgba(255,255,255,.17);border:1px solid rgba(255,255,255,.24);
+backdrop-filter:blur(10px)
+}
+.currency-icon svg{width:31px;height:31px;stroke:white;fill:none;stroke-width:1.6}
+.currency-label{font-size:13px;font-weight:800;color:#fff}
+.card-tag{font-size:9px;padding:6px 10px;border-radius:30px;background:#ffffff20;border:1px solid #ffffff35}
+.balance-number{
+font-size:clamp(27px,5vw,43px);font-weight:900;line-height:1.35;
+margin-top:22px;direction:ltr;text-align:right;overflow-wrap:anywhere;
+text-shadow:0 4px 15px #0003
+}
+.balance-caption{font-size:11px;color:#ffffffc9;margin-top:1px}
+.card-bottom{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:17px}
+.card-bottom span{font-size:10px;color:#ffffffcf}
+.card-bottom a{
+font-size:10px;font-weight:900;padding:8px 13px;border-radius:10px;
+background:#ffffff25;border:1px solid #ffffff40
+}
+.earned-card{
+margin-top:17px;padding:22px;border-radius:23px;
+background:linear-gradient(120deg,#211b3c,#292348 60%,#182c3b);
+border:1px solid rgba(174,147,255,.23);
+box-shadow:0 15px 35px #0003;position:relative;overflow:hidden
+}
+.earned-card:after{
+content:"";position:absolute;left:-30px;top:-70px;width:190px;height:190px;
+border-radius:50%;background:#a58aff13
+}
+.earned-head{display:flex;align-items:center;gap:12px}
+.earned-icon{
+width:48px;height:48px;border-radius:15px;display:grid;place-items:center;
+background:#a58aff22;border:1px solid #a58aff55
+}
+.earned-icon svg{width:26px;height:26px;stroke:#c6b4ff;fill:none;stroke-width:1.7}
+.earned-head h3{font-size:14px;font-weight:900}
+.earned-head p{font-size:10px;color:var(--muted);margin-top:2px}
+.earned-number{font-size:clamp(25px,5vw,36px);font-weight:900;color:#c6b4ff;margin-top:13px;direction:ltr;text-align:right}
+.earned-note{font-size:10px;color:#bcb5d0;margin-top:3px}
+.conversion{
+margin-top:17px;padding:22px;border-radius:23px;
+background:linear-gradient(145deg,rgba(31,29,54,.98),rgba(18,22,39,.98));
+border:1px solid var(--line);box-shadow:0 15px 35px #0003
+}
+.section-head{display:flex;align-items:center;gap:11px;margin-bottom:16px}
+.section-head .symbol{
+width:43px;height:43px;border-radius:14px;display:grid;place-items:center;
+background:#9e7cff22;border:1px solid #9e7cff44
+}
+.symbol svg{width:23px;height:23px;stroke:#c7b6ff;fill:none;stroke-width:1.8}
+.section-head h2{font-size:16px;font-weight:900}
+.section-head p{font-size:10px;color:var(--muted);margin-top:2px}
+.rate{
+padding:13px 15px;border-radius:14px;background:#ffffff08;
+border:1px solid var(--line);display:flex;justify-content:space-between;
+align-items:center;gap:10px;margin-bottom:16px
+}
+.rate span{font-size:11px;color:var(--muted)}
+.rate strong{font-size:13px;color:var(--gold)}
+.field-label{font-size:11px;font-weight:800;display:block;margin-bottom:8px}
+.input-wrap{position:relative}
+.input-wrap input{
+width:100%;height:54px;border-radius:14px;padding:0 15px;
+color:white;background:#0e0d1c;border:1px solid #ffffff18;outline:none;
+font-size:16px;font-weight:800
+}
+.input-wrap input:focus{border-color:#a58aff;box-shadow:0 0 0 3px #a58aff18}
+.input-wrap input::placeholder{color:#77718d}
+.conversion-preview{
+display:flex;align-items:center;justify-content:space-between;gap:10px;
+padding:15px;margin-top:12px;border-radius:14px;
+background:#55d9a510;border:1px solid #55d9a52c
+}
+.conversion-preview span{font-size:11px;color:#b8d8ca}
+.conversion-preview strong{font-size:20px;color:var(--green);direction:ltr}
+.primary-btn{
+width:100%;height:52px;border-radius:14px;margin-top:14px;
+background:linear-gradient(110deg,#aa91ff,#7050df);
+font-size:13px;font-weight:900;box-shadow:0 9px 25px #7654e544;
+transition:.2s
+}
+.primary-btn:disabled{opacity:.45;cursor:not-allowed}
+.primary-btn:not(:disabled):active{transform:scale(.985)}
+.hint{font-size:10px;color:var(--muted);line-height:1.9;margin-top:11px}
+.history{
+margin-top:18px;padding:22px;border-radius:23px;
+background:linear-gradient(145deg,#19182c,#111322);
+border:1px solid var(--line)
+}
+.history-list{display:flex;flex-direction:column;gap:9px}
+.transaction{
+display:flex;align-items:center;gap:12px;padding:13px;
+border-radius:15px;background:#ffffff06;border:1px solid #ffffff0b
+}
+.tx-icon{
+width:42px;height:42px;flex:none;border-radius:13px;display:grid;place-items:center;
+background:#ffffff0c
+}
+.tx-icon svg{width:21px;height:21px;stroke:currentColor;fill:none;stroke-width:1.8}
+.tx-info{flex:1;min-width:0}
+.tx-info strong{display:block;font-size:11px;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tx-info small{font-size:9px;color:var(--muted)}
+.tx-amount{font-size:13px;font-weight:900;direction:ltr;white-space:nowrap}
+.positive{color:var(--green)}
+.negative{color:var(--red)}
+.empty{text-align:center;padding:27px 10px;color:var(--muted);font-size:11px}
+.loading{width:24px;height:24px;margin:0 auto 10px;border:2px solid #ffffff20;border-top-color:var(--purple);border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.message{
+display:none;margin-top:13px;padding:12px 14px;border-radius:12px;
+font-size:11px;line-height:1.8
+}
+.message.show{display:block}
+.message.error{color:#ffb4c1;background:#ff718914;border:1px solid #ff718933}
+.message.success{color:#9beac8;background:#55d9a510;border:1px solid #55d9a533}
+.footer{text-align:center;color:#77718c;font-size:9px;padding:27px 0}
+@media(max-width:620px){
+.container{width:min(100% - 22px,500px)}
+.topbar{height:65px}
+.balance-grid{gap:10px}
+.balance-card{min-height:195px;padding:15px;border-radius:19px}
+.currency-icon{width:43px;height:43px;border-radius:14px}
+.currency-icon svg{width:25px;height:25px}
+.currency-label{font-size:11px}
+.card-tag{font-size:8px;padding:5px 7px}
+.balance-number{font-size:clamp(22px,6vw,30px);margin-top:18px}
+.card-bottom{margin-top:12px}
+.card-bottom span{font-size:8px}
+.card-bottom a{font-size:9px;padding:6px 8px}
+.earned-card,.conversion,.history{padding:17px;border-radius:19px}
+.page-title{padding-top:19px}
+}
+@media(max-width:370px){
+.balance-grid{grid-template-columns:1fr}
+.balance-card{min-height:180px}
+.balance-number{font-size:34px}
+}
+</style>
+</head>
+<body>
+<div class="container">
+<header class="topbar">
+<a class="back" href="home.html" aria-label="العودة للرئيسية">
+<svg viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></svg>
+</a>
+<div class="brand">
+<div class="brand-icon">
+<svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M3 10h18M7 15h4"/></svg>
+</div>
+<div><strong>HANOON WORLD</strong><small>YOUR SOCIAL UNIVERSE</small></div>
+</div>
+</header>
+
+<section class="page-title">
+<div class="eyebrow">HANOON FINANCE</div>
+<h1>محفظتك المالية</h1>
+<p>تابع أرصدتك وأرباحك وتحويلاتك من مكان واحد</p>
+</section>
+
+<section class="balance-grid">
+<article class="balance-card coins-card">
+<div class="card-top">
+<div class="currency-icon">
+<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M15.5 9.5c-.7-.8-1.7-1.2-3.1-1.2-1.5 0-2.5.7-2.5 1.8 0 2.8 5.4 1.1 5.4 4 0 1.2-1.1 2-2.8 2-1.3 0-2.5-.5-3.3-1.4M12 6.5v11"/></svg>
+</div>
+<span class="card-tag">COINS</span>
+</div>
+<div class="currency-label">رصيد العملات</div>
+<div class="balance-number" id="coins">—</div>
+<div class="balance-caption">عملاتك المتاحة للاستخدام</div>
+<div class="card-bottom"><span>الرصيد الحالي</span><a href="store.html">اكتشف المتجر</a></div>
+</article>
+
+<article class="balance-card gems-card">
+<div class="card-top">
+<div class="currency-icon">
+<svg viewBox="0 0 24 24"><path d="m12 2 8 7-8 13L4 9l8-7Z"/><path d="m4 9 16 0M8 9l4 13 4-13"/></svg>
+</div>
+<span class="card-tag">GEMS</span>
+</div>
+<div class="currency-label">رصيد الجواهر</div>
+<div class="balance-number" id="gems">—</div>
+<div class="balance-caption">جواهرك المتاحة</div>
+<div class="card-bottom"><span>الرصيد الحالي</span><a href="gifts.html">إرسال هدية</a></div>
+</article>
+</section>
+
+<section class="earned-card">
+<div class="earned-head">
+<div class="earned-icon">
+<svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+</div>
+<div><h3>الجواهر المكتسبة من الهدايا</h3><p>أرباحك التي يمكنك تحويلها إلى عملات</p></div>
+</div>
+<div class="earned-number" id="earnedGems">—</div>
+<div class="earned-note">هذا الرصيد مخصص للتحويل ولا يشمل الجواهر العادية</div>
+</section>
+
+<section class="conversion">
+<div class="section-head">
+<div class="symbol">
+<svg viewBox="0 0 24 24"><path d="M4 7h14l-3-3M20 17H6l3 3M18 7l-3-3M6 17l3 3"/></svg>
+</div>
+<div><h2>تحويل الأرباح</h2><p>حوّل الجواهر المكتسبة إلى عملات</p></div>
+</div>
+<div class="rate">
+<span>سعر التحويل الحالي</span>
+<strong id="rateText">جارٍ التحميل...</strong>
+</div>
+<label class="field-label" for="convertAmount">عدد الجواهر المراد تحويلها</label>
+<div class="input-wrap">
+<input id="convertAmount" type="number" min="100" step="100" placeholder="مثال: 100">
+</div>
+<div class="conversion-preview">
+<span>ستحصل على عملات</span>
+<strong id="previewCoins">0</strong>
+</div>
+<button class="primary-btn" id="convertBtn" disabled>تحويل الجواهر إلى عملات</button>
+<p class="hint" id="conversionHint">التحويل يتم من رصيد الأرباح المكتسبة فقط، وبالمضاعفات المحددة في سعر التحويل.</p>
+<div class="message" id="message"></div>
+</section>
+
+<section class="history">
+<div class="section-head">
+<div class="symbol">
+<svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5M12 7v5l4 2"/></svg>
+</div>
+<div><h2>سجل الحركات</h2><p>آخر عمليات الإضافة والخصم والتحويل</p></div>
+</div>
+<div class="history-list" id="historyList">
+<div class="empty"><div class="loading"></div>جارٍ تحميل الحركات...</div>
+</div>
+</section>
+
+<footer class="footer">HANOON WORLD · YOUR SOCIAL UNIVERSE</footer>
+</div>
+
+<script>
+const SUPABASE_URL="https://gjtgvczvclfwvlvcquxh.supabase.co";
+const SUPABASE_KEY="sb_publishable_4DVTUZ-xTlqU2GpFvpb7lw_g-Kxomd4";
+const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+
+const $=id=>document.getElementById(id);
+let currentUser=null;
+let wallet={coins:0,gems:0,earned_gems:0};
+let rate={gems:100,coins:70};
+
+function number(value){
+return Number(value||0).toLocaleString("en-US");
+}
+function escapeHTML(value){
+return String(value??"").replace(/[&<>"']/g,c=>({
+"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+}[c]));
+}
+function showMessage(message,type="error"){
+const box=$("message");
+box.textContent=message;
+box.className="message show "+type;
+}
+function hideMessage(){
+$("message").className="message";
+}
+async function loadSession(){
+const {data,error}=await db.auth.getSession();
+if(error)throw error;
+currentUser=data.session?.user||null;
+if(!currentUser){
+location.replace("index.html");
+return false;
+}
+return true;
+}
+async function loadWallet(){
+const {data,error}=await db.from("world_wallets")
+.select("coins,gems,earned_gems")
+.eq("user_id",currentUser.id)
+.maybeSingle();
+if(error)throw error;
+wallet={
+coins:Number(data?.coins||0),
+gems:Number(data?.gems||0),
+earned_gems:Number(data?.earned_gems||0)
+};
+renderWallet();
+}
+async function loadRate(){
+const {data,error}=await db.from("world_economy_settings")
+.select("earned_gems_per_batch,coins_per_batch")
+.eq("id",1)
+.maybeSingle();
+if(error)throw error;
+if(data){
+rate.gems=Number(data.earned_gems_per_batch||100);
+rate.coins=Number(data.coins_per_batch||70);
+}
+$("rateText").textContent=`${number(rate.gems)} جوهرة = ${number(rate.coins)} عملة`;
+$("convertAmount").step=String(rate.gems);
+$("convertAmount").min=String(rate.gems);
+updatePreview();
+}
+function renderWallet(){
+$("coins").textContent=number(wallet.coins);
+$("gems").textContent=number(wallet.gems);
+$("earnedGems").textContent=number(wallet.earned_gems);
+updatePreview();
+}
+function updatePreview(){
+const amount=Number($("convertAmount").value||0);
+const valid=Number.isSafeInteger(amount)&&amount>0&&amount%rate.gems===0;
+const result=valid?(amount/rate.gems)*rate.coins:0;
+$("previewCoins").textContent=number(result);
+$("convertBtn").disabled=!valid||amount>wallet.earned_gems;
+if(amount>wallet.earned_gems){
+$("conversionHint").textContent="المبلغ أكبر من رصيد أرباحك المتاح.";
+}else{
+$("conversionHint").textContent=`الحد الأدنى ${number(rate.gems)} جوهرة، ويجب أن يكون المبلغ من مضاعفات ${number(rate.gems)}.`;
+}
+}
+function transactionTitle(row){
+const reason=String(row.reason||"").toLowerCase();
+const ref=String(row.reference_type||"").toLowerCase();
+if(reason.includes("gift_earning")||ref.includes("gift"))return "أرباح هدية";
+if(reason.includes("gift_send"))return "إرسال هدية";
+if(reason.includes("conversion")||ref.includes("conversion"))return "تحويل جواهر إلى عملات";
+if(reason.includes("signup"))return "مكافأة التسجيل";
+return row.reason||"حركة في المحفظة";
+}
+function renderHistory(rows){
+const box=$("historyList");
+if(!rows.length){
+box.innerHTML='<div class="empty">لا توجد حركات مسجلة في المحفظة حتى الآن</div>';
+return;
+}
+box.innerHTML=rows.map(row=>{
+const amount=Number(row.amount||0);
+const positive=amount>0;
+const currency=row.currency==="gems"?"جوهرة":"عملة";
+const date=row.created_at?new Date(row.created_at).toLocaleString("ar-EG"):"";
+const color=positive?"positive":"negative";
+const sign=positive?"+":"";
+const icon=positive
+?'<svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>'
+:'<svg viewBox="0 0 24 24"><path d="M5 12h14"/></svg>';
+return `<article class="transaction">
+<div class="tx-icon ${color}">${icon}</div>
+<div class="tx-info"><strong>${escapeHTML(transactionTitle(row))}</strong><small>${escapeHTML(date)} · ${currency}</small></div>
+<div class="tx-amount ${color}">${sign}${number(Math.abs(amount))}</div>
+</article>`;
+}).join("");
+}
+async function loadHistory(){
+const {data,error}=await db.from("world_wallet_transactions")
+.select("currency,amount,reason,reference_type,reference_id,created_at")
+.eq("user_id",currentUser.id)
+.order("created_at",{ascending:false})
+.limit(30);
+if(error)throw error;
+renderHistory(data||[]);
+}
+async function convertGems(){
+hideMessage();
+const amount=Number($("convertAmount").value);
+if(!Number.isSafeInteger(amount)||amount<=0||amount%rate.gems!==0){
+showMessage("أدخل مبلغًا صحيحًا من مضاعفات سعر التحويل.");
+return;
+}
+if(amount>wallet.earned_gems){
+showMessage("رصيد أرباحك لا يكفي لإتمام التحويل.");
+return;
+}
+const btn=$("convertBtn");
+btn.disabled=true;
+btn.textContent="جارٍ تنفيذ التحويل...";
+try{
+const {data,error}=await db.rpc("hanoon_convert_earned_gems",{p_gems:amount});
+if(error)throw error;
+if(!data||data.success===false){
+throw new Error(data?.message||"تعذر تنفيذ التحويل.");
+}
+showMessage("تم التحويل بنجاح وتحديث أرصدتك.","success");
+$("convertAmount").value="";
+await Promise.all([loadWallet(),loadHistory()]);
+}catch(error){
+console.error("HANOON WALLET CONVERSION:",error);
+showMessage(error.message||"حدث خطأ أثناء التحويل.");
+}finally{
+btn.textContent="تحويل الجواهر إلى عملات";
+updatePreview();
+}
+}
+async function start(){
+try{
+const valid=await loadSession();
+if(!valid)return;
+await Promise.all([loadWallet(),loadRate(),loadHistory()]);
+}catch(error){
+console.error("HANOON WALLET:",error);
+$("historyList").innerHTML='<div class="empty">تعذر تحميل بيانات المحفظة. أعد تحميل الصفحة وحاول مرة أخرى.</div>';
+showMessage(error.message||"حدث خطأ أثناء تحميل المحفظة.");
+}
+}
+$("convertAmount").addEventListener("input",updatePreview);
+$("convertBtn").addEventListener("click",convertGems);
+db.auth.onAuthStateChange((event,session)=>{
+if(event==="SIGNED_OUT"||!session)location.replace("index.html");
+});
+start();
+</script>
+</body>
+</html>
