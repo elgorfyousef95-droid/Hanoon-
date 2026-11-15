@@ -1,0 +1,749 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="theme-color" content="#090a12">
+<title>HANOON WORLD | LIVE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg:#090a12;
+  --panel:#141624;
+  --panel2:#1c2031;
+  --purple:#a58aff;
+  --gold:#e8c78e;
+  --green:#50dfb3;
+  --red:#ff647d;
+  --text:#f8f6ff;
+  --muted:#9999b0;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{
+  width:100%;height:100%;margin:0;overflow:hidden;
+  overscroll-behavior:none;
+  touch-action:pan-x pan-y;
+  font-family:'Cairo',sans-serif;
+  background:var(--bg);color:var(--text);
+}
+body{position:fixed;inset:0}
+button,input,textarea{font:inherit}
+button{cursor:pointer}
+button:disabled{opacity:.45;cursor:not-allowed}
+.app{
+  width:100%;height:100%;height:100dvh;
+  display:flex;flex-direction:column;overflow:hidden;
+  background:
+    radial-gradient(ellipse at 80% -15%,#8d6aff25,transparent 43%),
+    radial-gradient(ellipse at 0% 100%,#38cdb510,transparent 40%),
+    var(--bg);
+}
+.header{
+  height:66px;flex-shrink:0;
+  padding:0 16px;
+  display:flex;align-items:center;justify-content:space-between;
+  border-bottom:1px solid #ffffff12;
+  background:#10121fe8;
+  backdrop-filter:blur(18px);
+}
+.brand{display:flex;align-items:center;gap:10px}
+.brand-icon{
+  width:42px;height:42px;border-radius:14px;
+  display:grid;place-items:center;
+  background:linear-gradient(145deg,#f4dfb9,#b98b51 65%,#76532f);
+  color:#21170b;font-size:23px;font-weight:900;
+  box-shadow:0 5px 22px #d3ad6b30;
+}
+.brand-name{font-size:13px;font-weight:900;letter-spacing:.5px}
+.brand-sub{font-size:9px;color:var(--muted)}
+.header-actions{display:flex;align-items:center;gap:8px}
+.icon-btn{
+  width:40px;height:40px;border-radius:13px;
+  border:1px solid #ffffff18;
+  background:#202438;color:white;
+  display:grid;place-items:center;
+  text-decoration:none;
+}
+.icon-btn svg{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.main{
+  flex:1;min-height:0;width:100%;max-width:850px;
+  margin:0 auto;padding:14px 15px 10px;
+  display:flex;flex-direction:column;gap:13px;
+  overflow:hidden;
+}
+.hero{
+  flex-shrink:0;position:relative;overflow:hidden;
+  min-height:146px;padding:17px 18px;
+  border-radius:23px;
+  border:1px solid #bda5ff35;
+  background:
+    radial-gradient(circle at 15% 20%,#e8c78e26,transparent 32%),
+    radial-gradient(circle at 90% 100%,#a58aff45,transparent 48%),
+    linear-gradient(120deg,#27213c,#171a2c 55%,#171729);
+  box-shadow:0 14px 40px #0005;
+}
+.hero:after{
+  content:"";position:absolute;width:190px;height:190px;
+  border:1px solid #ffffff12;border-radius:50%;
+  left:-70px;top:-90px;
+  box-shadow:0 0 0 18px #ffffff05,0 0 0 38px #ffffff04;
+}
+.hero-content{position:relative;z-index:1}
+.hero-top{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.live-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:4px 10px;border-radius:20px;
+  background:#ff4e6c20;border:1px solid #ff718766;
+  color:#ff9aaa;font-size:10px;font-weight:900;
+}
+.live-dot{
+  width:7px;height:7px;border-radius:50%;
+  background:#ff536e;box-shadow:0 0 10px #ff536e;
+  animation:pulse 1.2s infinite;
+}
+.hero h1{font-size:23px;line-height:1.5;margin:0;font-weight:900}
+.hero p{font-size:10px;color:#c3bfd4;margin:2px 0 12px}
+.hero-actions{display:flex;gap:8px;flex-wrap:wrap}
+.primary-btn{
+  height:39px;padding:0 15px;border:0;border-radius:12px;
+  color:#20182e;font-size:11px;font-weight:900;
+  background:linear-gradient(110deg,#f1d8a8,#c5a0ff);
+  box-shadow:0 7px 20px #b69aff25;
+}
+.secondary-btn{
+  height:39px;padding:0 13px;border-radius:12px;
+  border:1px solid #ffffff25;background:#ffffff0d;
+  color:white;font-size:10px;font-weight:800;
+}
+.section-head{
+  flex-shrink:0;display:flex;align-items:center;
+  justify-content:space-between;gap:10px;
+}
+.section-title{font-size:15px;font-weight:900}
+.section-sub{font-size:9px;color:var(--muted);margin-top:1px}
+.refresh-btn{
+  width:36px;height:36px;border-radius:11px;
+  border:1px solid #ffffff18;background:#1b1e2e;color:#ddd5ff;
+  display:grid;place-items:center;
+}
+.refresh-btn svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.filters{
+  flex-shrink:0;display:flex;gap:8px;overflow-x:auto;
+  scrollbar-width:none;padding-bottom:2px;
+}
+.filters::-webkit-scrollbar{display:none}
+.filter{
+  flex-shrink:0;padding:8px 14px;border-radius:22px;
+  border:1px solid #ffffff17;background:#171a29;
+  color:#aaa9bf;font-size:10px;font-weight:800;
+}
+.filter.active{
+  color:#e4d9ff;border-color:#a58aff75;
+  background:linear-gradient(120deg,#4b3a70,#29243d);
+}
+.search{
+  flex-shrink:0;height:43px;display:flex;align-items:center;gap:9px;
+  padding:0 13px;border-radius:14px;
+  border:1px solid #ffffff17;background:#151827;
+}
+.search svg{width:18px;height:18px;stroke:#9999b0;fill:none;stroke-width:1.8;stroke-linecap:round}
+.search input{
+  width:100%;min-width:0;border:0;outline:0;
+  background:transparent;color:white;font-size:11px;
+}
+.search input::placeholder{color:#77788f}
+.stream-area{
+  flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;
+  scrollbar-width:thin;scrollbar-color:#48405e transparent;
+  padding:1px 1px 12px;
+}
+.stream-grid{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:11px;
+}
+.stream-card{
+  min-width:0;overflow:hidden;position:relative;
+  border-radius:18px;border:1px solid #ffffff18;
+  background:linear-gradient(145deg,#20243a,#141725);
+  box-shadow:0 8px 22px #0004;
+}
+.stream-cover{
+  height:clamp(145px,29vh,230px);position:relative;
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 50% 35%,#8b70d655,transparent 42%),
+    linear-gradient(145deg,#30284a,#121725);
+}
+.stream-cover:before,.stream-cover:after{
+  content:"";position:absolute;border:1px solid #ffffff13;
+  width:160px;height:160px;border-radius:50%;
+}
+.stream-cover:after{width:210px;height:210px}
+.cover-avatar{
+  width:72px;height:72px;border-radius:50%;
+  display:grid;place-items:center;position:relative;z-index:1;
+  color:white;font-size:26px;font-weight:900;
+  background:linear-gradient(145deg,#c3aaff,#7056bb 70%,#3c315e);
+  border:2px solid #ffffff65;
+  box-shadow:0 8px 30px #0007;
+}
+.cover-live{
+  position:absolute;top:9px;right:9px;z-index:2;
+  padding:4px 8px;border-radius:8px;
+  color:white;background:#f04460e8;
+  font-size:9px;font-weight:900;
+}
+.cover-viewers{
+  position:absolute;top:9px;left:9px;z-index:2;
+  padding:4px 8px;border-radius:8px;
+  color:white;background:#080910b8;
+  font-size:9px;font-weight:800;
+  backdrop-filter:blur(8px);
+}
+.stream-info{padding:10px 11px 12px}
+.stream-title{
+  font-size:11px;font-weight:900;line-height:1.8;
+  overflow:hidden;display:-webkit-box;
+  -webkit-line-clamp:2;-webkit-box-orient:vertical;
+  min-height:39px;
+}
+.host-row{display:flex;align-items:center;gap:7px;margin-top:7px}
+.host-avatar{
+  width:25px;height:25px;flex-shrink:0;border-radius:50%;
+  display:grid;place-items:center;
+  background:#39304f;color:#e2d5ff;font-size:10px;font-weight:900;
+}
+.host-name{
+  min-width:0;flex:1;font-size:9px;color:#c5c2d6;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+.verified{
+  width:15px;height:15px;flex-shrink:0;border-radius:50%;
+  display:grid;place-items:center;
+  background:#2679ba;color:white;font-size:9px;font-weight:900;
+}
+.watch-btn{
+  width:100%;height:34px;margin-top:9px;border-radius:10px;
+  border:1px solid #a58aff45;
+  background:linear-gradient(110deg,#6f56bc,#9a7ce9);
+  color:white;font-size:10px;font-weight:900;
+}
+.empty{
+  min-height:220px;display:flex;align-items:center;
+  justify-content:center;flex-direction:column;
+  text-align:center;padding:25px;
+  border:1px dashed #ffffff22;border-radius:19px;
+  background:#ffffff05;
+}
+.empty-icon{
+  width:58px;height:58px;border-radius:19px;
+  display:grid;place-items:center;margin-bottom:12px;
+  background:#a58aff18;border:1px solid #a58aff35;
+}
+.empty-icon svg{width:26px;height:26px;stroke:#c2adff;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.empty strong{font-size:13px}
+.empty p{font-size:10px;line-height:2;color:var(--muted);margin:5px 0 13px}
+.bottom{
+  flex-shrink:0;height:57px;padding:0 16px;
+  display:flex;align-items:center;justify-content:space-around;
+  border-top:1px solid #ffffff12;background:#10121feF;
+  padding-bottom:env(safe-area-inset-bottom);
+}
+.nav-link{
+  display:flex;align-items:center;gap:6px;
+  color:#8e8fa6;text-decoration:none;font-size:9px;font-weight:800;
+}
+.nav-link svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.nav-link.active{color:#c9baff}
+.modal{
+  position:fixed;inset:0;z-index:30;display:none;
+  align-items:flex-end;justify-content:center;
+  padding:15px;background:#05060bd9;
+  backdrop-filter:blur(10px);
+}
+.modal.show{display:flex}
+.modal-card{
+  width:100%;max-width:470px;max-height:90%;
+  overflow-y:auto;padding:20px;border-radius:24px;
+  border:1px solid #ffffff20;
+  background:linear-gradient(145deg,#242238,#131725);
+  box-shadow:0 20px 70px #000b;
+}
+.modal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.modal-head strong{font-size:16px;font-weight:900}
+.close-btn{
+  width:33px;height:33px;border-radius:10px;
+  border:1px solid #ffffff20;background:#ffffff0c;color:white;font-size:18px;
+}
+.field{margin:12px 0}
+.field label{display:block;font-size:10px;color:#c4bfd7;margin-bottom:6px;font-weight:800}
+.field input,.field textarea{
+  width:100%;border:1px solid #ffffff1c;border-radius:12px;
+  background:#0d1020;color:white;padding:12px;
+  outline:none;font-size:11px;
+}
+.field textarea{height:85px;resize:none}
+.field input:focus,.field textarea:focus{border-color:#a58aff99}
+.field small{font-size:9px;color:var(--muted)}
+.modal-submit{width:100%;height:47px;margin-top:8px;border:0;border-radius:13px;background:linear-gradient(110deg,#b69aff,#8063df);color:white;font-weight:900;font-size:12px}
+.modal-note{font-size:9px;color:#a7a4ba;line-height:1.9;margin-top:10px}
+.toast{
+  position:fixed;z-index:50;bottom:75px;left:15px;right:15px;
+  max-width:430px;margin:auto;padding:12px 15px;
+  border-radius:13px;background:#202438f5;
+  border:1px solid #ffffff25;color:white;
+  text-align:center;font-size:10px;display:none;
+  box-shadow:0 10px 30px #0008;
+}
+.toast.show{display:block}
+.loading{
+  display:flex;justify-content:center;align-items:center;
+  min-height:130px;color:#aaa5bd;font-size:10px;gap:9px;
+}
+.spinner{
+  width:18px;height:18px;border-radius:50%;
+  border:2px solid #ffffff25;border-top-color:#b69aff;
+  animation:spin .8s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes pulse{50%{opacity:.3}}
+@media(min-width:650px){
+  .main{padding-top:20px}
+  .stream-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+  .stream-cover{height:230px}
+}
+@media(max-height:680px){
+  .header{height:55px}
+  .main{gap:8px;padding-top:8px}
+  .hero{min-height:118px;padding:11px 15px}
+  .hero h1{font-size:19px}
+  .hero p{margin:0 0 7px}
+  .hero-actions .primary-btn,.hero-actions .secondary-btn{height:33px}
+  .search{height:38px}
+  .bottom{height:49px}
+}
+</style>
+</head>
+
+<body>
+<div class="app">
+
+  <header class="header">
+    <div class="brand">
+      <div class="brand-icon">H</div>
+      <div>
+        <div class="brand-name">HANOON WORLD</div>
+        <div class="brand-sub">LIVE • بث مباشر</div>
+      </div>
+    </div>
+    <div class="header-actions">
+      <a class="icon-btn" href="home.html" aria-label="الرئيسية">
+        <svg viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1Z"/></svg>
+      </a>
+    </div>
+  </header>
+
+  <main class="main">
+
+    <section class="hero">
+      <div class="hero-content">
+        <div class="hero-top">
+          <span class="live-badge"><span class="live-dot"></span> LIVE WORLD</span>
+        </div>
+        <h1>عالم البث المباشر</h1>
+        <p>ابدأ بثك، قابل جمهورك، وشارك لحظاتك مع عالم هنون.</p>
+        <div class="hero-actions">
+          <button class="primary-btn" id="openCreate">＋ ابدأ بث مباشر</button>
+          <button class="secondary-btn" id="refreshTop">تحديث البثوث</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-head">
+      <div>
+        <div class="section-title">اكتشف البثوث</div>
+        <div class="section-sub" id="streamCount">البثوث المباشرة الآن</div>
+      </div>
+      <button class="refresh-btn" id="refreshButton" title="تحديث">
+        <svg viewBox="0 0 24 24"><path d="M20 7v5h-5M4 17v-5h5"/><path d="M5.5 9a7 7 0 0 1 11.8-2L20 12M4 12l2.7 5a7 7 0 0 0 11.8-2"/></svg>
+      </button>
+    </section>
+
+    <div class="filters">
+      <button class="filter active" data-filter="all">كل البثوث</button>
+      <button class="filter" data-filter="new">الأحدث</button>
+    </div>
+
+    <label class="search">
+      <svg viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="7.3"/><path d="m16.2 16.2 5 5"/></svg>
+      <input id="searchInput" type="search" placeholder="ابحث عن بث أو اسم صاحب البث..." autocomplete="off">
+    </label>
+
+    <section class="stream-area" id="streamArea">
+      <div class="loading"><span class="spinner"></span> جارٍ تحميل البثوث المباشرة...</div>
+    </section>
+
+  </main>
+
+  <nav class="bottom">
+    <a class="nav-link" href="home.html">
+      <svg viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1Z"/></svg>
+      الرئيسية
+    </a>
+    <a class="nav-link active" href="broadcasts.html">
+      <svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="3"/><path d="m10 10 5 2.5-5 2.5Z"/><path d="M8 3h8"/></svg>
+      LIVE
+    </a>
+    <a class="nav-link" href="live.html">
+      <svg viewBox="0 0 24 24"><path d="M12 3v18M3 12h18"/><circle cx="12" cy="12" r="9"/></svg>
+      مقابلة عشوائية
+    </a>
+    <a class="nav-link" href="wallet.html">
+      <svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="15" rx="3"/><path d="M3 9h18M16 15h2"/></svg>
+      المحفظة
+    </a>
+  </nav>
+
+</div>
+
+<div class="modal" id="createModal">
+  <div class="modal-card">
+    <div class="modal-head">
+      <strong>ابدأ بثك المباشر</strong>
+      <button class="close-btn" id="closeModal" aria-label="إغلاق">×</button>
+    </div>
+
+    <div class="field">
+      <label for="streamTitle">عنوان البث</label>
+      <input id="streamTitle" maxlength="100" placeholder="اكتب عنوانًا يجذب المشاهدين">
+    </div>
+
+    <div class="field">
+      <label for="streamDescription">وصف البث</label>
+      <textarea id="streamDescription" maxlength="500" placeholder="اكتب وصفًا قصيرًا عن البث..."></textarea>
+      <small>بحد أقصى 500 حرف.</small>
+    </div>
+
+    <button class="modal-submit" id="startLiveButton">تشغيل الكاميرا وبدء البث</button>
+    <div class="modal-note">
+      قبل إنشاء البث سنتحقق من إمكانية الوصول إلى الكاميرا والميكروفون. اسمح للمتصفح باستخدامهما عند ظهور الطلب.
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script type="module">
+import { supabase } from "./supabase.js";
+
+const $ = id => document.getElementById(id);
+
+const state = {
+  user:null,
+  streams:[],
+  profiles:{},
+  filter:"all",
+  channel:null,
+  loading:false
+};
+
+function toast(message){
+  const box=$("toast");
+  box.textContent=message;
+  box.classList.add("show");
+  clearTimeout(toast.timer);
+  toast.timer=setTimeout(()=>box.classList.remove("show"),3500);
+}
+
+function escapeHTML(value){
+  return String(value??"").replace(/[&<>"']/g,char=>({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+  })[char]);
+}
+
+function openModal(){
+  $("createModal").classList.add("show");
+  $("streamTitle").focus();
+}
+function closeModal(){
+  $("createModal").classList.remove("show");
+}
+
+function initials(name){
+  const clean=String(name||"H").trim();
+  return escapeHTML(clean.charAt(0).toUpperCase()||"H");
+}
+
+function formatViewers(value){
+  return Number(value||0).toLocaleString("en-US");
+}
+
+function timeValue(value){
+  const date=Date.parse(value||"");
+  return Number.isFinite(date)?date:0;
+}
+
+async function loadProfiles(ids){
+  const unique=[...new Set(ids.filter(Boolean))];
+  if(!unique.length)return;
+
+  const missing=unique.filter(id=>!state.profiles[id]);
+  if(!missing.length)return;
+
+  const {data,error}=await supabase
+    .from("profiles")
+    .select("id,full_name,username,is_verified")
+    .in("id",missing);
+
+  if(error)throw error;
+
+  for(const profile of data||[]){
+    state.profiles[profile.id]=profile;
+  }
+}
+
+function streamCard(stream){
+  const profile=state.profiles[stream.host_id]||{};
+  const name=profile.full_name||profile.username||"عضو هنون";
+  const title=stream.title||"بث مباشر";
+  const verified=profile.is_verified===true;
+  const started=timeValue(stream.started_at);
+
+  return `
+    <article class="stream-card">
+      <div class="stream-cover">
+        <span class="cover-live"><span class="live-dot" style="display:inline-block;margin-left:4px"></span> مباشر</span>
+        <span class="cover-viewers">مشاهدة مباشرة</span>
+        <div class="cover-avatar">${initials(name)}</div>
+      </div>
+      <div class="stream-info">
+        <div class="stream-title">${escapeHTML(title)}</div>
+        <div class="host-row">
+          <div class="host-avatar">${initials(name)}</div>
+          <div class="host-name">${escapeHTML(name)}</div>
+          ${verified?'<span class="verified" title="حساب موثق">✓</span>':""}
+        </div>
+        <button class="watch-btn" data-watch="${escapeHTML(stream.id)}">مشاهدة البث</button>
+      </div>
+    </article>
+  `;
+}
+
+function renderStreams(){
+  const search=$("searchInput").value.trim().toLowerCase();
+
+  let rows=[...state.streams];
+
+  if(state.filter==="new"){
+    rows.sort((a,b)=>timeValue(b.started_at)-timeValue(a.started_at));
+  }
+
+  if(search){
+    rows=rows.filter(stream=>{
+      const profile=state.profiles[stream.host_id]||{};
+      const name=profile.full_name||profile.username||"";
+      return String(stream.title||"").toLowerCase().includes(search)
+        ||String(name).toLowerCase().includes(search)
+        ||String(profile.username||"").toLowerCase().includes(search);
+    });
+  }
+
+  $("streamCount").textContent=
+    `${state.streams.length.toLocaleString("en-US")} بث مباشر`;
+
+  if(!rows.length){
+    $("streamArea").innerHTML=`
+      <div class="empty">
+        <div class="empty-icon">
+          <svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="3"/><path d="m10 10 5 2.5-5 2.5Z"/></svg>
+        </div>
+        <strong>${search?"لا توجد نتائج مطابقة":"لا توجد بثوث مباشرة الآن"}</strong>
+        <p>${search?"جرّب البحث باسم آخر.":"كن أول من يبدأ بثًا مباشرًا في عالم هنون."}</p>
+        <button class="primary-btn" id="emptyStartButton">ابدأ بثك الآن</button>
+      </div>
+    `;
+    $("emptyStartButton")?.addEventListener("click",openModal);
+    return;
+  }
+
+  $("streamArea").innerHTML=
+    `<div class="stream-grid">${rows.map(streamCard).join("")}</div>`;
+
+  $("streamArea").querySelectorAll("[data-watch]").forEach(button=>{
+    button.addEventListener("click",()=>{
+      const id=button.dataset.watch;
+      window.location.href="broadcast-room.html?stream="+encodeURIComponent(id);
+    });
+  });
+}
+
+async function loadStreams(){
+  if(state.loading)return;
+  state.loading=true;
+  $("refreshButton").disabled=true;
+  $("refreshTop").disabled=true;
+
+  if(!state.streams.length){
+    $("streamArea").innerHTML=
+      '<div class="loading"><span class="spinner"></span> جارٍ تحميل البثوث المباشرة...</div>';
+  }
+
+  try{
+    const {data,error}=await supabase
+      .from("world_live_streams")
+      .select("id,host_id,title,description,status,started_at")
+      .eq("status","live")
+      .order("started_at",{ascending:false})
+      .limit(60);
+
+    if(error)throw error;
+
+    state.streams=data||[];
+    await loadProfiles(state.streams.map(item=>item.host_id));
+    renderStreams();
+
+  }catch(error){
+    console.error("LIVE streams:",error);
+    $("streamArea").innerHTML=`
+      <div class="empty">
+        <strong>تعذر تحميل البثوث</strong>
+        <p>تحقق من اتصال الإنترنت ثم حاول التحديث مرة أخرى.</p>
+        <button class="primary-btn" id="retryButton">إعادة المحاولة</button>
+      </div>
+    `;
+    $("retryButton")?.addEventListener("click",loadStreams);
+  }finally{
+    state.loading=false;
+    $("refreshButton").disabled=false;
+    $("refreshTop").disabled=false;
+  }
+}
+
+async function checkCameraPermission(){
+  if(!navigator.mediaDevices?.getUserMedia){
+    throw new Error("الكاميرا تحتاج إلى فتح الموقع عبر HTTPS ومن متصفح يدعمها.");
+  }
+
+  const testStream=await navigator.mediaDevices.getUserMedia({
+    video:{facingMode:"user"},
+    audio:true
+  });
+
+  testStream.getTracks().forEach(track=>track.stop());
+}
+
+async function startLive(){
+  const button=$("startLiveButton");
+  const title=$("streamTitle").value.trim();
+  const description=$("streamDescription").value.trim();
+
+  if(!title){
+    toast("اكتب عنوان البث أولًا.");
+    $("streamTitle").focus();
+    return;
+  }
+  if(title.length<3){
+    toast("عنوان البث يجب أن يكون 3 أحرف على الأقل.");
+    return;
+  }
+
+  button.disabled=true;
+  button.textContent="جارٍ تجهيز البث...";
+
+  try{
+    if(!state.user){
+      window.location.href="login.html";
+      return;
+    }
+
+    await checkCameraPermission();
+
+    const {data,error}=await supabase
+      .from("world_live_streams")
+      .insert({
+        host_id:state.user.id,
+        title:title,
+        description:description,
+        status:"live"
+      })
+      .select("id")
+      .single();
+
+    if(error)throw error;
+    if(!data?.id)throw new Error("لم يتم إنشاء البث.");
+
+    window.location.href=
+      "broadcast-room.html?stream="+encodeURIComponent(data.id);
+
+  }catch(error){
+    console.error("Start LIVE:",error);
+    toast(error.message||"تعذر بدء البث. تحقق من صلاحية الكاميرا والميكروفون.");
+    button.disabled=false;
+    button.textContent="تشغيل الكاميرا وبدء البث";
+  }
+}
+
+function subscribeToStreams(){
+  if(state.channel)return;
+
+  state.channel=supabase
+    .channel("hanoon-live-discovery")
+    .on("postgres_changes",{
+      event:"*",
+      schema:"public",
+      table:"world_live_streams"
+    },()=>{
+      loadStreams();
+    })
+    .subscribe();
+}
+
+async function initialize(){
+  const {data,error}=await supabase.auth.getUser();
+
+  if(error||!data?.user){
+    window.location.replace("login.html");
+    return;
+  }
+
+  state.user=data.user;
+
+  $("openCreate").addEventListener("click",openModal);
+  $("closeModal").addEventListener("click",closeModal);
+  $("refreshButton").addEventListener("click",loadStreams);
+  $("refreshTop").addEventListener("click",loadStreams);
+  $("startLiveButton").addEventListener("click",startLive);
+  $("searchInput").addEventListener("input",renderStreams);
+
+  $("createModal").addEventListener("click",event=>{
+    if(event.target===$("createModal"))closeModal();
+  });
+
+  document.querySelectorAll("[data-filter]").forEach(button=>{
+    button.addEventListener("click",()=>{
+      document.querySelectorAll("[data-filter]").forEach(item=>item.classList.remove("active"));
+      button.classList.add("active");
+      state.filter=button.dataset.filter;
+      renderStreams();
+    });
+  });
+
+  await loadStreams();
+  subscribeToStreams();
+}
+
+window.addEventListener("pagehide",()=>{
+  if(state.channel)supabase.removeChannel(state.channel);
+});
+
+initialize().catch(error=>{
+  console.error(error);
+  toast("حدث خطأ أثناء فتح صفحة LIVE.");
+});
+</script>
+</body>
+</html>
