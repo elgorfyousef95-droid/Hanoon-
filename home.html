@@ -1,627 +1,1034 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<meta name="theme-color" content="#090914">
-<title>HANOON WORLD</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#090b17">
+<title>HANOON WORLD | الرئيسية</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 :root{
---bg:#090914;--panel:#141426;--panel2:#1c1b32;
---purple:#9b7cff;--purple2:#7654e5;--cyan:#65d9d1;
---gold:#f0c875;--text:#f8f6ff;--muted:#aaa5c0;
---line:rgba(255,255,255,.09);--shadow:0 18px 50px rgba(0,0,0,.38);
+  --bg:#090b17;
+  --panel:#111629;
+  --panel2:#171e34;
+  --panel3:#202944;
+  --purple:#9276ff;
+  --purple2:#7052e8;
+  --cyan:#4bd7cc;
+  --gold:#f0c978;
+  --pink:#e58bc9;
+  --text:#f5f4ff;
+  --muted:#929bb5;
+  --line:rgba(255,255,255,.085);
+  --shadow:0 18px 55px rgba(0,0,0,.32);
+  --top-height:76px;
+  --side-width:250px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{min-height:100vh;overflow-x:hidden;color:var(--text);font-family:Cairo,sans-serif;background:var(--bg);padding-bottom:105px}
-a{text-decoration:none;color:inherit}
+html,body{width:100%;height:100%;overflow:hidden}
+body{
+  color:var(--text);
+  font-family:"Cairo",sans-serif;
+  background:
+    radial-gradient(ellipse at 85% 5%,rgba(118,83,225,.17),transparent 35%),
+    radial-gradient(ellipse at 5% 75%,rgba(41,185,184,.09),transparent 35%),
+    var(--bg);
+}
+a{color:inherit;text-decoration:none}
 button,input{font:inherit}
-button{color:inherit;border:0;cursor:pointer}
-img{display:block;max-width:100%}
-body:before{content:"";position:fixed;inset:0;z-index:-3;background:linear-gradient(180deg,rgba(8,8,19,.62),rgba(8,8,19,.92)),url("https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=2000&q=90") center/cover fixed}
-body:after{content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;background:radial-gradient(ellipse at 5% 12%,rgba(130,91,245,.22),transparent 34%),radial-gradient(ellipse at 95% 38%,rgba(40,188,190,.13),transparent 35%),linear-gradient(180deg,transparent 30%,rgba(7,7,17,.48))}
-.app{width:min(100%,1450px);margin:auto;padding:0 22px}
-.topbar{height:78px;display:flex;align-items:center;justify-content:space-between;gap:15px;position:relative;z-index:20}
-.brand{display:flex;align-items:center;gap:11px;flex-shrink:0}
-.brand-mark{width:46px;height:46px;border-radius:15px;display:grid;place-items:center;background:linear-gradient(145deg,#c0a8ff,#6845db);border:1px solid rgba(255,255,255,.3);box-shadow:0 8px 27px rgba(128,88,237,.38)}
-.brand-mark svg{width:29px;height:29px}
-.brand-name{font-size:18px;font-weight:900;letter-spacing:.3px}
-.brand-sub{font-size:9px;letter-spacing:2px;color:#bcb1df;margin-top:-5px}
-.header-actions{display:flex;align-items:center;gap:9px}
-.wallet{display:flex;align-items:center;gap:10px;padding:8px 10px;background:linear-gradient(110deg,rgba(39,32,68,.96),rgba(19,24,43,.96));border:1px solid rgba(255,255,255,.13);border-radius:15px;box-shadow:0 8px 25px rgba(0,0,0,.22)}
-.wallet-unit{display:flex;align-items:center;gap:5px;font-size:12px;font-weight:900;min-width:55px}
-.wallet-unit svg{width:18px;height:18px}
-.wallet-unit.coins svg{color:var(--gold)}
-.wallet-unit.gems svg{color:#7bdcf4}
-.wallet-add{width:29px;height:29px;border-radius:9px;display:grid;place-items:center;background:linear-gradient(145deg,#ae94ff,#704cdb)}
-.wallet-add svg{width:17px;height:17px;stroke:white;fill:none;stroke-width:2.5}
-.wallet-links{display:flex;gap:6px;margin-right:3px}
-.wallet-link{display:flex;align-items:center;gap:5px;padding:7px 9px;border-radius:9px;background:rgba(255,255,255,.055);font-size:10px;font-weight:800;color:#ddd7ef}
-.wallet-link svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.7}
-.header-icon{width:42px;height:42px;border-radius:13px;display:grid;place-items:center;background:rgba(255,255,255,.07);border:1px solid var(--line)}
-.header-icon svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.8}
-.notification-link{position:relative}
-.notification-badge{position:absolute;top:-5px;right:-5px;min-width:19px;height:19px;padding:0 5px;border-radius:20px;background:#ff526d;color:#fff;font:800 10px Cairo,sans-serif;align-items:center;justify-content:center;border:2px solid #141426;box-shadow:0 3px 10px #0008}
-.notification-badge[hidden]{display:none!important}
-.my-avatar{width:42px;height:42px;border-radius:50%;overflow:hidden;display:grid;place-items:center;background:#282441;border:2px solid #9b7cff}
-.my-avatar img{width:100%;height:100%;object-fit:cover}
-.my-avatar svg{width:22px;height:22px;stroke:#c9baff;fill:none;stroke-width:1.6}
-.search-area{display:flex;align-items:center;gap:13px;margin-top:7px;position:relative;z-index:15}
-.search-box{height:53px;flex:1;display:flex;align-items:center;gap:12px;padding:0 17px;border-radius:17px;background:rgba(24,22,43,.92);border:1px solid rgba(174,149,255,.22);box-shadow:0 10px 30px rgba(0,0,0,.2),inset 0 1px rgba(255,255,255,.04)}
-.search-box:focus-within{border-color:rgba(174,149,255,.65);box-shadow:0 0 0 3px rgba(151,121,255,.1),0 12px 30px rgba(0,0,0,.24)}
-.search-box svg{width:21px;height:21px;flex:none;stroke:#b9a6f5;fill:none;stroke-width:1.8}
-.search-box input{flex:1;min-width:0;background:none;border:0;outline:0;color:white;font-size:13px}
-.search-box input::placeholder{color:#9690ad}
-.search-shortcut{font-size:10px;color:#9e98b6;padding:5px 8px;border-radius:7px;background:rgba(255,255,255,.055)}
-.search-filter{height:53px;width:53px;flex:none;display:grid;place-items:center;border-radius:16px;background:linear-gradient(145deg,#8e70eb,#6448ce);box-shadow:0 8px 22px rgba(105,76,208,.3)}
-.search-filter svg{width:21px;height:21px;stroke:white;fill:none;stroke-width:1.8}
-.search-results{display:none;position:absolute;top:62px;right:0;left:66px;padding:12px;border-radius:17px;background:#19172b;border:1px solid rgba(255,255,255,.13);box-shadow:var(--shadow);max-height:380px;overflow:auto}
+button{color:inherit;cursor:pointer}
+button:disabled{opacity:.5;cursor:not-allowed}
+svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.app-shell{
+  height:100dvh;
+  width:100%;
+  display:grid;
+  grid-template-columns:var(--side-width) minmax(0,1fr);
+  grid-template-rows:var(--top-height) minmax(0,1fr);
+  overflow:hidden;
+}
+.topbar{
+  grid-column:1/-1;
+  grid-row:1;
+  z-index:30;
+  display:flex;
+  align-items:center;
+  gap:22px;
+  padding:0 25px;
+  background:rgba(12,15,30,.94);
+  border-bottom:1px solid var(--line);
+  backdrop-filter:blur(22px);
+}
+.brand{
+  width:var(--side-width);
+  flex:none;
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+.brand-mark{
+  width:43px;height:43px;border-radius:14px;
+  display:grid;place-items:center;
+  color:white;
+  background:linear-gradient(145deg,#b6a0ff,#6749d6);
+  border:1px solid rgba(255,255,255,.28);
+  box-shadow:0 8px 28px rgba(125,92,228,.32);
+}
+.brand-mark svg{width:27px;height:27px}
+.brand-name{font-size:16px;font-weight:900;letter-spacing:.5px}
+.brand-sub{font-size:8px;letter-spacing:2.2px;color:#a9a3c8;margin-top:-4px}
+.search-wrap{position:relative;flex:1;max-width:680px}
+.search-box{
+  height:45px;
+  display:flex;
+  align-items:center;
+  gap:11px;
+  padding:0 15px;
+  border:1px solid rgba(167,145,255,.18);
+  border-radius:14px;
+  background:rgba(255,255,255,.045);
+  transition:.2s;
+}
+.search-box:focus-within{
+  border-color:rgba(159,132,255,.65);
+  background:rgba(255,255,255,.07);
+  box-shadow:0 0 0 3px rgba(145,112,255,.1);
+}
+.search-box svg{color:#b7a4ff;flex:none}
+.search-box input{
+  width:100%;min-width:0;
+  border:0;outline:0;background:transparent;
+  color:white;font-size:12px;
+}
+.search-box input::placeholder{color:#828ba5}
+.search-hint{font-size:9px;color:#8189a2;white-space:nowrap}
+.search-results{
+  display:none;
+  position:absolute;top:54px;right:0;left:0;
+  z-index:80;
+  max-height:min(65vh,520px);
+  overflow:auto;
+  padding:9px;
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:16px;
+  background:#141a2d;
+  box-shadow:var(--shadow);
+}
 .search-results.show{display:block}
-.search-result{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px;border-bottom:1px solid var(--line);font-size:12px}
+.search-result{
+  display:flex;align-items:center;gap:11px;
+  padding:10px;border-radius:11px;
+  border-bottom:1px solid rgba(255,255,255,.05);
+}
 .search-result:last-child{border:0}
-.search-result small{color:var(--muted)}
-.search-result a{color:#c9b7ff;font-weight:800}
-.intro{margin-top:24px;display:flex;align-items:flex-end;justify-content:space-between;gap:15px}
-.intro h1{font-size:clamp(23px,3vw,34px);font-weight:900;line-height:1.45}
-.intro h1 span{color:#bba6ff;text-shadow:0 0 28px rgba(155,124,255,.24)}
-.intro p{font-size:12px;color:#b8b2cc;margin-top:3px}
-.intro-mark{color:#c9baff;font-size:10px;font-weight:800;padding:8px 13px;border-radius:30px;border:1px solid rgba(171,145,255,.24);background:rgba(132,101,222,.12)}
-.hero{margin-top:21px;min-height:390px;border-radius:29px;overflow:hidden;position:relative;isolation:isolate;border:1px solid rgba(255,255,255,.14);box-shadow:var(--shadow);background:#171329}
-.hero-bg{position:absolute;inset:0;z-index:-2;background:linear-gradient(90deg,rgba(9,8,21,.96) 0%,rgba(10,8,23,.78) 40%,rgba(10,8,23,.12) 100%),url("https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1900&q=90") center 40%/cover;transform:scale(1.02)}
-.hero:after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(0deg,rgba(8,7,19,.72),transparent 55%)}
-.hero-content{min-height:390px;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;padding:40px 45px;max-width:650px}
-.hero-label{display:flex;align-items:center;gap:9px;font-size:11px;color:#c8b6ff;font-weight:900;margin-bottom:14px}
-.hero-label:before{content:"";width:8px;height:8px;border-radius:50%;background:#a88aff;box-shadow:0 0 15px #a88aff}
-.hero h2{font-size:clamp(32px,4.5vw,49px);font-weight:900;line-height:1.3}
-.hero h2 span{color:#b9a1ff}
-.hero p{max-width:450px;color:#d1ccdf;font-size:13px;line-height:2;margin-top:13px}
-.hero-buttons{display:flex;gap:10px;flex-wrap:wrap;margin-top:23px}
-.btn-primary,.btn-secondary{min-height:46px;padding:0 20px;border-radius:13px;display:inline-flex;align-items:center;justify-content:center;gap:9px;font-size:12px;font-weight:900;transition:.2s}
-.btn-primary{background:linear-gradient(110deg,#ad92ff,#704de0);box-shadow:0 8px 25px rgba(117,80,221,.35)}
-.btn-secondary{background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.18)}
-.btn-primary:hover,.btn-secondary:hover{transform:translateY(-3px)}
-.btn-primary svg,.btn-secondary svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2}
-.section{margin-top:39px}
-.section-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:17px}
-.section-heading{display:flex;align-items:center;gap:11px}
-.section-icon{width:42px;height:42px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(145deg,rgba(159,127,255,.22),rgba(74,65,130,.13));border:1px solid rgba(164,138,255,.2)}
-.section-icon svg{width:21px;height:21px;stroke:#c2adff;fill:none;stroke-width:1.8}
-.section-heading h3{font-size:19px;font-weight:900}
-.section-heading p{font-size:10px;color:var(--muted);margin-top:-3px}
-.view-all{font-size:11px;color:#c8b6ff;font-weight:900;white-space:nowrap}
+.search-result:hover{background:rgba(255,255,255,.06)}
+.result-icon{
+  width:35px;height:35px;flex:none;
+  display:grid;place-items:center;
+  border-radius:11px;
+  color:#c9baff;background:rgba(145,117,255,.13);
+}
+.result-icon svg{width:18px;height:18px}
+.result-copy{min-width:0;flex:1}
+.result-copy strong{display:block;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.result-copy small{display:block;color:var(--muted);font-size:9px;margin-top:2px}
+.result-open{font-size:10px;color:#c7b6ff;font-weight:900}
+.header-tools{display:flex;align-items:center;gap:9px;margin-right:auto}
+.header-icon{
+  width:40px;height:40px;
+  display:grid;place-items:center;
+  border:1px solid var(--line);
+  border-radius:13px;
+  background:rgba(255,255,255,.045);
+  color:#c7c4dc;
+}
+.header-icon:hover{background:rgba(145,117,255,.15);color:white}
+.header-avatar{
+  width:41px;height:41px;overflow:hidden;
+  display:grid;place-items:center;
+  border:2px solid rgba(155,128,255,.8);
+  border-radius:50%;background:#222b45;
+}
+.header-avatar img{width:100%;height:100%;object-fit:cover}
+.header-avatar svg{color:#c6b7ff}
+.sidebar{
+  grid-column:1;grid-row:2;
+  min-height:0;overflow-y:auto;
+  padding:19px 14px 25px;
+  background:rgba(13,17,33,.82);
+  border-left:1px solid var(--line);
+  scrollbar-width:thin;
+  scrollbar-color:#343b59 transparent;
+}
+.side-label{
+  padding:8px 12px 9px;
+  color:#737e9d;font-size:9px;font-weight:900;
+  letter-spacing:1px;
+}
+.side-link{
+  min-height:45px;
+  display:flex;align-items:center;gap:12px;
+  padding:0 13px;margin:3px 0;
+  border:1px solid transparent;
+  border-radius:12px;
+  color:#aab2c9;font-size:11px;font-weight:800;
+  transition:.2s;
+}
+.side-link svg{width:19px;height:19px;flex:none}
+.side-link:hover{background:rgba(255,255,255,.045);color:white}
+.side-link.active{
+  color:#d8ceff;
+  background:linear-gradient(100deg,rgba(143,113,255,.2),rgba(143,113,255,.055));
+  border-color:rgba(158,133,255,.17);
+}
+.side-link.active svg{color:#bba7ff}
+.side-divider{height:1px;background:var(--line);margin:14px 5px}
+.side-account{
+  margin-top:20px;padding:13px;
+  border:1px solid var(--line);
+  border-radius:15px;background:rgba(255,255,255,.035);
+}
+.side-account small{display:block;color:var(--muted);font-size:9px}
+.side-account strong{display:block;margin-top:4px;font-size:11px;overflow-wrap:anywhere}
+.side-account a{display:block;margin-top:10px;color:#c8b9ff;font-size:10px;font-weight:900}
+.main-area{
+  grid-column:2;grid-row:2;
+  min-width:0;min-height:0;
+  overflow-y:auto;overscroll-behavior:contain;
+  padding:25px 28px 55px;
+  scrollbar-width:thin;
+  scrollbar-color:#343b59 transparent;
+}
+.welcome-row{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:15px;margin-bottom:19px;
+}
+.welcome-copy small{color:#a99aff;font-size:10px;font-weight:900;letter-spacing:1px}
+.welcome-copy h1{font-size:clamp(21px,2.5vw,30px);font-weight:900;line-height:1.5}
+.welcome-copy h1 span{color:#b8a4ff}
+.welcome-copy p{color:var(--muted);font-size:11px;margin-top:2px}
+.welcome-date{
+  padding:9px 13px;border:1px solid var(--line);
+  border-radius:12px;background:rgba(255,255,255,.035);
+  color:#aab2c9;font-size:10px;white-space:nowrap;
+}
+.hero{
+  position:relative;isolation:isolate;overflow:hidden;
+  min-height:285px;border-radius:24px;
+  border:1px solid rgba(255,255,255,.12);
+  background:#17172b;box-shadow:var(--shadow);
+}
+.hero:before{
+  content:"";position:absolute;inset:0;z-index:-2;
+  background:
+    linear-gradient(90deg,rgba(8,10,24,.97) 0%,rgba(8,10,24,.78) 48%,rgba(8,10,24,.25) 100%),
+    url("https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1800&q=90") center 42%/cover;
+}
+.hero:after{
+  content:"";position:absolute;inset:0;z-index:-1;
+  background:radial-gradient(ellipse at 80% 30%,rgba(139,105,255,.25),transparent 42%);
+}
+.hero-content{
+  min-height:285px;max-width:650px;
+  display:flex;flex-direction:column;justify-content:center;
+  align-items:flex-start;padding:32px 38px;
+}
+.hero-label{
+  display:flex;align-items:center;gap:8px;
+  color:#c2b0ff;font-size:9px;font-weight:900;letter-spacing:1.5px;
+}
+.hero-label:before{
+  content:"";width:7px;height:7px;border-radius:50%;
+  background:var(--cyan);box-shadow:0 0 12px var(--cyan);
+}
+.hero h2{font-size:clamp(29px,4vw,43px);line-height:1.35;font-weight:900;margin-top:10px}
+.hero h2 span{color:#b9a5ff}
+.hero p{max-width:430px;color:#c0c3d5;font-size:11px;line-height:2;margin-top:10px}
+.hero-actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:19px}
+.btn{
+  min-height:41px;padding:0 17px;
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  border-radius:11px;font-size:10px;font-weight:900;
+  transition:.2s;
+}
+.btn:hover{transform:translateY(-2px)}
+.btn svg{width:16px;height:16px}
+.btn-primary{color:white;background:linear-gradient(110deg,#a58aff,#704de0);box-shadow:0 7px 22px rgba(112,77,224,.28)}
+.btn-secondary{color:#e2ddf4;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16)}
+.balance-grid{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:13px;margin-top:17px;
+}
+.balance-card{
+  min-width:0;display:flex;align-items:center;gap:12px;
+  padding:15px;border:1px solid var(--line);
+  border-radius:16px;background:linear-gradient(145deg,rgba(27,34,57,.94),rgba(17,22,39,.94));
+}
+.balance-icon{
+  width:42px;height:42px;flex:none;
+  display:grid;place-items:center;border-radius:13px;
+  background:rgba(255,255,255,.06);
+}
+.balance-icon svg{width:21px;height:21px}
+.balance-icon.coins{color:var(--gold);background:rgba(240,201,120,.1)}
+.balance-icon.gems{color:#79dff4;background:rgba(90,206,235,.1)}
+.balance-icon.points{color:#bcaaff;background:rgba(151,119,255,.12)}
+.balance-info small{display:block;color:var(--muted);font-size:9px}
+.balance-info strong{display:block;font-size:17px;font-weight:900;margin-top:1px;overflow-wrap:anywhere}
+.section{margin-top:31px}
+.section-head{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:12px;margin-bottom:14px;
+}
+.section-title{display:flex;align-items:center;gap:10px;min-width:0}
+.section-title-icon{
+  width:37px;height:37px;flex:none;
+  display:grid;place-items:center;border-radius:12px;
+  color:#c5b5ff;background:rgba(145,117,255,.12);
+  border:1px solid rgba(145,117,255,.15);
+}
+.section-title-icon svg{width:19px;height:19px}
+.section-title h3{font-size:14px;font-weight:900}
+.section-title p{font-size:9px;color:var(--muted);margin-top:1px}
+.view-all{color:#b9a7ff;font-size:10px;font-weight:900;white-space:nowrap}
 .view-all:hover{color:white}
-.category-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
-.category-card{height:175px;position:relative;overflow:hidden;border-radius:21px;border:1px solid rgba(255,255,255,.13);box-shadow:0 12px 28px rgba(0,0,0,.25);display:flex;align-items:flex-end;padding:17px;isolation:isolate}
-.category-card:before{content:"";position:absolute;inset:0;z-index:-2;background-size:cover;background-position:center;transition:transform .5s}
-.category-card:hover:before{transform:scale(1.08)}
-.category-card:after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(0deg,rgba(7,7,18,.96),rgba(7,7,18,.02) 85%)}
-.category-card:nth-child(1):before{background-image:url("https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=800&q=85")}
-.category-card:nth-child(3):before{background-image:url("https://images.unsplash.com/photo-1593305841991-05c297ba4575?auto=format&fit=crop&w=800&q=85")}
-.category-card:nth-child(4):before{background-image:url("https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=800&q=85")}
-.category-card:nth-child(5):before{background-image:url("https://images.unsplash.com/photo-1511882150382-421056c89033?auto=format&fit=crop&w=800&q=85")}
-.category-card.users-category:before{background-image:url("https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1000&q=90");background-position:center 42%}
-.category-card.users-category:after{background:linear-gradient(0deg,rgba(7,7,18,.97),rgba(7,7,18,.16) 78%),linear-gradient(135deg,rgba(117,82,218,.22),rgba(32,177,181,.12))}
-.category-symbol{position:absolute;top:14px;right:14px;width:43px;height:43px;border-radius:14px;display:grid;place-items:center;color:#e8dcff;background:linear-gradient(145deg,rgba(155,124,255,.82),rgba(75,58,145,.78));border:1px solid rgba(255,255,255,.28);box-shadow:0 8px 24px rgba(0,0,0,.3);backdrop-filter:blur(10px)}
-.category-symbol svg{width:23px;height:23px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
-.category-card.users-category strong{font-size:17px}
-.category-card.users-category small{max-width:260px;line-height:1.7}
-.category-card .card-arrow{position:absolute;top:13px;left:13px;width:30px;height:30px;border-radius:10px;display:grid;place-items:center;background:rgba(255,255,255,.16);backdrop-filter:blur(8px)}
-.card-arrow svg{width:16px;height:16px;stroke:white;fill:none;stroke-width:2}
-.category-card strong{display:block;font-size:16px;font-weight:900}
-.category-card small{display:block;color:#d1cbdc;font-size:10px;margin-top:3px}
-.filter-row{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;margin-bottom:15px}
-.filter-row::-webkit-scrollbar{display:none}
-.filter-chip{flex:none;padding:8px 15px;border-radius:30px;background:rgba(255,255,255,.06);border:1px solid var(--line);color:#cbc5dc;font-size:11px;font-weight:800}
-.filter-chip.active{background:linear-gradient(110deg,#9475f1,#6549d1);color:white;border-color:transparent}
-.content-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:15px}
-.game-card,.room-card{min-width:0;overflow:hidden;border-radius:20px;background:linear-gradient(145deg,rgba(33,30,56,.97),rgba(16,16,30,.98));border:1px solid rgba(255,255,255,.10);box-shadow:0 12px 30px rgba(0,0,0,.23);transition:.25s}
-.game-card:hover,.room-card:hover{transform:translateY(-4px);border-color:rgba(174,148,255,.4);box-shadow:0 18px 38px rgba(0,0,0,.34)}
-.game-image{height:165px;position:relative;background:#25213d;overflow:hidden}
-.game-image img{width:100%;height:100%;object-fit:cover;transition:.45s}
-.game-card:hover .game-image img{transform:scale(1.06)}
-.game-image:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(9,8,19,.55),transparent 65%)}
-.game-info{padding:13px}
-.game-info h4{font-size:13px;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.game-info p{font-size:10px;color:var(--muted);margin-top:3px}
-.card-footer{display:flex;align-items:center;justify-content:space-between;gap:7px;margin-top:12px}
-.card-type{font-size:10px;color:#aaa5bf}
-.card-link{padding:7px 12px;border-radius:9px;background:rgba(153,124,255,.17);color:#d0c2ff;font-size:10px;font-weight:900}
-.promo{min-height:220px;border-radius:25px;overflow:hidden;position:relative;isolation:isolate;display:flex;align-items:center;padding:30px 35px;border:1px solid rgba(255,255,255,.13);box-shadow:var(--shadow);background:#19152d}
-.promo:before{content:"";position:absolute;inset:0;z-index:-2;background:linear-gradient(90deg,rgba(10,8,23,.96),rgba(10,8,23,.73),rgba(10,8,23,.15)),url("https://images.unsplash.com/photo-1560253023-3ec5d502959f?auto=format&fit=crop&w=1500&q=85") center/cover}
-.promo:after{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(circle at 75% 50%,rgba(147,111,255,.2),transparent 38%)}
-.promo-content{max-width:490px}
-.promo-content small{font-size:10px;color:#c4b0ff;font-weight:900;letter-spacing:1px}
-.promo-content h3{font-size:26px;font-weight:900;margin-top:6px}
-.promo-content p{font-size:11px;color:#d0cadd;line-height:1.9;margin-top:5px}
-.promo-content .btn-primary{margin-top:15px}
-.room-cover{height:132px;position:relative;overflow:hidden;background:#292341}
-.room-cover img{width:100%;height:100%;object-fit:cover}
-.room-state{position:absolute;top:10px;right:10px;padding:5px 9px;border-radius:20px;background:rgba(9,10,20,.82);color:#8fe0c5;font-size:9px;font-weight:900;border:1px solid rgba(143,224,197,.2)}
-.room-info{padding:13px}
-.room-info h4{font-size:13px;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.room-details{display:flex;justify-content:space-between;gap:6px;margin-top:9px;color:var(--muted);font-size:10px}
-.room-code{color:#c7b4ff;font-weight:900}
-.room-info .card-footer{margin-top:12px}
-.live-grid{display:grid;grid-template-columns:1.35fr 1fr 1fr;gap:13px}
-.live-card{min-height:190px;position:relative;overflow:hidden;border-radius:20px;border:1px solid rgba(255,255,255,.13);background:#1c1830;isolation:isolate;display:flex;align-items:flex-end;padding:18px}
-.live-card:before{content:"";position:absolute;inset:0;z-index:-2;background-size:cover;background-position:center;transition:.45s}
-.live-card:hover:before{transform:scale(1.07)}
-.live-card:after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(0deg,rgba(7,7,18,.95),rgba(7,7,18,.04))}
-.live-card:nth-child(1):before{background-image:url("https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=900&q=85")}
-.live-card:nth-child(2):before{background-image:url("https://images.unsplash.com/photo-1593305841991-05c297ba4575?auto=format&fit=crop&w=700&q=85")}
-.live-card:nth-child(3):before{background-image:url("https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=700&q=85")}
-.live-card strong{font-size:15px;font-weight:900}
-.live-card p{font-size:10px;color:#d2ccdf;margin-top:3px}
-.empty-state{grid-column:1/-1;text-align:center;padding:35px 20px;border:1px dashed rgba(255,255,255,.17);border-radius:20px;background:rgba(255,255,255,.025)}
-.empty-state svg{width:37px;height:37px;stroke:#b09bff;fill:none;stroke-width:1.5;margin:0 auto 10px}
-.empty-state h4{font-size:14px;font-weight:900}
-.empty-state p{font-size:10px;color:var(--muted);margin-top:5px}
-.loader{width:28px;height:28px;margin:0 auto 12px;border:2px solid rgba(255,255,255,.12);border-top-color:#a98aff;border-radius:50%;animation:spin .8s linear infinite}
+.explore-grid{
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:11px;
+}
+.explore-card{
+  min-height:112px;position:relative;overflow:hidden;
+  display:flex;flex-direction:column;justify-content:space-between;
+  padding:14px;border-radius:16px;
+  border:1px solid var(--line);
+  background:linear-gradient(145deg,#1a2038,#111629);
+  transition:.2s;
+}
+.explore-card:hover{transform:translateY(-3px);border-color:rgba(166,142,255,.38)}
+.explore-card:after{
+  content:"";position:absolute;width:90px;height:90px;
+  left:-25px;bottom:-45px;border-radius:50%;
+  background:rgba(145,117,255,.12);filter:blur(2px);
+}
+.explore-icon{
+  width:34px;height:34px;display:grid;place-items:center;
+  border-radius:11px;color:#c8b8ff;background:rgba(145,117,255,.14);
+}
+.explore-icon svg{width:18px;height:18px}
+.explore-card strong{font-size:11px;font-weight:900}
+.explore-card small{font-size:9px;color:var(--muted);margin-top:2px}
+.cards-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}
+.game-card,.room-card,.member-card{
+  min-width:0;overflow:hidden;
+  border:1px solid var(--line);border-radius:16px;
+  background:linear-gradient(145deg,#1a2036,#111629);
+  transition:.2s;
+}
+.game-card:hover,.room-card:hover,.member-card:hover{transform:translateY(-3px);border-color:rgba(166,142,255,.35)}
+.card-image{height:132px;position:relative;background:#242b45;overflow:hidden}
+.card-image img{width:100%;height:100%;object-fit:cover}
+.card-image:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(7,10,22,.55),transparent 70%)}
+.card-body{padding:12px}
+.card-body h4{font-size:11px;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card-body p{font-size:9px;color:var(--muted);margin-top:4px;line-height:1.8}
+.card-meta{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:11px}
+.meta-text{font-size:9px;color:#a9b2c8}
+.card-link{
+  padding:6px 10px;border-radius:8px;
+  color:#d5caff;background:rgba(145,117,255,.15);
+  font-size:9px;font-weight:900;white-space:nowrap;
+}
+.room-status{
+  position:absolute;top:9px;right:9px;z-index:2;
+  padding:4px 8px;border-radius:20px;
+  color:#9ce8c8;background:rgba(8,20,24,.86);
+  border:1px solid rgba(114,221,180,.18);
+  font-size:8px;font-weight:900;
+}
+.member-row{display:flex;align-items:center;gap:10px;padding:11px}
+.member-avatar{
+  width:39px;height:39px;flex:none;overflow:hidden;
+  display:grid;place-items:center;border-radius:50%;
+  background:#29314b;border:1px solid rgba(255,255,255,.13);
+}
+.member-avatar img{width:100%;height:100%;object-fit:cover}
+.member-avatar svg{width:19px;height:19px;color:#c6b7ff}
+.member-copy{flex:1;min-width:0}
+.member-copy strong{display:block;font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.member-copy small{display:block;font-size:9px;color:var(--muted);margin-top:2px}
+.verified{color:#7edcff;font-size:10px;margin-right:3px}
+.member-open{font-size:9px;color:#c4b4ff;font-weight:900}
+.empty-state{
+  grid-column:1/-1;text-align:center;padding:25px 15px;
+  border:1px dashed rgba(255,255,255,.14);
+  border-radius:15px;background:rgba(255,255,255,.02);
+}
+.empty-state svg{width:28px;height:28px;color:#a998ff;margin-bottom:7px}
+.empty-state strong{display:block;font-size:11px}
+.empty-state p{font-size:9px;color:var(--muted);margin-top:4px}
+.loading-dot{
+  width:23px;height:23px;margin:0 auto 9px;
+  border:2px solid rgba(255,255,255,.12);
+  border-top-color:#a995ff;border-radius:50%;
+  animation:spin .8s linear infinite;
+}
 @keyframes spin{to{transform:rotate(360deg)}}
-.bottom-nav{position:fixed;z-index:50;bottom:10px;left:50%;transform:translateX(-50%);width:min(calc(100% - 22px),850px);min-height:72px;padding:7px 10px;display:flex;align-items:center;justify-content:space-around;gap:3px;background:rgba(19,18,35,.95);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);border:1px solid rgba(255,255,255,.13);border-radius:22px;box-shadow:0 15px 45px rgba(0,0,0,.52)}
-.nav-item{flex:1;min-width:0;min-height:54px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;border-radius:13px;color:#aaa5bf;font-size:10px;font-weight:800;transition:.2s}
-.nav-item svg{width:21px;height:21px;stroke:currentColor;fill:none;stroke-width:1.8}
-.nav-item.active{color:#c9b7ff;background:rgba(151,121,255,.14)}
-.nav-item:hover{color:white;background:rgba(255,255,255,.07)}
-.toast{position:fixed;z-index:100;bottom:100px;left:50%;transform:translate(-50%,15px);opacity:0;pointer-events:none;padding:11px 17px;border-radius:12px;background:#25213c;border:1px solid var(--line);color:white;font-size:11px;transition:.25s}
+.footer{
+  padding:35px 0 15px;text-align:center;
+  color:#69738d;font-size:9px;letter-spacing:1px;
+}
+.mobile-nav{display:none}
+.toast{
+  position:fixed;z-index:100;bottom:25px;left:50%;
+  transform:translate(-50%,15px);opacity:0;pointer-events:none;
+  padding:10px 16px;border:1px solid var(--line);
+  border-radius:12px;background:#202944;color:white;
+  font-size:10px;transition:.2s;
+}
 .toast.show{opacity:1;transform:translate(-50%,0)}
-@media(max-width:1050px){
-.content-grid,.category-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
-.wallet-links{display:none}
+@media(max-width:1150px){
+  :root{--side-width:215px}
+  .main-area{padding:22px}
+  .explore-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
 }
-@media(max-width:700px){
-.app{padding:0 13px}
-.topbar{height:68px;gap:7px}
-.brand{gap:7px}
-.brand-mark{width:39px;height:39px;border-radius:12px}
-.brand-name{font-size:13px}
-.brand-sub{font-size:7px;letter-spacing:1.3px}
-.header-actions{gap:5px}
-.header-icon,.my-avatar{width:36px;height:36px}
-.wallet{padding:6px 7px;gap:5px;border-radius:12px}
-.wallet-unit{min-width:43px;font-size:10px;gap:3px}
-.wallet-unit svg{width:15px;height:15px}
-.wallet-add{width:24px;height:24px}
-.search-area{margin-top:8px;gap:8px}
-.search-box{height:47px;padding:0 12px;gap:8px;border-radius:14px}
-.search-box input{font-size:11px}
-.search-box svg{width:18px;height:18px}
-.search-shortcut{display:none}
-.search-filter{height:47px;width:47px;border-radius:14px}
-.search-results{top:55px;left:55px}
-.intro{margin-top:19px}
-.intro h1{font-size:22px}
-.intro p{font-size:10px}
-.intro-mark{font-size:8px;padding:6px 9px}
-.hero{margin-top:16px;min-height:310px;border-radius:22px}
-.hero-bg{background:linear-gradient(90deg,rgba(9,8,21,.94),rgba(10,8,23,.61)),url("https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1000&q=90") center/cover}
-.hero-content{min-height:310px;padding:24px 21px}
-.hero h2{font-size:31px}
-.hero p{font-size:11px}
-.hero-label{font-size:9px}
-.btn-primary,.btn-secondary{min-height:42px;padding:0 14px;font-size:10px}
-.section{margin-top:29px}
-.section-heading h3{font-size:16px}
-.section-heading p{font-size:9px}
-.section-icon{width:35px;height:35px;border-radius:11px}
-.view-all{font-size:10px}
-.category-grid{gap:9px}
-.category-card{height:137px;padding:12px;border-radius:16px}
-.category-symbol{top:10px;right:10px;width:36px;height:36px;border-radius:12px}
-.category-symbol svg{width:20px;height:20px}
-.category-card.users-category strong{font-size:14px}
-.category-card.users-category small{font-size:9px;line-height:1.55}
-.category-card strong{font-size:13px}
-.category-card small{font-size:9px}
-.content-grid{gap:10px}
-.game-image{height:120px}
-.game-info{padding:10px}
-.game-info h4,.room-info h4{font-size:11px}
-.game-info p{font-size:9px}
-.card-link{font-size:9px;padding:6px 9px}
-.promo{min-height:180px;padding:20px;border-radius:20px}
-.promo-content h3{font-size:20px}
-.promo-content p{font-size:10px}
-.room-cover{height:110px}
-.room-info{padding:10px}
-.room-details{font-size:9px}
-.live-grid{grid-template-columns:1fr 1fr;gap:9px}
-.live-card{min-height:135px;padding:12px;border-radius:16px}
-.live-card:first-child{grid-column:1/-1;min-height:165px}
-.live-card strong{font-size:13px}
-.bottom-nav{bottom:7px;width:calc(100% - 14px);min-height:65px;padding:5px 4px;border-radius:18px}
-.nav-item{min-height:52px;font-size:8px;gap:3px}
-.nav-item svg{width:19px;height:19px}
+@media(max-width:850px){
+  :root{--side-width:190px}
+  .topbar{gap:12px;padding:0 15px}
+  .brand{width:190px}
+  .brand-name{font-size:13px}
+  .header-tools{gap:6px}
+  .cards-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
-@media(max-width:370px){
-.brand-sub{display:none}
-.brand-name{font-size:12px}
-.wallet-unit{min-width:38px}
-.intro-mark{display:none}
-.nav-item{font-size:7px}
+@media(max-width:650px){
+  :root{--top-height:64px}
+  .app-shell{grid-template-columns:1fr;grid-template-rows:var(--top-height) minmax(0,1fr)}
+  .topbar{grid-column:1;grid-row:1;padding:0 11px;gap:9px}
+  .brand{width:auto;gap:7px}
+  .brand-mark{width:36px;height:36px;border-radius:11px}
+  .brand-mark svg{width:22px;height:22px}
+  .brand-name{font-size:11px}
+  .brand-sub{font-size:6px;letter-spacing:1.3px}
+  .search-wrap{max-width:none}
+  .search-box{height:38px;padding:0 9px;gap:7px;border-radius:11px}
+  .search-box input{font-size:10px}
+  .search-box svg{width:17px;height:17px}
+  .search-hint{display:none}
+  .search-results{top:46px;max-height:55vh}
+  .header-tools{gap:5px}
+  .header-icon{width:34px;height:34px;border-radius:10px}
+  .header-icon svg{width:17px;height:17px}
+  .header-avatar{width:35px;height:35px}
+  .sidebar{display:none}
+  .main-area{grid-column:1;grid-row:2;padding:17px 12px 100px}
+  .welcome-row{margin-bottom:13px}
+  .welcome-copy small{font-size:8px}
+  .welcome-copy h1{font-size:20px}
+  .welcome-copy p{font-size:9px}
+  .welcome-date{font-size:8px;padding:7px 9px}
+  .hero,.hero-content{min-height:245px}
+  .hero{border-radius:19px}
+  .hero:before{background:linear-gradient(90deg,rgba(8,10,24,.96),rgba(8,10,24,.72)),url("https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=900&q=85") center/cover}
+  .hero-content{padding:22px 19px}
+  .hero h2{font-size:29px}
+  .hero p{font-size:9px;line-height:1.9}
+  .hero-label{font-size:8px}
+  .btn{min-height:37px;padding:0 12px;font-size:9px}
+  .balance-grid{gap:7px;margin-top:11px}
+  .balance-card{gap:7px;padding:9px 7px;border-radius:12px}
+  .balance-icon{width:30px;height:30px;border-radius:9px}
+  .balance-icon svg{width:16px;height:16px}
+  .balance-info small{font-size:8px}
+  .balance-info strong{font-size:12px}
+  .section{margin-top:24px}
+  .section-head{margin-bottom:10px}
+  .section-title-icon{width:32px;height:32px;border-radius:10px}
+  .section-title h3{font-size:12px}
+  .section-title p{font-size:8px}
+  .view-all{font-size:9px}
+  .explore-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .explore-card{min-height:91px;padding:10px;border-radius:13px}
+  .explore-icon{width:29px;height:29px;border-radius:9px}
+  .explore-card strong{font-size:10px}
+  .explore-card small{font-size:8px}
+  .cards-grid{gap:8px}
+  .card-image{height:100px}
+  .card-body{padding:9px}
+  .card-body h4{font-size:10px}
+  .card-body p{font-size:8px}
+  .card-link{font-size:8px;padding:5px 7px}
+  .member-row{padding:9px}
+  .member-avatar{width:33px;height:33px}
+  .member-copy strong{font-size:9px}
+  .member-copy small{font-size:8px}
+  .mobile-nav{
+    position:fixed;z-index:60;bottom:max(8px,env(safe-area-inset-bottom));
+    right:8px;left:8px;
+    min-height:61px;padding:5px;
+    display:flex;align-items:center;justify-content:space-around;gap:2px;
+    border:1px solid rgba(255,255,255,.12);
+    border-radius:18px;background:rgba(16,21,39,.96);
+    backdrop-filter:blur(20px);box-shadow:0 12px 35px rgba(0,0,0,.42);
+  }
+  .mobile-link{
+    flex:1;min-width:0;min-height:49px;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
+    border-radius:11px;color:#8f99b2;font-size:8px;font-weight:800;
+  }
+  .mobile-link svg{width:18px;height:18px}
+  .mobile-link.active{color:#d0c2ff;background:rgba(145,117,255,.14)}
+  .footer{padding-bottom:20px}
+  .toast{bottom:82px}
 }
-/* اختصارات الرأس والتصنيف */
-.quick-actions{display:flex;align-items:center;gap:6px}
-.quick-action{min-height:38px;padding:0 10px;display:flex;align-items:center;justify-content:center;gap:6px;border-radius:12px;background:rgba(255,255,255,.065);border:1px solid rgba(255,255,255,.11);font-size:10px;font-weight:900;white-space:nowrap;transition:.2s}
-.quick-action:hover{transform:translateY(-2px);background:rgba(151,121,255,.18)}
-.quick-action svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.8}
-.quick-action:nth-child(1){color:#d8caff}
-.quick-action:nth-child(2){color:#f0d28e}
-.quick-action:nth-child(3){color:#9ce4d7}
-.settings-menu{display:none;position:absolute;z-index:40;top:62px;left:0;width:min(250px,calc(100vw - 35px));padding:10px;border:1px solid rgba(255,255,255,.13);border-radius:16px;background:#19172b;box-shadow:var(--shadow)}
-.settings-menu.show{display:block}
-.settings-menu-title{padding:8px 10px 10px;color:#c9b7ff;font-size:11px;font-weight:900}
-.settings-menu a{display:block;padding:10px;border-radius:10px;color:#e9e4f7;font-size:11px;font-weight:700}
-.settings-menu a:hover{background:rgba(255,255,255,.07)}
-.search-area{position:relative}
-.leaderboard-category:before{background-image:url("https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=1000&q=90")}
-.leaderboard-category:after{background:linear-gradient(0deg,rgba(7,7,18,.97),rgba(7,7,18,.14) 78%),linear-gradient(135deg,rgba(117,82,218,.25),rgba(32,177,181,.12))}
-@media(max-width:1050px){.wallet-links{display:none}}
-@media(max-width:700px){
-.quick-actions{gap:4px}
-.quick-action{width:32px;min-width:32px;height:32px;min-height:32px;padding:0;font-size:0;gap:0}
-.quick-action svg{width:16px;height:16px}
-.settings-menu{top:55px}
+@media(max-width:380px){
+  .brand-sub{display:none}
+  .brand-name{font-size:10px}
+  .header-tools .header-icon:first-child{display:none}
+  .welcome-date{display:none}
+  .balance-card{flex-direction:column;align-items:flex-start}
 }
 </style>
 </head>
-<body>
-<div class="app">
-<header class="topbar">
-<a class="brand" href="home.html">
-<div class="brand-mark"><svg viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M20 4.5 31.5 11v18L20 35.5 8.5 29V11L20 4.5Z" stroke="white" stroke-width="1.5" stroke-opacity=".72"/><path d="M12 26V14h4l8 8V14h4v12h-4l-8-8v8h-4Z" fill="white"/><circle cx="31" cy="9" r="3" fill="#65d9d1" stroke="#fff" stroke-width="1"/></svg></div>
-<div><div class="brand-name">HANOON WORLD</div><div class="brand-sub">YOUR SOCIAL UNIVERSE</div></div>
-</a>
 
-<div class="header-actions">
-<div class="wallet">
-<div class="wallet-unit coins">
-<svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.7"/><path d="M15.5 9.5c-.7-.8-1.7-1.2-3.1-1.2-1.5 0-2.5.7-2.5 1.8 0 2.8 5.4 1.1 5.4 4 0 1.2-1.1 2-2.8 2-1.3 0-2.5-.5-3.3-1.4M12 6.5v11" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
-<span id="coinBalance">—</span>
-</div>
-<div class="wallet-unit gems">
-<svg viewBox="0 0 24 24" fill="none"><path d="m12 2 8 7-8 13L4 9l8-7Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="m4 9 16 0M8 9l4 13 4-13" stroke="currentColor" stroke-width="1.3"/></svg>
-<span id="gemBalance">—</span>
-</div>
-<a class="wallet-add" href="wallet.html" aria-label="إضافة رصيد"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></a>
-<div class="wallet-links">
-<a class="wallet-link" href="store.html"><svg viewBox="0 0 24 24"><path d="M4 8h16l-1 12H5L4 8Z"/><path d="M9 9V6a3 3 0 0 1 6 0v3"/></svg>المتجر</a>
-<a class="wallet-link" href="gifts.html"><svg viewBox="0 0 24 24"><path d="M3 10h18v11H3zM2 6h20v4H2zM12 6v15"/><path d="M12 6H8a2 2 0 1 1 2-2c0 1.1 2 2 2 2Zm0 0h4a2 2 0 1 0-2-2c0 1.1-2 2-2 2Z"/></svg>الهدايا</a>
-<a class="wallet-link" href="tasks.html"><svg viewBox="0 0 24 24"><path d="m9 12 2 2 4-4"/><rect x="4" y="3" width="16" height="18" rx="2"/></svg>المهام</a>
-</div>
-</div>
-<div class="quick-actions" aria-label="اختصارات سريعة"><a class="quick-action" href="store.html" aria-label="المتجر"><svg viewBox="0 0 24 24"><path d="M4 8h16l-1 12H5L4 8Z"/><path d="M9 9V6a3 3 0 0 1 6 0v3"/></svg><span>المتجر</span></a><a class="quick-action" href="wallet.html" aria-label="المحفظة"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M3 9h18M16 14h.01"/></svg><span>المحفظة</span></a><a class="quick-action" href="tasks.html" aria-label="المهام اليومية"><svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="m8 12 2.5 2.5L16 9"/></svg><span>المهام</span></a></div>
-<a class="header-icon notification-link" href="notifications.html" aria-label="الإشعارات">
-<svg viewBox="0 0 24 24"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9ZM10 21h4"/></svg>
-<span class="notification-badge" data-notification-count hidden></span>
-</a>
-<a class="my-avatar" href="profile.html" id="myProfileLink" aria-label="حسابي">
-<svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 21c.5-4 3.2-6 7.5-6s7 2 7.5 6"/></svg>
-</a>
-</div>
+<body>
+<div class="app-shell">
+
+<header class="topbar">
+  <a class="brand" href="home.html" aria-label="الرئيسية">
+    <span class="brand-mark">
+      <svg viewBox="0 0 40 40">
+        <path d="M20 4.5 31.5 11v18L20 35.5 8.5 29V11L20 4.5Z" stroke="white" stroke-width="1.5" stroke-opacity=".75"/>
+        <path d="M12 26V14h4l8 8V14h4v12h-4l-8-8v8h-4Z" fill="white" stroke="none"/>
+        <circle cx="31" cy="9" r="3" fill="#65d9d1" stroke="white"/>
+      </svg>
+    </span>
+    <span>
+      <span class="brand-name">HANOON WORLD</span>
+      <span class="brand-sub">YOUR SOCIAL UNIVERSE</span>
+    </span>
+  </a>
+
+  <div class="search-wrap">
+    <label class="search-box">
+      <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m16 16 5 5"/></svg>
+      <input id="globalSearch" type="search" autocomplete="off" placeholder="ابحث عن عضو أو لعبة أو غرفة أو أي شيء في هنون...">
+      <span class="search-hint">بحث شامل</span>
+    </label>
+    <div class="search-results" id="searchResults"></div>
+  </div>
+
+  <div class="header-tools">
+    <a class="header-icon" href="settings.html" aria-label="الإعدادات" title="الإعدادات">
+      <svg viewBox="0 0 24 24"><path d="M12 8.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7Z"/><path d="m19.4 15 .1.1a1.7 1.7 0 0 1-2.4 2.4l-.1-.1a1.7 1.7 0 0 0-2.9 1.2v.2a1.7 1.7 0 0 1-3.4 0v-.2a1.7 1.7 0 0 0-2.9-1.2l-.1.1a1.7 1.7 0 0 1-2.4-2.4l.1-.1a1.7 1.7 0 0 0-1.2-2.9H4a1.7 1.7 0 0 1 0-3.4h.2a1.7 1.7 0 0 0 1.2-2.9l-.1-.1a1.7 1.7 0 0 1 2.4-2.4l.1.1a1.7 1.7 0 0 0 2.9-1.2V2a1.7 1.7 0 0 1 3.4 0v.2a1.7 1.7 0 0 0 2.9 1.2l.1-.1a1.7 1.7 0 0 1 2.4 2.4l-.1.1a1.7 1.7 0 0 0 1.2 2.9h.2a1.7 1.7 0 0 1 0 3.4h-.2a1.7 1.7 0 0 0-1.2 2.9Z"/></svg>
+    </a>
+    <a class="header-icon" href="notifications.html" aria-label="الإشعارات" title="الإشعارات">
+      <svg viewBox="0 0 24 24"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9ZM10 21h4"/></svg>
+      <span class="notification-badge" data-notification-count hidden></span>
+    </a>
+    <a class="header-avatar" href="profile.html" id="myProfileLink" aria-label="حسابي">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 21c.5-4 3.2-6 7.5-6s7 2 7.5 6"/></svg>
+    </a>
+  </div>
 </header>
 
-<div class="search-area">
-<label class="search-box">
-<svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m16 16 5 5"/></svg>
-<input id="globalSearch" type="search" placeholder="ابحث في هنون: أعضاء، ألعاب، غرف، مهام، أقسام...">
-<span class="search-shortcut">بحث</span>
-</label>
-<button class="search-filter" id="settingsToggle" type="button" aria-label="الإعدادات السريعة" aria-expanded="false"><svg viewBox="0 0 24 24"><path d="M4 7h16M7 12h10M10 17h4"/><circle cx="8" cy="7" r="1.5"/><circle cx="15" cy="12" r="1.5"/></svg></button>
-<div class="settings-menu" id="settingsMenu"><div class="settings-menu-title">إعدادات سريعة</div><a href="profile.html">الملف الشخصي</a><a href="notifications.html">الإشعارات</a><a href="chat.html">المحادثات</a><a href="wallet.html">المحفظة</a><a href="tasks.html">المهام والإنجازات</a></div>
-<div class="search-results" id="searchResults"></div>
-</div>
+<aside class="sidebar">
+  <div class="side-label">القائمة الرئيسية</div>
+  <a class="side-link active" href="home.html"><svg viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10h-6v-6H9v6H3V10Z"/></svg>الرئيسية</a>
+  <a class="side-link" href="games.html"><svg viewBox="0 0 24 24"><path d="M7 8h10a4 4 0 0 1 4 4v4a3 3 0 0 1-5 2l-2-2h-4l-2 2a3 3 0 0 1-5-2v-4a4 4 0 0 1 4-4Z"/><path d="M8 11v4M6 13h4M16 12h.01M18 14h.01"/></svg>الألعاب</a>
+  <a class="side-link" href="rooms.html"><svg viewBox="0 0 24 24"><path d="M3 20V9l9-6 9 6v11h-6v-7H9v7H3Z"/></svg>الغرف</a>
+  <a class="side-link" href="members.html"><svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>الأعضاء</a>
+  <a class="side-link" href="chat.html"><svg viewBox="0 0 24 24"><path d="M4 5h16v12H9l-5 4V5Z"/><path d="M8 9h8M8 13h5"/></svg>المحادثات</a>
 
-<section class="intro">
-<div><h1>مرحباً بك في <span>عالم هنون</span></h1><p>مساحتك للألعاب والتواصل والتجارب المختلفة</p></div>
-<div class="intro-mark">اكتشف عالمك</div>
-</section>
+  <div class="side-divider"></div>
+  <div class="side-label">حسابك وعالمك</div>
+  <a class="side-link" href="profile.html"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 21c.5-4 3.2-6 7.5-6s7 2 7.5 6"/></svg>الملف الشخصي</a>
+  <a class="side-link" href="wallet.html"><svg viewBox="0 0 24 24"><rect x="2.5" y="5" width="19" height="14" rx="3"/><path d="M2.5 9h19M16 14h.01"/></svg>المحفظة</a>
+  <a class="side-link" href="tasks.html"><svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="m8 12 2.5 2.5L16 9"/></svg>المهام والإنجازات</a>
+  <a class="side-link" href="notifications.html"><svg viewBox="0 0 24 24"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9ZM10 21h4"/></svg>الإشعارات</a>
+  <a class="side-link" href="broadcasts.html"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/></svg>البث المباشر</a>
 
-<section class="hero">
-<div class="hero-bg"></div>
-<div class="hero-content">
-<div class="hero-label">HANOON WORLD EXPERIENCE</div>
-<h2>هنا تبدأ<br><span>حكايتك الجديدة</span></h2>
-<p>اكتشف ألعاباً مختلفة، ادخل غرف المجتمع، وشارك في عالم مليء بالتجارب والمنافسات.</p>
-<div class="hero-buttons">
-<a class="btn-primary" href="games.html"><svg viewBox="0 0 24 24"><path d="m8 5 12 7-12 7V5Z" fill="currentColor" stroke="none"/></svg>اكتشف الألعاب</a>
-<a class="btn-secondary" href="rooms.html"><svg viewBox="0 0 24 24"><path d="M3 20V9l9-6 9 6v11h-6v-7H9v7H3Z"/></svg>ادخل الغرف</a>
-</div>
-</div>
-</section>
+  <div class="side-divider"></div>
+  <a class="side-link" href="settings.html"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="m19 13.5 1.2 1a1.5 1.5 0 0 1-2 2.2l-1.1-.8a1.5 1.5 0 0 0-2.4 1.2v.4a1.5 1.5 0 0 1-3 0v-.4a1.5 1.5 0 0 0-2.4-1.2l-1.1.8a1.5 1.5 0 0 1-2-2.2l1.2-1a1.5 1.5 0 0 0-.8-2.6H5a1.5 1.5 0 0 1 0-3h1.6a1.5 1.5 0 0 0 .8-2.6l-1.2-1a1.5 1.5 0 0 1 2-2.2l1.1.8a1.5 1.5 0 0 0 2.4-1.2v-.4a1.5 1.5 0 0 1 3 0v.4a1.5 1.5 0 0 0 2.4 1.2l1.1-.8a1.5 1.5 0 0 1 2 2.2l-1.2 1a1.5 1.5 0 0 0 .8 2.6H19a1.5 1.5 0 0 1 0 3h-.2a1.5 1.5 0 0 0 .2 2.6Z"/></svg>الإعدادات</a>
 
-<section class="section">
-<div class="section-head">
-<div class="section-heading">
-<div class="section-icon"><svg viewBox="0 0 24 24"><path d="M12 3 14.5 9.5 21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5L12 3Z"/></svg></div>
-<div><h3>استكشف عالم هنون</h3><p>وجهات مختلفة داخل عالم واحد</p></div>
-</div>
-</div>
-<div class="category-grid">
-<a class="category-card" href="games.html">
-<span class="card-arrow"><svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg></span>
-<div><strong>منطقة الألعاب</strong><small>اكتشف الألعاب المتاحة</small></div>
-</a>
-<a class="category-card leaderboard-category" href="leaderboard.html"><span class="card-arrow"><svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg></span><span class="category-symbol"><svg viewBox="0 0 24 24"><path d="M4 19h16M6 16V9h3v7M11 16V4h3v12M16 16v-5h3v5"/></svg></span><div><strong>التصنيف العام</strong><small>ترتيب الأعضاء بالنقاط والمستويات والإنجازات</small></div></a>
-<a class="category-card" href="rooms.html">
-<span class="card-arrow"><svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg></span>
-<div><strong>عالم الغرف</strong><small>غرف المجتمع والألعاب</small></div>
-</a>
-<a class="category-card" href="broadcasts.html">
-<span class="card-arrow"><svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg></span>
-<span class="category-symbol"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3" fill="currentColor" stroke="none"/></svg></span>
-<div><strong>LIVE بث مباشر</strong><small>ابدأ بثك أو شاهد بث الأعضاء الآن</small></div>
-</a>
-<a class="category-card" href="tasks.html">
-<span class="card-arrow"><svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg></span>
-<div><strong>المهام والإنجازات</strong><small>أنجز مهامك واجمع العملات</small></div>
-</a>
-<a class="category-card" href="contests.html">
-<span class="card-arrow"><svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg></span>
-<div><strong>التحديات</strong><small>المنافسات والفعاليات</small></div>
-</a>
-</div>
-</section>
+  <div class="side-account">
+    <small>حسابك الحالي</small>
+    <strong id="sideUserName">جارٍ التحميل...</strong>
+    <a href="profile.html">عرض الملف الشخصي ←</a>
+  </div>
+</aside>
 
-<section class="section">
-<div class="section-head">
-<div class="section-heading">
-<div class="section-icon"><svg viewBox="0 0 24 24"><path d="M6 11h4l2-5 2 12 2-7h2"/></svg></div>
-<div><h3>الألعاب الأكثر لعبًا</h3><p>ترتيب حقيقي حسب مرات اللعب المسجلة</p></div>
-</div>
-<a class="view-all" href="games.html">كل الألعاب ←</a>
-</div>
-<div class="content-grid" id="gamesGrid"><div class="empty-state"><div class="loader"></div><p>جارٍ تحميل الألعاب...</p></div></div>
-</section>
+<main class="main-area" id="mainContent">
+  <div class="welcome-row">
+    <div class="welcome-copy">
+      <small>WELCOME TO YOUR WORLD</small>
+      <h1>أهلاً بك، <span id="welcomeName">صديق هنون</span></h1>
+      <p>كل ما تحبه وتحتاجه في عالم واحد.</p>
+    </div>
+    <div class="welcome-date" id="welcomeDate">HANOON WORLD</div>
+  </div>
 
-<section class="section">
-<div class="promo">
-<div class="promo-content">
-<small>YOUR WORLD · YOUR EXPERIENCE</small>
-<h3>مكانك بين أصدقائك</h3>
-<p>تصفح الغرف العامة واكتشف مساحات اللعب والتفاعل داخل مجتمع هنون.</p>
-<a class="btn-primary" href="rooms.html">اكتشف الغرف</a>
-</div>
-</div>
-</section>
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-label">HANOON WORLD EXPERIENCE</div>
+      <h2>عالمك يبدأ<br><span>من هنا</span></h2>
+      <p>اكتشف الألعاب، انضم إلى الغرف، تواصل مع الأعضاء، وتابع إنجازاتك في مساحة واحدة تجمع مجتمع هنون.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="games.html"><svg viewBox="0 0 24 24"><path d="m8 5 12 7-12 7V5Z" fill="currentColor" stroke="none"/></svg>اكتشف الألعاب</a>
+        <a class="btn btn-secondary" href="rooms.html"><svg viewBox="0 0 24 24"><path d="M3 20V9l9-6 9 6v11h-6v-7H9v7H3Z"/></svg>استكشف الغرف</a>
+      </div>
+    </div>
+  </section>
 
-<section class="section">
-<div class="section-head">
-<div class="section-heading">
-<div class="section-icon"><svg viewBox="0 0 24 24"><path d="M3 20V9l9-6 9 6v11h-6v-7H9v7H3Z"/></svg></div>
-<div><h3>الغرف العامة</h3><p>الغرف العامة المفتوحة في الوقت الحالي</p></div>
-</div>
-<a class="view-all" href="rooms.html">كل الغرف ←</a>
-</div>
-<div class="content-grid" id="roomsGrid"><div class="empty-state"><div class="loader"></div><p>جارٍ تحميل الغرف...</p></div></div>
-</section>
+  <section class="balance-grid">
+    <article class="balance-card">
+      <div class="balance-icon coins"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M15.5 9.5c-.7-.8-1.7-1.2-3.1-1.2-1.5 0-2.5.7-2.5 1.8 0 2.8 5.4 1.1 5.4 4 0 1.2-1.1 2-2.8 2-1.3 0-2.5-.5-3.3-1.4M12 6.5v11"/></svg></div>
+      <div class="balance-info"><small>العملات</small><strong id="coinBalance">—</strong></div>
+    </article>
+    <article class="balance-card">
+      <div class="balance-icon gems"><svg viewBox="0 0 24 24"><path d="m12 2 8 7-8 13L4 9l8-7Z"/><path d="M4 9h16M8 9l4 13 4-13"/></svg></div>
+      <div class="balance-info"><small>الجواهر</small><strong id="gemBalance">—</strong></div>
+    </article>
+    <article class="balance-card">
+      <div class="balance-icon points"><svg viewBox="0 0 24 24"><path d="m12 2 2.5 6.5L21 11l-6.5 2.5L12 20l-2.5-6.5L3 11l6.5-2.5L12 2Z"/><path d="m19 15 1.2 2.8L23 19l-2.8 1.2L19 23l-1.2-2.8L15 19l2.8-1.2L19 15Z"/></svg></div>
+      <div class="balance-info"><small>النقاط المسجلة</small><strong id="pointsBalance">—</strong></div>
+    </article>
+  </section>
 
-<section class="section">
-<div class="section-head">
-<div class="section-heading">
-<div class="section-icon"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H8l-4 4V5Z"/><path d="M8 9h8M8 12h5"/></svg></div>
-<div><h3>اكتشف عالم البث</h3><p>مساحة مخصصة للتجارب المباشرة</p></div>
-</div>
-<a class="view-all" href="broadcasts.html">دخول LIVE ←</a>
-</div>
-<div class="live-grid">
-<a class="live-card" href="broadcasts.html"><div><strong>LIVE بث مباشر</strong><p>شاهد الأعضاء وابدأ البث الخاص بك</p></div></a>
-<a class="live-card" href="live.html"><div><strong>مقابلة عشوائية</strong><p>تواصل بالصوت والصورة مع عضو جديد</p></div></a>
-<a class="live-card" href="tasks.html"><div><strong>مهام وإنجازات</strong><p>تابع تحدياتك اليومية والأسبوعية والشهرية</p></div></a>
-</div>
-</section>
+  <section class="section">
+    <div class="section-head">
+      <div class="section-title">
+        <span class="section-title-icon"><svg viewBox="0 0 24 24"><path d="m12 3 2.5 6.5L21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5L12 3Z"/></svg></span>
+        <div><h3>استكشف عالم هنون</h3><p>اختصاراتك إلى أهم أقسام الموقع</p></div>
+      </div>
+    </div>
+    <div class="explore-grid">
+      <a class="explore-card" href="games.html"><span class="explore-icon"><svg viewBox="0 0 24 24"><path d="M7 8h10a4 4 0 0 1 4 4v4a3 3 0 0 1-5 2l-2-2h-4l-2 2a3 3 0 0 1-5-2v-4a4 4 0 0 1 4-4Z"/></svg></span><span><strong>الألعاب</strong><small>اكتشف الألعاب المتاحة</small></span></a>
+      <a class="explore-card" href="rooms.html"><span class="explore-icon"><svg viewBox="0 0 24 24"><path d="M3 20V9l9-6 9 6v11h-6v-7H9v7H3Z"/></svg></span><span><strong>الغرف</strong><small>انضم إلى غرف المجتمع</small></span></a>
+      <a class="explore-card" href="members.html"><span class="explore-icon"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="4"/><path d="M2 21v-2a7 7 0 0 1 14 0v2M17 4a4 4 0 0 1 0 8M19 15a5 5 0 0 1 3 4v2"/></svg></span><span><strong>الأعضاء</strong><small>اكتشف مجتمع هنون</small></span></a>
+      <a class="explore-card" href="chat.html"><span class="explore-icon"><svg viewBox="0 0 24 24"><path d="M4 5h16v12H9l-5 4V5Z"/><path d="M8 9h8M8 13h5"/></svg></span><span><strong>المحادثات</strong><small>تواصل مع أصدقائك</small></span></a>
+      <a class="explore-card" href="tasks.html"><span class="explore-icon"><svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="m8 12 2.5 2.5L16 9"/></svg></span><span><strong>المهام</strong><small>تابع إنجازاتك ومكافآتك</small></span></a>
+      <a class="explore-card" href="wallet.html"><span class="explore-icon"><svg viewBox="0 0 24 24"><rect x="2.5" y="5" width="19" height="14" rx="3"/><path d="M2.5 9h19M16 14h.01"/></svg></span><span><strong>المحفظة</strong><small>راجع رصيدك وحركاتك</small></span></a>
+      <a class="explore-card" href="notifications.html"><span class="explore-icon"><svg viewBox="0 0 24 24"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9ZM10 21h4"/></svg></span><span><strong>الإشعارات</strong><small>تابع آخر التنبيهات</small></span></a>
+      <a class="explore-card" href="broadcasts.html"><span class="explore-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/></svg></span><span><strong>البث المباشر</strong><small>ادخل إلى عالم LIVE</small></span></a>
+    </div>
+  </section>
 
-<footer style="text-align:center;color:#77728e;font-size:10px;padding:35px 0 15px">HANOON WORLD · YOUR SOCIAL UNIVERSE</footer>
-</div>
+  <section class="section">
+    <div class="section-head">
+      <div class="section-title">
+        <span class="section-title-icon"><svg viewBox="0 0 24 24"><path d="M7 8h10a4 4 0 0 1 4 4v4a3 3 0 0 1-5 2l-2-2h-4l-2 2a3 3 0 0 1-5-2v-4a4 4 0 0 1 4-4Z"/></svg></span>
+        <div><h3>ألعاب هنون</h3><p>الألعاب المسجلة في دليل الألعاب</p></div>
+      </div>
+      <a class="view-all" href="games.html">عرض كل الألعاب ←</a>
+    </div>
+    <div class="cards-grid" id="gamesGrid"><div class="empty-state"><div class="loading-dot"></div><strong>جارٍ تحميل الألعاب...</strong></div></div>
+  </section>
 
-<nav class="bottom-nav">
-<a class="nav-item active" href="home.html"><svg viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10h-6v-6H9v6H3V10Z"/></svg>الرئيسية</a>
-<a class="nav-item" href="games.html"><svg viewBox="0 0 24 24"><path d="M7 8h10a4 4 0 0 1 4 4v4a3 3 0 0 1-5 2l-2-2h-4l-2 2a3 3 0 0 1-5-2v-4a4 4 0 0 1 4-4Z"/><path d="M8 11v4M6 13h4M16 12h.01M18 14h.01"/></svg>الألعاب</a>
-<a class="nav-item" href="leaderboard.html" aria-label="التصنيف العام"><svg viewBox="0 0 24 24"><path d="M4 19h16M6 16V9h3v7M11 16V4h3v12M16 16v-5h3v5"/></svg><span>التصنيف</span></a>
-<a class="nav-item" href="rooms.html"><svg viewBox="0 0 24 24"><path d="M3 20V9l9-6 9 6v11h-6v-7H9v7H3Z"/></svg>الغرف</a>
-<a class="nav-item" href="broadcasts.html"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3" fill="currentColor" stroke="none"/></svg>LIVE</a>
-<a class="nav-item" href="chat.html"><svg viewBox="0 0 24 24"><path d="M4 5h16v12H9l-5 4V5Z"/><path d="M8 9h8M8 13h5"/></svg>المحادثات</a>
-<a class="nav-item" href="profile.html"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 21c.5-4 3.2-6 7.5-6s7 2 7.5 6"/></svg>حسابي</a>
+  <section class="section">
+    <div class="section-head">
+      <div class="section-title">
+        <span class="section-title-icon"><svg viewBox="0 0 24 24"><path d="M3 20V9l9-6 9 6v11h-6v-7H9v7H3Z"/></svg></span>
+        <div><h3>الغرف المتاحة</h3><p>الغرف العامة المفتوحة حاليًا</p></div>
+      </div>
+      <a class="view-all" href="rooms.html">عرض كل الغرف ←</a>
+    </div>
+    <div class="cards-grid" id="roomsGrid"><div class="empty-state"><div class="loading-dot"></div><strong>جارٍ تحميل الغرف...</strong></div></div>
+  </section>
+
+  <section class="section">
+    <div class="section-head">
+      <div class="section-title">
+        <span class="section-title-icon"><svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+        <div><h3>أعضاء من مجتمع هنون</h3><p>حسابات الأعضاء الموجودة في دليل المجتمع</p></div>
+      </div>
+      <a class="view-all" href="members.html">عرض الأعضاء ←</a>
+    </div>
+    <div class="cards-grid" id="membersGrid"><div class="empty-state"><div class="loading-dot"></div><strong>جارٍ تحميل الأعضاء...</strong></div></div>
+  </section>
+
+  <footer class="footer">HANOON WORLD · YOUR SOCIAL UNIVERSE</footer>
+</main>
+
+<nav class="mobile-nav">
+  <a class="mobile-link active" href="home.html"><svg viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10h-6v-6H9v6H3V10Z"/></svg>الرئيسية</a>
+  <a class="mobile-link" href="games.html"><svg viewBox="0 0 24 24"><path d="M7 8h10a4 4 0 0 1 4 4v4a3 3 0 0 1-5 2l-2-2h-4l-2 2a3 3 0 0 1-5-2v-4a4 4 0 0 1 4-4Z"/></svg>الألعاب</a>
+  <a class="mobile-link" href="rooms.html"><svg viewBox="0 0 24 24"><path d="M3 20V9l9-6 9 6v11h-6v-7H9v7H3Z"/></svg>الغرف</a>
+  <a class="mobile-link" href="chat.html"><svg viewBox="0 0 24 24"><path d="M4 5h16v12H9l-5 4V5Z"/></svg>المحادثات</a>
+  <a class="mobile-link" href="profile.html"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 21c.5-4 3.2-6 7.5-6s7 2 7.5 6"/></svg>حسابي</a>
 </nav>
-
 <div class="toast" id="toast"></div>
+</div>
 
-<script>
-const SUPABASE_URL = "https://gjtgvczvclfwvlvcquxh.supabase.co";const SUPABASE_KEY = "sb_publishable_4DVTUZ-xTlqU2GpFvpb7lw_g-Kxomd4";
-const db = window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+<script type="module">
+import { supabase } from "./supabase.js";
 
-const sitePages=[
-{name:"المتجر",keywords:"متجر شراء عناصر منتجات",href:"store.html",type:"قسم"},
-{name:"المحفظة",keywords:"رصيد عملات جواهر معاملات",href:"wallet.html",type:"قسم"},
-{name:"المهام اليومية",keywords:"مهام يومية أسبوعية شهرية إنجازات نقاط",href:"tasks.html",type:"قسم"},
-{name:"التصنيف العام",keywords:"تصنيف ترتيب نقاط ليفل مستوى خبرة إنجازات",href:"leaderboard.html",type:"قسم"},
-{name:"الغرف",keywords:"غرف عامة مجتمع",href:"rooms.html",type:"قسم"},
-{name:"البث المباشر",keywords:"بث لايف مباشر مشاهدة",href:"broadcasts.html",type:"قسم"},
-{name:"المقابلة العشوائية",keywords:"مكالمة فيديو عشوائية",href:"live.html",type:"قسم"},
-{name:"المحادثات",keywords:"رسائل شات دردشة",href:"chat.html",type:"قسم"},
-{name:"الإشعارات",keywords:"تنبيهات إشعارات",href:"notifications.html",type:"قسم"},
-{name:"حسابي والملف الشخصي",keywords:"حساب ملف شخصي بروفايل",href:"profile.html",type:"قسم"},
-{name:"الألعاب",keywords:"ألعاب لعب",href:"games.html",type:"قسم"}
-];
-
-const state={user:null,games:[],rooms:[],members:[]};
 const $=id=>document.getElementById(id);
+const state={
+  user:null,profile:null,wallet:null,
+  games:[],rooms:[],members:[],
+  store:[],gifts:[],tasks:[],contests:[],posts:[]
+};
+
+const pageIndex=[
+  {name:"الرئيسية",words:"الرئيسية الهوم الصفحة الأولى",href:"home.html",type:"قسم"},
+  {name:"الألعاب",words:"ألعاب لعب game games",href:"games.html",type:"قسم"},
+  {name:"الغرف",words:"غرف مجتمع room rooms",href:"rooms.html",type:"قسم"},
+  {name:"الأعضاء",words:"أعضاء مستخدمين أشخاص members users",href:"members.html",type:"قسم"},
+  {name:"المحادثات",words:"رسائل شات دردشة محادثات chat messages",href:"chat.html",type:"قسم"},
+  {name:"الملف الشخصي",words:"حسابي بروفايل profile account",href:"profile.html",type:"قسم"},
+  {name:"المحفظة",words:"رصيد عملات جواهر wallet coins gems",href:"wallet.html",type:"قسم"},
+  {name:"المهام والإنجازات",words:"مهام إنجازات مكافآت يومية أسبوعية tasks achievements",href:"tasks.html",type:"قسم"},
+  {name:"الإشعارات",words:"تنبيهات إشعارات notifications",href:"notifications.html",type:"قسم"},
+  {name:"الإعدادات",words:"إعدادات خصوصية لغة مظهر settings",href:"settings.html",type:"قسم"},
+  {name:"البث المباشر",words:"بث مباشر لايف live broadcasts",href:"broadcasts.html",type:"قسم"},
+  {name:"إعداد الملف الشخصي",words:"إكمال الحساب صورة الاسم profile setup",href:"profile-setup.html",type:"قسم"}
+];
 
 function esc(value){
-return String(value??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));
+  return String(value??"").replace(/[&<>"']/g,c=>({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+  }[c]));
 }
-function isURL(value){return /^https?:\/\//i.test(String(value||""))}
-function publicImage(bucket,path){
-if(!path)return "";
-if(isURL(path))return path;
-const {data}=db.storage.from(bucket).getPublicUrl(path);
-return data?.publicUrl||"";
+function normalize(value){
+  return String(value??"").toLowerCase()
+    .replace(/[أإآ]/g,"ا").replace(/ى/g,"ي")
+    .replace(/[ًٌٍَُِّْـ]/g,"").trim();
 }
-function avatarFallback(){
-return `<svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 21c.5-4 3.2-6 7.5-6s7 2 7.5 6"/></svg>`;
+function formatNumber(value){
+  return new Intl.NumberFormat("ar-EG").format(Number(value)||0);
 }
-async function loadSession(){
-const {data,error}=await db.auth.getSession();
-if(error)throw error;
-state.user=data.session?.user||null;
-if(!state.user){location.href="index.html";return false}
-return true;
+function toast(message){
+  const el=$("toast");
+  el.textContent=message;
+  el.classList.add("show");
+  clearTimeout(toast.timer);
+  toast.timer=setTimeout(()=>el.classList.remove("show"),2500);
 }
-async function loadProfile(){
-const {data,error}=await db.from("profiles").select("id,full_name,avatar_path,member_code").eq("id",state.user.id).maybeSingle();
-if(error)throw error;
-const avatar=publicImage("avatars",data?.avatar_path);
-if(avatar)$("myProfileLink").innerHTML=`<img src="${esc(avatar)}" alt="حسابي">`;
+function imageURL(bucket,path){
+  if(!path)return "";
+  if(/^https?:\/\//i.test(String(path)))return path;
+  const {data}=supabase.storage.from(bucket).getPublicUrl(path);
+  return data?.publicUrl||"";
 }
-async function loadWallet(){
-const {data,error}=await db.from("world_wallets").select("coins,gems").eq("user_id",state.user.id).maybeSingle();
-if(error)throw error;
-$("coinBalance").textContent=data?.coins==null?"—":Number(data.coins).toLocaleString("en-US");
-$("gemBalance").textContent=data?.gems==null?"—":Number(data.gems).toLocaleString("en-US");
+function avatarMarkup(path){
+  const url=imageURL("avatars",path);
+  return url
+    ? `<img src="${esc(url)}" alt="" loading="lazy">`
+    : `<svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 21c.5-4 3.2-6 7.5-6s7 2 7.5 6"/></svg>`;
 }
-async function loadGames(){
-const {data,error}=await db.rpc("get_trending_games",{p_limit:100});
-if(error)throw error;
-state.games=data||[];
-renderGames(state.games.slice(0,5));
+function emptyState(title,description){
+  return `<div class="empty-state"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v4m0 4h.01"/></svg><strong>${esc(title)}</strong><p>${esc(description||"")}</p></div>`;
 }
-async function loadRooms(){
-const {data,error}=await db.from("world_game_rooms").select("id,game_id,host_user_id,room_code,status,visibility,max_players,created_at").eq("visibility","public").in("status",["waiting","playing"]).order("created_at",{ascending:false}) .limit(500);
-if(error)throw error;
-const rooms=data||[];
-const gameIds=[...new Set(rooms.map(x=>x.game_id).filter(Boolean))];
-const hostIds=[...new Set(rooms.map(x=>x.host_user_id).filter(Boolean))];
-let games=[],hosts=[];
-if(gameIds.length){
-const result=await db.from("world_games_catalog").select("id,title_ar,title_en,cover_path").in("id",gameIds);
-if(!result.error)games=result.data||[];
-}
-if(hostIds.length){
-const result=await db.from("profiles").select("id,full_name,avatar_path").in("id",hostIds);
-if(!result.error)hosts=result.data||[];
-}
-state.rooms=rooms.map(room=>({...room,game:games.find(g=>g.id===room.game_id)||null,host:hosts.find(h=>h.id===room.host_user_id)||null}));
-renderRooms(state.rooms);
-}
-/* تحميل دليل الأعضاء لاستخدامه في البحث فقط */
-async function loadMembersForSearch(){
-const {data,error}=await db.from("member_directory").select("id,username,member_code,full_name").neq("id",state.user.id).order("created_at",{ascending:false}).limit(100);
-if(error)throw error;
-state.members=data||[];
-}
-function renderGames(games){
-const grid=$("gamesGrid");
-if(!games.length){
-grid.innerHTML=`<div class="empty-state"><svg viewBox="0 0 24 24"><path d="M7 8h10a4 4 0 0 1 4 4v4a3 3 0 0 1-5 2l-2-2h-4l-2 2a3 3 0 0 1-5-2v-4a4 4 0 0 1 4-4Z"/></svg><h4>لا توجد بيانات لعب مسجلة بعد</h4><p>سيظهر هنا أفضل خمس ألعاب بعد تسجيل جلسات لعب حقيقية. لن نعرض ترتيبًا تخمينيًا.</p></div>`;
-return;
-}
-grid.innerHTML=games.map(game=>{
-const title=game.title_ar||game.title_en||"لعبة";
-const cover=isURL(game.cover_path)?game.cover_path:"";
-const key=encodeURIComponent(game.slug||game.game_id);
-const plays=Number(game.play_count)||0;
-return `<article class="game-card"><div class="game-image">${cover?`<img src="${esc(cover)}" alt="${esc(title)}" loading="lazy">`:""}</div><div class="game-info"><h4>${esc(title)}</h4><p>${esc(game.title_en||"من ألعاب هنون")}</p><div class="card-footer"><span class="card-type">${plays.toLocaleString("ar-EG")} مرات لعب</span><a class="card-link" href="game.html?game=${key}">التفاصيل</a></div></div></article>`;
-}).join("");
-}
-function renderRooms(rooms){
-const grid=$("roomsGrid");
-if(!rooms.length){
-grid.innerHTML=`<div class="empty-state"><svg viewBox="0 0 24 24"><path d="M3 20V9l9-6 9 6v11h-6v-7H9v7H3Z"/></svg><h4>لا توجد غرف عامة متاحة الآن</h4><p>ستظهر الغرف هنا عند وجود غرف عامة مفتوحة.</p></div>`;
-return;
-}
-grid.innerHTML=rooms.map(room=>{
-const title=room.game?.title_ar||room.game?.title_en||"غرفة ألعاب";
-const cover=isURL(room.game?.cover_path)?room.game.cover_path:"";
-const host=room.host?.full_name||"عضو";
-const status=room.status==="playing"?"قيد اللعب":"بانتظار اللاعبين";
-return `<article class="room-card"><div class="room-cover">${cover?`<img src="${esc(cover)}" alt="${esc(title)}" loading="lazy">`:""}<span class="room-state">${status}</span></div><div class="room-info"><h4>${esc(title)}</h4><div class="room-details"><span>المضيف: ${esc(host)}</span><span class="room-code">${esc(room.room_code||"")}</span></div><div class="card-footer"><span class="card-type">الحد الأقصى: ${Number(room.max_players)||"—"}</span><a class="card-link" href="room.html?room=${encodeURIComponent(room.id)}">التفاصيل</a></div></div></article>`;
-}).join("");
-}
-function renderSearch(query){
-const box=$("searchResults");
-const term=query.trim().toLowerCase();
-if(!term){box.classList.remove("show");box.innerHTML="";return}
-const foundGames=state.games.filter(g=>`${g.title_ar||""} ${g.title_en||""}`.toLowerCase().includes(term));
-const foundRooms=state.rooms.filter(r=>`${r.game?.title_ar||""} ${r.room_code||""} ${r.host?.full_name||""}`.toLowerCase().includes(term));
-const foundMembers=state.members.filter(m=>`${m.full_name||""} ${m.username||""} ${m.member_code||""}`.toLowerCase().includes(term));
-const foundPages=sitePages.filter(p=>`${p.name} ${p.keywords}`.toLowerCase().includes(term));
-const items=[
-...foundPages.map(p=>({name:p.name,type:p.type,href:p.href})),
-...foundGames.map(g=>({name:g.title_ar||g.title_en,type:"لعبة",href:`game.html?game=${encodeURIComponent(g.slug||g.game_id)}`})),
-...foundRooms.map(r=>({name:r.game?.title_ar||"غرفة",type:"غرفة",href:`room.html?room=${encodeURIComponent(r.id)}`})),
-...foundMembers.map(m=>({name:m.full_name||m.username||m.member_code,type:"عضو",href:`member.html?id=${encodeURIComponent(m.id)}`})),
-];
-box.classList.add("show");
-box.innerHTML=items.length?items.map(item=>`<div class="search-result"><div><strong>${esc(item.name)}</strong><small> · ${item.type}</small></div><a href="${esc(item.href)}">فتح</a></div>`).join(""):`<div class="search-result"><span>لا توجد نتائج مطابقة في البيانات المحمّلة</span></div>`;
+async function safeQuery(query,label){
+  try{
+    const {data,error}=await query;
+    if(error)throw error;
+    return data||[];
+  }catch(error){
+    console.warn("HANOON "+label,error);
+    return [];
+  }
 }
 
-async function safeTask(task,label){
-try{await task()}catch(error){console.error(`HANOON ${label}:`,error)}
+async function checkSession(){
+  const {data,error}=await supabase.auth.getSession();
+  if(error)throw error;
+  if(!data?.session?.user){
+    location.replace("login.html");
+    return false;
+  }
+  const {data:userData,error:userError}=await supabase.auth.getUser();
+  if(userError||!userData?.user){
+    location.replace("login.html");
+    return false;
+  }
+  state.user=userData.user;
+  return true;
 }
-async function loadAll(){
-const valid=await loadSession();
-if(!valid)return;
-await Promise.allSettled([
-safeTask(loadProfile,"profile"),
-safeTask(loadWallet,"wallet"),
-safeTask(loadGames,"games"),
-safeTask(loadRooms,"rooms"),
-safeTask(loadMembersForSearch,"member search")
-]);
+
+async function loadAccount(){
+  const {data,error}=await supabase.from("profiles")
+    .select("id,full_name,nickname,username,member_code,avatar_path,profile_completed,is_verified")
+    .eq("id",state.user.id).maybeSingle();
+  if(error)throw error;
+  if(!data||data.profile_completed!==true){
+    location.replace("profile-setup.html");
+    return;
+  }
+  state.profile=data;
+  const name=data.nickname||data.full_name||data.username||"عضو هنون";
+  $("welcomeName").textContent=name;
+  $("sideUserName").textContent=name;
+  if(data.member_code){
+    const card=$("sideUserName");
+    card.title="رقم العضوية: "+data.member_code;
+  }
+  const avatar=imageURL("avatars",data.avatar_path);
+  if(avatar)$("myProfileLink").innerHTML=`<img src="${esc(avatar)}" alt="حسابي">`;
+  $("welcomeDate").textContent=new Intl.DateTimeFormat("ar-EG",{
+    weekday:"long",day:"numeric",month:"long"
+  }).format(new Date());
 }
+
+async function loadWallet(){
+  const {data,error}=await supabase.from("world_wallets")
+    .select("coins,gems").eq("user_id",state.user.id).maybeSingle();
+  if(error)throw error;
+  state.wallet=data||null;
+  $("coinBalance").textContent=data?formatNumber(data.coins):"0";
+  $("gemBalance").textContent=data?formatNumber(data.gems):"0";
+}
+
+async function loadPoints(){
+  const {data,error}=await supabase.from("points_ledger")
+    .select("points").eq("user_id",state.user.id);
+  if(error){
+    console.warn("HANOON points:",error);
+    $("pointsBalance").textContent="—";
+    return;
+  }
+  const total=(data||[]).reduce((sum,row)=>sum+(Number(row.points)||0),0);
+  $("pointsBalance").textContent=formatNumber(total);
+}
+
+async function loadGames(){
+  state.games=await safeQuery(
+    supabase.from("world_games_catalog")
+      .select("id,slug,title_ar,title_en,description_ar,category,cover_path,is_active,sort_order")
+      .eq("is_active",true).order("sort_order",{ascending:true}).limit(60),
+    "games"
+  );
+  renderGames();
+}
+
+async function loadRooms(){
+  const rooms=await safeQuery(
+    supabase.from("world_game_rooms")
+      .select("id,game_id,host_user_id,room_code,status,visibility,max_players,created_at")
+      .eq("visibility","public").in("status",["waiting","playing"])
+      .order("created_at",{ascending:false}).limit(30),
+    "rooms"
+  );
+  const gameIds=[...new Set(rooms.map(x=>x.game_id).filter(Boolean))];
+  const hostIds=[...new Set(rooms.map(x=>x.host_user_id).filter(Boolean))];
+  let games=[],hosts=[];
+  if(gameIds.length){
+    games=await safeQuery(
+      supabase.from("world_games_catalog").select("id,title_ar,title_en,cover_path").in("id",gameIds),
+      "room games"
+    );
+  }
+  if(hostIds.length){
+    hosts=await safeQuery(
+      supabase.from("profiles").select("id,full_name,username").in("id",hostIds),
+      "room hosts"
+    );
+  }
+  state.rooms=rooms.map(room=>({
+    ...room,
+    game:games.find(g=>g.id===room.game_id)||null,
+    host:hosts.find(h=>h.id===room.host_user_id)||null
+  }));
+  renderRooms();
+}
+
+async function loadMembers(){
+  state.members=await safeQuery(
+    supabase.from("member_directory")
+      .select("id,username,member_code,full_name,avatar_path,is_verified,created_at")
+      .neq("id",state.user.id).order("created_at",{ascending:false}).limit(12),
+    "members"
+  );
+  renderMembers();
+}
+
+async function loadSearchCatalog(){
+  const [store,gifts,tasks,contests,posts]=await Promise.all([
+    safeQuery(supabase.from("world_store_items")
+      .select("id,slug,title_ar,title_en,description_ar,category,is_active")
+      .eq("is_active",true).limit(100),"store search"),
+    safeQuery(supabase.from("world_gifts")
+      .select("id,slug,name_ar,description_ar,is_active")
+      .eq("is_active",true).limit(100),"gift search"),
+    safeQuery(supabase.from("hanoon_task_catalog")
+      .select("id,task_key,title_ar,description_ar,category,is_active")
+      .eq("is_active",true).limit(100),"task search"),
+    safeQuery(supabase.from("contests")
+      .select("id,title,description,contest_type,status,starts_at,ends_at")
+      .limit(100),"contest search"),
+    safeQuery(supabase.from("posts")
+      .select("id,user_id,content,created_at")
+      .order("created_at",{ascending:false}).limit(100),"post search")
+  ]);
+  state.store=store;
+  state.gifts=gifts;
+  state.tasks=tasks;
+  state.contests=contests;
+  state.posts=posts;
+}
+
+function renderGames(){
+  const root=$("gamesGrid");
+  if(!state.games.length){
+    root.innerHTML=emptyState("لا توجد ألعاب مسجلة حاليًا","ستظهر الألعاب هنا عند تفعيلها في دليل الألعاب.");
+    return;
+  }
+  root.innerHTML=state.games.slice(0,6).map(game=>{
+    const title=game.title_ar||game.title_en||"لعبة";
+    const cover=imageURL("game-covers",game.cover_path)||game.cover_path||"";
+    const href="game.html?game="+encodeURIComponent(game.slug||game.id);
+    return `<article class="game-card">
+      <div class="card-image">${cover?`<img src="${esc(cover)}" alt="${esc(title)}" loading="lazy">`:""}</div>
+      <div class="card-body">
+        <h4>${esc(title)}</h4>
+        <p>${esc(game.description_ar||game.category||"من ألعاب مجتمع هنون")}</p>
+        <div class="card-meta"><span class="meta-text">${esc(game.category||"لعبة")}</span><a class="card-link" href="${esc(href)}">فتح اللعبة</a></div>
+      </div>
+    </article>`;
+  }).join("");
+}
+
+function renderRooms(){
+  const root=$("roomsGrid");
+  if(!state.rooms.length){
+    root.innerHTML=emptyState("لا توجد غرف عامة مفتوحة الآن","عندما ينشئ الأعضاء غرفًا عامة ستظهر هنا.");
+    return;
+  }
+  root.innerHTML=state.rooms.slice(0,6).map(room=>{
+    const title=room.game?.title_ar||room.game?.title_en||"غرفة ألعاب";
+    const cover=room.game?.cover_path||"";
+    const host=room.host?.full_name||room.host?.username||"عضو";
+    const status=room.status==="playing"?"قيد اللعب":"بانتظار اللاعبين";
+    return `<article class="room-card">
+      <div class="card-image">${cover?`<img src="${esc(cover)}" alt="${esc(title)}" loading="lazy">`:""}<span class="room-status">${status}</span></div>
+      <div class="card-body">
+        <h4>${esc(title)}</h4>
+        <p>المضيف: ${esc(host)} · رمز الغرفة: ${esc(room.room_code||"—")}</p>
+        <div class="card-meta"><span class="meta-text">الحد الأقصى: ${formatNumber(room.max_players)}</span><a class="card-link" href="rooms.html">عرض الغرف</a></div>
+      </div>
+    </article>`;
+  }).join("");
+}
+
+function renderMembers(){
+  const root=$("membersGrid");
+  if(!state.members.length){
+    root.innerHTML=emptyState("لا توجد حسابات أخرى للعرض","سيظهر الأعضاء هنا عند توفر حسابات في دليل المجتمع.");
+    return;
+  }
+  root.innerHTML=state.members.slice(0,6).map(member=>{
+    const name=member.full_name||member.username||"عضو هنون";
+    return `<article class="member-card">
+      <div class="member-row">
+        <span class="member-avatar">${avatarMarkup(member.avatar_path)}</span>
+        <span class="member-copy">
+          <strong>${esc(name)}${member.is_verified?'<span class="verified">✓</span>':""}</strong>
+          <small>${member.username?"@"+esc(member.username):esc(member.member_code||"عضو هنون")}</small>
+        </span>
+        <a class="member-open" href="member.html?id=${encodeURIComponent(member.id)}">عرض</a>
+      </div>
+    </article>`;
+  }).join("");
+}
+
+function searchMatches(query){
+  const term=normalize(query);
+  if(!term)return [];
+  const results=[];
+  const add=(name,type,href,extra="")=>{
+    const text=normalize(name+" "+extra);
+    if(text.includes(term))results.push({name,type,href});
+  };
+  pageIndex.forEach(page=>add(page.name,page.type,page.href,page.words));
+  state.games.forEach(game=>add(game.title_ar||game.title_en,"لعبة","game.html?game="+encodeURIComponent(game.slug||game.id),game.title_en+" "+game.description_ar+" "+game.category));
+  state.rooms.forEach(room=>add(room.game?.title_ar||"غرفة","غرفة","rooms.html",room.room_code+" "+(room.host?.full_name||"")));
+  state.members.forEach(member=>add(member.full_name||member.username||member.member_code,"عضو","member.html?id="+encodeURIComponent(member.id),member.username+" "+member.member_code));
+  state.store.forEach(item=>add(item.title_ar||item.title_en,"عنصر متجر","settings.html#store",item.title_en+" "+item.description_ar+" "+item.category));
+  state.gifts.forEach(gift=>add(gift.name_ar,"هدية","settings.html#gifts",gift.description_ar));
+  state.tasks.forEach(task=>add(task.title_ar,"مهمة","tasks.html",task.description_ar+" "+task.task_key+" "+task.category));
+  state.contests.forEach(contest=>add(contest.title,"تحدٍ","tasks.html",contest.description+" "+contest.contest_type));
+  state.posts.forEach(post=>add(post.content?.slice(0,90)||"منشور","منشور","members.html",post.content));
+  return results.slice(0,25);
+}
+
+function renderSearch(query){
+  const root=$("searchResults");
+  if(!query.trim()){
+    root.classList.remove("show");
+    root.innerHTML="";
+    return;
+  }
+  const results=searchMatches(query);
+  const icons={
+    "قسم":'<svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></svg>',
+    "عضو":'<svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 21c.5-4 3.2-6 7.5-6s7 2 7.5 6"/></svg>',
+    "لعبة":'<svg viewBox="0 0 24 24"><path d="M7 8h10a4 4 0 0 1 4 4v4a3 3 0 0 1-5 2l-2-2h-4l-2 2a3 3 0 0 1-5-2v-4a4 4 0 0 1 4-4Z"/></svg>',
+    "غرفة":'<svg viewBox="0 0 24 24"><path d="M3 20V9l9-6 9 6v11h-6v-7H9v7H3Z"/></svg>'
+  };
+  root.innerHTML=results.length
+    ? results.map(item=>`<a class="search-result" href="${esc(item.href)}"><span class="result-icon">${icons[item.type]||icons["قسم"]}</span><span class="result-copy"><strong>${esc(item.name)}</strong><small>${esc(item.type)}</small></span><span class="result-open">فتح ←</span></a>`).join("")
+    : `<div class="search-result"><span class="result-copy"><strong>لا توجد نتائج مطابقة</strong><small>جرّب كلمة أخرى أو جزءًا من الاسم.</small></span></div>`;
+  root.classList.add("show");
+}
+
+async function initialize(){
+  const valid=await checkSession();
+  if(!valid)return;
+
+  try{
+    await loadAccount();
+    if(!state.profile)return;
+  }catch(error){
+    console.error("HANOON account:",error);
+    toast("تعذر تحميل بيانات الحساب.");
+    return;
+  }
+
+  const tasks=[
+    loadWallet(),
+    loadPoints(),
+    loadGames(),
+    loadRooms(),
+    loadMembers(),
+    loadSearchCatalog()
+  ];
+  await Promise.allSettled(tasks);
+}
+
 $("globalSearch").addEventListener("input",event=>renderSearch(event.target.value));
-$("settingsToggle").addEventListener("click",()=>{
-const menu=$("settingsMenu");
-const open=menu.classList.toggle("show");
-$("settingsToggle").setAttribute("aria-expanded",String(open));
+$("globalSearch").addEventListener("keydown",event=>{
+  if(event.key==="Escape"){
+    $("searchResults").classList.remove("show");
+    event.target.blur();
+  }
 });
 document.addEventListener("click",event=>{
-if(!event.target.closest(".search-area"))$("searchResults").classList.remove("show");
-if(!event.target.closest(".search-area")){
-$("settingsMenu").classList.remove("show");
-$("settingsToggle").setAttribute("aria-expanded","false");
-}
+  if(!event.target.closest(".search-wrap"))$("searchResults").classList.remove("show");
 });
-db.auth.onAuthStateChange((event,session)=>{
-if(event==="SIGNED_OUT"||!session)location.href="index.html";
+
+supabase.auth.onAuthStateChange((event,session)=>{
+  if(event==="SIGNED_OUT"||(!session&&event==="INITIAL_SESSION")){
+    location.replace("login.html");
+  }
 });
-document.addEventListener("visibilitychange",()=>{
-if(!document.hidden&&state.user)loadAll();
-});
-loadAll();
-</script>
 
-<!-- ربط الصفحة بنظام الإشعارات المركزي -->
-<script type="module">
-import {
-initializeNotificationCore,
-updateNotificationBadge
-} from "./notification-core.js";
-
-const badge = document.querySelector("[data-notification-count]");
-
-async function refreshNotificationBadge(){
-const count = await updateNotificationBadge();
-if(badge){
-badge.textContent = count > 99 ? "99+" : String(count);
-badge.hidden = count === 0;
-}
-}
-
-if(badge){
 try{
-await initializeNotificationCore(refreshNotificationBadge);
-await refreshNotificationBadge();
+  await initialize();
 }catch(error){
-console.error("HANOON notification initialization:",error);
+  console.error("HANOON home initialization:",error);
+  toast("حدث خطأ أثناء تحميل الصفحة.");
 }
+
+try{
+  const {initializeNotificationCore,updateNotificationBadge}=await import("./notification-core.js");
+  async function refreshBadge(){await updateNotificationBadge();}
+  await initializeNotificationCore(refreshBadge);
+  await refreshBadge();
+}catch(error){
+  console.warn("HANOON notifications:",error);
 }
 </script>
-
 </body>
 </html>
