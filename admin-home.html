@@ -1,0 +1,308 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#090411">
+<title>HANOON WORLD | مركز الإدارة</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:#090411;color:#fff;font-family:Cairo,sans-serif}
+button{font:inherit;cursor:pointer}
+.hero{
+ min-height:340px;
+ position:relative;
+ overflow:hidden;
+ background:
+ linear-gradient(90deg,rgba(8,3,17,.42),rgba(8,3,17,.85)),
+ linear-gradient(0deg,#0a0612 0%,transparent 75%),
+ url("https://images.hdqwalls.com/download/joker-iconic-villain-uh-3840x2160.jpg") center 30%/cover no-repeat;
+}
+.hero:after{
+ content:"";position:absolute;inset:0;
+ background:radial-gradient(ellipse at 75% 35%,transparent 0%,rgba(8,3,17,.3) 75%);
+ pointer-events:none;
+}
+.topbar{
+ position:relative;z-index:2;
+ display:flex;justify-content:space-between;align-items:center;
+ padding:17px 5%;border-bottom:1px solid #ffffff25;
+ background:#08040b66;backdrop-filter:blur(12px)
+}
+.brand{font-size:17px;font-weight:900;letter-spacing:2px;color:#f2d18a}
+.owner-label{font-size:11px;color:#f2d18a;border:1px solid #e9c77c77;padding:7px 12px;border-radius:30px;background:#10091a99}
+.hero-content{position:relative;z-index:2;padding:55px 5% 35px;max-width:850px}
+.kicker{font-size:11px;color:#d8b5ff;letter-spacing:3px;font-weight:800}
+.hero h1{font-size:clamp(27px,5vw,48px);margin:10px 0;color:#fff;text-shadow:0 4px 25px #000;font-weight:900}
+.hero p{color:#e3d8ee;font-size:13px;line-height:2;margin:0}
+main{max-width:1450px;margin:auto;padding:0 22px 45px}
+.profile{
+ position:relative;z-index:4;margin-top:-25px;
+ display:flex;align-items:center;gap:17px;
+ padding:17px;border:1px solid #b88cff66;border-radius:20px;
+ background:linear-gradient(110deg,#211536f5,#10101df5);
+ box-shadow:0 15px 45px #0008;
+}
+.avatar{
+ width:82px;height:82px;flex-shrink:0;border-radius:22px;
+ display:grid;place-items:center;overflow:hidden;
+ border:2px solid #e5c77d;background:#34234b;
+ font-size:32px;font-weight:900;color:#f3d48f
+}
+.avatar img{width:100%;height:100%;object-fit:cover}
+.identity{min-width:0}
+.identity h2{font-size:19px;margin:0 0 4px;font-weight:900}
+.identity p{font-size:11px;color:#cbbddc;margin:3px 0;overflow-wrap:anywhere}
+.verified{display:inline-grid;place-items:center;width:19px;height:19px;border-radius:50%;background:#1689e8;color:white;font-size:12px;margin-right:5px}
+.owner-tag{display:inline-block;margin-top:7px;padding:5px 11px;border:1px solid #e7c77b88;border-radius:20px;color:#f3d48f;font-size:10px;background:#d4a84918}
+.section-head{display:flex;justify-content:space-between;align-items:end;gap:10px;margin:34px 0 16px}
+.section-head h2{font-size:20px;margin:0;font-weight:900}
+.section-head p{font-size:11px;color:#aaa0bb;margin:5px 0 0}
+.status{font-size:10px;color:#8ee5b8}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}
+.card{
+ min-height:185px;position:relative;overflow:hidden;
+ display:flex;flex-direction:column;justify-content:end;
+ padding:19px;text-decoration:none;color:white;
+ border:1px solid #ffffff25;border-radius:19px;
+ background:#171023;isolation:isolate;
+ transition:.25s;
+}
+.card:before{
+ content:"";position:absolute;inset:0;z-index:-2;
+ background:var(--card-bg,linear-gradient(135deg,#37204c,#11101b));
+ background-size:cover;background-position:center;
+ transition:transform .4s;
+}
+.card:after{
+ content:"";position:absolute;inset:0;z-index:-1;
+ background:linear-gradient(0deg,rgba(7,4,13,.98),rgba(7,4,13,.2));
+}
+.card:hover{transform:translateY(-5px);border-color:#d9b66f;box-shadow:0 15px 35px #0007}
+.card:hover:before{transform:scale(1.06)}
+.card-icon{
+ width:43px;height:43px;display:grid;place-items:center;
+ margin-bottom:auto;border:1px solid #e6c57c77;
+ border-radius:14px;background:#120b20a8;color:#f0d18b;
+ font-size:21px
+}
+.card h3{font-size:16px;margin:17px 0 5px;font-weight:900}
+.card p{font-size:10px;line-height:1.9;color:#d0c4df;margin:0}
+.card .open{margin-top:12px;color:#eacb87;font-size:10px;font-weight:800}
+.card.disabled{opacity:.65;cursor:not-allowed}
+.footer{text-align:center;color:#82768f;font-size:10px;padding:25px}
+.message{margin:20px 0;padding:13px;border:1px solid #e5c77b55;border-radius:12px;color:#ead9b5;background:#24182c;font-size:11px;line-height:1.9}
+@media(max-width:900px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){
+ .hero{min-height:300px;background-position:57% center}
+ .topbar{padding:13px 15px}.brand{font-size:13px}
+ .hero-content{padding:48px 18px 35px}
+ main{padding:0 12px 30px}
+ .profile{gap:12px;padding:12px}
+ .avatar{width:65px;height:65px;border-radius:18px}
+ .identity h2{font-size:15px}
+ .grid{grid-template-columns:1fr;gap:11px}
+ .card{min-height:150px}
+ .section-head h2{font-size:17px}
+}
+</style>
+</head>
+
+<body>
+
+<header class="hero">
+ <div class="topbar">
+  <div class="brand">HANOON WORLD</div>
+  <div class="owner-label">ADMIN CONTROL CENTER</div>
+ </div>
+ <div class="hero-content">
+  <div class="kicker">THE POWER OF MANAGEMENT</div>
+  <h1>مركز قيادة المنصة</h1>
+  <p>مرحباً بك في مركز إدارة HANOON WORLD. جميع أدوات التحكم والإدارة في مكان واحد.</p>
+ </div>
+</header>
+
+<main>
+ <section class="profile">
+  <div class="avatar" id="adminAvatar">H</div>
+  <div class="identity">
+   <h2 id="adminName">مالك المنصة</h2>
+   <p id="adminEmail">جارٍ تحميل بيانات الحساب...</p>
+   <div class="owner-tag">مالك المنصة • ADMINISTRATOR</div>
+  </div>
+ </section>
+
+ <div id="pageMessage" class="message" hidden></div>
+
+ <div class="section-head">
+  <div>
+   <h2>أقسام الإدارة الرئيسية</h2>
+   <p>اختر القسم الذي تريد إدارته</p>
+  </div>
+  <span class="status">● مركز الإدارة</span>
+ </div>
+
+ <section class="grid">
+
+  <a class="card" href="admin-members.html"
+   style="--card-bg:linear-gradient(135deg,#263f69,#10121f)">
+   <div class="card-icon">♙</div>
+   <h3>إدارة الأعضاء</h3>
+   <p>حسابات الأعضاء والملفات الشخصية والتوثيق والصلاحيات.</p>
+   <span class="open">فتح القسم ←</span>
+  </a>
+
+  <a class="card" href="admin-messages.html"
+   style="--card-bg:linear-gradient(135deg,#254b58,#11131d)">
+   <div class="card-icon">✉</div>
+   <h3>الرسائل والمحادثات</h3>
+   <p>إدارة الرسائل والمحادثات ومتابعة نظام التواصل.</p>
+   <span class="open">فتح القسم ←</span>
+  </a>
+
+  <a class="card" href="admin-notifications.html"
+   style="--card-bg:linear-gradient(135deg,#60402c,#17101b)">
+   <div class="card-icon">♢</div>
+   <h3>الإشعارات</h3>
+   <p>إرسال الإشعارات ومتابعة التنبيهات العامة.</p>
+   <span class="open">فتح القسم ←</span>
+  </a>
+
+  <a class="card" href="admin-content.html"
+   style="--card-bg:linear-gradient(135deg,#56345e,#15101f)">
+   <div class="card-icon">▤</div>
+   <h3>إدارة المحتوى</h3>
+   <p>المنشورات والمحتوى التحريري والإعلانات.</p>
+   <span class="open">فتح القسم ←</span>
+  </a>
+
+  <a class="card" href="admin-wallet.html"
+   style="--card-bg:linear-gradient(135deg,#665027,#17121a)">
+   <div class="card-icon">◇</div>
+   <h3>المحفظة والأرصدة</h3>
+   <p>متابعة الأرصدة والمعاملات وإدارة العملات.</p>
+   <span class="open">فتح القسم ←</span>
+  </a>
+
+  <a class="card" href="admin-gifts.html"
+   style="--card-bg:linear-gradient(135deg,#67334e,#17101d)">
+   <div class="card-icon">✧</div>
+   <h3>الهدايا والمتجر</h3>
+   <p>إدارة الهدايا والعناصر والأسعار والمخزون.</p>
+   <span class="open">فتح القسم ←</span>
+  </a>
+
+  <a class="card" href="admin-site.html"
+   style="--card-bg:linear-gradient(135deg,#344c6d,#11131c)">
+   <div class="card-icon">⌘</div>
+   <h3>إعدادات المنصة</h3>
+   <p>إعدادات الموقع والمظهر والصفحات الرئيسية.</p>
+   <span class="open">فتح القسم ←</span>
+  </a>
+
+  <a class="card" href="admin-updates.html"
+   style="--card-bg:linear-gradient(135deg,#385744,#11171b)">
+   <div class="card-icon">↻</div>
+   <h3>مركز التحديثات</h3>
+   <p>إصدارات المنصة وملفات التحديث والنشر.</p>
+   <span class="open">فتح القسم ←</span>
+  </a>
+
+  <a class="card" href="admin-security.html"
+   style="--card-bg:linear-gradient(135deg,#5a3034,#171015)">
+   <div class="card-icon">⬡</div>
+   <h3>الأمان وسجل النشاط</h3>
+   <p>جلسات الإدارة وسجل العمليات ومراجعة الأمان.</p>
+   <span class="open">فتح القسم ←</span>
+  </a>
+
+ </section>
+
+ <div class="footer">HANOON WORLD © ALL RIGHTS RESERVED</div>
+</main>
+
+<script type="module">
+import {supabase} from "./supabase.js";
+
+const SESSION_KEY="hanoon_admin_session";
+const ADMIN_ID="a4450f5b-05ee-4476-82e0-9e064d6df331";
+
+function showError(text){
+ const box=document.getElementById("pageMessage");
+ box.textContent=text;
+ box.hidden=false;
+}
+
+async function adminRequest(body,token){
+ const {data,error}=await supabase.functions.invoke(
+  "admin-send-notification",
+  {body,headers:{"x-admin-session":token}}
+ );
+ if(error)throw error;
+ if(data?.error)throw new Error(data.error);
+ return data;
+}
+
+async function start(){
+ const token=localStorage.getItem(SESSION_KEY);
+ if(!token){
+  location.replace("./admin-login.html");
+  return;
+ }
+
+ try{
+  const session=await adminRequest({action:"session_check"},token);
+  if(!session?.ok || !session?.isAdmin){
+   throw new Error("جلسة الإدارة غير صالحة.");
+  }
+
+  // قراءة بيانات مالك المنصة من سجل الحساب الفعلي
+  const {data:profile,error}=await supabase
+   .from("profiles")
+   .select("id,full_name,username,email,avatar_url,is_verified,role")
+   .eq("id",ADMIN_ID)
+   .single();
+
+  if(error)throw error;
+
+  document.getElementById("adminName").textContent=
+   profile.full_name || profile.username || "مالك المنصة";
+
+  document.getElementById("adminEmail").textContent=
+   profile.email || "البريد الإلكتروني غير متاح في سجل الملف الشخصي";
+
+  const avatar=document.getElementById("adminAvatar");
+  if(profile.avatar_url){
+   const img=document.createElement("img");
+   img.src=profile.avatar_url;
+   img.alt="صورة مالك المنصة";
+   img.onerror=()=>{avatar.textContent="H"};
+   avatar.replaceChildren(img);
+  }
+
+  if(profile.is_verified){
+   const mark=document.createElement("span");
+   mark.className="verified";
+   mark.textContent="✓";
+   document.getElementById("adminName").append(mark);
+  }
+
+ }catch(error){
+  console.error(error);
+  if(String(error.message||"").includes("جلسة الإدارة")){
+   localStorage.removeItem(SESSION_KEY);
+   location.replace("./admin-login.html");
+   return;
+  }
+  showError("تعذر تحميل بيانات حساب الإدارة. راجع صلاحية قراءة الملف الشخصي في قاعدة البيانات.");
+ }
+}
+
+start();
+</script>
+
+</body>
+</html>
