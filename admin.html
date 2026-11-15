@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -534,13 +533,13 @@ const quickCards = [
   },
   {
     section:"wallet",title:"المحفظة والأرصدة",
-    description:"قسم إدارة الأرصدة والمحفظة.",
+    description:"إدارة العملات والجواهر وتحويلها ومراجعة المعاملات.",
     icon:'<svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="5" width="20" height="15" rx="3"/><path d="M2 9h20m-6 5h2"/></svg>',
     image:"linear-gradient(135deg,#5a4324,#17101c)"
   },
   {
     section:"gifts",title:"الهدايا والمتجر",
-    description:"قسم إدارة الهدايا وعناصر المتجر.",
+    description:"إضافة الهدايا والمنتجات وتعديل أسعارها والتحكم في ظهورها.",
     icon:'<svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 12v9H4v-9m-2-5h20v5H2zM12 7v14"/></svg>',
     image:"linear-gradient(135deg,#593b4b,#18101d)"
   },
@@ -618,7 +617,7 @@ async function validateAdminSession(token){
 async function loadOwnerProfile(){
   const {data:profile,error} = await supabase
     .from("profiles")
-    .select("id,full_name,username,avatar_url,is_verified,role")
+    .select("id,full_name,username,avatar_path,is_verified,role")
     .eq("id",ADMIN_ID)
     .single();
 
@@ -635,12 +634,18 @@ async function loadOwnerProfile(){
   }
 
   const avatar = $("ownerAvatar");
-  if(profile.avatar_url){
-    const image = document.createElement("img");
-    image.src = profile.avatar_url;
-    image.alt = "صورة مالك المنصة";
-    image.onerror = ()=>{avatar.textContent="H";};
-    avatar.replaceChildren(image);
+  if(profile.avatar_path){
+    const {data:avatarData} = supabase.storage
+      .from("avatars")
+      .getPublicUrl(profile.avatar_path);
+
+    if(avatarData?.publicUrl){
+      const image = document.createElement("img");
+      image.src = avatarData.publicUrl;
+      image.alt = "صورة مالك المنصة";
+      image.onerror = ()=>{avatar.textContent="H";};
+      avatar.replaceChildren(image);
+    }
   }
 
   const {data:userData} = await supabase.auth.getUser();
@@ -810,16 +815,21 @@ async function openSection(section,options={}){
       if(generation!==moduleGeneration) return;
       activeModule = mod.mountUpdateCenter({root,supabase,sessionToken,toast});
     }
+    else if(section==="wallet"){
+      const mod = await import("./admin-sections/wallet.js");
+      if(generation!==moduleGeneration) return;
+      activeModule = await mod.renderWalletSection({root,supabase,sessionToken});
+    }
+    else if(section==="gifts"){
+      const mod = await import("./admin-sections/catalog.js");
+      if(generation!==moduleGeneration) return;
+      activeModule = await mod.renderCatalogSection({root,supabase,sessionToken});
+    }
     else{
-      const messages = {
-        wallet:"واجهة المحفظة لم يتم توصيل عملياتها الإدارية هنا بعد.",
-        gifts:"إدارة الهدايا والمتجر تحتاج إلى ربط عملياتها الفعلية قبل تفعيلها.",
-        messages:"إدارة الرسائل والمحادثات تحتاج إلى واجهة إدارية مستقلة."
-      };
       root.innerHTML = `
         <div class="admin-note">
           <strong>${sectionNames[section]}</strong>
-          <p>${messages[section] || "هذا القسم غير متاح حاليًا."}</p>
+          <p>قسم الرسائل محفوظ كما هو حاليًا، ولم يتم تغيير صلاحيات المحادثات أو بيانات الأعضاء.</p>
         </div>
       `;
     }
