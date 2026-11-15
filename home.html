@@ -275,6 +275,7 @@ body:after{content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;back
 <div class="wallet-links">
 <a class="wallet-link" href="store.html"><svg viewBox="0 0 24 24"><path d="M4 8h16l-1 12H5L4 8Z"/><path d="M9 9V6a3 3 0 0 1 6 0v3"/></svg>المتجر</a>
 <a class="wallet-link" href="gifts.html"><svg viewBox="0 0 24 24"><path d="M3 10h18v11H3zM2 6h20v4H2zM12 6v15"/><path d="M12 6H8a2 2 0 1 1 2-2c0 1.1 2 2 2 2Zm0 0h4a2 2 0 1 0-2-2c0 1.1-2 2-2 2Z"/></svg>الهدايا</a>
+<a class="wallet-link" href="tasks.html"><svg viewBox="0 0 24 24"><path d="m9 12 2 2 4-4"/><rect x="4" y="3" width="16" height="18" rx="2"/></svg>المهام</a>
 </div>
 </div>
 
@@ -340,9 +341,14 @@ body:after{content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;back
 <span class="card-arrow"><svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg></span>
 <div><strong>عالم الغرف</strong><small>غرف المجتمع والألعاب</small></div>
 </a>
-<a class="category-card" href="live.html">
+<a class="category-card" href="broadcasts.html">
 <span class="card-arrow"><svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg></span>
-<div><strong>منطقة البث</strong><small>اكتشف تجارب البث</small></div>
+<span class="category-symbol"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3" fill="currentColor" stroke="none"/></svg></span>
+<div><strong>LIVE بث مباشر</strong><small>ابدأ بثك أو شاهد بث الأعضاء الآن</small></div>
+</a>
+<a class="category-card" href="tasks.html">
+<span class="card-arrow"><svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg></span>
+<div><strong>المهام والإنجازات</strong><small>أنجز مهامك واجمع العملات</small></div>
 </a>
 <a class="category-card" href="contests.html">
 <span class="card-arrow"><svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg></span>
@@ -390,12 +396,12 @@ body:after{content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;back
 <div class="section-icon"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H8l-4 4V5Z"/><path d="M8 9h8M8 12h5"/></svg></div>
 <div><h3>اكتشف عالم البث</h3><p>مساحة مخصصة للتجارب المباشرة</p></div>
 </div>
-<a class="view-all" href="live.html">دخول البث ←</a>
+<a class="view-all" href="broadcasts.html">دخول LIVE ←</a>
 </div>
 <div class="live-grid">
-<a class="live-card" href="live.html"><div><strong>تجارب البث</strong><p>اكتشف مساحة البث في هنون</p></div></a>
-<a class="live-card" href="live.html"><div><strong>الألعاب الجماعية</strong><p>عالم اللعب والمنافسة</p></div></a>
-<a class="live-card" href="live.html"><div><strong>لحظات التحدي</strong><p>اكتشف تجارب جديدة</p></div></a>
+<a class="live-card" href="broadcasts.html"><div><strong>LIVE بث مباشر</strong><p>شاهد الأعضاء وابدأ البث الخاص بك</p></div></a>
+<a class="live-card" href="live.html"><div><strong>مقابلة عشوائية</strong><p>تواصل بالصوت والصورة مع عضو جديد</p></div></a>
+<a class="live-card" href="tasks.html"><div><strong>مهام وإنجازات</strong><p>تابع تحدياتك اليومية والأسبوعية والشهرية</p></div></a>
 </div>
 </section>
 
@@ -410,7 +416,7 @@ body:after{content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;back
 <span>المستخدمون</span>
 </a>
 <a class="nav-item" href="rooms.html"><svg viewBox="0 0 24 24"><path d="M3 20V9l9-6 9 6v11h-6v-7H9v7H3Z"/></svg>الغرف</a>
-<a class="nav-item" href="live.html"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="13" height="12" rx="2"/><path d="m16 10 5-3v10l-5-3"/></svg>بث عشوائي</a>
+<a class="nav-item" href="broadcasts.html"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3" fill="currentColor" stroke="none"/></svg>LIVE</a>
 <a class="nav-item" href="chat.html"><svg viewBox="0 0 24 24"><path d="M4 5h16v12H9l-5 4V5Z"/><path d="M8 9h8M8 13h5"/></svg>المحادثات</a>
 <a class="nav-item" href="profile.html"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 21c.5-4 3.2-6 7.5-6s7 2 7.5 6"/></svg>حسابي</a>
 </nav>
@@ -525,7 +531,7 @@ const foundRooms=state.rooms.filter(r=>`${r.game?.title_ar||""} ${r.room_code||"
 const foundMembers=state.members.filter(m=>`${m.full_name||""} ${m.username||""} ${m.member_code||""}`.toLowerCase().includes(term));
 const items=[
 ...foundGames.map(g=>({name:g.title_ar||g.title_en,type:"لعبة",href:`game.html?game=${encodeURIComponent(g.slug||g.id)}`})),
-...foundRooms.map(r=>({name:r.game?.title_ar||"غرفة ألعاب",type:"غرفة",href:`room.html?room=${encodeURIComponent(r.id)}`})),
+...foundRooms.map(r=>({name:r.game?.title_ar||"غرفة",type:"غرفة",href:`room.html?room=${encodeURIComponent(r.id)}`})),
 ...foundMembers.map(m=>({name:m.full_name||m.username||m.member_code,type:"مستخدم",href:`member.html?id=${encodeURIComponent(m.id)}`})),
 ];
 box.classList.add("show");
