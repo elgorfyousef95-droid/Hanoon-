@@ -206,19 +206,151 @@ svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke
   </div>
 </section>
 
+
 <section class="view" id="view-wallet">
-<div class="page-head"><div><div class="eyebrow">HANOON / WORLD WALLET</div><h1>مركز العملات والجواهر</h1><p>إدارة محفظتك ومكافأتك الشهرية وإضافة الرصيد أو تحويله للأعضاء.</p></div><div class="live-status"><i></i> تحكم المدير</div></div>
-<div class="wallet-hero"><h2>خزنة هَنون العالمية</h2><p>كل أرصدة العملات والجواهر وحركات الإضافة والتحويل في مكان واحد. المكافأة الشهرية تُضاف لحساب المدير فقط.</p><div class="wallet-status" id="walletScheduleStatus">جارٍ التحقق من الجدولة...</div></div>
-<div class="wallet-stats"><div class="wallet-stat coins"><small>رصيد العملات في حسابك</small><strong id="walletAdminCoins">—</strong><em>عملات ذهبية</em></div><div class="wallet-stat gems"><small>رصيد الجواهر في حسابك</small><strong id="walletAdminGems">—</strong><em>جواهر زرقاء</em></div><div class="wallet-stat monthly"><small>مكافأتك الشهرية التلقائية</small><strong>100,000,000 + 100,000,000</strong><em>عملة + جوهرة · للمدير فقط</em></div></div>
-<div class="wallet-grid"><div class="panel"><div class="panel-head"><h3>البحث عن عضو وإدارة رصيده</h3><span>بالاسم أو username أو الكود</span></div>
-<form class="member-tools" id="walletSearchForm"><input id="walletSearchInput" type="search" maxlength="80" placeholder="ابحث عن اسم العضو أو كوده..." autocomplete="off"><button class="primary-btn" id="walletSearchButton" type="submit">بحث</button></form>
-<div class="wallet-search-results" id="walletSearchResults"><div class="wallet-empty">اكتب اسم العضو أو كود العضوية لبدء البحث.</div></div>
-<div class="wallet-selected" id="walletSelectedPanel" hidden><div class="wallet-selected-head"><div class="wallet-member-avatar" id="walletSelectedAvatar">؟</div><div><strong id="walletSelectedName">العضو المحدد</strong><small id="walletSelectedMeta"></small></div></div>
-<div class="wallet-balance-pills"><div class="wallet-balance-pill"><small>رصيد العملات</small><strong id="walletSelectedCoins">0</strong></div><div class="wallet-balance-pill"><small>رصيد الجواهر</small><strong id="walletSelectedGems">0</strong></div></div>
-<form class="wallet-form" id="walletActionForm"><div class="field"><label for="walletActionType">نوع العملية</label><select id="walletActionType"><option value="add">إضافة رصيد للعضو من الإدارة</option><option value="transfer">تحويل من محفظة المدير للعضو</option></select></div><div class="field"><label for="walletCurrency">نوع الرصيد</label><select id="walletCurrency"><option value="coins">عملات</option><option value="gems">جواهر</option></select></div><div class="field"><label for="walletAmount">الكمية</label><input id="walletAmount" type="number" min="1" max="1000000000" step="1" inputmode="numeric" placeholder="اكتب الكمية" required></div><div class="field"><label for="walletReason">سبب العملية / ملاحظة</label><input id="walletReason" type="text" maxlength="160" placeholder="مثال: هدية من الإدارة"></div><button class="primary-btn" id="walletActionButton" type="submit">تنفيذ العملية</button></form></div></div>
-<div class="panel"><div class="panel-head"><h3>سجل حركات العضو</h3><button class="secondary-btn" id="walletRefreshButton" type="button">تحديث</button></div><div class="wallet-history" id="walletHistory"><div class="wallet-empty">اختر عضوًا لعرض سجل العملات والجواهر.</div></div></div></div>
-<div class="panel" style="margin-top:12px"><div class="panel-head"><h3>سجل المكافآت الشهرية للمدير</h3><span>آخر 6 أشهر</span></div><div class="wallet-month-list" id="walletMonthlyHistory"><div class="wallet-empty">جارٍ تحميل السجل...</div></div></div>
-</section><div class="footer-note">HANOON WORLD · PRIVATE ADMINISTRATION CENTER</div>
+  <div class="page-head">
+    <div>
+      <div class="eyebrow">HANOON / WORLD WALLET</div>
+      <h1>مركز العملات والجواهر</h1>
+      <p>إدارة الأرصدة والإضافات والتحويلات ومتابعة حركات الأعضاء.</p>
+    </div>
+    <div class="live-status"><i></i> تحكم المدير</div>
+  </div>
+
+  <div class="wallet-hero">
+    <h2>خزنة هَنون العالمية</h2>
+    <p>إدارة محفظتك ومكافأتك الشهرية وأرصدة جميع الأعضاء من مكان واحد.</p>
+    <div class="wallet-status" id="walletScheduleStatus">جارٍ التحقق من الجدولة...</div>
+  </div>
+
+  <div class="wallet-stats">
+    <div class="wallet-stat coins">
+      <small>رصيد العملات في حسابك</small>
+      <strong id="walletAdminCoins">—</strong>
+      <em>عملات ذهبية</em>
+    </div>
+    <div class="wallet-stat gems">
+      <small>رصيد الجواهر في حسابك</small>
+      <strong id="walletAdminGems">—</strong>
+      <em>جواهر زرقاء</em>
+    </div>
+    <div class="wallet-stat monthly">
+      <small>مكافأتك الشهرية</small>
+      <strong>100,000,000 + 100,000,000</strong>
+      <em>عملة + جوهرة · للمدير فقط</em>
+    </div>
+  </div>
+
+  <div class="wallet-grid">
+    <div class="panel">
+      <div class="panel-head">
+        <h3>الأعضاء المسجلون وإدارة أرصدتهم</h3>
+        <span id="walletMemberCount">جارٍ تحميل الأعضاء...</span>
+      </div>
+
+      <form class="member-tools" id="walletSearchForm">
+        <input
+          id="walletSearchInput"
+          type="search"
+          maxlength="100"
+          placeholder="ابحث بالاسم أو username أو كود العضوية أو ID..."
+          autocomplete="off">
+        <button class="primary-btn" id="walletSearchButton" type="submit">بحث</button>
+      </form>
+
+      <div class="wallet-search-results" id="walletSearchResults">
+        <div class="wallet-empty">جارٍ تحميل الأعضاء المسجلين...</div>
+      </div>
+
+      <div class="wallet-selected" id="walletSelectedPanel" hidden>
+        <div class="wallet-selected-head">
+          <div class="wallet-member-avatar" id="walletSelectedAvatar">؟</div>
+          <div>
+            <strong id="walletSelectedName">العضو المحدد</strong>
+            <small id="walletSelectedMeta"></small>
+          </div>
+        </div>
+
+        <div class="wallet-balance-pills">
+          <div class="wallet-balance-pill">
+            <small>رصيد العملات</small>
+            <strong id="walletSelectedCoins">0</strong>
+          </div>
+          <div class="wallet-balance-pill">
+            <small>رصيد الجواهر</small>
+            <strong id="walletSelectedGems">0</strong>
+          </div>
+        </div>
+
+        <form class="wallet-form" id="walletActionForm">
+          <div class="field">
+            <label for="walletActionType">نوع العملية</label>
+            <select id="walletActionType">
+              <option value="add">إضافة رصيد للعضو من الإدارة</option>
+              <option value="transfer">تحويل من محفظة المدير للعضو</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="walletCurrency">نوع الرصيد</label>
+            <select id="walletCurrency">
+              <option value="coins">عملات</option>
+              <option value="gems">جواهر</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="walletAmount">الكمية</label>
+            <input
+              id="walletAmount"
+              type="number"
+              min="1"
+              max="1000000000"
+              step="1"
+              inputmode="numeric"
+              placeholder="اكتب الكمية"
+              required>
+            <div class="field-hint">الحد الأقصى للعملية الواحدة مليار.</div>
+          </div>
+
+          <div class="field">
+            <label for="walletReason">سبب العملية / ملاحظة</label>
+            <input
+              id="walletReason"
+              type="text"
+              maxlength="160"
+              placeholder="مثال: هدية من الإدارة">
+          </div>
+
+          <button class="primary-btn" id="walletActionButton" type="submit">
+            تنفيذ العملية
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-head">
+        <h3>سجل حركات العضو</h3>
+        <button class="secondary-btn" id="walletRefreshButton" type="button">تحديث</button>
+      </div>
+      <div class="wallet-history" id="walletHistory">
+        <div class="wallet-empty">اختر عضوًا لعرض سجل العملات والجواهر.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel" style="margin-top:12px">
+    <div class="panel-head">
+      <h3>سجل المكافآت الشهرية للمدير</h3>
+      <span>آخر 6 أشهر</span>
+    </div>
+    <div class="wallet-month-list" id="walletMonthlyHistory">
+      <div class="wallet-empty">جارٍ تحميل السجل...</div>
+    </div>
+  </div>
+</section>
+<div class="footer-note">HANOON WORLD · PRIVATE ADMINISTRATION CENTER</div>
 </main>
 </div>
 </div>
