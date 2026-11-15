@@ -597,107 +597,494 @@ function renderProfile(profile){
   setText("infoVerified",verified?"موثق":"غير موثق");
   setText("infoRole",isAdmin?"إدارة الموقع":"عضو");
 
-  setImage($("avatarImage"),profile.avatar_path);
-  setImage($("cardAvatar"),profile.avatar_path);
-  setText("cardName",name);
-  setText("cardUsername",username);
-  setText("cardCode",code);
-  setText("cardJoined",joined);
-  setText("cardStatus",isAdmin?"ADMIN · VIP":verified?"VERIFIED MEMBER":"MEMBER");
 
-  if(profile.cover_path){
-    $("coverImage").src=storageUrl(profile.cover_path);
-    $("coverImage").hidden=false;
-    $("coverImage").onerror=()=>{$("coverImage").hidden=true};
-  }
-  renderTags("hobbiesList",profile.hobbies);
-  renderTags("interestsList",profile.interests,"gold");
-  renderTags("readingList",profile.reading_interests,"cyan");
-  document.title=name+" | HANOON WORLD";
+<script type="module">
+import { supabase } from "./supabase.js";
+
+const $ = id => document.getElementById(id);
+const ADMIN_ID = "a4450f5b-05ee-4476-82e0-9e064d6df331";
+const state = { user: null, profile: null };
+
+const FALLBACK_AVATAR = "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(
+  '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><rect width="200" height="200" fill="#172b43"/><circle cx="100" cy="75" r="37" fill="#a99aff"/><path d="M30 200c5-48 30-72 70-72s65 24 70 72" fill="#a99aff"/></svg>'
+);
+
+function toast(message) {
+  const el = $("toast");
+  if (!el) return;
+  el.textContent = message;
+  el.classList.add("show");
+  clearTimeout(toast.timer);
+  toast.timer = setTimeout(() => el.classList.remove("show"), 2400);
 }
 
-async function loadProfile(){
-  $("loadingState").hidden=false;$("errorState").hidden=true;$("profileContent").hidden=true;
+function formatDate(value) {
+  if (!value) return "غير متاح";
+  const d = new Date(value);
+  if (Number.isNaN(d.getTime())) return "غير متاح";
+  return new Intl.DateTimeFormat("ar-EG", {
+    year: "numeric", month: "long", day: "numeric"
+  }).format(d);
+}
 
-  // قراءة الجلسة المحفوظة بدل طلب Auth /user الذي سجل أخطاء 500 وtimeout.
-  const {data:sessionData,error:sessionError}=await supabase.auth.getSession();
-  if(sessionError)throw sessionError;
+function number(value) {
+  return new Intl.NumberFormat("ar-EG").format(Number(value) || 0);
+}
 
-  const currentUser=sessionData?.session?.user;
-  if(!currentUser){location.replace("login.html");return}
-  state.user=currentUser;
+function storageUrl(path, bucket = "avatars") {
+  if (!path) return null;
+  if (/^https?:\/\//i.test(path)) return path;
 
-  const {data:profile,error}=await supabase.from("profiles").select(`
-    id,is_verified,role,member_code,full_name,nickname,username,avatar_path,cover_path,
-    bio,hobbies,interests,reading_interests,profile_completed,is_private,created_at
-  `).eq("id",state.user.id).maybeSingle();
+  let clean = String(path).replace(/^\/+/, "");
+  if (clean.startsWith(bucket + "/")) {
+    clean = clean.slice(bucket.length + 1);
+  }
 
-  if(error){
-    console.error("Profile database query:",error);
-    showError("تعذر تحميل بيانات الحساب","حدث خطأ أثناء الاتصال بقاعدة البيانات: "+(error.message||"خطأ غير معروف"));
+  return supabase.storage.from(bucket).getPublicUrl(clean).data.publicUrl;
+}
+
+function setImage(el, path) {
+  if (!el) return;
+  el.onerror = () => {
+    el.onerror = null;
+    el.src = FALLBACK_AVATAR;
+  };
+  el.src = storageUrl(path) || FALLBACK_AVATAR;
+}
+
+function setText(id, value) {
+  const el = $(id);
+  if (el) el.textContent = value ?? "—";
+}
+
+function renderTags(id, items, kind = "") {
+  const box = $(id);
+  if (!box) return;
+
+  box.replaceChildren();
+
+  const values = Array.isArray(items)
+    ? items.filter(x => typeof x === "string" && x.trim())
+    : [];
+
+  if (!values.length) {
+    const empty = document.createElement("div");
+    empty.className = "empty";
+    empty.textContent = "لم تتم إضافة بيانات في هذا القسم بعد.";
+    box.append(empty);
     return;
   }
-  if(!profile){showError("لم يتم العثور على ملفك الشخصي","لم نعثر على سجل ملفك الشخصي.");return}
+
+  values.forEach(value => {
+    const tag = document.createElement("span");
+    tag.className = "tag " + kind;
+    tag.textContent = value;
+    box.append(tag);
+  });
+}
+
+function showError(title, message) {
+  if ($("loadingState")) $("loadingState").hidden = true;
+  if ($("profileContent")) $("profileContent").hidden = true;
+  if ($("errorState")) $("errorState").hidden = false;
+
+  setText("errorTitle", title);
+  setText("errorMessage", message);
+}
+
+async function loadCounts(userId) {
+  const results = await Promise.allSettled([
+    supabase.from("follows")
+      .select("follower_id", { count: "exact", head: true })
+      .eq("following_id", userId),
+
+    supabase.from("follows")
+      .select("following_id", { count: "exact", head: true })
+      .eq("follower_id", userId),
+
+    supabase.from("points_ledger")
+      .select("points_delta")
+      .eq("user_id", userId),
+
+    supabase.from("world_wallets")
+      .select("coins,gems")
+      .eq("user_id", userId)
+      .maybeSingle(),
+
+    supabase.from("world_gift_sends")
+      .select("id", { count: "exact", head: true })
+      .eq("recipient_id", userId)
+  ]);
+
+  const followers =
+    results[0].status === "fulfilled" && !results[0].value.error
+      ? results[0].value.count || 0 : 0;
+
+  const following =
+    results[1].status === "fulfilled" && !results[1].value.error
+      ? results[1].value.count || 0 : 0;
+
+  const pointRows =
+    results[2].status === "fulfilled" && !results[2].value.error
+      ? results[2].value.data || [] : [];
+
+  const points = pointRows.reduce(
+    (sum, row) => sum + (Number(row.points_delta) || 0), 0
+  );
+
+  const wallet =
+    results[3].status === "fulfilled" && !results[3].value.error
+      ? results[3].value.data : null;
+
+  const gifts =
+    results[4].status === "fulfilled" && !results[4].value.error
+      ? results[4].value.count || 0 : 0;
+
+  setText("followersCount", userId === ADMIN_ID ? "20M" : number(followers));
+  setText("followingCount", number(following));
+  setText("pointsCount", number(points));
+  setText("giftsCount", number(gifts));
+  setText("coinsCount", number(wallet?.coins || 0));
+  setText("gemsCount", number(wallet?.gems || 0));
+  setText("levelCount", "قريبًا");
+  setText("rankCount", "—");
+
+  return { points };
+}
+
+async function loadEquipped(userId) {
+  const box = $("equippedList");
+  if (!box) return;
+
+  box.innerHTML = '<div class="empty">جاري تحميل المقتنيات...</div>';
+
+  const { data: equipped, error } = await supabase
+    .from("world_store_equipped")
+    .select("category,inventory_id,equipped_at")
+    .eq("user_id", userId);
+
+  if (error) {
+    console.error("Equipped items:", error);
+    box.innerHTML = '<div class="empty">تعذر تحميل المقتنيات حاليًا.</div>';
+    return;
+  }
+
+  if (!equipped?.length) {
+    box.innerHTML = '<div class="empty">لم يتم تفعيل أي مقتنيات من المتجر حتى الآن.</div>';
+    return;
+  }
+
+  const ids = equipped.map(x => x.inventory_id).filter(Boolean);
+  let inventory = [];
+
+  if (ids.length) {
+    const inv = await supabase
+      .from("world_store_inventory")
+      .select("id,item_id")
+      .in("id", ids)
+      .eq("user_id", userId);
+
+    if (!inv.error) inventory = inv.data || [];
+  }
+
+  const itemIds = inventory.map(x => x.item_id).filter(Boolean);
+  let items = [];
+
+  if (itemIds.length) {
+    const found = await supabase
+      .from("world_store_items")
+      .select("id,title_ar,title_en,category")
+      .in("id", itemIds);
+
+    if (!found.error) items = found.data || [];
+  }
+
+  const categoryNames = {
+    profile_background: "خلفية البروفايل",
+    profile_frame: "إطار الصورة",
+    notification_sound: "صوت الإشعارات",
+    chat_background: "خلفية المحادثة",
+    room_background: "خلفية الغرفة",
+    sticker: "ملصق",
+    room_effect: "تأثير الغرفة",
+    game_effect: "تأثير اللعبة"
+  };
+
+  box.replaceChildren();
+
+  equipped.forEach(row => {
+    const inv = inventory.find(x => x.id === row.inventory_id);
+    const item = items.find(x => x.id === inv?.item_id);
+
+    const card = document.createElement("div");
+    card.className = "equipped-item";
+
+    const title = document.createElement("strong");
+    title.textContent =
+      item?.title_ar || item?.title_en ||
+      categoryNames[row.category] || row.category;
+
+    const desc = document.createElement("span");
+    desc.textContent = categoryNames[row.category] || "عنصر مفعّل";
+
+    card.append(title, desc);
+    box.append(card);
+  });
+}
+
+function renderProfile(profile) {
+  state.profile = profile;
+
+  const name = profile.full_name || profile.nickname || "عضو هنون";
+  const username = profile.username
+    ? "@" + profile.username
+    : "اسم المستخدم غير متاح";
+
+  const code = profile.member_code || "—";
+  const joined = formatDate(profile.created_at);
+  const verified = profile.is_verified === true;
+  const isAdmin = profile.role === "admin" || profile.id === ADMIN_ID;
+
+  document.body.classList.toggle("admin-profile", isAdmin);
+
+  if ($("founderBadge")) $("founderBadge").hidden = !isAdmin;
+
+  setText("fullName", name);
+
+  const fullName = $("fullName");
+  const verifiedBadge = $("verifiedBadge");
+
+  if (fullName && verifiedBadge) {
+    fullName.append(verifiedBadge);
+    verifiedBadge.hidden = !verified;
+  }
+
+  setText("username", username);
+  setText("memberCode", code);
+  setText("joinedDate", joined);
+  setText("bio", String(profile.bio || "").trim());
+
+  if ($("bio")) $("bio").hidden = !String(profile.bio || "").trim();
+
+  setText("accountType", isAdmin ? "حساب الإدارة" : "عضو هنون");
+
+  if ($("adminBadge")) $("adminBadge").hidden = !isAdmin;
+  if ($("vipBadge")) $("vipBadge").hidden = !isAdmin;
+
+  setText("privacyBadge", profile.is_private ? "حساب خاص" : "حساب عام");
+  setText("infoName", name);
+  setText("infoUsername", username);
+  setText("infoCode", code);
+  setText("infoJoined", joined);
+  setText("infoPrivacy", profile.is_private ? "حساب خاص" : "حساب عام");
+  setText("infoCompletion", profile.profile_completed ? "مكتمل" : "غير مكتمل");
+  setText("infoVerified", verified ? "موثق" : "غير موثق");
+  setText("infoRole", isAdmin ? "إدارة الموقع" : "عضو");
+
+  setImage($("avatarImage"), profile.avatar_path);
+  setImage($("cardAvatar"), profile.avatar_path);
+
+  setText("cardName", name);
+  setText("cardUsername", username);
+  setText("cardCode", code);
+  setText("cardJoined", joined);
+  setText("cardStatus", isAdmin ? "ADMIN · VIP" : verified ? "VERIFIED MEMBER" : "MEMBER");
+
+  const cover = $("coverImage");
+  if (cover) {
+    if (profile.cover_path) {
+      cover.src = storageUrl(profile.cover_path);
+      cover.hidden = false;
+      cover.onerror = () => { cover.hidden = true; };
+    } else {
+      cover.hidden = true;
+    }
+  }
+
+  renderTags("hobbiesList", profile.hobbies);
+  renderTags("interestsList", profile.interests, "gold");
+  renderTags("readingList", profile.reading_interests, "cyan");
+
+  document.title = name + " | HANOON WORLD";
+}
+
+async function loadProfile() {
+  if ($("loadingState")) $("loadingState").hidden = false;
+  if ($("errorState")) $("errorState").hidden = true;
+  if ($("profileContent")) $("profileContent").hidden = true;
+
+  const { data: sessionData, error: sessionError } =
+    await supabase.auth.getSession();
+
+  if (sessionError) throw sessionError;
+
+  const currentUser = sessionData?.session?.user;
+
+  if (!currentUser) {
+    location.replace("login.html");
+    return;
+  }
+
+  state.user = currentUser;
+
+  const { data: profile, error } = await supabase
+    .from("profiles")
+    .select(`
+      id,is_verified,role,member_code,full_name,nickname,username,
+      avatar_path,cover_path,bio,hobbies,interests,reading_interests,
+      profile_completed,is_private,created_at
+    `)
+    .eq("id", currentUser.id)
+    .maybeSingle();
+
+  if (error) {
+    console.error("Profile database query:", error);
+    showError(
+      "تعذر تحميل بيانات الحساب",
+      "خطأ قاعدة البيانات: " + (error.message || "خطأ غير معروف")
+    );
+    return;
+  }
+
+  if (!profile) {
+    showError("لم يتم العثور على ملفك الشخصي", "لم نعثر على سجل ملفك الشخصي.");
+    return;
+  }
 
   renderProfile(profile);
-  $("loadingState").hidden=true;$("errorState").hidden=true;$("profileContent").hidden=false;
 
-  await Promise.allSettled([loadCounts(state.user.id),loadEquipped(state.user.id)]);
+  if ($("loadingState")) $("loadingState").hidden = true;
+  if ($("errorState")) $("errorState").hidden = true;
+  if ($("profileContent")) $("profileContent").hidden = false;
+
+  await Promise.allSettled([
+    loadCounts(currentUser.id),
+    loadEquipped(currentUser.id)
+  ]);
 }
 
-function activateSection(section){
-  const panels={overview:"overviewPanel",interests:"interestsPanel",collection:"collectionPanel",membership:"membershipPanel"};
-  Object.entries(panels).forEach(([key,id])=>$(id).hidden=key!==section);
-  document.querySelectorAll("[data-section]").forEach(btn=>btn.classList.toggle("active",btn.dataset.section===section));
-}
-document.querySelectorAll("[data-section]").forEach(btn=>btn.addEventListener("click",()=>activateSection(btn.dataset.section)));
+function activateSection(section) {
+  const panels = {
+    overview: "overviewPanel",
+    interests: "interestsPanel",
+    collection: "collectionPanel",
+    membership: "membershipPanel"
+  };
 
-async function copyCode(){
-  const code=state.profile?.member_code;if(!code){toast("رقم العضوية غير متاح");return}
-  try{await navigator.clipboard.writeText(code);toast("تم نسخ رقم العضوية")}
-  catch{
-    const input=document.createElement("textarea");input.value=code;document.body.append(input);input.select();
-    const ok=document.execCommand("copy");input.remove();toast(ok?"تم نسخ رقم العضوية":"تعذر النسخ");
+  Object.entries(panels).forEach(([key, id]) => {
+    const panel = $(id);
+    if (panel) panel.hidden = key !== section;
+  });
+
+  document.querySelectorAll("[data-section]").forEach(btn => {
+    btn.classList.toggle("active", btn.dataset.section === section);
+  });
+}
+
+document.querySelectorAll("[data-section]").forEach(btn => {
+  btn.addEventListener("click", () => activateSection(btn.dataset.section));
+});
+
+async function copyCode() {
+  const code = state.profile?.member_code;
+
+  if (!code) {
+    toast("رقم العضوية غير متاح");
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(code);
+    toast("تم نسخ رقم العضوية");
+  } catch {
+    const input = document.createElement("textarea");
+    input.value = code;
+    document.body.append(input);
+    input.select();
+
+    const ok = document.execCommand("copy");
+    input.remove();
+    toast(ok ? "تم نسخ رقم العضوية" : "تعذر النسخ");
   }
 }
-async function shareProfile(){
-  if(!state.profile)return;
-  const url=location.origin+location.pathname;
-  try{
-    if(navigator.share)await navigator.share({title:(state.profile.full_name||"عضو هنون")+" | HANOON WORLD",text:"حسابي على HANOON WORLD",url});
-    else{await navigator.clipboard.writeText(url);toast("تم نسخ رابط الحساب")}
-  }catch(error){if(error.name!=="AbortError")toast("تعذرت المشاركة")}
-}
-$("copyCodeButton").addEventListener("click",copyCode);
-$("copyCardCode").addEventListener("click",copyCode);
-$("shareButton").addEventListener("click",shareProfile);
-$("retryButton").addEventListener("click",()=>loadProfile().catch(error=>{
-  console.error("Profile retry:",error);
-  showError("تعذر تحميل الحساب",error?.message||"تعذر تحميل الحساب. حاول مرة أخرى.");
-}));
 
-$("logoutButton").addEventListener("click",async()=>{
-  $("logoutButton").disabled=true;
-  const {error}=await supabase.auth.signOut();
-  if(error){$("logoutButton").disabled=false;toast("تعذر تسجيل الخروج");return}
+async function shareProfile() {
+  if (!state.profile) return;
+
+  const url = location.origin + location.pathname;
+
+  try {
+    if (navigator.share) {
+      await navigator.share({
+        title: (state.profile.full_name || "عضو هنون") + " | HANOON WORLD",
+        text: "حسابي على HANOON WORLD",
+        url
+      });
+    } else {
+      await navigator.clipboard.writeText(url);
+      toast("تم نسخ رابط الحساب");
+    }
+  } catch (error) {
+    if (error.name !== "AbortError") toast("تعذرت المشاركة");
+  }
+}
+
+$("copyCodeButton")?.addEventListener("click", copyCode);
+$("copyCardCode")?.addEventListener("click", copyCode);
+$("shareButton")?.addEventListener("click", shareProfile);
+
+$("retryButton")?.addEventListener("click", () => {
+  loadProfile().catch(error => {
+    console.error("Profile retry:", error);
+    showError("تعذر تحميل الحساب", error?.message || "تعذر تحميل الحساب.");
+  });
+});
+
+$("logoutButton")?.addEventListener("click", async () => {
+  const button = $("logoutButton");
+  if (button) button.disabled = true;
+
+  const { error } = await supabase.auth.signOut();
+
+  if (error) {
+    if (button) button.disabled = false;
+    toast("تعذر تسجيل الخروج");
+    return;
+  }
+
   location.replace("login.html");
 });
-supabase.auth.onAuthStateChange((event,session)=>{
-  if(event==="SIGNED_OUT"||!session)location.replace("login.html");
+
+/*
+  لا نعيد توجيه المستخدم عند INITIAL_SESSION الفارغ.
+  إعادة التوجيه تتم فقط عند تسجيل الخروج الفعلي.
+*/
+supabase.auth.onAuthStateChange(event => {
+  if (event === "SIGNED_OUT") {
+    location.replace("login.html");
+  }
 });
 
-loadProfile().catch(error=>{
-  console.error("HANOON profile:",error);
-  showError("تعذر تجهيز صفحة حسابك",error?.message||"حدث خطأ غير متوقع. راجع الاتصال وحاول مرة أخرى.");
-});
+/*
+  تحميل البروفايل مستقل عن نظام الإشعارات،
+  حتى لا يتسبب طلب Auth إضافي في تعطيل الصفحة.
+*/
+loadProfile().catch(error => {
+  console.error("HANOON profile loading error:", error);
 
-try{
-  const refreshProfileBadge=()=>updateNotificationBadge();
-  await initializeNotificationCore(refreshProfileBadge);
-  await refreshProfileBadge();
-}catch(error){
-  console.warn("Profile notifications unavailable:",error);
-}
+  const details = [
+    error?.name,
+    error?.message,
+    error?.code
+  ].filter(Boolean).join(" — ");
+
+  showError(
+    "تعذر تجهيز صفحة حسابك",
+    details || "حدث خطأ غير معروف أثناء تجهيز الحساب."
+  );
+});
 </script>
+
+
 </body>
 </html>
