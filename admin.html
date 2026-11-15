@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -806,9 +807,9 @@ async function openSection(section,options={}){
       activeModule = mod.mountContentManager({root,supabase,sessionToken,toast});
     }
     else if(section==="site"){
-      const mod = await import("./admin-site.js");
+      const mod = await import("./admin-page-studio.js");
       if(generation!==moduleGeneration) return;
-      activeModule = mod.mountSiteEditor({root,supabase,sessionToken,toast});
+      activeModule = mod.mountPageStudio({root,supabase,sessionToken,toast});
     }
     else if(section==="updates"){
       const mod = await import("./admin-updates.js");
