@@ -9,137 +9,178 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
 <style>
 :root{
-  --bg:#09101f;--panel:#111b2d;--panel2:#17243a;--line:#ffffff17;
-  --text:#f7f7ff;--muted:#aab6cb;--gold:#e9c982;--purple:#a995ff;
-  --cyan:#76dce5;--green:#57d6a2;--blue:#398cff;
+--bg:#09101f;--panel:#111b2d;--line:#ffffff17;
+--text:#f7f7ff;--muted:#aab6cb;--gold:#e9c982;
+--purple:#a995ff;--cyan:#76dce5;--green:#57d6a2;
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0;min-height:100%;font-family:Cairo,sans-serif;background:var(--bg);color:var(--text)}
 body{
-  overflow-x:hidden;
-  background:
-    radial-gradient(ellipse at 12% 5%,#55468a38,transparent 34%),
-    radial-gradient(ellipse at 90% 45%,#b48a3b20,transparent 35%),
-    linear-gradient(145deg,#080e1b,#101a2c 55%,#080e1a);
+overflow-x:hidden;
+background:
+radial-gradient(ellipse at 12% 5%,#55468a38,transparent 34%),
+radial-gradient(ellipse at 90% 45%,#b48a3b20,transparent 35%),
+linear-gradient(145deg,#080e1b,#101a2c 55%,#080e1a)
 }
-button,a{font:inherit}button{cursor:pointer}a{color:inherit;text-decoration:none}
+button,a{font:inherit}
+button{cursor:pointer}
+a{color:inherit;text-decoration:none}
 [hidden]{display:none!important}
+
 .topbar{
-  position:sticky;top:0;z-index:30;height:66px;padding:0 max(14px,calc((100% - 1180px)/2));
-  display:flex;align-items:center;justify-content:space-between;gap:12px;
-  background:#080f1deF;border-bottom:1px solid var(--line);backdrop-filter:blur(20px)
+position:sticky;top:0;z-index:30;height:64px;
+padding:0 max(14px,calc((100% - 1180px)/2));
+display:flex;align-items:center;justify-content:space-between;gap:12px;
+background:#080f1df0;border-bottom:1px solid var(--line);
+backdrop-filter:blur(20px)
 }
 .brand{display:flex;align-items:center;gap:10px;font-size:14px;font-weight:900;letter-spacing:1px}
 .brand-mark{
-  width:40px;height:40px;border-radius:14px;display:grid;place-items:center;
-  color:#1a2030;background:linear-gradient(145deg,#f4dfa9,#b38b4c);
-  box-shadow:0 8px 25px #d5ad6330
+width:40px;height:40px;border-radius:14px;display:grid;place-items:center;
+color:#1a2030;background:linear-gradient(145deg,#f4dfa9,#b38b4c);
+box-shadow:0 8px 25px #d5ad6330
 }
-.brand-mark svg{width:25px;height:25px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.brand-mark svg,.icon-btn svg,.btn svg,.side-link svg{
+width:20px;height:20px;fill:none;stroke:currentColor;
+stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round
+}
 .top-actions{display:flex;gap:8px;align-items:center}
 .icon-btn{
-  width:40px;height:40px;border:1px solid var(--line);border-radius:13px;
-  display:grid;place-items:center;background:#ffffff09;color:#fff
-}
-.icon-btn svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-.notification-link{position:relative}
-.notification-badge{
-  position:absolute;top:-5px;right:-5px;min-width:18px;height:18px;padding:0 4px;
-  display:flex;align-items:center;justify-content:center;border:2px solid #111b2d;
-  border-radius:20px;background:#ff526d;color:white;font-size:9px;font-weight:900
+width:40px;height:40px;border:1px solid var(--line);border-radius:13px;
+display:grid;place-items:center;background:#ffffff09;color:#fff
 }
 .page{width:min(1180px,94%);margin:24px auto 55px}
-.loading,.error-state{min-height:65vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:25px}
-.spinner{width:46px;height:46px;border:3px solid #ffffff20;border-top-color:var(--gold);border-radius:50%;animation:spin .8s linear infinite;margin-bottom:16px}
-@keyframes spin{to{transform:rotate(360deg)}}
-.loading p,.error-state p{color:var(--muted);font-size:12px;line-height:2}
-.hero{
-  position:relative;overflow:hidden;border:1px solid #e9c98238;border-radius:30px;
-  background:linear-gradient(145deg,#111d30f2,#0c1728f5);
-  box-shadow:0 28px 80px #0006
+.loading,.error-state{
+min-height:65vh;display:flex;flex-direction:column;
+align-items:center;justify-content:center;text-align:center;padding:25px
 }
-.cover{height:310px;position:relative;overflow:hidden;background:
-  linear-gradient(180deg,#101a2730,#0b1729 100%),
-  url("https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1800&q=85") center/cover}
-.cover:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,#0c1728 0%,transparent 75%)}
-.cover-image{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1}
+.spinner{
+width:46px;height:46px;border:3px solid #ffffff20;
+border-top-color:var(--gold);border-radius:50%;
+animation:spin .8s linear infinite;margin-bottom:16px
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading p,.error-state p{color:var(--muted);font-size:12px;line-height:2;max-width:500px}
+.error-state h2{font-size:20px}
+.hero{
+position:relative;overflow:hidden;border:1px solid #e9c98238;
+border-radius:30px;background:linear-gradient(145deg,#111d30f2,#0c1728f5);
+box-shadow:0 28px 80px #0006
+}
+.cover{
+height:310px;position:relative;overflow:hidden;
+background:
+linear-gradient(180deg,#101a2730,#0b1729 100%),
+url("https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1800&q=85") center/cover
+}
+.cover:after{
+content:"";position:absolute;inset:0;
+background:linear-gradient(0deg,#0c1728 0%,transparent 75%)
+}
+.cover-image{
+position:absolute;inset:0;width:100%;height:100%;
+object-fit:cover;z-index:1
+}
 .cover-label{
-  position:absolute;z-index:3;top:18px;right:20px;padding:8px 14px;border:1px solid #ffffff35;
-  border-radius:30px;background:#07111caa;backdrop-filter:blur(12px);
-  color:#f4dda9;font-size:10px;font-weight:900;letter-spacing:1px
+position:absolute;z-index:3;top:18px;right:20px;padding:8px 14px;
+border:1px solid #ffffff35;border-radius:30px;background:#07111caa;
+backdrop-filter:blur(12px);color:#f4dda9;font-size:10px;font-weight:900
 }
 .profile-body{position:relative;z-index:4;margin-top:-95px;padding:0 36px 27px}
 .identity-row{display:flex;align-items:flex-end;gap:20px;flex-wrap:wrap}
 .avatar-shell{
-  width:158px;height:158px;padding:6px;flex-shrink:0;border-radius:43px;
-  background:linear-gradient(145deg,#f2d99e,#a995ff 55%,#73dce5);
-  box-shadow:0 15px 45px #0009,0 0 0 7px #ffffff0b
+width:158px;height:158px;padding:6px;flex-shrink:0;border-radius:43px;
+background:linear-gradient(145deg,#f2d99e,#a995ff 55%,#73dce5);
+box-shadow:0 15px 45px #0009,0 0 0 7px #ffffff0b
 }
-.avatar{width:100%;height:100%;object-fit:cover;border:5px solid #101d30;border-radius:37px;background:#192943}
+.avatar{
+width:100%;height:100%;object-fit:cover;border:5px solid #101d30;
+border-radius:37px;background:#192943
+}
 .identity{flex:1;min-width:220px;padding-bottom:5px}
-.eyebrow{display:flex;align-items:center;gap:7px;color:var(--gold);font-size:10px;font-weight:900;letter-spacing:1px}
+.eyebrow{display:flex;align-items:center;gap:7px;color:var(--gold);font-size:10px;font-weight:900}
 .eyebrow svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8}
 .name{margin:7px 0 0;font-size:clamp(24px,4vw,36px);font-weight:900;line-height:1.5;overflow-wrap:anywhere}
 .verified-badge{display:inline-flex;vertical-align:middle;width:23px;height:23px;margin-inline-start:8px}
 .verified-badge svg{width:100%;height:100%}
 .username{direction:ltr;text-align:right;color:#c9c1f2;font-size:13px;font-weight:800}
 .identity-tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px;align-items:center}
-.pill{display:inline-flex;align-items:center;gap:6px;padding:6px 11px;border:1px solid var(--line);border-radius:30px;background:#ffffff09;color:#dce3f2;font-size:10px;font-weight:800}
+.pill{
+display:inline-flex;align-items:center;gap:6px;padding:6px 11px;
+border:1px solid var(--line);border-radius:30px;background:#ffffff09;
+color:#dce3f2;font-size:10px;font-weight:800
+}
 .pill.admin{border-color:#e9c98266;background:#e9c98216;color:#f1d99f}
 .pill.vip{border-color:#aa96ff66;background:#aa96ff18;color:#d5c9ff}
 .founder-mark{
-  display:inline-flex;align-items:center;gap:7px;padding:7px 12px;
-  border:1px solid #f3d58c99;border-radius:30px;
-  background:linear-gradient(110deg,#3c2b18dd,#251c39ed);
-  color:#ffe7ad;font-size:10px;font-weight:900;
-  box-shadow:0 0 24px #e9c9822c,inset 0 0 15px #fff1;
+display:inline-flex;align-items:center;gap:7px;padding:7px 12px;
+border:1px solid #f3d58c99;border-radius:30px;
+background:linear-gradient(110deg,#3c2b18dd,#251c39ed);
+color:#ffe7ad;font-size:10px;font-weight:900;
+box-shadow:0 0 24px #e9c9822c,inset 0 0 15px #fff1
 }
-.founder-mark svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.founder-mark svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.8}
 .hero-actions{display:flex;gap:8px;flex-wrap:wrap;margin-right:auto;padding-bottom:5px}
 .btn{
-  min-height:43px;padding:0 15px;border:1px solid var(--line);border-radius:14px;
-  display:inline-flex;align-items:center;justify-content:center;gap:8px;
-  background:#ffffff0c;color:#fff;font-size:11px;font-weight:900
+min-height:43px;padding:0 15px;border:1px solid var(--line);
+border-radius:14px;display:inline-flex;align-items:center;
+justify-content:center;gap:8px;background:#ffffff0c;
+color:#fff;font-size:11px;font-weight:900
 }
-.btn svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .btn.primary{border:0;background:linear-gradient(110deg,#f0dba7,#b58d4e);color:#172033}
 .btn.gold{border-color:#e9c98255;background:#e9c98212;color:var(--gold)}
-.bio{margin:18px 0 0;max-width:850px;color:#d6deeb;font-size:12px;line-height:2.1;white-space:pre-wrap;overflow-wrap:anywhere}
-.hero-foot{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-top:20px;padding-top:17px;border-top:1px solid var(--line)}
+.bio{
+margin:18px 0 0;max-width:850px;color:#d6deeb;
+font-size:12px;line-height:2.1;white-space:pre-wrap;overflow-wrap:anywhere
+}
+.hero-foot{
+display:flex;justify-content:space-between;align-items:center;gap:12px;
+flex-wrap:wrap;margin-top:20px;padding-top:17px;border-top:1px solid var(--line)
+}
 .member-code{color:var(--gold);font-size:12px;font-weight:900;direction:ltr}
 .joined{color:var(--muted);font-size:10px}
 .stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:11px;margin-top:17px}
 .stat{
-  min-height:100px;padding:15px;border:1px solid var(--line);border-radius:19px;
-  background:linear-gradient(145deg,#17243bd9,#0e192bd9);text-align:center
+min-height:100px;padding:15px;border:1px solid var(--line);
+border-radius:19px;background:linear-gradient(145deg,#17243bd9,#0e192bd9);
+text-align:center
 }
 .stat strong{display:block;font-size:22px;font-weight:900;line-height:1.5}
 .stat span{display:block;color:var(--muted);font-size:10px;font-weight:800}
-.stat .gold-text{color:var(--gold)}.stat .purple-text{color:#c4b7ff}.stat .cyan-text{color:var(--cyan)}.stat .green-text{color:var(--green)}
-.content-layout{display:grid;grid-template-columns:235px minmax(0,1fr);gap:18px;margin-top:19px;align-items:start}
+.gold-text{color:var(--gold)}.purple-text{color:#c4b7ff}
+.cyan-text{color:var(--cyan)}.green-text{color:var(--green)}
+.content-layout{
+display:grid;grid-template-columns:235px minmax(0,1fr);
+gap:18px;margin-top:19px;align-items:start
+}
 .side-card,.panel{
-  border:1px solid var(--line);border-radius:23px;
-  background:linear-gradient(145deg,#142138ed,#0d1829f2);
-  box-shadow:0 15px 45px #0003
+border:1px solid var(--line);border-radius:23px;
+background:linear-gradient(145deg,#142138ed,#0d1829f2);
+box-shadow:0 15px 45px #0003
 }
 .side-card{position:sticky;top:82px;padding:13px}
 .side-heading{padding:7px 9px 12px;color:var(--muted);font-size:10px;font-weight:900}
 .side-link{
-  width:100%;min-height:47px;margin:3px 0;padding:0 10px;border:1px solid transparent;
-  border-radius:13px;display:flex;align-items:center;gap:10px;background:transparent;
-  color:#cdd5e4;text-align:right;font-size:11px;font-weight:800
+width:100%;min-height:47px;margin:3px 0;padding:0 10px;
+border:1px solid transparent;border-radius:13px;
+display:flex;align-items:center;gap:10px;background:transparent;
+color:#cdd5e4;text-align:right;font-size:11px;font-weight:800
 }
 .side-link.active{border-color:#e9c98235;background:#e9c98212;color:#f2dba5}
-.side-link svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .side-divider{height:1px;background:var(--line);margin:10px 4px}
 .main-content{min-width:0}
 .panel{padding:23px}
 .panel+.panel{margin-top:15px}
 .panel-heading{display:flex;align-items:center;gap:11px;margin-bottom:17px}
-.panel-icon{width:42px;height:42px;display:grid;place-items:center;border:1px solid #e9c98240;border-radius:13px;background:#e9c98212;color:var(--gold)}
-.panel-icon svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.panel-icon{
+width:42px;height:42px;display:grid;place-items:center;
+border:1px solid #e9c98240;border-radius:13px;
+background:#e9c98212;color:var(--gold)
+}
+.panel-icon svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.8}
 .panel-heading h2{margin:0;font-size:15px;font-weight:900}
 .panel-heading p{margin:3px 0 0;color:var(--muted);font-size:10px}
 .about-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
@@ -156,10 +197,14 @@ button,a{font:inherit}button{cursor:pointer}a{color:inherit;text-decoration:none
 .equipped-item strong{display:block;font-size:11px;color:#f0dba8}
 .equipped-item span{display:block;margin-top:4px;color:var(--muted);font-size:9px}
 .membership-card{
-  position:relative;overflow:hidden;min-height:220px;padding:22px;border:1px solid #e9c98265;border-radius:20px;
-  background:linear-gradient(120deg,#0b1728d9,#182b43d9),url("https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&fit=crop&w=1200&q=80") center/cover
+position:relative;overflow:hidden;min-height:220px;padding:22px;
+border:1px solid #e9c98265;border-radius:20px;
+background:linear-gradient(120deg,#0b1728e8,#182b43df),
+url("https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&fit=crop&w=1200&q=80") center/cover
 }
-.membership-top,.membership-person,.membership-bottom{position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.membership-top,.membership-person,.membership-bottom{
+position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;gap:12px
+}
 .membership-top strong{font-size:12px;letter-spacing:1px}
 .membership-top span{color:var(--gold);font-size:9px;font-weight:900}
 .membership-person{justify-content:flex-start;margin-top:25px}
@@ -171,920 +216,789 @@ button,a{font:inherit}button{cursor:pointer}a{color:inherit;text-decoration:none
 .membership-bottom strong{display:block;margin-top:4px;color:var(--gold);font-size:11px}
 .footer{text-align:center;padding:28px 0 10px;color:#8190a8;font-size:9px;letter-spacing:2px}
 .toast{
-  position:fixed;z-index:80;bottom:22px;left:50%;transform:translate(-50%,15px);
-  opacity:0;pointer-events:none;padding:11px 17px;border:1px solid #e9c98255;border-radius:13px;
-  background:#142239;color:white;font-size:11px;font-weight:800;transition:.2s;white-space:nowrap
+position:fixed;z-index:80;bottom:22px;left:50%;
+transform:translate(-50%,15px);opacity:0;pointer-events:none;
+padding:11px 17px;border:1px solid #e9c98255;border-radius:13px;
+background:#142239;color:white;font-size:11px;font-weight:800;
+transition:.2s;white-space:nowrap
 }
 .toast.show{opacity:1;transform:translate(-50%,0)}
 
-/* Founder profile effects */
+/* مظهر حساب المؤسس */
 body.admin-profile{
-  --gold:#ffe3a0;--purple:#c1a8ff;--cyan:#8df4f4;
-  background:
-    radial-gradient(ellipse at 50% 0%,#d4a64b35,transparent 36%),
-    radial-gradient(ellipse at 8% 42%,#8b65ff30,transparent 32%),
-    radial-gradient(ellipse at 92% 60%,#40dce526,transparent 34%),
-    linear-gradient(145deg,#070914,#111027 48%,#080d1b);
+--gold:#ffe3a0;--purple:#c1a8ff;--cyan:#8df4f4;
+background:
+radial-gradient(ellipse at 50% 0%,#d4a64b35,transparent 36%),
+radial-gradient(ellipse at 8% 42%,#8b65ff30,transparent 32%),
+radial-gradient(ellipse at 92% 60%,#40dce526,transparent 34%),
+linear-gradient(145deg,#070914,#111027 48%,#080d1b)
 }
 body.admin-profile .hero{
-  border:1px solid #f4d58b99;
-  box-shadow:0 0 0 1px #d8b35a22,0 25px 90px #000b,0 0 65px #b78c3c24;
+border:1px solid #f4d58b99;
+box-shadow:0 0 0 1px #d8b35a22,0 25px 90px #000b,0 0 65px #b78c3c24
 }
 body.admin-profile .cover{
-  background:
-    radial-gradient(ellipse at 50% 25%,#f3d18a38,transparent 34%),
-    linear-gradient(120deg,#1d1740aa,#17172c66,#30231388),
-    url("https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1800&q=85") center/cover;
+background:
+radial-gradient(ellipse at 50% 25%,#f3d18a38,transparent 34%),
+linear-gradient(120deg,#1d1740aa,#17172c66,#30231388),
+url("https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1800&q=85") center/cover
 }
 body.admin-profile .cover:before{
-  content:"";position:absolute;z-index:2;inset:-30%;
-  background:linear-gradient(110deg,transparent 35%,#fff2 48%,transparent 60%);
-  transform:translateX(-55%);animation:founderShine 8s ease-in-out infinite;
-  pointer-events:none;
+content:"";position:absolute;z-index:2;inset:-30%;
+background:linear-gradient(110deg,transparent 35%,#fff2 48%,transparent 60%);
+transform:translateX(-55%);animation:shine 8s ease-in-out infinite;pointer-events:none
 }
-@keyframes founderShine{0%,35%{transform:translateX(-55%)}70%,100%{transform:translateX(55%)}}
+@keyframes shine{0%,35%{transform:translateX(-55%)}70%,100%{transform:translateX(55%)}}
 body.admin-profile .cover-label{
-  border-color:#f5d68caa;color:#ffe7ad;
-  background:linear-gradient(120deg,#171326dd,#4b3822cc);
-  box-shadow:0 0 28px #e8c16c35;letter-spacing:1.4px;
+border-color:#f5d68caa;color:#ffe7ad;
+background:linear-gradient(120deg,#171326dd,#4b3822cc);
+box-shadow:0 0 28px #e8c16c35
 }
 body.admin-profile .avatar-shell{
-  background:conic-gradient(from 0deg,#fff0b8,#b88938,#d9c5ff,#6de4e8,#fff0b8);
-  box-shadow:0 0 0 3px #f2d58b33,0 0 28px #e4bb5a88,0 18px 48px #000b;
-  animation:founderAura 5s ease-in-out infinite;
+background:conic-gradient(from 0deg,#fff0b8,#b88938,#d9c5ff,#6de4e8,#fff0b8);
+box-shadow:0 0 0 3px #f2d58b33,0 0 28px #e4bb5a88,0 18px 48px #000b;
+animation:aura 5s ease-in-out infinite
 }
-@keyframes founderAura{
-  0%,100%{filter:brightness(1);box-shadow:0 0 0 3px #f2d58b33,0 0 25px #e4bb5a66,0 18px 48px #000b}
-  50%{filter:brightness(1.12);box-shadow:0 0 0 5px #f2d58b45,0 0 42px #e4bb5aaa,0 18px 48px #000b}
+@keyframes aura{
+0%,100%{filter:brightness(1);box-shadow:0 0 0 3px #f2d58b33,0 0 25px #e4bb5a66,0 18px 48px #000b}
+50%{filter:brightness(1.12);box-shadow:0 0 0 5px #f2d58b45,0 0 42px #e4bb5aaa,0 18px 48px #000b}
 }
 body.admin-profile .avatar{border-color:#151328}
 body.admin-profile .name{
-  background:linear-gradient(100deg,#fff4ce,#f1d18a 42%,#d8caff 75%,#fff);
-  -webkit-background-clip:text;background-clip:text;color:transparent;
-  text-shadow:0 0 28px #e8c16c24
+background:linear-gradient(100deg,#fff4ce,#f1d18a 42%,#d8caff 75%,#fff);
+-webkit-background-clip:text;background-clip:text;color:transparent
 }
 body.admin-profile .eyebrow{color:#ffe3a0}
-body.admin-profile .pill.admin,body.admin-profile .pill.vip{box-shadow:0 0 20px #d7ad5c24}
-body.admin-profile .stat:first-child{border-color:#f0d28a88;background:linear-gradient(145deg,#59432388,#17172c)}
+body.admin-profile .stat:first-child{
+border-color:#f0d28a88;background:linear-gradient(145deg,#59432388,#17172c)
+}
 body.admin-profile .stat:first-child strong{color:#ffe3a0;text-shadow:0 0 20px #e9c98277}
-body.admin-profile .membership-card{border-color:#f3d58caa;box-shadow:inset 0 0 40px #d5ac5a18,0 0 35px #d5ac5a16}
+body.admin-profile .membership-card{border-color:#f3d58caa;box-shadow:0 0 35px #d5ac5a16}
+
 @media(prefers-reduced-motion:reduce){
-  body.admin-profile .avatar-shell,body.admin-profile .cover:before{animation:none}
+body.admin-profile .avatar-shell,body.admin-profile .cover:before{animation:none}
 }
 @media(max-width:850px){
-  .content-layout{grid-template-columns:1fr}
-  .side-card{position:static;display:flex;gap:5px;overflow:auto;white-space:nowrap}
-  .side-heading,.side-divider{display:none}
-  .side-link{width:auto;min-width:max-content;padding:0 12px}
+.content-layout{grid-template-columns:1fr}
+.side-card{position:static;display:flex;gap:5px;overflow:auto;white-space:nowrap}
+.side-heading,.side-divider{display:none}
+.side-link{width:auto;min-width:max-content;padding:0 12px}
 }
 @media(max-width:600px){
-  .topbar{height:60px;padding:0 11px}.brand{font-size:11px}.brand-mark{width:36px;height:36px}
-  .icon-btn{width:36px;height:36px}.page{width:calc(100% - 16px);margin:12px auto 35px}
-  .hero{border-radius:22px}.cover{height:220px}.profile-body{margin-top:-67px;padding:0 14px 18px}
-  .identity-row{align-items:center;gap:11px}.avatar-shell{width:112px;height:112px;border-radius:32px;padding:5px}
-  .avatar{border-radius:27px}.identity{min-width:0}.name{font-size:21px}.username{font-size:11px}
-  .hero-actions{width:100%;margin:5px 0 0;padding:0}.hero-actions .btn{flex:1;padding:0 8px;font-size:10px}
-  .stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.stat{min-height:84px;padding:11px}
-  .stat strong{font-size:19px}.panel{padding:16px}.about-grid{gap:7px}.about-item{padding:10px}
-  .equipped-list{grid-template-columns:1fr}
+.topbar{height:60px;padding:0 11px}
+.brand{font-size:11px}.brand-mark{width:36px;height:36px}
+.icon-btn{width:36px;height:36px}
+.page{width:calc(100% - 16px);margin:12px auto 35px}
+.hero{border-radius:22px}.cover{height:220px}
+.profile-body{margin-top:-67px;padding:0 14px 18px}
+.identity-row{align-items:center;gap:11px}
+.avatar-shell{width:112px;height:112px;border-radius:32px;padding:5px}
+.avatar{border-radius:27px}
+.identity{min-width:0}.name{font-size:21px}.username{font-size:11px}
+.hero-actions{width:100%;margin:5px 0 0;padding:0}
+.hero-actions .btn{flex:1;padding:0 8px;font-size:10px}
+.stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.stat{min-height:84px;padding:11px}.stat strong{font-size:19px}
+.panel{padding:16px}.about-grid{gap:7px}.about-item{padding:10px}
+.equipped-list{grid-template-columns:1fr}
 }
 </style>
 </head>
+
 <body>
+
 <header class="topbar">
-  <a class="brand" href="home.html">
-    <span class="brand-mark">
-      <svg viewBox="0 0 24 24"><path d="M4 19V5l8 10 8-10v14"/><path d="M3 22h18"/></svg>
-    </span>
-    <span>HANOON WORLD</span>
-  </a>
-  <div class="top-actions">
-    <a class="icon-btn" href="home.html" aria-label="الرئيسية">
-      <svg viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/></svg>
-    </a>
-    <a class="icon-btn notification-link" href="notifications.html" aria-label="الإشعارات">
-      <svg viewBox="0 0 24 24"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9ZM10 21h4"/></svg>
-      <span class="notification-badge" data-notification-count hidden></span>
-    </a>
-    <button class="icon-btn" id="shareButton" aria-label="مشاركة الحساب">
-      <svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.7 10.7 6.6-4.4M8.7 13.3l6.6 4.4"/></svg>
-    </button>
-    <button class="icon-btn" id="logoutButton" aria-label="تسجيل الخروج">
-      <svg viewBox="0 0 24 24"><path d="M10 17l5-5-5-5M15 12H3M12 3h7a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-7"/></svg>
-    </button>
-  </div>
+<a class="brand" href="home.html">
+<span class="brand-mark">
+<svg viewBox="0 0 24 24"><path d="M4 19V5l8 10 8-10v14M3 22h18"/></svg>
+</span>
+<span>HANOON WORLD</span>
+</a>
+
+<div class="top-actions">
+<a class="icon-btn" href="home.html" aria-label="الرئيسية">
+<svg viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/></svg>
+</a>
+<a class="icon-btn" href="notifications.html" aria-label="الإشعارات">
+<svg viewBox="0 0 24 24"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9ZM10 21h4"/></svg>
+</a>
+<button class="icon-btn" id="shareButton" aria-label="مشاركة الحساب">
+<svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.7 10.7 6.6-4.4M8.7 13.3l6.6 4.4"/></svg>
+</button>
+<button class="icon-btn" id="logoutButton" aria-label="تسجيل الخروج">
+<svg viewBox="0 0 24 24"><path d="M10 17l5-5-5-5M15 12H3M12 3h7a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-7"/></svg>
+</button>
+</div>
 </header>
 
 <main class="page">
-  <div class="loading" id="loadingState">
-    <div class="spinner"></div><strong>جاري تجهيز حسابك</strong>
-    <p>نحمّل ملفك الشخصي وإحصائياتك ومقتنياتك.</p>
-  </div>
 
-  <section class="error-state" id="errorState" hidden>
-    <h2 id="errorTitle">تعذر تحميل الحساب</h2>
-    <p id="errorMessage">حاول مرة أخرى.</p>
-    <button class="btn primary" id="retryButton">إعادة المحاولة</button>
-    <a class="btn" href="home.html">الرئيسية</a>
-  </section>
+<div class="loading" id="loadingState">
+<div class="spinner"></div>
+<strong>جاري تجهيز حسابك</strong>
+<p>نحمّل بيانات حسابك الآن.</p>
+</div>
 
-  <div id="profileContent" hidden>
-    <section class="hero">
-      <div class="cover">
-        <img class="cover-image" id="coverImage" alt="غلاف الحساب" hidden>
-        <div class="cover-label">HANOON WORLD · FOUNDER SPACE</div>
-      </div>
-      <div class="profile-body">
-        <div class="identity-row">
-          <div class="avatar-shell"><img class="avatar" id="avatarImage" alt="الصورة الشخصية"></div>
-          <div class="identity">
-            <div class="eyebrow">
-              <svg viewBox="0 0 24 24"><path d="m12 3 2.7 2 3.4.2.8 3.3 2 2.5-1.5 3.1.2 3.4-3.2 1.1-2.4 2.1-3.1-1.5-3.4.2-1.1-3.2-2.1-2.4 1.5-3.1-.2-3.4 3.2-1.1z"/><path d="m8.5 12 2.3 2.3 4.8-5"/></svg>
-              HANOON MEMBER
-            </div>
-            <h1 class="name" id="fullName">—<span class="verified-badge" id="verifiedBadge" hidden title="حساب موثق" aria-label="حساب موثق"><svg viewBox="0 0 24 24"><path fill="#2588ff" d="M12 1.8 14.6 4l3.4-.1.9 3.3 2.8 2-1.2 3.2 1.2 3.2-2.8 2-.9 3.3-3.4-.1L12 23l-2.6-2.2-3.4.1-.9-3.3-2.8-2 1.2-3.2-1.2-3.2 2.8-2 .9-3.3 3.4.1z"/><path d="m7.5 12.2 3 3 6-6" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></h1>
-            <div class="username" id="username">—</div>
-            <div class="identity-tags">
-              <span class="pill" id="accountType">عضو هنون</span>
-              <span class="pill admin" id="adminBadge" hidden>إدارة HANOON</span>
-              <span class="pill vip" id="vipBadge" hidden>VIP ADMIN</span>
-              <span class="founder-mark" id="founderBadge" hidden>
-                <svg viewBox="0 0 24 24"><path d="m12 2 2.7 5.5 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/><path d="m9 12 2 2 4-4"/></svg>
-                مؤسس HANOON WORLD
-              </span>
-              <span class="pill" id="privacyBadge">حساب عام</span>
-            </div>
-          </div>
-          <div class="hero-actions">
-            <a class="btn primary" href="profile-setup.html">
-              <svg viewBox="0 0 24 24"><path d="m15 5 4 4M4 20l4-.8L19 8a2.8 2.8 0 0 0-4-4L4 15z"/></svg>
-              تعديل الحساب
-            </a>
-            <button class="btn gold" id="copyCodeButton">
-              <svg viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/></svg>
-              نسخ العضوية
-            </button>
-          </div>
-        </div>
-        <p class="bio" id="bio" hidden></p>
-        <div class="hero-foot">
-          <div><div class="joined">رقم العضوية</div><div class="member-code" id="memberCode">—</div></div>
-          <div class="joined">تاريخ الانضمام: <strong id="joinedDate">—</strong></div>
-        </div>
-      </div>
-    </section>
+<section class="error-state" id="errorState" hidden>
+<h2 id="errorTitle">تعذر تحميل الحساب</h2>
+<p id="errorMessage">حدث خطأ أثناء تحميل بيانات الحساب.</p>
+<button class="btn primary" id="retryButton">إعادة المحاولة</button>
+<a class="btn" href="home.html">الرئيسية</a>
+</section>
 
-    <section class="stats">
-      <div class="stat"><strong class="gold-text" id="followersCount">—</strong><span>المتابعون</span></div>
-      <div class="stat"><strong class="purple-text" id="followingCount">—</strong><span>يتابع</span></div>
-      <div class="stat"><strong class="cyan-text" id="pointsCount">—</strong><span>إجمالي النقاط</span></div>
-      <div class="stat"><strong class="green-text" id="giftsCount">—</strong><span>الهدايا المستلمة</span></div>
-    </section>
+<div id="profileContent" hidden>
 
-    <section class="stats">
-      <div class="stat"><strong class="gold-text" id="coinsCount">—</strong><span>العملات</span></div>
-      <div class="stat"><strong class="purple-text" id="gemsCount">—</strong><span>الجواهر</span></div>
-      <div class="stat"><strong class="cyan-text" id="rankCount">—</strong><span>الترتيب بالنقاط</span></div>
-      <div class="stat"><strong class="green-text" id="levelCount">—</strong><span>المستوى</span></div>
-    </section>
+<section class="hero">
+<div class="cover">
+<img class="cover-image" id="coverImage" alt="غلاف الحساب" hidden>
+<div class="cover-label">HANOON WORLD · FOUNDER SPACE</div>
+</div>
 
-    <div class="content-layout">
-      <aside class="side-card">
-        <div class="side-heading">مساحة حسابك</div>
-        <button class="side-link active" data-section="overview">
-          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="5" rx="2"/><rect x="13" y="10" width="8" height="11" rx="2"/><rect x="3" y="13" width="8" height="8" rx="2"/></svg>
-          نظرة عامة
-        </button>
-        <button class="side-link" data-section="interests">
-          <svg viewBox="0 0 24 24"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.2-.9z"/></svg>
-          الهوايات والاهتمامات
-        </button>
-        <button class="side-link" data-section="collection">
-          <svg viewBox="0 0 24 24"><path d="M4 5h16v14H4zM8 9h8M8 13h5"/></svg>
-          مقتنيات المتجر
-        </button>
-        <button class="side-link" data-section="membership">
-          <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M3 10h18M7 15h4"/></svg>
-          بطاقة العضوية
-        </button>
-        <div class="side-divider"></div>
-        <a class="side-link" href="wallet.html">
-          <svg viewBox="0 0 24 24"><path d="M3 4h2l2 12h11l3-9H6M9 20h.01M17 20h.01"/></svg>
-          المحفظة
-        </a>
-        <a class="side-link" href="tasks.html">
-          <svg viewBox="0 0 24 24"><path d="M20 12v9H4v-9M2 7h20v5H2zM12 7v14M12 7H7a3 3 0 1 1 3-3zM12 7h5a3 3 0 1 0-3-3z"/></svg>
-          المهام والمكافآت
-        </a>
-        <a class="side-link" href="members.html">
-          <svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM20 8v6M23 11h-6"/></svg>
-          اكتشف الأعضاء
-        </a>
-      </aside>
+<div class="profile-body">
+<div class="identity-row">
 
-      <div class="main-content">
-        <section class="panel" id="overviewPanel">
-          <div class="panel-heading">
-            <span class="panel-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></span>
-            <div><h2>بيانات الحساب</h2><p>معلوماتك الأساسية في عالم هنون</p></div>
-          </div>
-          <div class="about-grid">
-            <div class="about-item"><div class="about-label">الاسم الكامل</div><div class="about-value" id="infoName">—</div></div>
-            <div class="about-item"><div class="about-label">اسم المستخدم</div><div class="about-value" id="infoUsername">—</div></div>
-            <div class="about-item"><div class="about-label">رقم العضوية</div><div class="about-value" id="infoCode">—</div></div>
-            <div class="about-item"><div class="about-label">تاريخ الانضمام</div><div class="about-value" id="infoJoined">—</div></div>
-            <div class="about-item"><div class="about-label">خصوصية الحساب</div><div class="about-value" id="infoPrivacy">—</div></div>
-            <div class="about-item"><div class="about-label">حالة الملف</div><div class="about-value" id="infoCompletion">—</div></div>
-            <div class="about-item"><div class="about-label">حالة التوثيق</div><div class="about-value" id="infoVerified">—</div></div>
-            <div class="about-item"><div class="about-label">صفة الحساب</div><div class="about-value" id="infoRole">—</div></div>
-          </div>
-        </section>
+<div class="avatar-shell">
+<img class="avatar" id="avatarImage" alt="الصورة الشخصية">
+</div>
 
-        <section class="panel" id="interestsPanel" hidden>
-          <div class="panel-heading">
-            <span class="panel-icon"><svg viewBox="0 0 24 24"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.2-.9z"/></svg></span>
-            <div><h2>هواياتي واهتماماتي</h2><p>الأشياء التي اخترت عرضها في حسابك</p></div>
-          </div>
-          <h3 style="font-size:12px;color:#e9c982">الهوايات</h3><div class="tag-list" id="hobbiesList"></div>
-          <h3 style="font-size:12px;color:#e9c982;margin-top:20px">الاهتمامات</h3><div class="tag-list" id="interestsList"></div>
-          <h3 style="font-size:12px;color:#e9c982;margin-top:20px">اهتمامات القراءة</h3><div class="tag-list" id="readingList"></div>
-        </section>
+<div class="identity">
+<div class="eyebrow">
+<svg viewBox="0 0 24 24"><path d="m12 3 2.7 2.7 3.7.2.8 3.5 2 2.6-1.5 3.2.2 3.4-3.3 1.1-2.4 2.1-3.2-1.5-3.4.2-1.1-3.2-2.1-2.4 1.5-3.2-.2-3.4 3.3-1.1z"/><path d="m8.5 12 2.3 2.3 4.8-5"/></svg>
+HANOON MEMBER
+</div>
 
-        <section class="panel" id="collectionPanel" hidden>
-          <div class="panel-heading">
-            <span class="panel-icon"><svg viewBox="0 0 24 24"><path d="M4 5h16v14H4zM8 9h8M8 13h5"/></svg></span>
-            <div><h2>مقتنيات المتجر المفعّلة</h2><p>العناصر التي تستخدمها حاليًا في حسابك</p></div>
-          </div>
-          <div class="equipped-list" id="equippedList"><div class="empty">جاري تحميل المقتنيات...</div></div>
-          <a class="btn gold" href="wallet.html" style="margin-top:15px">فتح المحفظة</a>
-        </section>
+<h1 class="name" id="fullName">
+—
+<span class="verified-badge" id="verifiedBadge" hidden title="حساب موثق">
+<svg viewBox="0 0 24 24">
+<path fill="#2588ff" d="M12 1.8 14.6 4l3.4-.1.9 3.3 2.8 2-1.2 3.2 1.2 3.2-2.8 2-.9 3.3-3.4-.1L12 23l-2.6-2.2-3.4.1-.9-3.3-2.8-2 1.2-3.2-1.2-3.2 2.8-2 .9-3.3 3.4.1z"/>
+<path d="m7.5 12.2 3 3 6-6" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+</span>
+</h1>
 
-        <section class="panel" id="membershipPanel" hidden>
-          <div class="panel-heading">
-            <span class="panel-icon"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M3 10h18M7 15h4"/></svg></span>
-            <div><h2>بطاقة عضويتك</h2><p>هويتك الرقمية داخل HANOON WORLD</p></div>
-          </div>
-          <div class="membership-card">
-            <div class="membership-top"><strong>HANOON WORLD</strong><span id="cardStatus">MEMBER</span></div>
-            <div class="membership-person"><img id="cardAvatar" alt="الصورة الشخصية"><div><strong id="cardName">—</strong><small id="cardUsername">—</small></div></div>
-            <div class="membership-bottom"><div><small>MEMBER ID</small><strong id="cardCode">—</strong></div><div><small>JOINED</small><strong id="cardJoined">—</strong></div></div>
-          </div>
-          <button class="btn gold" id="copyCardCode" style="margin-top:14px">نسخ رقم العضوية</button>
-        </section>
-      </div>
-    </div>
-  </div>
-  <footer class="footer">HANOON WORLD · YOUR WORLD · YOUR IDENTITY</footer>
+<div class="username" id="username">—</div>
+
+<div class="identity-tags">
+<span class="pill" id="accountType">عضو هنون</span>
+<span class="pill admin" id="adminBadge" hidden>إدارة HANOON</span>
+<span class="pill vip" id="vipBadge" hidden>VIP ADMIN</span>
+<span class="founder-mark" id="founderBadge" hidden>
+<svg viewBox="0 0 24 24"><path d="m12 2 2.7 5.5 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/><path d="m9 12 2 2 4-4"/></svg>
+مؤسس HANOON WORLD
+</span>
+<span class="pill" id="privacyBadge">حساب عام</span>
+</div>
+</div>
+
+<div class="hero-actions">
+<a class="btn primary" href="profile-setup.html">
+<svg viewBox="0 0 24 24"><path d="m15 5 4 4M4 20l4-.8L19 8a2.8 2.8 0 0 0-4-4L4 15z"/></svg>
+تعديل الحساب
+</a>
+<button class="btn gold" id="copyCodeButton">
+<svg viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/></svg>
+نسخ العضوية
+</button>
+</div>
+</div>
+
+<p class="bio" id="bio" hidden></p>
+
+<div class="hero-foot">
+<div>
+<div class="joined">رقم العضوية</div>
+<div class="member-code" id="memberCode">—</div>
+</div>
+<div class="joined">تاريخ الانضمام: <strong id="joinedDate">—</strong></div>
+</div>
+</div>
+</section>
+
+<section class="stats">
+<div class="stat"><strong class="gold-text" id="followersCount">—</strong><span>المتابعون</span></div>
+<div class="stat"><strong class="purple-text" id="followingCount">—</strong><span>يتابع</span></div>
+<div class="stat"><strong class="cyan-text" id="pointsCount">—</strong><span>إجمالي النقاط</span></div>
+<div class="stat"><strong class="green-text" id="giftsCount">—</strong><span>الهدايا المستلمة</span></div>
+</section>
+
+<section class="stats">
+<div class="stat"><strong class="gold-text" id="coinsCount">—</strong><span>العملات</span></div>
+<div class="stat"><strong class="purple-text" id="gemsCount">—</strong><span>الجواهر</span></div>
+<div class="stat"><strong class="cyan-text" id="rankCount">—</strong><span>الترتيب بالنقاط</span></div>
+<div class="stat"><strong class="green-text" id="levelCount">—</strong><span>المستوى</span></div>
+</section>
+
+<div class="content-layout">
+
+<aside class="side-card">
+<div class="side-heading">مساحة حسابك</div>
+
+<button class="side-link active" data-section="overview">
+<svg viewBox="0 0 24 24"><rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="5" rx="2"/><rect x="13" y="10" width="8" height="11" rx="2"/><rect x="3" y="13" width="8" height="8" rx="2"/></svg>
+نظرة عامة
+</button>
+
+<button class="side-link" data-section="interests">
+<svg viewBox="0 0 24 24"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.2-.9z"/></svg>
+الهوايات والاهتمامات
+</button>
+
+<button class="side-link" data-section="collection">
+<svg viewBox="0 0 24 24"><path d="M4 5h16v14H4zM8 9h8M8 13h5"/></svg>
+مقتنيات المتجر
+</button>
+
+<button class="side-link" data-section="membership">
+<svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M3 10h18M7 15h4"/></svg>
+بطاقة العضوية
+</button>
+
+<div class="side-divider"></div>
+
+<a class="side-link" href="wallet.html">المحفظة</a>
+<a class="side-link" href="tasks.html">المهام والمكافآت</a>
+<a class="side-link" href="members.html">اكتشف الأعضاء</a>
+</aside>
+
+<div class="main-content">
+
+<section class="panel" id="overviewPanel">
+<div class="panel-heading">
+<span class="panel-icon">
+<svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>
+</span>
+<div><h2>بيانات الحساب</h2><p>معلوماتك الأساسية في عالم هنون</p></div>
+</div>
+
+<div class="about-grid">
+<div class="about-item"><div class="about-label">الاسم الكامل</div><div class="about-value" id="infoName">—</div></div>
+<div class="about-item"><div class="about-label">اسم المستخدم</div><div class="about-value" id="infoUsername">—</div></div>
+<div class="about-item"><div class="about-label">رقم العضوية</div><div class="about-value" id="infoCode">—</div></div>
+<div class="about-item"><div class="about-label">تاريخ الانضمام</div><div class="about-value" id="infoJoined">—</div></div>
+<div class="about-item"><div class="about-label">خصوصية الحساب</div><div class="about-value" id="infoPrivacy">—</div></div>
+<div class="about-item"><div class="about-label">حالة الملف</div><div class="about-value" id="infoCompletion">—</div></div>
+<div class="about-item"><div class="about-label">حالة التوثيق</div><div class="about-value" id="infoVerified">—</div></div>
+<div class="about-item"><div class="about-label">صفة الحساب</div><div class="about-value" id="infoRole">—</div></div>
+</div>
+</section>
+
+<section class="panel" id="interestsPanel" hidden>
+<div class="panel-heading">
+<span class="panel-icon">✦</span>
+<div><h2>هواياتي واهتماماتي</h2><p>الأشياء التي اخترت عرضها في حسابك</p></div>
+</div>
+<h3 style="font-size:12px;color:#e9c982">الهوايات</h3>
+<div class="tag-list" id="hobbiesList"></div>
+<h3 style="font-size:12px;color:#e9c982;margin-top:20px">الاهتمامات</h3>
+<div class="tag-list" id="interestsList"></div>
+<h3 style="font-size:12px;color:#e9c982;margin-top:20px">اهتمامات القراءة</h3>
+<div class="tag-list" id="readingList"></div>
+</section>
+
+<section class="panel" id="collectionPanel" hidden>
+<div class="panel-heading">
+<span class="panel-icon">◇</span>
+<div><h2>مقتنيات المتجر المفعّلة</h2><p>العناصر التي تستخدمها حاليًا في حسابك</p></div>
+</div>
+<div class="equipped-list" id="equippedList">
+<div class="empty">جاري تحميل المقتنيات...</div>
+</div>
+<a class="btn gold" href="wallet.html" style="margin-top:15px">فتح المحفظة</a>
+</section>
+
+<section class="panel" id="membershipPanel" hidden>
+<div class="panel-heading">
+<span class="panel-icon">▤</span>
+<div><h2>بطاقة عضويتك</h2><p>هويتك الرقمية داخل HANOON WORLD</p></div>
+</div>
+<div class="membership-card">
+<div class="membership-top"><strong>HANOON WORLD</strong><span id="cardStatus">MEMBER</span></div>
+<div class="membership-person">
+<img id="cardAvatar" alt="الصورة الشخصية">
+<div><strong id="cardName">—</strong><small id="cardUsername">—</small></div>
+</div>
+<div class="membership-bottom">
+<div><small>MEMBER ID</small><strong id="cardCode">—</strong></div>
+<div><small>JOINED</small><strong id="cardJoined">—</strong></div>
+</div>
+</div>
+<button class="btn gold" id="copyCardCode" style="margin-top:14px">نسخ رقم العضوية</button>
+</section>
+
+</div>
+</div>
+</div>
+
+<footer class="footer">HANOON WORLD · YOUR WORLD · YOUR IDENTITY</footer>
 </main>
 
 <div class="toast" id="toast"></div>
 
 <script type="module">
 import { supabase } from "./supabase.js";
-import { initializeNotificationCore, updateNotificationBadge } from "./notification-core.js";
 
 const $ = id => document.getElementById(id);
 const ADMIN_ID = "a4450f5b-05ee-4476-82e0-9e064d6df331";
-const state = { user:null, profile:null };
 
-const FALLBACK_AVATAR = "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(
-  '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><rect width="200" height="200" fill="#172b43"/><circle cx="100" cy="75" r="37" fill="#a99aff"/><path d="M30 200c5-48 30-72 70-72s65 24 70 72" fill="#a99aff"/></svg>'
+const state = {
+user:null,
+profile:null
+};
+
+const FALLBACK_AVATAR =
+"data:image/svg+xml;charset=UTF-8," +
+encodeURIComponent(
+'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><rect width="200" height="200" fill="#172b43"/><circle cx="100" cy="75" r="37" fill="#a99aff"/><path d="M30 200c5-48 30-72 70-72s65 24 70 72" fill="#a99aff"/></svg>'
 );
 
 function toast(message){
-  const el=$("toast");el.textContent=message;el.classList.add("show");
-  clearTimeout(toast.timer);toast.timer=setTimeout(()=>el.classList.remove("show"),2400);
+const el=$("toast");
+if(!el)return;
+el.textContent=message;
+el.classList.add("show");
+clearTimeout(toast.timer);
+toast.timer=setTimeout(()=>el.classList.remove("show"),2400);
 }
-function formatDate(value){
-  if(!value)return "غير متاح";
-  const d=new Date(value);if(Number.isNaN(d.getTime()))return "غير متاح";
-  return new Intl.DateTimeFormat("ar-EG",{year:"numeric",month:"long",day:"numeric"}).format(d);
+
+function setText(id,value){
+const el=$(id);
+if(el)el.textContent=value??"—";
 }
+
 function number(value){
-  return new Intl.NumberFormat("ar-EG").format(Number(value)||0);
+return new Intl.NumberFormat("ar-EG").format(Number(value)||0);
 }
+
+function formatDate(value){
+if(!value)return "غير متاح";
+const date=new Date(value);
+if(Number.isNaN(date.getTime()))return "غير متاح";
+return new Intl.DateTimeFormat("ar-EG",{
+year:"numeric",month:"long",day:"numeric"
+}).format(date);
+}
+
 function storageUrl(path,bucket="avatars"){
-  if(!path)return null;
-  if(/^https?:\/\//i.test(path))return path;
-  let clean=String(path).replace(/^\/+/,"");
-  if(clean.startsWith(bucket+"/"))clean=clean.slice(bucket.length+1);
-  return supabase.storage.from(bucket).getPublicUrl(clean).data.publicUrl;
+if(!path)return null;
+if(/^https?:\/\//i.test(path))return path;
+let clean=String(path).replace(/^\/+/,"");
+if(clean.startsWith(bucket+"/"))clean=clean.slice(bucket.length+1);
+return supabase.storage.from(bucket).getPublicUrl(clean).data.publicUrl;
 }
-function setImage(el,path){
-  el.onerror=()=>{el.onerror=null;el.src=FALLBACK_AVATAR};
-  el.src=storageUrl(path)||FALLBACK_AVATAR;
+
+function setImage(element,path){
+if(!element)return;
+element.onerror=()=>{
+element.onerror=null;
+element.src=FALLBACK_AVATAR;
+};
+element.src=storageUrl(path)||FALLBACK_AVATAR;
 }
-function renderTags(id,items,kind=""){
-  const box=$(id);box.replaceChildren();
-  const values=Array.isArray(items)?items.filter(x=>typeof x==="string"&&x.trim()):[];
-  if(!values.length){const e=document.createElement("div");e.className="empty";e.textContent="لم تتم إضافة بيانات في هذا القسم بعد.";box.append(e);return}
-  values.forEach(value=>{const tag=document.createElement("span");tag.className="tag "+kind;tag.textContent=value;box.append(tag)});
-}
+
 function showError(title,message){
-  $("loadingState").hidden=true;$("profileContent").hidden=true;$("errorState").hidden=false;
-  $("errorTitle").textContent=title;$("errorMessage").textContent=message;
+if($("loadingState"))$("loadingState").hidden=true;
+if($("profileContent"))$("profileContent").hidden=true;
+if($("errorState"))$("errorState").hidden=false;
+setText("errorTitle",title);
+setText("errorMessage",message);
 }
-function setText(id,value){$(id).textContent=value??"—"}
+
+function renderTags(id,items,kind=""){
+const box=$(id);
+if(!box)return;
+box.replaceChildren();
+
+const values=Array.isArray(items)
+?items.filter(x=>typeof x==="string"&&x.trim())
+:[];
+
+if(!values.length){
+const empty=document.createElement("div");
+empty.className="empty";
+empty.textContent="لم تتم إضافة بيانات في هذا القسم بعد.";
+box.append(empty);
+return;
+}
+
+values.forEach(value=>{
+const tag=document.createElement("span");
+tag.className="tag "+kind;
+tag.textContent=value;
+box.append(tag);
+});
+}
 
 async function loadCounts(userId){
-  const results=await Promise.allSettled([
-    supabase.from("follows").select("follower_id",{count:"exact",head:true}).eq("following_id",userId),
-    supabase.from("follows").select("following_id",{count:"exact",head:true}).eq("follower_id",userId),
-    supabase.from("points_ledger").select("points_delta").eq("user_id",userId),
-    supabase.from("world_wallets").select("coins,gems").eq("user_id",userId).maybeSingle(),
-    supabase.from("world_gift_sends").select("id",{count:"exact",head:true}).eq("recipient_id",userId)
-  ]);
-  const followers=results[0].status==="fulfilled"&&!results[0].value.error?results[0].value.count||0:0;
-  const following=results[1].status==="fulfilled"&&!results[1].value.error?results[1].value.count||0:0;
-  const pointRows=results[2].status==="fulfilled"&&!results[2].value.error?results[2].value.data||[]:[];
-  const points=pointRows.reduce((sum,row)=>sum+(Number(row.points_delta)||0),0);
-  const wallet=results[3].status==="fulfilled"&&!results[3].value.error?results[3].value.data:null;
-  const gifts=results[4].status==="fulfilled"&&!results[4].value.error?results[4].value.count||0:0;
+const results=await Promise.allSettled([
+supabase.from("follows")
+.select("follower_id",{count:"exact",head:true})
+.eq("following_id",userId),
 
-  setText("followersCount",userId===ADMIN_ID?"20M":number(followers));
-  setText("followingCount",number(following));
-  setText("pointsCount",number(points));
-  setText("giftsCount",number(gifts));
-  setText("coinsCount",number(wallet?.coins||0));
-  setText("gemsCount",number(wallet?.gems||0));
+supabase.from("follows")
+.select("following_id",{count:"exact",head:true})
+.eq("follower_id",userId),
 
-  // لا يوجد حاليًا نظام مستويات مستقل في قاعدة البيانات.
-  setText("levelCount","قريبًا");
-  $("levelCount").title="سيظهر المستوى بعد اعتماد قواعد نظام المستويات";
-  setText("rankCount","—");
+supabase.from("points_ledger")
+.select("points_delta")
+.eq("user_id",userId),
 
-  return {points};
+supabase.from("world_wallets")
+.select("coins,gems")
+.eq("user_id",userId)
+.maybeSingle(),
+
+supabase.from("world_gift_sends")
+.select("id",{count:"exact",head:true})
+.eq("recipient_id",userId)
+]);
+
+const result=index=>{
+const item=results[index];
+return item.status==="fulfilled"&&!item.value.error?item.value:null;
+};
+
+const followers=result(0)?.count||0;
+const following=result(1)?.count||0;
+const pointRows=result(2)?.data||[];
+const wallet=result(3)?.data||null;
+const gifts=result(4)?.count||0;
+
+const points=pointRows.reduce(
+(sum,row)=>sum+(Number(row.points_delta)||0),0
+);
+
+setText("followersCount",userId===ADMIN_ID?"20M":number(followers));
+setText("followingCount",number(following));
+setText("pointsCount",number(points));
+setText("giftsCount",number(gifts));
+setText("coinsCount",number(wallet?.coins||0));
+setText("gemsCount",number(wallet?.gems||0));
+
+setText("levelCount","قريبًا");
+setText("rankCount","—");
 }
 
 async function loadEquipped(userId){
-  const box=$("equippedList");
-  box.innerHTML='<div class="empty">جاري تحميل المقتنيات...</div>';
-  const {data:equipped,error}=await supabase
-    .from("world_store_equipped")
-    .select("category,inventory_id,equipped_at")
-    .eq("user_id",userId);
+const box=$("equippedList");
+if(!box)return;
 
-  if(error){console.error("Equipped items:",error);box.innerHTML='<div class="empty">تعذر تحميل المقتنيات حاليًا.</div>';return}
-  if(!equipped?.length){box.innerHTML='<div class="empty">لم يتم تفعيل أي مقتنيات من المتجر حتى الآن.</div>';return}
+box.innerHTML='<div class="empty">جاري تحميل المقتنيات...</div>';
 
-  const ids=equipped.map(x=>x.inventory_id).filter(Boolean);
-  let inventory=[];
-  if(ids.length){
-    const inv=await supabase.from("world_store_inventory").select("id,item_id").in("id",ids).eq("user_id",userId);
-    if(!inv.error)inventory=inv.data||[];
-  }
-  const itemIds=inventory.map(x=>x.item_id).filter(Boolean);
-  let items=[];
-  if(itemIds.length){
-    const found=await supabase.from("world_store_items").select("id,title_ar,title_en,category").in("id",itemIds);
-    if(!found.error)items=found.data||[];
-  }
+const {data:equipped,error}=await supabase
+.from("world_store_equipped")
+.select("category,inventory_id,equipped_at")
+.eq("user_id",userId);
 
-  const categoryNames={
-    profile_background:"خلفية البروفايل",
-    profile_frame:"إطار الصورة",
-    notification_sound:"صوت الإشعارات",
-    chat_background:"خلفية المحادثة",
-    room_background:"خلفية الغرفة",
-    sticker:"ملصق",
-    room_effect:"تأثير الغرفة",
-    game_effect:"تأثير اللعبة"
-  };
-  box.replaceChildren();
-  equipped.forEach(row=>{
-    const inv=inventory.find(x=>x.id===row.inventory_id);
-    const item=items.find(x=>x.id===inv?.item_id);
-    const card=document.createElement("div");card.className="equipped-item";
-    const title=document.createElement("strong");
-    title.textContent=item?.title_ar||item?.title_en||categoryNames[row.category]||row.category;
-    const desc=document.createElement("span");
-    desc.textContent=categoryNames[row.category]||"عنصر مفعّل";
-    card.append(title,desc);box.append(card);
-  });
+if(error){
+console.error("Equipped items:",error);
+box.innerHTML='<div class="empty">تعذر تحميل المقتنيات حاليًا.</div>';
+return;
+}
+
+if(!equipped?.length){
+box.innerHTML='<div class="empty">لم يتم تفعيل أي مقتنيات من المتجر حتى الآن.</div>';
+return;
+}
+
+const ids=equipped.map(x=>x.inventory_id).filter(Boolean);
+let inventory=[];
+
+if(ids.length){
+const result=await supabase
+.from("world_store_inventory")
+.select("id,item_id")
+.in("id",ids)
+.eq("user_id",userId);
+
+if(!result.error)inventory=result.data||[];
+}
+
+const itemIds=inventory.map(x=>x.item_id).filter(Boolean);
+let items=[];
+
+if(itemIds.length){
+const result=await supabase
+.from("world_store_items")
+.select("id,title_ar,title_en,category")
+.in("id",itemIds);
+
+if(!result.error)items=result.data||[];
+}
+
+const categoryNames={
+profile_background:"خلفية البروفايل",
+profile_frame:"إطار الصورة",
+notification_sound:"صوت الإشعارات",
+chat_background:"خلفية المحادثة",
+room_background:"خلفية الغرفة",
+sticker:"ملصق",
+room_effect:"تأثير الغرفة",
+game_effect:"تأثير اللعبة"
+};
+
+box.replaceChildren();
+
+equipped.forEach(row=>{
+const inv=inventory.find(x=>x.id===row.inventory_id);
+const item=items.find(x=>x.id===inv?.item_id);
+
+const card=document.createElement("div");
+card.className="equipped-item";
+
+const title=document.createElement("strong");
+title.textContent=item?.title_ar||item?.title_en||
+categoryNames[row.category]||row.category;
+
+const desc=document.createElement("span");
+desc.textContent=categoryNames[row.category]||"عنصر مفعّل";
+
+card.append(title,desc);
+box.append(card);
+});
 }
 
 function renderProfile(profile){
-  state.profile=profile;
-  const name=profile.full_name||profile.nickname||"عضو هنون";
-  const username=profile.username?"@"+profile.username:"اسم المستخدم غير متاح";
-  const code=profile.member_code||"—";
-  const joined=formatDate(profile.created_at);
-  const verified=profile.is_verified===true;
-  const isAdmin=profile.role==="admin"||profile.id===ADMIN_ID;
+state.profile=profile;
 
-  document.body.classList.toggle("admin-profile",isAdmin);
-  $("founderBadge").hidden=!isAdmin;
+const name=profile.full_name||profile.nickname||"عضو هنون";
+const username=profile.username?"@"+profile.username:"اسم المستخدم غير متاح";
+const code=profile.member_code||"—";
+const joined=formatDate(profile.created_at);
+const verified=profile.is_verified===true;
+const isAdmin=profile.role==="admin"||profile.id===ADMIN_ID;
 
-  setText("fullName",name);
-  $("fullName").append($("verifiedBadge"));
-  $("verifiedBadge").hidden=!verified;
-  setText("username",username);
-  setText("memberCode",code);
-  setText("joinedDate",joined);
-  setText("bio",String(profile.bio||"").trim());
-  $("bio").hidden=!String(profile.bio||"").trim();
+document.body.classList.toggle("admin-profile",isAdmin);
 
-  setText("accountType",isAdmin?"حساب الإدارة":"عضو هنون");
-  $("adminBadge").hidden=!isAdmin;
-  $("vipBadge").hidden=!isAdmin;
-  setText("privacyBadge",profile.is_private?"حساب خاص":"حساب عام");
-  setText("infoName",name);
-  setText("infoUsername",username);
-  setText("infoCode",code);
-  setText("infoJoined",joined);
-  setText("infoPrivacy",profile.is_private?"حساب خاص":"حساب عام");
-  setText("infoCompletion",profile.profile_completed?"مكتمل":"غير مكتمل");
-  setText("infoVerified",verified?"موثق":"غير موثق");
-  setText("infoRole",isAdmin?"إدارة الموقع":"عضو");
+if($("founderBadge"))$("founderBadge").hidden=!isAdmin;
+if($("adminBadge"))$("adminBadge").hidden=!isAdmin;
+if($("vipBadge"))$("vipBadge").hidden=!isAdmin;
 
+setText("fullName",name);
 
-<script type="module">
-import { supabase } from "./supabase.js";
+const fullName=$("fullName");
+const verifiedBadge=$("verifiedBadge");
+if(fullName&&verifiedBadge){
+fullName.append(verifiedBadge);
+verifiedBadge.hidden=!verified;
+}
 
-const $ = id => document.getElementById(id);
-const ADMIN_ID = "a4450f5b-05ee-4476-82e0-9e064d6df331";
-const state = { user: null, profile: null };
+setText("username",username);
+setText("memberCode",code);
+setText("joinedDate",joined);
 
-const FALLBACK_AVATAR = "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(
-  '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><rect width="200" height="200" fill="#172b43"/><circle cx="100" cy="75" r="37" fill="#a99aff"/><path d="M30 200c5-48 30-72 70-72s65 24 70 72" fill="#a99aff"/></svg>'
+const bio=String(profile.bio||"").trim();
+setText("bio",bio);
+if($("bio"))$("bio").hidden=!bio;
+
+setText("accountType",isAdmin?"حساب الإدارة":"عضو هنون");
+setText("privacyBadge",profile.is_private?"حساب خاص":"حساب عام");
+
+setText("infoName",name);
+setText("infoUsername",username);
+setText("infoCode",code);
+setText("infoJoined",joined);
+setText("infoPrivacy",profile.is_private?"حساب خاص":"حساب عام");
+setText("infoCompletion",profile.profile_completed?"مكتمل":"غير مكتمل");
+setText("infoVerified",verified?"موثق":"غير موثق");
+setText("infoRole",isAdmin?"إدارة الموقع":"عضو");
+
+setImage($("avatarImage"),profile.avatar_path);
+setImage($("cardAvatar"),profile.avatar_path);
+
+setText("cardName",name);
+setText("cardUsername",username);
+setText("cardCode",code);
+setText("cardJoined",joined);
+setText("cardStatus",isAdmin?"ADMIN · VIP":verified?"VERIFIED MEMBER":"MEMBER");
+
+const cover=$("coverImage");
+if(cover){
+if(profile.cover_path){
+cover.src=storageUrl(profile.cover_path);
+cover.hidden=false;
+cover.onerror=()=>{cover.hidden=true;};
+}else{
+cover.hidden=true;
+}
+}
+
+renderTags("hobbiesList",profile.hobbies);
+renderTags("interestsList",profile.interests,"gold");
+renderTags("readingList",profile.reading_interests,"cyan");
+
+document.title=name+" | HANOON WORLD";
+}
+
+async function loadProfile(){
+if($("loadingState"))$("loadingState").hidden=false;
+if($("errorState"))$("errorState").hidden=true;
+if($("profileContent"))$("profileContent").hidden=true;
+
+const sessionResult=await Promise.race([
+supabase.auth.getSession(),
+new Promise((_,reject)=>setTimeout(
+()=>reject(new Error("انتهت مهلة الاتصال بخدمة تسجيل الدخول. أعد تحميل الصفحة.")),
+15000
+))
+]);
+
+if(sessionResult.error)throw sessionResult.error;
+
+const currentUser=sessionResult.data?.session?.user;
+
+if(!currentUser){
+location.replace("login.html");
+return;
+}
+
+state.user=currentUser;
+
+const profileResult=await Promise.race([
+supabase.from("profiles")
+.select(`
+id,is_verified,role,member_code,full_name,nickname,username,
+avatar_path,cover_path,bio,hobbies,interests,reading_interests,
+profile_completed,is_private,created_at
+`)
+.eq("id",currentUser.id)
+.maybeSingle(),
+
+new Promise((_,reject)=>setTimeout(
+()=>reject(new Error("قاعدة البيانات لم تستجب في الوقت المحدد.")),
+15000
+))
+]);
+
+if(profileResult.error)throw profileResult.error;
+
+const profile=profileResult.data;
+
+if(!profile){
+throw new Error("لم يتم العثور على ملفك الشخصي في قاعدة البيانات.");
+}
+
+renderProfile(profile);
+
+if($("loadingState"))$("loadingState").hidden=true;
+if($("errorState"))$("errorState").hidden=true;
+if($("profileContent"))$("profileContent").hidden=false;
+
+// الإحصائيات والمقتنيات تُحمّل بعد ظهور الصفحة.
+Promise.allSettled([
+loadCounts(currentUser.id),
+loadEquipped(currentUser.id)
+]).then(results=>{
+results.forEach(result=>{
+if(result.status==="rejected")console.error(result.reason);
+});
+});
+}
+
+function activateSection(section){
+const panels={
+overview:"overviewPanel",
+interests:"interestsPanel",
+collection:"collectionPanel",
+membership:"membershipPanel"
+};
+
+Object.entries(panels).forEach(([key,id])=>{
+const panel=$(id);
+if(panel)panel.hidden=key!==section;
+});
+
+document.querySelectorAll("[data-section]").forEach(button=>{
+button.classList.toggle("active",button.dataset.section===section);
+});
+}
+
+document.querySelectorAll("[data-section]").forEach(button=>{
+button.addEventListener("click",()=>{
+activateSection(button.dataset.section);
+});
+});
+
+async function copyCode(){
+const code=state.profile?.member_code;
+
+if(!code){
+toast("رقم العضوية غير متاح");
+return;
+}
+
+try{
+await navigator.clipboard.writeText(code);
+toast("تم نسخ رقم العضوية");
+}catch{
+const input=document.createElement("textarea");
+input.value=code;
+document.body.append(input);
+input.select();
+const copied=document.execCommand("copy");
+input.remove();
+toast(copied?"تم نسخ رقم العضوية":"تعذر النسخ");
+}
+}
+
+async function shareProfile(){
+if(!state.profile)return;
+
+const url=location.origin+location.pathname;
+
+try{
+if(navigator.share){
+await navigator.share({
+title:(state.profile.full_name||"عضو هنون")+" | HANOON WORLD",
+text:"حسابي على HANOON WORLD",
+url
+});
+}else{
+await navigator.clipboard.writeText(url);
+toast("تم نسخ رابط الحساب");
+}
+}catch(error){
+if(error.name!=="AbortError")toast("تعذرت المشاركة");
+}
+}
+
+$("copyCodeButton")?.addEventListener("click",copyCode);
+$("copyCardCode")?.addEventListener("click",copyCode);
+$("shareButton")?.addEventListener("click",shareProfile);
+
+$("retryButton")?.addEventListener("click",()=>{
+loadProfile().catch(error=>{
+console.error("Profile retry:",error);
+showError("تعذر تحميل الحساب",error?.message||"تعذر تحميل الحساب.");
+});
+});
+
+$("logoutButton")?.addEventListener("click",async()=>{
+const button=$("logoutButton");
+if(button)button.disabled=true;
+
+try{
+const {error}=await supabase.auth.signOut();
+if(error)throw error;
+location.replace("login.html");
+}catch(error){
+if(button)button.disabled=false;
+toast("تعذر تسجيل الخروج: "+(error.message||""));
+}
+});
+
+supabase.auth.onAuthStateChange(event=>{
+if(event==="SIGNED_OUT")location.replace("login.html");
+});
+
+loadProfile().catch(error=>{
+console.error("HANOON profile error:",error);
+showError(
+"تعذر تجهيز صفحة حسابك",
+error?.message||"حدث خطأ غير معروف أثناء تجهيز الحساب."
 );
-
-function toast(message) {
-  const el = $("toast");
-  if (!el) return;
-  el.textContent = message;
-  el.classList.add("show");
-  clearTimeout(toast.timer);
-  toast.timer = setTimeout(() => el.classList.remove("show"), 2400);
-}
-
-function formatDate(value) {
-  if (!value) return "غير متاح";
-  const d = new Date(value);
-  if (Number.isNaN(d.getTime())) return "غير متاح";
-  return new Intl.DateTimeFormat("ar-EG", {
-    year: "numeric", month: "long", day: "numeric"
-  }).format(d);
-}
-
-function number(value) {
-  return new Intl.NumberFormat("ar-EG").format(Number(value) || 0);
-}
-
-function storageUrl(path, bucket = "avatars") {
-  if (!path) return null;
-  if (/^https?:\/\//i.test(path)) return path;
-
-  let clean = String(path).replace(/^\/+/, "");
-  if (clean.startsWith(bucket + "/")) {
-    clean = clean.slice(bucket.length + 1);
-  }
-
-  return supabase.storage.from(bucket).getPublicUrl(clean).data.publicUrl;
-}
-
-function setImage(el, path) {
-  if (!el) return;
-  el.onerror = () => {
-    el.onerror = null;
-    el.src = FALLBACK_AVATAR;
-  };
-  el.src = storageUrl(path) || FALLBACK_AVATAR;
-}
-
-function setText(id, value) {
-  const el = $(id);
-  if (el) el.textContent = value ?? "—";
-}
-
-function renderTags(id, items, kind = "") {
-  const box = $(id);
-  if (!box) return;
-
-  box.replaceChildren();
-
-  const values = Array.isArray(items)
-    ? items.filter(x => typeof x === "string" && x.trim())
-    : [];
-
-  if (!values.length) {
-    const empty = document.createElement("div");
-    empty.className = "empty";
-    empty.textContent = "لم تتم إضافة بيانات في هذا القسم بعد.";
-    box.append(empty);
-    return;
-  }
-
-  values.forEach(value => {
-    const tag = document.createElement("span");
-    tag.className = "tag " + kind;
-    tag.textContent = value;
-    box.append(tag);
-  });
-}
-
-function showError(title, message) {
-  if ($("loadingState")) $("loadingState").hidden = true;
-  if ($("profileContent")) $("profileContent").hidden = true;
-  if ($("errorState")) $("errorState").hidden = false;
-
-  setText("errorTitle", title);
-  setText("errorMessage", message);
-}
-
-async function loadCounts(userId) {
-  const results = await Promise.allSettled([
-    supabase.from("follows")
-      .select("follower_id", { count: "exact", head: true })
-      .eq("following_id", userId),
-
-    supabase.from("follows")
-      .select("following_id", { count: "exact", head: true })
-      .eq("follower_id", userId),
-
-    supabase.from("points_ledger")
-      .select("points_delta")
-      .eq("user_id", userId),
-
-    supabase.from("world_wallets")
-      .select("coins,gems")
-      .eq("user_id", userId)
-      .maybeSingle(),
-
-    supabase.from("world_gift_sends")
-      .select("id", { count: "exact", head: true })
-      .eq("recipient_id", userId)
-  ]);
-
-  const followers =
-    results[0].status === "fulfilled" && !results[0].value.error
-      ? results[0].value.count || 0 : 0;
-
-  const following =
-    results[1].status === "fulfilled" && !results[1].value.error
-      ? results[1].value.count || 0 : 0;
-
-  const pointRows =
-    results[2].status === "fulfilled" && !results[2].value.error
-      ? results[2].value.data || [] : [];
-
-  const points = pointRows.reduce(
-    (sum, row) => sum + (Number(row.points_delta) || 0), 0
-  );
-
-  const wallet =
-    results[3].status === "fulfilled" && !results[3].value.error
-      ? results[3].value.data : null;
-
-  const gifts =
-    results[4].status === "fulfilled" && !results[4].value.error
-      ? results[4].value.count || 0 : 0;
-
-  setText("followersCount", userId === ADMIN_ID ? "20M" : number(followers));
-  setText("followingCount", number(following));
-  setText("pointsCount", number(points));
-  setText("giftsCount", number(gifts));
-  setText("coinsCount", number(wallet?.coins || 0));
-  setText("gemsCount", number(wallet?.gems || 0));
-  setText("levelCount", "قريبًا");
-  setText("rankCount", "—");
-
-  return { points };
-}
-
-async function loadEquipped(userId) {
-  const box = $("equippedList");
-  if (!box) return;
-
-  box.innerHTML = '<div class="empty">جاري تحميل المقتنيات...</div>';
-
-  const { data: equipped, error } = await supabase
-    .from("world_store_equipped")
-    .select("category,inventory_id,equipped_at")
-    .eq("user_id", userId);
-
-  if (error) {
-    console.error("Equipped items:", error);
-    box.innerHTML = '<div class="empty">تعذر تحميل المقتنيات حاليًا.</div>';
-    return;
-  }
-
-  if (!equipped?.length) {
-    box.innerHTML = '<div class="empty">لم يتم تفعيل أي مقتنيات من المتجر حتى الآن.</div>';
-    return;
-  }
-
-  const ids = equipped.map(x => x.inventory_id).filter(Boolean);
-  let inventory = [];
-
-  if (ids.length) {
-    const inv = await supabase
-      .from("world_store_inventory")
-      .select("id,item_id")
-      .in("id", ids)
-      .eq("user_id", userId);
-
-    if (!inv.error) inventory = inv.data || [];
-  }
-
-  const itemIds = inventory.map(x => x.item_id).filter(Boolean);
-  let items = [];
-
-  if (itemIds.length) {
-    const found = await supabase
-      .from("world_store_items")
-      .select("id,title_ar,title_en,category")
-      .in("id", itemIds);
-
-    if (!found.error) items = found.data || [];
-  }
-
-  const categoryNames = {
-    profile_background: "خلفية البروفايل",
-    profile_frame: "إطار الصورة",
-    notification_sound: "صوت الإشعارات",
-    chat_background: "خلفية المحادثة",
-    room_background: "خلفية الغرفة",
-    sticker: "ملصق",
-    room_effect: "تأثير الغرفة",
-    game_effect: "تأثير اللعبة"
-  };
-
-  box.replaceChildren();
-
-  equipped.forEach(row => {
-    const inv = inventory.find(x => x.id === row.inventory_id);
-    const item = items.find(x => x.id === inv?.item_id);
-
-    const card = document.createElement("div");
-    card.className = "equipped-item";
-
-    const title = document.createElement("strong");
-    title.textContent =
-      item?.title_ar || item?.title_en ||
-      categoryNames[row.category] || row.category;
-
-    const desc = document.createElement("span");
-    desc.textContent = categoryNames[row.category] || "عنصر مفعّل";
-
-    card.append(title, desc);
-    box.append(card);
-  });
-}
-
-function renderProfile(profile) {
-  state.profile = profile;
-
-  const name = profile.full_name || profile.nickname || "عضو هنون";
-  const username = profile.username
-    ? "@" + profile.username
-    : "اسم المستخدم غير متاح";
-
-  const code = profile.member_code || "—";
-  const joined = formatDate(profile.created_at);
-  const verified = profile.is_verified === true;
-  const isAdmin = profile.role === "admin" || profile.id === ADMIN_ID;
-
-  document.body.classList.toggle("admin-profile", isAdmin);
-
-  if ($("founderBadge")) $("founderBadge").hidden = !isAdmin;
-
-  setText("fullName", name);
-
-  const fullName = $("fullName");
-  const verifiedBadge = $("verifiedBadge");
-
-  if (fullName && verifiedBadge) {
-    fullName.append(verifiedBadge);
-    verifiedBadge.hidden = !verified;
-  }
-
-  setText("username", username);
-  setText("memberCode", code);
-  setText("joinedDate", joined);
-  setText("bio", String(profile.bio || "").trim());
-
-  if ($("bio")) $("bio").hidden = !String(profile.bio || "").trim();
-
-  setText("accountType", isAdmin ? "حساب الإدارة" : "عضو هنون");
-
-  if ($("adminBadge")) $("adminBadge").hidden = !isAdmin;
-  if ($("vipBadge")) $("vipBadge").hidden = !isAdmin;
-
-  setText("privacyBadge", profile.is_private ? "حساب خاص" : "حساب عام");
-  setText("infoName", name);
-  setText("infoUsername", username);
-  setText("infoCode", code);
-  setText("infoJoined", joined);
-  setText("infoPrivacy", profile.is_private ? "حساب خاص" : "حساب عام");
-  setText("infoCompletion", profile.profile_completed ? "مكتمل" : "غير مكتمل");
-  setText("infoVerified", verified ? "موثق" : "غير موثق");
-  setText("infoRole", isAdmin ? "إدارة الموقع" : "عضو");
-
-  setImage($("avatarImage"), profile.avatar_path);
-  setImage($("cardAvatar"), profile.avatar_path);
-
-  setText("cardName", name);
-  setText("cardUsername", username);
-  setText("cardCode", code);
-  setText("cardJoined", joined);
-  setText("cardStatus", isAdmin ? "ADMIN · VIP" : verified ? "VERIFIED MEMBER" : "MEMBER");
-
-  const cover = $("coverImage");
-  if (cover) {
-    if (profile.cover_path) {
-      cover.src = storageUrl(profile.cover_path);
-      cover.hidden = false;
-      cover.onerror = () => { cover.hidden = true; };
-    } else {
-      cover.hidden = true;
-    }
-  }
-
-  renderTags("hobbiesList", profile.hobbies);
-  renderTags("interestsList", profile.interests, "gold");
-  renderTags("readingList", profile.reading_interests, "cyan");
-
-  document.title = name + " | HANOON WORLD";
-}
-
-async function loadProfile() {
-  if ($("loadingState")) $("loadingState").hidden = false;
-  if ($("errorState")) $("errorState").hidden = true;
-  if ($("profileContent")) $("profileContent").hidden = true;
-
-  const { data: sessionData, error: sessionError } =
-    await supabase.auth.getSession();
-
-  if (sessionError) throw sessionError;
-
-  const currentUser = sessionData?.session?.user;
-
-  if (!currentUser) {
-    location.replace("login.html");
-    return;
-  }
-
-  state.user = currentUser;
-
-  const { data: profile, error } = await supabase
-    .from("profiles")
-    .select(`
-      id,is_verified,role,member_code,full_name,nickname,username,
-      avatar_path,cover_path,bio,hobbies,interests,reading_interests,
-      profile_completed,is_private,created_at
-    `)
-    .eq("id", currentUser.id)
-    .maybeSingle();
-
-  if (error) {
-    console.error("Profile database query:", error);
-    showError(
-      "تعذر تحميل بيانات الحساب",
-      "خطأ قاعدة البيانات: " + (error.message || "خطأ غير معروف")
-    );
-    return;
-  }
-
-  if (!profile) {
-    showError("لم يتم العثور على ملفك الشخصي", "لم نعثر على سجل ملفك الشخصي.");
-    return;
-  }
-
-  renderProfile(profile);
-
-  if ($("loadingState")) $("loadingState").hidden = true;
-  if ($("errorState")) $("errorState").hidden = true;
-  if ($("profileContent")) $("profileContent").hidden = false;
-
-  await Promise.allSettled([
-    loadCounts(currentUser.id),
-    loadEquipped(currentUser.id)
-  ]);
-}
-
-function activateSection(section) {
-  const panels = {
-    overview: "overviewPanel",
-    interests: "interestsPanel",
-    collection: "collectionPanel",
-    membership: "membershipPanel"
-  };
-
-  Object.entries(panels).forEach(([key, id]) => {
-    const panel = $(id);
-    if (panel) panel.hidden = key !== section;
-  });
-
-  document.querySelectorAll("[data-section]").forEach(btn => {
-    btn.classList.toggle("active", btn.dataset.section === section);
-  });
-}
-
-document.querySelectorAll("[data-section]").forEach(btn => {
-  btn.addEventListener("click", () => activateSection(btn.dataset.section));
-});
-
-async function copyCode() {
-  const code = state.profile?.member_code;
-
-  if (!code) {
-    toast("رقم العضوية غير متاح");
-    return;
-  }
-
-  try {
-    await navigator.clipboard.writeText(code);
-    toast("تم نسخ رقم العضوية");
-  } catch {
-    const input = document.createElement("textarea");
-    input.value = code;
-    document.body.append(input);
-    input.select();
-
-    const ok = document.execCommand("copy");
-    input.remove();
-    toast(ok ? "تم نسخ رقم العضوية" : "تعذر النسخ");
-  }
-}
-
-async function shareProfile() {
-  if (!state.profile) return;
-
-  const url = location.origin + location.pathname;
-
-  try {
-    if (navigator.share) {
-      await navigator.share({
-        title: (state.profile.full_name || "عضو هنون") + " | HANOON WORLD",
-        text: "حسابي على HANOON WORLD",
-        url
-      });
-    } else {
-      await navigator.clipboard.writeText(url);
-      toast("تم نسخ رابط الحساب");
-    }
-  } catch (error) {
-    if (error.name !== "AbortError") toast("تعذرت المشاركة");
-  }
-}
-
-$("copyCodeButton")?.addEventListener("click", copyCode);
-$("copyCardCode")?.addEventListener("click", copyCode);
-$("shareButton")?.addEventListener("click", shareProfile);
-
-$("retryButton")?.addEventListener("click", () => {
-  loadProfile().catch(error => {
-    console.error("Profile retry:", error);
-    showError("تعذر تحميل الحساب", error?.message || "تعذر تحميل الحساب.");
-  });
-});
-
-$("logoutButton")?.addEventListener("click", async () => {
-  const button = $("logoutButton");
-  if (button) button.disabled = true;
-
-  const { error } = await supabase.auth.signOut();
-
-  if (error) {
-    if (button) button.disabled = false;
-    toast("تعذر تسجيل الخروج");
-    return;
-  }
-
-  location.replace("login.html");
-});
-
-/*
-  لا نعيد توجيه المستخدم عند INITIAL_SESSION الفارغ.
-  إعادة التوجيه تتم فقط عند تسجيل الخروج الفعلي.
-*/
-supabase.auth.onAuthStateChange(event => {
-  if (event === "SIGNED_OUT") {
-    location.replace("login.html");
-  }
-});
-
-/*
-  تحميل البروفايل مستقل عن نظام الإشعارات،
-  حتى لا يتسبب طلب Auth إضافي في تعطيل الصفحة.
-*/
-loadProfile().catch(error => {
-  console.error("HANOON profile loading error:", error);
-
-  const details = [
-    error?.name,
-    error?.message,
-    error?.code
-  ].filter(Boolean).join(" — ");
-
-  showError(
-    "تعذر تجهيز صفحة حسابك",
-    details || "حدث خطأ غير معروف أثناء تجهيز الحساب."
-  );
 });
 </script>
-
 
 </body>
 </html>
