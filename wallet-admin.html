@@ -1,0 +1,371 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b0c16">
+<title>إدارة العملات | HANOON WORLD</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0b0c16;--panel:#171a2b;--line:#ffffff19;--text:#f8f6ff;--muted:#aaa8bf;--purple:#a78bfa;--gold:#e9c991;--green:#53d6a2;--red:#ff7188}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 15% 0%,#6745a533,transparent 40%),var(--bg);color:var(--text);font-family:Cairo,sans-serif}
+button,input,select{font:inherit}
+button{cursor:pointer}
+.app{width:min(900px,100%);margin:auto;padding:16px}
+.header{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 0 18px;border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px}
+.logo{width:42px;height:42px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(145deg,#f2d8a8,#9a7040);color:#201608;font-weight:900;font-size:23px}
+.brand strong{display:block;font-size:13px}
+.brand small{display:block;color:var(--muted);font-size:9px}
+.admin-pill{padding:7px 12px;border-radius:20px;border:1px solid #a78bfa55;background:#a78bfa18;color:#d8caff;font-size:10px;font-weight:900}
+.heading{padding:20px 0 14px}
+.heading h1{font-size:23px;margin:0;font-weight:900}
+.heading p{font-size:11px;color:var(--muted);line-height:2;margin:5px 0}
+.panel{padding:16px;margin:12px 0;border:1px solid var(--line);border-radius:18px;background:#171a2beF;box-shadow:0 15px 35px #0003}
+.panel h2{font-size:14px;margin:0 0 12px}
+.search-row{display:flex;gap:8px}
+input,select{width:100%;min-height:45px;padding:10px 12px;border-radius:12px;border:1px solid #ffffff20;background:#0d1020;color:white;outline:none;font-size:12px}
+input:focus,select:focus{border-color:#a78bfa}
+button{border:0}
+.primary{min-height:44px;padding:0 17px;border-radius:12px;background:linear-gradient(110deg,#c3a8ff,#8561df);color:#1a1230;font-size:11px;font-weight:900}
+.secondary{min-height:40px;padding:0 13px;border-radius:11px;background:#252940;border:1px solid var(--line);color:white;font-size:10px;font-weight:800}
+.member-list{display:grid;gap:8px;margin-top:12px}
+.member{display:flex;align-items:center;gap:10px;padding:11px;border:1px solid var(--line);border-radius:13px;background:#ffffff08}
+.avatar{width:43px;height:43px;flex-shrink:0;border-radius:13px;display:grid;place-items:center;background:#8064c733;color:#e2d5ff;font-weight:900}
+.member-info{flex:1;min-width:0}
+.member-info strong{display:block;font-size:12px;overflow-wrap:anywhere}
+.member-info small{display:block;color:var(--muted);font-size:10px;margin-top:3px;overflow-wrap:anywhere}
+.member button{min-height:36px;padding:0 12px;border-radius:10px;background:#a78bfa22;border:1px solid #a78bfa55;color:#e2d5ff;font-size:10px;font-weight:900}
+.wallet-head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.wallet-user strong{font-size:15px}
+.wallet-user small{display:block;color:var(--muted);font-size:10px;margin-top:3px}
+.balances{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:15px 0}
+.balance{padding:15px;border-radius:15px;background:linear-gradient(145deg,#332b1d,#1e1c25);border:1px solid #d8b77a40}
+.balance.gems{background:linear-gradient(145deg,#252045,#191a30);border-color:#a78bfa44}
+.balance small{display:block;color:#d8c79f;font-size:10px;font-weight:800}
+.balance.gems small{color:#c5b6ff}
+.balance strong{display:block;font-size:25px;margin-top:5px;font-weight:900}
+.balance span{font-size:9px;color:var(--muted)}
+.field{margin:12px 0}
+.field label{display:block;margin-bottom:6px;font-size:11px;font-weight:800;color:#e8e3f5}
+.add-btn{width:100%;margin-top:5px;min-height:48px}
+.notice{padding:11px 13px;margin:12px 0;border-radius:12px;border:1px solid #e9c99144;background:#e9c99112;color:#ecd8ac;font-size:10px;line-height:2}
+.history{display:grid;gap:7px;margin-top:10px}
+.transaction{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px;border:1px solid var(--line);border-radius:11px;background:#ffffff07}
+.transaction strong{display:block;font-size:11px}
+.transaction small{display:block;color:var(--muted);font-size:9px;margin-top:3px}
+.amount{font-size:12px;font-weight:900;white-space:nowrap}
+.amount.plus{color:var(--green)}
+.amount.minus{color:var(--red)}
+.empty{text-align:center;color:var(--muted);font-size:11px;padding:18px 5px;line-height:2}
+.status{display:none;padding:11px 13px;margin:12px 0;border-radius:12px;font-size:11px;line-height:1.8}
+.status.show{display:block}
+.status.error{background:#ff718817;border:1px solid #ff718855;color:#ffb1bd}
+.status.success{background:#53d6a218;border:1px solid #53d6a255;color:#a9f2d2}
+.hidden{display:none!important}
+@media(max-width:520px){.app{padding:12px}.search-row{flex-direction:column}.search-row button{width:100%}.panel{padding:13px}.balance strong{font-size:21px}}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="header">
+    <div class="brand">
+      <div class="logo">H</div>
+      <div><strong>HANOON WORLD</strong><small>WALLET CONTROL CENTER</small></div>
+    </div>
+    <span class="admin-pill">إدارة المحفظة</span>
+  </header>
+
+  <section class="heading">
+    <h1>العملات والجواهر</h1>
+    <p>ابحث عن العضو، راجع رصيده، وأضف له العملات أو الجواهر من حساب الإدارة.</p>
+  </section>
+
+  <div class="status" id="status"></div>
+
+  <section class="panel">
+    <h2>البحث عن عضو</h2>
+    <form id="searchForm" class="search-row">
+      <input id="searchInput" maxlength="80" placeholder="اسم العضو أو اسم المستخدم أو كود العضوية">
+      <button class="primary" id="searchButton">بحث عن العضو</button>
+    </form>
+    <div class="member-list" id="memberList">
+      <div class="empty">اكتب بيانات العضو لبدء البحث.</div>
+    </div>
+  </section>
+
+  <section class="panel hidden" id="walletPanel">
+    <div class="wallet-head">
+      <div class="wallet-user">
+        <strong id="selectedName">العضو</strong>
+        <small id="selectedCode"></small>
+      </div>
+      <button class="secondary" id="refreshWallet">تحديث الرصيد</button>
+    </div>
+
+    <div class="balances">
+      <div class="balance">
+        <small>رصيد العملات</small>
+        <strong id="coinsBalance">0</strong>
+        <span>COINS</span>
+      </div>
+      <div class="balance gems">
+        <small>رصيد الجواهر</small>
+        <strong id="gemsBalance">0</strong>
+        <span>GEMS</span>
+      </div>
+    </div>
+
+    <div class="notice">
+      إضافة العملات أو الجواهر تتم من صلاحية الإدارة فقط، وكل عملية تُسجل في سجل العضو.
+    </div>
+
+    <form id="addForm">
+      <div class="field">
+        <label for="currency">نوع الرصيد</label>
+        <select id="currency">
+          <option value="coins">عملات</option>
+          <option value="gems">جواهر</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="amount">الكمية المراد إضافتها</label>
+        <input id="amount" type="number" min="1" max="10000000" step="1" required placeholder="مثال: 500">
+      </div>
+      <div class="field">
+        <label for="reason">سبب الإضافة</label>
+        <input id="reason" maxlength="160" value="هدية من إدارة HANOON WORLD" placeholder="سبب الإضافة">
+      </div>
+      <button class="primary add-btn" id="addButton">إضافة الرصيد للعضو</button>
+    </form>
+  </section>
+
+  <section class="panel hidden" id="historyPanel">
+    <h2>سجل معاملات العضو</h2>
+    <div class="history" id="historyList"></div>
+  </section>
+
+  <div style="text-align:center;margin:22px 0">
+    <a href="admin.html" style="color:#c8b6ff;font-size:11px;text-decoration:none">العودة إلى لوحة الإدارة</a>
+  </div>
+</div>
+
+<script type="module">
+import {supabase} from "./supabase.js";
+
+const $=id=>document.getElementById(id);
+const ADMIN_ID="a4450f5b-05ee-4476-82e0-9e064d6df331";
+const SESSION_KEY="hanoon_admin_session";
+const state={user:null,selected:null,sessionToken:""};
+
+function showStatus(message,type="success"){
+  const box=$("status");
+  box.textContent=message;
+  box.className="status show "+type;
+  clearTimeout(showStatus.timer);
+  showStatus.timer=setTimeout(()=>box.classList.remove("show"),4500);
+}
+function formatNumber(value){
+  return Number(value||0).toLocaleString("en-US");
+}
+function escapeText(value){
+  return String(value??"");
+}
+async function checkAdmin(){
+  const {data,error}=await supabase.auth.getUser();
+  if(error||!data?.user){
+    location.replace("login.html");
+    throw new Error("يجب تسجيل الدخول بحساب الإدارة أولًا.");
+  }
+  state.user=data.user;
+  if(state.user.id!==ADMIN_ID){
+    document.body.innerHTML="<div style='padding:35px;text-align:center;color:white;font-family:Cairo'>غير مصرح بالدخول إلى هذه الصفحة.</div>";
+    throw new Error("هذا الحساب ليس حساب الإدارة الأساسي.");
+  }
+  state.sessionToken=localStorage.getItem(SESSION_KEY)||"";
+  if(!state.sessionToken){
+    location.replace("admin.html");
+    throw new Error("افتح لوحة الإدارة وسجل الدخول أولًا.");
+  }
+  const {data:sessionData,error:sessionError}=await supabase.functions.invoke(
+    "admin-send-notification",
+    {body:{action:"session_check"},headers:{"x-admin-session":state.sessionToken}}
+  );
+  if(sessionError||!sessionData?.ok||!sessionData?.isAdmin){
+    localStorage.removeItem(SESSION_KEY);
+    location.replace("admin.html");
+    throw new Error("جلسة الإدارة انتهت. سجل الدخول مرة أخرى.");
+  }
+}
+
+async function searchMembers(query){
+  const clean=query.trim().replace(/[%,()]/g," ").replace(/\s+/g," ");
+  if(!clean){showStatus("اكتب اسم العضو أو كود العضوية أولًا.","error");return}
+  $("searchButton").disabled=true;
+  $("searchButton").textContent="جارٍ البحث...";
+  $("memberList").innerHTML='<div class="empty">جارٍ البحث عن العضو...</div>';
+  $("walletPanel").classList.add("hidden");
+  $("historyPanel").classList.add("hidden");
+  try{
+    let request=supabase.from("profiles")
+      .select("id,full_name,username,member_code")
+      .limit(15);
+    if(/^[0-9a-f-]{36}$/i.test(clean)){
+      request=request.eq("id",clean);
+    }else{
+      request=request.or(
+        "member_code.ilike.%"+clean+"%,username.ilike.%"+clean+"%,full_name.ilike.%"+clean+"%"
+      );
+    }
+    const {data,error}=await request;
+    if(error)throw error;
+    renderMembers(data||[]);
+  }catch(error){
+    console.error(error);
+    $("memberList").innerHTML='<div class="empty">تعذر البحث: '+escapeText(error.message)+'</div>';
+  }finally{
+    $("searchButton").disabled=false;
+    $("searchButton").textContent="بحث عن العضو";
+  }
+}
+
+function renderMembers(members){
+  const list=$("memberList");
+  list.replaceChildren();
+  if(!members.length){
+    list.innerHTML='<div class="empty">لم يتم العثور على عضو بهذه البيانات.</div>';
+    return;
+  }
+  members.forEach(member=>{
+    const row=document.createElement("div");
+    row.className="member";
+    const avatar=document.createElement("div");
+    avatar.className="avatar";
+    avatar.textContent=(member.full_name||member.username||"؟").trim().slice(0,1);
+    const info=document.createElement("div");
+    info.className="member-info";
+    const name=document.createElement("strong");
+    name.textContent=member.full_name||"عضو هَنون";
+    const details=document.createElement("small");
+    details.textContent=[
+      member.username?"@"+member.username:"",
+      member.member_code||""
+    ].filter(Boolean).join(" · ");
+    info.append(name,details);
+    const button=document.createElement("button");
+    button.type="button";
+    button.textContent="فتح المحفظة";
+    button.addEventListener("click",()=>selectMember(member));
+    row.append(avatar,info,button);
+    list.append(row);
+  });
+}
+
+async function selectMember(member){
+  state.selected=member;
+  $("walletPanel").classList.remove("hidden");
+  $("historyPanel").classList.remove("hidden");
+  $("selectedName").textContent=member.full_name||member.username||"عضو هَنون";
+  $("selectedCode").textContent=(member.username?"@"+member.username+" · ":"")+(member.member_code||member.id);
+  await loadWalletDetails();
+}
+
+async function loadWalletDetails(){
+  if(!state.selected)return;
+  $("refreshWallet").disabled=true;
+  $("historyList").innerHTML='<div class="empty">جارٍ تحميل سجل المحفظة...</div>';
+  try{
+    const {data,error}=await supabase.rpc("hanoon_admin_wallet_details",{
+      p_user_id:state.selected.id
+    });
+    if(error)throw error;
+    $("coinsBalance").textContent=formatNumber(data.coins);
+    $("gemsBalance").textContent=formatNumber(data.gems);
+    renderHistory(data.transactions||[]);
+  }catch(error){
+    console.error(error);
+    showStatus(error.message||"تعذر تحميل رصيد العضو.","error");
+  }finally{
+    $("refreshWallet").disabled=false;
+  }
+}
+
+function renderHistory(items){
+  const list=$("historyList");
+  list.replaceChildren();
+  if(!items.length){
+    list.innerHTML='<div class="empty">لا توجد معاملات مسجلة لهذا العضو حتى الآن.</div>';
+    return;
+  }
+  items.forEach(item=>{
+    const row=document.createElement("div");
+    row.className="transaction";
+    const info=document.createElement("div");
+    const title=document.createElement("strong");
+    title.textContent=item.reason||"حركة رصيد";
+    const date=document.createElement("small");
+    date.textContent=new Date(item.created_at).toLocaleString("ar-EG");
+    const currency=document.createElement("small");
+    currency.textContent=item.currency==="gems"?"جواهر":"عملات";
+    info.append(title,date,currency);
+    const amount=document.createElement("div");
+    amount.className="amount "+(Number(item.amount)>=0?"plus":"minus");
+    amount.textContent=(Number(item.amount)>0?"+":"")+formatNumber(item.amount);
+    row.append(info,amount);
+    list.append(row);
+  });
+}
+
+$("searchForm").addEventListener("submit",event=>{
+  event.preventDefault();
+  searchMembers($("searchInput").value);
+});
+$("refreshWallet").addEventListener("click",loadWalletDetails);
+
+$("addForm").addEventListener("submit",async event=>{
+  event.preventDefault();
+  if(!state.selected)return;
+  const currency=$("currency").value;
+  const amount=Number($("amount").value);
+  const reason=$("reason").value.trim()||"إضافة من الإدارة";
+  if(!Number.isSafeInteger(amount)||amount<1||amount>10000000){
+    showStatus("أدخل كمية صحيحة من 1 إلى 10 ملايين.","error");
+    return;
+  }
+  const currencyName=currency==="gems"?"جوهرة":"عملة";
+  if(!confirm("تأكيد إضافة "+formatNumber(amount)+" "+currencyName+" إلى حساب "+(state.selected.full_name||state.selected.username)+"؟"))return;
+
+  const button=$("addButton");
+  button.disabled=true;
+  button.textContent="جارٍ تنفيذ الإضافة...";
+  try{
+    const {data,error}=await supabase.rpc("hanoon_admin_adjust_wallet",{
+      p_user_id:state.selected.id,
+      p_currency:currency,
+      p_amount:amount,
+      p_reason:reason
+    });
+    if(error)throw error;
+    if(!data?.success)throw new Error("لم يتم تأكيد عملية الإضافة.");
+    $("amount").value="";
+    showStatus("تمت إضافة "+formatNumber(amount)+" بنجاح. الرصيد الجديد: "+formatNumber(data.balance));
+    await loadWalletDetails();
+  }catch(error){
+    console.error(error);
+    showStatus(error.message||"تعذر إضافة الرصيد.","error");
+  }finally{
+    button.disabled=false;
+    button.textContent="إضافة الرصيد للعضو";
+  }
+});
+
+try{
+  await checkAdmin();
+}catch(error){
+  console.error(error);
+}
+</script>
+</body>
+</html>
