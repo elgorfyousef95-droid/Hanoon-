@@ -45,12 +45,20 @@ const walletStyles = `
 .wallet-admin td{color:#e2d6ed}
 .wallet-admin .plus{color:#61d6a2}
 .wallet-admin .minus{color:#ff879a}
+.wallet-admin .balance-icon{width:44px;height:44px;object-fit:contain;float:left;border-radius:11px;background:#ffffff0b;padding:4px}
+.wallet-admin .currency-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.wallet-admin .currency-card{border:1px solid #d5b16d66;border-radius:16px;padding:13px;background:linear-gradient(145deg,#261832,#100b18);display:grid;grid-template-columns:68px 1fr;gap:11px;align-items:center}
+.wallet-admin .currency-preview{width:68px;height:68px;object-fit:contain;border-radius:13px;background:#ffffff0a;border:1px solid #d5b16d55;padding:5px}
+.wallet-admin .currency-card strong{display:block;color:#f4d995;font-size:13px}
+.wallet-admin .currency-card small{display:block;color:#c7b8d5;font-size:10px;line-height:1.7;margin-top:4px}
+.wallet-admin .currency-card input{margin-top:7px;font-size:10px;padding:8px}
 @media(max-width:580px){
  .wallet-admin .balances{gap:8px}
  .wallet-admin .balance{padding:13px}
  .wallet-admin .balance b{font-size:21px}
  .wallet-admin .form{grid-template-columns:1fr}
  .wallet-admin .chips{margin-right:0;width:100%}
+ .wallet-admin .currency-grid{grid-template-columns:1fr}
 }
 `;
 
@@ -65,6 +73,7 @@ export async function renderWalletSection({root,supabase,sessionToken}){
   let member=null;
   let busy=false;
   let destroyed=false;
+  let currencyAssets=[];
 
   root.innerHTML=`
     <div class="wallet-admin">
@@ -74,6 +83,12 @@ export async function renderWalletSection({root,supabase,sessionToken}){
         <p>إدارة العملات والجواهر، متابعة أرصدة الأعضاء، وتنفيذ التحويلات مع سجل واضح للمعاملات.</p>
       </section>
 
+      <section class="panel">
+        <h3>صور العملات والجواهر</h3>
+        <div class="currency-grid" id="currencyAssets"><div class="note">جارٍ تحميل إعدادات الصور...</div></div>
+        <div class="actions"><button class="primary" id="saveCurrencies">حفظ الصور والأسماء</button></div>
+        <div class="message" id="currencyMessage" role="status"></div>
+      </section>
       <div class="balances" id="adminBalances">
         <div class="balance"><span>رصيد الإدارة من العملات</span><b>—</b></div>
         <div class="balance"><span>رصيد الإدارة من الجواهر</span><b>—</b></div>
@@ -150,15 +165,152 @@ export async function renderWalletSection({root,supabase,sessionToken}){
     return data;
   }
 
+  function setCurrencyMessage(text,error=false){
+    $("currencyMessage").textContent=text;
+    $("currencyMessage").style.color=error?"#ff9aaa":"#f1d18e";
+  }
+
+  async function callCurrency(action,payload={}){
+    const body=action==="list"
+      ?{action:"currency_list"}
+      :{action:"currency_save",item:payload};
+
+    const {data,error}=await supabase.functions.invoke("admin-upload-store-asset",{
+      body,
+      headers:{"x-admin-session":sessionToken}
+    });
+
+    if(error)throw new Error(error.message||"تعذر الاتصال بخدمة العملات.");
+    if(!data?.ok)throw new Error(data?.error||"تعذر تنفيذ عملية العملات.");
+    return data.result;
+  }
+
+  const currencyImage=path=>path
+    ?supabase.storage.from("world-store-assets").getPublicUrl(path).data?.publicUrl||""
+    :"";
+
+  async function uploadCurrencyImage(file){
+    if(!["image/png","image/jpeg","image/webp","image/gif"].includes(file.type)||file.size>10*1024*1024)
+      throw new Error("اختر PNG أو JPG أو WEBP أو GIF بحجم لا يتجاوز 10 ميجابايت.");
+
+    const form=new FormData();
+    form.append("file",file);
+    form.append("folder","currencies");
+
+    const {data,error}=await supabase.functions.invoke("admin-upload-store-asset",{
+      body:form,
+      headers:{"x-admin-session":sessionToken}
+    });
+
+    if(error)throw new Error(error.message||"تعذر رفع صورة العملة.");
+    if(!data?.ok||!data?.path)throw new Error(data?.error||"تعذر استلام مسار الصورة.");
+    return data.path;
+  }
+
+  function renderCurrencyAssets(){
+    const defs=[
+      {key:"coins",title:"العملات",desc:"صورة العملة الافتراضية داخل المنصة"},
+      {key:"gems",title:"الجواهر",desc:"صورة الجوهرة المميزة داخل المنصة"}
+    ];
+
+    $("currencyAssets").innerHTML=defs.map(def=>{
+      const row=currencyAssets.find(x=>x.currency_key===def.key)||{};
+      const src=currencyImage(row.image_path)||"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Crect width='100%25' height='100%25' fill='%231b1228'/%3E%3Ccircle cx='40' cy='40' r='22' fill='none' stroke='%23e9c77d' stroke-width='4'/%3E%3C/svg%3E";
+
+      return `<div class="currency-card" data-currency="${def.key}">
+        <img class="currency-preview" data-preview="${def.key}" src="${escapeHTML(src)}" alt="${def.title}">
+        <div>
+          <strong>${def.title}</strong>
+          <small>${def.desc}</small>
+          <input type="text" data-name="${def.key}" value="${escapeHTML(row.name_ar||def.title)}" aria-label="اسم ${def.title}">
+          <input type="file" data-file="${def.key}" accept="image/png,image/jpeg,image/webp,image/gif">
+        </div>
+      </div>`;
+    }).join("");
+
+    $("currencyAssets").querySelectorAll('input[type="file"]').forEach(input=>{
+      input.addEventListener("change",()=>{
+        const file=input.files?.[0];
+        if(!file)return;
+
+        if(!["image/png","image/jpeg","image/webp","image/gif"].includes(file.type)||file.size>10*1024*1024){
+          setCurrencyMessage("صيغة الصورة أو حجمها غير مقبول.",true);
+          input.value="";
+          return;
+        }
+
+        const preview=$(`[data-preview="${input.dataset.file}"]`);
+        if(preview._objectUrl)URL.revokeObjectURL(preview._objectUrl);
+        preview._objectUrl=URL.createObjectURL(file);
+        preview.src=preview._objectUrl;
+        setCurrencyMessage("تم اختيار الصورة. اضغط حفظ لرفعها.");
+      });
+    });
+  }
+
+  async function loadCurrencyAssets(){
+    const data=await callCurrency("list");
+    currencyAssets=Array.isArray(data?.items)?data.items:[];
+    renderCurrencyAssets();
+  }
+
+  async function saveCurrencyAssets(){
+    if(busy)return;
+
+    busy=true;
+    $("saveCurrencies").disabled=true;
+    setCurrencyMessage("جارٍ حفظ صور العملات...");
+
+    try{
+      for(const key of ["coins","gems"]){
+        const card=$(`.currency-card[data-currency="${key}"]`);
+        const file=card.querySelector(`[data-file="${key}"]`).files?.[0];
+        const old=currencyAssets.find(x=>x.currency_key===key)||{};
+        const name=card.querySelector(`[data-name="${key}"]`).value.trim();
+
+        if(!name)throw new Error("اكتب اسم العملة والجوهرة.");
+
+        const image_path=file
+          ?await uploadCurrencyImage(file)
+          :old.image_path||null;
+
+        await callCurrency("save",{
+          currency_key:key,
+          name_ar:name,
+          description_ar:key==="coins"?"عملة المنصة الافتراضية":"الجوهرة المميزة داخل المنصة",
+          image_path,
+          is_active:true,
+          sort_order:key==="coins"?1:2
+        });
+      }
+
+      await loadCurrencyAssets();
+      setCurrencyMessage("تم حفظ صور وأسماء العملات والجواهر بنجاح.");
+      await loadOverview();
+
+    }catch(error){
+      setCurrencyMessage(error.message||"تعذر حفظ صور العملات.",true);
+    }finally{
+      busy=false;
+      $("saveCurrencies").disabled=false;
+    }
+  }
+
   async function loadOverview(){
     const data=await callWallet("overview");
     if(destroyed)return;
+
+    const coins=currencyAssets.find(x=>x.currency_key==="coins");
+    const gems=currencyAssets.find(x=>x.currency_key==="gems");
+
     $("adminBalances").innerHTML=`
       <div class="balance">
+        ${coins?.image_path?`<img class="balance-icon" src="${escapeHTML(currencyImage(coins.image_path))}" alt="">`:""}
         <span>رصيد الإدارة من العملات</span>
         <b>${numberFormat(data?.coins)}</b>
       </div>
       <div class="balance">
+        ${gems?.image_path?`<img class="balance-icon" src="${escapeHTML(currencyImage(gems.image_path))}" alt="">`:""}
         <span>رصيد الإدارة من الجواهر</span>
         <b>${numberFormat(data?.gems)}</b>
       </div>
@@ -218,6 +370,7 @@ export async function renderWalletSection({root,supabase,sessionToken}){
 
   async function findMember(){
     const code=$("memberSearch").value.trim();
+
     if(!code){
       setMessage("اكتب كود العضوية أو اسم المستخدم أولاً.",true);
       return;
@@ -229,14 +382,17 @@ export async function renderWalletSection({root,supabase,sessionToken}){
     try{
       const data=await callWallet("search",{memberCode:code});
       if(destroyed)return;
-      if(!data?.user_id) throw new Error("لم يتم العثور على العضو.");
+      if(!data?.user_id)throw new Error("لم يتم العثور على العضو.");
+
       renderMember(data);
       setMessage("تم العثور على العضو وتحميل رصيده.");
+
     }catch(error){
       member=null;
       $("memberResult").innerHTML="";
       $("walletTransactions").textContent="تعذر تحميل سجل العضو.";
       setMessage(error.message||"تعذر البحث عن العضو.",true);
+
     }finally{
       $("findMember").disabled=false;
     }
@@ -287,14 +443,16 @@ export async function renderWalletSection({root,supabase,sessionToken}){
         reason:reason||undefined
       });
 
-      if(!data?.ok) throw new Error(data?.error||"لم يتم تأكيد تنفيذ العملية.");
+      if(!data?.ok)throw new Error(data?.error||"لم يتم تأكيد تنفيذ العملية.");
 
       setMessage("تم تنفيذ العملية وتسجيلها بنجاح.");
       $("walletAmount").value="";
       await findMember();
       await loadOverview();
+
     }catch(error){
       setMessage(error.message||"فشلت العملية. لم يتم تأكيد تنفيذها.",true);
+
     }finally{
       busy=false;
       $("submitWallet").disabled=false;
@@ -313,9 +471,13 @@ export async function renderWalletSection({root,supabase,sessionToken}){
       :"مراجعة وإضافة الرصيد";
   });
 
+  $("saveCurrencies").addEventListener("click",saveCurrencyAssets);
+
   try{
+    await loadCurrencyAssets();
     await loadOverview();
   }catch(error){
+    setCurrencyMessage(error.message||"تعذر تحميل صور العملات.",true);
     setMessage(error.message||"تعذر تحميل رصيد الإدارة.",true);
   }
 
