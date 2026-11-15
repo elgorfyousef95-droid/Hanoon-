@@ -1,0 +1,428 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#090414">
+<title>HANOON WORLD | دخول الإدارة</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+ --gold:#edc875;
+ --purple:#a34dff;
+ --text:#f8f2ff;
+ --muted:#b9a9ca;
+}
+body{
+ min-height:100vh;
+ font-family:'Cairo',sans-serif;
+ color:var(--text);
+ background:#090414;
+ overflow-x:hidden;
+}
+.background{
+ position:fixed;
+ inset:0;
+ z-index:-2;
+ background:
+ linear-gradient(90deg,rgba(5,1,12,.12),rgba(5,1,12,.65)),
+ url("./admin-login-bg.png") center/cover no-repeat;
+ transform:scale(1.02);
+}
+.background:after{
+ content:"";
+ position:absolute;
+ inset:0;
+ background:linear-gradient(0deg,rgba(5,1,12,.78),transparent 35%,rgba(5,1,12,.25));
+}
+.topbar{
+ position:absolute;
+ top:0;left:0;right:0;
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ padding:17px 24px;
+ z-index:3;
+}
+.brand{
+ color:var(--gold);
+ font-weight:900;
+ letter-spacing:2px;
+ font-size:15px;
+ text-shadow:0 0 15px #9b4cff;
+}
+.window-controls{display:flex;gap:9px}
+.window-controls button{
+ width:34px;height:30px;
+ border:1px solid #a34dff88;
+ background:#160b27bb;
+ color:#ead8ff;
+ border-radius:8px;
+ cursor:pointer;
+ font-size:17px;
+}
+.window-controls button:hover{
+ background:#7b2bd8;
+}
+main{
+ min-height:100vh;
+ display:grid;
+ place-items:center;
+ padding:85px 18px 65px;
+}
+.login-card{
+ width:min(100%,440px);
+ padding:32px;
+ border:1px solid #b35aff99;
+ border-radius:25px;
+ background:linear-gradient(145deg,rgba(17,8,32,.96),rgba(8,4,18,.94));
+ box-shadow:0 0 45px #8e37d744,0 25px 80px #000b;
+ backdrop-filter:blur(18px);
+ animation:show .8s ease both;
+ transition:width .3s ease;
+}
+.login-card.expanded{width:min(100%,570px)}
+.emblem{
+ width:76px;height:76px;
+ display:grid;place-items:center;
+ margin:0 auto 15px;
+ border-radius:50%;
+ border:2px solid var(--gold);
+ background:radial-gradient(circle,#48206e,#10071d);
+ box-shadow:0 0 25px #a34dff77,inset 0 0 20px #edc87522;
+ color:var(--gold);
+ font-size:39px;
+ font-weight:900;
+}
+h1{
+ text-align:center;
+ font-size:25px;
+ font-weight:900;
+ color:var(--gold);
+}
+.subtitle{
+ text-align:center;
+ color:var(--muted);
+ font-size:12px;
+ margin-top:5px;
+}
+.divider{
+ height:1px;
+ margin:23px 0;
+ background:linear-gradient(90deg,transparent,#b35aff,#edc875,transparent);
+}
+.label{
+ display:block;
+ color:#eadfff;
+ font-size:13px;
+ font-weight:700;
+ margin-bottom:9px;
+}
+.password-wrap{position:relative}
+input{
+ width:100%;
+ height:55px;
+ border:1px solid #8842bd99;
+ border-radius:13px;
+ padding:0 48px 0 48px;
+ outline:none;
+ background:#0c0618;
+ color:white;
+ font-family:inherit;
+ font-size:15px;
+ direction:rtl;
+ transition:.2s;
+}
+input:focus{
+ border-color:var(--gold);
+ box-shadow:0 0 0 3px #edc87520,0 0 20px #9d42d833;
+}
+.lock-icon,.show-password{
+ position:absolute;
+ top:50%;
+ transform:translateY(-50%);
+ color:#c99aff;
+}
+.lock-icon{right:16px}
+.show-password{
+ left:13px;
+ border:0;
+ background:none;
+ color:#d7b9ff;
+ cursor:pointer;
+ font-size:18px;
+}
+.submit{
+ width:100%;
+ height:55px;
+ margin-top:22px;
+ border:1px solid #ffe2a0;
+ border-radius:13px;
+ background:linear-gradient(100deg,#6f16c5,#a333ff 55%,#d69a32);
+ color:white;
+ font-family:inherit;
+ font-size:16px;
+ font-weight:900;
+ cursor:pointer;
+ box-shadow:0 0 24px #9b3de866;
+ transition:.2s;
+}
+.submit:hover{filter:brightness(1.15);transform:translateY(-2px)}
+.submit:disabled{opacity:.6;cursor:wait;transform:none}
+.message{
+ display:none;
+ margin-top:15px;
+ padding:11px 13px;
+ border-radius:10px;
+ font-size:12px;
+ text-align:center;
+}
+.message.error{
+ display:block;
+ color:#ffb7c2;
+ border:1px solid #ff617755;
+ background:#68182b55;
+}
+.message.success{
+ display:block;
+ color:#a8ffcf;
+ border:1px solid #42d6a477;
+ background:#125b3b44;
+}
+.secure{
+ display:flex;
+ justify-content:center;
+ align-items:center;
+ gap:8px;
+ margin-top:21px;
+ color:#a9d9bd;
+ font-size:11px;
+}
+.secure span{color:#50e6a1}
+.footer{
+ position:fixed;
+ bottom:14px;
+ left:0;right:0;
+ text-align:center;
+ color:#c7b5d9;
+ font-size:10px;
+ letter-spacing:1.5px;
+ text-shadow:0 2px 8px black;
+}
+@keyframes show{
+ from{opacity:0;transform:translateY(20px) scale(.97)}
+ to{opacity:1;transform:translateY(0) scale(1)}
+}
+@media(max-width:600px){
+ .topbar{padding:13px}
+ .login-card{padding:25px 19px;border-radius:20px}
+ h1{font-size:22px}
+ .background{background-position:35% center}
+}
+</style>
+</head>
+
+<body>
+
+<div class="background"></div>
+
+<header class="topbar">
+ <div class="brand">HANOON WORLD</div>
+ <div class="window-controls">
+  <button type="button" id="minimize" title="تصغير اللوحة">−</button>
+  <button type="button" id="expand" title="تكبير اللوحة">□</button>
+ </div>
+</header>
+
+<main>
+ <section class="login-card" id="loginCard">
+  <div class="emblem">H</div>
+
+  <h1>دخول الإدارة</h1>
+  <p class="subtitle">ADMINISTRATOR ACCESS</p>
+
+  <div class="divider"></div>
+
+  <form id="loginForm">
+   <label class="label" for="adminPassword">
+    كلمة المرور الخاصة بالإدارة
+   </label>
+
+   <div class="password-wrap">
+    <span class="lock-icon">♙</span>
+    <input
+     id="adminPassword"
+     type="password"
+     placeholder="أدخل كلمة السر"
+     autocomplete="current-password"
+     required
+    >
+    <button
+     class="show-password"
+     type="button"
+     id="togglePassword"
+     aria-label="إظهار كلمة المرور"
+    >◉</button>
+   </div>
+
+   <button class="submit" id="loginButton" type="submit">
+    تسجيل الدخول إلى لوحة التحكم
+   </button>
+
+   <div class="message" id="message"></div>
+  </form>
+
+  <div class="secure">
+   <span>●</span>
+   اتصال آمن • جلسة إدارة محمية
+  </div>
+ </section>
+</main>
+
+<footer class="footer">
+ HANOON WORLD © ALL RIGHTS RESERVED
+</footer>
+
+<script type="module">
+import { supabase } from "./supabase.js";
+
+const form = document.getElementById("loginForm");
+const passwordInput = document.getElementById("adminPassword");
+const loginButton = document.getElementById("loginButton");
+const message = document.getElementById("message");
+const card = document.getElementById("loginCard");
+
+const SESSION_KEY = "hanoon_admin_session";
+const HOME_PAGE = "./admin-home.html";
+
+function showMessage(text,type){
+ message.textContent = text;
+ message.className = "message " + type;
+}
+
+async function adminRequest(body,token){
+ const headers = {};
+ if(token) headers["x-admin-session"] = token;
+
+ const {data,error} = await supabase.functions.invoke(
+  "admin-send-notification",
+  {body,headers}
+ );
+
+ if(error) throw new Error(error.message || "تعذر الاتصال بخدمة الإدارة.");
+ if(data?.error) throw new Error(data.error);
+
+ return data;
+}
+
+async function validateSession(token){
+ const data = await adminRequest(
+  {action:"session_check"},
+  token
+ );
+
+ if(!data?.ok || !data?.isAdmin){
+  throw new Error("جلسة الإدارة غير صالحة.");
+ }
+
+ return true;
+}
+
+/* فحص الجلسة المحفوظة عند فتح الصفحة */
+(async function(){
+ const savedToken = localStorage.getItem(SESSION_KEY);
+ if(!savedToken) return;
+
+ try{
+  await validateSession(savedToken);
+  window.location.replace(HOME_PAGE);
+ }catch(error){
+  localStorage.removeItem(SESSION_KEY);
+ }
+})();
+
+/* إظهار وإخفاء كلمة السر */
+document.getElementById("togglePassword").addEventListener("click",()=>{
+ const hidden = passwordInput.type === "password";
+ passwordInput.type = hidden ? "text" : "password";
+ document.getElementById("togglePassword").textContent = hidden ? "◎" : "◉";
+});
+
+/* تكبير وتصغير بطاقة الدخول */
+document.getElementById("expand").addEventListener("click",()=>{
+ card.classList.toggle("expanded");
+});
+
+document.getElementById("minimize").addEventListener("click",()=>{
+ card.style.display = "none";
+
+ const restore = document.createElement("button");
+ restore.textContent = "إظهار نافذة الدخول";
+ restore.style.cssText = `
+  position:fixed;z-index:10;top:75px;right:20px;
+  padding:12px 18px;border-radius:12px;
+  background:#32104f;color:white;border:1px solid #d69aff;
+  font-family:inherit;cursor:pointer
+ `;
+ restore.onclick = ()=>{
+  card.style.display = "";
+  restore.remove();
+ };
+ document.body.appendChild(restore);
+});
+
+/* تسجيل الدخول */
+form.addEventListener("submit",async(event)=>{
+ event.preventDefault();
+
+ const password = passwordInput.value.trim();
+ if(!password){
+  showMessage("اكتب كلمة المرور أولاً.","error");
+  return;
+ }
+
+ loginButton.disabled = true;
+ loginButton.textContent = "جارٍ التحقق من بيانات الدخول...";
+ message.className = "message";
+
+ try{
+  const {data,error} = await supabase.functions.invoke(
+   "admin-send-notification",
+   {
+    body:{action:"check"},
+    headers:{"x-admin-code":password}
+   }
+  );
+
+  if(error) throw new Error(error.message || "تعذر الاتصال بخدمة الإدارة.");
+  if(data?.error) throw new Error(data.error);
+
+  if(!data?.ok || !data?.sessionToken){
+   throw new Error("كلمة المرور غير صحيحة أو ليس لديك صلاحية الإدارة.");
+  }
+
+  localStorage.setItem(SESSION_KEY,data.sessionToken);
+
+  showMessage("تم التحقق بنجاح. جارٍ فتح لوحة الإدارة...","success");
+  passwordInput.value = "";
+
+  setTimeout(()=>{
+   window.location.replace(HOME_PAGE);
+  },700);
+
+ }catch(error){
+  showMessage(error.message || "حدث خطأ أثناء تسجيل الدخول.","error");
+ }finally{
+  loginButton.disabled = false;
+  loginButton.textContent = "تسجيل الدخول إلى لوحة التحكم";
+ }
+});
+</script>
+
+</body>
+</html>
