@@ -1,419 +1,664 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-
-  <meta name="viewport"
-    content="width=device-width, initial-scale=1, maximum-scale=1,
-    user-scalable=no, viewport-fit=cover">
-
-  <meta name="theme-color" content="#10091e">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-
-  <title>HANOON WORLD</title>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-
-  <style>
-    :root {
-      --gold: #e9c77d;
-      --gold-light: #fff0c4;
-      --purple: #a879ff;
-      --dark: #10091e;
-    }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    html,
-    body {
-      width: 100%;
-      height: 100%;
-      overflow: hidden !important;
-      overscroll-behavior: none;
-      background: var(--dark);
-      font-family: "Cairo", sans-serif;
-      touch-action: pan-x pan-y;
-    }
-
-    body {
-      position: fixed;
-      inset: 0;
-      color: white;
-      user-select: none;
-      -webkit-user-select: none;
-    }
-
-    .splash {
-      position: fixed;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      height: 100dvh;
-      overflow: hidden;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background-color: var(--dark);
-      background-image:
-        linear-gradient(
-          180deg,
-          rgba(12, 5, 26, .30) 0%,
-          rgba(12, 5, 26, .38) 35%,
-          rgba(12, 5, 26, .78) 72%,
-          #10091e 100%
-        ),
-        url("https://images8.alphacoders.com/138/1382788.png");
-
-      background-size: cover;
-      background-position: center center;
-      background-repeat: no-repeat;
-      transform: none;
-      animation: none;
-    }
-
-    .overlay {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      background:
-        radial-gradient(
-          ellipse at center,
-          transparent 10%,
-          rgba(9, 4, 20, .25) 100%
-        );
-    }
-
-    .content {
-      position: relative;
-      z-index: 2;
-      width: 100%;
-      min-height: 100%;
-      padding: 30px 20px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-    }
-
-    /* مساحة الشعار الملكي بدون حرف مؤقت */
-
-    .emblem {
-      width: 142px;
-      height: 142px;
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 28px;
-      border-radius: 38px;
-      border: 1px solid rgba(235, 205, 145, .6);
-
-      background:
-        linear-gradient(
-          145deg,
-          rgba(143, 96, 207, .78),
-          rgba(45, 22, 79, .92)
-        );
-
-      box-shadow:
-        0 0 20px rgba(173, 119, 255, .25),
-        0 0 60px rgba(173, 119, 255, .22),
-        inset 0 0 25px rgba(255, 226, 166, .13);
-    }
-
-    .emblem::before {
-      content: "";
-      position: absolute;
-      inset: 8px;
-      border: 1px solid rgba(255, 225, 166, .42);
-      border-radius: 30px;
-    }
-
-    .emblem svg {
-      width: 90px;
-      height: 90px;
-      filter: drop-shadow(0 5px 12px rgba(0,0,0,.3));
-    }
-
-    .brand {
-      font-size: clamp(35px, 9vw, 62px);
-      line-height: 1.25;
-      font-weight: 900;
-      letter-spacing: 3px;
-      color: var(--gold-light);
-
-      text-shadow:
-        0 3px 15px rgba(0,0,0,.75),
-        0 0 30px rgba(228, 187, 112, .3);
-    }
-
-    .brand span {
-      display: block;
-      font-size: .45em;
-      letter-spacing: 9px;
-      color: #e5c98f;
-      margin-top: 8px;
-    }
-
-    .ornament {
-      width: 180px;
-      height: 1px;
-      margin: 26px 0 17px;
-      background: linear-gradient(
-        90deg,
-        transparent,
-        var(--gold),
-        transparent
-      );
-      position: relative;
-    }
-
-    .ornament::after {
-      content: "✦";
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      color: var(--gold-light);
-      background: #211331;
-      padding: 0 12px;
-      font-size: 15px;
-    }
-
-    .tagline {
-      font-size: 15px;
-      color: #eee2ff;
-      font-weight: 600;
-      letter-spacing: .5px;
-    }
-
-    .description {
-      margin-top: 7px;
-      color: rgba(231, 217, 255, .72);
-      font-size: 12px;
-    }
-
-    .loader-area {
-      position: absolute;
-      bottom: max(48px, env(safe-area-inset-bottom));
-      left: 0;
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 13px;
-    }
-
-    .loader {
-      width: 43px;
-      height: 43px;
-      border-radius: 50%;
-      border: 2px solid rgba(255, 255, 255, .15);
-      border-top-color: var(--gold-light);
-      border-right-color: var(--purple);
-      animation: spin 1s linear infinite;
-    }
-
-    .loading-text {
-      color: rgba(238, 224, 255, .8);
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 1px;
-    }
-
-    .version {
-      position: absolute;
-      bottom: max(15px, env(safe-area-inset-bottom));
-      left: 0;
-      width: 100%;
-      text-align: center;
-      color: rgba(255,255,255,.35);
-      font-size: 9px;
-      letter-spacing: 2px;
-    }
-
-    @keyframes spin {
-      to {
-        transform: rotate(360deg);
-      }
-    }
-
-    @media (max-width: 600px) {
-      .splash {
-        background-position: 55% center;
-      }
-
-      .emblem {
-        width: 120px;
-        height: 120px;
-        border-radius: 32px;
-        margin-bottom: 23px;
-      }
-
-      .emblem svg {
-        width: 76px;
-        height: 76px;
-      }
-
-      .brand {
-        letter-spacing: 2px;
-      }
-
-      .ornament {
-        margin-top: 21px;
-      }
-    }
-
-    @media (max-height: 650px) {
-      .emblem {
-        width: 95px;
-        height: 95px;
-        margin-bottom: 13px;
-      }
-
-      .emblem svg {
-        width: 65px;
-        height: 65px;
-      }
-
-      .ornament {
-        margin: 15px 0;
-      }
-
-      .loader-area {
-        bottom: 35px;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#090914">
+<title>HANOON WORLD</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+:root{
+--bg:#090914;--panel:#141426;--panel2:#1c1b32;
+--purple:#9b7cff;--purple2:#7654e5;--cyan:#65d9d1;
+--gold:#f0c875;--text:#f8f6ff;--muted:#aaa5c0;
+--line:rgba(255,255,255,.09);--shadow:0 18px 50px rgba(0,0,0,.38);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{min-height:100vh;overflow-x:hidden;color:var(--text);font-family:Cairo,sans-serif;background:var(--bg);padding-bottom:105px}
+a{text-decoration:none;color:inherit}
+button,input{font:inherit}
+button{color:inherit;border:0;cursor:pointer}
+img{display:block;max-width:100%}
+body:before{content:"";position:fixed;inset:0;z-index:-3;background:linear-gradient(180deg,rgba(8,8,19,.62),rgba(8,8,19,.92)),url("https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=2000&q=90") center/cover fixed}
+body:after{content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;background:radial-gradient(ellipse at 5% 12%,rgba(130,91,245,.22),transparent 34%),radial-gradient(ellipse at 95% 38%,rgba(40,188,190,.13),transparent 35%),linear-gradient(180deg,transparent 30%,rgba(7,7,17,.48))}
+.app{width:min(100%,1450px);margin:auto;padding:0 22px}
+.topbar{height:78px;display:flex;align-items:center;justify-content:space-between;gap:15px;position:relative;z-index:20}
+.brand{display:flex;align-items:center;gap:11px;flex-shrink:0}
+.brand-mark{width:46px;height:46px;border-radius:15px;display:grid;place-items:center;background:linear-gradient(145deg,#c0a8ff,#6845db);border:1px solid rgba(255,255,255,.3);box-shadow:0 8px 27px rgba(128,88,237,.38)}
+.brand-mark svg{width:29px;height:29px}
+.brand-name{font-size:18px;font-weight:900;letter-spacing:.3px}
+.brand-sub{font-size:9px;letter-spacing:2px;color:#bcb1df;margin-top:-5px}
+.header-actions{display:flex;align-items:center;gap:9px}
+.wallet{display:flex;align-items:center;gap:10px;padding:8px 10px;background:linear-gradient(110deg,rgba(39,32,68,.96),rgba(19,24,43,.96));border:1px solid rgba(255,255,255,.13);border-radius:15px;box-shadow:0 8px 25px rgba(0,0,0,.22)}
+.wallet-unit{display:flex;align-items:center;gap:5px;font-size:12px;font-weight:900;min-width:55px}
+.wallet-unit svg{width:18px;height:18px}
+.wallet-unit.coins svg{color:var(--gold)}
+.wallet-unit.gems svg{color:#7bdcf4}
+.wallet-add{width:29px;height:29px;border-radius:9px;display:grid;place-items:center;background:linear-gradient(145deg,#ae94ff,#704cdb)}
+.wallet-add svg{width:17px;height:17px;stroke:white;fill:none;stroke-width:2.5}
+.wallet-links{display:flex;gap:6px;margin-right:3px}
+.wallet-link{display:flex;align-items:center;gap:5px;padding:7px 9px;border-radius:9px;background:rgba(255,255,255,.055);font-size:10px;font-weight:800;color:#ddd7ef}
+.wallet-link svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.7}
+.header-icon{width:42px;height:42px;border-radius:13px;display:grid;place-items:center;background:rgba(255,255,255,.07);border:1px solid var(--line)}
+.header-icon svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.8}
+.notification-link{position:relative}
+.notification-badge{position:absolute;top:-5px;right:-5px;min-width:19px;height:19px;padding:0 5px;border-radius:20px;background:#ff526d;color:#fff;font:800 10px Cairo,sans-serif;align-items:center;justify-content:center;border:2px solid #141426;box-shadow:0 3px 10px #0008}
+.notification-badge[hidden]{display:none!important}
+.my-avatar{width:42px;height:42px;border-radius:50%;overflow:hidden;display:grid;place-items:center;background:#282441;border:2px solid #9b7cff}
+.my-avatar img{width:100%;height:100%;object-fit:cover}
+.my-avatar svg{width:22px;height:22px;stroke:#c9baff;fill:none;stroke-width:1.6}
+.search-area{display:flex;align-items:center;gap:13px;margin-top:7px;position:relative;z-index:15}
+.search-box{height:53px;flex:1;display:flex;align-items:center;gap:12px;padding:0 17px;border-radius:17px;background:rgba(24,22,43,.92);border:1px solid rgba(174,149,255,.22);box-shadow:0 10px 30px rgba(0,0,0,.2),inset 0 1px rgba(255,255,255,.04)}
+.search-box:focus-within{border-color:rgba(174,149,255,.65);box-shadow:0 0 0 3px rgba(151,121,255,.1),0 12px 30px rgba(0,0,0,.24)}
+.search-box svg{width:21px;height:21px;flex:none;stroke:#b9a6f5;fill:none;stroke-width:1.8}
+.search-box input{flex:1;min-width:0;background:none;border:0;outline:0;color:white;font-size:13px}
+.search-box input::placeholder{color:#9690ad}
+.search-shortcut{font-size:10px;color:#9e98b6;padding:5px 8px;border-radius:7px;background:rgba(255,255,255,.055)}
+.search-filter{height:53px;width:53px;flex:none;display:grid;place-items:center;border-radius:16px;background:linear-gradient(145deg,#8e70eb,#6448ce);box-shadow:0 8px 22px rgba(105,76,208,.3)}
+.search-filter svg{width:21px;height:21px;stroke:white;fill:none;stroke-width:1.8}
+.search-results{display:none;position:absolute;top:62px;right:0;left:66px;padding:12px;border-radius:17px;background:#19172b;border:1px solid rgba(255,255,255,.13);box-shadow:var(--shadow);max-height:380px;overflow:auto}
+.search-results.show{display:block}
+.search-result{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px;border-bottom:1px solid var(--line);font-size:12px}
+.search-result:last-child{border:0}
+.search-result small{color:var(--muted)}
+.search-result a{color:#c9b7ff;font-weight:800}
+.intro{margin-top:24px;display:flex;align-items:flex-end;justify-content:space-between;gap:15px}
+.intro h1{font-size:clamp(23px,3vw,34px);font-weight:900;line-height:1.45}
+.intro h1 span{color:#bba6ff;text-shadow:0 0 28px rgba(155,124,255,.24)}
+.intro p{font-size:12px;color:#b8b2cc;margin-top:3px}
+.intro-mark{color:#c9baff;font-size:10px;font-weight:800;padding:8px 13px;border-radius:30px;border:1px solid rgba(171,145,255,.24);background:rgba(132,101,222,.12)}
+.hero{margin-top:21px;min-height:390px;border-radius:29px;overflow:hidden;position:relative;isolation:isolate;border:1px solid rgba(255,255,255,.14);box-shadow:var(--shadow);background:#171329}
+.hero-bg{position:absolute;inset:0;z-index:-2;background:linear-gradient(90deg,rgba(9,8,21,.96) 0%,rgba(10,8,23,.78) 40%,rgba(10,8,23,.12) 100%),url("https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1900&q=90") center 40%/cover;transform:scale(1.02)}
+.hero:after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(0deg,rgba(8,7,19,.72),transparent 55%)}
+.hero-content{min-height:390px;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;padding:40px 45px;max-width:650px}
+.hero-label{display:flex;align-items:center;gap:9px;font-size:11px;color:#c8b6ff;font-weight:900;margin-bottom:14px}
+.hero-label:before{content:"";width:8px;height:8px;border-radius:50%;background:#a88aff;box-shadow:0 0 15px #a88aff}
+.hero h2{font-size:clamp(32px,4.5vw,49px);font-weight:900;line-height:1.3}
+.hero h2 span{color:#b9a1ff}
+.hero p{max-width:450px;color:#d1ccdf;font-size:13px;line-height:2;margin-top:13px}
+.hero-buttons{display:flex;gap:10px;flex-wrap:wrap;margin-top:23px}
+.btn-primary,.btn-secondary{min-height:46px;padding:0 20px;border-radius:13px;display:inline-flex;align-items:center;justify-content:center;gap:9px;font-size:12px;font-weight:900;transition:.2s}
+.btn-primary{background:linear-gradient(110deg,#ad92ff,#704de0);box-shadow:0 8px 25px rgba(117,80,221,.35)}
+.btn-secondary{background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.18)}
+.btn-primary:hover,.btn-secondary:hover{transform:translateY(-3px)}
+.btn-primary svg,.btn-secondary svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2}
+.section{margin-top:39px}
+.section-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:17px}
+.section-heading{display:flex;align-items:center;gap:11px}
+.section-icon{width:42px;height:42px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(145deg,rgba(159,127,255,.22),rgba(74,65,130,.13));border:1px solid rgba(164,138,255,.2)}
+.section-icon svg{width:21px;height:21px;stroke:#c2adff;fill:none;stroke-width:1.8}
+.section-heading h3{font-size:19px;font-weight:900}
+.section-heading p{font-size:10px;color:var(--muted);margin-top:-3px}
+.view-all{font-size:11px;color:#c8b6ff;font-weight:900;white-space:nowrap}
+.view-all:hover{color:white}
+.category-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.category-card{height:175px;position:relative;overflow:hidden;border-radius:21px;border:1px solid rgba(255,255,255,.13);box-shadow:0 12px 28px rgba(0,0,0,.25);display:flex;align-items:flex-end;padding:17px;isolation:isolate}
+.category-card:before{content:"";position:absolute;inset:0;z-index:-2;background-size:cover;background-position:center;transition:transform .5s}
+.category-card:hover:before{transform:scale(1.08)}
+.category-card:after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(0deg,rgba(7,7,18,.96),rgba(7,7,18,.02) 85%)}
+.category-card:nth-child(1):before{background-image:url("https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=800&q=85")}
+.category-card:nth-child(3):before{background-image:url("https://images.unsplash.com/photo-1593305841991-05c297ba4575?auto=format&fit=crop&w=800&q=85")}
+.category-card:nth-child(4):before{background-image:url("https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=800&q=85")}
+.category-card:nth-child(5):before{background-image:url("https://images.unsplash.com/photo-1511882150382-421056c89033?auto=format&fit=crop&w=800&q=85")}
+.category-card.users-category:before{background-image:url("https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1000&q=90");background-position:center 42%}
+.category-card.users-category:after{background:linear-gradient(0deg,rgba(7,7,18,.97),rgba(7,7,18,.16) 78%),linear-gradient(135deg,rgba(117,82,218,.22),rgba(32,177,181,.12))}
+.category-symbol{position:absolute;top:14px;right:14px;width:43px;height:43px;border-radius:14px;display:grid;place-items:center;color:#e8dcff;background:linear-gradient(145deg,rgba(155,124,255,.82),rgba(75,58,145,.78));border:1px solid rgba(255,255,255,.28);box-shadow:0 8px 24px rgba(0,0,0,.3);backdrop-filter:blur(10px)}
+.category-symbol svg{width:23px;height:23px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.category-card.users-category strong{font-size:17px}
+.category-card.users-category small{max-width:260px;line-height:1.7}
+.category-card .card-arrow{position:absolute;top:13px;left:13px;width:30px;height:30px;border-radius:10px;display:grid;place-items:center;background:rgba(255,255,255,.16);backdrop-filter:blur(8px)}
+.card-arrow svg{width:16px;height:16px;stroke:white;fill:none;stroke-width:2}
+.category-card strong{display:block;font-size:16px;font-weight:900}
+.category-card small{display:block;color:#d1cbdc;font-size:10px;margin-top:3px}
+.filter-row{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;margin-bottom:15px}
+.filter-row::-webkit-scrollbar{display:none}
+.filter-chip{flex:none;padding:8px 15px;border-radius:30px;background:rgba(255,255,255,.06);border:1px solid var(--line);color:#cbc5dc;font-size:11px;font-weight:800}
+.filter-chip.active{background:linear-gradient(110deg,#9475f1,#6549d1);color:white;border-color:transparent}
+.content-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:15px}
+.game-card,.room-card{min-width:0;overflow:hidden;border-radius:20px;background:linear-gradient(145deg,rgba(33,30,56,.97),rgba(16,16,30,.98));border:1px solid rgba(255,255,255,.10);box-shadow:0 12px 30px rgba(0,0,0,.23);transition:.25s}
+.game-card:hover,.room-card:hover{transform:translateY(-4px);border-color:rgba(174,148,255,.4);box-shadow:0 18px 38px rgba(0,0,0,.34)}
+.game-image{height:165px;position:relative;background:#25213d;overflow:hidden}
+.game-image img{width:100%;height:100%;object-fit:cover;transition:.45s}
+.game-card:hover .game-image img{transform:scale(1.06)}
+.game-image:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(9,8,19,.55),transparent 65%)}
+.game-info{padding:13px}
+.game-info h4{font-size:13px;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.game-info p{font-size:10px;color:var(--muted);margin-top:3px}
+.card-footer{display:flex;align-items:center;justify-content:space-between;gap:7px;margin-top:12px}
+.card-type{font-size:10px;color:#aaa5bf}
+.card-link{padding:7px 12px;border-radius:9px;background:rgba(153,124,255,.17);color:#d0c2ff;font-size:10px;font-weight:900}
+.promo{min-height:220px;border-radius:25px;overflow:hidden;position:relative;isolation:isolate;display:flex;align-items:center;padding:30px 35px;border:1px solid rgba(255,255,255,.13);box-shadow:var(--shadow);background:#19152d}
+.promo:before{content:"";position:absolute;inset:0;z-index:-2;background:linear-gradient(90deg,rgba(10,8,23,.96),rgba(10,8,23,.73),rgba(10,8,23,.15)),url("https://images.unsplash.com/photo-1560253023-3ec5d502959f?auto=format&fit=crop&w=1500&q=85") center/cover}
+.promo:after{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(circle at 75% 50%,rgba(147,111,255,.2),transparent 38%)}
+.promo-content{max-width:490px}
+.promo-content small{font-size:10px;color:#c4b0ff;font-weight:900;letter-spacing:1px}
+.promo-content h3{font-size:26px;font-weight:900;margin-top:6px}
+.promo-content p{font-size:11px;color:#d0cadd;line-height:1.9;margin-top:5px}
+.promo-content .btn-primary{margin-top:15px}
+.room-cover{height:132px;position:relative;overflow:hidden;background:#292341}
+.room-cover img{width:100%;height:100%;object-fit:cover}
+.room-state{position:absolute;top:10px;right:10px;padding:5px 9px;border-radius:20px;background:rgba(9,10,20,.82);color:#8fe0c5;font-size:9px;font-weight:900;border:1px solid rgba(143,224,197,.2)}
+.room-info{padding:13px}
+.room-info h4{font-size:13px;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.room-details{display:flex;justify-content:space-between;gap:6px;margin-top:9px;color:var(--muted);font-size:10px}
+.room-code{color:#c7b4ff;font-weight:900}
+.room-info .card-footer{margin-top:12px}
+.live-grid{display:grid;grid-template-columns:1.35fr 1fr 1fr;gap:13px}
+.live-card{min-height:190px;position:relative;overflow:hidden;border-radius:20px;border:1px solid rgba(255,255,255,.13);background:#1c1830;isolation:isolate;display:flex;align-items:flex-end;padding:18px}
+.live-card:before{content:"";position:absolute;inset:0;z-index:-2;background-size:cover;background-position:center;transition:.45s}
+.live-card:hover:before{transform:scale(1.07)}
+.live-card:after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(0deg,rgba(7,7,18,.95),rgba(7,7,18,.04))}
+.live-card:nth-child(1):before{background-image:url("https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=900&q=85")}
+.live-card:nth-child(2):before{background-image:url("https://images.unsplash.com/photo-1593305841991-05c297ba4575?auto=format&fit=crop&w=700&q=85")}
+.live-card:nth-child(3):before{background-image:url("https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=700&q=85")}
+.live-card strong{font-size:15px;font-weight:900}
+.live-card p{font-size:10px;color:#d2ccdf;margin-top:3px}
+.empty-state{grid-column:1/-1;text-align:center;padding:35px 20px;border:1px dashed rgba(255,255,255,.17);border-radius:20px;background:rgba(255,255,255,.025)}
+.empty-state svg{width:37px;height:37px;stroke:#b09bff;fill:none;stroke-width:1.5;margin:0 auto 10px}
+.empty-state h4{font-size:14px;font-weight:900}
+.empty-state p{font-size:10px;color:var(--muted);margin-top:5px}
+.loader{width:28px;height:28px;margin:0 auto 12px;border:2px solid rgba(255,255,255,.12);border-top-color:#a98aff;border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.bottom-nav{position:fixed;z-index:50;bottom:10px;left:50%;transform:translateX(-50%);width:min(calc(100% - 22px),850px);min-height:72px;padding:7px 10px;display:flex;align-items:center;justify-content:space-around;gap:3px;background:rgba(19,18,35,.95);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);border:1px solid rgba(255,255,255,.13);border-radius:22px;box-shadow:0 15px 45px rgba(0,0,0,.52)}
+.nav-item{flex:1;min-width:0;min-height:54px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;border-radius:13px;color:#aaa5bf;font-size:10px;font-weight:800;transition:.2s}
+.nav-item svg{width:21px;height:21px;stroke:currentColor;fill:none;stroke-width:1.8}
+.nav-item.active{color:#c9b7ff;background:rgba(151,121,255,.14)}
+.nav-item:hover{color:white;background:rgba(255,255,255,.07)}
+.toast{position:fixed;z-index:100;bottom:100px;left:50%;transform:translate(-50%,15px);opacity:0;pointer-events:none;padding:11px 17px;border-radius:12px;background:#25213c;border:1px solid var(--line);color:white;font-size:11px;transition:.25s}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+@media(max-width:1050px){
+.content-grid,.category-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+.wallet-links{display:none}
+}
+@media(max-width:700px){
+.app{padding:0 13px}
+.topbar{height:68px;gap:7px}
+.brand{gap:7px}
+.brand-mark{width:39px;height:39px;border-radius:12px}
+.brand-name{font-size:13px}
+.brand-sub{font-size:7px;letter-spacing:1.3px}
+.header-actions{gap:5px}
+.header-icon,.my-avatar{width:36px;height:36px}
+.wallet{padding:6px 7px;gap:5px;border-radius:12px}
+.wallet-unit{min-width:43px;font-size:10px;gap:3px}
+.wallet-unit svg{width:15px;height:15px}
+.wallet-add{width:24px;height:24px}
+.search-area{margin-top:8px;gap:8px}
+.search-box{height:47px;padding:0 12px;gap:8px;border-radius:14px}
+.search-box input{font-size:11px}
+.search-box svg{width:18px;height:18px}
+.search-shortcut{display:none}
+.search-filter{height:47px;width:47px;border-radius:14px}
+.search-results{top:55px;left:55px}
+.intro{margin-top:19px}
+.intro h1{font-size:22px}
+.intro p{font-size:10px}
+.intro-mark{font-size:8px;padding:6px 9px}
+.hero{margin-top:16px;min-height:310px;border-radius:22px}
+.hero-bg{background:linear-gradient(90deg,rgba(9,8,21,.94),rgba(10,8,23,.61)),url("https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1000&q=90") center/cover}
+.hero-content{min-height:310px;padding:24px 21px}
+.hero h2{font-size:31px}
+.hero p{font-size:11px}
+.hero-label{font-size:9px}
+.btn-primary,.btn-secondary{min-height:42px;padding:0 14px;font-size:10px}
+.section{margin-top:29px}
+.section-heading h3{font-size:16px}
+.section-heading p{font-size:9px}
+.section-icon{width:35px;height:35px;border-radius:11px}
+.view-all{font-size:10px}
+.category-grid{gap:9px}
+.category-card{height:137px;padding:12px;border-radius:16px}
+.category-symbol{top:10px;right:10px;width:36px;height:36px;border-radius:12px}
+.category-symbol svg{width:20px;height:20px}
+.category-card.users-category strong{font-size:14px}
+.category-card.users-category small{font-size:9px;line-height:1.55}
+.category-card strong{font-size:13px}
+.category-card small{font-size:9px}
+.content-grid{gap:10px}
+.game-image{height:120px}
+.game-info{padding:10px}
+.game-info h4,.room-info h4{font-size:11px}
+.game-info p{font-size:9px}
+.card-link{font-size:9px;padding:6px 9px}
+.promo{min-height:180px;padding:20px;border-radius:20px}
+.promo-content h3{font-size:20px}
+.promo-content p{font-size:10px}
+.room-cover{height:110px}
+.room-info{padding:10px}
+.room-details{font-size:9px}
+.live-grid{grid-template-columns:1fr 1fr;gap:9px}
+.live-card{min-height:135px;padding:12px;border-radius:16px}
+.live-card:first-child{grid-column:1/-1;min-height:165px}
+.live-card strong{font-size:13px}
+.bottom-nav{bottom:7px;width:calc(100% - 14px);min-height:65px;padding:5px 4px;border-radius:18px}
+.nav-item{min-height:52px;font-size:8px;gap:3px}
+.nav-item svg{width:19px;height:19px}
+}
+@media(max-width:370px){
+.brand-sub{display:none}
+.brand-name{font-size:12px}
+.wallet-unit{min-width:38px}
+.intro-mark{display:none}
+.nav-item{font-size:7px}
+}.section-heading p{font-size:9px}
+.section-icon{width:35px;height:35px;border-radius:11px}
+.view-all{font-size:10px}
+.category-grid{gap:9px}
+.category-card{height:137px;padding:12px;border-radius:16px}
+.category-symbol{top:10px;right:10px;width:36px;height:36px;border-radius:12px}
+.category-symbol svg{width:20px;height:20px}
+.category-card.users-category strong{font-size:14px}
+.category-card.users-category small{font-size:9px;line-height:1.55}
+.category-card strong{font-size:13px}
+.category-card small{font-size:9px}
+.content-grid{gap:10px}
+.game-image{height:120px}
+.game-info{padding:10px}
+.game-info h4,.room-info h4{font-size:11px}
+.game-info p{font-size:9px}
+.card-link{font-size:9px;padding:6px 9px}
+.promo{min-height:180px;padding:20px;border-radius:20px}
+.promo-content h3{font-size:20px}
+.promo-content p{font-size:10px}
+.room-cover{height:110px}
+.room-info{padding:10px}
+.room-details{font-size:9px}
+.live-grid{grid-template-columns:1fr 1fr;gap:9px}
+.live-card{min-height:135px;padding:12px;border-radius:16px}
+.live-card:first-child{grid-column:1/-1;min-height:165px}
+.live-card strong{font-size:13px}
+.bottom-nav{bottom:7px;width:calc(100% - 14px);min-height:65px;padding:5px 4px;border-radius:18px}
+.nav-item{min-height:52px;font-size:8px;gap:3px}
+.nav-item svg{width:19px;height:19px}
+}
+@media(max-width:370px){
+.brand-sub{display:none}
+.brand-name{font-size:12px}
+.wallet-unit{min-width:38px}
+.intro-mark{display:none}
+.nav-item{font-size:7px}
+}
+/* اختصارات الرأس والتصنيف */
+.quick-actions{display:flex;align-items:center;gap:6px}
+.quick-action{min-height:38px;padding:0 10px;display:flex;align-items:center;justify-content:center;gap:6px;border-radius:12px;background:rgba(255,255,255,.065);border:1px solid rgba(255,255,255,.11);font-size:10px;font-weight:900;white-space:nowrap;transition:.2s}
+.quick-action:hover{transform:translateY(-2px);background:rgba(151,121,255,.18)}
+.quick-action svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.8}
+.quick-action:nth-child(1){color:#d8caff}
+.quick-action:nth-child(2){color:#f0d28e}
+.quick-action:nth-child(3){color:#9ce4d7}
+.settings-menu{display:none;position:absolute;z-index:40;top:62px;left:0;width:min(250px,calc(100vw - 35px));padding:10px;border:1px solid rgba(255,255,255,.13);border-radius:16px;background:#19172b;box-shadow:var(--shadow)}
+.settings-menu.show{display:block}
+.settings-menu-title{padding:8px 10px 10px;color:#c9b7ff;font-size:11px;font-weight:900}
+.settings-menu a{display:block;padding:10px;border-radius:10px;color:#e9e4f7;font-size:11px;font-weight:700}
+.settings-menu a:hover{background:rgba(255,255,255,.07)}
+.search-area{position:relative}
+.leaderboard-category:before{background-image:url("https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=1000&q=90")}
+.leaderboard-category:after{background:linear-gradient(0deg,rgba(7,7,18,.97),rgba(7,7,18,.14) 78%),linear-gradient(135deg,rgba(117,82,218,.25),rgba(32,177,181,.12))}
+@media(max-width:1050px){.wallet-links{display:none}}
+@media(max-width:700px){
+.quick-actions{gap:4px}
+.quick-action{width:32px;min-width:32px;height:32px;min-height:32px;padding:0;font-size:0;gap:0}
+.quick-action svg{width:16px;height:16px}
+.settings-menu{top:55px}
+}
+</style>
 </head>
-
 <body>
+<div class="app">
+<header class="topbar">
+<a class="brand" href="home.html">
+<div class="brand-mark"><svg viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M20 4.5 31.5 11v18L20 35.5 8.5 29V11L20 4.5Z" stroke="white" stroke-width="1.5" stroke-opacity=".72"/><path d="M12 26V14h4l8 8V14h4v12h-4l-8-8v8h-4Z" fill="white"/><circle cx="31" cy="9" r="3" fill="#65d9d1" stroke="#fff" stroke-width="1"/></svg></div>
+<div><div class="brand-name">HANOON WORLD</div><div class="brand-sub">YOUR SOCIAL UNIVERSE</div></div>
+</a>
 
-  <main class="splash">
-    <div class="overlay"></div>
+<div class="header-actions">
+<div class="wallet">
+<div class="wallet-unit coins">
+<svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.7"/><path d="M15.5 9.5c-.7-.8-1.7-1.2-3.1-1.2-1.5 0-2.5.7-2.5 1.8 0 2.8 5.4 1.1 5.4 4 0 1.2-1.1 2-2.8 2-1.3 0-2.5-.5-3.3-1.4M12 6.5v11" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+<span id="coinBalance">—</span>
+</div>
+<div class="wallet-unit gems">
+<svg viewBox="0 0 24 24" fill="none"><path d="m12 2 8 7-8 13L4 9l8-7Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="m4 9 16 0M8 9l4 13 4-13" stroke="currentColor" stroke-width="1.3"/></svg>
+<span id="gemBalance">—</span>
+</div>
+<a class="wallet-add" href="wallet.html" aria-label="إضافة رصيد"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></a>
+<div class="wallet-links">
+<a class="wallet-link" href="store.html"><svg viewBox="0 0 24 24"><path d="M4 8h16l-1 12H5L4 8Z"/><path d="M9 9V6a3 3 0 0 1 6 0v3"/></svg>المتجر</a>
+<a class="wallet-link" href="gifts.html"><svg viewBox="0 0 24 24"><path d="M3 10h18v11H3zM2 6h20v4H2zM12 6v15"/><path d="M12 6H8a2 2 0 1 1 2-2c0 1.1 2 2 2 2Zm0 0h4a2 2 0 1 0-2-2c0 1.1-2 2-2 2Z"/></svg>الهدايا</a>
+<a class="wallet-link" href="tasks.html"><svg viewBox="0 0 24 24"><path d="m9 12 2 2 4-4"/><rect x="4" y="3" width="16" height="18" rx="2"/></svg>المهام</a>
+</div>
+</div>
+<div class="quick-actions" aria-label="اختصارات سريعة"><a class="quick-action" href="store.html" aria-label="المتجر"><svg viewBox="0 0 24 24"><path d="M4 8h16l-1 12H5L4 8Z"/><path d="M9 9V6a3 3 0 0 1 6 0v3"/></svg><span>المتجر</span></a><a class="quick-action" href="wallet.html" aria-label="المحفظة"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M3 9h18M16 14h.01"/></svg><span>المحفظة</span></a><a class="quick-action" href="tasks.html" aria-label="المهام اليومية"><svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="m8 12 2.5 2.5L16 9"/></svg><span>المهام</span></a></div>
+<a class="header-icon notification-link" href="notifications.html" aria-label="الإشعارات">
+<svg viewBox="0 0 24 24"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9ZM10 21h4"/></svg>
+<span class="notification-badge" data-notification-count hidden></span>
+</a>
+<a class="my-avatar" href="profile.html" id="myProfileLink" aria-label="حسابي">
+<svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 21c.5-4 3.2-6 7.5-6s7 2 7.5 6"/></svg>
+</a>
+</div>
+</header>
 
-    <section class="content">
+<div class="search-area">
+<label class="search-box">
+<svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m16 16 5 5"/></svg>
+<input id="globalSearch" type="search" placeholder="ابحث في هنون: أعضاء، ألعاب، غرف، مهام، أقسام...">
+<span class="search-shortcut">بحث</span>
+</label>
+<button class="search-filter" id="settingsToggle" type="button" aria-label="الإعدادات السريعة" aria-expanded="false"><svg viewBox="0 0 24 24"><path d="M4 7h16M7 12h10M10 17h4"/><circle cx="8" cy="7" r="1.5"/><circle cx="15" cy="12" r="1.5"/></svg></button>
+<div class="settings-menu" id="settingsMenu"><div class="settings-menu-title">إعدادات سريعة</div><a href="profile.html">الملف الشخصي</a><a href="notifications.html">الإشعارات</a><a href="chat.html">المحادثات</a><a href="wallet.html">المحفظة</a><a href="tasks.html">المهام والإنجازات</a></div>
+<div class="search-results" id="searchResults"></div>
+</div>
 
-      <div class="emblem" aria-label="HANOON WORLD emblem">
+<section class="intro">
+<div><h1>مرحباً بك في <span>عالم هنون</span></h1><p>مساحتك للألعاب والتواصل والتجارب المختلفة</p></div>
+<div class="intro-mark">اكتشف عالمك</div>
+</section>
 
-        <!-- رمز قلعة وتاج، بدون حرف H -->
-        <svg viewBox="0 0 120 120"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg">
+<section class="hero">
+<div class="hero-bg"></div>
+<div class="hero-content">
+<div class="hero-label">HANOON WORLD EXPERIENCE</div>
+<h2>هنا تبدأ<br><span>حكايتك الجديدة</span></h2>
+<p>اكتشف ألعاباً مختلفة، ادخل غرف المجتمع، وشارك في عالم مليء بالتجارب والمنافسات.</p>
+<div class="hero-buttons">
+<a class="btn-primary" href="games.html"><svg viewBox="0 0 24 24"><path d="m8 5 12 7-12 7V5Z" fill="currentColor" stroke="none"/></svg>اكتشف الألعاب</a>
+<a class="btn-secondary" href="rooms.html"><svg viewBox="0 0 24 24"><path d="M3 20V9l9-6 9 6v11h-6v-7H9v7H3Z"/></svg>ادخل الغرف</a>
+</div>
+</div>
+</section>
 
-          <path d="M60 8L72 24L91 19L89 39L108 49L96 66L101 85L81 91L60 111L39 91L19 85L24 66L12 49L31 39L29 19L48 24L60 8Z"
-            stroke="#F2D89E"
-            stroke-width="2.5"
-            stroke-linejoin="round"/>
+<section class="section">
+<div class="section-head">
+<div class="section-heading">
+<div class="section-icon"><svg viewBox="0 0 24 24"><path d="M12 3 14.5 9.5 21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5L12 3Z"/></svg></div>
+<div><h3>استكشف عالم هنون</h3><p>وجهات مختلفة داخل عالم واحد</p></div>
+</div>
+</div>
+<div class="category-grid">
+<a class="category-card" href="games.html">
+<span class="card-arrow"><svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg></span>
+<div><strong>منطقة الألعاب</strong><small>اكتشف الألعاب المتاحة</small></div>
+</a>
+<a class="category-card leaderboard-category" href="leaderboard.html"><span class="card-arrow"><svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg></span><span class="category-symbol"><svg viewBox="0 0 24 24"><path d="M4 19h16M6 16V9h3v7M11 16V4h3v12M16 16v-5h3v5"/></svg></span><div><strong>التصنيف العام</strong><small>ترتيب الأعضاء بالنقاط والمستويات والإنجازات</small></div></a>
+<a class="category-card" href="rooms.html">
+<span class="card-arrow"><svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg></span>
+<div><strong>عالم الغرف</strong><small>غرف المجتمع والألعاب</small></div>
+</a>
+<a class="category-card" href="broadcasts.html">
+<span class="card-arrow"><svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg></span>
+<span class="category-symbol"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3" fill="currentColor" stroke="none"/></svg></span>
+<div><strong>LIVE بث مباشر</strong><small>ابدأ بثك أو شاهد بث الأعضاء الآن</small></div>
+</a>
+<a class="category-card" href="tasks.html">
+<span class="card-arrow"><svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg></span>
+<div><strong>المهام والإنجازات</strong><small>أنجز مهامك واجمع العملات</small></div>
+</a>
+<a class="category-card" href="contests.html">
+<span class="card-arrow"><svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg></span>
+<div><strong>التحديات</strong><small>المنافسات والفعاليات</small></div>
+</a>
+</div>
+</section>
 
-          <path d="M39 47V35L49 43L60 27L71 43L81 35V47"
-            stroke="#FFE9B9"
-            stroke-width="3"
-            stroke-linecap="round"
-            stroke-linejoin="round"/>
+<section class="section">
+<div class="section-head">
+<div class="section-heading">
+<div class="section-icon"><svg viewBox="0 0 24 24"><path d="M6 11h4l2-5 2 12 2-7h2"/></svg></div>
+<div><h3>الألعاب الأكثر لعبًا</h3><p>ترتيب حقيقي حسب مرات اللعب المسجلة</p></div>
+</div>
+<a class="view-all" href="games.html">كل الألعاب ←</a>
+</div>
+<div class="content-grid" id="gamesGrid"><div class="empty-state"><div class="loader"></div><p>جارٍ تحميل الألعاب...</p></div></div>
+</section>
 
-          <path d="M31 91V61H44V50H55V61H65V50H76V61H89V91"
-            fill="#E9C77D"
-            fill-opacity=".18"
-            stroke="#FFE9B9"
-            stroke-width="3"
-            stroke-linejoin="round"/>
+<section class="section">
+<div class="promo">
+<div class="promo-content">
+<small>YOUR WORLD · YOUR EXPERIENCE</small>
+<h3>مكانك بين أصدقائك</h3>
+<p>تصفح الغرف العامة واكتشف مساحات اللعب والتفاعل داخل مجتمع هنون.</p>
+<a class="btn-primary" href="rooms.html">اكتشف الغرف</a>
+</div>
+</div>
+</section>
 
-          <path d="M51 91V76C51 71 55 67 60 67C65 67 69 71 69 76V91"
-            stroke="#FFE9B9"
-            stroke-width="3"/>
+<section class="section">
+<div class="section-head">
+<div class="section-heading">
+<div class="section-icon"><svg viewBox="0 0 24 24"><path d="M3 20V9l9-6 9 6v11h-6v-7H9v7H3Z"/></svg></div>
+<div><h3>الغرف العامة</h3><p>الغرف العامة المفتوحة في الوقت الحالي</p></div>
+</div>
+<a class="view-all" href="rooms.html">كل الغرف ←</a>
+</div>
+<div class="content-grid" id="roomsGrid"><div class="empty-state"><div class="loader"></div><p>جارٍ تحميل الغرف...</p></div></div>
+</section>
 
-          <path d="M23 98H97"
-            stroke="#E9C77D"
-            stroke-width="3"
-            stroke-linecap="round"/>
+<section class="section">
+<div class="section-head">
+<div class="section-heading">
+<div class="section-icon"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H8l-4 4V5Z"/><path d="M8 9h8M8 12h5"/></svg></div>
+<div><h3>اكتشف عالم البث</h3><p>مساحة مخصصة للتجارب المباشرة</p></div>
+</div>
+<a class="view-all" href="broadcasts.html">دخول LIVE ←</a>
+</div>
+<div class="live-grid">
+<a class="live-card" href="broadcasts.html"><div><strong>LIVE بث مباشر</strong><p>شاهد الأعضاء وابدأ البث الخاص بك</p></div></a>
+<a class="live-card" href="live.html"><div><strong>مقابلة عشوائية</strong><p>تواصل بالصوت والصورة مع عضو جديد</p></div></a>
+<a class="live-card" href="tasks.html"><div><strong>مهام وإنجازات</strong><p>تابع تحدياتك اليومية والأسبوعية والشهرية</p></div></a>
+</div>
+</section>
 
-          <circle cx="60" cy="17" r="3" fill="#FFF0C4"/>
-          <circle cx="34" cy="35" r="2" fill="#FFF0C4"/>
-          <circle cx="86" cy="35" r="2" fill="#FFF0C4"/>
+<footer style="text-align:center;color:#77728e;font-size:10px;padding:35px 0 15px">HANOON WORLD · YOUR SOCIAL UNIVERSE</footer>
+</div>
 
-        </svg>
-      </div>
+<nav class="bottom-nav">
+<a class="nav-item active" href="home.html"><svg viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10h-6v-6H9v6H3V10Z"/></svg>الرئيسية</a>
+<a class="nav-item" href="games.html"><svg viewBox="0 0 24 24"><path d="M7 8h10a4 4 0 0 1 4 4v4a3 3 0 0 1-5 2l-2-2h-4l-2 2a3 3 0 0 1-5-2v-4a4 4 0 0 1 4-4Z"/><path d="M8 11v4M6 13h4M16 12h.01M18 14h.01"/></svg>الألعاب</a>
+<a class="nav-item" href="leaderboard.html" aria-label="التصنيف العام"><svg viewBox="0 0 24 24"><path d="M4 19h16M6 16V9h3v7M11 16V4h3v12M16 16v-5h3v5"/></svg><span>التصنيف</span></a>
+<a class="nav-item" href="rooms.html"><svg viewBox="0 0 24 24"><path d="M3 20V9l9-6 9 6v11h-6v-7H9v7H3Z"/></svg>الغرف</a>
+<a class="nav-item" href="broadcasts.html"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3" fill="currentColor" stroke="none"/></svg>LIVE</a>
+<a class="nav-item" href="chat.html"><svg viewBox="0 0 24 24"><path d="M4 5h16v12H9l-5 4V5Z"/><path d="M8 9h8M8 13h5"/></svg>المحادثات</a>
+<a class="nav-item" href="profile.html"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 21c.5-4 3.2-6 7.5-6s7 2 7.5 6"/></svg>حسابي</a>
+</nav>
 
-      <h1 class="brand">
-        HANOON
-        <span>WORLD</span>
-      </h1>
+<div class="toast" id="toast"></div>
 
-      <div class="ornament"></div>
+<script>
+const SUPABASE_URL = "https://gjtgvczvclfwvlvcquxh.supabase.co";const SUPABASE_KEY = "sb_publishable_4DVTUZ-xTlqU2GpFvpb7lw_g-Kxomd4";
+const db = window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
 
-      <p class="tagline">
-        عالم يجمعنا
-      </p>
+const sitePages=[
+{name:"المتجر",keywords:"متجر شراء عناصر منتجات",href:"store.html",type:"قسم"},
+{name:"المحفظة",keywords:"رصيد عملات جواهر معاملات",href:"wallet.html",type:"قسم"},
+{name:"المهام اليومية",keywords:"مهام يومية أسبوعية شهرية إنجازات نقاط",href:"tasks.html",type:"قسم"},
+{name:"التصنيف العام",keywords:"تصنيف ترتيب نقاط ليفل مستوى خبرة إنجازات",href:"leaderboard.html",type:"قسم"},
+{name:"الغرف",keywords:"غرف عامة مجتمع",href:"rooms.html",type:"قسم"},
+{name:"البث المباشر",keywords:"بث لايف مباشر مشاهدة",href:"broadcasts.html",type:"قسم"},
+{name:"المقابلة العشوائية",keywords:"مكالمة فيديو عشوائية",href:"live.html",type:"قسم"},
+{name:"المحادثات",keywords:"رسائل شات دردشة",href:"chat.html",type:"قسم"},
+{name:"الإشعارات",keywords:"تنبيهات إشعارات",href:"notifications.html",type:"قسم"},
+{name:"حسابي والملف الشخصي",keywords:"حساب ملف شخصي بروفايل",href:"profile.html",type:"قسم"},
+{name:"الألعاب",keywords:"ألعاب لعب",href:"games.html",type:"قسم"}
+];
 
-      <p class="description">
-        أصدقاء · ألعاب · غرف · مغامرات
-      </p>
+const state={user:null,games:[],rooms:[],members:[]};
+const $=id=>document.getElementById(id);
 
-    </section>
+function esc(value){
+return String(value??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));
+}
+function isURL(value){return /^https?:\/\//i.test(String(value||""))}
+function publicImage(bucket,path){
+if(!path)return "";
+if(isURL(path))return path;
+const {data}=db.storage.from(bucket).getPublicUrl(path);
+return data?.publicUrl||"";
+}
+function avatarFallback(){
+return `<svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 21c.5-4 3.2-6 7.5-6s7 2 7.5 6"/></svg>`;
+}
+async function loadSession(){
+const {data,error}=await db.auth.getSession();
+if(error)throw error;
+state.user=data.session?.user||null;
+if(!state.user){location.href="index.html";return false}
+return true;
+}
+async function loadProfile(){
+const {data,error}=await db.from("profiles").select("id,full_name,avatar_path,member_code").eq("id",state.user.id).maybeSingle();
+if(error)throw error;
+const avatar=publicImage("avatars",data?.avatar_path);
+if(avatar)$("myProfileLink").innerHTML=`<img src="${esc(avatar)}" alt="حسابي">`;
+}
+async function loadWallet(){
+const {data,error}=await db.from("world_wallets").select("coins,gems").eq("user_id",state.user.id).maybeSingle();
+if(error)throw error;
+$("coinBalance").textContent=data?.coins==null?"—":Number(data.coins).toLocaleString("en-US");
+$("gemBalance").textContent=data?.gems==null?"—":Number(data.gems).toLocaleString("en-US");
+}
+async function loadGames(){
+const {data,error}=await db.rpc("get_trending_games",{p_limit:100});
+if(error)throw error;
+state.games=data||[];
+renderGames(state.games.slice(0,5));
+}
+async function loadRooms(){
+const {data,error}=await db.from("world_game_rooms").select("id,game_id,host_user_id,room_code,status,visibility,max_players,created_at").eq("visibility","public").in("status",["waiting","playing"]).order("created_at",{ascending:false}) .limit(500);
+if(error)throw error;
+const rooms=data||[];
+const gameIds=[...new Set(rooms.map(x=>x.game_id).filter(Boolean))];
+const hostIds=[...new Set(rooms.map(x=>x.host_user_id).filter(Boolean))];
+let games=[],hosts=[];
+if(gameIds.length){
+const result=await db.from("world_games_catalog").select("id,title_ar,title_en,cover_path").in("id",gameIds);
+if(!result.error)games=result.data||[];
+}
+if(hostIds.length){
+const result=await db.from("profiles").select("id,full_name,avatar_path").in("id",hostIds);
+if(!result.error)hosts=result.data||[];
+}
+state.rooms=rooms.map(room=>({...room,game:games.find(g=>g.id===room.game_id)||null,host:hosts.find(h=>h.id===room.host_user_id)||null}));
+renderRooms(state.rooms);
+}
+/* تحميل دليل الأعضاء لاستخدامه في البحث فقط */
+async function loadMembersForSearch(){
+const {data,error}=await db.from("member_directory").select("id,username,member_code,full_name").neq("id",state.user.id).order("created_at",{ascending:false}).limit(100);
+if(error)throw error;
+state.members=data||[];
+}
+function renderGames(games){
+const grid=$("gamesGrid");
+if(!games.length){
+grid.innerHTML=`<div class="empty-state"><svg viewBox="0 0 24 24"><path d="M7 8h10a4 4 0 0 1 4 4v4a3 3 0 0 1-5 2l-2-2h-4l-2 2a3 3 0 0 1-5-2v-4a4 4 0 0 1 4-4Z"/></svg><h4>لا توجد بيانات لعب مسجلة بعد</h4><p>سيظهر هنا أفضل خمس ألعاب بعد تسجيل جلسات لعب حقيقية. لن نعرض ترتيبًا تخمينيًا.</p></div>`;
+return;
+}
+grid.innerHTML=games.map(game=>{
+const title=game.title_ar||game.title_en||"لعبة";
+const cover=isURL(game.cover_path)?game.cover_path:"";
+const key=encodeURIComponent(game.slug||game.game_id);
+const plays=Number(game.play_count)||0;
+return `<article class="game-card"><div class="game-image">${cover?`<img src="${esc(cover)}" alt="${esc(title)}" loading="lazy">`:""}</div><div class="game-info"><h4>${esc(title)}</h4><p>${esc(game.title_en||"من ألعاب هنون")}</p><div class="card-footer"><span class="card-type">${plays.toLocaleString("ar-EG")} مرات لعب</span><a class="card-link" href="game.html?game=${key}">التفاصيل</a></div></div></article>`;
+}).join("");
+}
+function renderRooms(rooms){
+const grid=$("roomsGrid");
+if(!rooms.length){
+grid.innerHTML=`<div class="empty-state"><svg viewBox="0 0 24 24"><path d="M3 20V9l9-6 9 6v11h-6v-7H9v7H3Z"/></svg><h4>لا توجد غرف عامة متاحة الآن</h4><p>ستظهر الغرف هنا عند وجود غرف عامة مفتوحة.</p></div>`;
+return;
+}
+grid.innerHTML=rooms.map(room=>{
+const title=room.game?.title_ar||room.game?.title_en||"غرفة ألعاب";
+const cover=isURL(room.game?.cover_path)?room.game.cover_path:"";
+const host=room.host?.full_name||"عضو";
+const status=room.status==="playing"?"قيد اللعب":"بانتظار اللاعبين";
+return `<article class="room-card"><div class="room-cover">${cover?`<img src="${esc(cover)}" alt="${esc(title)}" loading="lazy">`:""}<span class="room-state">${status}</span></div><div class="room-info"><h4>${esc(title)}</h4><div class="room-details"><span>المضيف: ${esc(host)}</span><span class="room-code">${esc(room.room_code||"")}</span></div><div class="card-footer"><span class="card-type">الحد الأقصى: ${Number(room.max_players)||"—"}</span><a class="card-link" href="room.html?room=${encodeURIComponent(room.id)}">التفاصيل</a></div></div></article>`;
+}).join("");
+}
+function renderSearch(query){
+const box=$("searchResults");
+const term=query.trim().toLowerCase();
+if(!term){box.classList.remove("show");box.innerHTML="";return}
+const foundGames=state.games.filter(g=>`${g.title_ar||""} ${g.title_en||""}`.toLowerCase().includes(term));
+const foundRooms=state.rooms.filter(r=>`${r.game?.title_ar||""} ${r.room_code||""} ${r.host?.full_name||""}`.toLowerCase().includes(term));
+const foundMembers=state.members.filter(m=>`${m.full_name||""} ${m.username||""} ${m.member_code||""}`.toLowerCase().includes(term));
+const foundPages=sitePages.filter(p=>`${p.name} ${p.keywords}`.toLowerCase().includes(term));
+const items=[
+...foundPages.map(p=>({name:p.name,type:p.type,href:p.href})),
+...foundGames.map(g=>({name:g.title_ar||g.title_en,type:"لعبة",href:`game.html?game=${encodeURIComponent(g.slug||g.game_id)}`})),
+...foundRooms.map(r=>({name:r.game?.title_ar||"غرفة",type:"غرفة",href:`room.html?room=${encodeURIComponent(r.id)}`})),
+...foundMembers.map(m=>({name:m.full_name||m.username||m.member_code,type:"عضو",href:`member.html?id=${encodeURIComponent(m.id)}`})),
+];
+box.classList.add("show");
+box.innerHTML=items.length?items.map(item=>`<div class="search-result"><div><strong>${esc(item.name)}</strong><small> · ${item.type}</small></div><a href="${esc(item.href)}">فتح</a></div>`).join(""):`<div class="search-result"><span>لا توجد نتائج مطابقة في البيانات المحمّلة</span></div>`;
+}
 
-    <div class="loader-area">
-      <div class="loader"></div>
-      <p class="loading-text">جاري تجهيز عالمك...</p>
-    </div>
+async function safeTask(task,label){
+try{await task()}catch(error){console.error(`HANOON ${label}:`,error)}
+}
+async function loadAll(){
+const valid=await loadSession();
+if(!valid)return;
+await Promise.allSettled([
+safeTask(loadProfile,"profile"),
+safeTask(loadWallet,"wallet"),
+safeTask(loadGames,"games"),
+safeTask(loadRooms,"rooms"),
+safeTask(loadMembersForSearch,"member search")
+]);
+}
+$("globalSearch").addEventListener("input",event=>renderSearch(event.target.value));
+$("settingsToggle").addEventListener("click",()=>{
+const menu=$("settingsMenu");
+const open=menu.classList.toggle("show");
+$("settingsToggle").setAttribute("aria-expanded",String(open));
+});
+document.addEventListener("click",event=>{
+if(!event.target.closest(".search-area"))$("searchResults").classList.remove("show");
+if(!event.target.closest(".search-area")){
+$("settingsMenu").classList.remove("show");
+$("settingsToggle").setAttribute("aria-expanded","false");
+}
+});
+db.auth.onAuthStateChange((event,session)=>{
+if(event==="SIGNED_OUT"||!session)location.href="index.html";
+});
+document.addEventListener("visibilitychange",()=>{
+if(!document.hidden&&state.user)loadAll();
+});
+loadAll();
+</script>
 
-    <div class="version">
-      HANOON WORLD
-    </div>
+<!-- ربط الصفحة بنظام الإشعارات المركزي -->
+<script type="module">
+import {
+initializeNotificationCore,
+updateNotificationBadge
+} from "./notification-core.js";
 
-  </main>
+const badge = document.querySelector("[data-notification-count]");
 
-  <script>
-    (() => {
-      let moved = false;
+async function refreshNotificationBadge(){
+const count = await updateNotificationBadge();
+if(badge){
+badge.textContent = count > 99 ? "99+" : String(count);
+badge.hidden = count === 0;
+}
+}
 
-      // تثبيت الشاشة ومنع التكبير بالإيماءات
-      document.addEventListener("gesturestart", event => {
-        event.preventDefault();
-      }, { passive: false });
-
-      document.addEventListener("gesturechange", event => {
-        event.preventDefault();
-      }, { passive: false });
-
-      document.addEventListener("gestureend", event => {
-        event.preventDefault();
-      }, { passive: false });
-
-      document.addEventListener("touchmove", event => {
-        event.preventDefault();
-      }, { passive: false });
-
-      // الانتقال بعد خمس ثوانٍ من بدء الشاشة
-      const startTime = Date.now();
-
-      function enterWorld() {
-        if (moved) return;
-
-        const elapsed = Date.now() - startTime;
-        const remaining = Math.max(0, 5000 - elapsed);
-
-        if (remaining > 0) {
-          setTimeout(enterWorld, remaining);
-          return;
-        }
-
-        moved = true;
-        window.location.replace("./login.html");
-      }
-
-      setTimeout(enterWorld, 5000);
-    })();
-  </script>
+if(badge){
+try{
+await initializeNotificationCore(refreshNotificationBadge);
+await refreshNotificationBadge();
+}catch(error){
+console.error("HANOON notification initialization:",error);
+}
+}
+</script>
 
 </body>
 </html>
