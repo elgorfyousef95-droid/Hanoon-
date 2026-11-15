@@ -8,347 +8,224 @@
 <title>HANOON WORLD — LIVE</title>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
-:root{
-  --purple:#a58aff;--gold:#f2cf91;--red:#ff5574;
-  --green:#52dfb1;--panel:#171624;--line:#ffffff20;
-}
+:root{--purple:#a58aff;--gold:#f2cf91;--red:#ff5574;--green:#52dfb1;--line:#ffffff20}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{
-  width:100%;height:100%;margin:0;overflow:hidden;
-  background:#080810;color:#fff;font-family:Cairo,sans-serif;
-  overscroll-behavior:none;touch-action:pan-x pan-y;
-}
+html,body{width:100%;height:100%;margin:0;overflow:hidden;background:#080810;color:#fff;font-family:Cairo,sans-serif;overscroll-behavior:none}
 body{position:fixed;inset:0}
 button,input,select{font:inherit}
 button{cursor:pointer;color:inherit}
 button:disabled{opacity:.45;cursor:not-allowed}
 .app{position:fixed;inset:0;height:100dvh;overflow:hidden;background:#080810}
-.stage{position:absolute;inset:0;overflow:hidden;background:radial-gradient(circle at 50% 35%,#4a3a70,#161527 48%,#080810 100%)}
-.stage-shade{position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(#000a,transparent 24%,transparent 55%,#000b)}
-.topbar{
- position:absolute;z-index:8;top:0;left:0;right:0;
- padding:calc(env(safe-area-inset-top) + 9px) 12px 8px;
- display:flex;align-items:center;justify-content:space-between;gap:8px;
-}
-.identity{
- display:flex;align-items:center;gap:8px;min-width:0;
- padding:6px 11px 6px 13px;border-radius:30px;
- background:#090912bb;border:1px solid var(--line);
- backdrop-filter:blur(15px);cursor:pointer;
-}
-.avatar{
- width:37px;height:37px;border-radius:50%;flex-shrink:0;
- object-fit:cover;background:linear-gradient(140deg,#b99aff,#634b9f);
- border:1.5px solid #ffffff65;
-}
+.stage{position:absolute;inset:0;overflow:hidden;background:radial-gradient(circle at 50% 35%,#4a3a70,#161527 48%,#080810)}
+.stage-shade{position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(#0009,transparent 24%,transparent 58%,#000c)}
+.topbar{position:absolute;z-index:8;top:0;left:0;right:0;padding:calc(env(safe-area-inset-top) + 9px) 10px 8px;display:flex;align-items:center;justify-content:space-between;gap:7px}
+.identity{display:flex;align-items:center;gap:8px;min-width:0;padding:6px 10px;border-radius:30px;background:#090912d9;border:1px solid var(--line);backdrop-filter:blur(15px);cursor:pointer}
+.avatar{width:38px;height:38px;border-radius:50%;flex-shrink:0;object-fit:cover;background:linear-gradient(140deg,#b99aff,#634b9f);border:1.5px solid #ffffff65}
 .identity-text{min-width:0}
-.identity-name{font-size:10px;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:145px}
+.identity-name{font-size:10px;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:130px}
 .identity-user{font-size:8px;color:#d0c9e2}
-.verified{
- display:inline-flex;vertical-align:middle;margin-right:3px;
- width:13px;height:13px;border-radius:50%;background:#2999ff;
- align-items:center;justify-content:center;
-}
+.verified{display:inline-flex;vertical-align:middle;margin-right:3px;width:14px;height:14px;border-radius:50%;background:#2999ff;align-items:center;justify-content:center}
 .verified svg{width:9px;height:9px;stroke:white;fill:none;stroke-width:2.7}
-.top-actions{display:flex;align-items:center;gap:6px}
-.pill{
- display:flex;align-items:center;gap:5px;padding:7px 10px;
- border:1px solid var(--line);border-radius:25px;
- background:#090912bd;backdrop-filter:blur(12px);
- font-size:9px;font-weight:900;
-}
+.top-actions{display:flex;align-items:center;gap:5px}
+.pill{display:flex;align-items:center;gap:5px;padding:7px 8px;border:1px solid var(--line);border-radius:25px;background:#090912d9;font-size:9px;font-weight:900;white-space:nowrap}
 .live-pill{background:#e83c5c;border-color:#ff7890}
 .live-dot{width:7px;height:7px;border-radius:50%;background:white;animation:pulse 1s infinite}
-.close{
- width:35px;height:35px;border-radius:50%;border:1px solid var(--line);
- background:#090912bb;display:grid;place-items:center;font-size:20px;
-}
-.close svg,.action svg{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-.caption{position:absolute;z-index:5;top:85px;right:15px;left:15px;pointer-events:none;text-shadow:0 2px 9px #000}
+.close{width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:#090912d9;display:grid;place-items:center;font-size:20px}
+.caption{position:absolute;z-index:5;top:83px;right:14px;left:14px;pointer-events:none;text-shadow:0 2px 9px #000}
 .caption strong{font-size:13px;font-weight:900}
 .caption p{font-size:9px;color:#eee;margin:2px 0}
-.video-grid{
- position:absolute;z-index:1;inset:0;padding:125px 9px 160px;
- display:grid;grid-template-columns:1fr;grid-template-rows:1fr;
- gap:5px;transition:.2s;
-}
-.video-grid.grid{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr));padding-top:125px}
-.video-grid.fixed{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr));padding-top:125px}
+.video-grid{position:absolute;z-index:1;inset:0;padding:125px 9px 160px;display:grid;grid-template-columns:1fr;grid-template-rows:1fr;gap:6px}
+.video-grid.grid,.video-grid.fixed{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr));padding-top:125px}
 .video-grid.panel{grid-template-columns:minmax(0,1fr) 100px;grid-template-rows:1fr;padding-top:125px}
-.video-tile{
- min-width:0;min-height:0;position:relative;overflow:hidden;
- border:1px solid #ffffff32;border-radius:17px;
- background:linear-gradient(145deg,#3c3159,#12121d);
- box-shadow:0 5px 20px #0005;
-}
+.video-tile{min-width:0;min-height:0;position:relative;overflow:hidden;border:1px solid #ffffff32;border-radius:17px;background:linear-gradient(145deg,#3c3159,#12121d);box-shadow:0 5px 20px #0005}
 .video-tile video{width:100%;height:100%;object-fit:cover;background:#171323}
 .video-tile.self video{transform:scaleX(-1)}
-.video-tile .tile-name{
- position:absolute;bottom:7px;right:8px;left:8px;
- padding:4px 7px;border-radius:10px;background:#05050bbd;
- font-size:9px;font-weight:900;display:flex;align-items:center;gap:5px;
-}
-.video-tile .tile-avatar{
- position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
-}
+.video-tile .tile-name{position:absolute;bottom:7px;right:8px;left:8px;padding:4px 7px;border-radius:10px;background:#05050bdc;font-size:9px;font-weight:900;display:flex;align-items:center;gap:4px}
+.video-tile .tile-avatar{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none}
 .video-tile .tile-avatar img{width:65px;height:65px;border-radius:50%;object-fit:cover;border:2px solid #ffffff60}
-.video-tile .tile-avatar span{
- width:65px;height:65px;border-radius:50%;display:grid;place-items:center;
- background:linear-gradient(140deg,#b99aff,#634b9f);font-size:25px;font-weight:900;
-}
-.video-grid.panel .video-tile:not(:first-child){min-height:90px}
+.video-tile .tile-avatar span{width:65px;height:65px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(140deg,#b99aff,#634b9f);font-size:25px;font-weight:900}
+.video-grid.panel .video-tile:not(:first-child){min-height:90px;grid-column:2}
 .video-grid.panel .video-tile:first-child{grid-row:1;grid-column:1}
-.video-grid.panel .video-tile:not(:first-child){grid-column:2}
-.comments{
- position:absolute;z-index:6;right:12px;bottom:145px;
- width:min(78%,350px);max-height:28%;
- overflow:auto;display:flex;flex-direction:column;gap:6px;
- scrollbar-width:none;mask-image:linear-gradient(transparent,black 12%);
- padding-top:12px;
-}
+.comments{position:absolute;z-index:6;right:11px;bottom:145px;width:min(83%,360px);max-height:30%;overflow:auto;display:flex;flex-direction:column;gap:6px;scrollbar-width:none;padding-top:10px}
 .comments::-webkit-scrollbar{display:none}
-.comment{
- width:fit-content;max-width:100%;padding:6px 10px;border-radius:14px;
- background:#090912a8;border:1px solid #ffffff13;backdrop-filter:blur(9px);
- font-size:9px;line-height:1.8;overflow-wrap:anywhere;
- animation:commentIn .2s ease;
-}
-.comment b{color:#d7c2ff;margin-left:4px}
+.comment{width:fit-content;max-width:100%;padding:6px 9px;border-radius:14px;background:#090912bd;border:1px solid #ffffff13;backdrop-filter:blur(9px);font-size:9px;line-height:1.8;overflow-wrap:anywhere;animation:commentIn .2s ease}
+.comment b{color:#d7c2ff;margin-left:4px;cursor:pointer}
 .comment.system{color:#f4d49e;background:#382b1dbb}
 .comment.gift{color:#ffe0a6;background:#4b2b39dc}
-.bottom{
- position:absolute;z-index:10;bottom:0;left:0;right:0;
- padding:9px 11px calc(env(safe-area-inset-bottom) + 10px);
- background:linear-gradient(transparent,#080810e8 28%,#080810);
-}
-.actions{display:flex;align-items:center;gap:7px}
-.chat-wrap{
- flex:1;min-width:0;height:42px;border-radius:24px;
- border:1px solid #ffffff35;background:#ffffff18;
- display:flex;align-items:center;padding:0 13px;
-}
+.comment-tools{display:inline-flex;gap:5px;margin-right:6px}
+.comment-tools button{border:0;border-radius:7px;padding:2px 5px;background:#ffffff20;font-size:8px}
+.pinned{position:absolute;z-index:7;top:125px;right:12px;left:12px;padding:7px 10px;border-radius:12px;background:#6e5129e8;border:1px solid #f2cf91;font-size:9px;display:none}
+.pinned.show{display:block}
+.bottom{position:absolute;z-index:10;bottom:0;left:0;right:0;padding:9px 10px calc(env(safe-area-inset-bottom) + 10px);background:linear-gradient(transparent,#080810e8 28%,#080810)}
+.actions{display:flex;align-items:center;gap:6px}
+.chat-wrap{flex:1;min-width:0;height:42px;border-radius:24px;border:1px solid #ffffff35;background:#ffffff18;display:flex;align-items:center;padding:0 12px}
 .chat-input{width:100%;border:0;outline:0;background:transparent;color:white;font-size:10px}
 .chat-input::placeholder{color:#d2cddd}
-.action{
- width:42px;height:42px;flex-shrink:0;border-radius:50%;
- border:1px solid #ffffff35;background:#ffffff18;
- display:grid;place-items:center;backdrop-filter:blur(10px);
-}
+.action{width:40px;height:40px;flex-shrink:0;border-radius:50%;border:1px solid #ffffff35;background:#ffffff18;display:grid;place-items:center;backdrop-filter:blur(10px)}
+.action svg{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .action.gift{background:linear-gradient(145deg,#e7c17e,#94633b);color:#24180b;border-color:#f3d69d}
 .action.heart{color:#ff91a6}
 .action.guest{color:#c8b4ff}
-.host-controls{display:none;gap:7px;justify-content:center;margin-top:9px;flex-wrap:wrap}
+.host-controls{display:none;gap:6px;justify-content:center;margin-top:9px;flex-wrap:wrap}
 .host-controls.show{display:flex}
-.control{
- border:1px solid #ffffff2b;background:#ffffff18;
- border-radius:12px;padding:7px 11px;font-size:9px;font-weight:800;
-}
+.control{border:1px solid #ffffff2b;background:#ffffff18;border-radius:12px;padding:7px 10px;font-size:9px;font-weight:800}
 .control.danger{background:#a52d49;border-color:#ff718b}
 .control.active{background:#7258b5;border-color:#c4afff}
-.panel{
- position:absolute;z-index:20;left:9px;right:9px;bottom:calc(env(safe-area-inset-bottom) + 72px);
- max-height:65%;display:none;flex-direction:column;overflow:hidden;
- background:linear-gradient(145deg,#252238f7,#10111cf7);
- border:1px solid #ffffff28;border-radius:21px;
- box-shadow:0 15px 50px #000b;backdrop-filter:blur(18px);
-}
+.panel{position:absolute;z-index:20;left:8px;right:8px;bottom:calc(env(safe-area-inset-bottom) + 70px);max-height:70%;display:none;flex-direction:column;overflow:hidden;background:linear-gradient(145deg,#252238f7,#10111cf7);border:1px solid #ffffff28;border-radius:21px;box-shadow:0 15px 50px #000b;backdrop-filter:blur(18px)}
 .panel.show{display:flex}
 .panel-head{padding:11px 14px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #ffffff18}
 .panel-head strong{font-size:12px}
 .panel-close{border:0;background:transparent;font-size:22px}
 .panel-body{padding:12px;overflow:auto}
 .gift-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
-.gift-item{
- min-width:0;min-height:94px;border:1px solid #ffffff20;
- border-radius:14px;background:#ffffff0c;color:white;
- display:flex;align-items:center;justify-content:center;flex-direction:column;gap:5px;
-}
-.gift-item:active{border-color:var(--gold);background:#eac88b22}
-.gift-art{width:40px;height:40px;display:grid;place-items:center}
+.gift-item{min-width:0;min-height:94px;border:1px solid #ffffff20;border-radius:14px;background:#ffffff0c;color:white;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:5px}
+.gift-art{width:42px;height:42px;display:grid;place-items:center}
+.gift-art img{width:40px;height:40px;object-fit:contain}
 .gift-art svg{width:37px;height:37px;stroke:#f4d49a;fill:#f4d49a22;stroke-width:1.5}
 .gift-name{font-size:9px;font-weight:900}
 .gift-price{font-size:8px;color:var(--gold)}
 .field{width:100%;height:39px;border:1px solid #ffffff25;background:#ffffff10;color:white;border-radius:11px;padding:0 10px;font-size:10px;margin:4px 0}
 .field option{background:#171624;color:white}
-.panel-note{font-size:8px;color:#c7bfd7;padding:9px 2px}
+.panel-note{font-size:8px;color:#c7bfd7;padding:9px 2px;line-height:1.9}
 .row{display:flex;align-items:center;gap:7px}
 .row>*{flex:1;min-width:0}
-.primary{
- border:0;border-radius:11px;padding:9px 12px;
- background:linear-gradient(120deg,#a58aff,#7658c8);
- color:white;font-size:10px;font-weight:900;
-}
+.primary{border:0;border-radius:11px;padding:9px 12px;background:linear-gradient(120deg,#a58aff,#7658c8);color:white;font-size:10px;font-weight:900}
 .secondary{border:1px solid #ffffff2c;border-radius:11px;padding:8px 10px;background:#ffffff12;font-size:9px}
-.danger-btn{background:#a42d4b;border-color:#ff708c}
-.guest-entry{
- display:flex;align-items:center;gap:8px;padding:9px 4px;
- border-bottom:1px solid #ffffff13;font-size:9px;
-}
+.danger-btn{background:#a42d4b!important;border-color:#ff708c!important}
+.guest-entry{display:flex;align-items:center;gap:8px;padding:9px 4px;border-bottom:1px solid #ffffff13;font-size:9px}
 .guest-entry img{width:34px;height:34px;border-radius:50%;object-fit:cover}
 .guest-entry .guest-meta{flex:1;min-width:0}
 .guest-entry b{display:block;font-size:10px}
 .guest-entry small{color:#c9bfd8}
 .guest-entry button{border:0;border-radius:9px;padding:6px 8px;font-size:8px;background:#7658c8}
-.gift-effect{
- position:absolute;z-index:18;inset:0;display:none;
- align-items:center;justify-content:center;flex-direction:column;
- pointer-events:none;text-align:center;
- background:radial-gradient(circle,#eacb8b22,transparent 55%);
-}
+.gift-effect{position:absolute;z-index:18;inset:0;display:none;align-items:center;justify-content:center;flex-direction:column;pointer-events:none;text-align:center;background:radial-gradient(circle,#eacb8b22,transparent 55%)}
 .gift-effect.show{display:flex;animation:effectFade 3.2s ease forwards}
 .gift-effect .effect-art{width:min(45vw,190px);height:min(45vw,190px);display:grid;place-items:center;filter:drop-shadow(0 0 28px #f6cb7d)}
 .gift-effect img{max-width:100%;max-height:100%;object-fit:contain}
-.gift-effect svg{width:100%;height:100%;stroke:#ffe4a9;fill:#f4ce8b30;stroke-width:1.5}
 .gift-effect strong{font-size:16px;text-shadow:0 3px 14px #000}
 .gift-effect small{font-size:10px;color:#ffe2ae}
-.toast{
- position:absolute;z-index:50;top:90px;left:12px;right:12px;
- margin:auto;max-width:400px;padding:10px 13px;
- border:1px solid #ffffff30;border-radius:13px;
- background:#242237ed;text-align:center;font-size:10px;display:none;
-}
+.toast{position:absolute;z-index:50;top:90px;left:12px;right:12px;margin:auto;max-width:400px;padding:10px 13px;border:1px solid #ffffff30;border-radius:13px;background:#242237ed;text-align:center;font-size:10px;display:none}
 .toast.show{display:block}
-.loading{
- position:absolute;z-index:40;inset:0;display:flex;align-items:center;
- justify-content:center;flex-direction:column;gap:10px;
- background:#090912ed;text-align:center;padding:25px;
-}
+.loading{position:absolute;z-index:40;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px;background:#090912ed;text-align:center;padding:25px}
 .loading.hide{display:none}
 .spinner{width:35px;height:35px;border:3px solid #ffffff25;border-top-color:#b79aff;border-radius:50%;animation:spin .8s linear infinite}
 .loading strong{font-size:13px}.loading small{font-size:9px;color:#aaa}
+.heart-float{position:absolute;z-index:12;bottom:170px;font-size:28px;color:#ff7191;animation:heartRise 1.8s forwards;pointer-events:none}
 @keyframes pulse{50%{opacity:.3}}
 @keyframes spin{to{transform:rotate(360deg)}}
 @keyframes commentIn{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}
 @keyframes effectFade{0%{opacity:0;transform:scale(.6)}12%{opacity:1;transform:scale(1.04)}75%{opacity:1}100%{opacity:0;transform:scale(1.1)}}
 @keyframes heartRise{0%{opacity:0;transform:translateY(0) scale(.6)}20%{opacity:1}100%{opacity:0;transform:translateY(-190px) scale(1.8)}}
-.heart-float{position:absolute;z-index:12;bottom:170px;font-size:28px;color:#ff7191;animation:heartRise 1.8s forwards;pointer-events:none}
-@media(min-width:650px){
- .app{max-width:500px;margin:auto;left:0;right:0;border-left:1px solid #ffffff16;border-right:1px solid #ffffff16}
- body{background:#030309}
-}
+@media(min-width:650px){.app{max-width:500px;margin:auto;left:0;right:0;border-left:1px solid #ffffff16;border-right:1px solid #ffffff16}body{background:#030309}}
 </style>
 </head>
 <body>
 <div class="app">
- <section class="stage">
-  <div class="video-grid" id="videoGrid"></div>
-  <div class="stage-shade"></div>
-
-  <header class="topbar">
-   <div class="identity" id="hostIdentity">
-    <img class="avatar" id="hostAvatar" alt="">
-    <div class="identity-text">
-     <div class="identity-name" id="hostName">HANOON WORLD</div>
-     <div class="identity-user" id="hostUsername">بث مباشر</div>
-    </div>
+<section class="stage">
+ <div class="video-grid" id="videoGrid"></div>
+ <div class="stage-shade"></div>
+ <header class="topbar">
+  <div class="identity" id="hostIdentity">
+   <img class="avatar" id="hostAvatar" alt="">
+   <div class="identity-text">
+    <div class="identity-name" id="hostName">HANOON WORLD</div>
+    <div class="identity-user" id="hostUsername">بث مباشر</div>
    </div>
-   <div class="top-actions">
-    <div class="pill live-pill"><span class="live-dot"></span> LIVE</div>
-    <div class="pill">
-     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm13 10v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-     <span id="viewerCount">1</span>
-    </div>
-    <button class="close" id="closeButton" aria-label="إغلاق">×</button>
-   </div>
-  </header>
-
-  <div class="caption"><strong id="streamTitle">بث مباشر</strong><p id="streamDescription"></p></div>
-  <div class="comments" id="comments"></div>
-  <div class="gift-effect" id="giftEffect"><div class="effect-art" id="effectArt"></div><strong id="effectTitle"></strong><small id="effectSubtitle"></small></div>
- </section>
-
- <section class="bottom">
-  <div class="actions">
-   <label class="chat-wrap"><input class="chat-input" id="chatInput" maxlength="500" placeholder="اكتب تعليقًا..." autocomplete="off"></label>
-   <button class="action" id="sendChat" title="إرسال">
-    <svg viewBox="0 0 24 24"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
-   </button>
-   <button class="action heart" id="heartButton" title="إعجاب">
-    <svg viewBox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z"/></svg>
-   </button>
-   <button class="action guest" id="guestButton" title="الضيوف">
-    <svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm12-5v6m-3-3h6"/></svg>
-   </button>
-   <button class="action gift" id="giftButton" title="الهدايا">
-    <svg viewBox="0 0 24 24"><path d="M20 12v10H4V12M2 7h20v5H2zM12 7v15M12 7H7.5a2.5 2.5 0 1 1 2.5-2.5V7Zm0 0h4.5A2.5 2.5 0 1 0 14 4.5V7Z"/></svg>
-   </button>
   </div>
-  <div class="host-controls" id="hostControls">
-   <button class="control" id="micButton">كتم الصوت</button>
-   <button class="control" id="cameraButton">إيقاف الكاميرا</button>
-   <button class="control" id="layoutButton">إعدادات العرض</button>
-   <button class="control danger" id="endLiveButton">إنهاء البث</button>
+  <div class="top-actions">
+   <div class="pill live-pill"><span class="live-dot"></span> LIVE</div>
+   <div class="pill" title="المشاهدون"><span>مشاهدون</span><span id="viewerCount">1</span></div>
+   <div class="pill" title="الإعجابات">♥ <span id="likeCount">0</span></div>
+   <button class="close" id="reportButton" title="إبلاغ">!</button>
+   <button class="close" id="closeButton" aria-label="إغلاق">×</button>
   </div>
-  <div class="host-controls" id="guestControls">
-   <button class="control" id="guestMicButton">كتم صوتي</button>
-   <button class="control" id="guestCameraButton">إيقاف كاميرتي</button>
-   <button class="control danger" id="leaveGuestButton">مغادرة مقعد الضيف</button>
-  </div>
- </section>
+ </header>
+ <div class="caption"><strong id="streamTitle">بث مباشر</strong><p id="streamDescription"></p></div>
+ <div class="pinned" id="pinnedComment"></div>
+ <div class="comments" id="comments"></div>
+ <div class="gift-effect" id="giftEffect"><div class="effect-art" id="effectArt"></div><strong id="effectTitle"></strong><small id="effectSubtitle"></small></div>
+</section>
 
- <section class="panel" id="giftPanel">
-  <div class="panel-head"><strong>هدايا HANOON</strong><button class="panel-close" data-close="giftPanel">×</button></div>
-  <div class="panel-body">
-   <label style="font-size:9px;color:#cfc5df">إرسال الهدية إلى</label>
-   <select class="field" id="giftRecipient"></select>
-   <div class="gift-grid" id="giftGrid"><div class="panel-note">جارٍ تحميل الهدايا...</div></div>
-   <div class="panel-note">تُخصم الجواهر من محفظتك وتُضاف قيمة الهدية إلى محفظة المستلم. تأكد من اختيار المستلم قبل الإرسال.</div>
-  </div>
- </section>
-
- <section class="panel" id="guestPanel">
-  <div class="panel-head"><strong id="guestPanelTitle">الضيوف والمقاعد</strong><button class="panel-close" data-close="guestPanel">×</button></div>
-  <div class="panel-body">
-   <div id="guestRequestArea"></div>
-   <div id="hostGuestSettings" style="display:none">
-    <label style="font-size:9px">عدد مقاعد الضيوف (غير صاحب البث)</label>
-    <select class="field" id="guestLimit">
-     <option value="0">إغلاق مقاعد الضيوف</option>
-     <option value="1">ضيف واحد — بث ثنائي</option>
-     <option value="2">ضيفان — بث ثلاثي</option>
-     <option value="3">ثلاثة ضيوف — بث رباعي</option>
-    </select>
-    <label style="font-size:9px">طريقة ترتيب الشاشة</label>
-    <select class="field" id="guestLayout">
-     <option value="grid">Grid — شبكة</option>
-     <option value="panel">Panel — صاحب البث أساسي</option>
-     <option value="fixed">Fixed — تقسيم ثابت</option>
-    </select>
-    <label style="font-size:9px">من يستطيع طلب الانضمام؟</label>
-    <select class="field" id="guestAccess">
-     <option value="everyone">كل المشاهدين</option>
-     <option value="invite_only">بالدعوة فقط</option>
-    </select>
-    <button class="primary" id="saveGuestSettings" style="width:100%">حفظ إعدادات الضيوف</button>
-    <div class="panel-note">يمكنك قبول الطلبات أو رفضها أو إخراج الضيف أثناء البث.</div>
-    <div style="margin-top:12px;font-size:10px;font-weight:900">دعوة عضو بالاسم</div>
-    <div class="row"><input class="field" id="inviteUsername" placeholder="اسم المستخدم"><button class="secondary" id="inviteButton">إرسال دعوة</button></div>
-   </div>
-   <div id="guestRoster"></div>
-  </div>
- </section>
-
- <section class="panel" id="layoutPanel">
-  <div class="panel-head"><strong>إعدادات البث</strong><button class="panel-close" data-close="layoutPanel">×</button></div>
-  <div class="panel-body">
-   <label style="font-size:9px">عدد الضيوف</label>
-   <select class="field" id="guestLimit2">
-    <option value="0">بدون ضيوف</option><option value="1">ثنائي</option><option value="2">ثلاثي</option><option value="3">رباعي</option>
-   </select>
-   <label style="font-size:9px">الشكل</label>
-   <select class="field" id="guestLayout2">
-    <option value="grid">Grid</option><option value="panel">Panel</option><option value="fixed">Fixed</option>
-   </select>
-   <label style="font-size:9px">السماح بطلبات الضيوف</label>
-   <select class="field" id="guestAccess2"><option value="everyone">مفتوح</option><option value="invite_only">دعوات فقط</option></select>
-   <button class="primary" id="saveGuestSettings2" style="width:100%">حفظ</button>
-  </div>
- </section>
-
- <div class="toast" id="toast"></div>
- <div class="loading" id="loading">
-  <div class="spinner"></div><strong id="loadingTitle">جارٍ فتح البث المباشر...</strong><small id="loadingText">نجهز اتصال الفيديو</small>
+<section class="bottom">
+ <div class="actions">
+  <label class="chat-wrap"><input class="chat-input" id="chatInput" maxlength="500" placeholder="اكتب تعليقًا..." autocomplete="off"></label>
+  <button class="action" id="sendChat" title="إرسال"><svg viewBox="0 0 24 24"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg></button>
+  <button class="action heart" id="heartButton" title="إعجاب"><svg viewBox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.9-8.6a5.5 5.5 0 0 0-.1-7.8Z"/></svg></button>
+  <button class="action guest" id="guestButton" title="الضيوف"><svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm12-5v6m-3-3h6"/></svg></button>
+  <button class="action gift" id="giftButton" title="الهدايا"><svg viewBox="0 0 24 24"><path d="M20 12v10H4V12M2 7h20v5H2zM12 7v15M12 7H7.5a2.5 2.5 0 1 1 2.5-2.5V7Zm0 0h4.5A2.5 2.5 0 1 0 14 4.5V7Z"/></svg></button>
  </div>
+ <div class="host-controls" id="hostControls">
+  <button class="control" id="micButton">كتم الصوت</button>
+  <button class="control" id="cameraButton">إيقاف الكاميرا</button>
+  <button class="control" id="layoutButton">إعدادات العرض</button>
+  <button class="control" id="moderationButton">إدارة البث</button>
+  <button class="control danger" id="endLiveButton">إنهاء البث</button>
+ </div>
+ <div class="host-controls" id="guestControls">
+  <button class="control" id="guestMicButton">كتم صوتي</button>
+  <button class="control" id="guestCameraButton">إيقاف كاميرتي</button>
+  <button class="control danger" id="leaveGuestButton">مغادرة مقعد الضيف</button>
+ </div>
+</section>
+
+<section class="panel" id="giftPanel">
+ <div class="panel-head"><strong>هدايا HANOON</strong><button class="panel-close" data-close="giftPanel">×</button></div>
+ <div class="panel-body">
+  <label style="font-size:9px;color:#cfc5df">إرسال الهدية إلى</label>
+  <select class="field" id="giftRecipient"></select>
+  <div class="gift-grid" id="giftGrid"><div class="panel-note">جارٍ تحميل الهدايا...</div></div>
+  <div class="panel-note">تُخصم الجواهر من محفظتك وتُضاف قيمة الهدية إلى محفظة المستلم.</div>
+ </div>
+</section>
+
+<section class="panel" id="guestPanel">
+ <div class="panel-head"><strong>الضيوف والمقاعد</strong><button class="panel-close" data-close="guestPanel">×</button></div>
+ <div class="panel-body">
+  <div id="guestRequestArea"></div>
+  <div id="hostGuestSettings" style="display:none">
+   <label style="font-size:9px">عدد مقاعد الضيوف</label>
+   <select class="field" id="guestLimit">
+    <option value="0">إغلاق المقاعد</option><option value="1">ضيف واحد</option><option value="2">ضيفان</option><option value="3">ثلاثة ضيوف</option>
+   </select>
+   <label style="font-size:9px">ترتيب الشاشة</label>
+   <select class="field" id="guestLayout"><option value="grid">شبكة</option><option value="panel">صاحب البث أساسي</option><option value="fixed">تقسيم ثابت</option></select>
+   <label style="font-size:9px">طلبات الانضمام</label>
+   <select class="field" id="guestAccess"><option value="everyone">مفتوحة للجميع</option><option value="invite_only">بالدعوة فقط</option></select>
+   <button class="primary" id="saveGuestSettings" style="width:100%">حفظ الإعدادات</button>
+   <div style="margin-top:12px;font-size:10px;font-weight:900">دعوة عضو</div>
+   <div class="row"><input class="field" id="inviteUsername" placeholder="اسم المستخدم"><button class="secondary" id="inviteButton">دعوة</button></div>
+  </div>
+  <div id="guestRoster"></div>
+ </div>
+</section>
+
+<section class="panel" id="layoutPanel">
+ <div class="panel-head"><strong>إعدادات العرض</strong><button class="panel-close" data-close="layoutPanel">×</button></div>
+ <div class="panel-body">
+  <label style="font-size:9px">عدد الضيوف</label>
+  <select class="field" id="guestLimit2"><option value="0">بدون ضيوف</option><option value="1">ثنائي</option><option value="2">ثلاثي</option><option value="3">رباعي</option></select>
+  <label style="font-size:9px">شكل الشاشة</label>
+  <select class="field" id="guestLayout2"><option value="grid">شبكة</option><option value="panel">صاحب البث أساسي</option><option value="fixed">ثابت</option></select>
+  <label style="font-size:9px">السماح بالطلبات</label>
+  <select class="field" id="guestAccess2"><option value="everyone">مفتوح</option><option value="invite_only">دعوات فقط</option></select>
+  <button class="primary" id="saveGuestSettings2" style="width:100%">حفظ</button>
+ </div>
+</section>
+
+<section class="panel" id="moderationPanel">
+ <div class="panel-head"><strong>إدارة البث والحماية</strong><button class="panel-close" data-close="moderationPanel">×</button></div>
+ <div class="panel-body">
+  <div style="font-size:10px;font-weight:900">الكلمات المحظورة</div>
+  <div class="row"><input class="field" id="blockedWord" maxlength="80" placeholder="اكتب كلمة أو عبارة"><button class="secondary" id="addBlockedWord">إضافة</button></div>
+  <div class="panel-note">التعليقات التي تحتوي على الكلمات المحظورة سيتم رفضها تلقائيًا.</div>
+  <div style="font-size:10px;font-weight:900;margin-top:10px">إدارة الأعضاء</div>
+  <div class="panel-note">اضغط على زر إدارة بجوار تعليق العضو لكتمه أو حظره أو تعيينه مشرفًا.</div>
+  <div id="moderatorList"></div>
+ </div>
+</section>
+
+<div class="toast" id="toast"></div>
+<div class="loading" id="loading"><div class="spinner"></div><strong id="loadingTitle">جارٍ فتح البث المباشر...</strong><small id="loadingText">نجهز اتصال الفيديو</small></div>
 </div>
 
 <script type="module">
@@ -361,23 +238,21 @@ const ICE={iceServers:[
  {urls:"stun:stun.l.google.com:19302"},
  {urls:"stun:stun1.l.google.com:19302"}
 ]};
+const MAX_DIRECT_VIEWERS=4;
 
 const state={
- user:null,stream:null,host:null,isHost:false,isGuest:false,
- myGuest:null,localStream:null,channel:null,chatChannel:null,
- hostPeers:new Map(),viewerPC:null,pendingIce:[],
- guests:[],guestStreams:new Map(),streamOwners:new Map(),
- remoteStreams:new Map(),profiles:{},gifts:[],
- viewerCount:1,sending:false,ending:false,
- micOn:true,cameraOn:true,seenSignals:new Set(),
- giftTimer:null,heartbeat:null,chatBusy:false
+ user:null,stream:null,host:null,isHost:false,isGuest:false,myGuest:null,
+ localStream:null,channel:null,chatChannel:null,hostPeers:new Map(),
+ viewerPC:null,pendingIce:[],guests:[],guestStreams:new Map(),
+ streamOwners:new Map(),remoteStreams:new Map(),profiles:{},gifts:[],
+ viewerCount:1,likeCount:0,sending:false,ending:false,
+ micOn:true,cameraOn:true,seenSignals:new Set(),giftTimer:null,
+ heartbeat:null,chatBusy:false,moderators:new Set()
 };
-
-const MAX_VIEWERS=4;
 
 function toast(message){
  const el=$("toast");el.textContent=message;el.classList.add("show");
- clearTimeout(toast.timer);toast.timer=setTimeout(()=>el.classList.remove("show"),3200);
+ clearTimeout(toast.timer);toast.timer=setTimeout(()=>el.classList.remove("show"),3500);
 }
 function escapeHTML(v){
  return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
@@ -386,9 +261,16 @@ function initials(v){return String(v||"H").trim().charAt(0).toUpperCase()||"H"}
 function avatarURL(path){
  if(!path)return "";
  if(/^https?:\/\//i.test(path))return path;
- return supabase.storage.from("avatars").getPublicUrl(path).data.publicUrl;
+ let clean=String(path).replace(/^\/+/,"");
+ if(clean.startsWith("avatars/"))clean=clean.slice(8);
+ return supabase.storage.from("avatars").getPublicUrl(clean).data.publicUrl;
 }
-function profileLink(id){location.href="member.html?id="+encodeURIComponent(id)}
+function giftURL(path){
+ if(!path)return "";
+ if(/^https?:\/\//i.test(path))return path;
+ return supabase.storage.from("world-store-assets").getPublicUrl(String(path).replace(/^\/+/,"")).data.publicUrl;
+}
+function profileLink(id){if(id)location.href="member.html?id="+encodeURIComponent(id)}
 function verifiedHTML(ok){
  return ok?'<span class="verified"><svg viewBox="0 0 12 12"><path d="m2 6 2.5 2.5L10 3"/></svg></span>':"";
 }
@@ -397,73 +279,103 @@ function showLoading(title,sub){
  $("loading").classList.remove("hide");
 }
 function hideLoading(){$("loading").classList.add("hide")}
-function addComment(name,message,type=""){
- const el=document.createElement("div");el.className="comment "+type;
- if(type==="system"||type==="gift")el.textContent=message;
+function addComment(row){
+ const el=document.createElement("div");
+ const type=row.type||"";
+ el.className="comment "+type;
+ if(type==="system"||type==="gift"){el.textContent=row.message;el.dataset.commentId=row.id||"";}
  else{
-  const b=document.createElement("b");b.textContent=name+":";
-  const span=document.createElement("span");span.textContent=message;
+  const b=document.createElement("b");
+  b.textContent=(row.full_name||row.username||"عضو")+":";
+  if(row.user_id)b.onclick=()=>profileLink(row.user_id);
+  const span=document.createElement("span");span.textContent=row.message||"";
   el.append(b,span);
+  if(state.isHost&&row.user_id&&row.user_id!==state.user.id){
+   const tools=document.createElement("span");tools.className="comment-tools";
+   const manage=document.createElement("button");manage.textContent="إدارة";
+   manage.onclick=()=>manageMember(row.user_id);
+   tools.append(manage);
+   const pin=document.createElement("button");pin.textContent="تثبيت";
+   pin.onclick=()=>pinComment(row.id);
+   tools.append(pin);el.append(tools);
+  }
+  el.dataset.commentId=row.id||"";
  }
  $("comments").appendChild(el);
- while($("comments").children.length>45)$("comments").firstElementChild.remove();
+ while($("comments").children.length>50)$("comments").firstElementChild.remove();
  $("comments").scrollTop=$("comments").scrollHeight;
+}
+async function loadProfiles(ids){
+ const missing=[...new Set(ids.filter(Boolean))].filter(id=>!state.profiles[id]);
+ if(!missing.length)return;
+ const {data,error}=await supabase.from("profiles")
+  .select("id,full_name,username,is_verified,avatar_path")
+  .in("id",missing);
+ if(error)throw error;
+ for(const p of data||[])state.profiles[p.id]=p;
 }
 async function loadProfile(id){
  if(!id)return {};
  if(state.profiles[id])return state.profiles[id];
- const {data,error}=await supabase.from("profiles")
-  .select("id,full_name,username,is_verified,avatar_path")
-  .eq("id",id).maybeSingle();
- if(error)throw error;
- state.profiles[id]=data||{};
- return state.profiles[id];
+ await loadProfiles([id]);return state.profiles[id]||{};
 }
 function identityMarkup(profile){
  const name=profile?.full_name||profile?.username||"عضو هنون";
- const url=avatarURL(profile?.avatar_path);
- return {name,url,initial:initials(name)};
+ return {name,url:avatarURL(profile?.avatar_path),initial:initials(name)};
+}
+function setAvatar(img,profile){
+ const p=identityMarkup(profile);
+ img.alt=p.name;
+ img.src=p.url||"";
+ img.onerror=()=>{img.onerror=null;img.style.visibility="hidden"};
 }
 function renderHost(){
  const p=identityMarkup(state.host);
  $("hostName").innerHTML=escapeHTML(p.name)+verifiedHTML(state.host?.is_verified);
  $("hostUsername").textContent=state.host?.username?"@"+state.host.username:"صاحب البث";
- $("hostAvatar").src=p.url;
- $("hostAvatar").alt=p.name;
+ setAvatar($("hostAvatar"),state.host);
  $("hostIdentity").onclick=()=>profileLink(state.host.id);
  $("streamTitle").textContent=state.stream.title||"بث مباشر";
  $("streamDescription").textContent=state.stream.description||"";
 }
+async function playVideo(video,stream){
+ if(video.srcObject!==stream)video.srcObject=stream;
+ video.autoplay=true;video.playsInline=true;
+ try{await video.play()}catch(e){console.warn("Autoplay blocked; tap video to start",e)}
+}
 function addVideoTile(userId,stream,profile,isSelf=false){
+ if(!stream)return;
  const id="tile-"+userId;
- let tile=document.getElementById(id);
+ let tile=$(id);
  if(!tile){
   tile=document.createElement("div");tile.className="video-tile"+(isSelf?" self":"");tile.id=id;
-  const video=document.createElement("video");video.autoplay=true;video.playsInline=true;video.muted=isSelf;
+  const video=document.createElement("video");
+  video.autoplay=true;video.playsInline=true;video.muted=true;
   const avatar=document.createElement("div");avatar.className="tile-avatar";
   const info=document.createElement("div");info.className="tile-name";
   tile.append(video,avatar,info);$("videoGrid").appendChild(tile);
-  tile.onclick=()=>profileLink(userId);
+  tile.onclick=async()=>{
+   const v=tile.querySelector("video");
+   v.muted=!v.muted;
+   try{await v.play()}catch(e){}
+   if(!v.muted)toast("تم تشغيل صوت هذا الفيديو.");
+  };
  }
  const video=tile.querySelector("video");
- if(video.srcObject!==stream)video.srcObject=stream;
+ if(video.srcObject!==stream)playVideo(video,stream);
  const p=identityMarkup(profile);
  tile.querySelector(".tile-avatar").innerHTML=p.url
-  ?`<img src="${escapeHTML(p.url)}" alt="">`
+  ?`<img src="${escapeHTML(p.url)}" alt="" onerror="this.style.display='none'">`
   :`<span>${escapeHTML(p.initial)}</span>`;
  tile.querySelector(".tile-name").innerHTML=escapeHTML(p.name)+verifiedHTML(profile?.is_verified);
 }
-function removeVideoTile(userId){
- const tile=$("tile-"+userId);if(tile)tile.remove();
-}
+function removeVideoTile(userId){const tile=$("tile-"+userId);if(tile)tile.remove()}
 function renderAllTiles(){
  $("videoGrid").innerHTML="";
- if(state.localStream&&state.isHost)addVideoTile(state.user.id,state.localStream,state.profiles[state.user.id]||state.host,true);
- if(state.localStream&&state.isGuest)addVideoTile(state.user.id,state.localStream,state.profiles[state.user.id]||{},true);
- for(const [uid,stream] of state.remoteStreams){
-  const profile=state.profiles[uid]||{};
-  addVideoTile(uid,stream,profile,false);
- }
+ if(state.localStream&&(state.isHost||state.isGuest))
+  addVideoTile(state.user.id,state.localStream,state.profiles[state.user.id]||state.host,true);
+ for(const [uid,stream] of state.remoteStreams)
+  addVideoTile(uid,stream,state.profiles[uid]||{},false);
  applyLayout();
 }
 function applyLayout(){
@@ -474,6 +386,9 @@ function applyLayout(){
 function updateCount(){
  $("viewerCount").textContent=Math.max(1,Number(state.viewerCount)||1).toLocaleString("en-US");
 }
+function updateLikes(){
+ $("likeCount").textContent=Math.max(0,Number(state.likeCount)||0).toLocaleString("en-US");
+}
 async function loadStream(){
  const {data,error}=await supabase.from("world_live_streams")
   .select("id,host_id,title,description,status,started_at,guest_layout,guest_limit,guest_access")
@@ -483,12 +398,9 @@ async function loadStream(){
  state.stream=data;state.isHost=data.host_id===state.user.id;
  state.host=await loadProfile(data.host_id);
  renderHost();
- $("guestLimit").value=String(data.guest_limit??3);
- $("guestLayout").value=data.guest_layout||"grid";
- $("guestAccess").value=data.guest_access||"everyone";
- $("guestLimit2").value=String(data.guest_limit??3);
- $("guestLayout2").value=data.guest_layout||"grid";
- $("guestAccess2").value=data.guest_access||"everyone";
+ for(const id of ["guestLimit","guestLimit2"])$(id).value=String(data.guest_limit??3);
+ for(const id of ["guestLayout","guestLayout2"])$(id).value=data.guest_layout||"grid";
+ for(const id of ["guestAccess","guestAccess2"])$(id).value=data.guest_access||"everyone";
  applyLayout();
  if(state.isHost)$("hostControls").classList.add("show");
 }
@@ -510,11 +422,10 @@ async function startCamera(){
   video:{facingMode:"user",width:{ideal:1280},height:{ideal:720},frameRate:{ideal:24,max:30}},
   audio:{echoCancellation:true,noiseSuppression:true,autoGainControl:true}
  });
- state.streamOwners.set(state.localStream.id,state.user.id);
+ renderAllTiles();
  if(state.channel){
   await state.channel.send({type:"broadcast",event:"stream-map",payload:{stream_id:state.localStream.id,user_id:state.user.id}});
  }
- renderAllTiles();
 }
 async function sendSignal(to,type,payload={}){
  const {error}=await supabase.from("world_live_signals").insert({
@@ -536,10 +447,10 @@ async function hostMakeOffer(peer){
   const offer=await peer.pc.createOffer();
   await peer.pc.setLocalDescription(offer);
   await sendSignal(peer.userId,"offer",peer.pc.localDescription.toJSON());
- }catch(e){console.error("offer",e)}
+ }catch(e){console.error("LIVE offer",e)}
  finally{peer.makingOffer=false}
 }
-function addTracksToPeer(peer,stream,ownerId){
+function addTracksToPeer(peer,stream){
  if(!stream||peer.forwarded.has(stream.id))return;
  peer.forwarded.add(stream.id);
  stream.getTracks().forEach(track=>{
@@ -551,34 +462,23 @@ async function hostCreatePeer(userId,role="viewer"){
  const guest=state.guests.find(g=>g.user_id===userId&&g.status==="accepted");
  if(role==="guest"&&!guest)return;
  const viewers=[...state.hostPeers.values()].filter(p=>p.role==="viewer").length;
- if(role==="viewer"&&viewers>=MAX_VIEWERS)return;
-
+ if(role==="viewer"&&viewers>=MAX_DIRECT_VIEWERS)return;
  const pc=new RTCPeerConnection(ICE);
  const peer={userId,role,pc,pendingIce:[],forwarded:new Set(),makingOffer:false};
  state.hostPeers.set(userId,peer);
-
- addTracksToPeer(peer,state.localStream,state.user.id);
- for(const [guestId,stream] of state.guestStreams){
-  if(guestId!==userId)addTracksToPeer(peer,stream,guestId);
- }
- pc.onicecandidate=e=>{
-  if(e.candidate)sendSignal(userId,"ice",e.candidate.toJSON()).catch(console.error);
- };
+ addTracksToPeer(peer,state.localStream);
+ for(const stream of state.guestStreams.values())addTracksToPeer(peer,stream);
+ pc.onicecandidate=e=>{if(e.candidate)sendSignal(userId,"ice",e.candidate.toJSON()).catch(console.error)};
  pc.onnegotiationneeded=()=>hostMakeOffer(peer);
  pc.ontrack=async event=>{
   if(role!=="guest")return;
   const stream=event.streams[0]||new MediaStream([event.track]);
-  state.guestStreams.set(userId,stream);
-  state.remoteStreams.set(userId,stream);
+  state.guestStreams.set(userId,stream);state.remoteStreams.set(userId,stream);
   const profile=await loadProfile(userId);
-  state.streamOwners.set(stream.id,userId);
   addVideoTile(userId,stream,profile,false);
-  if(state.channel){
-   await state.channel.send({type:"broadcast",event:"stream-map",payload:{stream_id:stream.id,user_id:userId}});
-  }
-  for(const [otherId,otherPeer] of state.hostPeers){
-   if(otherId!==userId)addTracksToPeer(otherPeer,stream,userId);
-  }
+  if(state.channel)await state.channel.send({type:"broadcast",event:"stream-map",payload:{stream_id:stream.id,user_id:userId}});
+  for(const [otherId,otherPeer] of state.hostPeers)
+   if(otherId!==userId)addTracksToPeer(otherPeer,stream);
  };
  pc.onconnectionstatechange=()=>{
   if(["failed","closed"].includes(pc.connectionState))hostClosePeer(userId);
@@ -611,8 +511,7 @@ async function clientHandleSignal(s){
  if(s.sender_id!==state.stream.host_id||s.recipient_id!==state.user.id)return;
  if(s.signal_type==="bye"){
   toast("انتهى اتصالك بالبث أو تمت إزالة مقعدك.");
-  if(state.isGuest)await leaveGuest(false);
-  else leaveRoom(false);
+  if(state.isGuest)await leaveGuest(false);else leaveRoom(false);
   return;
  }
  if(s.signal_type==="offer"){
@@ -620,23 +519,17 @@ async function clientHandleSignal(s){
    state.viewerPC=new RTCPeerConnection(ICE);
    state.viewerPC.ontrack=async e=>{
     const stream=e.streams[0]||new MediaStream([e.track]);
-    state.remoteStreams.set(stream.id,stream);
-    const owner=state.streamOwners.get(stream.id);
-    if(owner){
-     const p=await loadProfile(owner);state.remoteStreams.delete(stream.id);state.remoteStreams.set(owner,stream);
-     addVideoTile(owner,stream,p,false);
-    }else{
-     state.remoteStreams.set(stream.id,stream);
-     addVideoTile(stream.id,stream,{full_name:"عضو مباشر"},false);
-    }
+    const owner=state.streamOwners.get(stream.id)||stream.id;
+    state.remoteStreams.set(owner,stream);
+    const profile=owner===stream.id?{full_name:"عضو مباشر"}:await loadProfile(owner);
+    addVideoTile(owner,stream,profile,false);
     hideLoading();
    };
    state.viewerPC.onicecandidate=e=>{
     if(e.candidate)sendSignal(state.stream.host_id,"ice",e.candidate.toJSON()).catch(console.error);
    };
-   if(state.isGuest&&state.localStream){
+   if(state.isGuest&&state.localStream)
     state.localStream.getTracks().forEach(t=>state.viewerPC.addTrack(t,state.localStream));
-   }
   }
   await state.viewerPC.setRemoteDescription(new RTCSessionDescription(s.payload));
   await flushIce(state.viewerPC,state.pendingIce);
@@ -652,10 +545,8 @@ async function clientHandleSignal(s){
 async function handleSignal(s){
  if(!s||state.seenSignals.has(s.id))return;
  state.seenSignals.add(s.id);
- try{
-  if(state.isHost)await hostHandleSignal(s);
-  else await clientHandleSignal(s);
- }catch(e){console.error("LIVE signal",e)}
+ try{if(state.isHost)await hostHandleSignal(s);else await clientHandleSignal(s)}
+ catch(e){console.error("LIVE signal",e)}
 }
 async function refreshGuests(){
  const {data,error}=await supabase.from("world_live_guests")
@@ -665,32 +556,27 @@ async function refreshGuests(){
   .order("requested_at",{ascending:true});
  if(error)throw error;
  state.guests=data||[];
- for(const g of state.guests)await loadProfile(g.user_id);
- renderGuestRoster();
+ await loadProfiles(state.guests.map(g=>g.user_id));
+ renderGuestRoster();renderGiftRecipients();
  if(state.isHost&&state.channel){
-  const presence=state.channel.presenceState();
-  const present=Object.values(presence).flat();
-  for(const g of state.guests.filter(x=>x.status==="accepted")){
+  const present=Object.values(state.channel.presenceState()).flat();
+  for(const g of state.guests.filter(x=>x.status==="accepted"))
    if(present.some(x=>x.user_id===g.user_id))hostCreatePeer(g.user_id,"guest").catch(console.error);
-  }
  }
- renderGiftRecipients();
 }
 function renderGuestRoster(){
  const host=state.isHost;
  $("hostGuestSettings").style.display=host?"block":"none";
- $("guestRequestArea").innerHTML="";
- $("guestRoster").innerHTML="";
+ $("guestRequestArea").innerHTML="";$("guestRoster").innerHTML="";
  if(host){
   const pending=state.guests.filter(g=>["requested","invited"].includes(g.status));
   for(const g of pending){
    const p=state.profiles[g.user_id]||{};
-   const name=p.full_name||p.username||"عضو";
    const row=document.createElement("div");row.className="guest-entry";
-   const img=document.createElement("img");img.src=avatarURL(p.avatar_path)||"";
+   const img=document.createElement("img");setAvatar(img,p);
    const meta=document.createElement("div");meta.className="guest-meta";
-   meta.innerHTML=`<b>${escapeHTML(name)} ${verifiedHTML(p.is_verified)}</b><small>${g.status==="requested"?"طلب انضمام": "دعوة مرسلة"} — ${g.media_mode==="audio"?"صوت":"صوت وصورة"}</small>`;
-   const slot=document.createElement("select");slot.className="field";slot.style.width="55px";
+   meta.innerHTML=`<b>${escapeHTML(p.full_name||p.username||"عضو")} ${verifiedHTML(p.is_verified)}</b><small>${g.status==="requested"?"طلب انضمام":"دعوة مرسلة"} — ${g.media_mode==="audio"?"صوت":"صوت وصورة"}</small>`;
+   const slot=document.createElement("select");slot.className="field";slot.style.width="48px";
    for(let i=1;i<=Math.max(1,state.stream.guest_limit);i++){const op=document.createElement("option");op.value=i;op.textContent=i;slot.appendChild(op)}
    const accept=document.createElement("button");accept.textContent="قبول";accept.onclick=()=>decideGuest(g.id,"accept",Number(slot.value));
    const decline=document.createElement("button");decline.textContent="رفض";decline.className="danger-btn";decline.onclick=()=>decideGuest(g.id,"decline");
@@ -699,36 +585,31 @@ function renderGuestRoster(){
   for(const g of state.guests.filter(x=>x.status==="accepted")){
    const p=state.profiles[g.user_id]||{};
    const row=document.createElement("div");row.className="guest-entry";
-   const img=document.createElement("img");img.src=avatarURL(p.avatar_path)||"";
+   const img=document.createElement("img");setAvatar(img,p);
    const meta=document.createElement("div");meta.className="guest-meta";
-   meta.innerHTML=`<b>${escapeHTML(p.full_name||p.username||"ضيف")}</b><small>ضيف مباشر — المقعد ${g.slot||"—"}</small>`;
-   const remove=document.createElement("button");remove.className="danger-btn";remove.textContent="إخراج";
-   remove.onclick=()=>decideGuest(g.id,"remove");
+   meta.innerHTML=`<b>${escapeHTML(p.full_name||p.username||"ضيف")} ${verifiedHTML(p.is_verified)}</b><small>ضيف مباشر — المقعد ${g.slot||"—"}</small>`;
+   const remove=document.createElement("button");remove.className="danger-btn";remove.textContent="إخراج";remove.onclick=()=>decideGuest(g.id,"remove");
    row.append(img,meta,remove);$("guestRoster").appendChild(row);
   }
-  if(!pending.length&&!state.guests.some(g=>g.status==="accepted"))$("guestRoster").innerHTML='<div class="panel-note">لا يوجد ضيوف حاليًا. يمكنك دعوة عضو أو انتظار الطلبات.</div>';
+  if(!pending.length&&!state.guests.some(g=>g.status==="accepted"))
+   $("guestRoster").innerHTML='<div class="panel-note">لا يوجد ضيوف حاليًا.</div>';
  }else{
   const my=state.myGuest;
-  const message=my?.status==="accepted"?"أنت الآن ضيف في هذا البث."
-   :my?.status==="requested"?"تم إرسال طلبك. انتظر موافقة صاحب البث."
-   :my?.status==="invited"?"صاحب البث دعاك للانضمام.";
   if(my){
-   $("guestRequestArea").innerHTML=`<div class="panel-note">${message}</div>`;
+   $("guestRequestArea").textContent=my.status==="accepted"?"أنت الآن ضيف في البث.":my.status==="requested"?"تم إرسال طلبك. انتظر موافقة صاحب البث.":"صاحب البث دعاك للانضمام.";
    if(my.status==="invited"){
-    const b=document.createElement("button");b.className="primary";b.textContent="قبول الدعوة";
-    b.onclick=()=>acceptMyInvite();$("guestRequestArea").appendChild(b);
+    const b=document.createElement("button");b.className="primary";b.textContent="قبول الدعوة";b.onclick=acceptMyInvite;
+    $("guestRequestArea").appendChild(b);
    }
   }else{
-   const b=document.createElement("button");b.className="primary";b.style.width="100%";b.textContent="طلب الانضمام إلى البث";
-   b.onclick=()=>requestGuest("video");$("guestRequestArea").appendChild(b);
-   const audio=document.createElement("button");audio.className="secondary";audio.style.width="100%";audio.style.marginTop="7px";audio.textContent="طلب الانضمام بالصوت فقط";
-   audio.onclick=()=>requestGuest("audio");$("guestRequestArea").appendChild(audio);
+   const b=document.createElement("button");b.className="primary";b.style.width="100%";b.textContent="طلب الانضمام إلى البث";b.onclick=()=>requestGuest("video");
+   const audio=document.createElement("button");audio.className="secondary";audio.style.width="100%";audio.style.marginTop="7px";audio.textContent="طلب الانضمام بالصوت فقط";audio.onclick=()=>requestGuest("audio");
+   $("guestRequestArea").append(b,audio);
   }
-  const accepted=state.guests.filter(g=>g.status==="accepted");
-  for(const g of accepted){
+  for(const g of state.guests.filter(x=>x.status==="accepted")){
    const p=state.profiles[g.user_id]||{};
    const row=document.createElement("div");row.className="guest-entry";
-   const img=document.createElement("img");img.src=avatarURL(p.avatar_path)||"";
+   const img=document.createElement("img");setAvatar(img,p);
    const meta=document.createElement("div");meta.className="guest-meta";
    meta.innerHTML=`<b>${escapeHTML(p.full_name||p.username||"ضيف")}</b><small>ضيف مباشر</small>`;
    row.append(img,meta);$("guestRoster").appendChild(row);
@@ -739,14 +620,13 @@ async function requestGuest(mode){
  try{
   const {data,error}=await supabase.rpc("hanoon_live_guest_request",{p_stream_id:streamId,p_media_mode:mode});
   if(error)throw error;
-  await loadMyGuestStatus();await refreshGuests();
-  toast(data?.status==="accepted"?"تم قبولك بالفعل":"تم إرسال طلب الانضمام.");
+  await loadMyGuestStatus();await refreshGuests();toast("تم إرسال طلب الانضمام.");
  }catch(e){toast(e.message||"تعذر إرسال الطلب")}
 }
 async function acceptMyInvite(){
  if(!state.myGuest)return;
  try{
-  const {data,error}=await supabase.rpc("hanoon_live_guest_decide",{p_guest_id:state.myGuest.id,p_action:"accept",p_slot:1});
+  const {error}=await supabase.rpc("hanoon_live_guest_decide",{p_guest_id:state.myGuest.id,p_action:"accept",p_slot:1});
   if(error)throw error;
   await loadMyGuestStatus();await becomeGuest();
  }catch(e){toast(e.message||"تعذر قبول الدعوة")}
@@ -756,10 +636,7 @@ async function decideGuest(id,action,slot){
   const {error}=await supabase.rpc("hanoon_live_guest_decide",{p_guest_id:id,p_action:action,p_slot:slot??null});
   if(error)throw error;
   const g=state.guests.find(x=>x.id===id);
-  if(action==="remove"&&g){
-   await sendSignal(g.user_id,"bye",{}).catch(()=>{});
-   hostClosePeer(g.user_id);
-  }
+  if(action==="remove"&&g){await sendSignal(g.user_id,"bye",{}).catch(()=>{});hostClosePeer(g.user_id)}
   await refreshGuests();toast(action==="accept"?"تم قبول الضيف":action==="remove"?"تم إخراج الضيف":"تم رفض الطلب");
  }catch(e){toast(e.message||"تعذر تنفيذ الطلب")}
 }
@@ -769,21 +646,15 @@ async function inviteMember(){
  try{
   const {data,error}=await supabase.from("profiles").select("id,username").ilike("username",username).limit(1).maybeSingle();
   if(error)throw error;if(!data)throw new Error("لم يتم العثور على العضو.");
-  const {error:inviteError}=await supabase.rpc("hanoon_live_guest_invite",{
-   p_stream_id:streamId,p_user_id:data.id,p_media_mode:"video"
-  });
-  if(inviteError)throw inviteError;
+  const {error:err}=await supabase.rpc("hanoon_live_guest_invite",{p_stream_id:streamId,p_user_id:data.id,p_media_mode:"video"});
+  if(err)throw err;
   $("inviteUsername").value="";await refreshGuests();toast("تم إرسال الدعوة.");
  }catch(e){toast(e.message||"تعذر إرسال الدعوة")}
 }
 async function saveGuestSettings(){
- const layout=$("guestLayout").value;
- const limit=Number($("guestLimit").value);
- const access=$("guestAccess").value;
+ const layout=$("guestLayout").value,limit=Number($("guestLimit").value),access=$("guestAccess").value;
  try{
-  const {error}=await supabase.rpc("hanoon_live_update_guest_settings",{
-   p_stream_id:streamId,p_layout:layout,p_guest_limit:limit,p_guest_access:access
-  });
+  const {error}=await supabase.rpc("hanoon_live_update_guest_settings",{p_stream_id:streamId,p_layout:layout,p_guest_limit:limit,p_guest_access:access});
   if(error)throw error;
   state.stream.guest_layout=layout;state.stream.guest_limit=limit;state.stream.guest_access=access;
   $("guestLimit2").value=String(limit);$("guestLayout2").value=layout;$("guestAccess2").value=access;
@@ -792,13 +663,12 @@ async function saveGuestSettings(){
 }
 async function becomeGuest(){
  if(!state.myGuest||state.myGuest.status!=="accepted")return;
- state.isGuest=true;
- $("guestControls").classList.add("show");
- await startCamera();
- if(state.channel)await state.channel.track({user_id:state.user.id,role:"guest",joined_at:new Date().toISOString()});
- await refreshGuests();
- $("guestPanel").classList.remove("show");
- toast("أنت الآن ضيف في البث.");
+ state.isGuest=true;$("guestControls").classList.add("show");
+ try{
+  if(!state.localStream)await startCamera();
+  if(state.channel)await state.channel.track({user_id:state.user.id,role:"guest",joined_at:new Date().toISOString()});
+  await refreshGuests();$("guestPanel").classList.remove("show");toast("أنت الآن ضيف في البث.");
+ }catch(e){toast(e.message||"تعذر تشغيل الكاميرا")}
 }
 async function leaveGuest(notify=true){
  if(notify)await sendSignal(state.stream.host_id,"bye",{}).catch(()=>{});
@@ -812,16 +682,14 @@ async function leaveGuest(notify=true){
 async function loadChat(){
  const {data,error}=await supabase.rpc("hanoon_live_recent_chat",{p_stream_id:streamId,p_before:null,p_limit:35});
  if(error)throw error;
- for(const row of data||[]){
-  const p=await loadProfile(row.user_id);
-  addComment(p.full_name||p.username||"عضو",row.message);
- }
+ for(const row of data||[])addComment(row);
 }
 function subscribeChat(){
  state.chatChannel=supabase.channel("hanoon-live-chat-"+streamId)
  .on("postgres_changes",{event:"INSERT",schema:"public",table:"world_live_chat",filter:"stream_id=eq."+streamId},async payload=>{
-  const row=payload.new;const p=await loadProfile(row.user_id);
-  addComment(p.full_name||p.username||"عضو",row.message);
+  const row=payload.new;
+  const p=await loadProfile(row.user_id);
+  addComment({...row,full_name:p.full_name,username:p.username});
  }).subscribe();
 }
 async function sendChat(){
@@ -830,7 +698,8 @@ async function sendChat(){
  state.chatBusy=true;$("sendChat").disabled=true;
  try{
   const {error}=await supabase.from("world_live_chat").insert({stream_id:streamId,user_id:state.user.id,message});
-  if(error)throw error;$("chatInput").value="";
+  if(error)throw error;
+  $("chatInput").value="";
  }catch(e){toast(e.message||"تعذر إرسال التعليق")}
  finally{state.chatBusy=false;$("sendChat").disabled=false}
 }
@@ -838,33 +707,24 @@ function giftSVG(slug){
  const shapes={
   rose:'<path d="M20 8c-4-7-12-6-14-1-2 5 4 8 7 5 3-3 1-7-2-7M12 12c-2 5-3 8-3 10m3-7 7 2m-7-2-5 3"/>',
   heart:'<path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.9-8.6a5.5 5.5 0 0 0-.1-7.8Z"/>',
-  coffee:'<path d="M4 8h14v9a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4V8Zm14 2h2a2 2 0 0 1 0 4h-2M8 3v3m5-3v3"/>',
-  teddy:'<circle cx="12" cy="13" r="7"/><circle cx="5" cy="6" r="3"/><circle cx="19" cy="6" r="3"/><circle cx="9" cy="12" r="1"/><circle cx="15" cy="12" r="1"/><path d="M10 16q2 2 4 0"/>',
   crown:'<path d="m3 8 5 4 4-8 4 8 5-4-2 12H5L3 8Z"/>',
   diamond:'<path d="M3 8 7 3h10l4 5-9 13L3 8Z M3 8h18M7 3l5 18 5-18"/>',
-  rocket:'<path d="M14 4c3-2 6-2 7-2 0 1 0 4-2 7l-6 7-5-5 6-7ZM8 11l-4 1-2 5 5-2m6 0-1 5-5 2 2-5m1-8 4 4"/>',
-  giftbox:'<path d="M3 10h18v11H3zM2 6h20v4H2zM12 6v15m0-15H8a2 2 0 1 1 2-2c0 1 2 2 2 2Zm0 0h4a2 2 0 1 0-2-2c0 1-2 2-2 2Z"/>'
+  rocket:'<path d="M14 4c3-2 6-2 7-2 0 1 0 4-2 7l-6 7-5-5 6-7Z"/>'
  };
  return `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">${shapes[slug]||'<path d="m12 2 3 7 7 3-7 3-3 7-3-7-7-3 7-3 3-7Z"/>'}</svg>`;
-}
-function storageURL(path){
- if(!path)return "";
- if(/^https?:\/\//i.test(path))return path;
- return supabase.storage.from("world-store-assets").getPublicUrl(path).data.publicUrl;
 }
 async function loadGifts(){
  const {data,error}=await supabase.from("world_gifts")
   .select("id,slug,name_ar,price_gems,image_path,animation_path,is_active,sort_order")
   .eq("is_active",true).order("sort_order").limit(80);
  if(error)throw error;
- state.gifts=data||[];
- $("giftGrid").innerHTML="";
+ state.gifts=data||[];$("giftGrid").innerHTML="";
  if(!state.gifts.length){$("giftGrid").innerHTML='<div class="panel-note">لا توجد هدايا متاحة.</div>';return}
  for(const gift of state.gifts){
   const b=document.createElement("button");b.className="gift-item";
   const art=document.createElement("span");art.className="gift-art";
-  const image=storageURL(gift.image_path);
-  art.innerHTML=image?`<img src="${escapeHTML(image)}" style="width:40px;height:40px;object-fit:contain" alt="">`:giftSVG(gift.slug);
+  const url=giftURL(gift.image_path);
+  art.innerHTML=url?`<img src="${escapeHTML(url)}" alt="" onerror="this.style.display='none'">`:giftSVG(gift.slug);
   const name=document.createElement("span");name.className="gift-name";name.textContent=gift.name_ar;
   const price=document.createElement("span");price.className="gift-price";price.textContent=Number(gift.price_gems).toLocaleString("en-US")+" جوهرة";
   b.append(art,name,price);b.onclick=()=>sendGift(gift);$("giftGrid").appendChild(b);
@@ -872,9 +732,8 @@ async function loadGifts(){
  renderGiftRecipients();
 }
 function renderGiftRecipients(){
- const select=$("giftRecipient");if(!select)return;
- const old=select.value;
- select.innerHTML="";
+ const select=$("giftRecipient");if(!select||!state.stream)return;
+ const old=select.value;select.innerHTML="";
  const hostOption=document.createElement("option");hostOption.value=state.stream.host_id;
  hostOption.textContent="صاحب البث — "+(state.host?.full_name||state.host?.username||"المضيف");
  select.appendChild(hostOption);
@@ -898,27 +757,126 @@ async function sendGift(gift){
   });
   if(error)throw error;
   if(data?.success===false)throw new Error(data.message||"تعذر إرسال الهدية");
-  $("giftPanel").classList.remove("show");
-  toast("تم إرسال الهدية وخصم الجواهر بنجاح.");
+  $("giftPanel").classList.remove("show");toast("تم إرسال الهدية وخصم الجواهر بنجاح.");
  }catch(e){toast(e.message||"تعذر إرسال الهدية. تحقق من رصيدك")}
  finally{state.sending=false}
 }
 async function showGiftEffect(event){
- const gift=state.gifts.find(g=>g.id===event.gift_id)||
-  (await supabase.from("world_gifts").select("id,slug,name_ar,image_path,animation_path").eq("id",event.gift_id).maybeSingle()).data;
+ let gift=state.gifts.find(g=>g.id===event.gift_id);
+ if(!gift){
+  const {data}=await supabase.from("world_gifts").select("id,slug,name_ar,image_path,animation_path").eq("id",event.gift_id).maybeSingle();
+  gift=data;
+ }
  if(!gift)return;
- const sender=await loadProfile(event.sender_id);
- const recipient=await loadProfile(event.recipient_id);
+ const [sender,recipient]=await Promise.all([loadProfile(event.sender_id),loadProfile(event.recipient_id)]);
  const art=$("effectArt");art.innerHTML="";
  const path=gift.animation_path||gift.image_path;
  if(path){
-  const img=document.createElement("img");img.src=storageURL(path);img.alt=gift.name_ar;art.appendChild(img);
+  const img=document.createElement("img");img.src=giftURL(path);img.alt=gift.name_ar;
+  img.onerror=()=>{img.onerror=null;art.innerHTML=giftSVG(gift.slug)};
+  art.appendChild(img);
  }else art.innerHTML=giftSVG(gift.slug);
  $("effectTitle").textContent=gift.name_ar+" × "+event.quantity;
  $("effectSubtitle").textContent=(sender.full_name||sender.username||"عضو")+" أرسلها إلى "+(recipient.full_name||recipient.username||"عضو");
  const box=$("giftEffect");box.classList.remove("show");void box.offsetWidth;box.classList.add("show");
- addComment("هدية",`${sender.full_name||sender.username||"عضو"} أرسل ${gift.name_ar}`,"gift");
+ addComment({type:"gift",message:`${sender.full_name||sender.username||"عضو"} أرسل ${gift.name_ar}`});
  clearTimeout(state.giftTimer);state.giftTimer=setTimeout(()=>box.classList.remove("show"),3300);
+}
+async function loadLikes(){
+ const {data,error}=await supabase.from("world_live_like_totals").select("likes_count").eq("stream_id",streamId).maybeSingle();
+ if(error)throw error;
+ state.likeCount=Number(data?.likes_count)||0;updateLikes();
+}
+function floatHeart(){
+ const h=document.createElement("div");h.className="heart-float";h.textContent="♥";
+ h.style.left=(15+Math.random()*55)+"%";$("videoGrid").appendChild(h);
+ setTimeout(()=>h.remove(),1900);
+}
+async function sendHeart(){
+ floatHeart();
+ const {data,error}=await supabase.rpc("hanoon_live_send_like",{p_stream_id:streamId});
+ if(error){toast(error.message||"تعذر تسجيل الإعجاب");return}
+ if(data){state.likeCount=Number(data.count)||state.likeCount;updateLikes()}
+ if(state.channel)await state.channel.send({type:"broadcast",event:"heart",payload:{}}).catch(()=>{});
+}
+async function pingViewer(){
+ if(state.isHost||state.isGuest)return;
+ const {data,error}=await supabase.rpc("hanoon_live_viewer_ping",{p_stream_id:streamId});
+ if(!error){state.viewerCount=Number(data)||1;updateCount()}
+}
+async function toggleTrack(kind,isGuest=false){
+ const stream=state.localStream;if(!stream)return;
+ const tracks=kind==="audio"?stream.getAudioTracks():stream.getVideoTracks();
+ if(!tracks.length)return;
+ const enabled=!tracks[0].enabled;tracks.forEach(t=>t.enabled=enabled);
+ if(kind==="audio"){
+  state.micOn=enabled;
+  $(isGuest?"guestMicButton":"micButton").textContent=enabled?(isGuest?"كتم صوتي":"كتم الصوت"):(isGuest?"تشغيل صوتي":"تشغيل الصوت");
+ }else{
+  state.cameraOn=enabled;
+  $(isGuest?"guestCameraButton":"cameraButton").textContent=enabled?(isGuest?"إيقاف كاميرتي":"إيقاف الكاميرا"):(isGuest?"تشغيل كاميرتي":"تشغيل الكاميرا");
+ }
+}
+async function manageMember(userId){
+ if(!state.isHost)return;
+ const action=prompt("اكتب الإجراء:\n mute = كتم 10 دقائق\n unmute = إلغاء الكتم\n ban = حظر من البث\n unban = إلغاء الحظر\n add_moderator = تعيين مشرف\n remove_moderator = إزالة المشرف");
+ if(!action)return;
+ const clean=action.trim().toLowerCase();
+ if(!["mute","unmute","ban","unban","add_moderator","remove_moderator"].includes(clean))
+  return toast("الإجراء غير معروف.");
+ try{
+  const {error}=await supabase.rpc("hanoon_live_moderate_member",{
+   p_stream_id:streamId,p_user_id:userId,p_action:clean,p_minutes:10,p_reason:"إجراء من إدارة البث"
+  });
+  if(error)throw error;
+  if(clean==="ban"){
+   await sendSignal(userId,"bye",{}).catch(()=>{});
+   hostClosePeer(userId);
+  }
+  toast("تم تنفيذ إجراء الإدارة.");
+ }catch(e){toast(e.message||"تعذر تنفيذ الإجراء")}
+}
+async function setBlockedWord(){
+ const word=$("blockedWord").value.trim();if(!word)return toast("اكتب الكلمة أولاً.");
+ try{
+  const {error}=await supabase.rpc("hanoon_live_set_blocked_word",{p_stream_id:streamId,p_word:word,p_action:"add"});
+  if(error)throw error;
+  $("blockedWord").value="";toast("تمت إضافة الكلمة إلى قائمة الحظر.");
+ }catch(e){toast(e.message||"تعذر إضافة الكلمة")}
+}
+async function pinComment(commentId){
+ if(!state.isHost)return;
+ try{
+  const {error}=await supabase.rpc("hanoon_live_pin_comment",{p_stream_id:streamId,p_comment_id:commentId});
+  if(error)throw error;toast("تم تثبيت التعليق.");
+ }catch(e){toast(e.message||"تعذر تثبيت التعليق")}
+}
+async function loadPinned(){
+ const {data,error}=await supabase.from("world_live_pinned_comments")
+  .select("comment_id,world_live_chat(id,message,user_id,profiles(full_name,username))")
+  .eq("stream_id",streamId).maybeSingle();
+ if(error){console.warn(error);return}
+ const box=$("pinnedComment");
+ if(!data){box.classList.remove("show");return}
+ const row=data.world_live_chat;
+ if(!row){box.classList.remove("show");return}
+ const profile=row.profiles||{};
+ box.textContent="مثبت: "+(profile.full_name||profile.username||"عضو")+": "+row.message;
+ box.classList.add("show");
+}
+async function reportLive(){
+ const reason=prompt("سبب الإبلاغ:\nspam أو harassment أو nudity أو violence أو hate أو underage أو other","other");
+ if(!reason)return;
+ const clean=reason.trim().toLowerCase();
+ if(!["spam","harassment","nudity","violence","hate","underage","other"].includes(clean))
+  return toast("سبب الإبلاغ غير صالح.");
+ const details=prompt("تفاصيل إضافية (اختياري):","")||"";
+ try{
+  const {error}=await supabase.rpc("hanoon_live_report",{
+   p_stream_id:streamId,p_reported_user_id:state.host.id,p_reason:clean,p_details:details
+  });
+  if(error)throw error;toast("تم إرسال البلاغ للمراجعة.");
+ }catch(e){toast(e.message||"تعذر إرسال البلاغ")}
 }
 function subscribeRoom(){
  state.channel=supabase.channel("hanoon-live-"+streamId,{config:{presence:{key:state.user.id}}});
@@ -928,12 +886,11 @@ function subscribeRoom(){
   const items=Object.values(state.channel.presenceState()).flat();
   for(const item of items){
    if(item.user_id===state.user.id)continue;
-   const isGuest=state.guests.some(g=>g.user_id===item.user_id&&g.status==="accepted");
-   hostCreatePeer(item.user_id,isGuest?"guest":"viewer").catch(console.error);
+   const guest=state.guests.some(g=>g.user_id===item.user_id&&g.status==="accepted");
+   hostCreatePeer(item.user_id,guest?"guest":"viewer").catch(console.error);
   }
-  for(const [id,peer] of state.hostPeers){
+  for(const [id] of state.hostPeers)
    if(!items.some(x=>x.user_id===id))hostClosePeer(id);
-  }
  })
  .on("postgres_changes",{event:"INSERT",schema:"public",table:"world_live_signals",filter:"stream_id=eq."+streamId},p=>handleSignal(p.new))
  .on("postgres_changes",{event:"*",schema:"public",table:"world_live_guests",filter:"stream_id=eq."+streamId},async()=>{
@@ -945,13 +902,19 @@ function subscribeRoom(){
   }
  })
  .on("postgres_changes",{event:"INSERT",schema:"public",table:"world_live_gift_events",filter:"stream_id=eq."+streamId},p=>showGiftEffect(p.new))
+ .on("postgres_changes",{event:"UPDATE",schema:"public",table:"world_live_like_totals",filter:"stream_id=eq."+streamId},p=>{
+  state.likeCount=Number(p.new.likes_count)||0;updateLikes();
+ })
+ .on("postgres_changes",{event:"INSERT",schema:"public",table:"world_live_like_totals",filter:"stream_id=eq."+streamId},p=>{
+  state.likeCount=Number(p.new.likes_count)||0;updateLikes();
+ })
+ .on("postgres_changes",{event:"*",schema:"public",table:"world_live_pinned_comments",filter:"stream_id=eq."+streamId},loadPinned)
  .on("broadcast",{event:"stream-map"},async p=>{
   const data=p.payload||{};if(!data.stream_id||!data.user_id)return;
   state.streamOwners.set(data.stream_id,data.user_id);
   const stream=state.remoteStreams.get(data.stream_id);
   if(stream){
-   state.remoteStreams.delete(data.stream_id);
-   state.remoteStreams.set(data.user_id,stream);
+   state.remoteStreams.delete(data.stream_id);state.remoteStreams.set(data.user_id,stream);
    const profile=await loadProfile(data.user_id);addVideoTile(data.user_id,stream,profile,false);
   }
  })
@@ -967,33 +930,6 @@ function subscribeRoom(){
   }
  });
 }
-function floatHeart(){
- const h=document.createElement("div");h.className="heart-float";h.textContent="♥";
- h.style.left=(15+Math.random()*55)+"%";$("videoGrid").appendChild(h);
- setTimeout(()=>h.remove(),1900);
-}
-async function sendHeart(){
- floatHeart();
- if(state.channel)await state.channel.send({type:"broadcast",event:"heart",payload:{}}).catch(()=>{});
-}
-async function pingViewer(){
- if(state.isHost||state.isGuest)return;
- const {data,error}=await supabase.rpc("hanoon_live_viewer_ping",{p_stream_id:streamId});
- if(!error){state.viewerCount=Number(data)||1;updateCount()}
-}
-async function toggleTrack(kind,isGuest=false){
- const stream=state.localStream;if(!stream)return;
- const tracks=kind==="audio"?stream.getAudioTracks():stream.getVideoTracks();
- if(!tracks.length)return;
- const enabled=!tracks[0].enabled;tracks.forEach(t=>t.enabled=enabled);
- if(kind==="audio"){
-  if(isGuest){state.micOn=enabled;$("guestMicButton").textContent=enabled?"كتم صوتي":"تشغيل صوتي"}
-  else{state.micOn=enabled;$("micButton").textContent=enabled?"كتم الصوت":"تشغيل الصوت"}
- }else{
-  if(isGuest){state.cameraOn=enabled;$("guestCameraButton").textContent=enabled?"إيقاف كاميرتي":"تشغيل كاميرتي"}
-  else{state.cameraOn=enabled;$("cameraButton").textContent=enabled?"إيقاف الكاميرا":"تشغيل الكاميرا"}
- }
-}
 async function endLive(){
  if(!state.isHost||state.ending)return;
  if(!confirm("هل تريد إنهاء البث للجميع؟"))return;
@@ -1003,8 +939,7 @@ async function endLive(){
   const {error}=await supabase.from("world_live_streams").update({status:"ended",ended_at:new Date().toISOString()})
    .eq("id",streamId).eq("host_id",state.user.id);
   if(error)throw error;
-  toast("تم إنهاء البث.");
-  setTimeout(()=>location.replace("broadcasts.html"),700);
+  toast("تم إنهاء البث.");setTimeout(()=>location.replace("broadcasts.html"),700);
  }catch(e){state.ending=false;toast(e.message||"تعذر إنهاء البث")}
 }
 async function leaveRoom(redirect=true){
@@ -1025,31 +960,49 @@ async function initialize(){
  const {data,error}=await supabase.auth.getUser();
  if(error||!data?.user){location.replace("login.html");return}
  state.user=data.user;
- const myProfile=await loadProfile(state.user.id);
+ showLoading("جارٍ فتح البث","نجهز الكاميرا والاتصال...");
+ await loadProfile(state.user.id);
  await loadStream();
  await loadMyGuestStatus();
+
+ // يبدأ المضيف أو الضيف الكاميرا فورًا قبل تحميل بقية التفاصيل.
  if(state.isHost||state.isGuest)await startCamera();
- await refreshGuests();
+
+ // نبدأ قنوات التحديث فورًا ثم نحمل البيانات المساندة بالتوازي.
  subscribeRoom();
- await loadChat();subscribeChat();await loadGifts();
+ const jobs=[
+  refreshGuests(),
+  loadChat(),
+  loadGifts(),
+  loadLikes(),
+  loadPinned()
+ ];
+ const results=await Promise.allSettled(jobs);
+ for(const result of results)
+  if(result.status==="rejected")console.warn("LIVE background load:",result.reason);
+
+ subscribeChat();
+
  if(!state.isHost&&!state.isGuest){
   await pingViewer();
   state.heartbeat=setInterval(pingViewer,20000);
-  showLoading("جارٍ الاتصال بالبث","انتظر حتى يظهر الفيديو المباشر...");
+  showLoading("جارٍ الاتصال بالبث","إذا لم يبدأ الفيديو، اضغط على نافذة الفيديو لتشغيله.");
  }else hideLoading();
- if(state.isHost)addComment("HANOON","أنت الآن مباشر. يمكنك دعوة الضيوف وإدارة البث.","system");
- if(state.isGuest)addComment("HANOON","انضممت إلى البث كضيف.","system");
-}
 
+ if(state.isHost)addComment({type:"system",message:"أنت الآن مباشر. يمكنك دعوة الضيوف وإدارة البث."});
+ if(state.isGuest)addComment({type:"system",message:"انضممت إلى البث كضيف."});
+}
 $("sendChat").onclick=sendChat;
 $("chatInput").addEventListener("keydown",e=>{if(e.key==="Enter")sendChat()});
 $("heartButton").onclick=sendHeart;
 $("giftButton").onclick=()=>$("giftPanel").classList.add("show");
-$("guestButton").onclick=()=>{
+$("guestButton").onclick=async()=>{
  if(state.isHost)$("hostGuestSettings").style.display="block";
  $("guestPanel").classList.add("show");
+ await refreshGuests();
 };
 $("closeButton").onclick=()=>state.isHost?endLive():leaveRoom();
+$("reportButton").onclick=reportLive;
 $("micButton").onclick=()=>toggleTrack("audio");
 $("cameraButton").onclick=()=>toggleTrack("video");
 $("guestMicButton").onclick=()=>toggleTrack("audio",true);
@@ -1057,6 +1010,7 @@ $("guestCameraButton").onclick=()=>toggleTrack("video",true);
 $("leaveGuestButton").onclick=()=>leaveGuest(true);
 $("endLiveButton").onclick=endLive;
 $("layoutButton").onclick=()=>$("layoutPanel").classList.add("show");
+$("moderationButton").onclick=()=>$("moderationPanel").classList.add("show");
 $("saveGuestSettings").onclick=saveGuestSettings;
 $("saveGuestSettings2").onclick=async()=>{
  $("guestLayout").value=$("guestLayout2").value;
@@ -1065,15 +1019,16 @@ $("saveGuestSettings2").onclick=async()=>{
  await saveGuestSettings();$("layoutPanel").classList.remove("show");
 };
 $("inviteButton").onclick=inviteMember;
+$("addBlockedWord").onclick=setBlockedWord;
 document.querySelectorAll("[data-close]").forEach(b=>b.onclick=()=>$(b.dataset.close).classList.remove("show"));
 
 window.addEventListener("pagehide",()=>{
  clearInterval(state.heartbeat);
  if(state.localStream)state.localStream.getTracks().forEach(t=>t.stop());
  if(state.viewerPC)state.viewerPC.close();
- for(const p of state.hostPeers.values())p.pc.close();
+ for(const peer of state.hostPeers.values())peer.pc.close();
+ if(!state.isHost)supabase.rpc("hanoon_live_viewer_leave",{p_stream_id:streamId}).catch(()=>{});
 });
-
 initialize().catch(e=>{
  console.error("HANOON LIVE",e);
  showLoading("تعذر فتح البث",e.message||"حدث خطأ غير متوقع.");
