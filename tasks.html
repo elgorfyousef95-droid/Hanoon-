@@ -7,358 +7,157 @@
 <meta name="theme-color" content="#080916">
 <title>عالم المهام | HANOON WORLD</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-
 <style>
 :root{
-  --bg:#080916;
-  --panel:#15162b;
-  --purple:#a58aff;
-  --cyan:#68e2dc;
-  --gold:#f5cf7b;
-  --green:#62dfad;
-  --red:#ff8298;
-  --text:#faf8ff;
-  --muted:#aaa8c4;
-  --line:rgba(255,255,255,.1);
+ --bg:#080916;--panel:#17182d;--purple:#a58aff;--cyan:#68e2dc;
+ --gold:#f5cf7b;--green:#62dfad;--red:#ff8298;
+ --text:#faf8ff;--muted:#aaa8c4;--line:rgba(255,255,255,.1)
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-html,body{width:100%;height:100%;min-width:320px;overflow:hidden;background:var(--bg);color:var(--text);font-family:Cairo,sans-serif}
+html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:Cairo,sans-serif}
 body{position:fixed;inset:0}
-button,a{font:inherit;color:inherit}
-button{border:0;cursor:pointer}
-a{text-decoration:none}
+button,a{font:inherit;color:inherit}button{border:0;cursor:pointer}a{text-decoration:none}
 .page{position:relative;width:100%;max-width:1100px;height:100%;margin:auto;display:flex;flex-direction:column;overflow:hidden;isolation:isolate}
-.background{
- position:fixed;inset:0;z-index:-5;
- background:
- radial-gradient(ellipse at 12% 10%,rgba(125,83,255,.24),transparent 34%),
- radial-gradient(ellipse at 90% 48%,rgba(20,181,193,.15),transparent 35%),
- radial-gradient(ellipse at 50% 100%,rgba(132,76,201,.13),transparent 40%),
- linear-gradient(145deg,#080916,#11132b 48%,#090b19);
-}
-.background:before{
- content:"";position:absolute;inset:0;opacity:.16;
- background-image:radial-gradient(rgba(255,255,255,.5) .7px,transparent .8px);
- background-size:27px 27px;pointer-events:none;
-}
-.topbar{
- flex:none;min-height:70px;padding:10px 17px;
- padding-top:max(10px,env(safe-area-inset-top));
- display:flex;align-items:center;justify-content:space-between;gap:12px;
- background:rgba(9,10,26,.83);border-bottom:1px solid var(--line);
- backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);
-}
-.brand{display:flex;align-items:center;gap:11px;min-width:0}
-.brand-icon{
- width:43px;height:43px;flex:none;display:grid;place-items:center;
- border-radius:15px;background:linear-gradient(145deg,#c1aaff,#714bdb);
- border:1px solid rgba(255,255,255,.24);
- box-shadow:0 8px 26px rgba(139,99,244,.4);
-}
+.background{position:fixed;inset:0;z-index:-2;background:radial-gradient(ellipse at 12% 10%,rgba(125,83,255,.24),transparent 34%),radial-gradient(ellipse at 90% 48%,rgba(20,181,193,.15),transparent 35%),linear-gradient(145deg,#080916,#11132b 48%,#090b19)}
+.topbar{flex:none;min-height:66px;padding:10px 16px;padding-top:max(10px,env(safe-area-inset-top));display:flex;align-items:center;justify-content:space-between;background:rgba(9,10,26,.88);border-bottom:1px solid var(--line);backdrop-filter:blur(20px)}
+.brand{display:flex;align-items:center;gap:10px}
+.brand-icon{width:42px;height:42px;display:grid;place-items:center;border-radius:14px;background:linear-gradient(145deg,#c1aaff,#714bdb);box-shadow:0 8px 25px #8b63f455}
 .brand-icon svg{width:25px;height:25px}
-.brand-name{font-size:14px;font-weight:900;line-height:1.4}
-.brand-caption{font-size:9px;color:#aaa5c9;letter-spacing:1.7px}
+.brand-name{font-size:14px;font-weight:900}.brand-caption{font-size:9px;color:var(--muted);letter-spacing:1px}
 .header-actions{display:flex;gap:8px}
-.icon-button{
- width:41px;height:41px;display:grid;place-items:center;border-radius:13px;
- border:1px solid var(--line);background:rgba(255,255,255,.06)
-}
+.icon-button{width:40px;height:40px;display:grid;place-items:center;border-radius:13px;border:1px solid var(--line);background:#ffffff0c}
 .icon-button svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.8}
-.scroll-area{
- flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;
- padding:17px 15px 30px;overscroll-behavior:contain;touch-action:pan-y;
- scrollbar-width:thin;scrollbar-color:rgba(165,138,255,.4) transparent;
-}
-
-/* البانر الرئيسي */
-.hero{
- position:relative;isolation:isolate;overflow:hidden;min-height:245px;
- padding:24px 21px;border-radius:27px;
- border:1px solid rgba(196,174,255,.3);
- background:
- radial-gradient(ellipse at 83% 22%,rgba(121,214,255,.3),transparent 27%),
- radial-gradient(ellipse at 8% 95%,rgba(202,124,255,.32),transparent 38%),
- linear-gradient(115deg,#20194a 0%,#272052 43%,#12384b 100%);
- box-shadow:0 20px 55px rgba(0,0,0,.32),inset 0 1px rgba(255,255,255,.13);
-}
-.hero:before{
- content:"";position:absolute;z-index:-1;width:260px;height:260px;
- left:-80px;top:-105px;border:1px solid rgba(255,255,255,.16);
- border-radius:50%;box-shadow:0 0 0 22px rgba(255,255,255,.035),0 0 0 48px rgba(255,255,255,.025),0 0 0 78px rgba(255,255,255,.018);
-}
-.hero:after{
- content:"";position:absolute;z-index:-1;width:190px;height:190px;
- right:-65px;bottom:-112px;border-radius:50%;
- background:radial-gradient(circle,rgba(255,255,255,.15),rgba(255,255,255,0) 68%);
-}
-.hero-content{position:relative;z-index:2;max-width:650px}
-.hero-kicker{
- display:inline-flex;align-items:center;gap:7px;padding:6px 11px;
- border-radius:30px;background:rgba(255,255,255,.1);
- border:1px solid rgba(255,255,255,.17);color:#d9faff;
- font-size:9px;font-weight:900;letter-spacing:1px;
-}
-.hero-kicker svg{width:14px;height:14px;stroke:var(--gold);fill:none;stroke-width:1.8}
-.hero h1{font-size:clamp(26px,6vw,38px);font-weight:900;line-height:1.45;margin-top:11px}
-.hero p{max-width:510px;margin-top:5px;color:#e0dcf3;font-size:11px;line-height:2.1}
-.hero-art{
- position:absolute;left:18px;bottom:13px;width:118px;height:118px;
- display:grid;place-items:center;opacity:.95;pointer-events:none;
-}
-.hero-art .orbit{
- position:absolute;width:104px;height:104px;border:1px solid rgba(255,255,255,.22);
- border-radius:50%;box-shadow:0 0 0 12px rgba(255,255,255,.035);
-}
-.hero-art .gem{
- width:66px;height:66px;display:grid;place-items:center;
- border-radius:23px;transform:rotate(-12deg);
- background:linear-gradient(145deg,rgba(255,255,255,.32),rgba(255,255,255,.07));
- border:1px solid rgba(255,255,255,.38);
- box-shadow:0 10px 35px rgba(0,0,0,.2),inset 0 1px rgba(255,255,255,.4);
-}
-.hero-art svg{width:39px;height:39px;stroke:#ffe7a8;fill:none;stroke-width:1.4}
-.hero-meta{display:flex;flex-wrap:wrap;gap:7px;margin-top:15px}
-.meta-pill{
- display:flex;align-items:center;gap:6px;padding:6px 10px;
- border-radius:25px;background:rgba(5,8,25,.25);
- border:1px solid rgba(255,255,255,.15);font-size:9px;font-weight:800;color:#f0edff
-}
-.meta-pill svg{width:14px;height:14px;stroke:var(--cyan);fill:none;stroke-width:1.8}
-
-/* ملخص التقدم */
-.summary-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin-top:13px}
-.summary-card{
- position:relative;overflow:hidden;min-width:0;padding:13px 11px;
- border:1px solid var(--line);border-radius:18px;
- background:linear-gradient(145deg,rgba(30,29,58,.94),rgba(15,19,39,.94));
- box-shadow:0 9px 24px rgba(0,0,0,.16);
-}
-.summary-card:after{content:"";position:absolute;width:75px;height:75px;left:-32px;top:-35px;border-radius:50%;background:rgba(165,138,255,.1)}
-.summary-icon{width:30px;height:30px;display:grid;place-items:center;border-radius:10px;background:rgba(165,138,255,.15);color:var(--purple);margin-bottom:7px}
-.summary-icon svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:1.9}
-.summary-value{font-size:20px;font-weight:900;line-height:1.4}
-.summary-label{font-size:9px;color:var(--muted);font-weight:700}
-
-/* عناوين الأقسام */
-.section-heading{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:24px 2px 11px}
+.scroll-area{flex:1;min-height:0;overflow-y:auto;padding:16px 14px 28px;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#8065c5 transparent}
+.hero{position:relative;isolation:isolate;overflow:hidden;min-height:210px;padding:23px 19px;border-radius:25px;border:1px solid #c4aeff44;background:radial-gradient(ellipse at 83% 22%,#79d6ff4d,transparent 27%),radial-gradient(ellipse at 8% 95%,#c77cff50,transparent 38%),linear-gradient(115deg,#20194a,#272052 43%,#12384b);box-shadow:0 18px 45px #0005}
+.hero:before{content:"";position:absolute;z-index:-1;width:230px;height:230px;left:-75px;top:-95px;border:1px solid #ffffff25;border-radius:50%;box-shadow:0 0 0 22px #ffffff08,0 0 0 48px #ffffff06}
+.hero-kicker{display:inline-flex;align-items:center;gap:7px;padding:6px 11px;border-radius:25px;background:#ffffff17;border:1px solid #ffffff25;color:#d9faff;font-size:9px;font-weight:900}
+.hero-kicker svg{width:14px;height:14px;stroke:var(--gold);fill:none}
+.hero h1{font-size:clamp(27px,6vw,38px);font-weight:900;margin-top:10px}
+.hero p{max-width:540px;margin-top:5px;color:#e0dcf3;font-size:11px;line-height:2}
+.hero-meta{display:flex;flex-wrap:wrap;gap:7px;margin-top:13px}
+.meta-pill{padding:6px 10px;border-radius:25px;background:#05081955;border:1px solid #ffffff25;font-size:9px;font-weight:800}
+.hero-art{position:absolute;left:20px;bottom:15px;width:90px;height:90px;border:1px solid #ffffff35;border-radius:50%;display:grid;place-items:center;box-shadow:0 0 0 12px #ffffff08}
+.hero-art svg{width:45px;height:45px;stroke:#ffe7a8;fill:none;stroke-width:1.4}
+.summary-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin-top:12px}
+.summary-card{padding:12px 10px;border:1px solid var(--line);border-radius:17px;background:linear-gradient(145deg,#1e1d3a,#0f1327)}
+.summary-icon{width:29px;height:29px;display:grid;place-items:center;border-radius:10px;background:#a58aff22;color:var(--purple);margin-bottom:6px}
+.summary-icon svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:1.8}
+.summary-value{font-size:19px;font-weight:900}.summary-label{font-size:9px;color:var(--muted);font-weight:700}
+.section-heading{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:22px 2px 11px}
 .section-heading h2{font-size:16px;font-weight:900}
 .section-heading span{font-size:9px;color:var(--muted)}
 .section-mark{display:flex;align-items:center;gap:8px}
 .section-mark:before{content:"";width:4px;height:19px;border-radius:5px;background:linear-gradient(var(--purple),var(--cyan))}
-
-/* بطاقات المهام */
-.task-list{display:grid;gap:13px}
-.task-card{
- --task-a:#8869e9;--task-b:#25335f;--task-glow:rgba(139,105,233,.3);
- position:relative;isolation:isolate;overflow:hidden;min-width:0;
- border:1px solid rgba(255,255,255,.12);border-radius:21px;
- background:linear-gradient(125deg,rgba(35,34,70,.98),rgba(14,20,40,.98));
- box-shadow:0 12px 28px rgba(0,0,0,.22);
-}
-.task-card:before{
- content:"";position:absolute;z-index:-1;inset:0;
- background:
- radial-gradient(ellipse at 5% 5%,var(--task-glow),transparent 48%),
- linear-gradient(115deg,var(--task-b),transparent 75%);
- opacity:.9;pointer-events:none;
-}
-.task-card:after{
- content:"";position:absolute;z-index:-1;width:150px;height:150px;
- left:-55px;top:-65px;border:1px solid rgba(255,255,255,.1);
- border-radius:50%;box-shadow:0 0 0 17px rgba(255,255,255,.025),0 0 0 37px rgba(255,255,255,.018);
- pointer-events:none;
-}
-.task-card.cat-messages{--task-a:#69c9ed;--task-b:#153e59;--task-glow:rgba(57,188,231,.27)}
-.task-card.cat-posts{--task-a:#c58aff;--task-b:#43275e;--task-glow:rgba(177,102,255,.27)}
-.task-card.cat-comments{--task-a:#70d9bd;--task-b:#174b4b;--task-glow:rgba(67,213,175,.25)}
-.task-card.cat-gifts{--task-a:#ffc875;--task-b:#604025;--task-glow:rgba(255,174,75,.3)}
-.task-card.cat-store{--task-a:#f4a4d0;--task-b:#572b50;--task-glow:rgba(242,118,190,.25)}
-.task-card.cat-video{--task-a:#85a9ff;--task-b:#273c72;--task-glow:rgba(102,143,255,.3)}
-.task-card.cat-reactions{--task-a:#ff91a6;--task-b:#612c4a;--task-glow:rgba(255,103,151,.28)}
-.task-card.cat-rooms{--task-a:#e1bd75;--task-b:#4d4427;--task-glow:rgba(229,187,91,.26)}
-.task-card.completed{border-color:rgba(98,223,173,.38)}
-.task-card.claimed{border-color:rgba(98,223,173,.25);opacity:.88}
-.task-inner{padding:15px}
-.task-top{display:flex;align-items:flex-start;gap:11px}
-.task-icon{
- width:47px;height:47px;flex:none;display:grid;place-items:center;
- border-radius:16px;color:var(--task-a);
- background:linear-gradient(145deg,rgba(255,255,255,.16),rgba(255,255,255,.045));
- border:1px solid rgba(255,255,255,.17);
- box-shadow:0 7px 18px rgba(0,0,0,.15),inset 0 1px rgba(255,255,255,.12);
-}
+.tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:14px 0 13px}
+.tab{min-height:54px;padding:8px 4px;border:1px solid var(--line);border-radius:15px;background:#ffffff08;color:#aaa8c4;font-size:11px;font-weight:900;transition:.2s}
+.tab span{display:block;font-size:9px;font-weight:600;margin-top:2px;color:#9996b4}
+.tab.active{color:#fff;border-color:#a58aff88;background:linear-gradient(135deg,#7255bd77,#276b7770);box-shadow:0 7px 20px #8065c533}
+.tab.active span{color:#d9d0ff}
+.task-list{display:grid;gap:12px}
+.task-card{--a:#8869e9;--b:#25335f;--glow:#8b69e94d;position:relative;isolation:isolate;overflow:hidden;border:1px solid #ffffff20;border-radius:20px;background:linear-gradient(125deg,#232246,#0e1428);box-shadow:0 12px 28px #0004}
+.task-card:before{content:"";position:absolute;z-index:-1;inset:0;background:radial-gradient(ellipse at 5% 5%,var(--glow),transparent 48%),linear-gradient(115deg,var(--b),transparent 75%)}
+.task-card:after{content:"";position:absolute;z-index:-1;width:140px;height:140px;left:-55px;top:-65px;border:1px solid #ffffff20;border-radius:50%;box-shadow:0 0 0 17px #ffffff08,0 0 0 37px #ffffff05}
+.cat-messages{--a:#69c9ed;--b:#153e59;--glow:#39bce74a}
+.cat-posts{--a:#c58aff;--b:#43275e;--glow:#b166ff4a}
+.cat-comments{--a:#70d9bd;--b:#174b4b;--glow:#43d5af40}
+.cat-gifts{--a:#ffc875;--b:#604025;--glow:#ffae4b4d}
+.cat-store{--a:#f4a4d0;--b:#572b50;--glow:#f276be40}
+.cat-video{--a:#85a9ff;--b:#273c72;--glow:#668fff4d}
+.cat-reactions{--a:#ff91a6;--b:#612c4a;--glow:#ff67974a}
+.cat-rooms{--a:#e1bd75;--b:#4d4427;--glow:#e5bb5b40}
+.task-card.completed{border-color:#62dfad66}.task-card.claimed{border-color:#62dfad44;opacity:.9}
+.task-inner{padding:14px}
+.task-top{display:flex;align-items:flex-start;gap:10px}
+.task-icon{width:45px;height:45px;flex:none;display:grid;place-items:center;border-radius:15px;color:var(--a);background:#ffffff17;border:1px solid #ffffff25}
 .task-icon svg{width:23px;height:23px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .task-info{flex:1;min-width:0}
 .task-title{font-size:13px;font-weight:900;line-height:1.7}
 .task-description{font-size:10px;line-height:1.9;color:#c6c4dc;margin-top:3px}
-.task-reward{
- flex:none;min-width:65px;text-align:center;padding:7px 8px;
- border-radius:12px;background:rgba(5,8,22,.28);
- border:1px solid rgba(255,255,255,.12);color:#ffdf9c;
- font-size:12px;font-weight:900;white-space:nowrap;
-}
+.task-reward{min-width:65px;text-align:center;padding:7px 6px;border-radius:12px;background:#05081655;border:1px solid #ffffff20;color:#ffdf9c;font-size:12px;font-weight:900}
 .task-reward small{display:block;font-size:8px;color:#e3d3b4}
-.task-divider{height:1px;margin:13px 0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.15),transparent)}
+.task-divider{height:1px;margin:12px 0;background:linear-gradient(90deg,transparent,#ffffff30,transparent)}
 .task-meta{display:flex;align-items:center;justify-content:space-between;gap:8px}
-.difficulty{display:inline-flex;padding:4px 9px;border-radius:20px;background:rgba(255,255,255,.09);color:#e3ddf7;font-size:9px;font-weight:900}
-.difficulty.easy{color:#85e8ba;background:rgba(82,214,164,.12)}
-.difficulty.medium{color:#f6d58a;background:rgba(241,200,117,.12)}
-.difficulty.hard{color:#ffad96;background:rgba(255,128,102,.12)}
-.difficulty.legendary{color:#e0b4ff;background:rgba(185,117,255,.15)}
+.difficulty{display:inline-flex;padding:4px 9px;border-radius:20px;background:#ffffff15;color:#e3ddf7;font-size:9px;font-weight:900}
+.difficulty.easy{color:#85e8ba;background:#52d6a41f}
+.difficulty.medium{color:#f6d58a;background:#f1c87520}
+.difficulty.hard{color:#ffad96;background:#ff806620}
 .progress-text{direction:ltr;color:#dedbef;font-size:10px;font-weight:900}
-.progress-track{height:8px;margin-top:9px;overflow:hidden;border-radius:20px;background:rgba(0,0,0,.27);border:1px solid rgba(255,255,255,.06)}
-.progress-fill{height:100%;width:0;border-radius:20px;background:linear-gradient(90deg,var(--task-a),#fff0bd);box-shadow:0 0 12px var(--task-glow);transition:width .4s ease}
+.progress-track{height:8px;margin-top:9px;overflow:hidden;border-radius:20px;background:#0005}
+.progress-fill{height:100%;width:0;border-radius:20px;background:linear-gradient(90deg,var(--a),#fff0bd);transition:width .4s}
 .task-bottom{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:12px}
 .task-category{font-size:9px;color:#c4c0dc;font-weight:800}
-.claim-button{
- min-width:112px;min-height:37px;padding:7px 12px;border-radius:11px;
- background:linear-gradient(120deg,var(--task-a),#b9a4ff);
- color:#171326;font-size:10px;font-weight:900;
- box-shadow:0 6px 16px var(--task-glow);
-}
-.claim-button:disabled{cursor:not-allowed;opacity:.55;box-shadow:none}
-.claim-button.claimed{color:#8be9bf;background:rgba(82,214,164,.12);border:1px solid rgba(82,214,164,.25);box-shadow:none}
-
-/* حالة التحميل والأخطاء */
-.state-box{
- padding:25px 15px;text-align:center;border:1px dashed rgba(255,255,255,.16);
- border-radius:19px;background:rgba(19,21,43,.72);color:var(--muted);
- font-size:11px;line-height:2.1
-}
-.state-box svg{display:block;width:31px;height:31px;margin:0 auto 9px;stroke:var(--purple);fill:none;stroke-width:1.7}
-.loading{padding:32px 15px;text-align:center;color:var(--muted);font-size:11px}
-.spinner{width:29px;height:29px;margin:0 auto 10px;border:3px solid rgba(255,255,255,.12);border-top-color:var(--cyan);border-radius:50%;animation:spin .8s linear infinite}
+.claim-button{min-width:112px;min-height:37px;padding:7px 12px;border-radius:11px;background:linear-gradient(120deg,var(--a),#b9a4ff);color:#171326;font-size:10px;font-weight:900}
+.claim-button:disabled{cursor:not-allowed;opacity:.55}
+.claim-button.claimed{color:#8be9bf;background:#52d6a41f;border:1px solid #52d6a440;box-shadow:none}
+.state-box{padding:25px 14px;text-align:center;border:1px dashed #ffffff30;border-radius:18px;background:#13152bcc;color:var(--muted);font-size:11px;line-height:2}
+.loading{padding:30px;text-align:center;color:var(--muted);font-size:11px}
+.spinner{width:28px;height:28px;margin:0 auto 10px;border:3px solid #ffffff20;border-top-color:var(--cyan);border-radius:50%;animation:spin .8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
-.claim-button.retry{margin-top:10px;background:linear-gradient(120deg,#8e73ed,#68cbd1);color:#101323}
-.message{
- display:none;position:fixed;z-index:30;top:max(82px,env(safe-area-inset-top));
- left:14px;right:14px;max-width:450px;margin:auto;padding:12px 15px;
- border-radius:13px;font-size:11px;font-weight:800;text-align:center;
- background:#24243d;border:1px solid var(--line);box-shadow:0 12px 30px rgba(0,0,0,.35)
-}
-.message.show{display:block}
-.message.success{border-color:rgba(82,214,164,.35);color:#8de7c1}
-.message.error{border-color:rgba(255,113,135,.35);color:#ff9cab}
-
-/* تذييل توضيحي */
-.info-panel{
- position:relative;overflow:hidden;margin-top:20px;padding:17px;
- border-radius:19px;border:1px solid rgba(165,138,255,.2);
- background:linear-gradient(120deg,rgba(44,35,81,.72),rgba(19,38,53,.72));
-}
+.retry{margin-top:10px;background:linear-gradient(120deg,#8e73ed,#68cbd1)}
+.info-panel{margin-top:18px;padding:16px;border-radius:18px;border:1px solid #a58aff33;background:linear-gradient(120deg,#2c235d88,#13263588)}
 .info-panel h3{font-size:12px;font-weight:900;color:#e6ddff}
 .info-panel p{margin-top:5px;color:#c0bdd5;font-size:10px;line-height:2}
-.info-panel .info-icon{float:left;width:33px;height:33px;display:grid;place-items:center;border-radius:11px;background:rgba(255,255,255,.09)}
-.info-panel svg{width:18px;height:18px;stroke:var(--gold);fill:none;stroke-width:1.8}
-
-.bottom-nav{
- flex:none;min-height:64px;padding:8px 10px;padding-bottom:max(8px,env(safe-area-inset-bottom));
- display:flex;align-items:center;justify-content:space-around;gap:5px;
- border-top:1px solid var(--line);background:rgba(9,10,25,.96);
- backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)
-}
-.nav-item{min-width:0;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:#8987a5;font-size:9px;font-weight:800}
+.message{display:none;position:fixed;z-index:30;top:max(78px,env(safe-area-inset-top));left:14px;right:14px;max-width:450px;margin:auto;padding:12px 15px;border-radius:13px;font-size:11px;font-weight:800;text-align:center;background:#24243d;border:1px solid var(--line);box-shadow:0 12px 30px #0006}
+.message.show{display:block}.message.success{border-color:#52d6a455;color:#8de7c1}.message.error{border-color:#ff718755;color:#ff9cab}
+.bottom-nav{flex:none;min-height:62px;padding:8px 10px;padding-bottom:max(8px,env(safe-area-inset-bottom));display:flex;align-items:center;justify-content:space-around;gap:5px;border-top:1px solid var(--line);background:#090a19f5;backdrop-filter:blur(20px)}
+.nav-item{min-width:0;flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;color:#8987a5;font-size:9px;font-weight:800}
 .nav-item svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.8}
 .nav-item.active{color:#bcaaff}
-@media(min-width:720px){
- .scroll-area{padding:24px 25px 35px}
- .hero{padding:30px;min-height:260px}
- .task-list{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
- .task-card{min-width:0}
- .hero-art{left:55px;bottom:30px;transform:scale(1.25)}
-}
-@media(max-width:390px){
- .topbar{padding-right:11px;padding-left:11px}
- .scroll-area{padding-right:10px;padding-left:10px}
- .hero{padding:20px 15px;min-height:235px}
- .hero-art{left:-7px;bottom:3px;transform:scale(.82);opacity:.7}
- .summary-card{padding:11px 8px}
- .summary-value{font-size:18px}
- .task-inner{padding:13px}
- .task-reward{min-width:58px;font-size:10px}
- .task-title{font-size:12px}
-}
+@media(min-width:720px){.scroll-area{padding:24px 25px}.hero{padding:30px;min-height:240px}.task-list{grid-template-columns:repeat(2,minmax(0,1fr))}.hero-art{left:55px;bottom:35px;transform:scale(1.2)}}
+@media(max-width:390px){.scroll-area{padding-right:10px;padding-left:10px}.hero{padding:19px 14px}.hero-art{left:-10px;opacity:.55;transform:scale(.8)}.task-inner{padding:12px}.task-title{font-size:12px}}
 </style>
 </head>
-
 <body>
 <div class="background"></div>
 <div class="page">
-
 <header class="topbar">
  <div class="brand">
-  <div class="brand-icon">
-   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-    <path d="M12 2.8 14.5 9.5 21.2 12 14.5 14.5 12 21.2 9.5 14.5 2.8 12 9.5 9.5 12 2.8Z"/>
-    <path d="m18.5 2 .7 2.1 2.1.7-2.1.7-.7 2.1-.7-2.1-2.1-.7 2.1-.7.7-2.1Z"/>
-   </svg>
-  </div>
-  <div>
-   <div class="brand-name">HANOON WORLD</div>
-   <div class="brand-caption">MISSIONS & ACHIEVEMENTS</div>
-  </div>
+  <div class="brand-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2.8 14.5 9.5 21.2 12 14.5 14.5 12 21.2 9.5 14.5 2.8 12 9.5 9.5 12 2.8Z"/><path d="m18.5 2 .7 2.1 2.1.7-2.1.7-.7 2.1-.7-2.1-2.1-.7 2.1-.7.7-2.1Z"/></svg></div>
+  <div><div class="brand-name">HANOON WORLD</div><div class="brand-caption">MISSIONS & ACHIEVEMENTS</div></div>
  </div>
  <div class="header-actions">
-  <a class="icon-button" href="wallet.html" aria-label="المحفظة">
-   <svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="15" rx="3"/><path d="M3 9V6a3 3 0 0 1 3-3h12"/><path d="M16 14h5"/><circle cx="16" cy="14" r=".8"/></svg>
-  </a>
-  <a class="icon-button" href="home.html" aria-label="الرئيسية">
-   <svg viewBox="0 0 24 24"><path d="m3 10 9-7 9 7"/><path d="M5 9v11h14V9"/><path d="M9 20v-6h6v6"/></svg>
-  </a>
+  <a class="icon-button" href="wallet.html" aria-label="المحفظة"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="15" rx="3"/><path d="M3 9V6a3 3 0 0 1 3-3h12M16 14h5"/><circle cx="16" cy="14" r=".8"/></svg></a>
+  <a class="icon-button" href="home.html" aria-label="الرئيسية"><svg viewBox="0 0 24 24"><path d="m3 10 9-7 9 7M5 9v11h14V9M9 20v-6h6v6"/></svg></a>
  </div>
 </header>
 
 <main class="scroll-area">
  <section class="hero">
-  <div class="hero-content">
-   <div class="hero-kicker">
-    <svg viewBox="0 0 24 24"><path d="m12 2 2.5 7.5L22 12l-7.5 2.5L12 22l-2.5-7.5L2 12l7.5-2.5L12 2Z"/></svg>
-    تحديات وإنجازات هانون
-   </div>
-   <h1>عالم المهام</h1>
-   <p>كل يوم فرصة جديدة للإنجاز. أكمل التحديات، اجمع مكافآتك، واصنع سجل إنجازاتك داخل HANOON WORLD.</p>
-   <div class="hero-meta">
-    <div class="meta-pill">
-     <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg>
-     <span id="todayLabel">جاري تحميل التاريخ...</span>
-    </div>
-    <div class="meta-pill">
-     <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
-     <span id="cycleLabel">دورة المهام</span>
-    </div>
-   </div>
+  <div class="hero-kicker"><svg viewBox="0 0 24 24"><path d="m12 2 2.5 7.5L22 12l-7.5 2.5L12 22l-2.5-7.5L2 12l7.5-2.5L12 2Z"/></svg> تحديات وإنجازات هانون</div>
+  <h1>عالم المهام</h1>
+  <p>أنجز التحديات اليومية والأسبوعية والشهرية، اجمع مكافآتك، واصنع سجل إنجازاتك داخل HANOON WORLD.</p>
+  <div class="hero-meta">
+   <div class="meta-pill" id="todayLabel">جاري تحميل التاريخ...</div>
+   <div class="meta-pill" id="cycleLabel">دورة المهام</div>
   </div>
-  <div class="hero-art" aria-hidden="true">
-   <div class="orbit"></div>
-   <div class="gem">
-    <svg viewBox="0 0 24 24"><path d="m12 2 8 7-8 13L4 9l8-7Z"/><path d="M4 9h16M9 9l3 13 3-13M8 2l1 7M16 2l-1 7"/></svg>
-   </div>
-  </div>
+  <div class="hero-art"><svg viewBox="0 0 24 24"><path d="m12 2 8 7-8 13L4 9l8-7Z"/><path d="M4 9h16M9 9l3 13 3-13M8 2l1 7M16 2l-1 7"/></svg></div>
  </section>
 
  <section class="summary-grid">
   <div class="summary-card">
    <div class="summary-icon"><svg viewBox="0 0 24 24"><path d="m12 3 2.7 5.5 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1-4.4-4.3 6.1-.9L12 3Z"/></svg></div>
-   <div class="summary-value" id="completedCount">0</div>
-   <div class="summary-label">تم استلامها</div>
+   <div class="summary-value" id="completedCount">0</div><div class="summary-label">تم استلامها</div>
   </div>
   <div class="summary-card">
    <div class="summary-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
-   <div class="summary-value" id="remainingCount">0</div>
-   <div class="summary-label">قيد الإنجاز</div>
+   <div class="summary-value" id="remainingCount">0</div><div class="summary-label">قيد الإنجاز</div>
   </div>
   <div class="summary-card">
    <div class="summary-icon"><svg viewBox="0 0 24 24"><path d="M12 2v20M17 6H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
-   <div class="summary-value" id="availableRewards">0</div>
-   <div class="summary-label">عملات جاهزة</div>
+   <div class="summary-value" id="availableRewards">0</div><div class="summary-label">عملات جاهزة</div>
   </div>
  </section>
 
  <div class="section-heading">
-  <div class="section-mark"><h2>تحديات اليوم</h2></div>
+  <div class="section-mark"><h2 id="sectionTitle">المهام اليومية</h2></div>
   <span id="taskCount">جاري التحميل</span>
+ </div>
+
+ <div class="tabs" role="tablist" aria-label="أنواع المهام">
+  <button class="tab active" data-period="daily">يومية<span>تتجدد كل يوم</span></button>
+  <button class="tab" data-period="weekly">أسبوعية<span>تحديات الأسبوع</span></button>
+  <button class="tab" data-period="monthly">شهرية<span>إنجازات الشهر</span></button>
  </div>
 
  <section id="taskList" class="task-list">
@@ -366,48 +165,52 @@ a{text-decoration:none}
  </section>
 
  <section class="info-panel">
-  <div class="info-icon">
-   <svg viewBox="0 0 24 24"><path d="M12 3v18M3 12h18"/><circle cx="12" cy="12" r="9"/></svg>
-  </div>
   <h3>كيف تحصل على مكافآتك؟</h3>
-  <p>يتم احتساب التقدم من نشاطك الفعلي داخل الموقع. عندما تحقق شروط المهمة سيتفعّل زر استلام المكافأة، ويمكن استلام مكافأة كل مهمة مرة واحدة فقط.</p>
+  <p>يتم احتساب تقدمك من نشاطك الفعلي داخل الموقع. عند تحقيق شروط المهمة سيتفعّل زر استلام المكافأة. كل مهمة يمكن استلام مكافأتها مرة واحدة فقط خلال دورتها.</p>
  </section>
 </main>
 
 <nav class="bottom-nav">
- <a class="nav-item" href="home.html"><svg viewBox="0 0 24 24"><path d="m3 10 9-7 9 7"/><path d="M5 9v11h14V9"/><path d="M9 20v-6h6v6"/></svg>الرئيسية</a>
- <a class="nav-item" href="store.html"><svg viewBox="0 0 24 24"><path d="M3 8h18l-2 12H5L3 8Z"/><path d="M8 8a4 4 0 0 1 8 0"/></svg>المتجر</a>
- <a class="nav-item active" href="tasks.html"><svg viewBox="0 0 24 24"><path d="m9 12 2 2 4-4"/><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 3V2h8v1"/></svg>المهام</a>
- <a class="nav-item" href="wallet.html"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="15" rx="3"/><path d="M3 9V6a3 3 0 0 1 3-3h12"/><path d="M16 14h5"/></svg>المحفظة</a>
+ <a class="nav-item" href="home.html"><svg viewBox="0 0 24 24"><path d="m3 10 9-7 9 7M5 9v11h14V9M9 20v-6h6v6"/></svg>الرئيسية</a>
+ <a class="nav-item" href="store.html"><svg viewBox="0 0 24 24"><path d="M3 8h18l-2 12H5L3 8Z M8 8a4 4 0 0 1 8 0"/></svg>المتجر</a>
+ <a class="nav-item active" href="tasks.html"><svg viewBox="0 0 24 24"><path d="m9 12 2 2 4-4"/><rect x="4" y="3" width="16" height="18" rx="2"/></svg>المهام</a>
+ <a class="nav-item" href="wallet.html"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="15" rx="3"/><path d="M3 9V6a3 3 0 0 1 3-3h12"/></svg>المحفظة</a>
  <a class="nav-item" href="profile.html"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>حسابي</a>
 </nav>
 </div>
-
 <div id="message" class="message"></div>
 
 <script type="module">
 import { supabase } from "./supabase.js";
 
-const taskList = document.getElementById("taskList");
-const messageBox = document.getElementById("message");
-let messageTimer = null;
+const taskList=document.getElementById("taskList");
+const messageBox=document.getElementById("message");
+let currentPeriod="daily";
+let messageTimer=null;
+let loadingPeriod=false;
 
-const icons = {
+const periodNames={
+ daily:"المهام اليومية",
+ weekly:"المهام الأسبوعية",
+ monthly:"المهام الشهرية"
+};
+
+const icons={
  messages:`<svg viewBox="0 0 24 24"><path d="M21 11.5a8.4 8.4 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8A8.5 8.5 0 0 1 8.7 3.9"/></svg>`,
- posts:`<svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L8 18l-4 1 1-4Z"/><path d="m15 5 4 4"/></svg>`,
- comments:`<svg viewBox="0 0 24 24"><path d="M21 11.5a8.4 8.4 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8A8.5 8.5 0 0 1 8.7 3.9"/></svg>`,
- gifts_sent:`<svg viewBox="0 0 24 24"><path d="M20 12v10H4V12M2 7h20v5H2z"/><path d="M12 22V7M12 7H7.5a2.5 2.5 0 1 1 2.5-2.5V7Zm0 0h4.5A2.5 2.5 0 1 0 14 4.5V7Z"/></svg>`,
- store_purchases:`<svg viewBox="0 0 24 24"><path d="M3 8h18l-2 12H5L3 8Z"/><path d="M8 8a4 4 0 0 1 8 0"/></svg>`,
+ posts:`<svg viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L8 18l-4 1 1-4Z"/></svg>`,
+ comments:`<svg viewBox="0 0 24 24"><path d="M21 11.5a8.4 8.4 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7L3 21l1.9-5.7"/></svg>`,
+ gifts_sent:`<svg viewBox="0 0 24 24"><path d="M20 12v10H4V12M2 7h20v5H2zM12 22V7M12 7H7.5a2.5 2.5 0 1 1 2.5-2.5V7Zm0 0h4.5A2.5 2.5 0 1 0 14 4.5V7Z"/></svg>`,
+ store_purchases:`<svg viewBox="0 0 24 24"><path d="M3 8h18l-2 12H5L3 8ZM8 8a4 4 0 0 1 8 0"/></svg>`,
  video_minutes:`<svg viewBox="0 0 24 24"><rect x="3" y="6" width="13" height="12" rx="2"/><path d="m16 10 5-3v10l-5-3"/></svg>`,
- reactions:`<svg viewBox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z"/></svg>`,
+ reactions:`<svg viewBox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l7.8-7.5a5.5 5.5 0 0 0 1-8.9Z"/></svg>`,
  rooms_joined:`<svg viewBox="0 0 24 24"><path d="M3 10h18M5 10V6l7-3 7 3v4M5 10v10h14V10M9 20v-6h6v6"/></svg>`
 };
 
-const labels = {easy:"سهلة",medium:"متوسطة",hard:"صعبة",legendary:"أسطورية"};
-const categoryNames = {
+const labels={easy:"سهلة",medium:"متوسطة",hard:"صعبة",legendary:"أسطورية"};
+const categoryNames={
  messages:"المحادثات",posts:"المنشورات",comments:"التعليقات",
- gifts_sent:"الهدايا",store_purchases:"المتجر",video_minutes:"الفيديو",
- reactions:"التفاعلات",rooms_joined:"الغرف والألعاب"
+ gifts_sent:"الهدايا",store_purchases:"المتجر",
+ video_minutes:"الفيديو",reactions:"التفاعلات",rooms_joined:"الغرف والألعاب"
 };
 
 function showMessage(text,type="success"){
@@ -431,7 +234,7 @@ function formatDate(value){
  }).format(date);
 }
 
-function formatMonth(start,end){
+function formatRange(start,end){
  if(!start||!end)return "دورة المهام";
  const a=new Date(start+"T12:00:00");
  const b=new Date(end+"T12:00:00");
@@ -443,14 +246,13 @@ function metricForTask(task){
  const key=String(task.metric_key||"");
  if(categoryNames[key])return key;
  const taskKey=String(task.task_key||"");
- if(taskKey.includes("messages"))return "messages";
- if(taskKey.includes("post"))return "posts";
- if(taskKey.includes("comments"))return "comments";
- if(taskKey.includes("gift"))return "gifts_sent";
- if(taskKey.includes("store"))return "store_purchases";
- if(taskKey.includes("video"))return "video_minutes";
- if(taskKey.includes("reaction"))return "reactions";
- if(taskKey.includes("room"))return "rooms_joined";
+ for(const [part,metric] of [
+  ["messages","messages"],["post","posts"],["comments","comments"],
+  ["gift","gifts_sent"],["store","store_purchases"],
+  ["video","video_minutes"],["reaction","reactions"],["room","rooms_joined"]
+ ]){
+  if(taskKey.includes(part))return metric;
+ }
  return "messages";
 }
 
@@ -472,7 +274,7 @@ function renderTasks(tasks){
  document.getElementById("taskCount").textContent=list.length+" مهام";
 
  if(!list.length){
-  taskList.innerHTML=`<div class="state-box">لا توجد مهام متاحة حاليًا.</div>`;
+  taskList.innerHTML=`<div class="state-box">لا توجد مهام متاحة في هذا القسم حاليًا.</div>`;
   return;
  }
 
@@ -486,90 +288,135 @@ function renderTasks(tasks){
   const title=escapeHTML(task.title_ar||"مهمة جديدة");
   const description=escapeHTML(task.description_ar||"أنجز المطلوب للحصول على المكافأة.");
   const reward=Number(task.reward_coins||0).toLocaleString("en-US");
-  const category=categoryNames[metric]||"تحدي يومي";
+  const category=categoryNames[metric]||"تحدي";
   const buttonText=claimed?"تم الاستلام":completed?"استلام المكافأة":"لم تكتمل بعد";
   const disabled=claimed||!completed;
-  const taskClass="cat-"+metric;
+  const assignmentId=escapeHTML(task.assignment_id||task.id||"");
 
   return `
-   <article class="task-card ${taskClass} ${completed?"completed":""} ${claimed?"claimed":""}">
-    <div class="task-inner">
-     <div class="task-top">
-      <div class="task-icon">${icons[metric]||icons.messages}</div>
-      <div class="task-info">
-       <div class="task-title">${title}</div>
-       <div class="task-description">${description}</div>
-      </div>
-      <div class="task-reward">+${reward}<small>عملة</small></div>
+  <article class="task-card cat-${metric} ${completed?"completed":""} ${claimed?"claimed":""}">
+   <div class="task-inner">
+    <div class="task-top">
+     <div class="task-icon">${icons[metric]||icons.messages}</div>
+     <div class="task-info">
+      <div class="task-title">${title}</div>
+      <div class="task-description">${description}</div>
      </div>
-     <div class="task-divider"></div>
-     <div class="task-meta">
-      <span class="difficulty ${escapeHTML(task.difficulty||"")}">${labels[task.difficulty]||"مهمة"}</span>
-      <span class="progress-text">${progress} / ${target}</span>
-     </div>
-     <div class="progress-track"><div class="progress-fill" style="width:${percent}%"></div></div>
-     <div class="task-bottom">
-      <span class="task-category">${category}</span>
-      <button class="claim-button ${claimed?"claimed":""}" data-claim="${escapeHTML(task.assignment_id)}" ${disabled?"disabled":""}>${buttonText}</button>
-     </div>
+     <div class="task-reward">+${reward}<small>عملة</small></div>
     </div>
-   </article>`;
+    <div class="task-divider"></div>
+    <div class="task-meta">
+     <span class="difficulty ${escapeHTML(task.difficulty||"")}">${labels[task.difficulty]||"مهمة"}</span>
+     <span class="progress-text">${progress} / ${target}</span>
+    </div>
+    <div class="progress-track"><div class="progress-fill" style="width:${percent}%"></div></div>
+    <div class="task-bottom">
+     <span class="task-category">${category}</span>
+     <button class="claim-button ${claimed?"claimed":""}" data-claim="${assignmentId}" ${disabled?"disabled":""}>${buttonText}</button>
+    </div>
+   </div>
+  </article>`;
  }).join("");
 }
 
-async function loadTasks(){
- taskList.innerHTML=`<div class="loading"><div class="spinner"></div>جاري تحميل مهام اليوم...</div>`;
- const {data,error}=await supabase.rpc("hanoon_daily_tasks_get");
+function showLoadError(error){
+ console.error("Tasks loading error:",error);
+ taskList.innerHTML=`
+ <div class="state-box">
+  تعذر تحميل هذا القسم حاليًا.
+  <br>${escapeHTML(error?.message||"حدث خطأ غير معروف")}
+  <br><button class="claim-button retry" id="retryTasks">إعادة المحاولة</button>
+ </div>`;
+}
 
- if(error){
-  console.error("Daily tasks error:",error);
-  taskList.innerHTML=`
-   <div class="state-box">
-    تعذر تحميل المهام حاليًا.
-    <br>${escapeHTML(error.message)}
-    <br><button class="claim-button retry" id="retryTasks">إعادة المحاولة</button>
-   </div>`;
-  return;
+async function loadTasks(period=currentPeriod){
+ if(loadingPeriod)return;
+ loadingPeriod=true;
+ currentPeriod=period;
+
+ document.querySelectorAll(".tab").forEach(tab=>{
+  tab.classList.toggle("active",tab.dataset.period===period);
+ });
+
+ document.getElementById("sectionTitle").textContent=periodNames[period];
+ taskList.innerHTML=`<div class="loading"><div class="spinner"></div>جاري تحميل ${periodNames[period]}...</div>`;
+
+ try{
+  let data,error;
+
+  if(period==="daily"){
+   ({data,error}=await supabase.rpc("hanoon_daily_tasks_get"));
+  }else{
+   ({data,error}=await supabase.rpc("hanoon_period_tasks_get",{
+    p_period_type:period
+   }));
+  }
+
+  if(error)throw error;
+  if(!data)throw new Error("لم تصل بيانات المهام.");
+
+  const tasks=Array.isArray(data.tasks)?data.tasks:[];
+  const start=data.period_start||data.month_start;
+  const end=data.period_end||data.month_end;
+
+  if(period==="daily"){
+   document.getElementById("todayLabel").textContent=formatDate(data.task_date)||"مهام اليوم";
+  }else{
+   document.getElementById("todayLabel").textContent=period==="weekly"?"التحديات الأسبوعية":"التحديات الشهرية";
+  }
+
+  document.getElementById("cycleLabel").textContent=formatRange(start,end);
+  renderTasks(tasks);
+ }catch(error){
+  showLoadError(error);
+ }finally{
+  loadingPeriod=false;
  }
-
- if(!data){
-  taskList.innerHTML=`<div class="state-box">لم تصل بيانات المهام. حاول مرة أخرى.</div>`;
-  return;
- }
-
- document.getElementById("todayLabel").textContent=formatDate(data.task_date);
- document.getElementById("cycleLabel").textContent=formatMonth(data.month_start,data.month_end);
- renderTasks(data.tasks);
 }
 
 async function claimTask(assignmentId,button){
  if(!assignmentId||button.disabled)return;
+
  const oldText=button.textContent;
  button.disabled=true;
  button.textContent="جارٍ الاستلام...";
 
- const {data,error}=await supabase.rpc("hanoon_daily_task_claim",{
-  p_assignment_id:assignmentId
- });
+ try{
+  let data,error;
 
- if(error){
-  console.error("Task claim error:",error);
+  if(currentPeriod==="daily"){
+   ({data,error}=await supabase.rpc("hanoon_daily_task_claim",{
+    p_assignment_id:assignmentId
+   }));
+  }else{
+   ({data,error}=await supabase.rpc("hanoon_period_task_claim",{
+    p_assignment_id:assignmentId
+   }));
+  }
+
+  if(error)throw error;
+
+  if(!data?.success){
+   throw new Error(data?.message||"لم يتم استلام المكافأة. تأكد من إكمال المهمة.");
+  }
+
+  showMessage("تم استلام "+Number(data.reward_coins||0).toLocaleString("en-US")+" عملة بنجاح!");
+  await loadTasks(currentPeriod);
+ }catch(error){
+  console.error("Claim error:",error);
   button.disabled=false;
   button.textContent=oldText;
   showMessage(error.message||"تعذر استلام المكافأة.","error");
-  return;
  }
-
- if(!data?.success){
-  button.disabled=false;
-  button.textContent=oldText;
-  showMessage("لم يتم استلام المكافأة.","error");
-  return;
- }
-
- showMessage("تم استلام "+Number(data.reward_coins||0).toLocaleString("en-US")+" عملة بنجاح!");
- await loadTasks();
 }
+
+document.querySelectorAll(".tab").forEach(tab=>{
+ tab.addEventListener("click",()=>{
+  if(tab.dataset.period!==currentPeriod){
+   loadTasks(tab.dataset.period);
+  }
+ });
+});
 
 taskList.addEventListener("click",async event=>{
  const button=event.target.closest("[data-claim]");
@@ -577,17 +424,24 @@ taskList.addEventListener("click",async event=>{
   await claimTask(button.dataset.claim,button);
   return;
  }
- if(event.target.id==="retryTasks")await loadTasks();
+ if(event.target.id==="retryTasks"){
+  loadTasks(currentPeriod);
+ }
 });
 
 async function initialize(){
- const {data,error}=await supabase.auth.getSession();
- if(error||!data?.session){
-  window.location.replace("index.html");
-  return;
+ try{
+  const {data,error}=await supabase.auth.getSession();
+  if(error||!data?.session){
+   window.location.replace("index.html");
+   return;
+  }
+  await loadTasks("daily");
+ }catch(error){
+  showLoadError(error);
  }
- await loadTasks();
 }
+
 initialize();
 </script>
 </body>
