@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -294,6 +293,33 @@
       stroke:currentColor;
       stroke-width:2;
     }
+
+    /* شارة التوثيق الزرقاء */
+    .verified-badge{
+      display:inline-flex;
+      width:23px;
+      height:23px;
+      margin-right:8px;
+      vertical-align:middle;
+      align-items:center;
+      justify-content:center;
+      border-radius:50%;
+      background:#2389f5;
+      color:#fff;
+      box-shadow:0 3px 12px #2389f555;
+    }
+
+    .verified-badge svg{
+      width:15px;
+      height:15px;
+      fill:none;
+      stroke:currentColor;
+      stroke-width:2.8;
+      stroke-linecap:round;
+      stroke-linejoin:round;
+    }
+
+    .verified-badge[hidden]{display:none!important}
 
     .full-name{
       margin:10px 0 0;
@@ -736,7 +762,7 @@
               عضو في مجتمع هنون
             </div>
 
-            <h1 class="full-name" id="fullName">—</h1>
+            <h1 class="full-name" id="fullName">—<span class="verified-badge" id="verifiedBadge" hidden aria-label="حساب موثق" title="حساب موثق"><svg viewBox="0 0 24 24"><path d="m5 12 4.2 4.2L19 6.8"/></svg></span></h1>
             <div class="username" id="username">—</div>
             <p class="bio" id="bio" hidden></p>
 
@@ -965,8 +991,18 @@
     function renderProfile(member){
       state.member = member;
 
-      $("fullName").textContent =
+      const fullName = $("fullName");
+      const verifiedBadge = $("verifiedBadge");
+
+      fullName.textContent =
         member.full_name || member.username || "عضو هنون";
+
+      fullName.appendChild(verifiedBadge);
+
+      verifiedBadge.hidden = !(
+        member.id === "a4450f5b-05ee-4476-82e0-9e064d6df331" ||
+        member.is_verified === true
+      );
 
       $("username").textContent = member.username
         ? "@" + member.username
@@ -1033,7 +1069,7 @@
 
       const directoryResult = await db
         .from("member_directory")
-        .select("id,username,member_code,full_name,avatar_path,bio,hobbies,reading_interests,created_at")
+        .select("id,username,member_code,full_name,avatar_path,bio,hobbies,reading_interests,created_at,is_verified")
         .eq("id",memberId)
         .maybeSingle();
 
@@ -1054,7 +1090,7 @@
 
       const profileResult = await db
         .from("profiles")
-        .select("id,username,member_code,full_name,avatar_path,cover_path,bio,hobbies,reading_interests,created_at,profile_completed,is_private")
+        .select("id,username,member_code,full_name,avatar_path,cover_path,bio,hobbies,reading_interests,created_at,profile_completed,is_private,is_verified")
         .eq("id",memberId)
         .maybeSingle();
 
