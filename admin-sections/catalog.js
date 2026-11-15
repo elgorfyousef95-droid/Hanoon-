@@ -1,3 +1,4 @@
+
 const esc = value => String(value ?? "").replace(/[&<>"']/g, c => ({
   "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
 }[c]));
@@ -38,6 +39,12 @@ const styles = `
 .hanoon-catalog .item-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px}
 .hanoon-catalog .message{min-height:20px;color:#f1d18e;font-size:12px;margin-top:10px}
 .hanoon-catalog .empty{padding:18px;border:1px dashed #b58ac766;border-radius:12px;color:#cbb9da;font-size:12px;text-align:center}
+.hanoon-catalog .upload-box{display:grid;grid-template-columns:100px 1fr;gap:13px;align-items:center;padding:13px;border:1px dashed #d8b56d88;border-radius:15px;background:linear-gradient(145deg,#2a1a35,#120c1b)}
+.hanoon-catalog .preview{width:100px;height:100px;object-fit:contain;border-radius:13px;background:#120c1b;border:1px solid #d6b46f77}
+.hanoon-catalog .file-pick{display:block;padding:11px;border:1px solid #bd91dc66;border-radius:11px;background:#251633;color:#f5e8ff}
+.hanoon-catalog .file-pick input{display:block;width:100%;margin-top:8px;font-size:10px}
+.hanoon-catalog .hint{font-size:10px;color:#bba9cb;line-height:1.7;margin-top:7px}
+@media(max-width:620px){.hanoon-catalog .upload-box{grid-template-columns:80px 1fr}.hanoon-catalog .preview{width:80px;height:80px}}
 @media(max-width:620px){.hanoon-catalog .form,.hanoon-catalog .list{grid-template-columns:1fr}.hanoon-catalog .catalog-hero{padding:18px}}
 `;
 
@@ -113,11 +120,35 @@ export async function renderCatalogSection({root,supabase,sessionToken}){
   const publicImage=path=>{
     if(!path)return "";
     if(/^https?:\/\//i.test(path))return path;
-
-    return supabase.storage
-      .from("world-store-assets")
-      .getPublicUrl(path).data?.publicUrl||"";
+    return supabase.storage.from("world-store-assets").getPublicUrl(path).data?.publicUrl||"";
   };
+
+  async function uploadImage(file,folder){
+    if(!["image/png","image/jpeg","image/webp","image/gif"].includes(file.type)||file.size>10*1024*1024)
+      throw new Error("اختر PNG أو JPG أو WEBP أو GIF بحجم لا يتجاوز 10 ميجابايت.");
+    const form=new FormData();form.append("file",file);form.append("folder",folder);
+    const {data,error}=await supabase.functions.invoke("admin-upload-store-asset",{body:form,headers:{"x-admin-session":sessionToken}});
+    if(error)throw new Error(error.message||"تعذر رفع الصورة.");
+    if(!data?.ok||!data?.path)throw new Error(data?.error||"تعذر استلام مسار الصورة.");
+    return data.path;
+  }
+
+  function imagePicker(path,label){
+    const url=publicImage(path)||"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Crect width='100%25' height='100%25' fill='%231b1228'/%3E%3Cpath d='M20 70l22-25 17 17 11-13 15 21' fill='none' stroke='%23e9c77d' stroke-width='4'/%3E%3Ccircle cx='35' cy='30' r='8' fill='%23a34dff'/%3E%3C/svg%3E";
+    return `
+      <div class="field wide"><label>${label}</label>
+        <div class="upload-box">
+          <img class="preview" id="catalogImagePreview" src="${esc(url)}" alt="معاينة الصورة">
+          <div>
+            <label class="file-pick">اختيار صورة من الجهاز
+              <input id="catalogImageFile" type="file" accept="image/png,image/jpeg,image/webp,image/gif">
+            </label>
+            <div class="hint">PNG / JPG / WEBP / GIF — حتى 10 ميجابايت. ستظهر المعاينة قبل الحفظ.</div>
+            <input type="hidden" name="image_path" value="${esc(path||"")}">
+          </div>
+        </div>
+      </div>`;
+  }
 
   function field(name,label,value="",type="text",wide=false){
     return `
@@ -158,7 +189,7 @@ export async function renderCatalogSection({root,supabase,sessionToken}){
       html+=field("name_ar","اسم الهدية بالعربية",f.name_ar||"");
       html+=area("description_ar","وصف الهدية",f.description_ar||"");
       html+=field("price_gems","السعر بالجواهر",f.price_gems??1,"number");
-      html+=field("image_path","مسار صورة الهدية",f.image_path||"");
+      html+=imagePicker(f.image_path,"صورة الهدية الرئيسية");
       html+=field("animation_path","مسار الحركة أو GIF",f.animation_path||"");
       html+=field("sort_order","ترتيب العرض",f.sort_order??0,"number");
       html+=check("is_active","إظهار الهدية للأعضاء",f.is_active!==false);
@@ -172,7 +203,7 @@ export async function renderCatalogSection({root,supabase,sessionToken}){
       html+=field("price_coins","السعر بالعملات",f.price_coins??0,"number");
       html+=field("price_gems","السعر بالجواهر",f.price_gems??0,"number");
       html+=field("stock","المخزون (اتركه فارغًا للمفتوح)",f.stock??"","number");
-      html+=field("image_path","مسار الصورة",f.image_path||"");
+      html+=imagePicker(f.image_path,"صورة المنتج");
       html+=field("asset_path","مسار الملف الأساسي",f.asset_path||"");
       html+=field("preview_path","مسار المعاينة",f.preview_path||"");
       html+=field("sound_path","مسار الصوت",f.sound_path||"");
@@ -182,6 +213,16 @@ export async function renderCatalogSection({root,supabase,sessionToken}){
     }
 
     $("catalogFields").innerHTML=html;
+    $("catalogImageFile").addEventListener("change",()=>{
+      const file=$("catalogImageFile").files?.[0];if(!file)return;
+      if(!["image/png","image/jpeg","image/webp","image/gif"].includes(file.type)||file.size>10*1024*1024){
+        message("صيغة الصورة غير مدعومة أو حجمها أكبر من 10 ميجابايت.",true);$("catalogImageFile").value="";return;
+      }
+      const preview=$("catalogImagePreview");
+      if(preview._objectUrl)URL.revokeObjectURL(preview._objectUrl);
+      preview._objectUrl=URL.createObjectURL(file);preview.src=preview._objectUrl;
+      message("تم اختيار الصورة. اضغط حفظ لرفعها إلى المنصة.");
+    });
     $("editorPanel").scrollIntoView({behavior:"smooth",block:"start"});
   }
 
@@ -320,6 +361,7 @@ export async function renderCatalogSection({root,supabase,sessionToken}){
     if(busy)return;
 
     const payload=readForm();
+    const imageFile=$("catalogImageFile")?.files?.[0];
 
     if(!payload.slug||!/^[a-z0-9][a-z0-9_-]{1,59}$/.test(payload.slug)){
       message("اكتب معرّفًا إنجليزيًا صحيحًا دون مسافات.",true);
@@ -342,11 +384,17 @@ export async function renderCatalogSection({root,supabase,sessionToken}){
       return;
     }
 
+    if(catalog==="gift"&&!imageFile&&!payload.image_path){
+      message("اختَر صورة للهدية من جهازك قبل الحفظ.",true);
+      return;
+    }
+
     busy=true;
     $("saveItem").disabled=true;
-    message("جارٍ حفظ العنصر...");
+    message(imageFile?"جارٍ رفع الصورة ثم حفظ العنصر...":"جارٍ حفظ العنصر...");
 
     try{
+      if(imageFile)payload.image_path=await uploadImage(imageFile,catalog==="gift"?"gifts":"store");
       await rpc("save",payload);
       if(destroyed)return;
 
