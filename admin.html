@@ -1,1653 +1,952 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
-<meta name="theme-color" content="#090711">
-<title>مركز تحكم هَنون | HANOON WORLD</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#090510">
+<title>HANOON WORLD | الإدارة</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
 <style>
-:root{--bg:#090711;--panel:#171326ed;--line:#ffffff20;--text:#f8f5ff;--muted:#b9afca;--purple:#b18aff;--green:#53d6a2;--red:#ff7188;--blue:#1689e8}
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{margin:0;width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:Cairo,sans-serif}
-button,input,textarea,select{font:inherit}button{cursor:pointer}[hidden]{display:none!important}
-svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-.app{position:fixed;inset:0;background:radial-gradient(ellipse at 15% 10%,#39235a55,transparent 40%),radial-gradient(ellipse at 90% 90%,#193c4650,transparent 45%),#090711;overflow:hidden}
-.topbar{height:66px;position:absolute;inset:0 0 auto;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:0 18px;background:#080610e8;border-bottom:1px solid var(--line);backdrop-filter:blur(20px)}
-.brand{display:flex;align-items:center;gap:10px}.brand-mark{width:40px;height:40px;display:grid;place-items:center;border-radius:13px;background:linear-gradient(145deg,#d0b7ff,#7650c9);color:#171128}.brand-mark svg{stroke:#171128}.brand-name{font-size:13px;font-weight:900;letter-spacing:1px}.brand-sub{font-size:9px;color:#b5a7d4;letter-spacing:2px}
-.top-actions{display:flex;align-items:center;gap:8px}.admin-label{padding:7px 12px;border:1px solid #b18aff55;border-radius:30px;background:#a58aff20;color:#e0d0ff;font-size:10px;font-weight:900}
-.icon-btn{width:40px;height:40px;display:grid;place-items:center;border:1px solid var(--line);border-radius:12px;background:#ffffff0c;color:white}
-.layout{position:absolute;inset:66px 0 0}.sidebar{position:absolute;top:0;right:0;bottom:0;width:248px;padding:15px 13px;overflow-y:auto;background:#0a0815f2;border-left:1px solid var(--line);z-index:60;backdrop-filter:blur(22px)}
-.side-caption{padding:9px 12px;color:#a99abd;font-size:9px;font-weight:900;letter-spacing:1px}
-.nav-btn{width:100%;min-height:46px;display:flex;align-items:center;gap:11px;padding:0 12px;margin:4px 0;border:1px solid transparent;border-radius:12px;background:transparent;color:#d0c8df;text-align:right;font-size:12px;font-weight:800;text-decoration:none}
-.nav-btn.active,.nav-btn:hover{border-color:#b18aff55;background:#a77aff22;color:#f1e7ff}
-.nav-icon{width:29px;height:29px;display:grid;place-items:center;border-radius:9px;background:#b18aff18;color:#cbb2ff;flex-shrink:0}.nav-icon svg{width:17px;height:17px}
-.side-separator{height:1px;background:var(--line);margin:13px 7px}.sidebar-bottom{margin:20px 5px 0;padding:13px;border:1px solid var(--line);border-radius:14px;background:#ffffff08}.sidebar-bottom strong{font-size:11px}.sidebar-bottom p{margin:6px 0 0;color:var(--muted);font-size:10px;line-height:1.9}
-.main{position:absolute;top:0;right:248px;left:0;bottom:0;overflow-y:auto;overflow-x:hidden;padding:23px clamp(12px,3vw,34px) 35px;overscroll-behavior:contain}
-.view{display:none}.view.active{display:block}
-.page-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:19px}.eyebrow{color:#c3a4ff;font-size:10px;font-weight:900;letter-spacing:1px}.page-head h1{font-size:clamp(21px,3vw,28px);margin:5px 0 3px;font-weight:900}.page-head p{margin:0;color:#c0b6d1;font-size:11px;line-height:1.8}
-.live-status{display:flex;align-items:center;gap:7px;padding:7px 11px;border:1px solid #53d6a255;border-radius:30px;background:#53d6a218;color:#a9f2d2;font-size:10px;font-weight:800;white-space:nowrap}.live-status i{width:7px;height:7px;border-radius:50%;background:var(--green)}
-.panel,.stat-card,.welcome,.form-panel{border:1px solid var(--line);background:var(--panel);backdrop-filter:blur(18px);box-shadow:0 12px 35px #0002}
-.panel,.form-panel{padding:17px;border-radius:17px}.panel-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:13px}.panel-head h3{font-size:13px;margin:0;font-weight:900}.panel-head span{font-size:9px;color:#b6abc9}
-.admin-profile{display:grid;grid-template-columns:120px 1fr;gap:17px;padding:17px;border:1px solid #1689e877;border-radius:19px;background:linear-gradient(115deg,#142d4cbb,#211638e8);margin-bottom:17px;overflow:hidden}
-.admin-cover{grid-column:1/-1;height:90px;margin:-17px -17px -54px;opacity:.55;background:linear-gradient(120deg,#3976b7,#64439a);background-size:cover;background-position:center}
-.admin-avatar{width:100px;height:100px;border:4px solid #171326;border-radius:25px;object-fit:cover;background:#28203b;z-index:1}
-.admin-ident{align-self:center;min-width:0;z-index:1}.admin-ident h2{font-size:18px;margin:0 0 5px}.admin-ident p{margin:3px 0;color:#d0c6df;font-size:10px;overflow-wrap:anywhere}
-.verified-mark{display:inline-flex;vertical-align:middle;align-items:center;justify-content:center;width:18px;height:18px;margin-right:5px;border-radius:50%;background:var(--blue);color:#fff}
-.verified-mark svg{width:12px;height:12px;stroke:#fff;stroke-width:2.8}
-.admin-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}.admin-tag{padding:4px 8px;border:1px solid #ffffff27;border-radius:20px;background:#ffffff12;color:#eee7ff;font-size:9px}
-.admin-data{grid-column:1/-1;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.admin-data div{padding:9px;border:1px solid #ffffff20;border-radius:10px;background:#08061055;min-width:0}.admin-data small{display:block;color:#bdb2cf;font-size:9px}.admin-data strong{display:block;margin-top:4px;font-size:10px;overflow-wrap:anywhere}
-.welcome{display:flex;align-items:center;justify-content:space-between;gap:15px;padding:20px;border-color:#b18aff55;border-radius:18px;margin-bottom:15px}.welcome h2{margin:0;font-size:17px}.welcome p{margin:7px 0 0;color:#d0c5df;font-size:11px;line-height:2}.welcome-icon{width:52px;height:52px;display:grid;place-items:center;border:1px solid #d4c2ff65;border-radius:16px;background:#a58aff25;color:#e1d1ff;flex-shrink:0}
-.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin-bottom:15px}.stat-card{min-height:90px;padding:12px;border-radius:14px}.stat-name{font-size:10px;color:#c2b7d3;font-weight:800;margin-top:8px}.stat-value{font-size:13px;font-weight:900;margin-top:3px}.stat-icon{width:30px;height:30px;display:grid;place-items:center;border-radius:10px;background:#a58aff24;color:#d1baff}
-.content-grid{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(210px,.8fr);gap:12px}.quick-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.quick-action{min-height:67px;display:flex;align-items:center;gap:9px;padding:10px;border:1px solid var(--line);border-radius:12px;background:#ffffff09;text-align:right;color:var(--text)}.quick-action strong{display:block;font-size:11px}.quick-action small{display:block;margin-top:3px;color:var(--muted);font-size:9px}.q-icon{width:32px;height:32px;display:grid;place-items:center;border-radius:10px;background:#a58aff20;color:#d2baff}
-.activity-empty,.member-empty{padding:20px 8px;text-align:center;color:#bdb2cf;font-size:11px;line-height:2}.section-title{margin:0 0 5px;font-size:19px;font-weight:900}.section-description{margin:0 0 15px;color:#c0b6d1;font-size:11px;line-height:2}
-.form-layout{display:grid;grid-template-columns:minmax(0,1fr) 270px;gap:13px;align-items:start}.field{margin-bottom:13px}.field label{display:block;margin-bottom:6px;color:#e1d8ee;font-size:11px;font-weight:800}.field input,.field textarea,.field select,.member-tools input{width:100%;min-height:43px;padding:10px 12px;border:1px solid #ffffff20;border-radius:11px;outline:none;background:#080710d9;color:var(--text);font-size:12px}.field textarea{min-height:110px;resize:vertical;line-height:1.9}.field-hint{margin-top:5px;color:#aaa0bd;font-size:9px}
-.primary-btn{min-height:43px;display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:0 16px;border:0;border-radius:11px;background:linear-gradient(110deg,#c5a6ff,#8055d9);color:#171128;font-size:11px;font-weight:900}.primary-btn:disabled{opacity:.55;cursor:not-allowed}.secondary-btn{min-height:38px;padding:0 12px;border:1px solid var(--line);border-radius:10px;background:#ffffff0c;color:#eee8f8;font-size:10px;font-weight:800}
-.notice{padding:10px 12px;border:1px solid #e8c98d45;border-radius:11px;background:#e8c98d12;color:#f0dcae;font-size:10px;line-height:2;margin-bottom:13px}
-.preview-card{padding:16px;border:1px solid #b18aff44;border-radius:15px;background:#1a132aeb}.preview-top{margin-bottom:13px}.preview-top strong{font-size:11px}.preview-top small{display:block;color:var(--muted);font-size:9px;margin-top:3px}.preview-label{font-size:9px;color:#c2a6f3;font-weight:900;margin-bottom:7px}.preview-title{font-size:14px;font-weight:900;overflow-wrap:anywhere}.preview-body{margin-top:8px;color:#d0c9dc;font-size:11px;line-height:2;white-space:pre-wrap}.preview-destination{margin-top:12px;padding-top:10px;border-top:1px solid var(--line);font-size:9px;color:#bdb2cf}
-.member-tools{display:flex;gap:8px;align-items:center;margin-bottom:13px}.member-tools input{flex:1;min-width:0}.member-results{display:grid;gap:8px}.member-row{display:flex;align-items:center;gap:10px;padding:11px;border:1px solid var(--line);border-radius:13px;background:#ffffff09;min-width:0}.member-avatar{width:46px;height:46px;flex-shrink:0;display:grid;place-items:center;overflow:hidden;border-radius:13px;background:#a58aff2a;color:#e0cfff;font-weight:900}.member-avatar img{width:100%;height:100%;object-fit:cover}.member-info{flex:1;min-width:0}.member-info strong{display:block;font-size:12px;overflow-wrap:anywhere}.member-info small{display:block;margin-top:3px;color:#b8aec9;font-size:10px;overflow-wrap:anywhere}.member-meta{display:flex;flex-wrap:wrap;gap:5px;margin-top:5px}.member-tag{padding:3px 7px;border:1px solid var(--line);border-radius:20px;color:#d0c6df;font-size:9px}
-.member-actions{display:flex;gap:6px;flex-shrink:0}.member-actions button{min-height:35px;padding:0 9px;border-radius:9px;font-size:9px;font-weight:900}.member-open{border:1px solid #b18aff55;background:#a58aff20;color:#e0d0ff}.member-message{border:1px solid #53d6a255;background:#53d6a218;color:#a9f2d2}.member-verify{border:1px solid #55d6a277;background:#53d6a218;color:#a9f2d2}.member-verify.remove{border-color:#ff718866;background:#ff71881a;color:#ffb0bd}.member-verify:disabled{opacity:.5}
-.member-pagination{display:flex;align-items:center;justify-content:space-between;gap:9px;margin-top:13px;color:#bdb2cf;font-size:10px}
-.member-detail,.message-compose,.access-screen,.dialog-backdrop{position:fixed;inset:0;z-index:150;display:flex;align-items:center;justify-content:center;padding:15px;background:#05040bdc;backdrop-filter:blur(12px)}
-.member-detail-card,.message-compose-card,.dialog-card,.access-card{width:min(620px,100%);max-height:90%;overflow:auto;padding:18px;border:1px solid #b18aff55;border-radius:19px;background:#110d1df7;box-shadow:0 25px 80px #0009}
-.detail-head,.message-compose-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:13px}.detail-head h3,.message-compose-head h3{margin:0;font-size:14px}.detail-close{width:35px;height:35px;border:1px solid var(--line);border-radius:10px;background:#ffffff0b;color:white}
-.detail-cover{width:100%;height:125px;object-fit:cover;border-radius:13px;background:#241b37;margin-bottom:10px}.detail-profile-head{display:flex;align-items:center;gap:12px;margin-top:-30px;padding:0 12px 10px}.detail-avatar{width:70px;height:70px;display:grid;place-items:center;overflow:hidden;border:4px solid #110d1d;border-radius:20px;background:#a58aff2c;color:#e3d2ff;font-size:23px;font-weight:900;flex-shrink:0}.detail-avatar img{width:100%;height:100%;object-fit:cover}.detail-name{font-size:14px;font-weight:900}.detail-username{color:#b9aecb;font-size:10px;margin-top:3px}.detail-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin-top:10px}.detail-item{padding:10px;border:1px solid var(--line);border-radius:10px;background:#ffffff08;min-width:0}.detail-item small{display:block;color:#b7abc9;font-size:9px}.detail-item strong{display:block;margin-top:4px;font-size:10px;overflow-wrap:anywhere;white-space:pre-wrap}.detail-video{width:100%;max-height:210px;margin-top:10px;border-radius:12px;background:#000}
-.message-compose-card{width:min(450px,100%)}.message-compose-target{margin:0 0 10px;color:#c8bdd8;font-size:11px;line-height:1.8}.message-compose textarea{width:100%;min-height:130px;resize:vertical;padding:11px;border:1px solid #ffffff25;border-radius:11px;outline:none;background:#090711;color:var(--text);font:inherit;font-size:12px;line-height:1.9}.message-compose-actions,.dialog-actions{display:flex;gap:8px;margin-top:12px}.message-compose-actions button,.dialog-actions button{flex:1}
-.toast{position:fixed;z-index:250;bottom:17px;left:50%;transform:translate(-50%,20px);opacity:0;pointer-events:none;padding:10px 16px;border:1px solid var(--line);border-radius:11px;background:#1b1730;color:white;font-size:11px;font-weight:800;transition:.25s;max-width:90%;text-align:center}.toast.show{opacity:1;transform:translate(-50%,0)}.toast.error{border-color:#ff718855;color:#ffb0bd}
-.access-screen{z-index:200;background:#090711ee}.access-card{width:min(400px,100%);text-align:center;padding:25px}.access-mark{width:58px;height:58px;display:grid;place-items:center;margin:0 auto 13px;border-radius:18px;background:#a58aff28;color:#d9c5ff}.access-card h2{margin:0;font-size:18px}.access-card p{margin:8px 0 16px;color:#c0b6d1;font-size:11px;line-height:2}.access-input{width:100%;height:46px;margin:0 0 11px;padding:0 13px;border:1px solid #ffffff25;border-radius:11px;outline:none;background:#090711;color:var(--text);font:inherit;text-align:center;letter-spacing:2px}.access-card .primary-btn{width:100%}
-.dialog-backdrop{z-index:300}.dialog-card{width:min(380px,100%)}.dialog-card h3{margin:0 0 7px;font-size:15px}.dialog-card p{margin:0;color:#c5bad5;font-size:11px;line-height:2}
-.footer-note{text-align:center;color:#a89bbd;font-size:9px;margin-top:23px}.mobile-menu{display:none}
-@media(max-width:1050px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.form-layout{grid-template-columns:1fr}}
-@media(max-width:800px){.sidebar{width:248px;transform:translateX(105%);transition:transform .22s;box-shadow:-20px 0 60px #0009}.sidebar.open{transform:translateX(0)}.main{right:0;padding:17px 13px 28px}.mobile-menu{display:grid}.content-grid{grid-template-columns:1fr}.topbar{padding:0 11px}}
-@media(max-width:520px){.topbar{height:60px}.layout{top:60px}.brand-name{font-size:11px}.admin-label{font-size:9px;padding:6px 8px}.main{padding:14px 10px 25px}.admin-profile{grid-template-columns:83px 1fr;gap:10px;padding:12px}.admin-cover{margin:-12px -12px -48px}.admin-avatar{width:76px;height:76px;border-radius:20px}.admin-ident h2{font-size:14px}.admin-data{grid-template-columns:1fr 1fr}.welcome{padding:15px}.welcome h2{font-size:14px}.stats{gap:7px}.stat-card{min-height:83px;padding:9px}.stat-value{font-size:12px}.panel,.form-panel{padding:12px}.quick-grid{grid-template-columns:1fr}.member-tools{flex-direction:column;align-items:stretch}.member-tools button{width:100%}.member-row{align-items:flex-start;flex-wrap:wrap}.member-actions{width:calc(100% - 55px);margin-right:55px}.member-actions button{flex:1;padding:0 5px}.detail-grid{grid-template-columns:1fr 1fr}.detail-cover{height:100px}}
-/* HANOON PREMIUM WALLET */
-.wallet-hero{padding:22px;border:1px solid #b18aff66;border-radius:22px;background:radial-gradient(circle at 8% 15%,#bd9aff33,transparent 38%),linear-gradient(125deg,#201538,#111c2b);margin-bottom:14px}
-.wallet-hero h2{margin:0;font-size:19px;font-weight:900}
-.wallet-hero p{margin:7px 0;color:#d1c6e5;font-size:11px;line-height:2}
-.wallet-status{display:inline-flex;padding:7px 11px;border:1px solid #53d6a255;border-radius:30px;background:#53d6a21c;color:#aaf2d4;font-size:10px;font-weight:900}
-.wallet-status.off{border-color:#ffbd6855;background:#ffbd6818;color:#ffdda9}
-.wallet-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:14px}
-.wallet-stat{min-height:110px;padding:14px;border:1px solid #ffffff20;border-radius:17px;background:linear-gradient(145deg,#211a36ed,#131321f2);box-shadow:0 12px 32px #0003}
-.wallet-stat.coins{background:radial-gradient(circle at 100% 0,#f7c95b2a,transparent 55%),linear-gradient(145deg,#342a19,#171522)}
-.wallet-stat.gems{background:radial-gradient(circle at 100% 0,#5acbff2a,transparent 55%),linear-gradient(145deg,#172d42,#171522)}
-.wallet-stat.monthly{background:radial-gradient(circle at 100% 0,#bd91ff30,transparent 55%),linear-gradient(145deg,#2b1d43,#171522)}
-.wallet-stat small{display:block;color:#c7bdd7;font-size:10px;font-weight:800}
-.wallet-stat strong{display:block;margin-top:10px;font-size:clamp(16px,2.4vw,23px);font-weight:900;overflow-wrap:anywhere}
-.wallet-stat em{display:block;margin-top:5px;color:#b8adc9;font-size:9px;font-style:normal}
-.wallet-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(280px,.95fr);gap:12px;align-items:start}
-.wallet-search-results,.wallet-history,.wallet-month-list{display:grid;gap:7px;margin-top:10px;max-height:400px;overflow:auto}
-.wallet-member{display:flex;align-items:center;gap:10px;padding:10px;border:1px solid #ffffff1c;border-radius:13px;background:#ffffff08}
-.wallet-member-avatar{width:46px;height:46px;display:grid;place-items:center;overflow:hidden;flex-shrink:0;border-radius:14px;background:linear-gradient(145deg,#a98bff55,#3e9caa44);font-size:17px;font-weight:900}
-.wallet-member-avatar img{width:100%;height:100%;object-fit:cover}
-.wallet-member-info{flex:1;min-width:0}
-.wallet-member-info strong{display:block;font-size:11px}
-.wallet-member-info small{display:block;margin-top:3px;color:#bdb2cf;font-size:9px}
-.wallet-member button{min-height:35px;padding:0 11px;border:1px solid #b18aff66;border-radius:9px;background:#a58aff20;color:#e4d6ff;font-size:10px;font-weight:900}
-.wallet-selected{margin-top:12px;padding:13px;border:1px solid #b18aff55;border-radius:15px;background:linear-gradient(135deg,#211832,#121c28)}
-.wallet-selected-head{display:flex;align-items:center;gap:10px}
-.wallet-selected-head strong{font-size:12px}
-.wallet-selected-head small{display:block;color:#bdb2cf;font-size:9px;margin-top:3px}
-.wallet-balance-pills{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:12px}
-.wallet-balance-pill{padding:10px;border:1px solid #ffffff20;border-radius:11px;background:#08071166}
-.wallet-balance-pill small{display:block;color:#c1b6d2;font-size:9px}
-.wallet-balance-pill strong{display:block;margin-top:5px;font-size:15px}
-.wallet-form{margin-top:12px;padding-top:12px;border-top:1px solid #ffffff20}
-.wallet-form .field{margin-bottom:10px}
-.wallet-form .primary-btn{width:100%}
-.wallet-transaction{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px;border:1px solid #ffffff18;border-radius:11px;background:#ffffff07}
-.wallet-transaction-info{min-width:0}
-.wallet-transaction-info strong{display:block;font-size:10px}
-.wallet-transaction-info small{display:block;margin-top:4px;color:#b7abc9;font-size:9px;line-height:1.6}
-.wallet-amount{font-size:12px;font-weight:900;white-space:nowrap;direction:ltr}
-.wallet-amount.plus{color:#70e0b2}
-.wallet-amount.minus{color:#ff91a3}
-.wallet-month-row{display:flex;justify-content:space-between;gap:8px;padding:10px;border:1px solid #ffffff18;border-radius:10px;background:#ffffff07;font-size:10px}
-.wallet-month-row strong{color:#aef0d2}
-.wallet-empty{padding:16px;text-align:center;color:#bdb2cf;font-size:10px;line-height:1.9}
-@media(max-width:900px){.wallet-grid{grid-template-columns:1fr}}
-@media(max-width:620px){.wallet-stats{grid-template-columns:1fr 1fr}.wallet-stat.monthly{grid-column:1/-1}.wallet-hero{padding:16px}.wallet-hero h2{font-size:16px}.wallet-member{align-items:flex-start;flex-wrap:wrap}.wallet-member button{margin-right:56px;flex:1}.wallet-stat{min-height:100px;padding:11px}}
+:root{
+  --gold:#e9c77d;
+  --purple:#a34dff;
+  --text:#fffaff;
+  --muted:#c2b5d0;
+  --panel:rgba(15,9,25,.88);
+  --line:rgba(226,190,255,.2);
+}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;font-family:Cairo,sans-serif;background:#090510;color:var(--text)}
+button,input{font:inherit}
+button{cursor:pointer}
+.hidden{display:none!important}
+
+/* الخلفيات الخارجية */
+.screen-bg{
+  position:fixed;
+  inset:0;
+  z-index:-3;
+  background-position:center;
+  background-size:cover;
+  background-repeat:no-repeat;
+  transform:scale(1.025);
+}
+.screen-bg:after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(115deg,rgba(5,2,12,.83),rgba(8,3,18,.38),rgba(5,2,12,.88));
+}
+#startBg{
+  background-image:url("https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=2200&q=90");
+}
+#loginBg,#dashboardBg{
+  background-image:url("https://wallpapercrafter.com/th800/70940-joker-movie-joker-2019-movies-movies-hd-joaquin-phoenix-4k.jpg");
+}
+
+/* شاشة البداية */
+#startScreen{
+  position:fixed;
+  inset:0;
+  z-index:20;
+  display:grid;
+  place-items:center;
+  overflow:hidden;
+  background:#090510;
+}
+.start-content{
+  position:relative;
+  z-index:2;
+  width:min(90%,520px);
+  text-align:center;
+  animation:rise 1.2s ease both;
+}
+.brand-mark{
+  width:112px;
+  height:112px;
+  display:grid;
+  place-items:center;
+  margin:0 auto 22px;
+  border:1px solid #f1d48e;
+  border-radius:32px;
+  color:#fff0c7;
+  font-size:55px;
+  font-weight:900;
+  background:linear-gradient(145deg,#4d1a75,#130b25 65%,#9a672b);
+  box-shadow:0 0 35px #a34dff77,0 0 90px #d4a54a33,inset 0 0 25px #fff3;
+  animation:markPulse 3s infinite ease-in-out;
+}
+.start-title{
+  margin:0;
+  color:#f4d99b;
+  font-size:clamp(28px,7vw,43px);
+  font-weight:900;
+  letter-spacing:3px;
+  text-shadow:0 5px 30px #000;
+}
+.start-subtitle{
+  margin:10px 0 30px;
+  color:#e1d4ed;
+  font-size:12px;
+  letter-spacing:4px;
+}
+.loader{
+  width:48px;
+  height:48px;
+  margin:auto;
+  border:3px solid #ffffff22;
+  border-top-color:var(--gold);
+  border-left-color:#a34dff;
+  border-radius:50%;
+  animation:spin 1s linear infinite;
+}
+.start-caption{
+  margin-top:17px;
+  color:#d8c8e7;
+  font-size:11px;
+  letter-spacing:1px;
+}
+.start-orbit{
+  position:absolute;
+  width:260px;
+  height:260px;
+  border:1px solid #d7b7ff22;
+  border-radius:50%;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%);
+  animation:orbit 15s linear infinite;
+}
+.start-orbit:before,.start-orbit:after{
+  content:"";
+  position:absolute;
+  width:8px;height:8px;
+  border-radius:50%;
+  background:var(--gold);
+  box-shadow:0 0 18px var(--gold);
+}
+.start-orbit:before{top:20px;left:50px}
+.start-orbit:after{bottom:25px;right:35px;background:#bd76ff}
+
+/* شاشة تسجيل الدخول */
+#loginScreen{
+  min-height:100vh;
+  display:grid;
+  place-items:center;
+  padding:80px 18px 55px;
+  position:relative;
+}
+.top-brand{
+  position:absolute;
+  top:20px;
+  right:25px;
+  left:25px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  z-index:2;
+}
+.brand-name{
+  color:var(--gold);
+  font-weight:900;
+  letter-spacing:2px;
+  font-size:15px;
+  text-shadow:0 0 18px #a34dff;
+}
+.secure-label{
+  color:#e6d8f4;
+  font-size:10px;
+  border:1px solid #e5c77c66;
+  border-radius:30px;
+  padding:7px 13px;
+  background:#10091c99;
+}
+.login-card{
+  width:min(100%,440px);
+  padding:34px 30px;
+  border:1px solid #c17aff77;
+  border-radius:27px;
+  background:linear-gradient(145deg,rgba(22,10,37,.94),rgba(8,5,17,.95));
+  box-shadow:0 25px 90px #000b,0 0 45px #923de633,inset 0 1px #fff2;
+  backdrop-filter:blur(20px);
+  animation:rise .8s ease both;
+}
+.login-emblem{
+  width:76px;height:76px;
+  margin:0 auto 16px;
+  display:grid;place-items:center;
+  border:2px solid var(--gold);
+  border-radius:24px;
+  color:#f4d99b;
+  font-size:38px;
+  font-weight:900;
+  background:linear-gradient(145deg,#59217e,#14091f);
+  box-shadow:0 0 30px #a34dff66;
+}
+.login-card h1{
+  margin:0;
+  text-align:center;
+  color:var(--gold);
+  font-size:25px;
+  font-weight:900;
+}
+.login-description{
+  text-align:center;
+  color:var(--muted);
+  font-size:11px;
+  letter-spacing:2px;
+  margin:7px 0 24px;
+}
+.gold-line{
+  height:1px;
+  margin:20px 0;
+  background:linear-gradient(90deg,transparent,#a34dff,#e9c77d,transparent);
+}
+.field-label{
+  display:block;
+  color:#eee1fa;
+  font-size:13px;
+  font-weight:700;
+  margin-bottom:9px;
+}
+.password-wrap{position:relative}
+.password-wrap input{
+  width:100%;
+  height:55px;
+  padding:0 17px 0 52px;
+  color:white;
+  border:1px solid #8b50b877;
+  border-radius:13px;
+  outline:none;
+  background:#0b0614;
+  direction:rtl;
+}
+.password-wrap input:focus{
+  border-color:var(--gold);
+  box-shadow:0 0 0 3px #e9c77d20;
+}
+.show-password{
+  position:absolute;
+  left:10px;
+  top:50%;
+  transform:translateY(-50%);
+  border:0;
+  background:transparent;
+  color:#e6c7ff;
+  font-size:12px;
+  padding:8px;
+}
+.primary-btn{
+  width:100%;
+  min-height:54px;
+  margin-top:20px;
+  border:1px solid #f7dda1;
+  border-radius:13px;
+  color:#fff;
+  font-weight:900;
+  background:linear-gradient(100deg,#671bb2,#a13ee8 55%,#b98735);
+  box-shadow:0 8px 28px #8b31d755;
+  transition:.2s;
+}
+.primary-btn:hover{filter:brightness(1.15);transform:translateY(-2px)}
+.primary-btn:disabled{opacity:.6;cursor:wait;transform:none}
+.login-message{
+  display:none;
+  margin-top:14px;
+  padding:11px;
+  border-radius:10px;
+  font-size:12px;
+  text-align:center;
+}
+.login-message.error{
+  display:block;
+  color:#ffc3cc;
+  background:#721c3444;
+  border:1px solid #ff718655;
+}
+.login-message.success{
+  display:block;
+  color:#a8f4c9;
+  background:#125b3b44;
+  border:1px solid #42d6a477;
+}
+.login-foot{
+  text-align:center;
+  margin-top:20px;
+  color:#b9a8cb;
+  font-size:10px;
+}
+.login-foot span{color:#75e8ad}
+.copyright{
+  position:absolute;
+  bottom:15px;
+  width:100%;
+  text-align:center;
+  color:#c6b5d6;
+  font-size:10px;
+  letter-spacing:2px;
+}
+
+/* لوحة الإدارة */
+#dashboardScreen{
+  min-height:100vh;
+  position:relative;
+  isolation:isolate;
+}
+.dashboard-bg{
+  position:fixed;
+  inset:0;
+  z-index:-2;
+  background:url("https://wallpapercrafter.com/th800/70940-joker-movie-joker-2019-movies-movies-hd-joaquin-phoenix-4k.jpg") center/cover no-repeat;
+}
+.dashboard-bg:after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(110deg,rgba(5,3,12,.94),rgba(9,5,19,.83)),linear-gradient(0deg,#08050f,transparent);
+}
+.dashboard-top{
+  min-height:76px;
+  padding:12px 22px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+  border-bottom:1px solid #ffffff20;
+  background:#090611bb;
+  backdrop-filter:blur(18px);
+}
+.dashboard-brand{
+  color:var(--gold);
+  font-weight:900;
+  letter-spacing:2px;
+  font-size:16px;
+}
+.top-actions{display:flex;align-items:center;gap:10px}
+.top-chip{
+  padding:7px 12px;
+  border:1px solid #e9c77d55;
+  border-radius:30px;
+  color:#f2dcae;
+  font-size:10px;
+  background:#1b1026bb;
+}
+.logout-btn{
+  border:1px solid #ff879455;
+  background:#511b2d99;
+  color:#ffd4dc;
+  border-radius:10px;
+  padding:8px 13px;
+  font-size:11px;
+}
+.dashboard-layout{
+  display:grid;
+  grid-template-columns:250px minmax(0,1fr);
+  min-height:calc(100vh - 76px);
+}
+.sidebar{
+  padding:22px 14px;
+  border-left:1px solid #ffffff18;
+  background:#0c0815d9;
+  backdrop-filter:blur(16px);
+}
+.owner-mini{
+  padding:15px 12px;
+  border:1px solid #d9b77b55;
+  border-radius:17px;
+  background:linear-gradient(140deg,#382047cc,#13101dcc);
+  margin-bottom:24px;
+}
+.owner-avatar{
+  width:55px;height:55px;
+  display:grid;place-items:center;
+  border-radius:17px;
+  border:1px solid var(--gold);
+  background:linear-gradient(145deg,#63308a,#21142d);
+  color:#ffe3a4;
+  font-size:24px;
+  font-weight:900;
+  overflow:hidden;
+  margin-bottom:10px;
+}
+.owner-avatar img{width:100%;height:100%;object-fit:cover}
+.owner-mini strong{display:block;font-size:13px}
+.owner-mini small{display:block;color:#c5b3d5;font-size:10px;margin-top:4px;overflow-wrap:anywhere}
+.owner-role{
+  display:inline-block;
+  margin-top:10px;
+  color:var(--gold);
+  font-size:9px;
+  border:1px solid #e9c77d66;
+  border-radius:20px;
+  padding:4px 9px;
+}
+.menu-caption{
+  color:#8f7da3;
+  font-size:10px;
+  font-weight:800;
+  padding:0 10px;
+  margin:18px 0 8px;
+}
+.menu-button{
+  width:100%;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  text-align:right;
+  padding:12px 11px;
+  margin:5px 0;
+  border:1px solid transparent;
+  border-radius:12px;
+  color:#ded2eb;
+  background:transparent;
+  font-size:12px;
+  transition:.2s;
+}
+.menu-button:hover,.menu-button.active{
+  color:#ffe5aa;
+  border-color:#d5ad6c55;
+  background:linear-gradient(90deg,#49265e88,#21152e99);
+}
+.menu-icon{
+  width:28px;height:28px;
+  display:grid;place-items:center;
+  flex-shrink:0;
+  border-radius:9px;
+  border:1px solid #c79bff44;
+  color:#e4c5ff;
+  background:#261533;
+}
+.main-content{padding:28px;min-width:0}
+.welcome-panel{
+  position:relative;
+  overflow:hidden;
+  padding:32px;
+  min-height:230px;
+  border:1px solid #d8b87a66;
+  border-radius:24px;
+  background:
+    linear-gradient(100deg,rgba(9,5,17,.88),rgba(31,13,43,.64)),
+    url("https://wallpapercrafter.com/th800/70940-joker-movie-joker-2019-movies-movies-hd-joaquin-phoenix-4k.jpg") center/cover;
+  box-shadow:0 18px 55px #0007;
+}
+.welcome-kicker{
+  color:#d8b8ff;
+  font-size:10px;
+  letter-spacing:3px;
+  font-weight:800;
+}
+.welcome-panel h1{
+  font-size:clamp(25px,4vw,39px);
+  margin:12px 0 7px;
+  color:#ffe1a0;
+  font-weight:900;
+}
+.welcome-panel p{
+  max-width:650px;
+  color:#e0d4e9;
+  font-size:12px;
+  line-height:2;
+  margin:0;
+}
+.content-heading{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  margin:28px 0 15px;
+}
+.content-heading h2{font-size:18px;margin:0}
+.content-heading p{font-size:10px;color:#b6a5c7;margin:5px 0 0}
+.live-status{
+  color:#a6efc4;
+  font-size:10px;
+  white-space:nowrap;
+}
+.admin-note{
+  padding:17px;
+  border:1px solid #bd8bdf44;
+  border-radius:16px;
+  background:#180f25dd;
+  color:#d7c9e4;
+  font-size:12px;
+  line-height:2;
+}
+.admin-note strong{color:var(--gold)}
+.verified-mark{
+  display:inline-grid;
+  place-items:center;
+  width:19px;height:19px;
+  margin-right:6px;
+  border-radius:50%;
+  color:#fff;
+  background:#1689e8;
+  font-size:12px;
+  vertical-align:middle;
+}
+.mobile-menu{display:none}
+#sectionView{min-height:200px}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes rise{
+  from{opacity:0;transform:translateY(24px) scale(.97)}
+  to{opacity:1;transform:translateY(0) scale(1)}
+}
+@keyframes markPulse{
+  0%,100%{box-shadow:0 0 35px #a34dff77,0 0 90px #d4a54a33}
+  50%{box-shadow:0 0 55px #a34dffbb,0 0 110px #d4a54a66}
+}
+@keyframes orbit{to{transform:translate(-50%,-50%) rotate(360deg)}}
+
+@media(max-width:850px){
+  .dashboard-layout{grid-template-columns:1fr}
+  .sidebar{
+    position:fixed;
+    z-index:10;
+    top:76px;
+    right:0;
+    bottom:0;
+    width:min(290px,85vw);
+    overflow-y:auto;
+    transform:translateX(110%);
+    transition:transform .25s;
+    box-shadow:-20px 0 50px #0008;
+  }
+  .sidebar.open{transform:translateX(0)}
+  .mobile-menu{
+    display:grid;
+    place-items:center;
+    width:38px;height:38px;
+    border:1px solid #d9b77b66;
+    border-radius:10px;
+    color:#f2dcae;
+    background:#21152f;
+  }
+  .dashboard-brand{margin-left:auto}
+  .main-content{padding:17px}
+}
+@media(max-width:520px){
+  .top-brand{top:14px;right:14px;left:14px}
+  .brand-name{font-size:12px}
+  .secure-label{font-size:9px}
+  .login-card{padding:27px 19px;border-radius:21px}
+  .login-card h1{font-size:22px}
+  .dashboard-top{padding:10px 13px}
+  .dashboard-brand{font-size:12px}
+  .top-chip{display:none}
+  .welcome-panel{padding:23px 19px;min-height:210px}
+  .content-heading h2{font-size:16px}
+}
 </style>
-<link rel="stylesheet" href="./admin.css">
 </head>
+
 <body>
-<div class="app">
-<header class="topbar">
-  <div class="brand">
-    <div class="brand-mark"><svg viewBox="0 0 40 40"><path d="M8 29V11h6v7h12v-7h6v18h-6v-6H14v6H8Z"/></svg></div>
-    <div><div class="brand-name">HANOON WORLD</div><div class="brand-sub">CONTROL CENTER</div></div>
+
+<!-- شاشة البداية -->
+<section id="startScreen">
+  <div class="screen-bg" id="startBg"></div>
+  <div class="start-orbit"></div>
+  <div class="start-content">
+    <div class="brand-mark">H</div>
+    <h1 class="start-title">HANOON WORLD</h1>
+    <p class="start-subtitle">ADMINISTRATION SYSTEM</p>
+    <div class="loader"></div>
+    <div class="start-caption">جارٍ تجهيز مركز الإدارة</div>
   </div>
-  <div class="top-actions">
-    <span class="admin-label">لوحة المدير</span>
-    <button class="icon-btn mobile-menu" id="menuButton" aria-label="القائمة"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
-    <button class="icon-btn" id="logoutButton" title="تسجيل الخروج" aria-label="تسجيل الخروج"><svg viewBox="0 0 24 24"><path d="M10 17l5-5-5-5M15 12H3M12 3h6a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-6"/></svg></button>
-  </div>
-</header>
+</section>
 
-<div class="layout">
-<aside class="sidebar" id="sidebar">
-  <div class="side-caption">الإدارة الرئيسية</div>
-  <button class="nav-btn active" data-view="dashboard"><span class="nav-icon"><svg viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-6v-7h-4v7H4a1 1 0 0 1-1-1Z"/></svg></span>الرئيسية</button>
-  <button class="nav-btn" data-view="members"><span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM20 8v6M23 11h-6"/></svg></span>إدارة الأعضاء</button>
-  <button class="nav-btn" data-view="wallet"><span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M4 7.5A2.5 2.5 0 0 1 6.5 5H20v14H6.5A2.5 2.5 0 0 1 4 16.5z"/><path d="M4 8h14a2 2 0 0 1 2 2v5h-5a2.5 2.5 0 0 1 0-5h5M16 12.5h.01"/></svg></span>المحفظة والعملات</button>
-  <button class="nav-btn" data-view="notifications"><span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9ZM10 21h4"/></svg></span>إرسال الإشعارات</button>
-  <div class="side-separator"></div>
-  <div class="side-caption">إدارة وتطوير الموقع</div>
-  <button class="nav-btn" data-view="site-editor"><span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M12 3v18M3 12h18M5 5l14 14M19 5 5 19"/></svg></span>محرر تصميم الموقع</button>
-  <button class="nav-btn" data-view="content-manager"><span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M4 5h16M4 10h16M4 15h10M4 20h7"/></svg></span>إدارة المحتوى والهدايا</button>
-  <button class="nav-btn" data-view="update-center"><span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M12 3v12m-5-5 5 5 5-5M4 19v2h16v-2"/></svg></span>مركز التحديثات والإصدارات</button>
-  <div class="side-separator"></div>
-  <div class="side-caption">روابط الموقع</div>
-  <a class="nav-btn" href="home.html">موقع هَنون</a>
-  <a class="nav-btn" href="members.html">دليل الأعضاء</a>
-  <a class="nav-btn" href="games.html">الألعاب</a>
-  <div class="sidebar-bottom"><strong>● حماية لوحة الإدارة</strong><p>جلسة إدارية آمنة تنتهي بعد 30 يومًا أو عند تسجيل الخروج.</p></div>
-</aside>
+<!-- شاشة الدخول -->
+<section id="loginScreen" class="hidden">
+  <div class="screen-bg" id="loginBg"></div>
 
-<main class="main" id="mainContent">
-<section class="view active" id="view-dashboard">
-  <div class="page-head"><div><div class="eyebrow">HANOON / ADMINISTRATION</div><h1>مركز التحكم</h1><p>حساب الإدارة وجميع أدوات التحكم في مكان واحد.</p></div><div class="live-status"><i></i> مركز الإدارة</div></div>
+  <header class="top-brand">
+    <div class="brand-name">HANOON WORLD</div>
+    <div class="secure-label">ADMINISTRATOR ACCESS</div>
+  </header>
 
-  <section class="admin-profile" aria-label="حساب المدير الموثق">
-    <div class="admin-cover" id="adminCover"></div>
-    <img class="admin-avatar" id="adminAvatar" alt="صورة حساب المدير">
-    <div class="admin-ident">
-      <h2>Yousef elgorf <span class="verified-mark" title="حساب موثّق"><svg viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></svg></span></h2>
-      <p>@elgorf</p>
-      <div class="admin-tags"><span class="admin-tag">مدير الموقع</span><span class="admin-tag">حساب موثّق</span><span class="admin-tag">نشط</span></div>
-    </div>
-    <div class="admin-data">
-      <div><small>كود العضوية</small><strong>HN-81F47A85A3</strong></div>
-      <div><small>معرّف الحساب (ID)</small><strong>a4450f5b-05ee-4476-82e0-9e064d6df331</strong></div>
-      <div><small>اسم المستخدم</small><strong>elgorf</strong></div>
-      <div><small>حالة التوثيق</small><strong>موثّق رسميًا</strong></div>
+  <section class="login-card">
+    <div class="login-emblem">H</div>
+    <h1>دخول مالك المنصة</h1>
+    <p class="login-description">PRIVATE ADMIN CONTROL</p>
+
+    <div class="gold-line"></div>
+
+    <form id="loginForm">
+      <label class="field-label" for="adminPassword">كلمة مرور الإدارة</label>
+
+      <div class="password-wrap">
+        <input
+          id="adminPassword"
+          type="password"
+          placeholder="اكتب كلمة مرور الإدارة"
+          autocomplete="current-password"
+          required
+        >
+        <button class="show-password" id="togglePassword" type="button">إظهار</button>
+      </div>
+
+      <button class="primary-btn" id="loginButton" type="submit">
+        دخول لوحة الإدارة
+      </button>
+
+      <div id="loginMessage" class="login-message"></div>
+    </form>
+
+    <div class="login-foot">
+      <span>●</span> جلسة إدارة محمية • اتصال بقاعدة البيانات
     </div>
   </section>
 
-  <div class="welcome"><div><h2>أهلًا بك في مركز تحكم هَنون</h2><p>من هنا تقدر تدير الأعضاء، وتوثّق الحسابات، وتراسل الأعضاء، وترسل الإشعارات.</p></div><div class="welcome-icon"><svg viewBox="0 0 24 24"><path d="M12 3 4 6v5c0 5 3.4 8.4 8 10 4.6-1.6 8-5 8-10V6l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg></div></div>
-  <div class="stats">
-    <div class="stat-card"><div class="stat-icon">01</div><div class="stat-name">إدارة الأعضاء</div><div class="stat-value">مركز الأعضاء</div></div>
-    <div class="stat-card"><div class="stat-icon">02</div><div class="stat-name">التواصل مع الأعضاء</div><div class="stat-value">المراسلات والإشعارات</div></div>
-    <div class="stat-card"><div class="stat-icon">03</div><div class="stat-name">التوثيق</div><div class="stat-value">تحكم مباشر</div></div>
-    <div class="stat-card"><div class="stat-icon">04</div><div class="stat-name">حساب المدير</div><div class="stat-value">موثّق ومحمي</div></div>
-  </div>
-  <div class="content-grid">
-    <div class="panel"><div class="panel-head"><h3>اختصارات الإدارة</h3><span>وصول سريع</span></div><div class="quick-grid">
-      <button class="quick-action" data-open-view="notifications"><span class="q-icon">N</span><span><strong>إرسال إشعار</strong><small>إلى عضو أو مجموعة أو الجميع</small></span></button>
-      <button class="quick-action" data-open-view="members"><span class="q-icon">M</span><span><strong>إدارة الأعضاء</strong><small>بيانات وصور وتوثيق ومراسلة</small></span></button>
-      <button class="quick-action" data-open-view="wallet"><span class="q-icon">W</span><span><strong>المحفظة والعملات</strong><small>رصيد المدير وتحويلات الأعضاء</small></span></button>
-    </div></div>
-    <div class="panel"><div class="panel-head"><h3>حالة مركز التحكم</h3><span>الأمان</span></div><div class="activity-empty">تم تحميل لوحة الإدارة. كل عملية حساسة تتحقق من جلسة الإدارة على الخادم.</div></div>
-  </div>
+  <div class="copyright">HANOON WORLD © ALL RIGHTS RESERVED</div>
 </section>
 
-<section class="view" id="view-members">
-  <div class="page-head"><div><div class="eyebrow">MEMBER MANAGEMENT</div><h1>إدارة الأعضاء</h1><p>ابحث بالاسم أو اسم المستخدم أو كود العضوية أو المعرّف.</p></div><div class="live-status"><i></i> بيانات الأعضاء</div></div>
-  <div class="panel">
-    <div class="panel-head"><h3>دليل أعضاء هَنون</h3><span id="memberCount">جارٍ التحضير</span></div>
-    <form class="member-tools" id="memberSearchForm">
-      <input id="memberSearchInput" type="search" maxlength="80" placeholder="ابحث عن عضو..." autocomplete="off">
-      <button class="primary-btn" id="memberSearchButton" type="submit">بحث</button>
-      <button class="secondary-btn" id="memberRefreshButton" type="button">تحديث</button>
-    </form>
-    <div class="member-results" id="memberResults"><div class="member-empty">جارٍ تحميل قائمة الأعضاء...</div></div>
-    <div class="member-pagination" id="memberPagination" hidden><button class="secondary-btn" id="memberPrev" type="button">السابق</button><span id="memberPageLabel"></span><button class="secondary-btn" id="memberNext" type="button">التالي</button></div>
-  </div>
-</section>
+<!-- لوحة الإدارة داخل نفس الملف -->
+<section id="dashboardScreen" class="hidden">
+  <div class="dashboard-bg"></div>
 
-<section class="view" id="view-notifications">
-  <div class="page-head"><div><div class="eyebrow">COMMUNICATION CENTER</div><h1>إرسال الإشعارات</h1><p>أرسل إشعارًا محفوظًا داخل حسابات أعضاء هَنون.</p></div><div class="live-status"><i></i> جاهز للإرسال</div></div>
-  <h2 class="section-title">إنشاء إشعار جديد</h2>
-  <p class="section-description">حدد المستلمين، واكتب محتوى الإشعار، واختر وجهة الضغط عليه.</p>
-  <div class="notice">الإشعار يُحفظ داخل الموقع. إشعارات الهاتف الخارجية Push تحتاج ربط خدمة مستقلة.</div>
-  <div class="form-layout">
-    <form class="form-panel" id="notificationForm">
-      <div class="field"><label for="audience">إرسال الإشعار إلى</label><select id="audience" required><option value="all">جميع الأعضاء</option><option value="completed">الأعضاء أصحاب الملفات المكتملة</option><option value="member">عضو محدد</option></select></div>
-      <div class="field" id="memberCodeField" hidden><label for="memberCode">كود العضو</label><input id="memberCode" type="text" autocomplete="off" placeholder="اكتب كود العضو"></div>
-      <div class="field"><label for="notificationTitle">عنوان الإشعار</label><input id="notificationTitle" type="text" maxlength="180" required placeholder="اكتب عنوانًا واضحًا"></div>
-      <div class="field"><label for="notificationBody">نص الإشعار</label><textarea id="notificationBody" maxlength="2000" required placeholder="اكتب تفاصيل الإشعار هنا..."></textarea><div class="field-hint">الحد الأقصى 2000 حرف.</div></div>
-      <div class="field"><label for="targetRoute">وجهة الضغط على الإشعار</label><select id="targetRoute"><option value="">صفحة الإشعارات</option><option value="home.html">الرئيسية</option><option value="members.html">الأعضاء</option><option value="games.html">الألعاب</option><option value="notifications.html">الإشعارات</option><option value="profile.html">الملف الشخصي</option></select></div>
-      <button class="primary-btn" id="sendButton" type="submit">إرسال الإشعار</button>
-    </form>
-    <aside class="preview-card"><div class="preview-top"><strong>معاينة الإشعار</strong><small>هكذا سيظهر داخل الموقع</small></div><div class="preview-label">HANOON WORLD · حساب الإدارة</div><div class="preview-title" id="previewTitle">عنوان الإشعار سيظهر هنا</div><div class="preview-body" id="previewBody">اكتب نص الإشعار لتظهر المعاينة هنا مباشرة.</div><div class="preview-destination">وجهة الضغط: <strong id="previewDestination">صفحة الإشعارات</strong></div></aside>
-  </div>
-</section>
+  <header class="dashboard-top">
+    <button class="mobile-menu" id="mobileMenu" type="button" aria-label="القائمة">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M4 6h16M4 12h16M4 18h16"/>
+      </svg>
+    </button>
 
-<section class="view" id="view-wallet">
-  <div class="page-head">
-    <div>
-      <div class="eyebrow">HANOON / WORLD WALLET</div>
-      <h1>مركز العملات والجواهر</h1>
-      <p>إدارة الأرصدة والإضافات والتحويلات ومتابعة حركات الأعضاء.</p>
+    <div class="dashboard-brand">HANOON WORLD</div>
+
+    <div class="top-actions">
+      <span class="top-chip">مركز قيادة المنصة</span>
+      <button class="logout-btn" id="logoutButton" type="button">تسجيل الخروج</button>
     </div>
-    <div class="live-status"><i></i> تحكم المدير</div>
-  </div>
+  </header>
 
-  <div class="wallet-hero">
-    <h2>خزنة هَنون العالمية</h2>
-    <p>إدارة محفظتك ومكافأتك الشهرية وأرصدة جميع الأعضاء من مكان واحد.</p>
-    <div class="wallet-status" id="walletScheduleStatus">جارٍ التحقق من الجدولة...</div>
-  </div>
-
-  <div class="wallet-stats">
-    <div class="wallet-stat coins">
-      <small>رصيد العملات في حسابك</small>
-      <strong id="walletAdminCoins">—</strong>
-      <em>عملات ذهبية</em>
-    </div>
-    <div class="wallet-stat gems">
-      <small>رصيد الجواهر في حسابك</small>
-      <strong id="walletAdminGems">—</strong>
-      <em>جواهر زرقاء</em>
-    </div>
-    <div class="wallet-stat monthly">
-      <small>مكافأتك الشهرية</small>
-      <strong>100,000,000 + 100,000,000</strong>
-      <em>عملة + جوهرة · للمدير فقط</em>
-    </div>
-  </div>
-
-  <div class="wallet-grid">
-    <div class="panel">
-      <div class="panel-head">
-        <h3>الأعضاء المسجلون وإدارة أرصدتهم</h3>
-        <span id="walletMemberCount">جارٍ تحميل الأعضاء...</span>
+  <div class="dashboard-layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="owner-mini">
+        <div class="owner-avatar" id="ownerAvatar">H</div>
+        <strong id="ownerName">مالك المنصة</strong>
+        <small id="ownerEmail">جارٍ تحميل بيانات الحساب...</small>
+        <span class="owner-role">مالك المنصة • ADMIN</span>
       </div>
 
-      <form class="member-tools" id="walletSearchForm">
-        <input
-          id="walletSearchInput"
-          type="search"
-          maxlength="100"
-          placeholder="ابحث بالاسم أو username أو كود العضوية أو ID..."
-          autocomplete="off">
-        <button class="primary-btn" id="walletSearchButton" type="submit">بحث</button>
-      </form>
+      <div class="menu-caption">القائمة الرئيسية</div>
 
-      <div class="wallet-search-results" id="walletSearchResults">
-        <div class="wallet-empty">جارٍ تحميل الأعضاء المسجلين...</div>
-      </div>
+      <button class="menu-button active" data-section="overview" type="button">
+        <span class="menu-icon">⌂</span> الرئيسية
+      </button>
 
-      <div class="wallet-selected" id="walletSelectedPanel" hidden>
-        <div class="wallet-selected-head">
-          <div class="wallet-member-avatar" id="walletSelectedAvatar">؟</div>
+      <div class="menu-caption">أقسام الإدارة</div>
+
+      <button class="menu-button" data-section="members" type="button">
+        <span class="menu-icon">♙</span> إدارة الأعضاء
+      </button>
+      <button class="menu-button" data-section="messages" type="button">
+        <span class="menu-icon">✉</span> الرسائل والمحادثات
+      </button>
+      <button class="menu-button" data-section="notifications" type="button">
+        <span class="menu-icon">♢</span> الإشعارات
+      </button>
+      <button class="menu-button" data-section="content" type="button">
+        <span class="menu-icon">▤</span> إدارة المحتوى
+      </button>
+      <button class="menu-button" data-section="wallet" type="button">
+        <span class="menu-icon">◇</span> المحفظة والأرصدة
+      </button>
+      <button class="menu-button" data-section="gifts" type="button">
+        <span class="menu-icon">✧</span> الهدايا والمتجر
+      </button>
+      <button class="menu-button" data-section="site" type="button">
+        <span class="menu-icon">⌘</span> إعدادات المنصة
+      </button>
+      <button class="menu-button" data-section="updates" type="button">
+        <span class="menu-icon">↻</span> مركز التحديثات
+      </button>
+      <button class="menu-button" data-section="security" type="button">
+        <span class="menu-icon">⬡</span> الأمان وسجل النشاط
+      </button>
+    </aside>
+
+    <main class="main-content">
+      <div id="sectionView">
+        <section class="welcome-panel">
+          <div class="welcome-kicker">THE POWER OF MANAGEMENT</div>
+          <h1>مرحباً بك في مركز القيادة</h1>
+          <p>
+            لوحة الإدارة المركزية لمنصة HANOON WORLD.
+            من هنا سيتم تشغيل وإدارة جميع أقسام المنصة من مكان واحد.
+          </p>
+        </section>
+
+        <div class="content-heading">
           <div>
-            <strong id="walletSelectedName">العضو المحدد</strong>
-            <small id="walletSelectedMeta"></small>
+            <h2>لوحة التحكم الرئيسية</h2>
+            <p>إدارة المنصة من واجهة واحدة متكاملة</p>
           </div>
+          <span class="live-status">● نظام الإدارة</span>
         </div>
 
-        <div class="wallet-balance-pills">
-          <div class="wallet-balance-pill">
-            <small>رصيد العملات</small>
-            <strong id="walletSelectedCoins">0</strong>
-          </div>
-          <div class="wallet-balance-pill">
-            <small>رصيد الجواهر</small>
-            <strong id="walletSelectedGems">0</strong>
-          </div>
+        <div class="admin-note">
+          <strong>تم تجهيز الهيكل الأساسي للأدمن.</strong>
+          القائمة الجانبية ومكان عرض الأقسام موجودان داخل هذه الصفحة.
+          سنربط ملفات كل قسم في مكان العرض نفسه، بحيث تظل القائمة والهوية والخلفية ثابتة أثناء التنقل بين الأقسام.
         </div>
-
-        <form class="wallet-form" id="walletActionForm">
-          <div class="field">
-            <label for="walletActionType">نوع العملية</label>
-            <select id="walletActionType">
-              <option value="add">إضافة رصيد للعضو من الإدارة</option>
-              <option value="transfer">تحويل من محفظة المدير للعضو</option>
-            </select>
-          </div>
-
-          <div class="field">
-            <label for="walletCurrency">نوع الرصيد</label>
-            <select id="walletCurrency">
-              <option value="coins">عملات</option>
-              <option value="gems">جواهر</option>
-            </select>
-          </div>
-
-          <div class="field">
-            <label for="walletAmount">الكمية</label>
-            <input id="walletAmount" type="number" min="1" max="1000000000" step="1" inputmode="numeric" placeholder="اكتب الكمية" required>
-            <div class="field-hint">الحد الأقصى للعملية الواحدة مليار.</div>
-          </div>
-
-          <div class="field">
-            <label for="walletReason">سبب العملية / ملاحظة</label>
-            <input id="walletReason" type="text" maxlength="160" placeholder="مثال: هدية من الإدارة">
-          </div>
-
-          <button class="primary-btn" id="walletActionButton" type="submit">تنفيذ العملية</button>
-        </form>
       </div>
-    </div>
-
-    <div class="panel">
-      <div class="panel-head">
-        <h3>سجل حركات العضو</h3>
-        <button class="secondary-btn" id="walletRefreshButton" type="button">تحديث</button>
-      </div>
-      <div class="wallet-history" id="walletHistory">
-        <div class="wallet-empty">اختر عضوًا لعرض سجل العملات والجواهر.</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="panel" style="margin-top:12px">
-    <div class="panel-head">
-      <h3>سجل المكافآت الشهرية للمدير</h3>
-      <span>آخر 6 أشهر</span>
-    </div>
-    <div class="wallet-month-list" id="walletMonthlyHistory">
-      <div class="wallet-empty">جارٍ تحميل السجل...</div>
-    </div>
+    </main>
   </div>
 </section>
 
-<section class="view" id="view-site-editor">
-  <div class="page-head"><div><div class="eyebrow">HANOON / DESIGN STUDIO</div><h1>استوديو تصميم الموقع</h1><p>تحكم في ألوان الموقع وخلفياته وصوره ونصوصه وترتيب أقسامه.</p></div><div class="live-status"><i></i> محرر التصميم</div></div>
-  <div id="adminSiteRoot"></div>
-</section>
+<script type="module">
+import { supabase } from "./supabase.js";
 
-<section class="view" id="view-content-manager">
-  <div class="page-head"><div><div class="eyebrow">HANOON / CONTENT CONTROL</div><h1>إدارة المحتوى</h1><p>إدارة المحتوى التحريري والإعلانات والعروض الترويجية.</p></div><div class="live-status"><i></i> إدارة المحتوى</div></div>
-  <div id="adminContentRoot"></div>
-</section>
+const SESSION_KEY = "hanoon_admin_session";
+const ADMIN_ID = "a4450f5b-05ee-4476-82e0-9e064d6df331";
 
-<section class="view" id="view-update-center">
-  <div class="page-head"><div><div class="eyebrow">HANOON / UPDATE CENTER</div><h1>مركز التحديثات والإصدارات</h1><p>إنشاء الإصدارات وإضافة الملفات وإدارة النشر والسحب.</p></div><div class="live-status"><i></i> مركز التحديثات</div></div>
-  <div id="adminUpdatesRoot"></div>
-</section><script type="module">
-import {supabase} from "./supabase.js";
-import {createAdminExtensions} from "./admin-core.js";
+const startScreen = document.getElementById("startScreen");
+const loginScreen = document.getElementById("loginScreen");
+const dashboardScreen = document.getElementById("dashboardScreen");
+const loginForm = document.getElementById("loginForm");
+const loginButton = document.getElementById("loginButton");
+const passwordInput = document.getElementById("adminPassword");
+const loginMessage = document.getElementById("loginMessage");
 
-const $=id=>document.getElementById(id);
-const SESSION_KEY="hanoon_admin_session";
-const ADMIN_ID="a4450f5b-05ee-4476-82e0-9e064d6df331";
-const ADMIN_CODE="HN-81F47A85A3";
-const ADMIN_AVATAR="a4450f5b-05ee-4476-82e0-9e064d6df331/avatar-1794696870435.jpg";
-const ADMIN_COVER="a4450f5b-05ee-4476-82e0-9e064d6df331/cover-1794696871360.jpg";
-const PAGE_SIZE=20;
+let sessionToken = null;
 
-let sessionToken="";
-let adminExtensions=null;
-
-function ensureAdminExtensions(){
-  if(!sessionToken)throw new Error("جلسة الإدارة غير متاحة.");
-  if(!adminExtensions){
-    adminExtensions=createAdminExtensions({supabase,sessionToken,toast});
-  }
-  return adminExtensions;
-}
-let memberOffset=0,memberTotal=0,membersLoaded=false;
-let messageTarget=null,pendingDialogAction=null,toastTimer;
-let historyStack=[],currentView="dashboard";
-let walletSelectedMember=null;
-let walletMembersLoaded=false;
-
-const walletNumber=value=>Number(value||0).toLocaleString("en-US");
-
-function toast(message,error=false){
-  const el=$("toast");
-  el.textContent=message;
-  el.classList.toggle("error",error);
-  el.classList.add("show");
-  clearTimeout(toastTimer);
-  toastTimer=setTimeout(()=>el.classList.remove("show"),3500);
+function showScreen(screen){
+  startScreen.classList.add("hidden");
+  loginScreen.classList.add("hidden");
+  dashboardScreen.classList.add("hidden");
+  screen.classList.remove("hidden");
 }
 
-function showAccess(title,message){
-  $("accessTitle").textContent=title;
-  $("accessMessage").textContent=message;
-  $("accessScreen").hidden=false;
+function showLoginMessage(message,type){
+  loginMessage.textContent = message;
+  loginMessage.className = "login-message " + type;
 }
 
-function showDashboard(){
-  $("accessScreen").hidden=true;
-}
+async function adminRequest(body,token){
+  const headers = {};
+  if(token) headers["x-admin-session"] = token;
 
-function publicAsset(path){
-  if(!path)return "";
-  const {data}=supabase.storage.from("avatars").getPublicUrl(path);
-  return data?.publicUrl||"";
-}
-
-function loadAdminIdentity(){
-  const avatar=publicAsset(ADMIN_AVATAR);
-  const cover=publicAsset(ADMIN_COVER);
-
-  if(avatar){
-    $("adminAvatar").src=avatar;
-    $("adminAvatar").onerror=()=>{
-      $("adminAvatar").removeAttribute("src");
-    };
-  }
-
-  if(cover){
-    $("adminCover").style.backgroundImage=`url("${cover}")`;
-  }
-}
-
-/* خدمة الإدارة والجلسة الآمنة */
-
-async function adminRequest(body,token=sessionToken){
-  const headers={};
-  if(token)headers["x-admin-session"]=token;
-
-  const {data,error}=await supabase.functions.invoke(
+  const {data,error} = await supabase.functions.invoke(
     "admin-send-notification",
     {body,headers}
   );
 
-  if(error){
-    let message="";
-    try{
-      if(error.context&&typeof error.context.json==="function"){
-        const details=await error.context.json();
-        message=details?.error||"";
-      }
-    }catch{}
+  if(error) throw new Error(error.message || "تعذر الاتصال بخدمة الإدارة.");
+  if(data?.error) throw new Error(data.error);
 
-    throw new Error(
-      message||error.message||"تعذر الاتصال بخدمة الإدارة."
-    );
-  }
-
-  if(data?.error)throw new Error(data.error);
   return data;
 }
 
-async function createAdminSession(password){
-  const {data,error}=await supabase.functions.invoke(
-    "admin-send-notification",
-    {
-      body:{action:"check"},
-      headers:{"x-admin-code":password}
-    }
+async function validateAdminSession(token){
+  const result = await adminRequest(
+    {action:"session_check"},
+    token
   );
 
-  if(error){
-    throw new Error(data?.error||error.message||"تعذر تسجيل الدخول.");
-  }
-
-  if(!data?.ok||!data?.sessionToken){
-    throw new Error(data?.error||"لم يتم إنشاء جلسة الإدارة.");
-  }
-
-  sessionToken=data.sessionToken;
-  localStorage.setItem(SESSION_KEY,sessionToken);
-  return data;
-}
-
-async function validateSession(token){
-  const data=await adminRequest({action:"session_check"},token);
-
-  if(!data?.ok||!data?.isAdmin){
+  if(!result?.ok || !result?.isAdmin){
     throw new Error("جلسة الإدارة غير صالحة.");
   }
 
-  sessionToken=token;
-  return true;
+  return result;
 }
 
-async function logoutAdmin(){
-  try{
-    if(sessionToken)await adminRequest({action:"logout"});
-  }catch(error){
-    console.warn(error);
+async function loadOwnerProfile(){
+  const {data:profile,error} = await supabase
+    .from("profiles")
+    .select("id,full_name,username,avatar_url,is_verified,role")
+    .eq("id",ADMIN_ID)
+    .single();
+
+  if(error) throw error;
+
+  const name = profile.full_name || profile.username || "مالك المنصة";
+  document.getElementById("ownerName").textContent = name;
+
+  const nameInHeader = document.getElementById("ownerName");
+  if(profile.is_verified){
+    const mark = document.createElement("span");
+    mark.className = "verified-mark";
+    mark.textContent = "✓";
+    nameInHeader.appendChild(mark);
   }
 
-  sessionToken="";
+  const avatar = document.getElementById("ownerAvatar");
+  if(profile.avatar_url){
+    const image = document.createElement("img");
+    image.src = profile.avatar_url;
+    image.alt = "صورة مالك المنصة";
+    image.onerror = () => { avatar.textContent = "H"; };
+    avatar.replaceChildren(image);
+  }
+
+  // البريد يُقرأ من جلسة Supabase إن كانت موجودة، ولا نخترع بريداً من عندنا.
+  const {data:userData} = await supabase.auth.getUser();
+  const email = userData?.user?.email || "بيانات البريد غير متاحة من جلسة الدخول الحالية";
+  document.getElementById("ownerEmail").textContent = email;
+}
+
+async function openDashboard(token){
+  sessionToken = token;
+  await validateAdminSession(token);
+  showScreen(dashboardScreen);
+
+  try{
+    await loadOwnerProfile();
+  }catch(error){
+    console.error("Owner profile:",error);
+    document.getElementById("ownerEmail").textContent =
+      "تعذر تحميل بيانات الحساب من جدول profiles";
+  }
+}
+
+function openLogin(){
+  showScreen(loginScreen);
+  setTimeout(()=>passwordInput.focus(),150);
+}
+
+/* شاشة البداية ثم التحقق من الجلسة */
+async function boot(){
+  const savedToken = localStorage.getItem(SESSION_KEY);
+
+  setTimeout(async()=>{
+    if(savedToken){
+      try{
+        await openDashboard(savedToken);
+        return;
+      }catch(error){
+        console.warn("Admin session:",error);
+        localStorage.removeItem(SESSION_KEY);
+      }
+    }
+
+    openLogin();
+  },5000);
+}
+
+/* إظهار وإخفاء كلمة المرور */
+document.getElementById("togglePassword").addEventListener("click",()=>{
+  const hidden = passwordInput.type === "password";
+  passwordInput.type = hidden ? "text" : "password";
+  document.getElementById("togglePassword").textContent =
+    hidden ? "إخفاء" : "إظهار";
+});
+
+/* تسجيل الدخول */
+loginForm.addEventListener("submit",async(event)=>{
+  event.preventDefault();
+
+  const password = passwordInput.value.trim();
+  if(!password){
+    showLoginMessage("اكتب كلمة المرور أولاً.","error");
+    return;
+  }
+
+  loginButton.disabled = true;
+  loginButton.textContent = "جارٍ التحقق من صلاحية الدخول...";
+  loginMessage.className = "login-message";
+
+  try{
+    const {data,error} = await supabase.functions.invoke(
+      "admin-send-notification",
+      {
+        body:{action:"check"},
+        headers:{"x-admin-code":password}
+      }
+    );
+
+    if(error) throw new Error(error.message || "تعذر الاتصال بخدمة الإدارة.");
+    if(data?.error) throw new Error(data.error);
+
+    if(!data?.ok || !data?.sessionToken){
+      throw new Error("كلمة المرور غير صحيحة أو لا تملك صلاحية الإدارة.");
+    }
+
+    localStorage.setItem(SESSION_KEY,data.sessionToken);
+    passwordInput.value = "";
+
+    showLoginMessage("تم التحقق من بيانات الإدارة بنجاح.","success");
+
+    await openDashboard(data.sessionToken);
+
+  }catch(error){
+    showLoginMessage(error.message || "حدث خطأ أثناء تسجيل الدخول.","error");
+  }finally{
+    loginButton.disabled = false;
+    loginButton.textContent = "دخول لوحة الإدارة";
+  }
+});
+
+/* تسجيل الخروج من الواجهة وإزالة الجلسة المحفوظة محلياً */
+document.getElementById("logoutButton").addEventListener("click",()=>{
   localStorage.removeItem(SESSION_KEY);
-  location.reload();
-}
-
-$("accessForm").addEventListener("submit",async event=>{
-  event.preventDefault();
-
-  const button=$("accessAction");
-  const password=$("adminPassword").value.trim();
-
-  if(!password)return;
-
-  button.disabled=true;
-  button.textContent="جارٍ التحقق...";
-
-  try{
-    await createAdminSession(password);
-    $("adminPassword").value="";
-    showDashboard();
-    loadAdminIdentity();
-    toast("تم فتح جلسة الإدارة بنجاح.");
-    updatePreview();
-  }catch(error){
-    sessionToken="";
-    localStorage.removeItem(SESSION_KEY);
-    showAccess("تعذر الدخول",error.message||"كلمة السر غير صحيحة.");
-    $("adminPassword").value="";
-    $("adminPassword").focus();
-  }finally{
-    button.disabled=false;
-    button.textContent="دخول إلى لوحة التحكم";
-  }
+  sessionToken = null;
+  passwordInput.value = "";
+  loginMessage.className = "login-message";
+  openLogin();
 });
 
-/* نوافذ التأكيد والتنقل */
-
-function askConfirmation(title,message,confirmText="تأكيد"){
-  return new Promise(resolve=>{
-    $("dialogTitle").textContent=title;
-    $("dialogMessage").textContent=message;
-    $("dialogConfirm").textContent=confirmText;
-    pendingDialogAction=resolve;
-    $("confirmDialog").hidden=false;
-  });
-}
-
-function closeDialog(result){
-  $("confirmDialog").hidden=true;
-
-  if(pendingDialogAction){
-    pendingDialogAction(result);
-    pendingDialogAction=null;
-  }
-}
-
-$("dialogCancel").addEventListener("click",()=>closeDialog(false));
-$("dialogConfirm").addEventListener("click",()=>closeDialog(true));
-
-$("confirmDialog").addEventListener("click",event=>{
-  if(event.target===$("confirmDialog"))closeDialog(false);
+/* القائمة الجانبية على الموبايل */
+const sidebar = document.getElementById("sidebar");
+document.getElementById("mobileMenu").addEventListener("click",()=>{
+  sidebar.classList.toggle("open");
 });
 
-$("logoutButton").addEventListener("click",async()=>{
-  if(await askConfirmation(
-    "تسجيل الخروج",
-    "هل تريد إنهاء جلسة الإدارة؟",
-    "تسجيل الخروج"
-  )){
-    await logoutAdmin();
-  }
-});
-
-function savePosition(){
-  return {
-    view:currentView,
-    scrollTop:$("mainContent").scrollTop,
-    memberOffset,
-    detailOpen:!$("memberDetail").hidden
-  };
-}
-
-function renderView(name){
-  currentView=name;
-
-  document.querySelectorAll(".view").forEach(view=>{
-    view.classList.toggle("active",view.id==="view-"+name);
-  });
-
-  document.querySelectorAll(".nav-btn[data-view]").forEach(button=>{
-    button.classList.toggle("active",button.dataset.view===name);
-  });
-
-  $("sidebar").classList.remove("open");
-  $("mainContent").scrollTop=0;
-
-  const extensionViews={"site-editor":"site","content-manager":"content","update-center":"updates"};
-  if(extensionViews[name]){
-    ensureAdminExtensions().open(extensionViews[name]);
-  }else if(adminExtensions){
-    adminExtensions.close();
-  }
-
-  if(name==="members"&&!membersLoaded){
-    searchMembers(true);
-  }
-
-  if(name==="wallet"){
-    loadWalletOverview();
-    loadWalletMembers();
-  }
-}
-
-function openView(name){
-  if(!["dashboard","members","notifications","wallet","site-editor","content-manager","update-center"].includes(name))return;
-  if(name===currentView)return;
-
-  historyStack.push(savePosition());
-  renderView(name);
-}
-
-function goBackInsidePanel(){
-  const prev=historyStack.pop();
-  if(!prev)return;
-
-  renderView(prev.view);
-  memberOffset=prev.memberOffset||0;
-
-  requestAnimationFrame(()=>{
-    $("mainContent").scrollTop=prev.scrollTop||0;
-    if(prev.detailOpen)$("memberDetail").hidden=false;
-  });
-}
-
-document.querySelectorAll("[data-view]").forEach(button=>{
-  button.addEventListener("click",()=>openView(button.dataset.view));
-});
-
-document.querySelectorAll("[data-open-view]").forEach(button=>{
-  button.addEventListener("click",()=>openView(button.dataset.openView));
-});
-
-$("menuButton").addEventListener("click",()=>{
-  $("sidebar").classList.toggle("open");
-});
-
-window.addEventListener("keydown",event=>{
-  if(event.key!=="Escape")return;
-
-  if(!$("memberDetail").hidden){
-    $("memberDetail").hidden=true;
-    return;
-  }
-
-  if(!$("adminMessageDialog").hidden){
-    closeAdminMessage();
-    return;
-  }
-
-  if(!$("confirmDialog").hidden){
-    closeDialog(false);
-    return;
-  }
-
-  if(historyStack.length){
-    goBackInsidePanel();
-    return;
-  }
-
-  $("sidebar").classList.remove("open");
-});
-
-window.addEventListener("popstate",()=>{
-  if(historyStack.length)goBackInsidePanel();
-});
-
-history.pushState({adminPanel:true},"","#admin");
-
-/* أدوات الأعضاء */
-
-function memberInitial(member){
-  return String(
-    member.full_name||member.nickname||member.username||"؟"
-  ).trim().slice(0,1)||"؟";
-}
-
-function makeImage(url,alt){
-  if(!url)return null;
-
-  const img=document.createElement("img");
-  img.src=url;
-  img.alt=alt;
-  img.loading="lazy";
-  img.referrerPolicy="no-referrer";
-  img.onerror=()=>img.remove();
-
-  return img;
-}
-
-function displayValue(value){
-  if(value===null||value===undefined||value==="")return "";
-  if(Array.isArray(value))return value.join("، ");
-  if(typeof value==="object")return JSON.stringify(value);
-  return String(value);
-}
-
-function showMemberDetails(member){
-  $("detailName").textContent=
-    member.full_name||member.nickname||"عضو هَنون";
-
-  if(member.is_verified){
-    const badge=document.createElement("span");
-    badge.className="verified-mark";
-    badge.innerHTML=
-      '<svg viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></svg>';
-    $("detailName").append(badge);
-  }
-
-  $("detailUsername").textContent=
-    member.username?"@"+member.username:"";
-
-  const avatar=$("detailAvatar");
-  avatar.replaceChildren();
-
-  const avatarImage=makeImage(member.avatar_url,"صورة العضو");
-
-  if(avatarImage)avatar.append(avatarImage);
-  else avatar.textContent=memberInitial(member);
-
-  const cover=$("detailCover");
-
-  if(member.cover_url){
-    cover.src=member.cover_url;
-    cover.hidden=false;
-    cover.onerror=()=>cover.hidden=true;
-  }else{
-    cover.removeAttribute("src");
-    cover.hidden=true;
-  }
-
-  const video=$("detailVideo");
-
-  if(member.profile_video_path){
-    video.src=member.profile_video_path;
-    video.hidden=false;
-  }else{
-    video.pause();
-    video.removeAttribute("src");
-    video.load();
-    video.hidden=true;
-  }
-
-  const fields=[
-    ["كود العضوية",member.member_code],
-    ["المعرّف",member.id],
-    ["اسم المستخدم",member.username],
-    ["الاسم الكامل",member.full_name],
-    ["الاسم المستعار",member.nickname],
-    ["العمر",member.age],
-    ["النبذة الشخصية",member.bio],
-    ["الهوايات",member.hobbies],
-    ["اهتمامات القراءة",member.reading_interests],
-    ["الاهتمامات",member.interests],
-    ["حالة التوثيق",member.is_verified?"موثّق":"غير موثّق"],
-    ["الملف الشخصي",member.profile_completed?"مكتمل":"غير مكتمل"],
-    ["خصوصية الحساب",member.is_private?"خاص":"عام"],
-    ["الصلاحية",member.role==="admin"?"مدير":"عضو"],
-    ["تاريخ الانضمام",member.created_at?new Date(member.created_at).toLocaleString("ar-EG"):""],
-    ["آخر تحديث",member.updated_at?new Date(member.updated_at).toLocaleString("ar-EG"):""],
-    ["مسار الصورة",member.avatar_path],
-    ["مسار الغلاف",member.cover_path],
-    ["مسار الفيديو",member.profile_video_path]
-  ];
-
-  const grid=$("detailGrid");
-  grid.replaceChildren();
-
-  fields.forEach(([label,value])=>{
-    const clean=displayValue(value);
-    if(!clean)return;
-
-    const item=document.createElement("div");
-    item.className="detail-item";
-
-    const small=document.createElement("small");
-    small.textContent=label;
-
-    const strong=document.createElement("strong");
-    strong.textContent=clean;
-
-    item.append(small,strong);
-    grid.append(item);
-  });
-
-  $("memberDetail").hidden=false;
-}
-
-$("closeMemberDetail").addEventListener("click",()=>{
-  $("memberDetail").hidden=true;
-});
-
-$("memberDetail").addEventListener("click",event=>{
-  if(event.target===$("memberDetail")){
-    $("memberDetail").hidden=true;
-  }
-});
-
-/* مراسلة الأعضاء */
-
-function openAdminMessage(member){
-  if(!member?.member_code){
-    toast("لا يوجد كود عضوية صالح لهذا العضو.",true);
-    return;
-  }
-
-  messageTarget=member;
-
-  $("adminMessageTarget").textContent=
-    "إلى: "+
-    (member.full_name||member.nickname||member.username||"عضو هَنون")+
-    " · "+member.member_code+
-    " — ستظهر الرسالة باسم حسابك الموثّق.";
-
-  $("adminMessageBody").value="";
-  $("adminMessageDialog").hidden=false;
-
-  setTimeout(()=>$("adminMessageBody").focus(),30);
-}
-
-function closeAdminMessage(){
-  $("adminMessageDialog").hidden=true;
-  messageTarget=null;
-}
-
-$("closeAdminMessage").addEventListener("click",closeAdminMessage);
-$("cancelAdminMessage").addEventListener("click",closeAdminMessage);
-
-$("adminMessageDialog").addEventListener("click",event=>{
-  if(event.target===$("adminMessageDialog")){
-    closeAdminMessage();
-  }
-});
-
-$("sendAdminMessage").addEventListener("click",async()=>{
-  if(!messageTarget)return;
-
-  const body=$("adminMessageBody").value.trim();
-
-  if(!body){
-    toast("اكتب نص الرسالة أولًا.",true);
-    $("adminMessageBody").focus();
-    return;
-  }
-
-  if(!sessionToken){
-    toast("جلسة الإدارة انتهت. سجّل الدخول مرة أخرى.",true);
-    return;
-  }
-
-  const button=$("sendAdminMessage");
-  button.disabled=true;
-  button.textContent="جارٍ الإرسال...";
-
-  try{
-    const {data,error}=await supabase.rpc(
-      "admin_send_direct_message",
-      {
-        p_session_token:sessionToken,
-        p_member_code:messageTarget.member_code,
-        p_body:body
-      }
-    );
-
-    if(error)throw new Error(error.message||"تعذر إرسال الرسالة.");
-    if(!data?.ok)throw new Error(data?.error||"لم يتم تأكيد إرسال الرسالة.");
-
-    closeAdminMessage();
-    toast("تم إرسال الرسالة وإنشاء المحادثة مع العضو.");
-  }catch(error){
-    console.error(error);
-    toast(error.message||"حدث خطأ أثناء إرسال الرسالة.",true);
-  }finally{
-    button.disabled=false;
-    button.textContent="إرسال الرسالة";
-  }
-});
-
-/* توثيق الأعضاء */
-
-async function setMemberVerification(member,button){
-  if(!member?.member_code||!sessionToken)return;
-
-  if(member.id===ADMIN_ID){
-    toast("حساب الإدارة الأساسي محمي من تغيير التوثيق هنا.",true);
-    return;
-  }
-
-  const nextValue=!member.is_verified;
-
-  const yes=await askConfirmation(
-    nextValue?"توثيق الحساب":"إلغاء التوثيق",
-    nextValue
-      ?"هل تريد منح هذا العضو علامة التوثيق الزرقاء؟"
-      :"هل تريد إلغاء علامة التوثيق عن هذا العضو؟",
-    nextValue?"توثيق الحساب":"إلغاء التوثيق"
-  );
-
-  if(!yes)return;
-
-  button.disabled=true;
-
-  try{
-    const {data,error}=await supabase.rpc(
-      "admin_set_member_verified",
-      {
-        p_session_token:sessionToken,
-        p_member_code:member.member_code,
-        p_verified:nextValue
-      }
-    );
-
-    if(error)throw new Error(error.message||"تعذر تحديث التوثيق.");
-    if(!data?.ok)throw new Error(data?.error||"لم يتم تحديث التوثيق.");
-
-    toast(nextValue?"تم توثيق الحساب.":"تم إلغاء توثيق الحساب.");
-    await searchMembers(false);
-  }catch(error){
-    toast(error.message||"حدث خطأ أثناء تحديث التوثيق.",true);
-    button.disabled=false;
-  }
-}
-
-function renderMembers(members){
-  const container=$("memberResults");
-  container.replaceChildren();
-
-  if(!members.length){
-    const empty=document.createElement("div");
-    empty.className="member-empty";
-    empty.textContent="لا يوجد أعضاء لعرضهم.";
-    container.append(empty);
-    return;
-  }
-
-  members.forEach(member=>{
-    const row=document.createElement("article");
-    row.className="member-row";
-
-    const avatar=document.createElement("div");
-    avatar.className="member-avatar";
-
-    const image=makeImage(member.avatar_url,"صورة العضو");
-
-    if(image)avatar.append(image);
-    else avatar.textContent=memberInitial(member);
-
-    const info=document.createElement("div");
-    info.className="member-info";
-
-    const name=document.createElement("strong");
-    name.textContent=member.full_name||member.nickname||"عضو هَنون";
-
-    if(member.is_verified){
-      const badge=document.createElement("span");
-      badge.className="verified-mark";
-      badge.title="حساب موثّق";
-      badge.innerHTML=
-        '<svg viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></svg>';
-      name.append(badge);
-    }
-
-    const details=document.createElement("small");
-    details.textContent=[
-      member.username?"@"+member.username:"",
-      member.member_code||""
-    ].filter(Boolean).join(" · ");
-
-    const meta=document.createElement("div");
-    meta.className="member-meta";
-
-    const status=document.createElement("span");
-    status.className="member-tag";
-    status.textContent=member.profile_completed
-      ?"الملف مكتمل"
-      :"الملف غير مكتمل";
-
-    meta.append(status);
-
-    if(member.role==="admin"){
-      const tag=document.createElement("span");
-      tag.className="member-tag";
-      tag.textContent="مدير";
-      meta.append(tag);
-    }
-
-    if(member.is_verified){
-      const tag=document.createElement("span");
-      tag.className="member-tag";
-      tag.textContent="موثّق";
-      meta.append(tag);
-    }
-
-    info.append(name,details,meta);
-
-    const open=document.createElement("button");
-    open.type="button";
-    open.className="member-open";
-    open.textContent="التفاصيل";
-    open.addEventListener("click",()=>showMemberDetails(member));
-
-    const message=document.createElement("button");
-    message.type="button";
-    message.className="member-message";
-    message.textContent="مراسلة";
-    message.addEventListener("click",()=>openAdminMessage(member));
-
-    const verify=document.createElement("button");
-    verify.type="button";
-    verify.className="member-verify"+(member.is_verified?" remove":"");
-    verify.textContent=member.is_verified?"إلغاء التوثيق":"توثيق";
-    verify.disabled=member.id===ADMIN_ID;
-    verify.title=verify.disabled?"حساب الإدارة محمي":"تغيير حالة التوثيق";
-    verify.addEventListener("click",()=>setMemberVerification(member,verify));
-
-    const actions=document.createElement("div");
-    actions.className="member-actions";
-    actions.append(open,message,verify);
-
-    row.append(avatar,info,actions);
-    container.append(row);
-  });
-}
-
-function updateMemberPagination(){
-  const page=Math.floor(memberOffset/PAGE_SIZE)+1;
-  const pages=Math.max(1,Math.ceil(memberTotal/PAGE_SIZE));
-
-  $("memberPagination").hidden=memberTotal<=PAGE_SIZE;
-  $("memberPageLabel").textContent=
-    "صفحة "+page+" من "+pages+" · "+memberTotal+" عضو";
-
-  $("memberPrev").disabled=memberOffset<=0;
-  $("memberNext").disabled=memberOffset+PAGE_SIZE>=memberTotal;
-}
-
-async function searchMembers(reset=true){
-  if(reset)memberOffset=0;
-
-  const query=$("memberSearchInput").value.trim();
-  const button=$("memberSearchButton");
-
-  button.disabled=true;
-  button.textContent="جارٍ التحميل...";
-  $("memberCount").textContent="جارٍ تحميل القائمة";
-
-  $("memberResults").innerHTML=
-    '<div class="member-empty">جارٍ تحميل أعضاء هَنون...</div>';
-
-  $("memberPagination").hidden=true;
-
-  try{
-    const data=await adminRequest({
-      action:"search_members",
-      query,
-      limit:PAGE_SIZE,
-      offset:memberOffset
+/* التنقل الداخلي: لا يخرج المستخدم من صفحة الأدمن */
+const sectionNames = {
+  overview:"الرئيسية",
+  members:"إدارة الأعضاء",
+  messages:"الرسائل والمحادثات",
+  notifications:"الإشعارات",
+  content:"إدارة المحتوى",
+  wallet:"المحفظة والأرصدة",
+  gifts:"الهدايا والمتجر",
+  site:"إعدادات المنصة",
+  updates:"مركز التحديثات",
+  security:"الأمان وسجل النشاط"
+};
+
+document.querySelectorAll(".menu-button").forEach(button=>{
+  button.addEventListener("click",()=>{
+    document.querySelectorAll(".menu-button").forEach(item=>{
+      item.classList.remove("active");
     });
 
-    if(!data?.ok)throw new Error(data?.error||"تعذر تحميل الأعضاء.");
+    button.classList.add("active");
+    sidebar.classList.remove("open");
 
-    const members=Array.isArray(data.members)?data.members:[];
-    const codes=members.map(member=>member.member_code).filter(Boolean);
-
-    if(codes.length){
-      const {data:verification,error}=await supabase.rpc(
-        "admin_get_member_verification",
-        {
-          p_session_token:sessionToken,
-          p_member_codes:codes
-        }
-      );
-
-      if(error)throw new Error(error.message||"تعذر تحميل حالات التوثيق.");
-      if(!verification?.ok){
-        throw new Error(verification?.error||"تعذر تحميل حالات التوثيق.");
-      }
-
-      const verified=new Map(
-        (Array.isArray(verification.members)?verification.members:[])
-          .map(item=>[item.member_code,!!item.is_verified])
-      );
-
-      members.forEach(member=>{
-        member.is_verified=verified.get(member.member_code)===true;
-      });
+    const section = button.dataset.section;
+    if(section === "overview"){
+      location.reload();
+      return;
     }
 
-    membersLoaded=true;
-    memberTotal=Number(data.total||0);
-
-    renderMembers(members);
-
-    $("memberCount").textContent=
-      memberTotal.toLocaleString("ar-EG")+" عضو";
-
-    updateMemberPagination();
-  }catch(error){
-    $("memberResults").replaceChildren();
-
-    const empty=document.createElement("div");
-    empty.className="member-empty";
-    empty.textContent=error.message||"حدث خطأ أثناء تحميل الأعضاء.";
-
-    $("memberResults").append(empty);
-    $("memberCount").textContent="تعذر تحميل القائمة";
-
-    toast(error.message||"تعذر تحميل الأعضاء.",true);
-  }finally{
-    button.disabled=false;
-    button.textContent="بحث";
-  }
-}
-
-$("memberSearchForm").addEventListener("submit",event=>{
-  event.preventDefault();
-  searchMembers(true);
-});
-
-$("memberRefreshButton").addEventListener("click",()=>{
-  membersLoaded=false;
-  searchMembers(true);
-});
-
-$("memberPrev").addEventListener("click",()=>{
-  if(memberOffset<=0)return;
-  memberOffset=Math.max(0,memberOffset-PAGE_SIZE);
-  searchMembers(false);
-});
-
-$("memberNext").addEventListener("click",()=>{
-  if(memberOffset+PAGE_SIZE>=memberTotal)return;
-  memberOffset+=PAGE_SIZE;
-  searchMembers(false);
-});
-
-/* الإشعارات */
-
-$("audience").addEventListener("change",()=>{
-  $("memberCodeField").hidden=$("audience").value!=="member";
-});
-
-function updatePreview(){
-  $("previewTitle").textContent=
-    $("notificationTitle").value.trim()||"عنوان الإشعار سيظهر هنا";
-
-  $("previewBody").textContent=
-    $("notificationBody").value.trim()||
-    "اكتب نص الإشعار لتظهر المعاينة هنا مباشرة.";
-
-  const routes={
-    "":"صفحة الإشعارات",
-    "home.html":"الرئيسية",
-    "members.html":"الأعضاء",
-    "games.html":"الألعاب",
-    "notifications.html":"الإشعارات",
-    "profile.html":"الملف الشخصي"
-  };
-
-  $("previewDestination").textContent=
-    routes[$("targetRoute").value]||"صفحة الإشعارات";
-}
-
-["notificationTitle","notificationBody","targetRoute"].forEach(id=>{
-  $(id).addEventListener("input",updatePreview);
-  $(id).addEventListener("change",updatePreview);
-});
-
-$("notificationForm").addEventListener("submit",async event=>{
-  event.preventDefault();
-
-  const audience=$("audience").value;
-  const memberCode=$("memberCode").value.trim();
-  const title=$("notificationTitle").value.trim();
-  const body=$("notificationBody").value.trim();
-  const targetRoute=$("targetRoute").value;
-
-  if(!title||!body){
-    toast("اكتب عنوان الإشعار ونصه أولًا.",true);
-    return;
-  }
-
-  if(audience==="member"&&!memberCode){
-    toast("اكتب كود العضو المستهدف.",true);
-    $("memberCode").focus();
-    return;
-  }
-
-  const names={
-    all:"جميع الأعضاء",
-    completed:"الأعضاء أصحاب الملفات المكتملة",
-    member:"العضو المحدد"
-  };
-
-  if(!await askConfirmation(
-    "تأكيد إرسال الإشعار",
-    "هل تريد إرسال الإشعار إلى "+names[audience]+"؟",
-    "إرسال الآن"
-  ))return;
-
-  const button=$("sendButton");
-  button.disabled=true;
-  button.textContent="جارٍ إرسال الإشعار...";
-
-  try{
-    const data=await adminRequest({
-      action:"send",
-      audience,
-      memberCode,
-      title,
-      body,
-      targetRoute
-    });
-
-    if(!data?.ok){
-      throw new Error(data?.error||"تعذر إرسال الإشعار.");
-    }
-
-    toast(
-      "تم حفظ الإشعار وإرساله إلى "+
-      Number(data.sent||0).toLocaleString("en-US")+" عضو."
-    );
-
-    $("notificationForm").reset();
-    $("memberCodeField").hidden=true;
-    updatePreview();
-  }catch(error){
-    toast(error.message||"حدث خطأ أثناء إرسال الإشعار.",true);
-  }finally{
-    button.disabled=false;
-    button.textContent="إرسال الإشعار";
-  }
-});
-
-/* =========================================
-   مركز المحفظة والعملات والجواهر
-   كل العمليات تمر عبر جلسة الإدارة الآمنة
-========================================= */
-
-function walletAvatar(member){
-  const url=member.avatar_url||member.avatar||publicAsset(member.avatar_path);
-
-  const holder=document.createElement("div");
-  holder.className="wallet-member-avatar";
-
-  const img=makeImage(url,"صورة العضو");
-
-  if(img)holder.append(img);
-  else holder.textContent=memberInitial(member);
-
-  return holder;
-}
-
-/* تحميل رصيد المدير والمكافآت */
-
-async function loadWalletOverview(){
-  $("walletScheduleStatus").textContent=
-    "جارٍ تحميل حالة المكافأة الشهرية...";
-
-  try{
-    const response=await adminRequest({
-      action:"wallet_overview"
-    });
-
-    const data=response.overview||{};
-
-    $("walletAdminCoins").textContent=walletNumber(data.coins);
-    $("walletAdminGems").textContent=walletNumber(data.gems);
-
-    const active=data.schedule_active===true;
-
-    $("walletScheduleStatus").classList.toggle("off",!active);
-
-    $("walletScheduleStatus").textContent=active
-      ?"● المكافأة التلقائية مفعّلة · أول كل شهر"
-      :"● الجدولة الشهرية غير مفعّلة";
-
-    const history=Array.isArray(data.monthly_history)
-      ?data.monthly_history:[];
-
-    const list=$("walletMonthlyHistory");
-    list.replaceChildren();
-
-    if(!history.length){
-      list.innerHTML=
-        '<div class="wallet-empty">لا توجد مكافآت شهرية مسجلة حتى الآن.</div>';
-    }else{
-      history.forEach(item=>{
-        const row=document.createElement("div");
-        row.className="wallet-month-row";
-
-        const date=document.createElement("span");
-        date.textContent=new Date(item.month_start+"T00:00:00Z")
-          .toLocaleDateString("ar-EG",{
-            year:"numeric",
-            month:"long",
-            timeZone:"UTC"
-          });
-
-        const amount=document.createElement("strong");
-        amount.textContent=
-          "+"+walletNumber(item.coins_added)+" عملة · +"+
-          walletNumber(item.gems_added)+" جوهرة";
-
-        row.append(date,amount);
-        list.append(row);
-      });
-    }
-  }catch(error){
-    console.error(error);
-
-    $("walletScheduleStatus").classList.add("off");
-    $("walletScheduleStatus").textContent=
-      error.message||"تعذر تحميل بيانات المحفظة";
-
-    toast(error.message||"تعذر تحميل بيانات المحفظة.",true);
-  }
-}
-
-/* تحميل الأعضاء تلقائيًا عند فتح المحفظة */
-
-async function loadWalletMembers(query=""){
-  const list=$("walletSearchResults");
-  const count=$("walletMemberCount");
-
-  list.innerHTML=
-    '<div class="wallet-empty">جارٍ تحميل الأعضاء المسجلين...</div>';
-
-  count.textContent="جارٍ تحميل الأعضاء...";
-
-  const button=$("walletSearchButton");
-  button.disabled=true;
-
-  try{
-    const data=await adminRequest({
-      action:"search_members",
-      query:query.trim(),
-      limit:20,
-      offset:0
-    });
-
-    if(!data?.ok){
-      throw new Error(data?.error||"تعذر تحميل الأعضاء.");
-    }
-
-    const members=Array.isArray(data.members)?data.members:[];
-
-    renderWalletMembers(members);
-
-    count.textContent=
-      Number(data.total||0).toLocaleString("ar-EG")+" عضو مسجل";
-
-    walletMembersLoaded=true;
-  }catch(error){
-    list.innerHTML="";
-
-    const empty=document.createElement("div");
-    empty.className="wallet-empty";
-    empty.textContent=error.message||"تعذر تحميل الأعضاء.";
-
-    list.append(empty);
-    count.textContent="تعذر تحميل القائمة";
-
-    toast(error.message||"تعذر تحميل الأعضاء.",true);
-  }finally{
-    button.disabled=false;
-  }
-}
-
-function renderWalletMembers(members){
-  const list=$("walletSearchResults");
-  list.replaceChildren();
-
-  if(!members.length){
-    list.innerHTML=
-      '<div class="wallet-empty">لا توجد نتائج مطابقة للبحث.</div>';
-    return;
-  }
-
-  members.forEach(member=>{
-    const row=document.createElement("div");
-    row.className="wallet-member";
-
-    const avatar=walletAvatar(member);
-
-    const info=document.createElement("div");
-    info.className="wallet-member-info";
-
-    const name=document.createElement("strong");
-    name.textContent=
-      member.full_name||member.nickname||"عضو هَنون";
-
-    const meta=document.createElement("small");
-    meta.textContent=[
-      member.username?"@"+member.username:"",
-      member.member_code||"",
-      member.id||""
-    ].filter(Boolean).join(" · ");
-
-    info.append(name,meta);
-
-    const choose=document.createElement("button");
-    choose.type="button";
-    choose.textContent="فتح المحفظة";
-    choose.addEventListener("click",()=>openWalletMember(member));
-
-    row.append(avatar,info,choose);
-    list.append(row);
+    // نقطة عرض الأقسام التي سنربط بها ملفات الإدارة تباعاً.
+    // لا يتم فتح صفحة خارجية أو مغادرة واجهة الأدمن.
+    document.getElementById("sectionView").innerHTML = `
+      <section class="welcome-panel">
+        <div class="welcome-kicker">HANOON WORLD • ADMIN</div>
+        <h1>${sectionNames[section]}</h1>
+        <p>هذا القسم سيُحمّل داخل مركز الإدارة الرئيسي، مع بقاء القائمة والهوية والتصميم ثابتة.</p>
+      </section>
+      <div class="content-heading">
+        <div>
+          <h2>${sectionNames[section]}</h2>
+          <p>مساحة القسم داخل لوحة الإدارة</p>
+        </div>
+      </div>
+      <div class="admin-note">
+        <strong>القسم محدد داخل الأدمن.</strong>
+        سيتم توصيل واجهته ووظائفه الفعلية بملف القسم الخاص به في الخطوة التالية.
+      </div>
+    `;
   });
-}
-
-/* البحث بالاسم أو username أو كود العضوية أو ID */
-
-$("walletSearchForm").addEventListener("submit",async event=>{
-  event.preventDefault();
-
-  const query=$("walletSearchInput").value.trim();
-
-  await loadWalletMembers(query);
 });
 
-/* فتح محفظة عضو */
-
-async function openWalletMember(member){
-  walletSelectedMember=member;
-
-  $("walletSelectedPanel").hidden=false;
-
-  $("walletSelectedName").textContent=
-    member.full_name||member.nickname||"عضو هَنون";
-
-  $("walletSelectedMeta").textContent=[
-    member.username?"@"+member.username:"",
-    member.member_code||"",
-    member.id||""
-  ].filter(Boolean).join(" · ");
-
-  const avatar=$("walletSelectedAvatar");
-  avatar.replaceChildren();
-
-  const img=makeImage(
-    member.avatar_url||member.avatar||publicAsset(member.avatar_path),
-    "صورة العضو"
-  );
-
-  if(img)avatar.append(img);
-  else avatar.textContent=memberInitial(member);
-
-  await loadWalletMemberDetails();
-}
-
-/* تفاصيل العضو وسجل حركاته عبر خدمة الإدارة */
-
-async function loadWalletMemberDetails(){
-  if(!walletSelectedMember)return;
-
-  $("walletHistory").innerHTML=
-    '<div class="wallet-empty">جارٍ تحميل سجل الحركات...</div>';
-
-  $("walletRefreshButton").disabled=true;
-
-  try{
-    const response=await adminRequest({
-      action:"wallet_member_details",
-      userId:walletSelectedMember.id
-    });
-
-    const data=response.details||{};
-
-    $("walletSelectedCoins").textContent=
-      walletNumber(data.coins);
-
-    $("walletSelectedGems").textContent=
-      walletNumber(data.gems);
-
-    renderWalletHistory(data.transactions||[]);
-  }catch(error){
-    $("walletHistory").textContent=
-      error.message||"تعذر تحميل سجل العضو.";
-
-    toast(error.message||"تعذر تحميل سجل العضو.",true);
-  }finally{
-    $("walletRefreshButton").disabled=false;
-  }
-}
-
-function renderWalletHistory(items){
-  const list=$("walletHistory");
-  list.replaceChildren();
-
-  if(!items.length){
-    list.innerHTML=
-      '<div class="wallet-empty">لا توجد حركات مسجلة لهذا العضو.</div>';
-    return;
-  }
-
-  items.forEach(item=>{
-    const row=document.createElement("div");
-    row.className="wallet-transaction";
-
-    const info=document.createElement("div");
-    info.className="wallet-transaction-info";
-
-    const title=document.createElement("strong");
-    title.textContent=item.reason||"حركة رصيد";
-
-    const detail=document.createElement("small");
-
-    const currency=item.currency==="gems"?"جواهر":"عملات";
-    const counter=item.counterparty_name
-      ?" · الطرف الآخر: "+item.counterparty_name:"";
-
-    detail.textContent=
-      currency+counter+" · "+
-      new Date(item.created_at).toLocaleString("ar-EG");
-
-    info.append(title,detail);
-
-    const amount=document.createElement("div");
-    amount.className="wallet-amount "+
-      (Number(item.amount)>=0?"plus":"minus");
-
-    amount.textContent=
-      (Number(item.amount)>0?"+":"")+
-      walletNumber(item.amount);
-
-    row.append(info,amount);
-    list.append(row);
-  });
-}
-
-$("walletRefreshButton").addEventListener(
-  "click",
-  loadWalletMemberDetails
-);
-
-/* إضافة الرصيد أو التحويل من المدير */
-
-$("walletActionForm").addEventListener("submit",async event=>{
-  event.preventDefault();
-
-  if(!walletSelectedMember)return;
-
-  const operation=$("walletActionType").value;
-  const currency=$("walletCurrency").value;
-  const amount=Number($("walletAmount").value);
-
-  const reason=$("walletReason").value.trim()||
-    "عملية من إدارة هَنون";
-
-  if(!Number.isSafeInteger(amount)||amount<1||amount>1000000000){
-    toast("أدخل كمية صحيحة من 1 إلى مليار.",true);
-    return;
-  }
-
-  const currencyName=currency==="gems"?"جوهرة":"عملة";
-  const operationName=operation==="transfer"?"تحويل":"إضافة";
-
-  const memberName=
-    walletSelectedMember.full_name||
-    walletSelectedMember.username||
-    "العضو المحدد";
-
-  const confirmed=await askConfirmation(
-    "تأكيد "+operationName+" الرصيد",
-    "هل تريد "+operationName+" "+
-      walletNumber(amount)+" "+currencyName+
-      " إلى "+memberName+"؟",
-    "تأكيد العملية"
-  );
-
-  if(!confirmed)return;
-
-  const button=$("walletActionButton");
-  button.disabled=true;
-  button.textContent="جارٍ تنفيذ العملية...";
-
-  try{
-    const action=operation==="transfer"
-      ?"wallet_transfer"
-      :"wallet_adjust";
-
-    const response=await adminRequest({
-      action,
-      userId:walletSelectedMember.id,
-      currency,
-      amount,
-      reason
-    });
-
-    const result=response.result||{};
-
-    if(!response.ok||result.success!==true){
-      throw new Error(
-        result.error||"لم يتم تأكيد العملية من قاعدة البيانات."
-      );
-    }
-
-    $("walletAmount").value="";
-    $("walletReason").value="";
-
-    toast(
-      operation==="transfer"
-        ?"تم التحويل بنجاح وتسجيل الحركة للطرفين."
-        :"تمت إضافة الرصيد بنجاح."
-    );
-
-    await Promise.all([
-      loadWalletMemberDetails(),
-      loadWalletOverview()
-    ]);
-
-    await loadWalletMembers($("walletSearchInput").value.trim());
-  }catch(error){
-    console.error(error);
-    toast(error.message||"تعذر تنفيذ العملية.",true);
-  }finally{
-    button.disabled=false;
-    button.textContent="تنفيذ العملية";
-  }
-});/* بدء تشغيل لوحة الإدارة */
-
-const savedToken=localStorage.getItem(SESSION_KEY)||"";
-
-if(savedToken){
-  try{
-    await validateSession(savedToken);
-    showDashboard();
-    loadAdminIdentity();
-    updatePreview();
-  }catch(error){
-    localStorage.removeItem(SESSION_KEY);
-    sessionToken="";
-    showAccess(
-      "انتهت جلسة الإدارة",
-      "اكتب كلمة السر لإنشاء جلسة جديدة."
-    );
-  }
-}else{
-  showAccess(
-    "الدخول إلى لوحة الإدارة",
-    "اكتب كلمة سر الإدارة للمتابعة."
-  );
-}
+boot();
 </script>
+
 </body>
 </html>
