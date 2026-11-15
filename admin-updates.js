@@ -1,835 +1,749 @@
 /* =========================================================
-   HANOON WORLD — UPDATE CENTER
+   HANOON WORLD — VISUAL UPDATE & RELEASE CENTER
    File: admin-updates.js
-
-   Secure database RPCs:
-   - hanoon_admin_create_update_release
-   - hanoon_admin_list_update_releases
-   - hanoon_admin_add_update_asset
-   - hanoon_admin_publish_update_release
-   - hanoon_admin_withdraw_update_release
-
-   Storage bucket:
-   - hanoon-site-assets
+   إدارة التصميم والخلفيات والإصدارات بدون كتابة أكواد.
 ========================================================= */
 
-export function mountUpdateCenter({
-  root,
-  supabase,
-  sessionToken,
-  toast = () => {}
-}) {
-  if (!root || !supabase || !sessionToken) {
-    throw new Error("Update center configuration is incomplete.");
-  }
+export function mountUpdateCenter({ root, supabase, sessionToken, toast = () => {} }) {
+  if (!root || !supabase || !sessionToken) throw new Error("بيانات تشغيل مركز التحديثات غير مكتملة.");
 
   const BUCKET = "hanoon-site-assets";
-  const MAX_FILE_SIZE = 50 * 1024 * 1024;
-
+  const MAX_IMAGE = 10 * 1024 * 1024;
+  const MAX_FILE = 50 * 1024 * 1024;
   let releases = [];
   let selectedRelease = null;
-  let selectedFile = null;
-  let loading = false;
-  let saving = false;
+  let backgroundFile = null;
+  let announcementFile = null;
+  let assetFile = null;
+  let appearance = { accent: "#a982f5", background: "#090711", backgroundImage: "" };
+  let busy = false;
 
-  const escapeHTML = value =>
-    String(value ?? "").replace(/[&<>"']/g, char => ({
-      "&": "&amp;",
-      "<": "&lt;",
-      ">": "&gt;",
-      '"': "&quot;",
-      "'": "&#039;"
-    })[char]);
+  const $ = selector => root.querySelector(selector);
+  const esc = value => String(value ?? "").replace(/[&<>"']/g, c => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" })[c]);
+  const notify = (message, type = "info") => toast(message, type);
+  const publicUrl = path => !path ? "" : /^https?:\/\//i.test(path) ? path : supabase.storage.from(BUCKET).getPublicUrl(path).data.publicUrl;
+  const dateText = value => value ? new Intl.DateTimeFormat("ar-EG", { dateStyle:"medium", timeStyle:"short" }).format(new Date(value)) : "غير محدد";
+  const sizeText = bytes => { const n = Number(bytes || 0); return n < 1048576 ? `${(n/1024).toFixed(1)} كيلوبايت` : `${(n/1048576).toFixed(2)} ميجابايت`; };
+  const typeNames = { general:"تحديث عام", design:"تغيير التصميم والخلفيات", content:"محتوى جديد", features:"مميزات جديدة", fixes:"إصلاحات وتحسينات" };
 
-  const formatDate = value => {
-    if (!value) return "غير محدد";
+  root.innerHTML = `
+    <section class="hw-module hw-update-center" dir="rtl">
+      <style>
+        .hw-update-center{--u-purple:#9b7bff;--u-gold:#e8c77a;color:#f5f0ff}
+        .hw-update-center .hw-card{background:linear-gradient(145deg,rgba(31,24,49,.97),rgba(13,12,24,.98));border:1px solid rgba(185,151,255,.2);box-shadow:0 18px 55px rgba(0,0,0,.24);border-radius:20px;padding:20px;margin:16px 0}
+        .hw-update-center .hw-content-heading{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px}
+        .hw-update-center .hw-content-heading h3{margin:0 0 6px;font-size:18px}
+        .hw-update-center .hw-content-heading p,.hw-update-center small{color:#bdb2d2;font-size:12px}
+        .hw-update-center .hw-field{display:flex;flex-direction:column;gap:8px;margin:12px 0;min-width:0}
+        .hw-update-center .hw-field label,.hw-update-center .hw-field>span{font-size:12px;color:#e9defa}
+        .hw-update-center .hw-input,.hw-update-center input:not([type=checkbox]):not([type=color]):not([type=file]),.hw-update-center textarea,.hw-update-center select{width:100%;box-sizing:border-box;background:#171322;color:#fff;border:1px solid #514568;border-radius:11px;padding:12px;font:inherit;min-height:44px}
+        .hw-update-center input[type=file]{max-width:100%;padding:12px;background:#171322;border:1px dashed #705d91;border-radius:12px;color:#eee}
+        .hw-update-center input[type=color]{width:100%;height:45px;border:1px solid #514568;border-radius:10px;background:#171322;padding:4px}
+        .hw-update-center .hw-form-grid,.hw-update-center .hw-appearance-grid,.hw-update-center .hw-stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+        .hw-update-center .hw-stats{grid-template-columns:repeat(3,minmax(0,1fr));margin:14px 0}
+        .hw-update-center .hw-stats .hw-card{margin:0}
+        .hw-update-center .hw-stats strong{display:block;font-size:25px;color:#e8c77a;margin-top:7px}
+        .hw-update-center .hw-action{border:1px solid rgba(210,190,255,.22);border-radius:11px;background:#211a31;color:#fff;padding:10px 15px;cursor:pointer;font:inherit;font-size:12px}
+        .hw-update-center .hw-action.primary{background:linear-gradient(120deg,#8d69ed,#bd8cda);border:0}
+        .hw-update-center .hw-action.danger{background:#572338}
+        .hw-update-center .hw-action:disabled{opacity:.5;cursor:not-allowed}
+        .hw-update-center .hw-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+        .hw-update-center .hw-status{font-size:11px;border-radius:30px;padding:6px 10px;background:#34294b;color:#e5d5ff}
+        .hw-update-center .hw-status.published{background:#173c36;color:#8ce2c6}
+        .hw-update-center .hw-status.withdrawn{background:#49222d;color:#ff9cad}
+        .hw-update-center .hw-appearance-preview{min-height:260px;border-radius:18px;overflow:hidden;display:grid;place-items:center;padding:18px;background:radial-gradient(circle at 20% 15%,#7852b955,transparent 45%),linear-gradient(135deg,#211737,#0e1724);background-size:cover;background-position:center;border:1px solid rgba(255,255,255,.14)}
+        .hw-update-center .hw-preview-glass{width:min(100%,360px);padding:24px;border-radius:18px;background:rgba(15,12,27,.72);border:1px solid rgba(255,255,255,.2);backdrop-filter:blur(14px);text-align:center}
+        .hw-update-center .hw-preview-glass span{font-size:10px;letter-spacing:2px;color:#d8c3ff}
+        .hw-update-center .hw-preview-glass h3{font-size:24px;margin:12px 0}
+        .hw-update-center .hw-preview-glass p{font-size:12px;color:#d4cce3}
+        .hw-update-center .hw-preview-glass button{border:0;border-radius:30px;padding:10px 22px;color:#fff;background:linear-gradient(120deg,#9b7bff,#c99a67)}
+        .hw-update-center .hw-release-card{padding:16px;border:1px solid rgba(190,160,230,.17);border-radius:16px;background:rgba(9,8,18,.45);margin:12px 0}
+        .hw-update-center .hw-release-top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+        .hw-update-center .hw-release-version{color:#e8c77a;font-size:12px}
+        .hw-update-center .hw-release-card h4{margin:7px 0;font-size:16px}
+        .hw-update-center .hw-release-card p{color:#c7bdd7;font-size:12px;white-space:pre-wrap}
+        .hw-update-center .hw-release-meta{display:flex;gap:12px;flex-wrap:wrap;color:#b7aaca;font-size:11px;margin:10px 0}
+        .hw-update-center .hw-release-banner img{width:min(100%,380px);max-height:190px;object-fit:cover;border-radius:13px;border:1px solid #55436d}
+        .hw-update-center .hw-feedback{font-size:12px;color:#d8c3ff;margin-top:10px;min-height:18px}
+        @media(max-width:700px){
+          .hw-update-center .hw-form-grid,.hw-update-center .hw-appearance-grid{grid-template-columns:1fr}
+          .hw-update-center .hw-stats{grid-template-columns:1fr}
+          .hw-update-center .hw-appearance-preview{min-height:210px}
+          .hw-update-center .hw-card{padding:14px}
+        }
+      </style>
 
-    const date = new Date(value);
+      <header class="hw-module-header">
+        <div>
+          <span class="hw-eyebrow">HANOON WORLD / CONTROL STUDIO</span>
+          <h2>مركز التحديثات والتحكم في الموقع</h2>
+          <p>غيّر الخلفيات والألوان، جهّز الإصدارات، واعرض التحديث للأعضاء من غير كتابة أكواد.</p>
+        </div>
+        <button class="hw-action" type="button" data-action="reload">تحديث البيانات</button>
+      </header>
 
-    if (Number.isNaN(date.getTime())) return "غير محدد";
+      <div class="hw-stats">
+        <div class="hw-card"><span>كل الإصدارات</span><strong id="uCountAll">0</strong></div>
+        <div class="hw-card"><span>منشورة</span><strong id="uCountPublished">0</strong></div>
+        <div class="hw-card"><span>مسودات</span><strong id="uCountDraft">0</strong></div>
+      </div>
 
-    return new Intl.DateTimeFormat("ar-EG", {
-      dateStyle: "medium",
-      timeStyle: "short"
-    }).format(date);
-  };
+      <section class="hw-card">
+        <div class="hw-content-heading">
+          <div><h3>استوديو الخلفيات والألوان</h3><p>اختر صورة من موبايلك أو جهازك، وغيّر ألوان الموقع مع معاينة فورية.</p></div>
+          <span class="hw-status published">تحكم بصري</span>
+        </div>
+        <div class="hw-appearance-grid">
+          <div>
+            <label class="hw-field"><span>لون الهوية الرئيسي</span><input id="uAccent" type="color" value="#a982f5"></label>
+            <label class="hw-field"><span>لون خلفية الموقع</span><input id="uBackground" type="color" value="#090711"></label>
+            <label class="hw-field"><span>اختيار خلفية من الجهاز</span><input id="uBackgroundFile" type="file" accept="image/png,image/jpeg,image/webp,image/gif"></label>
+            <div class="hw-actions">
+              <button class="hw-action primary" type="button" data-action="save-appearance">حفظ ونشر شكل الموقع</button>
+              <button class="hw-action" type="button" data-action="remove-background">إزالة الخلفية</button>
+            </div>
+            <div class="hw-feedback" id="uAppearanceFeedback"></div>
+            <small>صور PNG وJPG وWEBP وGIF حتى 10 ميجابايت. الحفظ يحدّث إعدادات التصميم المشتركة؛ ظهورها في صفحات الموقع يتطلب أن تقرأ الصفحات إعدادات المظهر المحفوظة.</small>
+          </div>
+          <div class="hw-appearance-preview" id="uAppearancePreview">
+            <div class="hw-preview-glass">
+              <span>HANOON WORLD</span>
+              <h3>عالمك يبدأ من هنا</h3>
+              <p>معاينة الخلفية والألوان قبل الحفظ</p>
+              <button type="button">اكتشف الموقع</button>
+            </div>
+          </div>
+        </div>
+      </section>
 
-  const formatSize = bytes => {
-    const size = Number(bytes || 0);
+      <section class="hw-card">
+        <div class="hw-content-heading">
+          <div><h3>إنشاء إصدار جديد</h3><p>حدد رقم الإصدار ونوعه وصورة الإعلان وطريقة ظهوره للأعضاء.</p></div>
+        </div>
+        <form id="uReleaseForm">
+          <div class="hw-form-grid">
+            <label class="hw-field"><span>رقم الإصدار</span><input id="uVersion" name="version" placeholder="مثال: 2.0.0" maxlength="40" required></label>
+            <label class="hw-field"><span>عنوان التحديث</span><input id="uTitle" name="title" placeholder="تحديث هَنون الجديد" maxlength="160" required></label>
+            <label class="hw-field">
+              <span>نوع التحديث</span>
+              <select id="uType">
+                <option value="general">تحديث عام</option>
+                <option value="design">تغيير التصميم والخلفيات</option>
+                <option value="content">محتوى جديد</option>
+                <option value="features">مميزات جديدة</option>
+                <option value="fixes">إصلاحات وتحسينات</option>
+              </select>
+            </label>
+            <label class="hw-field">
+              <span>طريقة التحديث</span>
+              <select id="uMandatory">
+                <option value="false">اختياري — يمكن التأجيل</option>
+                <option value="true">إجباري — يتطلب متابعة التحديث</option>
+              </select>
+            </label>
+          </div>
+          <label class="hw-field"><span>وصف التحديث</span><textarea id="uDescription" name="description" rows="3" maxlength="3000" placeholder="اكتب رسالة التحديث التي ستظهر للأعضاء..."></textarea></label>
+          <label class="hw-field"><span>صورة إعلان التحديث من جهازك (اختياري)</span><input id="uAnnouncementImage" type="file" accept="image/png,image/jpeg,image/webp,image/gif"></label>
+          <label class="hw-field"><span>إيه الجديد؟ (كل نقطة في سطر)</span><textarea id="uChangelog" name="changelog" rows="5" placeholder="خلفية جديدة للموقع&#10;تحسين شكل الصفحات&#10;إضافة مميزات جديدة"></textarea></label>
+          <button class="hw-action primary" type="submit">إنشاء الإصدار وحفظه كمسودة</button>
+        </form>
+      </section>
 
-    if (size < 1024) return `${size} بايت`;
-    if (size < 1024 * 1024) {
-      return `${(size / 1024).toFixed(1)} كيلوبايت`;
+      <section class="hw-card">
+        <div class="hw-content-heading">
+          <div><h3>إضافة صورة أو ملف للمسودة</h3><p>لإرفاق صورة أو ملف مرتبط بإصدار معين، من غير تعديل الأكواد.</p></div>
+        </div>
+        <div class="hw-form-grid">
+          <label class="hw-field"><span>الإصدار</span><select id="uAssetRelease"><option value="">اختر إصدارًا مسودة</option></select></label>
+          <label class="hw-field">
+            <span>نوع الملف</span>
+            <select id="uAssetType">
+              <option value="image">صورة</option>
+              <option value="video">فيديو</option>
+              <option value="audio">صوت</option>
+              <option value="font">خط</option>
+              <option value="other">ملف آخر</option>
+            </select>
+          </label>
+        </div>
+        <label class="hw-field"><span>اسم العنصر أو وصفه</span><input id="uAssetPath" placeholder="مثال: خلفية الصفحة الرئيسية"></label>
+        <label class="hw-field"><span>اختيار الملف من الجهاز</span><input id="uAssetFile" type="file"></label>
+        <button class="hw-action primary" type="button" data-action="add-asset">إضافة الملف للإصدار</button>
+        <div class="hw-feedback" id="uAssetFeedback"></div>
+      </section>
+
+      <section class="hw-card">
+        <div class="hw-content-heading">
+          <div><h3>سجل الإصدارات</h3><p>راجع المسودات والمنشور واسحب أي إصدار عند الحاجة.</p></div>
+        </div>
+        <div id="uReleaseList">جارٍ تحميل الإصدارات...</div>
+      </section>
+
+      <section class="hw-card">
+        <h3>معلومة مهمة عن ظهور التحديث</h3>
+        <p style="color:#c7bdd7;font-size:12px;line-height:1.9">
+          نشر الإصدار ينشئ إشعارات للأعضاء ويخزن بيانات التحديث في قاعدة البيانات.
+          التحديث الإجباري/الاختياري وصورة الإعلان تُحفظ مع الإصدار.
+          أما تغيير الخلفية فيحفظ إعدادات المظهر المشتركة؛ يجب أن تكون صفحات الموقع
+          مربوطة بقراءة هذه الإعدادات حتى يظهر التغيير عليها كلها.
+          هذا المركز لا يستبدل ملفات الموقع البرمجية.
+        </p>
+      </section>
+    </section>`;  function paintAppearance() {
+    const preview = $("#uAppearancePreview");
+    if (!preview) return;
+
+    const accent = $("#uAccent")?.value || appearance.accent;
+    const bg = $("#uBackground")?.value || appearance.background;
+
+    preview.style.backgroundColor = bg;
+    preview.style.borderColor = accent;
+
+    preview.style.backgroundImage = appearance.backgroundImage
+      ? `linear-gradient(90deg,rgba(12,9,22,.72),rgba(12,9,22,.58)),url("${appearance.backgroundImage}")`
+      : `radial-gradient(circle at 20% 15%,${accent}66,transparent 45%),linear-gradient(135deg,#211737,#0e1724)`;
+  }
+
+  async function upload(file, folder, max = MAX_IMAGE) {
+    if (!file) return null;
+
+    if (file.size > max) {
+      throw new Error(`حجم الملف أكبر من الحد المسموح (${sizeText(max)}).`);
     }
 
-    return `${(size / (1024 * 1024)).toFixed(2)} ميجابايت`;
-  };
+    const ext = (file.name.split(".").pop() || "bin")
+      .toLowerCase()
+      .replace(/[^a-z0-9]/g, "") || "bin";
 
-  function notify(message, type = "info") {
-    toast(message, type);
+    const path = `${folder}/${crypto.randomUUID()}.${ext}`;
+
+    const { error } = await supabase.storage
+      .from(BUCKET)
+      .upload(path, file, {
+        cacheControl:"3600",
+        upsert:false,
+        contentType:file.type || "application/octet-stream"
+      });
+
+    if (error) throw error;
+
+    return path;
   }
 
-  function statusLabel(status) {
-    const labels = {
-      draft: "مسودة",
-      published: "منشور",
-      withdrawn: "مسحوب"
+  async function loadAppearance() {
+    const { data, error } = await supabase.rpc(
+      "hanoon_admin_get_site_settings",
+      { p_session_token:sessionToken }
+    );
+
+    if (error) throw error;
+
+    const row = (Array.isArray(data) ? data : [])
+      .find(item => item.setting_key === "site_appearance");
+
+    const value = row?.setting_value || {};
+
+    appearance = {
+      accent:value.accent || "#a982f5",
+      background:value.background || "#090711",
+      backgroundImage:value.backgroundImage || ""
     };
 
-    return labels[status] || status;
+    $("#uAccent").value = appearance.accent;
+    $("#uBackground").value = appearance.background;
+
+    paintAppearance();
   }
 
-  function statusClass(status) {
-    return {
-      draft: "draft",
-      published: "published",
-      withdrawn: "withdrawn"
-    }[status] || "draft";
-  }
-
-  function render() {
-    root.innerHTML = `
-      <section class="hw-module hw-update-center" dir="rtl">
-
-        <header class="hw-module-header">
-          <div>
-            <span class="hw-eyebrow">HANOON WORLD / RELEASES</span>
-            <h2>مركز التحديثات والإصدارات</h2>
-            <p>
-              أنشئ إصدارات جديدة، وأضف ملفات التحديث، وتحكم في نشرها.
-            </p>
-          </div>
-
-          <button
-            class="hw-action"
-            type="button"
-            data-action="reload"
-            ${loading ? "disabled" : ""}
-          >
-            تحديث القائمة
-          </button>
-        </header>
-
-        <div class="hw-update-stats">
-
-          <div class="hw-card">
-            <span>كل الإصدارات</span>
-            <strong>${releases.length}</strong>
-          </div>
-
-          <div class="hw-card">
-            <span>الإصدارات المنشورة</span>
-            <strong>
-              ${releases.filter(r => r.status === "published").length}
-            </strong>
-          </div>
-
-          <div class="hw-card">
-            <span>المسودات</span>
-            <strong>
-              ${releases.filter(r => r.status === "draft").length}
-            </strong>
-          </div>
-
-        </div>
-
-        <div class="hw-card hw-release-create">
-
-          <div class="hw-content-heading">
-            <div>
-              <h3>إنشاء إصدار جديد</h3>
-              <p>أدخل بيانات الإصدار وسجل التغييرات.</p>
-            </div>
-          </div>
-
-          <form id="hwReleaseForm">
-
-            <div class="hw-form-grid">
-
-              <div class="hw-field">
-                <label for="hwVersion">رقم الإصدار</label>
-                <input
-                  class="hw-input"
-                  id="hwVersion"
-                  name="version"
-                  placeholder="مثال: 1.0.1"
-                  maxlength="40"
-                  required
-                >
-              </div>
-
-              <div class="hw-field">
-                <label for="hwReleaseTitle">عنوان الإصدار</label>
-                <input
-                  class="hw-input"
-                  id="hwReleaseTitle"
-                  name="title"
-                  placeholder="تحديث جديد للموقع"
-                  maxlength="160"
-                  required
-                >
-              </div>
-
-            </div>
-
-            <div class="hw-field">
-              <label for="hwReleaseDescription">وصف الإصدار</label>
-              <textarea
-                class="hw-input"
-                id="hwReleaseDescription"
-                name="description"
-                rows="3"
-                maxlength="3000"
-                placeholder="اكتب وصفًا مختصرًا للتحديث..."
-              ></textarea>
-            </div>
-
-            <div class="hw-field">
-              <label for="hwChangelog">سجل التغييرات</label>
-              <textarea
-                class="hw-input"
-                id="hwChangelog"
-                name="changelog"
-                rows="5"
-                placeholder="كل تغيير في سطر مستقل..."
-              ></textarea>
-              <small>سيتم حفظ كل سطر كبند مستقل في سجل الإصدار.</small>
-            </div>
-
-            <button
-              class="hw-action primary"
-              type="submit"
-              ${saving ? "disabled" : ""}
-            >
-              إنشاء الإصدار
-            </button>
-
-          </form>
-        </div>
-
-        <div class="hw-card hw-release-assets">
-
-          <div class="hw-content-heading">
-            <div>
-              <h3>إضافة ملفات إلى إصدار</h3>
-              <p>
-                اختر إصدارًا في حالة المسودة، ثم أضف ملفات التحديث.
-              </p>
-            </div>
-          </div>
-
-          <div class="hw-field">
-            <label for="hwAssetRelease">الإصدار المستهدف</label>
-
-            <select class="hw-input" id="hwAssetRelease">
-              <option value="">اختر إصدارًا...</option>
-
-              ${releases
-                .filter(r => r.status === "draft")
-                .map(r => `
-                  <option
-                    value="${escapeHTML(r.id)}"
-                    ${selectedRelease === r.id ? "selected" : ""}
-                  >
-                    ${escapeHTML(r.version)} — ${escapeHTML(r.title)}
-                  </option>
-                `).join("")}
-            </select>
-          </div>
-
-          <div class="hw-form-grid">
-
-            <div class="hw-field">
-              <label for="hwAssetAction">نوع العملية</label>
-              <select class="hw-input" id="hwAssetAction">
-                <option value="add">إضافة ملف</option>
-                <option value="replace">استبدال ملف</option>
-                <option value="delete">حذف ملف عند تطبيق التحديث</option>
-              </select>
-            </div>
-
-            <div class="hw-field">
-              <label for="hwAssetType">نوع الملف</label>
-              <select class="hw-input" id="hwAssetType">
-                <option value="other">ملف آخر</option>
-                <option value="image">صورة</option>
-                <option value="video">فيديو</option>
-                <option value="audio">صوت</option>
-                <option value="font">خط</option>
-                <option value="style">ملف CSS</option>
-                <option value="script">ملف JavaScript</option>
-                <option value="page">صفحة HTML</option>
-                <option value="data">بيانات</option>
-              </select>
-            </div>
-
-          </div>
-
-          <div class="hw-field">
-            <label for="hwTargetPath">مسار الملف داخل الموقع</label>
-            <input
-              class="hw-input"
-              id="hwTargetPath"
-              placeholder="مثال: assets/css/style.css"
-              maxlength="500"
-            >
-            <small>
-              هذا هو المسار الذي سيستهدفه محرك التحديث عند تطبيق الإصدار.
-            </small>
-          </div>
-
-          <div class="hw-field" id="hwFileField">
-            <label for="hwAssetFile">ملف التحديث</label>
-            <input
-              class="hw-input"
-              id="hwAssetFile"
-              type="file"
-            >
-            <small>
-              الحد الأقصى للرفع من لوحة الإدارة: 50 ميجابايت للملف الواحد.
-            </small>
-          </div>
-
-          <div class="hw-field">
-            <label for="hwAssetOrder">ترتيب الملف</label>
-            <input
-              class="hw-input"
-              id="hwAssetOrder"
-              type="number"
-              min="0"
-              max="100000"
-              value="0"
-            >
-          </div>
-
-          <button
-            class="hw-action primary"
-            type="button"
-            data-action="upload"
-          >
-            إضافة الملف إلى الإصدار
-          </button>
-
-          <div id="hwAssetFeedback" class="hw-content-feedback"></div>
-
-        </div>
-
-        <div class="hw-card hw-release-list">
-
-          <div class="hw-content-heading">
-            <div>
-              <h3>سجل الإصدارات</h3>
-              <p>جميع الإصدارات المحفوظة في قاعدة البيانات.</p>
-            </div>
-          </div>
-
-          <div class="hw-release-list-items">
-
-            ${
-              loading
-                ? `<p>جارٍ تحميل الإصدارات...</p>`
-                : releases.length
-                  ? releases.map(release => `
-                    <article class="hw-release-card">
-
-                      <div class="hw-release-top">
-                        <div>
-                          <span class="hw-release-version">
-                            v${escapeHTML(release.version)}
-                          </span>
-
-                          <h4>${escapeHTML(release.title)}</h4>
-                        </div>
-
-                        <span class="hw-status ${statusClass(release.status)}">
-                          ${statusLabel(release.status)}
-                        </span>
-                      </div>
-
-                      <p>
-                        ${escapeHTML(release.description || "لا يوجد وصف.")}
-                      </p>
-
-                      <div class="hw-release-meta">
-                        <span>
-                          الحجم: ${formatSize(release.total_size_bytes)}
-                        </span>
-
-                        <span>
-                          الإنشاء: ${formatDate(release.created_at)}
-                        </span>
-
-                        ${
-                          release.published_at
-                            ? `<span>النشر: ${formatDate(release.published_at)}</span>`
-                            : ""
-                        }
-                      </div>
-
-                      <div class="hw-release-actions">
-
-                        ${
-                          release.status === "draft"
-                            ? `
-                              <button
-                                class="hw-action primary"
-                                type="button"
-                                data-publish="${escapeHTML(release.id)}"
-                              >
-                                نشر الإصدار
-                              </button>
-                            `
-                            : ""
-                        }
-
-                        ${
-                          release.status === "published"
-                            ? `
-                              <button
-                                class="hw-action danger"
-                                type="button"
-                                data-withdraw="${escapeHTML(release.id)}"
-                              >
-                                سحب الإصدار
-                              </button>
-                            `
-                            : ""
-                        }
-
-                        ${
-                          release.status === "draft"
-                            ? `
-                              <button
-                                class="hw-action"
-                                type="button"
-                                data-select-release="${escapeHTML(release.id)}"
-                              >
-                                إضافة ملفات
-                              </button>
-                            `
-                            : ""
-                        }
-
-                      </div>
-
-                    </article>
-                  `).join("")
-                  : `<p>لا توجد إصدارات حتى الآن.</p>`
-            }
-
-          </div>
-        </div>
-
-        <div class="hw-card hw-update-warning">
-          <h3>تنبيه بخصوص تطبيق التحديثات</h3>
-          <p>
-            هذه اللوحة تحفظ إصدارات التحديث وملفاتها وتنشر سجل الإصدار
-            في قاعدة البيانات. تطبيق الملفات تلقائيًا على صفحات الموقع
-            يحتاج إلى محرك تحديث في الواجهة العامة؛ لا تعتبر عملية النشر
-            وحدها تحديثًا تلقائيًا لملفات GitHub Pages.
-          </p>
-        </div>
-
-      </section>
-    `;
-
-    bindEvents();
-  }
-
-  function bindEvents() {
-    root.querySelector('[data-action="reload"]')
-      ?.addEventListener("click", loadReleases);
-
-    root.querySelector("#hwReleaseForm")
-      ?.addEventListener("submit", createRelease);
-
-    root.querySelector('[data-action="upload"]')
-      ?.addEventListener("click", addAsset);
-
-    root.querySelector("#hwAssetRelease")
-      ?.addEventListener("change", event => {
-        selectedRelease = event.target.value || null;
-      });
-
-    root.querySelector("#hwAssetAction")
-      ?.addEventListener("change", updateFileRequirement);
-
-    root.querySelector("#hwAssetFile")
-      ?.addEventListener("change", event => {
-        selectedFile = event.target.files?.[0] || null;
-      });
-
-    root.querySelectorAll("[data-publish]").forEach(button => {
-      button.addEventListener("click", () => {
-        publishRelease(button.dataset.publish);
-      });
-    });
-
-    root.querySelectorAll("[data-withdraw]").forEach(button => {
-      button.addEventListener("click", () => {
-        withdrawRelease(button.dataset.withdraw);
-      });
-    });
-
-    root.querySelectorAll("[data-select-release]").forEach(button => {
-      button.addEventListener("click", () => {
-        selectedRelease = button.dataset.selectRelease;
-
-        const select = root.querySelector("#hwAssetRelease");
-        if (select) select.value = selectedRelease;
-
-        root.querySelector(".hw-release-assets")
-          ?.scrollIntoView({ behavior: "smooth", block: "start" });
-      });
-    });
-
-    updateFileRequirement();
-  }
-
-  function updateFileRequirement() {
-    const action = root.querySelector("#hwAssetAction")?.value;
-    const field = root.querySelector("#hwFileField");
-
-    if (field) {
-      field.style.display = action === "delete" ? "none" : "";
+  async function saveAppearance() {
+    const button = $('[data-action="save-appearance"]');
+
+    button.disabled = true;
+
+    try {
+      let imagePath = appearance.backgroundImage;
+
+      if (backgroundFile) {
+        imagePath = await upload(
+          backgroundFile,
+          "site-backgrounds"
+        );
+      }
+
+      const next = {
+        brand:"HANOON WORLD",
+        accent:$("#uAccent").value,
+        background:$("#uBackground").value,
+        backgroundImage:imagePath || ""
+      };
+
+      const { data, error } = await supabase.rpc(
+        "hanoon_admin_save_site_appearance",
+        {
+          p_session_token:sessionToken,
+          p_settings:next
+        }
+      );
+
+      if (error) throw error;
+
+      if (data?.ok === false) {
+        throw new Error(data.error || "تعذر حفظ المظهر.");
+      }
+
+      appearance = next;
+      backgroundFile = null;
+
+      $("#uAppearanceFeedback").textContent =
+        "تم حفظ إعدادات المظهر والخلفية في قاعدة البيانات.";
+
+      paintAppearance();
+
+      notify(
+        "تم حفظ إعدادات الخلفية والألوان.",
+        "success"
+      );
+
+    } catch (error) {
+      notify(error.message || "تعذر حفظ المظهر.", "error");
+
+    } finally {
+      button.disabled = false;
     }
   }
 
   async function loadReleases() {
-    if (loading) return;
+    const { data, error } = await supabase.rpc(
+      "hanoon_admin_list_update_releases",
+      { p_session_token:sessionToken }
+    );
 
-    loading = true;
-    render();
+    if (error) throw error;
 
-    try {
-      const { data, error } = await supabase.rpc(
-        "hanoon_admin_list_update_releases",
-        {
-          p_session_token: sessionToken
-        }
+    releases = Array.isArray(data) ? data : [];
+
+    $("#uCountAll").textContent = releases.length;
+
+    $("#uCountPublished").textContent =
+      releases.filter(r => r.status === "published").length;
+
+    $("#uCountDraft").textContent =
+      releases.filter(r => r.status === "draft").length;
+
+    const drafts = releases.filter(r => r.status === "draft");
+
+    $("#uAssetRelease").innerHTML =
+      `<option value="">اختر إصدارًا مسودة</option>` +
+      drafts.map(r =>
+        `<option value="${esc(r.id)}">${esc(r.version)} — ${esc(r.title)}</option>`
+      ).join("");
+
+    $("#uReleaseList").innerHTML = releases.length
+      ? releases.map(r => `
+        <article class="hw-release-card">
+          <div class="hw-release-top">
+            <div>
+              <span class="hw-release-version">الإصدار ${esc(r.version)}</span>
+              <h4>${esc(r.title)}</h4>
+            </div>
+
+            <span class="hw-status ${
+              r.status === "published"
+                ? "published"
+                : r.status === "withdrawn"
+                  ? "withdrawn"
+                  : ""
+            }">
+              ${
+                r.status === "published"
+                  ? "منشور"
+                  : r.status === "withdrawn"
+                    ? "مسحوب"
+                    : "مسودة"
+              }
+            </span>
+          </div>
+
+          <p>${esc(r.description || "لا يوجد وصف.")}</p>
+
+          ${
+            Array.isArray(r.changelog) && r.changelog.length
+              ? `<ul style="color:#d8cce8;font-size:12px;line-height:1.9;padding-right:20px">
+                  ${r.changelog.map(item =>
+                    `<li>${esc(typeof item === "string" ? item : item?.text || item?.title || "")}</li>`
+                  ).join("")}
+                </ul>`
+              : ""
+          }
+
+          <div class="hw-release-meta">
+            <span>${esc(typeNames[r.release_type] || "تحديث عام")}</span>
+            <span>${r.is_mandatory ? "إجباري" : "اختياري"}</span>
+            <span>الحجم: ${sizeText(r.total_size_bytes)}</span>
+            <span>تاريخ الإنشاء: ${dateText(r.created_at)}</span>
+          </div>
+
+          ${
+            r.announcement_image_path
+              ? `<div class="hw-release-banner">
+                  <img src="${esc(publicUrl(r.announcement_image_path))}" alt="إعلان التحديث">
+                </div>`
+              : ""
+          }
+
+          <div class="hw-actions">
+            ${
+              r.status === "draft"
+                ? `<button class="hw-action primary" type="button" data-publish="${esc(r.id)}">نشر الإصدار</button>`
+                : ""
+            }
+
+            ${
+              r.status === "published"
+                ? `<button class="hw-action danger" type="button" data-withdraw="${esc(r.id)}">سحب الإصدار</button>`
+                : ""
+            }
+
+            ${
+              r.status === "draft"
+                ? `<button class="hw-action" type="button" data-pick-release="${esc(r.id)}">إضافة ملفات</button>`
+                : ""
+            }
+          </div>
+        </article>
+      `).join("")
+      : "<p>لا توجد إصدارات حتى الآن.</p>";
+
+    root.querySelectorAll("[data-publish]").forEach(button => {
+      button.addEventListener("click", () =>
+        publish(button.dataset.publish)
       );
+    });
 
-      if (error) throw error;
-
-      releases = Array.isArray(data) ? data : [];
-
-      if (
-        selectedRelease &&
-        !releases.some(r =>
-          r.id === selectedRelease && r.status === "draft"
-        )
-      ) {
-        selectedRelease = null;
-      }
-
-      loading = false;
-      render();
-
-    } catch (error) {
-      loading = false;
-      render();
-
-      notify(
-        error?.message || "تعذر تحميل قائمة الإصدارات.",
-        "error"
+    root.querySelectorAll("[data-withdraw]").forEach(button => {
+      button.addEventListener("click", () =>
+        withdraw(button.dataset.withdraw)
       );
-    }
-  }
+    });
 
-  async function createRelease(event) {
+    root.querySelectorAll("[data-pick-release]").forEach(button => {
+      button.addEventListener("click", () => {
+        $("#uAssetRelease").value = button.dataset.pickRelease;
+
+        $("#uAssetRelease").scrollIntoView({
+          behavior:"smooth",
+          block:"center"
+        });
+      });
+    });
+                        }  async function createRelease(event) {
     event.preventDefault();
 
-    if (saving) return;
+    if (busy) return;
 
-    const form = event.currentTarget;
-    const formData = new FormData(form);
+    const version = $("#uVersion").value.trim();
+    const title = $("#uTitle").value.trim();
+    const description = $("#uDescription").value.trim();
+    const type = $("#uType").value;
+    const mandatory = $("#uMandatory").value === "true";
 
-    const version = String(formData.get("version") || "").trim();
-    const title = String(formData.get("title") || "").trim();
-    const description = String(formData.get("description") || "").trim();
-
-    const changelogText = String(
-      formData.get("changelog") || ""
-    ).trim();
+    const changelog = $("#uChangelog").value
+      .split("\n")
+      .map(line => line.trim())
+      .filter(Boolean)
+      .map(text => ({text}));
 
     if (!version || !title) {
-      notify("اكتب رقم الإصدار والعنوان أولًا.", "error");
-      return;
+      return notify("اكتب رقم الإصدار والعنوان.", "error");
     }
 
-    const changelog = changelogText
-      ? changelogText
-          .split("\n")
-          .map(line => line.trim())
-          .filter(Boolean)
-          .map(text => ({ text }))
-      : [];
-
-    saving = true;
-    render();
+    busy = true;
 
     try {
-      const { data, error } = await supabase.rpc(
+      const {
+        data:releaseId,
+        error
+      } = await supabase.rpc(
         "hanoon_admin_create_update_release",
         {
-          p_session_token: sessionToken,
-          p_version: version,
-          p_title: title,
-          p_description: description,
-          p_changelog: changelog
+          p_session_token:sessionToken,
+          p_version:version,
+          p_title:title,
+          p_description:description,
+          p_changelog:changelog
         }
       );
 
       if (error) throw error;
 
-      selectedRelease = data || null;
+      let imagePath = null;
 
-      notify("تم إنشاء الإصدار بنجاح.", "success");
+      if (announcementFile) {
+        imagePath = await upload(
+          announcementFile,
+          "update-announcements"
+        );
+      }
 
-      saving = false;
+      const { error:optionsError } = await supabase.rpc(
+        "hanoon_admin_update_release_options",
+        {
+          p_session_token:sessionToken,
+          p_release_id:releaseId,
+          p_release_type:type,
+          p_is_mandatory:mandatory,
+          p_announcement_image_path:imagePath
+        }
+      );
+
+      if (optionsError) throw optionsError;
+
+      $("#uReleaseForm").reset();
+      announcementFile = null;
+
+      notify("تم إنشاء الإصدار وحفظه كمسودة.", "success");
+
       await loadReleases();
 
     } catch (error) {
-      saving = false;
-      render();
+      notify(error.message || "تعذر إنشاء الإصدار.", "error");
 
-      notify(
-        error?.message || "تعذر إنشاء الإصدار.",
-        "error"
-      );
+    } finally {
+      busy = false;
     }
-  }
-
-  async function sha256(file) {
-    if (!globalThis.crypto?.subtle) return null;
-
-    const buffer = await file.arrayBuffer();
-    const digest = await crypto.subtle.digest("SHA-256", buffer);
-
-    return Array.from(new Uint8Array(digest))
-      .map(byte => byte.toString(16).padStart(2, "0"))
-      .join("");
   }
 
   async function addAsset() {
-    if (saving) return;
-
-    const releaseId =
-      root.querySelector("#hwAssetRelease")?.value;
-
-    const action =
-      root.querySelector("#hwAssetAction")?.value;
-
-    const assetType =
-      root.querySelector("#hwAssetType")?.value;
-
-    const targetPath =
-      root.querySelector("#hwTargetPath")?.value.trim();
-
-    const sortOrder = Number(
-      root.querySelector("#hwAssetOrder")?.value || 0
-    );
-
-    const file = root.querySelector("#hwAssetFile")
-      ?.files?.[0] || null;
+    const releaseId = $("#uAssetRelease").value;
+    const file = assetFile;
+    const target = $("#uAssetPath").value.trim();
 
     if (!releaseId) {
-      notify("اختر إصدارًا في حالة المسودة.", "error");
-      return;
+      return notify("اختر إصدارًا مسودة أولًا.", "error");
     }
 
-    if (!targetPath) {
-      notify("اكتب مسار الملف المستهدف.", "error");
-      return;
+    if (!file || !target) {
+      return notify("اختر الملف واكتب وصفه.", "error");
     }
 
-    if (action !== "delete" && !file) {
-      notify("اختر الملف الذي تريد رفعه.", "error");
-      return;
-    }
-
-    if (file && file.size > MAX_FILE_SIZE) {
-      notify("حجم الملف أكبر من 50 ميجابايت.", "error");
-      return;
+    if (file.size > MAX_FILE) {
+      return notify("حجم الملف أكبر من 50 ميجابايت.", "error");
     }
 
     const release = releases.find(r => r.id === releaseId);
 
     if (!release || release.status !== "draft") {
-      notify("لا يمكن تعديل ملفات إصدار غير مسودة.", "error");
-      return;
+      return notify("يمكن إضافة الملفات للمسودات فقط.", "error");
     }
 
-    saving = true;
-
-    const button = root.querySelector('[data-action="upload"]');
-    if (button) {
-      button.disabled = true;
-      button.textContent = "جارٍ إضافة الملف...";
-    }
+    const button = $('[data-action="add-asset"]');
+    button.disabled = true;
 
     let storagePath = null;
-    let mimeType = null;
-    let fileSize = 0;
-    let fileHash = null;
 
     try {
-      if (action !== "delete") {
-        const safeName = file.name
-          .normalize("NFKD")
-          .replace(/[^\w.-]+/g, "_")
-          .slice(-120);
+      storagePath = await upload(
+        file,
+        `release-assets/${releaseId}`,
+        MAX_FILE
+      );
 
-        storagePath =
-          `${releaseId}/${Date.now()}-${safeName}`;
+      const type = $("#uAssetType").value;
+      const mime = file.type || "application/octet-stream";
 
-        mimeType = file.type || "application/octet-stream";
-        fileSize = file.size;
-        fileHash = await sha256(file);
-
-        const { error: uploadError } = await supabase.storage
-          .from(BUCKET)
-          .upload(storagePath, file, {
-            cacheControl: "3600",
-            upsert: false,
-            contentType: mimeType
-          });
-
-        if (uploadError) throw uploadError;
-      }
-
-      const { error: rpcError } = await supabase.rpc(
+      const { error } = await supabase.rpc(
         "hanoon_admin_add_update_asset",
         {
-          p_session_token: sessionToken,
-          p_release_id: releaseId,
-          p_action: action,
-          p_asset_type: assetType,
-          p_target_path: targetPath,
-          p_storage_path: storagePath,
-          p_mime_type: mimeType,
-          p_size_bytes: fileSize,
-          p_sha256: fileHash,
-          p_sort_order: sortOrder,
-          p_metadata: {
-            original_name: file?.name || null
-          }
+          p_session_token:sessionToken,
+          p_release_id:releaseId,
+          p_action:"add",
+          p_asset_type:type,
+          p_target_path:target,
+          p_storage_path:storagePath,
+          p_mime_type:mime,
+          p_size_bytes:file.size,
+          p_sha256:null,
+          p_sort_order:0,
+          p_metadata:{original_name:file.name}
         }
       );
 
-      if (rpcError) {
-        /*
-         * If database registration fails after upload,
-         * remove the orphaned storage object.
-         */
-        if (storagePath) {
-          await supabase.storage
-            .from(BUCKET)
-            .remove([storagePath]);
-        }
+      if (error) {
+        await supabase.storage
+          .from(BUCKET)
+          .remove([storagePath]);
 
-        throw rpcError;
+        throw error;
       }
 
-      notify("تمت إضافة ملف التحديث إلى الإصدار.", "success");
+      $("#uAssetFeedback").textContent =
+        "تم رفع الملف وربطه بالإصدار.";
 
-      selectedFile = null;
+      $("#uAssetFile").value = "";
+      $("#uAssetPath").value = "";
+      assetFile = null;
 
       await loadReleases();
 
+      notify("تمت إضافة الملف للإصدار.", "success");
+
     } catch (error) {
-      notify(
-        error?.message || "تعذرت إضافة ملف التحديث.",
-        "error"
-      );
+      notify(error.message || "تعذر إضافة الملف.", "error");
 
-      saving = false;
-
-      const uploadButton = root.querySelector('[data-action="upload"]');
-      if (uploadButton) {
-        uploadButton.disabled = false;
-        uploadButton.textContent = "إضافة الملف إلى الإصدار";
-      }
+    } finally {
+      button.disabled = false;
     }
   }
 
-  async function publishRelease(releaseId) {
-    const release = releases.find(r => r.id === releaseId);
+  async function publish(id) {
+    const release = releases.find(r => r.id === id);
 
-    if (!release || release.status !== "draft") {
-      notify("هذا الإصدار ليس مسودة قابلة للنشر.", "error");
-      return;
-    }
+    if (!release || release.status !== "draft") return;
 
-    const confirmed = window.confirm(
-      `هل تريد نشر الإصدار ${release.version}؟ سيتم تسجيله كتحديث منشور وإرسال إشعار للأعضاء.`
-    );
+    const mode = release.is_mandatory ? "إجباري" : "اختياري";
 
-    if (!confirmed) return;
+    if (!confirm(
+      `نشر الإصدار ${release.version} كتحديث ${mode} وإرسال إشعار للأعضاء؟`
+    )) return;
 
     try {
       const { error } = await supabase.rpc(
         "hanoon_admin_publish_update_release",
         {
-          p_session_token: sessionToken,
-          p_release_id: releaseId
+          p_session_token:sessionToken,
+          p_release_id:id
         }
       );
 
       if (error) throw error;
 
-      notify("تم نشر الإصدار بنجاح.", "success");
+      notify("تم نشر الإصدار وإرسال إشعارات التحديث.", "success");
+
       await loadReleases();
 
     } catch (error) {
-      notify(
-        error?.message || "تعذر نشر الإصدار.",
-        "error"
-      );
+      notify(error.message || "تعذر نشر الإصدار.", "error");
     }
   }
 
-  async function withdrawRelease(releaseId) {
-    const release = releases.find(r => r.id === releaseId);
+  async function withdraw(id) {
+    const release = releases.find(r => r.id === id);
 
-    if (!release || release.status !== "published") {
-      notify("هذا الإصدار غير منشور.", "error");
-      return;
-    }
+    if (!release || release.status !== "published") return;
 
-    const confirmed = window.confirm(
-      `هل تريد سحب الإصدار ${release.version}؟`
-    );
-
-    if (!confirmed) return;
+    if (!confirm(`هل تريد سحب الإصدار ${release.version}؟`)) return;
 
     try {
       const { error } = await supabase.rpc(
         "hanoon_admin_withdraw_update_release",
         {
-          p_session_token: sessionToken,
-          p_release_id: releaseId
+          p_session_token:sessionToken,
+          p_release_id:id
         }
       );
 
       if (error) throw error;
 
       notify("تم سحب الإصدار.", "success");
+
       await loadReleases();
 
     } catch (error) {
-      notify(
-        error?.message || "تعذر سحب الإصدار.",
-        "error"
-      );
+      notify(error.message || "تعذر سحب الإصدار.", "error");
     }
   }
 
-  render();
-  loadReleases();
+  // معاينة الألوان مباشرة عند تغييرها
+  $("#uAccent").addEventListener("input", paintAppearance);
+  $("#uBackground").addEventListener("input", paintAppearance);
+
+  // اختيار خلفية من الموبايل أو الجهاز
+  $("#uBackgroundFile").addEventListener("change", event => {
+    backgroundFile = event.target.files?.[0] || null;
+
+    if (backgroundFile) {
+      if (!backgroundFile.type.startsWith("image/")) {
+        notify("اختر ملف صورة صحيح.", "error");
+        backgroundFile = null;
+        event.target.value = "";
+        return;
+      }
+
+      const local = URL.createObjectURL(backgroundFile);
+
+      $("#uAppearancePreview").style.backgroundImage =
+        `linear-gradient(90deg,rgba(12,9,22,.5),rgba(12,9,22,.4)),url("${local}")`;
+    }
+  });
+
+  // صورة إعلان الإصدار
+  $("#uAnnouncementImage").addEventListener("change", event => {
+    announcementFile = event.target.files?.[0] || null;
+  });
+
+  // ملف إضافي للإصدار
+  $("#uAssetFile").addEventListener("change", event => {
+    assetFile = event.target.files?.[0] || null;
+  });
+
+  // إنشاء الإصدار
+  $("#uReleaseForm").addEventListener("submit", createRelease);
+
+  // إعادة تحميل البيانات
+  $('[data-action="reload"]').addEventListener("click", async () => {
+    try {
+      await loadReleases();
+      await loadAppearance();
+
+      notify("تم تحديث البيانات.", "success");
+
+    } catch (error) {
+      notify(error.message, "error");
+    }
+  });
+
+  // حفظ شكل الموقع
+  $('[data-action="save-appearance"]').addEventListener(
+    "click",
+    saveAppearance
+  );
+
+  // إزالة الخلفية
+  $('[data-action="remove-background"]').addEventListener("click", () => {
+    appearance.backgroundImage = "";
+    backgroundFile = null;
+
+    $("#uBackgroundFile").value = "";
+
+    paintAppearance();
+  });
+
+  // إضافة ملف للإصدار
+  $('[data-action="add-asset"]').addEventListener(
+    "click",
+    addAsset
+  );
+
+  // التحميل الأول عند فتح مركز الإدارة
+  (async () => {
+    try {
+      await Promise.all([
+        loadAppearance(),
+        loadReleases()
+      ]);
+
+    } catch (error) {
+      console.error("Update center load:", error);
+
+      notify(
+        error.message || "تعذر تحميل مركز التحديثات.",
+        "error"
+      );
+    }
+  })();
 
   return {
-    reload: loadReleases,
+    reload:loadReleases,
 
     destroy() {
       root.innerHTML = "";
