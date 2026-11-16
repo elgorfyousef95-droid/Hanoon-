@@ -3,972 +3,278 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
-<meta name="theme-color" content="#090b18">
-<title>الغرف | HANOON WORLD</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#090914">
+<title>HANOON ARENA | غرف اللعب</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 <style>
-:root{
- --bg:#070916;
- --panel:#11162a;
- --panel2:#1b2140;
- --text:#f6f4ff;
- --muted:#a2a8c1;
- --purple:#a88aff;
- --gold:#f1cf8a;
- --cyan:#65e2df;
- --green:#52d5a0;
- --red:#ff7188;
- --line:rgba(202,190,255,.15);
-}
+:root{--bg:#090914;--panel:#141426;--panel2:#1c1b32;--purple:#a88aff;--gold:#f1cf8a;--cyan:#69ddd6;--text:#f7f4ff;--muted:#a4a1bb;--line:#ffffff18;--green:#55dca5;--red:#ff7188}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 html{scroll-behavior:smooth}
-body{
- min-height:100vh;
- color:var(--text);
- font-family:Cairo,sans-serif;
- overflow-x:hidden;
- background:
-  radial-gradient(ellipse at 8% 18%,rgba(111,72,207,.19),transparent 34%),
-  radial-gradient(ellipse at 94% 32%,rgba(37,180,190,.12),transparent 32%),
-  radial-gradient(ellipse at 48% 100%,rgba(128,78,205,.13),transparent 40%),
-  #070916;
-}
-button,input,select{font:inherit}
-button{cursor:pointer;color:inherit}
-a{text-decoration:none;color:inherit}
-
-.bg{
- position:fixed;inset:0;z-index:-2;opacity:.72;
- background:
-  linear-gradient(180deg,rgba(5,7,18,.28),#070916 76%),
-  url("https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=2200&q=90") center 35%/cover;
-}
-.bg:before,.bg:after{
- content:"";position:absolute;inset:0;pointer-events:none;
-}
-.bg:before{
- opacity:.55;
- background-image:
- radial-gradient(2px 2px at 12% 22%,#f3d99c88 50%,transparent 100%),
- radial-gradient(2px 2px at 76% 18%,#a88aff99 50%,transparent 100%),
- radial-gradient(1px 1px at 42% 62%,#fff8 50%,transparent 100%),
- radial-gradient(2px 2px at 88% 78%,#65e2df88 50%,transparent 100%);
- background-size:320px 260px,410px 330px,270px 300px,500px 400px;
- animation:starDrift 28s linear infinite;
-}
-.bg:after{
- background:
-  radial-gradient(ellipse at 12% 10%,#8058d52b,transparent 40%),
-  radial-gradient(ellipse at 90% 40%,#27b9b42a,transparent 38%);
-}
-@keyframes starDrift{
- to{background-position:320px 260px,-410px 330px,270px -300px,-500px 400px}
-}
-@keyframes spin{to{transform:rotate(360deg)}}
-@keyframes heroSweep{
- 0%,45%{transform:translateX(-100%)}
- 75%,100%{transform:translateX(100%)}
-}
-.container{width:min(1240px,calc(100% - 36px));margin:auto}
-
-header{
- min-height:82px;
- display:flex;align-items:center;justify-content:space-between;
- border-bottom:1px solid rgba(202,190,255,.13);
- gap:15px;position:relative;
-}
-header:after{
- content:"";position:absolute;bottom:-1px;right:0;
- width:180px;height:1px;
- background:linear-gradient(90deg,transparent,var(--gold),transparent);
-}
-.brand{display:flex;align-items:center;gap:11px;font-weight:900;letter-spacing:.5px}
-.brand-icon{
- width:48px;height:48px;border:1px solid #ffffff38;
- border-radius:17px;display:grid;place-items:center;
- background:linear-gradient(145deg,#c0a8ff,#6842c7 65%,#33216e);
- box-shadow:0 0 0 5px #a88aff0c,0 12px 34px #8056dc66,inset 0 1px #ffffff80;
-}
-.brand-icon svg{width:25px;stroke:white;fill:none;stroke-width:1.8}
-.brand small{display:block;color:var(--gold);font-size:8px;letter-spacing:2px;margin-top:-5px}
-.header-actions{display:flex;align-items:center;gap:9px}
-.header-btn{
- border:1px solid #ffffff20;
- background:linear-gradient(145deg,#ffffff12,#ffffff05);
- border-radius:12px;padding:9px 13px;
- font-size:11px;font-weight:800;backdrop-filter:blur(12px);
- transition:.2s ease;
-}
-.header-btn:hover{border-color:#c0a8ff88;background:#a88aff18;transform:translateY(-2px)}
-.header-btn svg{
- width:15px;height:15px;vertical-align:middle;
- margin-left:5px;stroke:currentColor;fill:none;stroke-width:1.8;
-}
-
-.hero{
- margin-top:28px;position:relative;min-height:330px;overflow:hidden;
- border:1px solid rgba(198,174,255,.32);border-radius:30px;
- background:#101329;isolation:isolate;
- box-shadow:0 30px 90px #0009,0 0 55px #8056dc18;
-}
-.hero:before{
- content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
- background:linear-gradient(115deg,transparent 35%,#c4a7ff12 52%,transparent 70%);
- transform:translateX(-100%);animation:heroSweep 9s ease-in-out infinite;
-}
-.hero-bg{
- position:absolute;inset:0;width:100%;height:100%;
- object-fit:cover;opacity:.68;filter:saturate(1.15) contrast(1.06);
- transform:scale(1.02);
-}
-.hero-shade{
- position:absolute;inset:0;
- background:
-  linear-gradient(90deg,#080a18 0%,#090b1beF 33%,#090b1b9c 67%,#090b1b35 100%),
-  linear-gradient(0deg,#080a18 0%,transparent 55%);
-}
-.hero-content{position:relative;padding:54px 52px;max-width:760px}
-.eyebrow{
- display:inline-flex;padding:7px 14px;border-radius:30px;
- border:1px solid #f1cf8a66;
- background:linear-gradient(100deg,#f1cf8a20,#a88aff18);
- color:var(--gold);font-size:10px;font-weight:900;
- letter-spacing:1.1px;
- box-shadow:inset 0 0 18px #f1cf8a0b,0 5px 22px #0003;
-}
-.hero h1{
- font-size:clamp(36px,6vw,58px);font-weight:900;
- margin:12px 0 5px;line-height:1.35;
- text-shadow:0 7px 30px #000b;letter-spacing:-1px;
-}
-.hero p{font-size:13px;line-height:2;color:#e1def0;max-width:570px}
-.hero-stats{display:flex;gap:10px;flex-wrap:wrap;margin-top:17px}
-.hero-stat{
- padding:9px 14px;border:1px solid #ffffff24;
- border-radius:10px;background:#090c1cb8;
- font-size:10px;color:#e5e0f6;
- backdrop-filter:blur(10px);box-shadow:0 7px 22px #0003;
-}
-
-.section-head{
- display:flex;align-items:center;justify-content:space-between;
- gap:12px;margin:34px 0 16px;
-}
-.section-head h2{font-size:19px;font-weight:900;letter-spacing:.1px}
-.section-head h2:before{
- content:"";display:inline-block;width:4px;height:19px;
- border-radius:8px;background:linear-gradient(var(--gold),var(--purple));
- margin-left:10px;vertical-align:-4px;box-shadow:0 0 14px #b58cff88;
-}
-.section-head p{font-size:11px;color:var(--muted);margin-top:2px}
-.section-actions{display:flex;gap:8px;align-items:center}
-.action-btn{
- border:1px solid #ffffff20;border-radius:12px;padding:9px 12px;
- background:linear-gradient(145deg,#ffffff12,#ffffff05);
- font-size:10px;font-weight:800;backdrop-filter:blur(12px);
- transition:.2s ease;
-}
-.action-btn:hover{border-color:#c0a8ff88;background:#a88aff18;transform:translateY(-2px)}
-.action-btn svg{
- width:15px;height:15px;vertical-align:middle;
- margin-left:4px;stroke:currentColor;fill:none;stroke-width:1.8;
-}
-.primary{
- border:0;border-radius:12px;padding:11px 15px;
- background:linear-gradient(115deg,#c1a6ff 0%,#8d69e7 48%,#6746c6 100%);
- color:#fff;font-size:11px;font-weight:900;
- box-shadow:0 10px 28px #8159df55,inset 0 1px #ffffff75;
- transition:transform .2s,filter .2s,box-shadow .2s;
-}
-.primary:hover{
- transform:translateY(-2px);filter:brightness(1.08);
- box-shadow:0 14px 34px #8159df77;
-}
-.primary svg{width:16px;height:16px;vertical-align:middle;margin-left:5px;stroke:white;fill:none;stroke-width:2}
-
-.panel{
- border:1px solid #c2b2ff20;border-radius:23px;
- background:linear-gradient(145deg,#171d35eF,#0d1225f2);
- padding:20px;box-shadow:0 24px 65px #0005,inset 0 1px #ffffff0b;
- backdrop-filter:blur(13px);
-}
-.room-grid{
- display:grid;
- grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));
- gap:17px;
-}
-.room-card{
- position:relative;overflow:hidden;
- border:1px solid #c8b8ff20;border-radius:21px;
- background:linear-gradient(155deg,#1b2340,#101528 72%);
- box-shadow:0 14px 34px #0004,inset 0 1px #ffffff0b;
- transition:transform .25s,border-color .25s,box-shadow .25s;
-}
-.room-card:before{
- content:"";position:absolute;inset:0;border-radius:inherit;
- pointer-events:none;
- background:linear-gradient(135deg,#c5a7ff0b,transparent 42%,#64d8d10a);
-}
-.room-card:hover{
- transform:translateY(-5px);border-color:#b69aff88;
- box-shadow:0 22px 45px #0007,0 0 28px #8f6ce51a;
-}
-.room-cover{height:170px;position:relative;overflow:hidden;background:#151b32}
-.room-cover img{
- width:100%;height:100%;object-fit:cover;opacity:.86;
- filter:saturate(1.14);transition:transform .5s;
-}
-.room-card:hover .room-cover img{transform:scale(1.06)}
-.room-cover:after{
- content:"";position:absolute;inset:0;
- background:linear-gradient(0deg,#101528 0%,#10152822 72%,#07091630);
-}
-.room-cover-label{
- position:absolute;z-index:1;right:13px;top:12px;
- border:1px solid #ffffff38;border-radius:9px;padding:5px 9px;
- background:#080b1bd9;font-size:9px;font-weight:800;
- box-shadow:0 5px 20px #0005;backdrop-filter:blur(10px);
-}
-.room-cover-status{
- position:absolute;z-index:1;left:13px;top:12px;
- padding:5px 9px;border-radius:9px;
- background:#123e37d9;border:1px solid #55dfae70;
- color:#8ce8c0;font-size:9px;box-shadow:0 5px 20px #0004;
-}
-.room-body{padding:17px}
-.room-title{font-size:15px;font-weight:900}
-.room-code{font-size:10px;color:#aeb5d0;margin-top:4px;letter-spacing:.4px}
-.room-details{display:flex;gap:7px;flex-wrap:wrap;margin:12px 0}
-.room-detail{
- border:1px solid #ffffff16;border-radius:8px;padding:6px 9px;
- color:#c6c9da;font-size:9px;background:#ffffff08;
-}
-.room-footer{display:flex;align-items:center;justify-content:space-between;gap:10px}
-.room-count{font-size:10px;color:var(--muted)}
-.join-btn{
- min-width:100px;border:1px solid #b69aff55;border-radius:10px;
- padding:9px 13px;
- background:linear-gradient(120deg,#b59aff35,#8662df35);
- color:#e6dcff;font-size:10px;font-weight:900;transition:.2s;
-}
-.join-btn:not(:disabled):hover{
- background:linear-gradient(120deg,#b59aff,#7953d4);color:white;
-}
-.join-btn:disabled{opacity:.45;cursor:not-allowed}
-
-.empty{
- padding:36px 18px;text-align:center;color:var(--muted);
- border:1px dashed #b9a5ff38;border-radius:17px;
- background:linear-gradient(145deg,#151a31b8,#0c1022c9);
- box-shadow:inset 0 1px #ffffff08;
-}
-.empty svg{width:43px;height:43px;stroke:#a78bfa;fill:none;margin-bottom:12px}
-.empty h3{font-size:16px;color:#eee9ff;margin-bottom:5px}
-.empty p{font-size:11px;line-height:2}
-.loading{
- width:30px;height:30px;border:3px solid #ffffff22;
- border-top-color:var(--purple);border-radius:50%;
- animation:spin .8s linear infinite;margin:0 auto 12px;
-}
-
-.game-grid{
- display:grid;
- grid-template-columns:repeat(auto-fill,minmax(min(100%,205px),1fr));
- gap:14px;
-}
-.game-card{
- position:relative;overflow:hidden;
- border:1px solid #ffffff18;border-radius:18px;
- background:linear-gradient(145deg,#202744,#11172b);
- box-shadow:0 10px 25px #0003;
- cursor:pointer;text-align:right;transition:.25s;
-}
-.game-card:hover{
- transform:translateY(-4px);border-color:#b69aff88;
- box-shadow:0 18px 34px #0006;
-}
-.game-card.selected{
- border-color:#c4a9ff;
- box-shadow:0 0 0 2px #a78bfa38,0 12px 28px #7955dc33;
-}
-.game-card img{
- width:100%;height:128px;object-fit:cover;display:block;
- transition:transform .4s;filter:saturate(1.12);
-}
-.game-card:hover img{transform:scale(1.045)}
-.game-card-info{padding:12px 13px 14px}
-.game-card-info b{font-size:13px;display:block}
-.game-card-info small{font-size:10px;color:var(--muted)}
-
-.modal{
- position:fixed;inset:0;z-index:20;display:none;
- align-items:center;justify-content:center;padding:15px;
- background:#030510e8;backdrop-filter:blur(12px);
-}
+body{font-family:Cairo,sans-serif;color:var(--text);background:var(--bg);min-height:100vh;overflow-x:hidden}
+button,input,select{font:inherit}button{cursor:pointer;color:inherit}a{color:inherit;text-decoration:none}
+.bg{position:fixed;inset:0;z-index:-3;background:linear-gradient(180deg,#08081255,#090914 75%),url("https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=2200&q=90") center/cover;filter:saturate(1.08)}
+.bg:after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 15% 15%,#8d61e52a,transparent 35%),radial-gradient(ellipse at 90% 50%,#37c8c02a,transparent 38%)}
+.wrap{width:min(1320px,calc(100% - 34px));margin:auto}
+header{height:78px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:12px;font-size:16px;font-weight:900;letter-spacing:1px}
+.brand-mark{width:46px;height:46px;border-radius:15px;display:grid;place-items:center;background:linear-gradient(145deg,#c6b1ff,#6543bd);box-shadow:0 8px 30px #8059db70}
+.brand-mark svg{width:25px;stroke:#fff;fill:none;stroke-width:1.8}
+.brand small{display:block;font-size:8px;color:var(--gold);letter-spacing:3px;margin-top:-5px}
+.head-actions{display:flex;gap:9px}
+.btn{border:1px solid #ffffff24;background:#ffffff0b;border-radius:12px;padding:10px 15px;font-size:11px;font-weight:800}
+.btn:hover{border-color:#b99cff;background:#a88aff18}
+.primary{border:0;border-radius:12px;padding:11px 18px;background:linear-gradient(110deg,#bda6ff,#7650d2);box-shadow:0 8px 25px #7955d555;font-size:11px;font-weight:900}
+.primary:disabled{opacity:.5;cursor:wait}
+.hero{position:relative;isolation:isolate;overflow:hidden;margin:27px 0 32px;min-height:390px;border:1px solid #c8b5ff45;border-radius:30px;background:#111126;box-shadow:0 30px 90px #0009}
+.hero-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2}
+.hero:after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,#090914 0%,#090914ed 34%,#09091488 68%,#09091422),linear-gradient(0deg,#090914 0%,transparent 65%)}
+.hero-content{padding:55px 55px 42px;max-width:780px}
+.kicker{display:inline-flex;align-items:center;gap:8px;border:1px solid #f1cf8a66;background:#f1cf8a12;color:var(--gold);border-radius:30px;padding:7px 14px;font-size:10px;font-weight:900;letter-spacing:1.5px}
+.kicker i{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 12px var(--green)}
+h1{font-size:clamp(38px,6vw,66px);font-weight:900;line-height:1.25;margin:17px 0 9px;text-shadow:0 8px 30px #000}
+.hero p{max-width:570px;color:#e0dced;font-size:13px;line-height:2.1}
+.hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px}
+.hero-stats{display:flex;gap:10px;flex-wrap:wrap;margin-top:28px}
+.stat{border:1px solid #ffffff25;background:#090914aa;backdrop-filter:blur(12px);border-radius:13px;padding:10px 15px;min-width:110px}
+.stat b{display:block;font-size:19px;color:var(--gold)}
+.stat span{font-size:9px;color:#c2bdd3}
+.section{margin:30px 0}
+.section-head{display:flex;align-items:end;justify-content:space-between;gap:12px;margin-bottom:16px}
+.section-head h2{font-size:20px;font-weight:900}
+.section-head p{font-size:10px;color:var(--muted);margin-top:3px}
+.section-head h2:before{content:"";display:inline-block;width:4px;height:21px;border-radius:4px;background:linear-gradient(var(--gold),var(--purple));margin-left:10px;vertical-align:-4px}
+.toolbar{display:grid;grid-template-columns:minmax(180px,1.5fr) repeat(3,minmax(125px,.7fr));gap:10px;padding:14px;border:1px solid var(--line);background:#141426d9;border-radius:18px;margin-bottom:16px;backdrop-filter:blur(15px)}
+.toolbar input,.toolbar select,.field input,.field select{width:100%;height:44px;background:#0c0c19;color:var(--text);border:1px solid #ffffff20;border-radius:11px;padding:0 13px;outline:none;font-size:11px}
+.toolbar input:focus,.toolbar select:focus,.field input:focus,.field select:focus{border-color:var(--purple);box-shadow:0 0 0 3px #a88aff20}
+.room-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:17px}
+.room-card{overflow:hidden;border:1px solid #c8b8ff24;border-radius:21px;background:linear-gradient(145deg,#1b1b32f5,#10101ff5);box-shadow:0 15px 40px #0005;transition:.25s}
+.room-card:hover{transform:translateY(-5px);border-color:#b79aff88;box-shadow:0 23px 48px #0008}
+.cover{height:180px;position:relative;overflow:hidden;background:#17172a}
+.cover img{width:100%;height:100%;object-fit:cover;transition:.5s}
+.room-card:hover .cover img{transform:scale(1.07)}
+.cover:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,#10101ff5,transparent 75%)}
+.cover-label,.cover-status{position:absolute;z-index:1;top:13px;border:1px solid #ffffff30;background:#090914c9;backdrop-filter:blur(10px);padding:6px 10px;border-radius:9px;font-size:9px;font-weight:800}
+.cover-label{right:13px}.cover-status{left:13px;color:#9ceacb}
+.cover-status i{display:inline-block;width:7px;height:7px;background:var(--green);border-radius:50%;margin-left:5px;box-shadow:0 0 9px var(--green)}
+.room-body{padding:16px}
+.host{display:flex;align-items:center;gap:10px;padding:10px;border-radius:13px;background:#ffffff08;border:1px solid #ffffff12}
+.avatar{width:39px;height:39px;border-radius:50%;object-fit:cover;background:linear-gradient(145deg,#9877e8,#282044);display:grid;place-items:center;font-weight:900;border:1px solid #b99cff80;flex-shrink:0}
+.host-info{min-width:0;flex:1}.host-info small{display:block;color:var(--muted);font-size:9px}.host-info b{font-size:11px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.verified{color:#59baff;margin-right:4px}
+.code-line{display:flex;justify-content:space-between;align-items:center;margin:13px 0}
+.code{direction:ltr;letter-spacing:2px;font-weight:900;font-size:11px;color:#e6d9ff}
+.copy{border:1px solid #b99cff55;background:#a88aff12;color:#dfd2ff;border-radius:8px;padding:6px 9px;font-size:9px;font-weight:800}
+.seats{display:flex;align-items:center;gap:7px;flex-wrap:wrap;min-height:40px}
+.seat{width:34px;height:34px;border:1px dashed #a99acb66;border-radius:50%;display:grid;place-items:center;color:#aaa;background:#ffffff05;overflow:hidden;font-size:13px}
+.seat img{width:100%;height:100%;object-fit:cover}
+.seat.full{border:1px solid #a88aff}
+.seat-note{font-size:9px;color:var(--muted);margin-right:auto}
+.tags{display:flex;gap:7px;flex-wrap:wrap;margin:13px 0}
+.tag{font-size:9px;color:#d2cde2;background:#ffffff09;border:1px solid #ffffff15;border-radius:8px;padding:5px 8px}
+.room-bottom{display:flex;align-items:center;justify-content:space-between;border-top:1px solid #ffffff12;padding-top:12px;gap:8px}
+.room-bottom small{font-size:9px;color:var(--muted)}
+.join{border:1px solid #b99cff55;background:linear-gradient(110deg,#9875eb,#6745be);border-radius:10px;padding:9px 13px;font-size:10px;font-weight:900}
+.join:disabled{opacity:.45;cursor:not-allowed}
+.empty{grid-column:1/-1;text-align:center;border:1px dashed #b99cff44;background:#151528c9;border-radius:18px;padding:38px 15px;color:var(--muted);font-size:11px;line-height:2}
+.empty b{display:block;color:#f2edff;font-size:16px;margin-bottom:5px}
+.games{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:13px}
+.game{position:relative;overflow:hidden;border:1px solid #ffffff20;border-radius:17px;background:#151528;text-align:right;cursor:pointer;transition:.25s}
+.game:hover{transform:translateY(-4px);border-color:#b99cff}
+.game img{width:100%;height:145px;object-fit:cover;display:block}
+.game div{padding:11px 12px}.game b{font-size:12px;display:block}.game small{font-size:9px;color:var(--muted)}
+.game:after{content:"";position:absolute;inset:0 0 42px;background:linear-gradient(0deg,#11112088,transparent);pointer-events:none}
+footer{text-align:center;color:#77738c;font-size:9px;padding:35px 0 30px;letter-spacing:2px}
+.modal{position:fixed;inset:0;z-index:20;display:none;align-items:center;justify-content:center;padding:15px;background:#03030ce8;backdrop-filter:blur(13px)}
 .modal.open{display:flex}
-.modal-box{
- width:min(610px,100%);max-height:90vh;overflow:auto;
- border:1px solid #b69aff55;border-radius:25px;
- background:
-  radial-gradient(ellipse at 100% 0%,#8e68db20,transparent 45%),
-  linear-gradient(145deg,#1b2140,#0c1123);
- box-shadow:0 35px 110px #000d,0 0 55px #8862d522,inset 0 1px #ffffff12;
- padding:21px;
-}
-.modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
-.modal-head h2{font-size:20px;font-weight:900}
-.close-btn{
- width:34px;height:34px;border:1px solid var(--line);
- border-radius:10px;background:#ffffff08;font-size:18px;transition:.2s;
-}
-.close-btn:hover{background:#ff718822;border-color:#ff718866}
-.field{margin-top:14px}
-.field label{display:block;font-size:11px;font-weight:800;margin-bottom:7px}
-.field input,.field select{
- width:100%;height:45px;border:1px solid var(--line);
- border-radius:11px;background:#0c1020;color:var(--text);
- padding:0 12px;outline:none;font-size:12px;
-}
-.field input:focus,.field select:focus{
- border-color:#a78bfa;box-shadow:0 0 0 3px #a78bfa20;
-}
-.visibility-options{display:grid;grid-template-columns:1fr 1fr;gap:9px}
-.visibility-option{
- border:1px solid var(--line);border-radius:12px;padding:12px;
- background:#ffffff06;text-align:right;transition:.2s;
-}
-.visibility-option:hover{border-color:#a78bfa88}
-.visibility-option.active{
- border-color:var(--purple);background:#a78bfa15;
- box-shadow:inset 0 0 20px #a78bfa13;
-}
-.visibility-option b{display:block;font-size:11px}
-.visibility-option small{font-size:9px;color:var(--muted)}
-.modal-submit{width:100%;margin-top:18px;height:47px}
-.feedback{
- display:none;margin-top:12px;padding:11px;border-radius:10px;
- background:#ff718815;border:1px solid #ff718844;
- color:#ff9aab;font-size:10px;line-height:1.8;
-}
-.feedback.show{display:block}
-.feedback.success{background:#52d5a015;border-color:#52d5a044;color:#8ce8c0}
-.code-row{display:flex;gap:8px}
-.code-row input{direction:ltr;text-align:center;letter-spacing:3px;font-weight:900}
-footer{text-align:center;padding:35px 0 30px;color:#777d98;font-size:9px;letter-spacing:1.5px}
-
-.bottom-nav{
- display:none;position:fixed;bottom:0;right:0;left:0;z-index:10;
- padding:9px 7px calc(9px + env(safe-area-inset-bottom));
- border-top:1px solid #b69aff2a;
- background:linear-gradient(180deg,#11162bea,#090d1cf7);
- box-shadow:0 -12px 35px #0005;backdrop-filter:blur(15px);
- grid-template-columns:repeat(5,1fr);
-}
-.bottom-nav a{
- display:flex;flex-direction:column;align-items:center;gap:4px;
- color:#9299b3;font-size:9px;transition:color .2s;
-}
-.bottom-nav a.active{color:#d2bdff}
-.bottom-nav svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.7}
-
-@media(min-width:900px){
- .hero-content{padding:54px 52px}
- .room-cover{height:170px}
-}
-@media(max-width:700px){
- .container{width:calc(100% - 22px)}
- header{min-height:68px}
- .hero{min-height:300px;margin-top:17px;border-radius:23px}
- .hero-content{padding:32px 20px}
- .hero h1{font-size:38px}
- .hero p{font-size:11px}
- .hero-shade{
-  background:
-   linear-gradient(90deg,#090b18f5,#090b18c9 70%,#090b1870),
-   linear-gradient(0deg,#080a18,transparent 80%);
- }
- .section-head{margin:26px 0 13px;flex-wrap:wrap}
- .section-head h2{font-size:16px}
- .section-actions{width:100%}
- .section-actions>*{flex:1}
- .room-grid{grid-template-columns:1fr;gap:13px}
- .room-cover{height:165px}
- .panel{padding:13px;border-radius:19px}
- .game-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
- .game-card img{height:100px}
- .game-card-info{padding:9px}
- .game-card-info b{font-size:11px}
- .bottom-nav{display:grid;padding-top:10px}
+.modal-box{width:min(600px,100%);max-height:90vh;overflow:auto;padding:22px;border:1px solid #b99cff66;border-radius:23px;background:radial-gradient(circle at 100% 0,#8058d52b,transparent 42%),#171629;box-shadow:0 35px 100px #000c}
+.modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px}.modal-head h3{font-size:19px}
+.close{width:34px;height:34px;border:1px solid var(--line);border-radius:10px;background:#ffffff0b;font-size:19px}
+.field{margin-top:13px}.field label{display:block;font-size:10px;font-weight:800;margin-bottom:7px}
+.choices{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}
+.choice{border:1px solid #ffffff20;border-radius:12px;background:#ffffff08;padding:10px;text-align:right;font-size:11px}
+.choice.active{border-color:var(--purple);background:#a88aff1c}
+.choice img{width:100%;height:82px;object-fit:cover;border-radius:8px;margin-bottom:6px}
+.feedback{display:none;margin-top:12px;padding:10px;border-radius:10px;background:#ff718815;border:1px solid #ff718844;color:#ff9aab;font-size:10px;line-height:1.8}
+.feedback.show{display:block}.feedback.ok{background:#55dca515;border-color:#55dca544;color:#8ce8c0}
+.submit{width:100%;height:46px;margin-top:17px}
+.bottom{display:none}
+@media(max-width:950px){.room-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.games{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:620px){
+ .wrap{width:calc(100% - 22px)}header{height:66px}.brand{font-size:12px}.brand-mark{width:39px;height:39px}
+ .head-actions .btn:first-child{display:none}.hero{margin:15px 0 25px;min-height:380px;border-radius:22px}
+ .hero-content{padding:35px 20px}.hero:after{background:linear-gradient(90deg,#090914ed,#090914a8),linear-gradient(0deg,#090914,transparent)}
+ .hero p{font-size:11px}.hero-stats{gap:7px}.stat{min-width:0;flex:1;padding:8px 10px}.stat b{font-size:16px}
+ .section-head{align-items:start;flex-direction:column}.toolbar{grid-template-columns:1fr 1fr;padding:10px}.toolbar input{grid-column:1/-1}
+ .room-grid{grid-template-columns:1fr;gap:13px}.cover{height:180px}.games{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.game img{height:110px}
+ .bottom{display:flex;position:fixed;bottom:0;right:0;left:0;z-index:10;justify-content:space-around;padding:11px 5px calc(11px + env(safe-area-inset-bottom));background:#111120ed;border-top:1px solid #b99cff35;backdrop-filter:blur(14px);font-size:9px;color:#c7bfdc}
  body{padding-bottom:75px}
- .header-actions .header-btn:first-child{display:none}
- .modal-box{padding:16px;border-radius:20px}
 }
-@media(prefers-reduced-motion:reduce){
- *,*:before,*:after{
-  scroll-behavior:auto!important;
-  animation-duration:.01ms!important;
-  animation-iteration-count:1!important;
-  transition-duration:.01ms!important;
- }
-}
-
-/* HANOON ROOMS — premium live details */
-.room-card{isolation:isolate}
-.room-card:after{content:"";position:absolute;inset:0;pointer-events:none;border-radius:inherit;background:radial-gradient(circle at 92% 4%,#b69aff17,transparent 36%);z-index:-1}
-.room-cover img{transition:transform .65s cubic-bezier(.2,.8,.2,1),filter .4s}
-.room-card:hover .room-cover img{transform:scale(1.075);filter:saturate(1.25)}
-.room-cover:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,#090d1df2 0%,#090d1d22 58%,#090d1d08 100%);pointer-events:none}
-.room-cover-label,.room-cover-status{z-index:1;backdrop-filter:blur(12px)}
-.room-body{position:relative;padding:16px 17px 17px}
-.room-host{display:flex;align-items:center;gap:10px;margin:0 0 13px;padding:10px 11px;border:1px solid #c7b5ff1c;border-radius:14px;background:linear-gradient(110deg,#b49aff12,#ffffff04)}
-.room-host-avatar{width:37px;height:37px;flex:0 0 37px;border-radius:50%;object-fit:cover;border:1px solid #d5c4ff80;background:linear-gradient(145deg,#8d6bd8,#272043);display:grid;place-items:center;color:white;font-size:12px;font-weight:900;overflow:hidden}
-.room-host-info{min-width:0;flex:1}
-.room-host-info small{display:block;color:#9da5c0;font-size:9px}
-.room-host-info b{display:flex;align-items:center;gap:5px;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.verified-mark{width:14px;height:14px;flex:0 0 14px;display:inline-block;vertical-align:middle}
-.room-code-line{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:9px 0 12px}
-.room-code{margin:0;font-size:10px;color:#e6d7ff;letter-spacing:1.4px;direction:ltr;text-align:left}
-.copy-code{border:1px solid #bba5ff42;background:#a88aff13;color:#d7c8ff;border-radius:8px;padding:5px 9px;font-size:9px;font-weight:800}
-.room-players{display:flex;align-items:center;gap:7px;margin:12px 0 13px;min-height:43px;flex-wrap:wrap}
-.player-seat{position:relative;width:36px;height:36px;border:1px dashed #a99acb55;border-radius:50%;display:grid;place-items:center;color:#8c91aa;background:#ffffff05;font-size:13px}
-.player-seat img{width:100%;height:100%;object-fit:cover;border-radius:50%}
-.player-seat.filled{border:1px solid #a88aff99;box-shadow:0 0 0 3px #a88aff12}
-.player-seat.host:after{content:"";position:absolute;width:8px;height:8px;bottom:-1px;right:-1px;border-radius:50%;background:#f1cf8a;border:1px solid #15152a}
-.players-caption{font-size:9px;color:#a6acc2;margin-right:auto}
-.room-details{display:flex;gap:7px;flex-wrap:wrap}
-.room-detail{border:1px solid #ffffff16;background:#ffffff08;border-radius:8px;padding:5px 8px;font-size:9px;color:#c6cbe0}
-.room-footer{margin-top:14px;padding-top:12px;border-top:1px solid #ffffff12}
-.room-count{font-size:9px;color:#9ea7c2}
-.join-btn{border:1px solid #c2aaff55;background:linear-gradient(110deg,#9e7bf0,#694ac2);box-shadow:0 6px 18px #7755c544;color:white;border-radius:10px;padding:9px 13px;font-size:10px;font-weight:900}
-.join-btn:disabled{filter:grayscale(.6);opacity:.55;cursor:not-allowed}
-.live-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#55dca5;box-shadow:0 0 10px #55dca5;margin-left:5px}
-@media(max-width:700px){
- .room-body{padding:14px}
- .room-host{margin-bottom:10px}
- .room-cover{height:175px}
-}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 </style>
 </head>
-
 <body>
 <div class="bg"></div>
-
-<div class="container">
+<div class="wrap">
 <header>
- <a class="brand" href="home.html">
-  <span class="brand-icon">
-   <svg viewBox="0 0 24 24">
-    <path d="M7 8h10a4 4 0 0 1 4 4v4a3 3 0 0 1-5 2l-2-2h-4l-2 2a3 3 0 0 1-5-2v-4a4 4 0 0 1 4-4Z"/>
-    <path d="M8 11v4M6 13h4M16 12h.01M18 14h.01"/>
-   </svg>
-  </span>
-  <span>HANOON WORLD<small>GAMING ROOMS</small></span>
- </a>
-
- <div class="header-actions">
-  <a class="header-btn" href="games.html">مكتبة الألعاب</a>
-  <button class="header-btn" id="refreshBtn">
-   <svg viewBox="0 0 24 24"><path d="M20 7v5h-5M4 17v-5h5"/><path d="M5.5 9A7 7 0 0 1 18 6l2 6M4 12l2 6a7 7 0 0 0 12.5-3"/></svg>
-   تحديث
-  </button>
- </div>
+<a class="brand" href="home.html"><span class="brand-mark"><svg viewBox="0 0 24 24"><path d="M7 8h10a4 4 0 0 1 4 4v4a3 3 0 0 1-5 2l-2-2h-4l-2 2a3 3 0 0 1-5-2v-4a4 4 0 0 1 4-4Z"/><path d="M8 11v4M6 13h4M16 12h.01M18 14h.01"/></svg></span><span>HANOON WORLD<small>ARENA EXPERIENCE</small></span></a>
+<div class="head-actions"><a class="btn" href="games.html">مكتبة الألعاب</a><button class="btn" id="refresh">تحديث الساحة</button></div>
 </header>
 
 <section class="hero">
- <img class="hero-bg" src="https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=1600&q=85" alt="Gaming room">
- <div class="hero-shade"></div>
- <div class="hero-content">
-  <span class="eyebrow">HANOON ELITE MULTIPLAYER ARENA</span>
-  <h1>غرف اللعب</h1>
-  <p>عالم ألعاب راقٍ يجمع أصحابك في غرف مباشرة، مع ملفات اللاعبين ومقاعد واضحة وتجربة دخول سلسة. افتح ساحتك الخاصة أو انضم إلى تحدٍ عام.</p>
-  <div class="hero-stats">
-   <span class="hero-stat">غرف عامة متاحة</span>
-   <span class="hero-stat">دعوات بكود الغرفة</span>
-   <span class="hero-stat">ألعاب هنون</span>
-  </div>
- </div>
+<img class="hero-img" src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1900&q=90" alt="ساحة ألعاب إلكترونية">
+<div class="hero-content">
+<span class="kicker"><i></i> HANOON ELITE GAMING ARENA</span>
+<h1>الساحة تبدأ<br>من هنا.</h1>
+<p>اجمع أصدقاءك في غرفة واحدة، اختار لعبتك، وابدأ المنافسة. اكتشف الغرف المفتوحة أو أنشئ ساحتك الخاصة وشارك كود الدعوة.</p>
+<div class="hero-actions"><button class="primary" id="createOpen">＋ أنشئ غرفة جديدة</button><button class="btn" id="joinOpen">دخول بكود الغرفة</button></div>
+<div class="hero-stats">
+<div class="stat"><b id="roomsStat">—</b><span>غرفة ظاهرة</span></div>
+<div class="stat"><b id="playersStat">—</b><span>لاعب في الغرف</span></div>
+<div class="stat"><b id="gamesStat">—</b><span>لعبة متاحة</span></div>
+</div>
+</div>
 </section>
 
-<section class="section-head">
- <div>
-  <h2>الغرف المتاحة</h2>
-  <p>الغرف الموجودة حاليًا في قاعدة البيانات</p>
- </div>
- <div class="section-actions">
-  <button class="action-btn" id="joinCodeBtn">دخول بكود</button>
-  <button class="primary" id="createBtn">
-   <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
-   إنشاء غرفة
-  </button>
- </div>
+<section class="section">
+<div class="section-head"><div><h2>اكتشف الغرف</h2><p>الغرف المعروضة يتم تحميلها مباشرة من قاعدة بيانات هنون.</p></div></div>
+<div class="toolbar">
+<input id="search" placeholder="ابحث باسم اللعبة أو كود الغرفة أو المضيف...">
+<select id="gameFilter"><option value="">كل الألعاب</option></select>
+<select id="visibilityFilter"><option value="">كل أنواع الغرف</option><option value="public">عامة</option><option value="private">خاصة (لأعضائها)</option></select>
+<select id="statusFilter"><option value="">كل الحالات</option><option value="available">متاحة</option><option value="full">مكتملة</option><option value="playing">جارية</option></select>
+</div>
+<div id="rooms" class="room-grid"><div class="empty"><b>جارٍ تجهيز الساحة</b>لحظات ونظهر الغرف المتاحة...</div></div>
 </section>
 
-<div id="roomsContainer">
- <div class="empty"><div class="loading"></div>جارٍ تحميل الغرف...</div>
-</div>
-
-<section class="section-head">
- <div>
-  <h2>ابدأ بغرفتك الخاصة</h2>
-  <p>اختار لعبة من الألعاب المتاحة وأنشئ غرفة جديدة</p>
- </div>
+<section class="section">
+<div class="section-head"><div><h2>اختر عالمك</h2><p>الألعاب الفعالة المسجلة في مكتبة هنون.</p></div></div>
+<div id="games" class="games"><div class="empty">جارٍ تحميل الألعاب...</div></div>
 </section>
-
-<div class="panel">
- <div id="gamesContainer" class="game-grid">
-  <div class="empty" style="grid-column:1/-1">جارٍ تحميل الألعاب...</div>
- </div>
+<footer>HANOON WORLD · PLAY TOGETHER · COMPETE WITH HONOR</footer>
 </div>
+<nav class="bottom"><a href="home.html">الرئيسية</a><a href="rooms.html">الغرف</a><a href="games.html">الألعاب</a><a href="chat.html">المحادثات</a><a href="profile.html">حسابي</a></nav>
 
-<footer>HANOON WORLD · PLAY TOGETHER</footer>
-</div>
+<div class="modal" id="createModal"><div class="modal-box">
+<div class="modal-head"><h3>إنشاء ساحة جديدة</h3><button class="close" data-close="createModal">×</button></div>
+<p style="font-size:10px;color:var(--muted);line-height:2">اختار اللعبة وحدد نوع الغرفة وعدد المقاعد.</p>
+<div class="field"><label>اللعبة</label><div id="gameChoices" class="choices"></div></div>
+<div class="field"><label>نوع الغرفة</label><div class="choices"><button class="choice active" data-visibility="public">غرفة عامة<br><small>تظهر في قائمة الغرف</small></button><button class="choice" data-visibility="private">غرفة خاصة<br><small>الدخول بكود الدعوة</small></button></div></div>
+<div class="field"><label for="maxPlayers">عدد اللاعبين</label><select id="maxPlayers"><option value="2">لاعبان</option><option value="3">3 لاعبين</option><option value="4" selected>4 لاعبين</option><option value="5">5 لاعبين</option><option value="6">6 لاعبين</option><option value="7">7 لاعبين</option><option value="8">8 لاعبين</option></select></div>
+<div class="feedback" id="createFeedback"></div><button class="primary submit" id="createConfirm">إنشاء الغرفة</button>
+</div></div>
 
-<nav class="bottom-nav">
- <a href="home.html">
-  <svg viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10H3z"/><path d="M9 20v-6h6v6"/></svg>
-  الرئيسية
- </a>
- <a href="rooms.html" class="active">
-  <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M8 9h8M8 13h5"/></svg>
-  الغرف
- </a>
- <a href="games.html">
-  <svg viewBox="0 0 24 24"><path d="M7 8h10a4 4 0 0 1 4 4v4a3 3 0 0 1-5 2l-2-2h-4l-2 2a3 3 0 0 1-5-2v-4a4 4 0 0 1 4-4Z"/><path d="M8 11v4M6 13h4"/></svg>
-  الألعاب
- </a>
- <a href="chat.html">
-  <svg viewBox="0 0 24 24"><path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5H4l1.5-4A8.5 8.5 0 1 1 21 11.5Z"/></svg>
-  المحادثات
- </a>
- <a href="profile.html">
-  <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>
-  حسابي
- </a>
-</nav>
-
-<div class="modal" id="createModal">
- <div class="modal-box">
-  <div class="modal-head">
-   <h2>إنشاء غرفة جديدة</h2>
-   <button class="close-btn" data-close="createModal">×</button>
-  </div>
-
-  <p style="font-size:11px;color:var(--muted);line-height:2">
-   اختار اللعبة ونوع الغرفة وعدد اللاعبين.
-  </p>
-
-  <div class="field">
-   <label>اختار اللعبة</label>
-   <div id="modalGames" class="game-grid"></div>
-  </div>
-
-  <div class="field">
-   <label>نوع الغرفة</label>
-   <div class="visibility-options">
-    <button class="visibility-option active" data-visibility="public">
-     <b>غرفة عامة</b>
-     <small>تظهر في قائمة الغرف</small>
-    </button>
-    <button class="visibility-option" data-visibility="private">
-     <b>غرفة خاصة</b>
-     <small>الدخول باستخدام كود الغرفة</small>
-    </button>
-   </div>
-  </div>
-
-  <div class="field">
-   <label for="maxPlayers">عدد اللاعبين الأقصى</label>
-   <select id="maxPlayers">
-    <option value="2">لاعبان</option>
-    <option value="3">3 لاعبين</option>
-    <option value="4" selected>4 لاعبين</option>
-    <option value="6">6 لاعبين</option>
-    <option value="8">8 لاعبين</option>
-   </select>
-  </div>
-
-  <div class="feedback" id="createFeedback"></div>
-  <button class="primary modal-submit" id="confirmCreate">إنشاء الغرفة</button>
- </div>
-</div>
-
-<div class="modal" id="codeModal">
- <div class="modal-box" style="max-width:420px">
-  <div class="modal-head">
-   <h2>دخول غرفة</h2>
-   <button class="close-btn" data-close="codeModal">×</button>
-  </div>
-  <p style="font-size:11px;color:var(--muted);line-height:2">
-   اكتب كود الغرفة الذي أرسله لك صاحبها.
-  </p>
-  <div class="field">
-   <label for="roomCodeInput">كود الغرفة</label>
-   <div class="code-row">
-    <input id="roomCodeInput" maxlength="8" placeholder="XXXXXXXX" autocomplete="off">
-   </div>
-  </div>
-  <div class="feedback" id="joinFeedback"></div>
-  <button class="primary modal-submit" id="confirmJoin">دخول الغرفة</button>
- </div>
-</div>
+<div class="modal" id="joinModal"><div class="modal-box" style="max-width:420px">
+<div class="modal-head"><h3>دخول بكود الغرفة</h3><button class="close" data-close="joinModal">×</button></div>
+<p style="font-size:10px;color:var(--muted)">اكتب كود الدعوة الذي أرسله لك صاحب الغرفة.</p>
+<div class="field"><label for="roomCode">كود الغرفة</label><input id="roomCode" maxlength="12" placeholder="مثال: A1B2C3D4" style="direction:ltr;text-align:center;letter-spacing:4px;text-transform:uppercase"></div>
+<div class="feedback" id="joinFeedback"></div><button class="primary submit" id="joinConfirm">دخول الغرفة</button>
+</div></div>
 
 <script>
 const SUPABASE_URL="https://gjtgvczvclfwvlvcquxh.supabase.co";
 const SUPABASE_KEY="sb_publishable_4DVTUZ-xTlqU2GpFvpb7lw_g-Kxomd4";
 const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
-
 const $=id=>document.getElementById(id);
-
-const GAME_IMAGES={
- domino:"https://i.tgrthaber.com/images/2025/3/24/domino-nedir-ve-nasil-oynanir-domino-oyunu-toplam-kacta-biter-3209914_202503241741_4.jpg",
- ludo:"https://images.unsplash.com/photo-1606503153255-59d8b8b82185?auto=format&fit=crop&w=900&q=85",
- chess:"https://burst.shopifycdn.com/photos/dark-wooden-chess-pieces-against-a-black-background.jpg?exif=0&iptc=0&width=900",
- jackaroo:"https://i0.wp.com/www.jackarokw.com/wp-content/uploads/2018/01/Jackaroo-28-scaled.jpg?fit=900%2C600&ssl=1",
- "tic-tac-toe":"https://images.unsplash.com/photo-1611996575749-79a3a250f948?auto=format&fit=crop&w=900&q=85"
+const IMAGES={
+ ludo:"https://images.unsplash.com/photo-1606503153255-59d8b8b82185?auto=format&fit=crop&w=1000&q=85",
+ domino:"https://images.unsplash.com/photo-1606167668584-78701c57f13d?auto=format&fit=crop&w=1000&q=85",
+ chess:"https://burst.shopifycdn.com/photos/dark-wooden-chess-pieces-against-a-black-background.jpg?width=1000",
+ "tic-tac-toe":"https://images.unsplash.com/photo-1611996575749-79a3a250f948?auto=format&fit=crop&w=1000&q=85",
+ jackaroo:"https://images.unsplash.com/photo-1606503153255-59d8b8b82185?auto=format&fit=crop&w=1000&q=85"
 };
-
-let currentUser=null;
-let games=[];
-let selectedGame=null;
-let selectedVisibility="public";
-let roomRows=[];
-
-function esc(value){
- return String(value??"").replace(/[&<>"']/g,c=>({
-  "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
- }[c]));
-}
-
-function feedback(id,message,success=false){
- const el=$(id);
- el.textContent=message;
- el.classList.add("show");
- el.classList.toggle("success",success);
-}
-
-function clearFeedback(id){
- const el=$(id);
- el.textContent="";
- el.classList.remove("show","success");
-}
-
-function openModal(id){$(id).classList.add("open")}
-function closeModal(id){$(id).classList.remove("open")}
-
-document.querySelectorAll("[data-close]").forEach(btn=>{
- btn.addEventListener("click",()=>closeModal(btn.dataset.close));
-});
-
-document.querySelectorAll(".modal").forEach(modal=>{
- modal.addEventListener("click",e=>{
-  if(e.target===modal)modal.classList.remove("open");
- });
-});
-
-function authError(){
- location.href="login.html?next="+encodeURIComponent("rooms.html");
-}
-
-function getGameImage(game){
- return game.cover_path&&/^https?:\/\//i.test(game.cover_path)
-  ?game.cover_path
-  :(GAME_IMAGES[game.slug]||"");
-}
-
+let games=[],rooms=[],selectedGame="",visibility="public",busy=false;
+const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+function imageFor(g){return g.cover_path&&/^https?:\/\//i.test(g.cover_path)?g.cover_path:(IMAGES[g.slug]||IMAGES.ludo)}
+function asset(path){if(!path)return"";if(/^https?:\/\//i.test(path))return path;return db.storage.from("avatars").getPublicUrl(String(path).replace(/^\/+/,"")).data.publicUrl}
+function initials(name){return esc(String(name||"؟").trim().split(/\s+/).slice(0,2).map(x=>x[0]||"").join(""))}
+function showError(id,msg,ok=false){$(id).textContent=msg;$(id).className="feedback show"+(ok?" ok":"")}
+function modal(id,open=true){$(id).classList.toggle("open",open)}
+document.querySelectorAll("[data-close]").forEach(b=>b.onclick=()=>modal(b.dataset.close,false));
+document.querySelectorAll(".modal").forEach(m=>m.addEventListener("click",e=>{if(e.target===m)modal(m.id,false)}));
+function authRequired(){location.href="login.html?next="+encodeURIComponent("rooms.html")}
 async function loadGames(){
- const {data,error}=await db
-  .from("world_games_catalog")
-  .select("id,slug,title_ar,title_en,category,cover_path,is_active,sort_order")
-  .eq("is_active",true)
-  .order("sort_order",{ascending:true});
-
- if(error)throw error;
- games=data||[];
- renderGameChoices();
+ const {data,error}=await db.from("world_games_catalog").select("id,slug,title_ar,title_en,category,cover_path,is_active,sort_order").eq("is_active",true).order("sort_order",{ascending:true});
+ if(error)throw error;games=data||[];
+ $("gamesStat").textContent=games.length;
+ $("gameFilter").innerHTML='<option value="">كل الألعاب</option>'+games.map(g=>`<option value="${esc(g.slug)}">${esc(g.title_ar||g.title_en)}</option>`).join("");
+ const cards=games.map(g=>`<button class="game" data-game-card="${esc(g.slug)}"><img src="${esc(imageFor(g))}" alt="${esc(g.title_ar)}" loading="lazy"><div><b>${esc(g.title_ar||g.title_en)}</b><small>${esc(g.category||"ألعاب هنون")}</small></div></button>`).join("");
+ $("games").innerHTML=cards||'<div class="empty">لا توجد ألعاب فعالة حاليًا.</div>';
+ $("gameChoices").innerHTML=games.map(g=>`<button class="choice" data-pick="${esc(g.slug)}"><img src="${esc(imageFor(g))}" alt=""><b>${esc(g.title_ar||g.title_en)}</b></button>`).join("");
+ document.querySelectorAll("[data-pick]").forEach(b=>b.onclick=()=>{selectedGame=b.dataset.pick;document.querySelectorAll("[data-pick]").forEach(x=>x.classList.toggle("active",x===b))});
+ document.querySelectorAll("[data-game-card]").forEach(b=>b.onclick=()=>{$("gameFilter").value=b.dataset.gameCard;renderRooms();$("rooms").scrollIntoView({behavior:"smooth"})});
 }
-
-function renderGameChoices(){
- if(!games.length){
-  $("gamesContainer").innerHTML=`
-   <div class="empty" style="grid-column:1/-1">
-    <h3>لا توجد ألعاب متاحة حاليًا</h3>
-    <p>الألعاب ستظهر هنا عندما تكون متاحة للعب.</p>
-   </div>`;
-  $("modalGames").innerHTML="";
-  return;
- }
-
- const cards=games.map(game=>{
-  const image=getGameImage(game);
-  return `
-   <button class="game-card ${selectedGame===game.slug?"selected":""}" data-game="${esc(game.slug)}">
-    ${image?`<img src="${esc(image)}" alt="${esc(game.title_ar)}" loading="lazy">`:`<div style="height:105px;background:#20243b"></div>`}
-    <div class="game-card-info">
-     <b>${esc(game.title_ar||game.title_en||game.slug)}</b>
-     <small>${esc(game.category||"ألعاب هنون")}</small>
-    </div>
-   </button>`;
- }).join("");
-
- $("gamesContainer").innerHTML=cards;
- $("modalGames").innerHTML=cards;
-
- document.querySelectorAll("[data-game]").forEach(btn=>{
-  btn.addEventListener("click",()=>{
-   selectedGame=btn.dataset.game;
-   renderGameChoices();
-  });
- });
-}
-
-async function loadRooms(){
- $("roomsContainer").innerHTML=`
-  <div class="empty"><div class="loading"></div>جارٍ تحديث الغرف...</div>`;
-
- const {data,error}=await db.rpc("get_world_game_rooms_showcase",{p_limit:50});
- if(error)throw error;
-
- roomRows=data||[];
- renderRooms();
-}
-
-function publicAsset(path,bucket="avatars"){
- if(!path)return "";
- if(/^https?:\/\//i.test(path))return path;
- const clean=String(path).replace(/^\/+/, "");
- return db.storage.from(bucket).getPublicUrl(clean).data.publicUrl;
-}
-
-function verifiedIcon(){
- return '<svg class="verified-mark" viewBox="0 0 24 24" aria-label="موثق"><path fill="#45a9ff" d="M12 1.8 14.7 3l3-.1 1.4 2.7 2.5 1.7-.5 3 1 2.8-2 2.3-.6 3-3 .7-2.2 2.1-2.8-1-2.8 1-2.2-2.1-3-.7-.6-3-2-2.3 1-2.8-.5-3 2.5-1.7L6.3 2.9l3 .1z"/><path d="m7.8 12.1 2.7 2.7 5.8-6" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-}
-
-function initials(name){
- const words=String(name||"؟").trim().split(/\s+/).filter(Boolean);
- return esc((words[0]?.[0]||"؟")+(words[1]?.[0]||""));
-}
-
+function verified(){return '<span class="verified" title="حساب موثق">◆</span>'}
 function renderRooms(){
- const host=$("roomsContainer");
-
- if(!roomRows.length){
-  host.innerHTML='<div class="empty"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M8 9h8M8 13h5"/></svg><h3>الساحة هادئة الآن</h3><p>كن أول من يفتح غرفة ويجمع أصدقاءه في هنون.</p><button class="primary" onclick="document.getElementById(\'createBtn\').click()">إنشاء أول غرفة</button></div>';
-  return;
- }
-
- host.innerHTML='<div class="room-grid">'+roomRows.map(room=>{
-  const image=GAME_IMAGES[room.game_slug]||"";
-  const count=Number(room.player_count)||0;
-  const max=Number(room.max_players)||2;
-  const isFull=count>=max;
-  const players=Array.isArray(room.players)?room.players:[];
-  const hostAvatar=publicAsset(room.host_avatar_path);
-  const status=room.status==="playing"?"المباراة جارية":"بانتظار اللاعبين";
-
-  const seats=Array.from({length:Math.min(max,8)},(_,i)=>{
-   const player=players[i];
-   if(!player)return '<span class="player-seat" title="مقعد متاح">＋</span>';
-
-   const avatar=publicAsset(player.avatar_path);
-   const isHost=player.user_id===room.host_user_id;
-
-   return '<span class="player-seat filled '+(isHost?"host":"") +'" title="'+esc(player.name||"لاعب")+'">'+
-    (avatar?'<img src="'+esc(avatar)+'" alt="'+esc(player.name||"لاعب")+'" loading="lazy">':initials(player.name))+
-    '</span>';
-  }).join("");
-
-  return '<article class="room-card"><div class="room-cover">'+
-   (image?'<img src="'+esc(image)+'" alt="'+esc(room.game_title_ar)+'" loading="lazy">':"")+
-   '<span class="room-cover-label">'+esc(room.game_title_ar||room.game_slug)+'</span>'+
-   '<span class="room-cover-status"><i class="live-dot"></i>'+status+'</span>'+
-   '</div><div class="room-body"><div class="room-host">'+
-   (hostAvatar?'<img class="room-host-avatar" src="'+esc(hostAvatar)+'" alt="">':'<span class="room-host-avatar">'+initials(room.host_name)+'</span>')+
-   '<div class="room-host-info"><small>صاحب الغرفة</small><b>'+
-   esc(room.host_name||"لاعب هنون")+(room.host_verified?verifiedIcon():"")+
-   '</b></div><span class="room-detail">'+(room.visibility==="private"?"خاصة":"عامة")+'</span></div>'+
-   '<div class="room-code-line"><div class="room-code"># '+esc(room.room_code)+'</div>'+
-   '<button class="copy-code" data-copy-code="'+esc(room.room_code)+'">نسخ الكود</button></div>'+
-   '<div class="room-players">'+seats+'<span class="players-caption">'+count+" من "+max+' لاعبين</span></div>'+
-   '<div class="room-details"><span class="room-detail">'+(isFull?"الغرفة مكتملة":"متاح "+(max-count)+" مقعد")+
-   '</span><span class="room-detail">'+(room.status==="playing"?"بدأت المباراة":"جاهزة للانضمام")+'</span></div>'+
-   '<div class="room-footer"><span class="room-count">'+(isFull?"اكتملت المقاعد":"انضم وابدأ اللعب")+
-   '</span><button class="join-btn" data-join="'+esc(room.room_code)+'" '+
-   (isFull||room.status==="playing"?"disabled":"")+'>'+
-   (isFull?"مكتملة":room.status==="playing"?"جارية":"دخول الغرفة")+
-   '</button></div></div></article>';
- }).join("")+'</div>';
-
- document.querySelectorAll("[data-join]").forEach(btn=>{
-  btn.addEventListener("click",()=>joinRoom(btn.dataset.join));
+ const term=$("search").value.trim().toLowerCase(),gf=$("gameFilter").value,vf=$("visibilityFilter").value,sf=$("statusFilter").value;
+ const filtered=rooms.filter(r=>{
+  const count=Number(r.player_count)||0,max=Number(r.max_players)||2,full=count>=max;
+  return (!term||[r.game_title_ar,r.game_slug,r.room_code,r.host_name].some(x=>String(x||"").toLowerCase().includes(term)))&&(!gf||r.game_slug===gf)&&(!vf||r.visibility===vf)&&(!sf||(sf==="full"&&full)||(sf==="available"&&!full&&r.status==="waiting")||(sf==="playing"&&r.status==="playing"));
  });
-
- document.querySelectorAll("[data-copy-code]").forEach(btn=>{
-  btn.addEventListener("click",async()=>{
-   try{
-    await navigator.clipboard.writeText(btn.dataset.copyCode);
-    btn.textContent="تم النسخ ✓";
-   }catch(e){
-    $("roomCodeInput").value=btn.dataset.copyCode;
-    openModal("codeModal");
-    feedback("joinFeedback","الكود جاهز للنسخ.");
-   }
-   setTimeout(()=>btn.textContent="نسخ الكود",1800);
-  });
- });
+ $("roomsStat").textContent=rooms.length;
+ $("playersStat").textContent=rooms.reduce((n,r)=>n+(Number(r.player_count)||0),0);
+ if(!filtered.length){$("rooms").innerHTML='<div class="empty"><b>لا توجد غرف مطابقة</b>جرّب تغيير البحث أو الفلاتر، أو أنشئ غرفة جديدة.</div>';return}
+ $("rooms").innerHTML=filtered.map(r=>{
+  const count=Number(r.player_count)||0,max=Number(r.max_players)||2,full=count>=max,players=Array.isArray(r.players)?r.players:[];
+  const g=games.find(x=>x.slug===r.game_slug),img=g?imageFor(g):(IMAGES[r.game_slug]||IMAGES.ludo);
+  const seats=Array.from({length:Math.min(max,8)},(_,i)=>{const p=players[i];if(!p)return'<span class="seat">＋</span>';const av=asset(p.avatar_path);return `<span class="seat full" title="${esc(p.name)}">${av?`<img src="${esc(av)}" alt="">`:initials(p.name)}</span>`}).join("");
+  return `<article class="room-card"><div class="cover"><img src="${esc(img)}" alt="${esc(r.game_title_ar)}" loading="lazy"><span class="cover-label">${esc(r.game_title_ar||r.game_slug)}</span><span class="cover-status"><i></i>${r.status==="playing"?"مباراة جارية":"بانتظار اللاعبين"}</span></div><div class="room-body"><div class="host">${r.host_avatar_path&&asset(r.host_avatar_path)?`<img class="avatar" src="${esc(asset(r.host_avatar_path))}" alt="">`:`<span class="avatar">${initials(r.host_name)}</span>`}<div class="host-info"><small>صاحب الغرفة</small><b>${esc(r.host_name||"لاعب هنون")}${r.host_verified?verified():""}</b></div><span class="tag">${r.visibility==="private"?"خاصة":"عامة"}</span></div><div class="code-line"><span class="code"># ${esc(r.room_code)}</span><button class="copy" data-copy="${esc(r.room_code)}">نسخ الكود</button></div><div class="seats">${seats}<span class="seat-note">${count} / ${max} لاعب</span></div><div class="tags"><span class="tag">${full?"اكتملت المقاعد":`متاح ${max-count} مقعد`}</span><span class="tag">${r.status==="playing"?"بدأت":"بانتظار البدء"}</span></div><div class="room-bottom"><small>${full?"الغرفة مكتملة":"انضم إلى الغرفة"}</small><button class="join" data-enter="${esc(r.room_code)}" ${full||r.status!=="waiting"?"disabled":""}>${full?"مكتملة":r.status==="playing"?"جارية":"دخول الغرفة"}</button></div></div></article>`;
+ }).join("");
+ document.querySelectorAll("[data-enter]").forEach(b=>b.onclick=()=>joinRoom(b.dataset.enter));
+ document.querySelectorAll("[data-copy]").forEach(b=>b.onclick=async()=>{try{await navigator.clipboard.writeText(b.dataset.copy);b.textContent="تم النسخ ✓"}catch(e){$("roomCode").value=b.dataset.copy;modal("joinModal")}});
 }
-
+async function loadRooms(){
+ $("rooms").innerHTML='<div class="empty">جارٍ تحديث الغرف...</div>';
+ const {data,error}=await db.rpc("get_world_game_rooms_showcase",{p_limit:100});
+ if(error)throw error;rooms=data||[];renderRooms();
+}
+function translateError(e){
+ const m=String(e?.message||e||"");
+ const map={AUTH_REQUIRED:"سجل دخولك أولًا.",GAME_NOT_AVAILABLE:"اللعبة غير متاحة حاليًا.",INVALID_VISIBILITY:"نوع الغرفة غير صحيح.",INVALID_PLAYER_LIMIT:"عدد اللاعبين يجب أن يكون بين 2 و8.",INVALID_ROOM_CODE:"اكتب كودًا صحيحًا.",ROOM_NOT_FOUND:"لم نعثر على غرفة بهذا الكود.",ROOM_NOT_JOINABLE:"الغرفة لا تستقبل لاعبين الآن.",ROOM_FULL:"الغرفة مكتملة."};
+ for(const k in map)if(m.includes(k))return map[k];
+ if(m.includes("Failed to fetch"))return"تعذر الاتصال. تحقق من الإنترنت.";
+ return"تعذر تنفيذ العملية. حاول مرة أخرى.";
+}
 async function createRoom(){
- clearFeedback("createFeedback");
-
- if(!selectedGame){
-  feedback("createFeedback","اختار اللعبة أولًا.");
-  return;
- }
-
- const btn=$("confirmCreate");
- btn.disabled=true;
- btn.textContent="جارٍ إنشاء الغرفة...";
-
+ if(busy)return;
+ if(!selectedGame){showError("createFeedback","اختار اللعبة أولًا.");return}
+ busy=true;$("createConfirm").disabled=true;$("createConfirm").textContent="جارٍ الإنشاء...";
  try{
-  const {data,error}=await db.rpc("create_world_game_room",{
-   p_game_slug:selectedGame,
-   p_visibility:selectedVisibility,
-   p_max_players:Number($("maxPlayers").value)
-  });
-
-  if(error)throw error;
-  if(!data||!data.id)throw new Error("لم يتم استلام بيانات الغرفة.");
-
+  const {data,error}=await db.rpc("create_world_game_room",{p_game_slug:selectedGame,p_visibility:visibility,p_max_players:Number($("maxPlayers").value)});
+  if(error)throw error;if(!data?.id)throw Error("لم يصل رقم الغرفة.");
   location.href="room.html?id="+encodeURIComponent(data.id);
- }catch(error){
-  console.error(error);
-  feedback("createFeedback",translateError(error));
- }finally{
-  btn.disabled=false;
-  btn.textContent="إنشاء الغرفة";
- }
+ }catch(e){showError("createFeedback",translateError(e))}
+ finally{busy=false;$("createConfirm").disabled=false;$("createConfirm").textContent="إنشاء الغرفة"}
 }
-
 async function joinRoom(code){
- if(!code)return;
- clearFeedback("joinFeedback");
-
+ if(busy)return;
+ const clean=String(code||"").trim().toUpperCase();if(!clean){showError("joinFeedback","اكتب كود الغرفة.");return}
+ busy=true;$("joinConfirm").disabled=true;
  try{
-  const {data,error}=await db.rpc("join_world_game_room",{
-   p_room_code:String(code).trim().toUpperCase()
-  });
-  if(error)throw error;
-  if(!data||!data.id)throw new Error("لم يتم العثور على بيانات الغرفة.");
-
-  closeModal("codeModal");
+  const {data,error}=await db.rpc("join_world_game_room",{p_room_code:clean});
+  if(error)throw error;if(!data?.id)throw Error("لم يصل رقم الغرفة.");
   location.href="room.html?id="+encodeURIComponent(data.id);
- }catch(error){
-  console.error(error);
-  if($("codeModal").classList.contains("open")){
-   feedback("joinFeedback",translateError(error));
-  }else{
-   alert(translateError(error));
-  }
- }
+ }catch(e){showError("joinFeedback",translateError(e))}
+ finally{busy=false;$("joinConfirm").disabled=false}
 }
-
-function translateError(error){
- const message=String(error?.message||error||"");
- if(message.includes("AUTH_REQUIRED"))return "سجل دخولك أولًا للمتابعة.";
- if(message.includes("GAME_NOT_AVAILABLE"))return "اللعبة غير متاحة حاليًا.";
- if(message.includes("INVALID_VISIBILITY"))return "نوع الغرفة غير صحيح.";
- if(message.includes("INVALID_PLAYER_LIMIT"))return "عدد اللاعبين غير مسموح به.";
- if(message.includes("INVALID_ROOM_CODE"))return "اكتب كود غرفة صحيحًا.";
- if(message.includes("ROOM_NOT_FOUND"))return "لم نعثر على غرفة بهذا الكود.";
- if(message.includes("ROOM_NOT_JOINABLE"))return "هذه الغرفة لم تعد تستقبل لاعبين.";
- if(message.includes("ROOM_FULL"))return "الغرفة وصلت إلى الحد الأقصى من اللاعبين.";
- if(message.includes("NOT_A_ROOM_MEMBER"))return "أنت لست عضوًا في هذه الغرفة.";
- if(message.includes("foreign key")||message.includes("world_game_room_players_user_id_fkey")){
-  return "ملف حسابك غير مكتمل في قاعدة البيانات. أكمل إعداد الملف الشخصي أولًا.";
- }
- if(message.includes("Failed to fetch"))return "تعذر الاتصال بالخادم. تحقق من الإنترنت.";
- return "تعذر تنفيذ العملية. حاول مرة أخرى.";
-}
-
-$("createBtn").addEventListener("click",()=>{
- selectedGame=null;
- selectedVisibility="public";
- document.querySelectorAll("[data-visibility]").forEach(btn=>{
-  btn.classList.toggle("active",btn.dataset.visibility==="public");
- });
- renderGameChoices();
- clearFeedback("createFeedback");
- openModal("createModal");
-});
-
-$("joinCodeBtn").addEventListener("click",()=>{
- $("roomCodeInput").value="";
- clearFeedback("joinFeedback");
- openModal("codeModal");
-});
-
-$("confirmCreate").addEventListener("click",createRoom);
-$("confirmJoin").addEventListener("click",()=>joinRoom($("roomCodeInput").value));
-
-$("roomCodeInput").addEventListener("input",e=>{
- e.target.value=e.target.value.replace(/[^a-zA-Z0-9]/g,"").toUpperCase();
-});
-
-document.querySelectorAll("[data-visibility]").forEach(btn=>{
- btn.addEventListener("click",()=>{
-  selectedVisibility=btn.dataset.visibility;
-  document.querySelectorAll("[data-visibility]").forEach(item=>{
-   item.classList.toggle("active",item===btn);
-  });
- });
-});
-
-$("refreshBtn").addEventListener("click",async()=>{
+$("createOpen").onclick=()=>{selectedGame="";visibility="public";document.querySelectorAll("[data-pick]").forEach(b=>b.classList.remove("active"));document.querySelectorAll("[data-visibility]").forEach(b=>b.classList.toggle("active",b.dataset.visibility==="public"));$("createFeedback").className="feedback";modal("createModal")};
+$("joinOpen").onclick=()=>{ $("roomCode").value="";$("joinFeedback").className="feedback";modal("joinModal")};
+$("createConfirm").onclick=createRoom;$("joinConfirm").onclick=()=>joinRoom($("roomCode").value);
+$("roomCode").addEventListener("input",e=>e.target.value=e.target.value.replace(/[^a-z0-9]/gi,"").toUpperCase());
+document.querySelectorAll("[data-visibility]").forEach(b=>b.onclick=()=>{visibility=b.dataset.visibility;document.querySelectorAll("[data-visibility]").forEach(x=>x.classList.toggle("active",x===b))});
+["search","gameFilter","visibilityFilter","statusFilter"].forEach(id=>$(id).addEventListener(id==="search"?"input":"change",renderRooms));
+$("refresh").onclick=()=>loadRooms().catch(e=>{ $("rooms").innerHTML=`<div class="empty">${esc(translateError(e))}</div>`});
+async function init(){
  try{
-  await loadRooms();
- }catch(error){
-  console.error(error);
-  $("roomsContainer").innerHTML=`
-   <div class="empty"><h3>تعذر تحديث الغرف</h3><p>${esc(translateError(error))}</p></div>`;
- }
-});
-
-async function initialize(){
- try{
-  const {data,error}=await db.auth.getSession();
-  if(error)throw error;
-
-  currentUser=data.session?.user||null;
-  if(!currentUser){authError();return;}
-
+  const {data,error}=await db.auth.getSession();if(error)throw error;
+  if(!data.session?.user){authRequired();return}
   await Promise.all([loadGames(),loadRooms()]);
-
-  setInterval(()=>{
-   if(document.visibilityState==="visible"){
-    loadRooms().catch(err=>console.warn("Rooms refresh:",err));
-   }
-  },15000);
-
- }catch(error){
-  console.error("HANOON ROOMS:",error);
-  $("roomsContainer").innerHTML=`
-   <div class="empty">
-    <h3>تعذر تحميل الغرف</h3>
-    <p>${esc(translateError(error))}</p>
-   </div>`;
-  $("gamesContainer").innerHTML=`
-   <div class="empty" style="grid-column:1/-1">
-    <h3>تعذر تحميل الألعاب</h3>
-    <p>تحقق من الاتصال بقاعدة البيانات.</p>
-   </div>`;
- }
+  setInterval(()=>{if(document.visibilityState==="visible")loadRooms().catch(console.warn)},15000);
+ }catch(e){console.error(e);$("rooms").innerHTML=`<div class="empty"><b>تعذر تحميل الساحة</b>${esc(translateError(e))}</div>`}
 }
-
-initialize();
+init();
 </script>
 </body>
 </html>
