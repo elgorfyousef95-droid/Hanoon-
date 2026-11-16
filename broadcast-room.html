@@ -1,18 +1,17 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <meta name="theme-color" content="#090912">
 <title>HANOON WORLD — LIVE</title>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 :root{--purple:#a58aff;--gold:#f2cf91;--red:#ff5574;--green:#52dfb1;--line:#ffffff20}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{width:100%;height:100%;margin:0;overflow:hidden;background:#080810;color:#fff;font-family:Cairo,sans-serif;overscroll-behavior:none}
+html,body{width:100%;height:100%;margin:0;overflow:hidden;background:#080810;color:#fff;font-family:Cairo,sans-serif;overscroll-behavior:none;touch-action:pan-x pan-y}
 body{position:fixed;inset:0}
-button,input,select{font:inherit}
+button,input,select{font:inherit}input,textarea{touch-action:pan-x pan-y;user-select:text;-webkit-user-select:text}
 button{cursor:pointer;color:inherit}
 button:disabled{opacity:.45;cursor:not-allowed}
 .app{position:fixed;inset:0;height:100dvh;overflow:hidden;background:#080810}
@@ -117,6 +116,13 @@ button:disabled{opacity:.45;cursor:not-allowed}
 @keyframes effectFade{0%{opacity:0;transform:scale(.6)}12%{opacity:1;transform:scale(1.04)}75%{opacity:1}100%{opacity:0;transform:scale(1.1)}}
 @keyframes heartRise{0%{opacity:0;transform:translateY(0) scale(.6)}20%{opacity:1}100%{opacity:0;transform:translateY(-190px) scale(1.8)}}
 @media(min-width:650px){.app{max-width:500px;margin:auto;left:0;right:0;border-left:1px solid #ffffff16;border-right:1px solid #ffffff16}body{background:#030309}}
+/* وضع الغرفة الصوتية */
+.audio-mode .video-grid{inset:0;padding:145px 14px 170px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:minmax(130px,1fr);align-content:center;overflow:auto}
+.audio-mode .video-tile{min-height:125px;background:linear-gradient(145deg,#453568,#171323);border:1px solid #d5c1ff55}
+.audio-mode .video-tile video{display:none}
+.audio-mode .video-tile .tile-avatar{inset:12px 0 28px}
+.audio-mode .video-tile .tile-avatar img,.audio-mode .video-tile .tile-avatar span{width:66px;height:66px;box-shadow:0 0 0 7px #ffffff0d,0 0 28px #a58aff55}
+.audio-mode .video-tile .tile-name{justify-content:center;bottom:7px}
 </style>
 </head>
 <body>
@@ -232,8 +238,15 @@ button:disabled{opacity:.45;cursor:not-allowed}
 import { supabase } from "./supabase.js";
 
 const $=id=>document.getElementById(id);
+document.addEventListener("touchstart",e=>{if(e.touches&&e.touches.length>1)e.preventDefault()},{passive:false});
+document.addEventListener("touchmove",e=>{if(e.touches&&e.touches.length>1)e.preventDefault()},{passive:false});
+document.addEventListener("gesturestart",e=>e.preventDefault(),{passive:false});
+document.addEventListener("gesturechange",e=>e.preventDefault(),{passive:false});
+document.addEventListener("gestureend",e=>e.preventDefault(),{passive:false});
+document.addEventListener("dblclick",e=>e.preventDefault(),{passive:false});
 const params=new URLSearchParams(location.search);
 const streamId=params.get("stream");
+const audioMode=params.get("audio")==="1";
 const ICE={iceServers:[
  {urls:"stun:stun.l.google.com:19302"},
  {urls:"stun:stun1.l.google.com:19302"}
@@ -241,7 +254,7 @@ const ICE={iceServers:[
 const MAX_DIRECT_VIEWERS=4;
 
 const state={
- user:null,stream:null,host:null,isHost:false,isGuest:false,myGuest:null,
+ user:null,stream:null,host:null,isHost:false,isGuest:false,myGuest:null,audioMode:false,
  localStream:null,channel:null,chatChannel:null,hostPeers:new Map(),
  viewerPC:null,pendingIce:[],guests:[],guestStreams:new Map(),
  streamOwners:new Map(),remoteStreams:new Map(),profiles:{},gifts:[],
@@ -348,7 +361,7 @@ function addVideoTile(userId,stream,profile,isSelf=false){
  const id="tile-"+userId;
  let tile=$(id);
  if(!tile){
-  tile=document.createElement("div");tile.className="video-tile"+(isSelf?" self":"");tile.id=id;
+  tile=document.createElement("div");tile.className="video-tile"+(isSelf?" self":"")+(state.audioMode?" audio-seat":"");tile.id=id;
   const video=document.createElement("video");
   video.autoplay=true;video.playsInline=true;video.muted=true;
   const avatar=document.createElement("div");avatar.className="tile-avatar";
@@ -361,6 +374,7 @@ function addVideoTile(userId,stream,profile,isSelf=false){
    if(!v.muted)toast("تم تشغيل صوت هذا الفيديو.");
   };
  }
+ if(state.audioMode)tile.classList.add("audio-seat");
  const video=tile.querySelector("video");
  if(video.srcObject!==stream)playVideo(video,stream);
  const p=identityMarkup(profile);
@@ -391,18 +405,18 @@ function updateLikes(){
 }
 async function loadStream(){
  const {data,error}=await supabase.from("world_live_streams")
-  .select("id,host_id,title,description,status,started_at,guest_layout,guest_limit,guest_access")
+  .select("id,host_id,title,description,status,started_at,guest_layout,guest_limit,guest_access,room_code,visibility,background_url,room_category,is_audio_room,allow_games")
   .eq("id",streamId).maybeSingle();
  if(error)throw error;
- if(!data||data.status!=="live")throw new Error("هذا البث غير موجود أو انتهى.");
+ if(!data||data.status!=="live")throw new Error("هذه الغرفة غير موجودة أو انتهت.");
  state.stream=data;state.isHost=data.host_id===state.user.id;
- state.host=await loadProfile(data.host_id);
- renderHost();
+ state.audioMode=audioMode||data.is_audio_room===true;
+ if(state.audioMode){document.body.classList.add("audio-mode");$("loadingText").textContent="نجهز الاتصال الصوتي";$("cameraButton").style.display="none";$("layoutButton").style.display="none";$("guestCameraButton").style.display="none";}
+ state.host=await loadProfile(data.host_id);renderHost();
  for(const id of ["guestLimit","guestLimit2"])$(id).value=String(data.guest_limit??3);
  for(const id of ["guestLayout","guestLayout2"])$(id).value=data.guest_layout||"grid";
  for(const id of ["guestAccess","guestAccess2"])$(id).value=data.guest_access||"everyone";
- applyLayout();
- if(state.isHost)$("hostControls").classList.add("show");
+ applyLayout();if(state.isHost)$("hostControls").classList.add("show");
 }
 async function loadMyGuestStatus(){
  if(state.isHost)return;
@@ -417,17 +431,14 @@ async function loadMyGuestStatus(){
  if(state.isGuest)$("guestControls").classList.add("show");
 }
 async function startCamera(){
- if(!navigator.mediaDevices?.getUserMedia)throw new Error("الكاميرا غير مدعومة. افتح الموقع عبر HTTPS.");
+ if(!navigator.mediaDevices?.getUserMedia)throw new Error("الميكروفون غير مدعوم. افتح الموقع عبر HTTPS.");
  state.localStream=await navigator.mediaDevices.getUserMedia({
-  video:{facingMode:"user",width:{ideal:1280},height:{ideal:720},frameRate:{ideal:24,max:30}},
+  video:state.audioMode?false:{facingMode:"user",width:{ideal:1280},height:{ideal:720},frameRate:{ideal:24,max:30}},
   audio:{echoCancellation:true,noiseSuppression:true,autoGainControl:true}
  });
  renderAllTiles();
- if(state.channel){
-  await state.channel.send({type:"broadcast",event:"stream-map",payload:{stream_id:state.localStream.id,user_id:state.user.id}});
- }
-}
-async function sendSignal(to,type,payload={}){
+ if(state.channel)await state.channel.send({type:"broadcast",event:"stream-map",payload:{stream_id:state.localStream.id,user_id:state.user.id}});
+}async function sendSignal(to,type,payload={}){
  const {error}=await supabase.from("world_live_signals").insert({
   stream_id:streamId,sender_id:state.user.id,recipient_id:to,signal_type:type,payload
  });
@@ -602,7 +613,7 @@ function renderGuestRoster(){
     $("guestRequestArea").appendChild(b);
    }
   }else{
-   const b=document.createElement("button");b.className="primary";b.style.width="100%";b.textContent="طلب الانضمام إلى البث";b.onclick=()=>requestGuest("video");
+   const b=document.createElement("button");b.className="primary";b.style.width="100%";b.textContent=state.audioMode?"طلب الصعود للمايك":"طلب الانضمام إلى البث";b.onclick=()=>requestGuest(state.audioMode?"audio":"video");
    const audio=document.createElement("button");audio.className="secondary";audio.style.width="100%";audio.style.marginTop="7px";audio.textContent="طلب الانضمام بالصوت فقط";audio.onclick=()=>requestGuest("audio");
    $("guestRequestArea").append(b,audio);
   }
@@ -611,7 +622,7 @@ function renderGuestRoster(){
    const row=document.createElement("div");row.className="guest-entry";
    const img=document.createElement("img");setAvatar(img,p);
    const meta=document.createElement("div");meta.className="guest-meta";
-   meta.innerHTML=`<b>${escapeHTML(p.full_name||p.username||"ضيف")}</b><small>ضيف مباشر</small>`;
+   meta.innerHTML=`<b>${escapeHTML(p.full_name||p.username||"عضو")}</b><small>ضيف مباشر</small>`;
    row.append(img,meta);$("guestRoster").appendChild(row);
   }
  }
@@ -667,7 +678,7 @@ async function becomeGuest(){
  try{
   if(!state.localStream)await startCamera();
   if(state.channel)await state.channel.track({user_id:state.user.id,role:"guest",joined_at:new Date().toISOString()});
-  await refreshGuests();$("guestPanel").classList.remove("show");toast("أنت الآن ضيف في البث.");
+  await refreshGuests();$("guestPanel").classList.remove("show");toast(state.audioMode?"أنت الآن متحدث في الغرفة الصوتية.":"أنت الآن ضيف في البث.");
  }catch(e){toast(e.message||"تعذر تشغيل الكاميرا")}
 }
 async function leaveGuest(notify=true){
@@ -702,8 +713,7 @@ async function sendChat(){
   $("chatInput").value="";
  }catch(e){toast(e.message||"تعذر إرسال التعليق")}
  finally{state.chatBusy=false;$("sendChat").disabled=false}
-}
-function giftSVG(slug){
+                                  }function giftSVG(slug){
  const shapes={
   rose:'<path d="M20 8c-4-7-12-6-14-1-2 5 4 8 7 5 3-3 1-7-2-7M12 12c-2 5-3 8-3 10m3-7 7 2m-7-2-5 3"/>',
   heart:'<path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.9-8.6a5.5 5.5 0 0 0-.1-7.8Z"/>',
@@ -877,8 +887,7 @@ async function reportLive(){
   });
   if(error)throw error;toast("تم إرسال البلاغ للمراجعة.");
  }catch(e){toast(e.message||"تعذر إرسال البلاغ")}
-}
-function subscribeRoom(){
+ }function subscribeRoom(){
  state.channel=supabase.channel("hanoon-live-"+streamId,{config:{presence:{key:state.user.id}}});
  state.channel
  .on("presence",{event:"sync"},async()=>{
@@ -960,15 +969,15 @@ async function initialize(){
  const {data,error}=await supabase.auth.getUser();
  if(error||!data?.user){location.replace("login.html");return}
  state.user=data.user;
- showLoading("جارٍ فتح البث","نجهز الكاميرا والاتصال...");
+ showLoading("جارٍ فتح الغرفة",audioMode?"نجهز المايك والاتصال الصوتي...":"نجهز الكاميرا والاتصال...");
  await loadProfile(state.user.id);
  await loadStream();
  await loadMyGuestStatus();
 
- // يبدأ المضيف أو الضيف الكاميرا فورًا قبل تحميل بقية التفاصيل.
+ // يبدأ المضيف أو الضيف الميكروفون أو الكاميرا حسب وضع الغرفة.
  if(state.isHost||state.isGuest)await startCamera();
 
- // نبدأ قنوات التحديث فورًا ثم نحمل البيانات المساندة بالتوازي.
+ // نبدأ قنوات التحديث ثم نحمل البيانات المساندة.
  subscribeRoom();
  const jobs=[
   refreshGuests(),
@@ -986,13 +995,12 @@ async function initialize(){
  if(!state.isHost&&!state.isGuest){
   await pingViewer();
   state.heartbeat=setInterval(pingViewer,20000);
-  showLoading("جارٍ الاتصال بالبث","إذا لم يبدأ الفيديو، اضغط على نافذة الفيديو لتشغيله.");
+  showLoading("جارٍ الاتصال بالغرفة",state.audioMode?"نجهز استقبال الصوت من المتحدثين.":"إذا لم يبدأ الفيديو، اضغط على نافذة الفيديو لتشغيله.");
  }else hideLoading();
 
  if(state.isHost)addComment({type:"system",message:"أنت الآن مباشر. يمكنك دعوة الضيوف وإدارة البث."});
  if(state.isGuest)addComment({type:"system",message:"انضممت إلى البث كضيف."});
-}
-$("sendChat").onclick=sendChat;
+ }$("sendChat").onclick=sendChat;
 $("chatInput").addEventListener("keydown",e=>{if(e.key==="Enter")sendChat()});
 $("heartButton").onclick=sendHeart;
 $("giftButton").onclick=()=>$("giftPanel").classList.add("show");
