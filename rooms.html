@@ -1,94 +1,247 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <meta name="theme-color" content="#090812">
-<title>هنون | الغرف الاجتماعية</title>
+<title>هنون | النادي الاجتماعي</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#090812;--panel:#171526;--purple:#a88aff;--gold:#efd09a;--muted:#aaa5bc;--line:#ffffff20}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:#f8f5ff;font-family:Cairo,sans-serif;min-height:100vh}
+:root{
+  color-scheme:dark;
+  --bg:#090812;
+  --panel:#171526;
+  --panel2:#211d35;
+  --purple:#a88aff;
+  --gold:#efd09a;
+  --muted:#aaa5bc;
+  --line:#ffffff1b;
+  --green:#5be0ae;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{min-height:100%;background:var(--bg);touch-action:pan-y}
+body{
+  margin:0;min-height:100vh;overflow-x:hidden;
+  background:radial-gradient(ellipse at 8% 8%,#50347b35,transparent 34%),
+  radial-gradient(ellipse at 92% 45%,#176a7030,transparent 32%),var(--bg);
+  color:#f8f5ff;font-family:Cairo,sans-serif
+}
 button,input,select{font:inherit}
 button{cursor:pointer;color:inherit}
 a{color:inherit;text-decoration:none}
-.wrap{width:min(1240px,calc(100% - 26px));margin:auto}
-header{height:70px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line)}
-.brand{display:flex;align-items:center;gap:10px;font-weight:900}
-.mark{width:40px;height:40px;border-radius:14px;background:linear-gradient(140deg,#c7adff,#6542bd);display:grid;place-items:center}
-.mark svg{width:23px;stroke:white;fill:none;stroke-width:1.8}
-.brand small{display:block;color:var(--gold);font-size:8px;letter-spacing:3px;margin-top:-5px}
-.btn{border:1px solid var(--line);background:#ffffff0b;border-radius:12px;padding:10px 14px;font-size:10px;font-weight:900}
-.primary{border:0;background:linear-gradient(110deg,#bca5ff,#7650d2);box-shadow:0 8px 25px #7955d555}
-.hero{margin:20px 0 24px;min-height:310px;border:1px solid #c7b2ff50;border-radius:26px;overflow:hidden;position:relative;isolation:isolate;box-shadow:0 25px 70px #0008}
-.hero>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2}
-.hero:after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,#090812f5,#090812d9 40%,#09081240),linear-gradient(0deg,#090812,transparent 75%)}
-.hero-content{padding:35px;max-width:760px}
+.wrap{width:min(1320px,calc(100% - 30px));margin:auto}
+header{
+  height:76px;display:flex;align-items:center;justify-content:space-between;
+  border-bottom:1px solid var(--line);gap:12px
+}
+.brand{display:flex;align-items:center;gap:11px;font-weight:900}
+.mark{
+  width:43px;height:43px;border-radius:15px;
+  background:linear-gradient(140deg,#c7adff,#6542bd);
+  display:grid;place-items:center;box-shadow:0 8px 25px #7955d555
+}
+.mark svg{width:24px;stroke:white;fill:none;stroke-width:1.8}
+.brand small{display:block;color:var(--gold);font-size:8px;letter-spacing:2.5px;margin-top:-5px}
+.header-actions{display:flex;gap:8px;align-items:center}
+.btn{
+  border:1px solid var(--line);background:#ffffff0b;
+  border-radius:12px;padding:10px 14px;font-size:10px;font-weight:900
+}
+.primary{
+  border:0;background:linear-gradient(110deg,#bca5ff,#7650d2);
+  box-shadow:0 8px 25px #7955d555
+}
+.hero{
+  margin:20px 0 22px;min-height:325px;
+  border:1px solid #c7b2ff50;border-radius:27px;
+  overflow:hidden;position:relative;isolation:isolate;
+  box-shadow:0 25px 70px #0008;background:#171326
+}
+.hero>img{
+  position:absolute;inset:0;width:100%;height:100%;
+  object-fit:cover;z-index:-2
+}
+.hero:after{
+  content:"";position:absolute;inset:0;z-index:-1;
+  background:linear-gradient(90deg,#090812f7,#090812db 42%,#09081245),
+  linear-gradient(0deg,#090812,transparent 75%)
+}
+.hero-content{padding:34px;max-width:760px}
 .eyebrow{color:var(--gold);font-size:10px;letter-spacing:2px;font-weight:900}
-.hero h1{font-size:clamp(30px,5vw,56px);line-height:1.35;margin:10px 0}
-.hero p{font-size:12px;color:#ddd6eb;line-height:2;max-width:550px}
-.hero-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:18px}
+.hero h1{font-size:clamp(31px,5vw,55px);line-height:1.3;margin:9px 0}
+.hero h1 span{color:#c6b2ff}
+.hero p{font-size:12px;color:#ddd6eb;line-height:2;max-width:560px;margin:8px 0}
+.hero-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:17px}
 .stats{display:flex;gap:9px;margin-top:20px}
-.stat{background:#090812b8;border:1px solid var(--line);border-radius:12px;padding:8px 14px;min-width:95px}
+.stat{
+  background:#090812b8;border:1px solid var(--line);
+  border-radius:12px;padding:7px 14px;min-width:105px
+}
 .stat b{display:block;color:var(--gold);font-size:18px}
 .stat small{color:#c7bfd7;font-size:9px}
-.head{display:flex;justify-content:space-between;align-items:end;margin:24px 0 12px}
-.head h2{margin:0;font-size:20px}
-.head p{margin:3px 0 0;color:var(--muted);font-size:10px}
-.filters{display:grid;grid-template-columns:1fr 180px 150px;gap:9px;margin-bottom:13px}
-.filters input,.filters select,.field input,.field select{width:100%;height:43px;background:#11101e;color:white;border:1px solid var(--line);border-radius:11px;padding:0 12px;outline:none;font-size:11px}
-.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
-.card{overflow:hidden;border:1px solid #ffffff22;border-radius:18px;background:#171526;box-shadow:0 14px 40px #0006}
-.cover{height:185px;position:relative;background:#27203b}
-.cover img{width:100%;height:100%;object-fit:cover}
-.cover:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,#0c0b17,transparent 75%)}
-.cover .live{position:absolute;z-index:1;top:12px;right:12px;background:#c43e5a;border-radius:20px;padding:5px 10px;font-size:9px;font-weight:900}
-.cover .members{position:absolute;z-index:1;top:12px;left:12px;background:#080812bd;border:1px solid #ffffff30;border-radius:20px;padding:5px 9px;font-size:9px}
-.cover h3{position:absolute;z-index:1;bottom:10px;right:13px;left:13px;margin:0;font-size:17px;text-shadow:0 2px 9px #000}
-.cardbody{padding:12px}
-.host{display:flex;align-items:center;gap:8px;font-size:10px}
-.avatar{width:34px;height:34px;border-radius:50%;object-fit:cover;background:#5b438a;display:grid;place-items:center}
+.section-head{
+  display:flex;justify-content:space-between;align-items:end;
+  gap:10px;margin:25px 0 13px
+}
+.section-head h2{margin:0;font-size:20px}
+.section-head p{margin:3px 0 0;color:var(--muted);font-size:10px}
+.live-indicator{
+  display:flex;align-items:center;gap:7px;
+  color:var(--green);font-size:10px;font-weight:900
+}
+.live-indicator:before{
+  content:"";width:7px;height:7px;border-radius:50%;
+  background:var(--green);box-shadow:0 0 12px var(--green)
+}
+.toolbar{
+  display:grid;grid-template-columns:minmax(180px,1fr) 190px 140px;
+  gap:9px;margin-bottom:13px
+}
+.control{
+  height:46px;width:100%;background:#11101e;color:#fff;
+  border:1px solid var(--line);border-radius:12px;
+  padding:0 13px;outline:none;font-size:11px
+}
+.control:focus,.field input:focus,.field select:focus{border-color:#b99cff88}
+.category-row{
+  display:flex;gap:8px;overflow:auto;padding:2px 0 10px;
+  scrollbar-width:none
+}
+.category-row::-webkit-scrollbar{display:none}
+.chip{
+  white-space:nowrap;border:1px solid var(--line);
+  background:#ffffff08;border-radius:30px;padding:8px 14px;
+  color:#c6bfd6;font-size:9px;font-weight:800
+}
+.chip.active{background:#a88aff25;border-color:#b99cff88;color:#e0d5ff}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}
+.card{
+  min-width:0;overflow:hidden;border:1px solid #ffffff20;
+  border-radius:19px;background:linear-gradient(155deg,#201c34,#121120 85%);
+  box-shadow:0 14px 40px #0006
+}
+.cover{height:190px;position:relative;background:linear-gradient(135deg,#43335f,#16172a);overflow:hidden}
+.cover img{width:100%;height:100%;object-fit:cover;display:block}
+.cover:after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(0deg,#0c0b17,transparent 75%)
+}
+.live-badge,.privacy-badge,.category-badge{
+  position:absolute;z-index:1;border:1px solid #ffffff30;
+  background:#080812c9;border-radius:20px;padding:5px 9px;
+  font-size:8px;font-weight:900
+}
+.live-badge{top:11px;right:11px;color:#ff8a9b}
+.privacy-badge{top:11px;left:11px;color:#e4d9ff}
+.cover h3{
+  position:absolute;z-index:1;bottom:10px;right:13px;left:13px;
+  margin:0;font-size:18px;text-shadow:0 2px 9px #000
+}
+.category-badge{bottom:12px;left:12px;color:var(--gold)}
+.cardbody{padding:13px}
+.host{display:flex;align-items:center;gap:9px;font-size:10px}
+.avatar{
+  width:36px;height:36px;border-radius:50%;object-fit:cover;
+  background:linear-gradient(145deg,#8566ca,#34254f);
+  display:grid;place-items:center;border:1px solid #ffffff30;font-weight:900
+}
 .host small{display:block;color:var(--muted);font-size:8px}
-.meta{display:flex;gap:7px;flex-wrap:wrap;margin:11px 0}
-.tag{border:1px solid var(--line);background:#ffffff09;border-radius:8px;padding:5px 8px;font-size:8px;color:#d9d2e6}
-.join{width:100%;border:1px solid #b99cff66;background:linear-gradient(110deg,#9875eb,#6745be);border-radius:10px;padding:10px;font-size:10px;font-weight:900}
-.empty{grid-column:1/-1;border:1px dashed #b99cff55;border-radius:16px;padding:30px;text-align:center;color:var(--muted);font-size:11px;background:#151426}
-.modal{position:fixed;inset:0;z-index:10;display:none;align-items:center;justify-content:center;padding:12px;background:#03030ce8;backdrop-filter:blur(12px)}
+.description{color:#c3bdd1;font-size:9px;line-height:1.8;margin:10px 0 0;min-height:32px}
+.meta{display:flex;gap:6px;flex-wrap:wrap;margin:11px 0}
+.tag{
+  border:1px solid var(--line);background:#ffffff08;
+  border-radius:8px;padding:5px 8px;font-size:8px;color:#d9d2e6
+}
+.join{
+  width:100%;border:1px solid #b99cff66;
+  background:linear-gradient(110deg,#9875eb,#6745be);
+  border-radius:10px;padding:11px;font-size:10px;font-weight:900
+}
+.empty{
+  grid-column:1/-1;border:1px dashed #b99cff55;
+  border-radius:16px;padding:34px 20px;text-align:center;
+  color:var(--muted);font-size:11px;background:#151426
+}
+.empty strong{display:block;color:#eee7ff;font-size:15px;margin-bottom:6px}
+.modal{
+  position:fixed;inset:0;z-index:10;display:none;
+  align-items:center;justify-content:center;padding:12px;
+  background:#03030ce8;backdrop-filter:blur(12px)
+}
 .modal.show{display:flex}
-.box{width:min(590px,100%);max-height:92dvh;overflow:auto;border:1px solid #b99cff66;border-radius:20px;background:#171526;padding:18px;box-shadow:0 30px 90px #000c}
-.modalhead{display:flex;justify-content:space-between;align-items:center}
-.modalhead h3{margin:0}
-.close{width:34px;height:34px;border:1px solid var(--line);background:#ffffff0b;border-radius:9px;font-size:20px}
-.field{margin-top:12px}
+.box{
+  width:min(620px,100%);max-height:92dvh;overflow:auto;
+  border:1px solid #b99cff66;border-radius:20px;
+  background:#171526;padding:18px;box-shadow:0 30px 90px #000c
+}
+.modalhead{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.modalhead h3{margin:0;font-size:17px}
+.close{
+  width:35px;height:35px;border:1px solid var(--line);
+  background:#ffffff0b;border-radius:10px;font-size:20px
+}
+.field{margin-top:13px}
 .field label{display:block;font-size:10px;font-weight:800;margin-bottom:6px}
-.gallery{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;margin-top:9px}
-.bgchoice{height:76px;border:2px solid transparent;border-radius:10px;overflow:hidden;padding:0;background:#222}
+.field input,.field select{
+  width:100%;height:43px;background:#11101e;color:white;
+  border:1px solid var(--line);border-radius:11px;
+  padding:0 12px;outline:none;font-size:11px
+}
+.gallery{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:9px}
+.bgchoice{
+  height:85px;border:2px solid transparent;border-radius:11px;
+  overflow:hidden;padding:0;background:#222;position:relative
+}
 .bgchoice.selected{border-color:var(--gold);box-shadow:0 0 0 2px #efd09a33}
 .bgchoice img{width:100%;height:100%;object-fit:cover}
-.hint{font-size:9px;color:var(--muted);line-height:1.8;margin-top:7px}
-.submit{width:100%;height:45px;margin-top:15px}
-.toast{position:fixed;z-index:20;bottom:20px;right:12px;left:12px;margin:auto;max-width:420px;background:#27233b;border:1px solid #ffffff30;border-radius:12px;padding:12px;text-align:center;font-size:10px;display:none}
-.toast.show{display:block}
-@media(max-width:850px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:600px){
- .wrap{width:calc(100% - 18px)}
- header{height:60px}
- .hero{margin:12px 0 20px;min-height:300px;border-radius:19px}
- .hero-content{padding:23px 16px}
- .hero:after{background:linear-gradient(90deg,#090812ee,#090812a8),linear-gradient(0deg,#090812,transparent)}
- .hero p{font-size:10px}
- .stats{gap:5px}
- .stat{min-width:0;flex:1;padding:7px 8px}
- .stat b{font-size:15px}
- .filters{grid-template-columns:1fr 1fr}
- .filters input{grid-column:1/-1}
- .grid{grid-template-columns:1fr}
- .cover{height:190px}
- .gallery{grid-template-columns:repeat(3,minmax(0,1fr))}
- .bgchoice{height:68px}
+.bgchoice span{
+  position:absolute;bottom:4px;right:6px;background:#080812bb;
+  border-radius:5px;padding:2px 5px;font-size:8px
 }
+.hint{font-size:9px;color:var(--muted);line-height:1.8;margin-top:7px}
+.submit{width:100%;height:46px;margin-top:16px}
+.toast{
+  position:fixed;z-index:20;bottom:20px;right:12px;left:12px;
+  margin:auto;max-width:440px;background:#27233b;
+  border:1px solid #ffffff30;border-radius:12px;
+  padding:12px;text-align:center;font-size:10px;display:none
+}
+.toast.show{display:block}
+@media(max-width:900px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:620px){
+  .wrap{width:calc(100% - 18px)}
+  header{height:62px}
+  .mark{width:38px;height:38px}
+  .brand{font-size:12px}
+  .brand small{font-size:7px}
+  .header-actions{gap:5px}
+  .btn{padding:9px 10px;font-size:9px}
+  .hero{margin:12px 0 19px;min-height:305px;border-radius:20px}
+  .hero-content{padding:22px 16px}
+  .hero:after{background:linear-gradient(90deg,#090812ef,#090812b8),linear-gradient(0deg,#090812,transparent)}
+  .hero h1{font-size:34px}
+  .hero p{font-size:10px}
+  .stats{gap:5px}
+  .stat{min-width:0;flex:1;padding:7px 8px}
+  .stat b{font-size:15px}
+  .toolbar{grid-template-columns:1fr 1fr}
+  .toolbar input{grid-column:1/-1}
+  .grid{grid-template-columns:1fr 1fr;gap:9px}
+  .cover{height:145px}
+  .cover h3{font-size:14px}
+  .cardbody{padding:10px}
+  .description{font-size:8px;min-height:40px}
+  .host{font-size:9px}
+  .avatar{width:31px;height:31px}
+  .meta{gap:4px}
+  .tag{font-size:7px;padding:4px 6px}
+  .join{padding:10px;font-size:9px}
+  .gallery{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .bgchoice{height:72px}
+  .section-head h2{font-size:17px}
+}
+@media(max-width:360px){.grid{grid-template-columns:1fr}.cover{height:175px}}
 </style>
 </head>
 <body>
@@ -96,328 +249,524 @@ header{height:70px;display:flex;align-items:center;justify-content:space-between
 <header>
 <a class="brand" href="home.html">
 <span class="mark"><svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 0 1 16 0v5a3 3 0 0 1-3 3h-2v-6h5M4 14h5v6H7a3 3 0 0 1-3-3z"/></svg></span>
-<span>HANOON WORLD<small>SOCIAL VOICE ROOMS</small></span>
+<span>HANOON WORLD<small>SOCIAL VOICE CLUB</small></span>
 </a>
-<div><a class="btn" href="broadcasts.html">البث المباشر</a> <button class="btn" id="refresh">تحديث</button></div>
+<div class="header-actions">
+<a class="btn" href="broadcasts.html">البث المباشر</a>
+<button class="btn" id="refresh">تحديث</button>
+</div>
 </header>
-
 <section class="hero">
-<img src="https://loremflickr.com/1600/900/luxury,lounge,interior?lock=88001" alt="">
+<img src="https://loremflickr.com/1600/900/luxury,lounge,interior?lock=88001" alt="مساحة اجتماعية فاخرة">
 <div class="hero-content">
 <div class="eyebrow">✦ HANOON SOCIAL CLUB</div>
-<h1>مكانك.. وصوتك.. وناسك.</h1>
-<p>ادخل غرفتك واجمع أصحابك في مساحة صوتية مفتوحة. اتكلموا، اتعرفوا، شاركوا الرسائل، وخلي الألعاب نشاطًا اختياريًا يختاره مضيف الغرفة وقت ما يحب.</p>
+<h1>غرفتك.. <span>عالمك.</span></h1>
+<p>ادخل مجتمعًا صوتيًا يجمعك بالناس. افتح غرفتك، اختار خلفيتها، استقبل أصحابك، واتكلموا في مساحة فيها صوت وشات وتفاعل وإدارة كاملة للمضيف.</p>
 <div class="hero-actions">
-<button class="btn primary" id="createOpen">＋ إنشاء غرفة اجتماعية</button>
+<button class="btn primary" id="createOpen">＋ إنشاء غرفة</button>
 <button class="btn" id="joinOpen">دخول بكود الغرفة</button>
 </div>
 <div class="stats">
-<div class="stat"><b id="roomCount">—</b><small>غرف مفتوحة</small></div>
-<div class="stat"><b id="peopleCount">—</b><small>غرف نشطة</small></div>
-<div class="stat"><b>200</b><small>اختيار خلفية</small></div>
+<div class="stat"><b id="roomCount">—</b><small>غرف عامة مباشرة</small></div>
+<div class="stat"><b id="peopleCount">—</b><small>أعضاء داخل الغرف</small></div>
+<div class="stat"><b>200</b><small>خلفية للاختيار</small></div>
 </div>
 </div>
+</section><main>
+<section class="section-head">
+<div>
+<h2>اكتشف الغرف</h2>
+<p>اختار المساحة اللي تناسبك وابدأ التعارف والتفاعل</p>
+</div>
+<div class="live-indicator">مباشر الآن</div>
 </section>
 
-<div class="head"><div><h2>الغرف النشطة</h2><p>اختار المكان اللي تحب تنضم إليه.</p></div></div>
-<div class="filters">
-<input id="search" placeholder="ابحث باسم الغرفة أو المضيف أو الكود">
-<select id="category">
-<option value="">كل أنواع الغرف</option>
-<option value="general">دردشة عامة</option>
+<div class="toolbar">
+<input class="control" id="search" placeholder="ابحث عن غرفة أو مضيف...">
+<select class="control" id="sort">
+<option value="new">الأحدث أولاً</option>
+<option value="name">الاسم</option>
+</select>
+<select class="control" id="category">
+<option value="all">كل التصنيفات</option>
+<option value="general">عامة</option>
 <option value="friends">أصدقاء</option>
 <option value="music">موسيقى</option>
-<option value="study">مذاكرة</option>
-<option value="talk">نقاش وحوار</option>
+<option value="study">دراسة</option>
+<option value="talk">دردشة</option>
 <option value="events">فعاليات</option>
-<option value="games">ألعاب اختيارية</option>
+<option value="games">ألعاب</option>
 </select>
-<select id="sort"><option value="new">الأحدث</option><option value="title">الاسم</option></select>
-</div>
-<div class="grid" id="rooms"><div class="empty">جارٍ تحميل الغرف الاجتماعية...</div></div>
 </div>
 
-<div class="modal" id="createModal"><div class="box">
-<div class="modalhead"><h3>إنشاء غرفة اجتماعية</h3><button class="close" data-close="createModal">×</button></div>
-<div class="field"><label>اسم الغرفة</label><input id="title" maxlength="80" placeholder="مثلاً: سهرة أصدقاء هنون"></div>
-<div class="field"><label>وصف الغرفة</label><input id="description" maxlength="250" placeholder="اكتب وصفًا بسيطًا"></div>
-<div class="field"><label>تصنيف الغرفة</label>
+<div class="category-row" id="categoryChips">
+<button class="chip active" data-cat="all">الكل</button>
+<button class="chip" data-cat="general">عام</button>
+<button class="chip" data-cat="friends">أصدقاء</button>
+<button class="chip" data-cat="music">موسيقى</button>
+<button class="chip" data-cat="study">دراسة</button>
+<button class="chip" data-cat="talk">دردشة</button>
+<button class="chip" data-cat="events">فعاليات</button>
+</div>
+
+<div class="grid" id="roomsGrid">
+<div class="empty"><strong>جاري تحميل الغرف...</strong>لحظة واحدة</div>
+</div>
+</main>
+</div>
+
+<!-- نافذة إنشاء غرفة -->
+<div class="modal" id="createModal">
+<div class="box">
+<div class="modalhead">
+<h3>إنشاء غرفتك الجديدة</h3>
+<button class="close" data-close="createModal">×</button>
+</div>
+
+<div class="field">
+<label>اسم الغرفة</label>
+<input id="roomTitle" maxlength="100" placeholder="مثلاً: سهرة أصدقاء هنون">
+</div>
+
+<div class="field">
+<label>وصف الغرفة</label>
+<input id="roomDescription" maxlength="500" placeholder="اكتب وصفاً بسيطاً لغرفتك">
+</div>
+
+<div class="field">
+<label>تصنيف الغرفة</label>
 <select id="roomCategory">
-<option value="general">دردشة عامة</option><option value="friends">أصدقاء</option><option value="music">موسيقى</option><option value="study">مذاكرة</option><option value="talk">نقاش وحوار</option><option value="events">فعاليات</option><option value="games">ألعاب اختيارية</option>
-</select></div>
-<div class="field"><label>الخصوصية</label><select id="visibility"><option value="public">عامة — تظهر للجميع</option><option value="private">خاصة — بالدعوة والكود</option></select></div>
-<div class="field"><label>الألعاب داخل الغرفة</label><select id="allowGames"><option value="true">يسمح للمضيف بتشغيل الألعاب</option><option value="false">غرفة تواصل فقط</option></select></div>
-<div class="field"><label>اختر خلفية خارجية</label><div class="gallery" id="gallery"></div><div class="hint">تقدر تتنقل بين مجموعات الخلفيات وتختار الشكل المناسب لغرفتك.</div><button class="btn" id="moreBackgrounds" type="button" style="margin-top:8px">خلفيات أخرى</button></div>
-<button class="btn primary submit" id="createConfirm">إنشاء الغرفة والدخول</button>
-</div></div>
+<option value="general">عام</option>
+<option value="friends">أصدقاء</option>
+<option value="music">موسيقى</option>
+<option value="study">دراسة</option>
+<option value="talk">دردشة</option>
+<option value="events">فعاليات</option>
+<option value="games">ألعاب</option>
+</select>
+</div>
 
-<div class="modal" id="joinModal"><div class="box" style="max-width:420px">
-<div class="modalhead"><h3>دخول بكود الغرفة</h3><button class="close" data-close="joinModal">×</button></div>
-<div class="field"><label>كود الغرفة</label><input id="roomCode" maxlength="12" placeholder="HN123456" style="direction:ltr;text-align:center;letter-spacing:4px"></div>
-<button class="btn primary submit" id="joinConfirm">دخول الغرفة</button>
-</div></div>
+<div class="field">
+<label>نوع الغرفة</label>
+<select id="roomVisibility">
+<option value="public">عامة - تظهر للجميع</option>
+<option value="private">خاصة - الدخول بكود</option>
+</select>
+</div>
+
+<div class="field">
+<label>السماح بالألعاب</label>
+<select id="roomGames">
+<option value="false">لا</option>
+<option value="true">نعم</option>
+</select>
+</div>
+
+<div class="field">
+<label>اختر خلفية الغرفة</label>
+<div class="gallery" id="backgroundGallery"></div>
+<button class="btn" id="moreBackgrounds" style="width:100%;margin-top:9px">عرض خلفيات أخرى</button>
+<p class="hint">الخلفيات المعروضة صور خارجية للاختيار، وليست ملفات محفوظة داخل مساحة تخزين هنون.</p>
+</div>
+
+<button class="btn primary submit" id="createSubmit">إنشاء الغرفة والدخول إليها</button>
+</div>
+</div>
+
+<!-- نافذة الدخول بالكود -->
+<div class="modal" id="joinModal">
+<div class="box" style="max-width:400px">
+<div class="modalhead">
+<h3>دخول غرفة خاصة</h3>
+<button class="close" data-close="joinModal">×</button>
+</div>
+<div class="field">
+<label>كود الغرفة</label>
+<input id="roomCodeInput" maxlength="20" placeholder="اكتب كود الغرفة">
+</div>
+<button class="btn primary submit" id="joinSubmit">دخول الغرفة</button>
+<p class="hint">أدخل الكود الذي أرسله لك صاحب الغرفة.</p>
+</div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script type="module">
 import {supabase} from "./supabase.js";
 
-const $=id=>document.getElementById(id);
-let user=null,rows=[],selectedBackground="",galleryPage=0,busy=false,channel=null;
+const $ = id => document.getElementById(id);
 
-const tags=[
-"luxury,lounge,interior","purple,neon,night,city","galaxy,space,stars",
-"forest,nature,waterfall","modern,architecture,interior","cinematic,abstract,texture",
-"ocean,beach,sunset","gaming,setup,neon","royal,palace,interior","mountains,fog,landscape"
+const categories = {
+ general:"عام",
+ friends:"أصدقاء",
+ music:"موسيقى",
+ study:"دراسة",
+ talk:"دردشة",
+ events:"فعاليات",
+ games:"ألعاب"
+};
+
+const backgrounds = [
+ {name:"ملكي",url:"https://loremflickr.com/900/600/luxury,lounge?lock=1101"},
+ {name:"بنفسجي",url:"https://loremflickr.com/900/600/purple,interior?lock=1102"},
+ {name:"طبيعة",url:"https://loremflickr.com/900/600/nature,forest?lock=1103"},
+ {name:"بحر",url:"https://loremflickr.com/900/600/ocean,sea?lock=1104"},
+ {name:"ليل",url:"https://loremflickr.com/900/600/night,city?lock=1105"},
+ {name:"نجوم",url:"https://loremflickr.com/900/600/stars,sky?lock=1106"},
+ {name:"ورود",url:"https://loremflickr.com/900/600/flowers,garden?lock=1107"},
+ {name:"موسيقى",url:"https://loremflickr.com/900/600/music,studio?lock=1108"},
+ {name:"كلاسيك",url:"https://loremflickr.com/900/600/classic,interior?lock=1109"},
+ {name:"مدينة",url:"https://loremflickr.com/900/600/city,architecture?lock=1110"},
+ {name:"ذهبي",url:"https://loremflickr.com/900/600/gold,luxury?lock=1111"},
+ {name:"هادئ",url:"https://loremflickr.com/900/600/minimal,interior?lock=1112"}
 ];
 
-function backgroundURL(i){
- const tag=tags[Math.floor(i/20)%tags.length];
- return "https://loremflickr.com/1200/800/"+tag+"?lock="+(76000+i);
+let currentUser = null;
+let rooms = [];
+let selectedBackground = backgrounds[0].url;
+let backgroundPage = 0;
+let activeCategory = "all";
+let channel = null;
+
+function toast(message){
+ const el=$("toast");
+ el.textContent=message;
+ el.classList.add("show");
+ clearTimeout(toast.timer);
+ toast.timer=setTimeout(()=>el.classList.remove("show"),3000);
 }
 
-const escapeHTML=v=>String(v??"").replace(/[&<>"']/g,c=>({
+function escapeHTML(value){
+ return String(value??"").replace(/[&<>"']/g,c=>({
  "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
-}[c]));
-
-function toast(m){
- $("toast").textContent=m;
- $("toast").classList.add("show");
- clearTimeout(toast.t);
- toast.t=setTimeout(()=>$("toast").classList.remove("show"),3200);
+ }[c]));
 }
 
-function open(id){$(id).classList.add("show")}
-function close(id){$(id).classList.remove("show")}
+function openModal(id){$(id).classList.add("show")}
+function closeModal(id){$(id).classList.remove("show")}
 
-function renderGallery(){
- const start=(galleryPage*12)%200;
- const ids=Array.from({length:12},(_,n)=>(start+n)%200);
- $("gallery").innerHTML=ids.map(i=>
-  '<button type="button" class="bgchoice '+(selectedBackground===backgroundURL(i)?"selected":"")+'" data-bg="'+i+'"><img loading="lazy" src="'+backgroundURL(i)+'" alt="خلفية '+(i+1)+'"></button>'
- ).join("");
+document.querySelectorAll("[data-close]").forEach(button=>{
+ button.addEventListener("click",()=>closeModal(button.dataset.close));
+});
 
- $("gallery").querySelectorAll("[data-bg]").forEach(b=>{
-  b.onclick=()=>{
-   selectedBackground=backgroundURL(Number(b.dataset.bg));
-   renderGallery();
+document.querySelectorAll(".modal").forEach(modal=>{
+ modal.addEventListener("click",event=>{
+  if(event.target===modal)modal.classList.remove("show");
+ });
+});
+
+$("createOpen").onclick=()=>openModal("createModal");
+$("joinOpen").onclick=()=>openModal("joinModal");
+
+function renderBackgrounds(){
+ const start=backgroundPage*6;
+ const items=backgrounds.slice(start,start+6);
+ $("backgroundGallery").innerHTML=items.map((item,index)=>`
+  <button type="button" class="bgchoice ${selectedBackground===item.url?"selected":""}"
+   data-bg="${start+index}">
+   <img src="${item.url}" alt="${escapeHTML(item.name)}" loading="lazy">
+   <span>${escapeHTML(item.name)}</span>
+  </button>
+ `).join("");
+
+ $("backgroundGallery").querySelectorAll("[data-bg]").forEach(button=>{
+  button.onclick=()=>{
+   selectedBackground=backgrounds[Number(button.dataset.bg)].url;
+   renderBackgrounds();
   };
  });
- if(!selectedBackground)selectedBackground=backgroundURL(start);
 }
 
-function profileName(p){return p?.full_name||p?.username||"عضو هنون"}
+$("moreBackgrounds").onclick=()=>{
+ backgroundPage=(backgroundPage+1)%2;
+ renderBackgrounds();
+};
 
-function card(r){
- const p=r.profile||{};
- const name=profileName(p);
- const bg=r.background_url||backgroundURL(0);
- const categories={
-  general:"دردشة عامة",friends:"أصدقاء",music:"موسيقى",
-  study:"مذاكرة",talk:"نقاش",events:"فعاليات",games:"ألعاب اختيارية"
- };
- const category=categories[r.room_category]||"غرفة اجتماعية";
+function makeCode(){
+ const chars="ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+ let result="";
+ for(let i=0;i<8;i++)result+=chars[Math.floor(Math.random()*chars.length)];
+ return result;
+}
 
- return '<article class="card">'+
-  '<div class="cover"><img loading="lazy" src="'+escapeHTML(bg)+'" alt="">'+
-  '<span class="live">● مباشر</span>'+
-  '<span class="members">غرفة صوتية</span>'+
-  '<h3>'+escapeHTML(r.title)+'</h3></div>'+
-  '<div class="cardbody">'+
-  '<div class="host"><span class="avatar">'+escapeHTML(name.slice(0,1))+'</span>'+
-  '<span>'+escapeHTML(name)+'<small>مضيف الغرفة</small></span></div>'+
-  '<div class="meta"><span class="tag">'+category+'</span>'+
-  '<span class="tag">'+(r.visibility==="private"?"خاصة":"عامة")+'</span>'+
-  '<span class="tag">'+(r.allow_games?"ألعاب اختيارية":"تواصل فقط")+'</span></div>'+
-  '<button class="join" data-enter="'+r.id+'">دخول الغرفة</button>'+
-  '</div></article>';
+function avatarMarkup(profile){
+ const name=profile?.full_name||profile?.username||"عضو";
+ const path=profile?.avatar_path;
+ const avatar=path
+  ? `<img class="avatar" src="${escapeHTML(path)}" alt="">`
+  : `<span class="avatar">${escapeHTML(name.trim().charAt(0)||"هـ")}</span>`;
+ return avatar;
+}
+
+function roomCard(room){
+ const host=room.hostProfile||{};
+ const title=escapeHTML(room.title);
+ const description=escapeHTML(room.description||"غرفة اجتماعية مفتوحة للتعارف والتفاعل");
+ const background=escapeHTML(room.background_url||"");
+ const hostName=escapeHTML(host.full_name||host.username||"عضو هنون");
+ const count=Number(room.viewerCount||0);
+
+ return `
+ <article class="card">
+  <div class="cover">
+   ${background?`<img src="${background}" alt="" loading="lazy">`:""}
+   <span class="live-badge">● مباشر</span>
+   ${room.visibility==="private"?'<span class="privacy-badge">خاصة</span>':""}
+   <h3>${title}</h3>
+   <span class="category-badge">${categories[room.room_category]||"عام"}</span>
+  </div>
+  <div class="cardbody">
+   <div class="host">
+    ${avatarMarkup(host)}
+    <div>${hostName}<small>مضيف الغرفة</small></div>
+   </div>
+   <p class="description">${description}</p>
+   <div class="meta">
+    <span class="tag">◉ ${count} داخل الغرفة</span>
+    <span class="tag">${room.allow_games?"ألعاب متاحة":"دردشة وصوت"}</span>
+   </div>
+   <button class="join" data-enter="${escapeHTML(room.id)}">دخول الغرفة</button>
+  </div>
+ </article>`;
+}
+
+function renderRooms(){
+ const search=$("search").value.trim().toLowerCase();
+ const sort=$("sort").value;
+
+ let filtered=rooms.filter(room=>{
+  const matchesCategory=activeCategory==="all"||room.room_category===activeCategory;
+  const host=room.hostProfile||{};
+  const haystack=[room.title,room.description,host.full_name,host.username]
+   .join(" ").toLowerCase();
+  return matchesCategory&&haystack.includes(search);
+ });
+
+ if(sort==="name")filtered.sort((a,b)=>a.title.localeCompare(b.title,"ar"));
+ else filtered.sort((a,b)=>new Date(b.started_at)-new Date(a.started_at));
+
+ $("roomCount").textContent=rooms.length;
+ $("roomsGrid").innerHTML=filtered.length
+  ?filtered.map(roomCard).join("")
+  :`<div class="empty"><strong>لا توجد غرف مطابقة</strong>جرّب البحث بكلمة أخرى أو اختر تصنيفاً مختلفاً.</div>`;
+
+ $("roomsGrid").querySelectorAll("[data-enter]").forEach(button=>{
+  button.onclick=()=>enterRoom(button.dataset.enter);
+ });
 }
 
 async function loadRooms(){
+ $("roomsGrid").innerHTML='<div class="empty">جاري تحميل الغرف...</div>';
+
  const {data,error}=await supabase
   .from("world_live_streams")
-  .select("id,host_id,title,description,status,started_at,room_code,visibility,background_url,room_category,is_audio_room,allow_games")
+  .select("id,host_id,title,description,status,started_at,visibility,background_url,room_category,allow_games,room_code")
   .eq("status","live")
   .eq("is_audio_room",true)
   .eq("visibility","public")
   .order("started_at",{ascending:false})
-  .limit(100);
+  .limit(60);
 
- if(error)throw error;
-
- rows=data||[];
- const ids=[...new Set(rows.map(x=>x.host_id))];
- let profiles={};
-
- if(ids.length){
-  const p=await supabase.from("profiles")
-   .select("id,full_name,username,avatar_path")
-   .in("id",ids);
-  if(p.error)throw p.error;
-  (p.data||[]).forEach(x=>profiles[x.id]=x);
+ if(error){
+  console.error(error);
+  $("roomsGrid").innerHTML='<div class="empty"><strong>تعذر تحميل الغرف</strong>راجع اتصال قاعدة البيانات وصلاحيات القراءة.</div>';
+  toast("حصلت مشكلة أثناء تحميل الغرف");
+  return;
  }
 
- rows=rows.map(x=>({...x,profile:profiles[x.host_id]}));
+ rooms=data||[];
+
+ const hostIds=[...new Set(rooms.map(room=>room.host_id).filter(Boolean))];
+
+ if(hostIds.length){
+  const {data:profiles,error:profileError}=await supabase
+   .from("profiles")
+   .select("id,full_name,username,avatar_path,is_verified")
+   .in("id",hostIds);
+
+  if(profileError)console.warn("تعذر تحميل ملفات المضيفين",profileError);
+
+  const profileMap=new Map((profiles||[]).map(p=>[p.id,p]));
+  rooms.forEach(room=>room.hostProfile=profileMap.get(room.host_id)||null);
+ }
+
+ const roomIds=rooms.map(room=>room.id);
+
+ if(roomIds.length){
+  const {data:viewers,error:viewError}=await supabase
+   .from("world_live_viewers")
+   .select("stream_id,user_id")
+   .in("stream_id",roomIds);
+
+  if(!viewError){
+   const counts={};
+   (viewers||[]).forEach(v=>{
+    counts[v.stream_id]=(counts[v.stream_id]||0)+1;
+   });
+   rooms.forEach(room=>room.viewerCount=counts[room.id]||0);
+   $("peopleCount").textContent=(viewers||[]).length;
+  }else{
+   console.warn("تعذر تحميل عدد المشاهدين",viewError);
+   rooms.forEach(room=>room.viewerCount=0);
+   $("peopleCount").textContent="—";
+  }
+ }else{
+  $("peopleCount").textContent="0";
+ }
+
  renderRooms();
 }
 
-function renderRooms(){
- let list=[...rows];
- const q=$("search").value.trim().toLowerCase();
- const cat=$("category").value;
-
- if(q)list=list.filter(r=>
-  (r.title+" "+r.room_code+" "+profileName(r.profile)).toLowerCase().includes(q)
- );
-
- if(cat)list=list.filter(r=>r.room_category===cat);
-
- if($("sort").value==="title")
-  list.sort((a,b)=>a.title.localeCompare(b.title,"ar"));
-
- $("roomCount").textContent=rows.length;
- $("peopleCount").textContent=rows.length;
-
- $("rooms").innerHTML=list.length
-  ?list.map(card).join("")
-  :'<div class="empty">لا توجد غرف عامة مفتوحة الآن. كن أول من ينشئ غرفة!</div>';
-
- $("rooms").querySelectorAll("[data-enter]").forEach(b=>{
-  b.onclick=()=>enterRoom(b.dataset.enter);
- });
-}
-
-function enterRoom(id){
- location.href="broadcast-room.html?stream="+encodeURIComponent(id)+"&audio=1";
-}
-
-function makeCode(){
- const chars="ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
- let out="HN";
- for(let i=0;i<6;i++)out+=chars[Math.floor(Math.random()*chars.length)];
- return out;
-}
-
-async function createRoom(){
- if(busy)return;
-
- const title=$("title").value.trim();
- if(title.length<3)return toast("اكتب اسمًا من 3 أحرف على الأقل.");
-
- busy=true;
- $("createConfirm").disabled=true;
- $("createConfirm").textContent="جارٍ إنشاء الغرفة...";
-
- try{
-  const code=makeCode();
-
-  const payload={
-   host_id:user.id,
-   title,
-   description:$("description").value.trim(),
-   status:"live",
-   guest_layout:"grid",
-   guest_limit:3,
-   guest_access:"everyone",
-   room_code:code,
-   visibility:$("visibility").value,
-   background_url:selectedBackground||backgroundURL(0),
-   room_category:$("roomCategory").value,
-   is_audio_room:true,
-   allow_games:$("allowGames").value==="true"
-  };
-
-  const {data,error}=await supabase
-   .from("world_live_streams")
-   .insert(payload)
-   .select("id")
-   .single();
-
-  if(error)throw error;
-  if(!data?.id)throw new Error("لم يتم استلام رقم الغرفة.");
-
-  location.href="broadcast-room.html?stream="+encodeURIComponent(data.id)+"&audio=1";
-
- }catch(e){
-  console.error(e);
-  toast(e.message||"تعذر إنشاء الغرفة");
- }finally{
-  busy=false;
-  $("createConfirm").disabled=false;
-  $("createConfirm").textContent="إنشاء الغرفة والدخول";
- }
+async function enterRoom(id){
+ const room=rooms.find(r=>r.id===id);
+ if(!room)return;
+ location.href=`broadcast-room.html?stream=${encodeURIComponent(room.id)}&audio=1`;
 }
 
 async function joinByCode(){
- const code=$("roomCode").value.trim().toUpperCase();
- if(!code)return toast("اكتب كود الغرفة.");
+ const code=$("roomCodeInput").value.trim().toUpperCase();
+ if(!code){toast("اكتب كود الغرفة أولاً");return;}
 
  const {data,error}=await supabase
   .from("world_live_streams")
   .select("id,status,visibility")
   .eq("room_code",code)
-  .eq("is_audio_room",true)
+  .eq("status","live")
   .maybeSingle();
 
- if(error)throw error;
- if(!data||data.status!=="live")return toast("الغرفة غير موجودة أو انتهت.");
-
- location.href="broadcast-room.html?stream="+encodeURIComponent(data.id)+"&audio=1";
-}
-
-async function init(){
- const {data,error}=await supabase.auth.getUser();
-
- if(error||!data?.user){
-  location.replace("login.html?next=rooms.html");
+ if(error){
+  console.error(error);
+  toast("تعذر التحقق من الكود");
   return;
  }
 
- user=data.user;
+ if(!data){toast("الكود غير صحيح أو الغرفة انتهت");return;}
 
- renderGallery();
- await loadRooms();
-
- $("createOpen").onclick=()=>open("createModal");
- $("joinOpen").onclick=()=>open("joinModal");
- $("createConfirm").onclick=createRoom;
- $("joinConfirm").onclick=()=>joinByCode().catch(e=>toast(e.message));
- $("refresh").onclick=()=>loadRooms().catch(e=>toast(e.message));
- $("search").oninput=renderRooms;
- $("category").onchange=renderRooms;
- $("sort").onchange=renderRooms;
-
- $("moreBackgrounds").onclick=()=>{
-  galleryPage=(galleryPage+1)%17;
-  selectedBackground="";
-  renderGallery();
- };
-
- document.querySelectorAll("[data-close]").forEach(b=>{
-  b.onclick=()=>close(b.dataset.close);
- });
-
- document.querySelectorAll(".modal").forEach(m=>{
-  m.addEventListener("click",e=>{
-   if(e.target===m)close(m.id);
-  });
- });
-
- channel=supabase.channel("hanoon-social-rooms")
-  .on("postgres_changes",{
-   event:"*",schema:"public",table:"world_live_streams"
-  },()=>loadRooms().catch(console.warn))
-  .subscribe();
-
- setInterval(()=>loadRooms().catch(()=>{}),30000);
+ closeModal("joinModal");
+ location.href=`broadcast-room.html?stream=${encodeURIComponent(data.id)}&audio=1`;
 }
 
-init().catch(e=>{
- console.error(e);
- toast("تعذر تحميل الغرف: "+e.message);
+$("joinSubmit").onclick=joinByCode;
+$("roomCodeInput").addEventListener("keydown",event=>{
+ if(event.key==="Enter")joinByCode();
 });
 
-window.addEventListener("pagehide",()=>{
+async function createRoom(){
+ if(!currentUser){
+  toast("سجل دخولك أولاً لإنشاء غرفة");
+  location.href="login.html?next=rooms.html";
+  return;
+ }
+
+ const title=$("roomTitle").value.trim();
+ const description=$("roomDescription").value.trim();
+ const category=$("roomCategory").value;
+ const visibility=$("roomVisibility").value;
+ const allowGames=$("roomGames").value==="true";
+
+ if(title.length<3){
+  toast("اسم الغرفة لازم يكون 3 أحرف على الأقل");
+  return;
+ }
+
+ const button=$("createSubmit");
+ button.disabled=true;
+ button.textContent="جاري إنشاء الغرفة...";
+
+ const roomData={
+  host_id:currentUser.id,
+  title,
+  description,
+  status:"live",
+  guest_layout:"grid",
+  guest_limit:3,
+  guest_access:visibility==="private"?"invite_only":"everyone",
+  room_code:makeCode(),
+  visibility,
+  background_url:selectedBackground,
+  room_category:category,
+  is_audio_room:true,
+  allow_games:allowGames
+ };
+
+ const {data,error}=await supabase
+  .from("world_live_streams")
+  .insert(roomData)
+  .select("id")
+  .single();
+
+ button.disabled=false;
+ button.textContent="إنشاء الغرفة والدخول إليها";
+
+ if(error){
+  console.error(error);
+  toast("فشل إنشاء الغرفة: "+error.message);
+  return;
+ }
+
+ closeModal("createModal");
+ toast("تم إنشاء الغرفة بنجاح");
+ location.href=`broadcast-room.html?stream=${encodeURIComponent(data.id)}&audio=1`;
+}
+
+$("createSubmit").onclick=createRoom;
+
+$("search").addEventListener("input",renderRooms);
+$("sort").addEventListener("change",renderRooms);
+
+$("category").addEventListener("change",()=>{
+ activeCategory=$("category").value;
+ document.querySelectorAll(".chip").forEach(chip=>{
+  chip.classList.toggle("active",chip.dataset.cat===activeCategory);
+ });
+ renderRooms();
+});
+
+document.querySelectorAll(".chip").forEach(chip=>{
+ chip.onclick=()=>{
+  activeCategory=chip.dataset.cat;
+  $("category").value=activeCategory;
+  document.querySelectorAll(".chip").forEach(c=>{
+   c.classList.toggle("active",c===chip);
+  });
+  renderRooms();
+ };
+});
+
+$("refresh").onclick=loadRooms;
+
+async function initialize(){
+ renderBackgrounds();
+
+ const {data,error}=await supabase.auth.getUser();
+
+ if(error)console.warn("Auth:",error);
+ currentUser=data?.user||null;
+
+ await loadRooms();
+
  if(channel)supabase.removeChannel(channel);
+
+ channel=supabase.channel("hanoon-rooms-discovery")
+  .on("postgres_changes",{
+   event:"*",
+   schema:"public",
+   table:"world_live_streams"
+  },()=>loadRooms())
+  .subscribe();
+
+ document.addEventListener("visibilitychange",()=>{
+  if(!document.hidden)loadRooms();
+ });
+
+ window.addEventListener("beforeunload",()=>{
+  if(channel)supabase.removeChannel(channel);
+ });
+}
+
+initialize().catch(error=>{
+ console.error(error);
+ toast("حدث خطأ أثناء تشغيل صفحة الغرف");
 });
 </script>
 </body>
